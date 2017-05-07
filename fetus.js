@@ -98,7 +98,7 @@ function Response(message)
 	}
 	response.toTesting=function()
 	{
-		response.postMessage(message.channel.guild.id);
+		console.log(message.guild.member(message.author.id).roles);
 	}
 	
 	//{
