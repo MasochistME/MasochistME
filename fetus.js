@@ -13,6 +13,8 @@ bot.on('message', message => {
 	
 	if (response.hasCommandTrigger())
 		response.toCommand();
+	if (response.hasReactionTrigger())
+		response.toReactionTrigger();
 });
 
 //#################
@@ -24,14 +26,25 @@ function Response(message)
 	response.originalAuthor=message.author;
 	response.videoChannel='';
 	
+	response.editMessage=function(editedContent) { message.edit(editedContent); }
 	response.postMessage=function(messageToPost) { message.channel.send(messageToPost); }
 	response.postMessageToChannel=function(messageToPost, channelToPost) { bot.channels.get(channelToPost).send(messageToPost); }
+	response.reactToMessage=function(reactionEmoji) { message.react(reactionEmoji); }
 	
 	//{
 	response.hasCommandTrigger=function()
 	{
 		if (response.originalMessage.startsWith('/'))
 			return true;
+		return false;
+	}
+	response.hasReactionTrigger=function()
+	{
+		for (var i=0; i<response.arrayOfTriggers.length; i++)
+		{
+			if (response.originalMessage.indexOf(response.arrayOfTriggers[i][0])!=-1)
+				return true;
+		}
 		return false;
 	}
 	response.isLink=function(supposedLink)
@@ -41,6 +54,14 @@ function Response(message)
 		return false;
 	}
 	//}
+	response.toReactionTrigger=function()
+	{
+		for (var i=0; i<response.arrayOfTriggers.length; i++)
+		{
+			if (response.originalMessage.indexOf(response.arrayOfTriggers[i][0])!=-1)
+				return response.reactToMessage(response.arrayOfTriggers[i][1]);
+		}
+	}
 	response.toCommand=function()
 	{
 		response.listOfCommands(response.extractKeyword());
@@ -93,6 +114,7 @@ function Response(message)
 			default: return null;
 		}
 	}
+	response.arrayOfTriggers=[['Ⓜ', ':mm:310140119606886421']];
 	response.listOfCommands=function(keyword)
 	{
 		switch(keyword)
