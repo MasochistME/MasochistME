@@ -1,0 +1,29 @@
+{
+  "name": "drfetus",
+  "version": "1.0.0",
+  "description": "Custom Discord bot.",
+  "main": "fetus.js",
+  "dependencies": {
+    "discord.js": "^11.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "/test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Arcyvilk/DrFetus.git"
+  },
+  "keywords": [
+    "fetus",
+    "smb",
+    "discord",
+    "bot"
+  ],
+  "author": "Arcyvilk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Arcyvilk/DrFetus/issues"
+  },
+  "homepage": "https://github.com/Arcyvilk/DrFetus#readme"
+}
