@@ -5,6 +5,7 @@ bot.login(process.env.DISCORD_TOKEN);
 
 bot.on('ready', () => {
   console.log('I am ready!');
+  bot.user.setGame('/h for help');
 });
 
 bot.on('message', message => {
@@ -15,6 +16,8 @@ bot.on('message', message => {
 		response.toCommand();
 	if (response.hasReactionTrigger())
 		response.toReactionTrigger();
+	if (response.hasStatusChangeTrigger())
+		response.toStatusChangeTrigger();
 });
 
 //#################
@@ -30,11 +33,18 @@ function Response(message)
 	response.postMessage=function(messageToPost) { message.channel.send(messageToPost); }
 	response.postMessageToChannel=function(messageToPost, channelToPost) { bot.channels.get(channelToPost).send(messageToPost); }
 	response.reactToMessage=function(reactionEmoji) { message.react(reactionEmoji); }
+	response.changeStatus=function(newStatus) { bot.user.setGame(newStatus); }
 	
 	//{
 	response.hasCommandTrigger=function()
 	{
 		if (response.originalMessage.startsWith('/'))
+			return true;
+		return false;
+	}
+	response.hasStatusChangeTrigger=function()
+	{
+		if (response.originalMessage.startsWith('#'))
 			return true;
 		return false;
 	}
@@ -54,6 +64,11 @@ function Response(message)
 		return false;
 	}
 	//}
+	response.toStatusChangeTrigger=function()
+	{
+		var newStatus=response.originalMessage.slice(1);
+		response.changeStatus(newStatus);
+	}
 	response.toReactionTrigger=function()
 	{
 		for (var i=0; i<response.arrayOfTriggers.length; i++)
