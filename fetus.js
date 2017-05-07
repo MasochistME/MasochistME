@@ -1,8 +1,6 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 
-const videoChannel='310035724328239105';
-
 bot.login(DISCORD_TOKEN);
 
 bot.on('ready', () => {
@@ -11,6 +9,7 @@ bot.on('ready', () => {
 
 bot.on('message', message => {
 	var response=new Response(message);
+	response.whatServer(message.channel.guild.id);
 	
 	if (response.hasCommandTrigger())
 		response.toCommand();
@@ -22,14 +21,13 @@ function Response(message)
 {
 	var response=this;
 	response.originalMessage=message.content;
+	response.originalAuthor=message.author;
+	response.videoChannel='';
 	
 	response.postMessage=function(messageToPost) { message.channel.send(messageToPost); }
-	response.postMessageToChannel=function(messageToPost, channelToPost)
-	{
-		//console.log('I post -'+messageToPost+'- in -'+channelToPost+'- channel.);
-		bot.channels.get(channelToPost).send(messageToPost)
-	}
+	response.postMessageToChannel=function(messageToPost, channelToPost) { bot.channels.get(channelToPost).send(messageToPost); }
 	
+	//{
 	response.hasCommandTrigger=function()
 	{
 		if (response.originalMessage.startsWith('/'))
@@ -42,6 +40,7 @@ function Response(message)
 			return true;
 		return false;
 	}
+	//}
 	response.toCommand=function()
 	{
 		response.listOfCommands(response.extractKeyword());
@@ -52,7 +51,7 @@ function Response(message)
 		if (response.isLink(linkToVid))
 		{
 			message.delete(3000)
-				.then(response.postMessageToChannel(linkToVid, videoChannel))
+				.then(response.postMessageToChannel(linkToVid + " "+response.originalAuthor, response.videoChannel))
 				.catch(console.error);
 		}
 	}
@@ -61,7 +60,12 @@ function Response(message)
 		response.postMessage("```List of commands:\n\n"+
 							"- /vid <link> - posts a video to the video channel```");
 	}
+	response.toTesting=function()
+	{
+		response.postMessage(message.channel.guild.id);
+	}
 	
+	//{
 	response.extractKeyword=function()
 	{
 		var keyword=response.originalMessage;
@@ -76,16 +80,30 @@ function Response(message)
 		content=content.slice(content.indexOf(' ')).trim();
 		return content;
 	}
+	//}
 	
+	response.whatServer=function(serverID)
+	{
+		switch(serverID)
+		{
+			case '263045520358899714':
+				return response.videoChannel='310035724328239105';
+			case '234740225782317057':
+				return response.videoChannel='310735697260707841';
+			default: return null;
+		}
+	}
 	response.listOfCommands=function(keyword)
 	{
-		switch (keyword)
+		switch(keyword)
 		{
-			case 'vid':
-				return response.toVideoLink();
 			case 'h':
 			case 'help':
 				return response.toHelp();
+			case 'test':
+				return response.toTesting();
+			case 'vid':
+				return response.toVideoLink();
 			default: return null;
 		}
 	}	
