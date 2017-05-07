@@ -184,7 +184,7 @@ function Roles(presence)
 	var roles=this;
 	roles.user=presence.guild.member(presence.user.id);
 	roles.list=presence._roles;
-	roles.streamingRole='277466738218762241'; //for arcytesting, '310767157153759243'; //for 0.1%
+	roles.streamingRole='310767157153759243'; //'310767157153759243'; //for 0.1%
 	
 	roles.hasStreamingRole=function()
 	{
