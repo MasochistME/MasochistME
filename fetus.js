@@ -27,7 +27,6 @@ bot.on('presenceUpdate', presence => {
 		
 	if (game && game.url) 
 	{	
-		console.log("Streaming detected - "+game.url+"!");
 		if (!roles.hasStreamingRole())
 			roles.setNewRole('streaming');
 	}
@@ -185,7 +184,7 @@ function Roles(presence)
 	var roles=this;
 	roles.user=presence.guild.member(presence.user.id);
 	roles.list=presence._roles;
-	roles.streamingRole='';
+	roles.streamingRole='310767157153759243';
 	
 	roles.hasStreamingRole=function()
 	{
