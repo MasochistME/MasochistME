@@ -20,6 +20,22 @@ bot.on('message', message => {
 		response.toStatusChangeTrigger();
 });
 
+bot.on('presenceUpdate', presence => {
+	var roles=new Roles(presence);
+	roles.whatServer(presence.guild.id);
+	
+	if (presence.frozenPresence.game.url!=null) 
+	{	
+		if (!roles.hasStreamingRole())
+			roles.setNewRole('streaming');
+	}
+	else
+	{
+		if (roles.hasStreamingRole())
+			roles.removeRole('streaming');
+	}
+});
+
 //#################
 
 function Response(message)
@@ -35,7 +51,7 @@ function Response(message)
 	response.reactToMessage=function(reactionEmoji) { message.react(reactionEmoji); }
 	response.changeStatus=function(newStatus) { bot.user.setGame(newStatus); }
 	
-	//{
+	//{ checks for triggers
 	response.hasCommandTrigger=function()
 	{
 		if (response.originalMessage.startsWith('/'))
@@ -64,6 +80,18 @@ function Response(message)
 		return false;
 	}
 	//}
+	response.toModCommand=function(modCommand)
+	{
+		if (response.originalAuthor.id=='205755033210454016') //165962236009906176 is mine
+		{
+			switch(modCommand)
+			{
+				case 'fk':
+					return response.postMessage('http://i.imgur.com/hpW1uTO.png');
+				default: return null;
+			}
+		}
+	}
 	response.toStatusChangeTrigger=function()
 	{
 		var newStatus=response.originalMessage.slice(1);
@@ -98,10 +126,10 @@ function Response(message)
 	}
 	response.toTesting=function()
 	{
-		console.log(message.guild.member(message.author.id).roles);
+		console.log('all right!');
 	}
 	
-	//{
+	//{ keyword stuff
 	response.extractKeyword=function()
 	{
 		var keyword=response.originalMessage;
@@ -118,6 +146,7 @@ function Response(message)
 	}
 	//}
 	
+	//{ arrays
 	response.whatServer=function(serverID)
 	{
 		switch(serverID)
@@ -134,6 +163,8 @@ function Response(message)
 	{
 		switch(keyword)
 		{
+			case 'fk':
+				return response.toModCommand('fk');
 			case 'h':
 			case 'help':
 				return response.toHelp();
@@ -144,4 +175,54 @@ function Response(message)
 			default: return null;
 		}
 	}	
+	//}
+}
+
+function Roles(presence)
+{
+	var roles=this;
+	roles.user=presence.guild.member(presence.user.id);
+	roles.list=presence._roles;
+	roles.streamingRole='';
+	
+	roles.hasStreamingRole=function()
+	{
+		for (var i=0; i<roles.list.length; i++)
+		{
+			if (roles.list[i]==roles.streamingRole)
+				return true;
+		}
+		return false;
+	}
+	
+	roles.setNewRole=function(desiredRole)
+	{
+		switch(desiredRole)
+		{
+			case 'streaming':
+				return roles.user.addRole(roles.streamingRole);
+			default: break;
+		}
+	}
+	roles.removeRole=function(roleToRemove)
+	{
+		switch(roleToRemove)
+		{
+			case 'streaming':
+				return roles.user.removeRole(roles.streamingRole);
+			default: break;
+		}
+	}
+	
+	roles.whatServer=function(serverID)
+	{
+		switch(serverID)
+		{
+			case '263045520358899714':
+				return roles.streamingRole='310767157153759243';
+			case '234740225782317057':
+				return roles.streamingRole='277466738218762241';
+			default: return null;
+		}
+	}
 }
