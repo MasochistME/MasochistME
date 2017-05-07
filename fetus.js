@@ -21,15 +21,16 @@ bot.on('message', message => {
 });
 
 bot.on('presenceUpdate', presence => {
+	var game=presence.frozenPresence.game;
 	var roles=new Roles(presence);
 	roles.whatServer(presence.guild.id);
-	
-	if (presence.frozenPresence.game.url!=null) 
+		
+	if (game && game.url) 
 	{	
 		if (!roles.hasStreamingRole())
 			roles.setNewRole('streaming');
 	}
-	else
+	if (!game || (game && !game.url))
 	{
 		if (roles.hasStreamingRole())
 			roles.removeRole('streaming');
