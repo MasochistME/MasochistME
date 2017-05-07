@@ -21,12 +21,12 @@ bot.on('message', message => {
 });
 
 bot.on('presenceUpdate', presence => {
-	var game=presence.frozenPresence.game;
-	var roles=new Roles(presence);
-	roles.whatServer(presence.guild.id);
-		
+	var roles=new Roles(presence);		
+	var game=presence.frozenPresence.game;	
+	
 	if (game && game.url) 
 	{	
+		console.log(game.url);
 		if (!roles.hasStreamingRole())
 			roles.setNewRole('streaming');
 	}
@@ -152,9 +152,9 @@ function Response(message)
 	{
 		switch(serverID)
 		{
-			case '263045520358899714':
+			case '263045520358899714': //0.1%
 				return response.videoChannel='310035724328239105';
-			case '234740225782317057':
+			case '234740225782317057': //vikmains
 				return response.videoChannel='310735697260707841';
 			default: return null;
 		}
@@ -184,7 +184,7 @@ function Roles(presence)
 	var roles=this;
 	roles.user=presence.guild.member(presence.user.id);
 	roles.list=presence._roles;
-	roles.streamingRole='310767157153759243';
+	roles.streamingRole='277466738218762241'; //for arcytesting, '310767157153759243'; //for 0.1%
 	
 	roles.hasStreamingRole=function()
 	{
@@ -212,18 +212,6 @@ function Roles(presence)
 			case 'streaming':
 				return roles.user.removeRole(roles.streamingRole);
 			default: break;
-		}
-	}
-	
-	roles.whatServer=function(serverID)
-	{
-		switch(serverID)
-		{
-			case '263045520358899714':
-				return roles.streamingRole='310767157153759243';
-			case '234740225782317057':
-				return roles.streamingRole='277466738218762241';
-			default: return null;
 		}
 	}
 }
