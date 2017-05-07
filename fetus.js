@@ -27,6 +27,7 @@ bot.on('presenceUpdate', presence => {
 		
 	if (game && game.url) 
 	{	
+		console.log("Streaming detected - "+game.url+"!");
 		if (!roles.hasStreamingRole())
 			roles.setNewRole('streaming');
 	}
