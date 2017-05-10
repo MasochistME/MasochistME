@@ -42,8 +42,13 @@ exports.Response = function (message, channels) {
         {
             switch (modCommand) {
                 case 'fk':
-                    return response.postMessage('http://i.imgur.com/hpW1uTO.png');
-                default: return null;
+                    {
+                        message.delete()
+                            .then(response.postMessage('http://i.imgur.com/hpW1uTO.png'))
+                            .catch(console.error);
+                        break;
+                    }
+                default: break;
             }
         }
     };
