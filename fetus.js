@@ -12,15 +12,13 @@ bot.on('ready', () => {
 });
 
 bot.on('message', message => {
-	var response=new Response.Response(message, bot.channels);
+	var response=new Response.Response(message, bot.channels, bot.user);
 	response.whatServer(message.channel.guild.id);
 	
 	if (response.hasCommandTrigger())
 		response.toCommand();
 	if (response.hasReactionTrigger())
 		response.toReactionTrigger();
-	if (response.hasStatusChangeTrigger())
-		response.toStatusChangeTrigger();
 });
 
 bot.on('presenceUpdate', presence => {

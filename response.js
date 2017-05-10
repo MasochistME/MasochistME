@@ -1,6 +1,6 @@
 ﻿var RNG = require('./RNG.js');
 
-exports.Response = function (message, channels) {
+exports.Response = function (message, channels, user) {
     var response = this;
 
     response.originalMessage = message.content;
@@ -12,15 +12,10 @@ exports.Response = function (message, channels) {
     response.postMessage = function (messageToPost) { message.channel.send(messageToPost); };
     response.postMessageToChannel = function (messageToPost, channelToPost) { channels.get(channelToPost).send(messageToPost); };
     response.reactToMessage = function (reactionEmoji) { message.react(reactionEmoji); };
-    response.changeStatus = function (newStatus) { bot.user.setGame(newStatus); };
+    response.changeStatus = function (newStatus) { user.setGame(newStatus); };
 
     response.hasCommandTrigger = function () {
         if (response.originalMessage.startsWith('/'))
-            return true;
-        return false;
-    };
-    response.hasStatusChangeTrigger = function () {
-        if (response.originalMessage.startsWith('#'))
             return true;
         return false;
     };
@@ -48,13 +43,16 @@ exports.Response = function (message, channels) {
                             .catch(console.error);
                         break;
                     }
+                case 'status':
+                    {
+                        var newStatus = response.removeKeyword();
+                        response.changeStatus(newStatus);
+                        message.delete(1000);
+                        break;
+                    }
                 default: break;
             }
         }
-    };
-    response.toStatusChangeTrigger = function () {
-        var newStatus = response.originalMessage.slice(1);
-        response.changeStatus(newStatus);
     };
     response.toReactionTrigger = function () {
         for (var i = 0; i < response.arrayOfTriggers.length; i++) {
@@ -86,8 +84,8 @@ exports.Response = function (message, channels) {
     };
     response.toHelp = function () {
         response.postMessage("```List of commands:\n\n" +
-            "- /vid <link>            - posts a video to the video channel\n" +
-            "- /rec <link> <text>     - posts a recommendation with a custom test to the recomendation channel```");
+            "- /vid <link>            - posts a video to the #videos channel\n" +
+            "- /rec <link> <text>     - posts a recommendation with a custom test to the #recommendations channel```");
     };
     response.toTesting = function () {
         console.log('all right!');
@@ -143,6 +141,8 @@ exports.Response = function (message, channels) {
                 return response.toHelp();
             case 'rec':
                 return response.toRecommendation();
+            case 'status':
+                return response.toModCommand('status');
             case 'test':
                 return response.toTesting();
             case 'vid':
