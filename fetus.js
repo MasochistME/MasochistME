@@ -2,8 +2,8 @@ const Discord = require('discord.js');
 const bot = new Discord.Client();
 
 bot.login(process.env.DISCORD_TOKEN);
-var Response = require('./response.js');
-var Roles = require('./roles.js');
+var Response = require('./classes/response.js');
+var Roles = require('./classes/roles.js');
 
 
 bot.on('ready', () => {

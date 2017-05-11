@@ -1,6 +1,6 @@
 {
   "name": "drfetus",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Custom Discord bot.",
   "main": "fetus.js",
   "dependencies": {
@@ -15,10 +15,14 @@
     "url": "git+https://github.com/Arcyvilk/DrFetus.git"
   },
   "keywords": [
+    "dr",
     "fetus",
-    "smb",
     "discord",
-    "bot"
+    "bot",
+    "smb",
+    "super",
+    "meat",
+    "boy"
   ],
   "author": "Arcyvilk",
   "license": "ISC",
