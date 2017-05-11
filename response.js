@@ -2,6 +2,7 @@
 
 exports.Response = function (message, channels, user) {
     var response = this;
+    var rng = new RNG.RNG();
 
     response.originalMessage = message.content;
     response.originalAuthor = message.author;
@@ -71,13 +72,12 @@ exports.Response = function (message, channels, user) {
     };
     response.toRecommendation = function () {
         var linkAndText = response.removeKeyword().trim();
-        var rng = new RNG.RNG();
         message.delete(5000);
         if (response.isLink(linkAndText))
         {
             if (linkAndText.indexOf(' ') === -1) //no text
                 return response.postMessageToChannel("\"_"+response.arrayOfFetus[rng.chooseRandom(response.arrayOfFetus.length)] + "_\" - @Dr. Fetus\n" + linkAndText + " - " + response.originalAuthor, response.recChannel);
-            response.postMessageToChannel(response.splitStringBySymbol(linkAndText, ' ')[0] + " - \"_" + response.splitStringBySymbol(linkAndText, ' ')[1] +
+            response.postMessageToChannel(response.subStringBySymbol(linkAndText, ' ')[0] + " - \"_" + response.subtStringBySymbol(linkAndText, ' ')[1] +
                                             "_\" - " + response.originalAuthor,
                                             response.recChannel);
         }
@@ -85,7 +85,58 @@ exports.Response = function (message, channels, user) {
     response.toHelp = function () {
         response.postMessage("```List of commands:\n\n" +
             "- /vid <link>            - posts a video to the #videos channel\n" +
-            "- /rec <link> <text>     - posts a recommendation with a custom test to the #recommendations channel```");
+            "- /rec <link> <text>     - posts a recommendation with a custom text to the #recommendations channel```");
+    };
+    response.toKeyword = function () {
+        for (var i = 0; i < response.listOfKeywordsAndChanceToReact().length; i++)
+        {
+            if (!response.originalMessage.includes('|') && response.originalMessage.toLowerCase().includes(response.listOfKeywordsAndChanceToReact()[i][0])) {
+                if (rng.happensWithAChanceOf(response.listOfKeywordsAndChanceToReact()[i][2]))
+                    return response.postMessage(response.listOfKeywordsAndChanceToReact()[i][1]);
+            }
+        }
+    };
+    response.toFuck = function () {
+        var object = response.originalMessage.substring(response.originalMessage.indexOf('fuck') + 5).toLowerCase().trim();
+        if (object.indexOf(' ') !== -1)
+            object = object.substring(0, object.indexOf(' '));
+        switch (object)
+        {
+            case 'you':
+            case 'you.':
+            case 'you!':
+                {
+                    object = 'them!';
+                    break;
+                }
+            case 'me':
+            case 'me!':
+            case 'me.':
+                {
+                    object = 'you!';
+                    break;
+                }
+            case 'arcy':
+            case 'arcy!':
+            case 'arcy.':
+                {
+                    object = '... Or not. That\'s not very nice.';
+                    break;
+                }
+            case 'fetus':
+            case 'fetus!':
+            case 'fetus.':
+                {
+                    object = 'fetus! ...wait _what_.';
+                    break;
+                }
+            default:
+                {
+                    object += '!';
+                    break;
+                }
+        }
+        return 'Yeah! Fuck ' + object;
     };
     response.toTesting = function () {
         console.log('all right!');
@@ -104,12 +155,14 @@ exports.Response = function (message, channels, user) {
         content = content.slice(content.indexOf(' ')).trim();
         return content;
     };
-    response.splitStringBySymbol = function (input, symbol) {
+    response.subStringBySymbol = function (input, symbol) {
         var first = input.substring(0, input.indexOf(symbol)).trim();
         var second = input.substring(input.indexOf(symbol)).trim();
         return [first, second];
     };
-
+    response.splitStringBySymbol = function (input, symbol) {
+        return input.split(symbol);
+    };
         //arrays
     response.whatServer = function (serverID) {
         switch (serverID) {
@@ -149,5 +202,9 @@ exports.Response = function (message, channels, user) {
                 return response.toVideoLink();
             default: return null;
         }
+    };
+    response.listOfKeywordsAndChanceToReact = function () {
+        return [['fuck ', response.toFuck(), 40],
+            ['hello', 'o/', 2]];
     };
 };
