@@ -77,7 +77,7 @@ exports.Response = function (message, channels, user) {
         {
             if (linkAndText.indexOf(' ') === -1) //no text
                 return response.postMessageToChannel("\"_"+response.arrayOfFetus[rng.chooseRandom(response.arrayOfFetus.length)] + "_\" - @Dr. Fetus\n" + linkAndText + " - " + response.originalAuthor, response.recChannel);
-            response.postMessageToChannel(response.subStringBySymbol(linkAndText, ' ')[0] + " - \"_" + response.subtStringBySymbol(linkAndText, ' ')[1] +
+            response.postMessageToChannel(response.subStringBySymbol(linkAndText, ' ')[0] + " - \"_" + response.subStringBySymbol(linkAndText, ' ')[1] +
                                             "_\" - " + response.originalAuthor,
                                             response.recChannel);
         }
