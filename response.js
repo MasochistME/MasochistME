@@ -38,22 +38,17 @@ exports.Response = function (message, channels, user) {
         {
             switch (modCommand) {
                 case 'fk':
-                    {
-                        message.delete()
-                            .then(response.postMessage('http://i.imgur.com/hpW1uTO.png'))
-                            .catch(console.error);
-                        break;
-                    }
+                    return response.postMessage('http://i.imgur.com/hpW1uTO.png');
                 case 'status':
                     {
                         var newStatus = response.removeKeyword();
-                        response.changeStatus(newStatus);
-                        message.delete(1000);
-                        break;
+                        return response.changeStatus(newStatus);
                     }
                 default: break;
             }
         }
+        else
+            return message.author.send('```You aren\'t allowed to use this command because you ain\'t cool enough.```');
     };
     response.toReactionTrigger = function () {
         for (var i = 0; i < response.arrayOfTriggers.length; i++) {
@@ -63,16 +58,15 @@ exports.Response = function (message, channels, user) {
     };
     response.toCommand = function () {
         response.listOfCommands(response.extractKeyword());
+        message.delete(3000);
     };
     response.toVideoLink = function () {
         var linkToVid = response.removeKeyword();
         if (response.isLink(linkToVid))
             response.postMessageToChannel(linkToVid + " " + response.originalAuthor, response.videoChannel);
-        message.delete(5000);
     };
     response.toRecommendation = function () {
         var linkAndText = response.removeKeyword().trim();
-        message.delete(5000);
         if (response.isLink(linkAndText))
         {
             if (linkAndText.indexOf(' ') === -1) //no text
@@ -178,7 +172,7 @@ exports.Response = function (message, channels, user) {
                     response.recChannel = '310735697260707841';
                     break;
                 }
-            default: return null;
+            default: return null; //zrobić tu żeby zwracało DM bota kiedy się gada z nim przez DM
         }
     };
     response.arrayOfTriggers = [['Ⓜ', ':mm:310140119606886421']];

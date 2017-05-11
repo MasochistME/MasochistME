@@ -12,16 +12,25 @@ bot.on('ready', () => {
 });
 
 bot.on('message', message => {
-	var response=new Response.Response(message, bot.channels, bot.user);
-	response.whatServer(message.channel.guild.id);
+    var response = new Response.Response(message, bot.channels, bot.user);
+    try {
+        response.whatServer(message.channel.guild.id);
+    }
+    catch (err) {
+        console.log('\n\n!!! PROBABLY DM PROBLEM !!!\n\n'+err);
+    }
 
-    if (message.author.id !== bot.user.id)
-    {
-        if (response.hasReactionTrigger())
-            response.toReactionTrigger();
-        if (response.hasCommandTrigger())
-            return response.toCommand();
-        return response.toKeyword();
+    try {
+        if (message.author.id !== bot.user.id) {
+            if (response.hasReactionTrigger())
+                response.toReactionTrigger();
+            if (response.hasCommandTrigger())
+                return response.toCommand();
+            return response.toKeyword();
+        }
+    }
+    catch (err) {
+        console.log('\n\n!!! SOME BIGGER BUG !!!\n\n'+err);
     }
 });
 
