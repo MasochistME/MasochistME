@@ -136,6 +136,9 @@
     <Folder Include="node_modules\ws\lib\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="classes\stream.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="classes\response.js" />
     <Compile Include="classes\RNG.js" />
     <Compile Include="classes\roles.js" />

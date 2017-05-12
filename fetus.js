@@ -40,8 +40,8 @@ bot.on('presenceUpdate', (oldMember, newMember) => {
     var stream = new Stream.Stream(newMember);
     var game = newMember.presence.game;
     
-	if (game && game.url && !roles.userHasRole('Live Stream'))
+	if (game && game.url)
         stream.addStreamingRoleIfTheyDontHaveItYet();
-	if ((!game || (game && !game.url)) && roles.userHasRole('Live Stream'))
+	if (!game || (game && !game.url))
         stream.removeStreamingRoleIfTheyStoppedStreaming();
 });
