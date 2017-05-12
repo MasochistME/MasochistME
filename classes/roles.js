@@ -1,28 +1,30 @@
-exports.Roles = function (presence) {
+exports.Roles = function (member) {
     var roles = this;
-    roles.user = presence.guild.member(presence.user.id);
-    roles.list = presence._roles;
-    roles.streamingRole = '310767157153759243'; //'310767157153759243'; //for 0.1%
+    roles.user = member.id;
 
-    roles.hasStreamingRole = function () {
-        for (var i = 0; i < roles.list.length; i++) {
-            if (roles.list[i] === roles.streamingRole)
-                return true;
+    roles.returnRoleIDIfExists = function (roleName) {
+        try {
+            return member.guild.roles.find('name', roleName).id;
         }
+        catch (err) {
+            console.log(`${roleName} role doesn't exist in the ${member.guild.name} server. ${err}`);
+            return null;
+        }
+    };
+    roles.userHasRole = function (roleName) {
+        if (member.roles.has(roles.returnRoleIDIfExists(roleName)))
+            return true;
         return false;
     };
-    roles.setNewRole = function (desiredRole) {
-        switch (desiredRole) {
-            case 'streaming':
-                return roles.user.addRole(roles.streamingRole);
-            default: break;
-        }
+
+    roles.addRoleToUser = function (roleName) {
+        member.addRole(roles.returnRoleIDIfExists(roleName))
+            .then(console.log(`${roleName} succesfully added to the ${member.user.username} user!`))
+            .catch(console.error);
     };
-    roles.removeRole = function (roleToRemove) {
-        switch (roleToRemove) {
-            case 'streaming':
-                return roles.user.removeRole(roles.streamingRole);
-            default: break;
-        }
+    roles.removeRoleFromUser = function (roleName) {
+        member.removeRole(roles.returnRoleIDIfExists(roleName))
+            .then(console.log(`${roleName} succesfully removed from the ${member.user.username} user!`))
+            .catch(console.error);
     };
 };

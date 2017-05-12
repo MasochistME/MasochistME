@@ -4,6 +4,7 @@ const bot = new Discord.Client();
 bot.login(process.env.DISCORD_TOKEN);
 var Response = require('./classes/response.js');
 var Roles = require('./classes/roles.js');
+var Stream = require('./classes/stream.js');
 
 
 bot.on('ready', () => {
@@ -34,19 +35,13 @@ bot.on('message', message => {
     }
 });
 
-bot.on('presenceUpdate', presence => {
-	var roles=new Roles.Roles(presence);		
-	var game=presence.frozenPresence.game;	
-	
-	if (game && game.url) 
-	{	
-		console.log(game.url);
-		if (!roles.hasStreamingRole())
-			roles.setNewRole('streaming');
-	}
-	if (!game || (game && !game.url))
-	{
-		if (roles.hasStreamingRole())
-			roles.removeRole('streaming');
-	}
+bot.on('presenceUpdate', (oldMember, newMember) => {
+    var roles = new Roles.Roles(newMember);
+    var stream = new Stream.Stream(newMember);
+    var game = newMember.presence.game;
+    
+	if (game && game.url && !roles.userHasRole('Live Stream'))
+        stream.addStreamingRoleIfTheyDontHaveItYet();
+	if ((!game || (game && !game.url)) && roles.userHasRole('Live Stream'))
+        stream.removeStreamingRoleIfTheyStoppedStreaming();
 });

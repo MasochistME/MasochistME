@@ -1,0 +1,2 @@
+X:\Programowanko\DrFetus\DrFetus\obj\Debug\DrFetus.njsprojResolveAssemblyReference.cache
+X:\Programowanko\DrFetus\DrFetus\bin\Microsoft.NodejsTools.WebRole.dll

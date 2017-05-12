@@ -1,0 +1,337 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <Name>DrFetus</Name>
+    <RootNamespace>DrFetus</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>db537108-2dff-4aae-ad12-9fcc9c8c59a1</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>fetus.js</StartupFile>
+    <StartWebBrowser>False</StartWebBrowser>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+    <StartWebBrowser>false</StartWebBrowser>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include=".gitattributes" />
+    <Content Include=".gitignore" />
+    <Content Include="drfetus.png" />
+    <Content Include="node_modules\discord.js\.gitmodules" />
+    <Content Include="node_modules\discord.js\.npmignore" />
+    <Content Include="node_modules\discord.js\.tern-project" />
+    <Content Include="node_modules\discord.js\LICENSE" />
+    <Content Include="node_modules\discord.js\package.json" />
+    <Content Include="node_modules\discord.js\README.md" />
+    <Content Include="node_modules\discord.js\typings\LICENSE" />
+    <Content Include="node_modules\discord.js\typings\package.json" />
+    <Content Include="node_modules\discord.js\typings\README.md" />
+    <Content Include="node_modules\discord.js\typings\tsconfig.json" />
+    <Content Include="node_modules\discord.js\typings\tslint.json" />
+    <Content Include="node_modules\long\.npmignore" />
+    <Content Include="node_modules\long\.travis.yml" />
+    <Content Include="node_modules\long\bower.json" />
+    <Content Include="node_modules\long\dist\long.min.js.gz" />
+    <Content Include="node_modules\long\dist\long.min.map" />
+    <Content Include="node_modules\long\dist\README.md" />
+    <Content Include="node_modules\long\doco\INDEX.md" />
+    <Content Include="node_modules\long\doco\Long.md" />
+    <Content Include="node_modules\long\donate.png" />
+    <Content Include="node_modules\long\jsdoc.json" />
+    <Content Include="node_modules\long\LICENSE" />
+    <Content Include="node_modules\long\long.png" />
+    <Content Include="node_modules\long\package.json" />
+    <Content Include="node_modules\long\README.md" />
+    <Content Include="node_modules\long\src\bower.json" />
+    <Content Include="node_modules\prism-media\.eslintrc.json" />
+    <Content Include="node_modules\prism-media\.npmignore" />
+    <Content Include="node_modules\prism-media\.travis.yml" />
+    <Content Include="node_modules\prism-media\LICENSE" />
+    <Content Include="node_modules\prism-media\package.json" />
+    <Content Include="node_modules\prism-media\README.md" />
+    <Content Include="node_modules\safe-buffer\.travis.yml" />
+    <Content Include="node_modules\safe-buffer\LICENSE" />
+    <Content Include="node_modules\safe-buffer\package.json" />
+    <Content Include="node_modules\safe-buffer\README.md" />
+    <Content Include="node_modules\snekfetch\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="node_modules\snekfetch\.github\PULL_REQUEST_TEMPLATE.md" />
+    <Content Include="node_modules\snekfetch\.npmignore" />
+    <Content Include="node_modules\snekfetch\package.json" />
+    <Content Include="node_modules\snekfetch\README.md" />
+    <Content Include="node_modules\snekfetch\src\mimes.json" />
+    <Content Include="node_modules\tweetnacl\.npmignore" />
+    <Content Include="node_modules\tweetnacl\AUTHORS.md" />
+    <Content Include="node_modules\tweetnacl\CHANGELOG.md" />
+    <Content Include="node_modules\tweetnacl\LICENSE" />
+    <Content Include="node_modules\tweetnacl\package.json" />
+    <Content Include="node_modules\tweetnacl\PULL_REQUEST_TEMPLATE.md" />
+    <Content Include="node_modules\tweetnacl\README.md" />
+    <Content Include="node_modules\ultron\LICENSE" />
+    <Content Include="node_modules\ultron\package.json" />
+    <Content Include="node_modules\ws\LICENSE" />
+    <Content Include="node_modules\ws\package.json" />
+    <Content Include="node_modules\ws\README.md" />
+    <Content Include="package.json" />
+    <Content Include="Procfile" />
+    <Content Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="classes\" />
+    <Folder Include="node_modules\" />
+    <Folder Include="node_modules\discord.js\" />
+    <Folder Include="node_modules\discord.js\src\" />
+    <Folder Include="node_modules\discord.js\src\client\" />
+    <Folder Include="node_modules\discord.js\src\client\actions\" />
+    <Folder Include="node_modules\discord.js\src\client\rest\" />
+    <Folder Include="node_modules\discord.js\src\client\rest\RequestHandlers\" />
+    <Folder Include="node_modules\discord.js\src\client\voice\" />
+    <Folder Include="node_modules\discord.js\src\client\voice\dispatcher\" />
+    <Folder Include="node_modules\discord.js\src\client\voice\opus\" />
+    <Folder Include="node_modules\discord.js\src\client\voice\player\" />
+    <Folder Include="node_modules\discord.js\src\client\voice\receiver\" />
+    <Folder Include="node_modules\discord.js\src\client\voice\util\" />
+    <Folder Include="node_modules\discord.js\src\client\websocket\" />
+    <Folder Include="node_modules\discord.js\src\client\websocket\packets\" />
+    <Folder Include="node_modules\discord.js\src\client\websocket\packets\handlers\" />
+    <Folder Include="node_modules\discord.js\src\sharding\" />
+    <Folder Include="node_modules\discord.js\src\structures\" />
+    <Folder Include="node_modules\discord.js\src\structures\interfaces\" />
+    <Folder Include="node_modules\discord.js\src\util\" />
+    <Folder Include="node_modules\discord.js\typings\" />
+    <Folder Include="node_modules\long\" />
+    <Folder Include="node_modules\long\dist\" />
+    <Folder Include="node_modules\long\doco\" />
+    <Folder Include="node_modules\long\externs\" />
+    <Folder Include="node_modules\long\scripts\" />
+    <Folder Include="node_modules\long\src\" />
+    <Folder Include="node_modules\long\tests\" />
+    <Folder Include="node_modules\prism-media\" />
+    <Folder Include="node_modules\prism-media\src\" />
+    <Folder Include="node_modules\prism-media\src\transcoders\" />
+    <Folder Include="node_modules\prism-media\src\transcoders\ffmpeg\" />
+    <Folder Include="node_modules\prism-media\src\util\" />
+    <Folder Include="node_modules\prism-media\test\" />
+    <Folder Include="node_modules\safe-buffer\" />
+    <Folder Include="node_modules\snekfetch\" />
+    <Folder Include="node_modules\snekfetch\.github\" />
+    <Folder Include="node_modules\snekfetch\src\" />
+    <Folder Include="node_modules\snekfetch\test\" />
+    <Folder Include="node_modules\tweetnacl\" />
+    <Folder Include="node_modules\ultron\" />
+    <Folder Include="node_modules\ws\" />
+    <Folder Include="node_modules\ws\lib\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="classes\response.js" />
+    <Compile Include="classes\RNG.js" />
+    <Compile Include="classes\roles.js" />
+    <Compile Include="fetus.js" />
+    <Compile Include="node_modules\discord.js\src\client\actions\Action.js" />
+    <Compile Include="node_modules\discord.js\src\client\actions\ActionsManager.js" />
+    <Compile Include="node_modules\discord.js\src\client\actions\ChannelCreate.js" />
+    <Compile Include="node_modules\discord.js\src\client\actions\ChannelDelete.js" />
+    <Compile Include="node_modules\discord.js\src\client\actions\ChannelUpdate.js" />
+    <Compile Include="node_modules\discord.js\src\client\actions\GuildBanRemove.js" />
+    <Compile Include="node_modules\discord.js\src\client\actions\GuildChannelsPositionUpdate.js" />
+    <Compile Include="node_modules\discord.js\src\client\actions\GuildDelete.js" />
+    <Compile Include="node_modules\discord.js\src\client\actions\GuildEmojiCreate.js" />
+    <Compile Include="node_modules\discord.js\src\client\actions\GuildEmojiDelete.js" />
+    <Compile Include="node_modules\discord.js\src\client\actions\GuildEmojisUpdate.js" />
+    <Compile Include="node_modules\discord.js\src\client\actions\GuildEmojiUpdate.js" />
+    <Compile Include="node_modules\discord.js\src\client\actions\GuildMemberGet.js" />
+    <Compile Include="node_modules\discord.js\src\client\actions\GuildMemberRemove.js" />
+    <Compile Include="node_modules\discord.js\src\client\actions\GuildRoleCreate.js" />
+    <Compile Include="node_modules\discord.js\src\client\actions\GuildRoleDelete.js" />
+    <Compile Include="node_modules\discord.js\src\client\actions\GuildRolesPositionUpdate.js" />
+    <Compile Include="node_modules\discord.js\src\client\actions\GuildRoleUpdate.js" />
+    <Compile Include="node_modules\discord.js\src\client\actions\GuildSync.js" />
+    <Compile Include="node_modules\discord.js\src\client\actions\GuildUpdate.js" />
+    <Compile Include="node_modules\discord.js\src\client\actions\MessageCreate.js" />
+    <Compile Include="node_modules\discord.js\src\client\actions\MessageDelete.js" />
+    <Compile Include="node_modules\discord.js\src\client\actions\MessageDeleteBulk.js" />
+    <Compile Include="node_modules\discord.js\src\client\actions\MessageReactionAdd.js" />
+    <Compile Include="node_modules\discord.js\src\client\actions\MessageReactionRemove.js" />
+    <Compile Include="node_modules\discord.js\src\client\actions\MessageReactionRemoveAll.js" />
+    <Compile Include="node_modules\discord.js\src\client\actions\MessageUpdate.js" />
+    <Compile Include="node_modules\discord.js\src\client\actions\UserGet.js" />
+    <Compile Include="node_modules\discord.js\src\client\actions\UserNoteUpdate.js" />
+    <Compile Include="node_modules\discord.js\src\client\actions\UserUpdate.js" />
+    <Compile Include="node_modules\discord.js\src\client\Client.js" />
+    <Compile Include="node_modules\discord.js\src\client\ClientDataManager.js" />
+    <Compile Include="node_modules\discord.js\src\client\ClientDataResolver.js" />
+    <Compile Include="node_modules\discord.js\src\client\ClientManager.js" />
+    <Compile Include="node_modules\discord.js\src\client\rest\APIRequest.js" />
+    <Compile Include="node_modules\discord.js\src\client\rest\DiscordAPIError.js" />
+    <Compile Include="node_modules\discord.js\src\client\rest\RequestHandlers\Burst.js" />
+    <Compile Include="node_modules\discord.js\src\client\rest\RequestHandlers\RequestHandler.js" />
+    <Compile Include="node_modules\discord.js\src\client\rest\RequestHandlers\Sequential.js" />
+    <Compile Include="node_modules\discord.js\src\client\rest\RESTManager.js" />
+    <Compile Include="node_modules\discord.js\src\client\rest\RESTMethods.js" />
+    <Compile Include="node_modules\discord.js\src\client\rest\UserAgentManager.js" />
+    <Compile Include="node_modules\discord.js\src\client\voice\ClientVoiceManager.js" />
+    <Compile Include="node_modules\discord.js\src\client\voice\dispatcher\StreamDispatcher.js" />
+    <Compile Include="node_modules\discord.js\src\client\voice\opus\BaseOpusEngine.js" />
+    <Compile Include="node_modules\discord.js\src\client\voice\opus\NodeOpusEngine.js" />
+    <Compile Include="node_modules\discord.js\src\client\voice\opus\OpusEngineList.js" />
+    <Compile Include="node_modules\discord.js\src\client\voice\opus\OpusScriptEngine.js" />
+    <Compile Include="node_modules\discord.js\src\client\voice\player\AudioPlayer.js" />
+    <Compile Include="node_modules\discord.js\src\client\voice\receiver\VoiceReadable.js" />
+    <Compile Include="node_modules\discord.js\src\client\voice\receiver\VoiceReceiver.js" />
+    <Compile Include="node_modules\discord.js\src\client\voice\util\Secretbox.js" />
+    <Compile Include="node_modules\discord.js\src\client\voice\util\SecretKey.js" />
+    <Compile Include="node_modules\discord.js\src\client\voice\util\VolumeInterface.js" />
+    <Compile Include="node_modules\discord.js\src\client\voice\VoiceBroadcast.js" />
+    <Compile Include="node_modules\discord.js\src\client\voice\VoiceConnection.js" />
+    <Compile Include="node_modules\discord.js\src\client\voice\VoiceUDPClient.js" />
+    <Compile Include="node_modules\discord.js\src\client\voice\VoiceWebSocket.js" />
+    <Compile Include="node_modules\discord.js\src\client\WebhookClient.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\AbstractHandler.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\ChannelCreate.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\ChannelDelete.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\ChannelPinsUpdate.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\ChannelUpdate.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\GuildBanAdd.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\GuildBanRemove.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\GuildCreate.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\GuildDelete.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\GuildEmojisUpdate.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\GuildMemberAdd.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\GuildMemberRemove.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\GuildMembersChunk.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\GuildMemberUpdate.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\GuildRoleCreate.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\GuildRoleDelete.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\GuildRoleUpdate.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\GuildSync.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\GuildUpdate.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\MessageCreate.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\MessageDelete.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\MessageDeleteBulk.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\MessageReactionAdd.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\MessageReactionRemove.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\MessageReactionRemoveAll.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\MessageUpdate.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\PresenceUpdate.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\Ready.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\RelationshipAdd.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\RelationshipRemove.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\Resumed.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\TypingStart.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\UserNoteUpdate.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\UserSettingsUpdate.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\UserUpdate.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\VoiceServerUpdate.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\handlers\VoiceStateUpdate.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\packets\WebSocketPacketManager.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\WebSocketConnection.js" />
+    <Compile Include="node_modules\discord.js\src\client\websocket\WebSocketManager.js" />
+    <Compile Include="node_modules\discord.js\src\index.js" />
+    <Compile Include="node_modules\discord.js\src\sharding\Shard.js" />
+    <Compile Include="node_modules\discord.js\src\sharding\ShardClientUtil.js" />
+    <Compile Include="node_modules\discord.js\src\sharding\ShardingManager.js" />
+    <Compile Include="node_modules\discord.js\src\structures\Channel.js" />
+    <Compile Include="node_modules\discord.js\src\structures\ClientUser.js" />
+    <Compile Include="node_modules\discord.js\src\structures\ClientUserSettings.js" />
+    <Compile Include="node_modules\discord.js\src\structures\DMChannel.js" />
+    <Compile Include="node_modules\discord.js\src\structures\Emoji.js" />
+    <Compile Include="node_modules\discord.js\src\structures\GroupDMChannel.js" />
+    <Compile Include="node_modules\discord.js\src\structures\Guild.js" />
+    <Compile Include="node_modules\discord.js\src\structures\GuildAuditLogs.js" />
+    <Compile Include="node_modules\discord.js\src\structures\GuildChannel.js" />
+    <Compile Include="node_modules\discord.js\src\structures\GuildMember.js" />
+    <Compile Include="node_modules\discord.js\src\structures\interfaces\Collector.js" />
+    <Compile Include="node_modules\discord.js\src\structures\interfaces\TextBasedChannel.js" />
+    <Compile Include="node_modules\discord.js\src\structures\Invite.js" />
+    <Compile Include="node_modules\discord.js\src\structures\Message.js" />
+    <Compile Include="node_modules\discord.js\src\structures\MessageAttachment.js" />
+    <Compile Include="node_modules\discord.js\src\structures\MessageCollector.js" />
+    <Compile Include="node_modules\discord.js\src\structures\MessageEmbed.js" />
+    <Compile Include="node_modules\discord.js\src\structures\MessageMentions.js" />
+    <Compile Include="node_modules\discord.js\src\structures\MessageReaction.js" />
+    <Compile Include="node_modules\discord.js\src\structures\OAuth2Application.js" />
+    <Compile Include="node_modules\discord.js\src\structures\PartialGuild.js" />
+    <Compile Include="node_modules\discord.js\src\structures\PartialGuildChannel.js" />
+    <Compile Include="node_modules\discord.js\src\structures\PermissionOverwrites.js" />
+    <Compile Include="node_modules\discord.js\src\structures\Presence.js" />
+    <Compile Include="node_modules\discord.js\src\structures\ReactionCollector.js" />
+    <Compile Include="node_modules\discord.js\src\structures\ReactionEmoji.js" />
+    <Compile Include="node_modules\discord.js\src\structures\RichEmbed.js" />
+    <Compile Include="node_modules\discord.js\src\structures\Role.js" />
+    <Compile Include="node_modules\discord.js\src\structures\TextChannel.js" />
+    <Compile Include="node_modules\discord.js\src\structures\User.js" />
+    <Compile Include="node_modules\discord.js\src\structures\UserConnection.js" />
+    <Compile Include="node_modules\discord.js\src\structures\UserProfile.js" />
+    <Compile Include="node_modules\discord.js\src\structures\VoiceChannel.js" />
+    <Compile Include="node_modules\discord.js\src\structures\VoiceRegion.js" />
+    <Compile Include="node_modules\discord.js\src\structures\Webhook.js" />
+    <Compile Include="node_modules\discord.js\src\util\Collection.js" />
+    <Compile Include="node_modules\discord.js\src\util\Constants.js" />
+    <Compile Include="node_modules\discord.js\src\util\Permissions.js" />
+    <Compile Include="node_modules\discord.js\src\util\Snowflake.js" />
+    <Compile Include="node_modules\discord.js\src\util\Util.js" />
+    <Compile Include="node_modules\long\dist\long.js" />
+    <Compile Include="node_modules\long\dist\long.min.js" />
+    <Compile Include="node_modules\long\externs\long.js" />
+    <Compile Include="node_modules\long\index.js" />
+    <Compile Include="node_modules\long\scripts\build.js" />
+    <Compile Include="node_modules\long\src\long.js" />
+    <Compile Include="node_modules\long\src\wrap.js" />
+    <Compile Include="node_modules\long\tests\goog.math.long.js" />
+    <Compile Include="node_modules\long\tests\suite.js" />
+    <Compile Include="node_modules\prism-media\src\index.js" />
+    <Compile Include="node_modules\prism-media\src\Prism.js" />
+    <Compile Include="node_modules\prism-media\src\transcoders\ffmpeg\Ffmpeg.js" />
+    <Compile Include="node_modules\prism-media\src\transcoders\ffmpeg\FfmpegProcess.js" />
+    <Compile Include="node_modules\prism-media\src\transcoders\MediaTranscoder.js" />
+    <Compile Include="node_modules\prism-media\src\util\Constants.js" />
+    <Compile Include="node_modules\prism-media\test\main.js" />
+    <Compile Include="node_modules\safe-buffer\browser.js" />
+    <Compile Include="node_modules\safe-buffer\index.js" />
+    <Compile Include="node_modules\safe-buffer\test.js" />
+    <Compile Include="node_modules\snekfetch\index.js" />
+    <Compile Include="node_modules\snekfetch\src\FormData.js" />
+    <Compile Include="node_modules\snekfetch\src\index.js" />
+    <Compile Include="node_modules\snekfetch\src\mime.js" />
+    <Compile Include="node_modules\snekfetch\src\mimeOfBuffer.js" />
+    <Compile Include="node_modules\snekfetch\test\test.js" />
+    <Compile Include="node_modules\tweetnacl\nacl-fast.js" />
+    <Compile Include="node_modules\tweetnacl\nacl-fast.min.js" />
+    <Compile Include="node_modules\tweetnacl\nacl.js" />
+    <Compile Include="node_modules\tweetnacl\nacl.min.js" />
+    <Compile Include="node_modules\ultron\index.js" />
+    <Compile Include="node_modules\ws\index.js" />
+    <Compile Include="node_modules\ws\lib\BufferUtil.js" />
+    <Compile Include="node_modules\ws\lib\Constants.js" />
+    <Compile Include="node_modules\ws\lib\ErrorCodes.js" />
+    <Compile Include="node_modules\ws\lib\EventTarget.js" />
+    <Compile Include="node_modules\ws\lib\Extensions.js" />
+    <Compile Include="node_modules\ws\lib\PerMessageDeflate.js" />
+    <Compile Include="node_modules\ws\lib\Receiver.js" />
+    <Compile Include="node_modules\ws\lib\Sender.js" />
+    <Compile Include="node_modules\ws\lib\Validation.js" />
+    <Compile Include="node_modules\ws\lib\WebSocket.js" />
+    <Compile Include="node_modules\ws\lib\WebSocketServer.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="node_modules\discord.js\typings\discord.js-test.ts" />
+    <TypeScriptCompile Include="node_modules\discord.js\typings\index.d.ts" />
+    <TypeScriptCompile Include="node_modules\tweetnacl\nacl.d.ts" />
+  </ItemGroup>
+  <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
+  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsTools.targets" />
+</Project>
