@@ -15,7 +15,6 @@ bot.on('ready', () => {
 
 bot.on('message', message => {
     var data = new Data.Data(message, bot); //poprzez date podawac dalej wszystkie message, bot, ID etc
-    var response = new Response.Response(data);
     try {
         data.whatServer(message.channel.guild.id);
     }
@@ -25,6 +24,8 @@ bot.on('message', message => {
 
     try {
         if (message.author.id !== bot.user.id) {
+            var response = new Response.Response(data);
+
             if (message.channel.id==response.database)
                 return message.delete();
             response.toEmoteReactionTrigger();

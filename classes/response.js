@@ -21,6 +21,11 @@ exports.Response = function (data) {
             return true;
         return false;
     };
+    response.userAllowedToUseCommand = function (cmd) {
+        if (cmd.isModCommand && !response.userIsAMod())
+            return false;
+        return true;
+    };
     response.toEmoteReactionTrigger = function () {
         for (property in command.listOfEmoteReactionTriggers) {
             if (data.message.content.indexOf(property) != -1)
@@ -29,28 +34,26 @@ exports.Response = function (data) {
     };
     response.toCommand = function () {
         var keyword = input.extractKeyword(data.message.content);
+        data.message.delete(5000);
 
-        if (command.listOfTextResponses.hasOwnProperty(keyword)) {
-            if (command.listOfTextResponses[keyword].modCommand && !response.userIsAMod()) //check for mod
-            {
-                data.message.delete(3000);
-                return data.message.author.send('```You aren\'t allowed to use this command because you ain\'t cool enough.```'); // use the new post() class
-            }
-            post.message(command.listOfTextResponses[keyword].textResponse);
-        }
+        if (command.listOfTextResponses.hasOwnProperty(keyword))
+            return response.isTextResponse(command.listOfTextResponses[keyword]);
         if (command.listOfFunctionResponses.hasOwnProperty(keyword))
-        {
-            if (command.listOfFunctionResponses[keyword].modCommand && data.message.author.id !== '205755033210454016') //check for mod
-            {
-                data.message.delete(3000);
-                return data.message.author.send('```You aren\'t allowed to use this command because you ain\'t cool enough.```'); // use the new post() class
-            }
-            var functionName = command.listOfFunctionResponses[keyword].triggers;
-            var arguments = command.listOfFunctionResponses[keyword].arguments;
-            response[functionName](arguments);
-        }
-        data.message.delete(3000);
+            return response.isFunctionResponse(command.listOfFunctionResponses[keyword]);
     };
+    response.isTextResponse = function (cmd) {
+        if (!response.userAllowedToUseCommand(cmd))
+            return data.message.author.send('```You aren\'t allowed to use this command because you ain\'t cool enough.```'); // use the new post() class
+        if (!cmd.hasOwnProperty('postInChannel'))
+            return post.message(cmd.textResponse);
+        post.messageToChannel(cmd.textResponse, cmd.postInChannel);
+    };
+    response.isFunctionResponse = function (cmd) {
+        if (!response.userAllowedToUseCommand(cmd))
+            return data.message.author.send('```You aren\'t allowed to use this command because you ain\'t cool enough.```'); // use the new post() class
+        response[cmd.triggers](cmd.arguments);
+    };
+
     response.toKeyword = function () {
         for (property in command.listOfKeywords) {
             if (data.message.content.indexOf(property) != -1) {

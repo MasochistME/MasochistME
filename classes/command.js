@@ -1,12 +1,8 @@
-﻿var Post = require('./post.js');
-var Input = require('./input.js');
-var RNG = require('./RNG.js');
+﻿var Input = require('./input.js');
 
 exports.Command = function (data) {
     var command = this;
-    var post = new Post.Post(data);
     var input = new Input.Input();
-    var rng = new RNG.RNG();
 
     //TEXT RESPONSES
     command.help = "```List of commands:\n\n" +
@@ -17,44 +13,51 @@ exports.Command = function (data) {
     command.listOfTextResponses = {
         'test': {
             textResponse: command.test,
-            modCommand: true
+            isModCommand: true
         },
         'fk': {
             textResponse: 'http://i.imgur.com/hpW1uTO.png',
-            modCommand: true,
+            isModCommand: true,
         },
         'h': {
             textResponse: command.help,
-            modCommand: false,
+            isModCommand: false,
             title: 'List of commands'
         },
         'help': {
             textResponse: command.help,
-            modCommand: false,
+            isModCommand: false,
             title: 'List of commands'
+        },
+        'impersonate': {
+            textResponse: input.removeKeyword(data.message.content),
+            isModCommand: false,
+            postInChannel: data.genChannel
         }
     };
     command.listOfFunctionResponses = {
         
         //'follow': {
         //    triggers: 'toFollow',
-        //    modCommand: false
+        //    isModCommand: false
         //},
         //'unfollow': {
         //    triggers: 'toUnfollow',
-        //    modCommand: false
+        //    isModCommand: false
         //},
         'rec': {
             triggers: 'toRecommendation',
-            modCommand: false
+            isModCommand: false,
+            postInChannel: data.recChannel
         },
         'status': {
             triggers: 'toStatusChange',
-            modCommand: true,
+            isModCommand: true,
         },
         'vid': {
             triggers: 'toVideoLink',
-            modCommand: false
+            isModCommand: false,
+            postInChannel: data.vidChannel
         }
     };
     command.listOfKeywords = {
