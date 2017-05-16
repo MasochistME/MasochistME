@@ -41,7 +41,7 @@ exports.Command = function (data) {
         //},
         'rec': {
             triggers: 'toRecommendation'
-        //},
+        },
         'status': {
             triggers: 'toModCommand',
             arguments: 'status'
