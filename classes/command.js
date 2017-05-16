@@ -39,8 +39,8 @@ exports.Command = function (data) {
         //'unfollow': {
         //    triggers: 'toUnfollow'
         //},
-        //'rec': {
-        //    triggers: 'toRecommendation'
+        'rec': {
+            triggers: 'toRecommendation'
         //},
         'status': {
             triggers: 'toModCommand',
