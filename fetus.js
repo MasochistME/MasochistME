@@ -5,6 +5,7 @@ bot.login(process.env.DISCORD_TOKEN);
 var Response = require('./classes/response.js');
 var Roles = require('./classes/roles.js');
 var Stream = require('./classes/stream.js');
+var Data = require('./classes/data.js');
 
 
 bot.on('ready', () => {
@@ -13,25 +14,27 @@ bot.on('ready', () => {
 });
 
 bot.on('message', message => {
-    var response = new Response.Response(message, bot.channels, bot.user);
+    var data = new Data.Data(message, bot); //poprzez date podawac dalej wszystkie message, bot, ID etc
+    var response = new Response.Response(data);
     try {
-        response.whatServer(message.channel.guild.id);
+        data.whatServer(message.channel.guild.id);
     }
     catch (err) {
-        console.log('\n\n!!! PROBABLY DM PROBLEM !!!\n\n'+err);
+        console.log(`\n\n!!! MESSAGE SENT IN DM, CAN'T FETCH SERVER DATA !!!\n ${err}\n\n`);
     }
 
     try {
         if (message.author.id !== bot.user.id) {
-            if (response.hasReactionTrigger())
-                response.toReactionTrigger();
+            if (message.channel.id==response.database)
+                return message.delete();
+            response.toReactionTrigger();
             if (response.hasCommandTrigger())
                 return response.toCommand();
-            return response.toKeyword();
+            response.toKeyword();
         }
     }
     catch (err) {
-        console.log('\n\n!!! SOME BIGGER BUG !!!\n\n'+err);
+        console.log(`\n\n!!! ${err} !!!\n\n`);
     }
 });
 

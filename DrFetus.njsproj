@@ -136,6 +136,18 @@
     <Folder Include="node_modules\ws\lib\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="classes\command.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="classes\database.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="classes\input.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="classes\post.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="classes\stream.js">
       <SubType>Code</SubType>
     </Compile>
