@@ -16,29 +16,41 @@ exports.Response = function (data) {
             return true;
         return false;
     };
-    response.toReactionTrigger = function () {
-        for (property in command.listOfTriggers) {
+    response.userIsAMod = function () {
+        if (data.message.author.id === '205755033210454016')
+            return true;
+        return false;
+    };
+    response.toEmoteReactionTrigger = function () {
+        for (property in command.listOfEmoteReactionTriggers) {
             if (data.message.content.indexOf(property) != -1)
-                return post.reactionToMessage(command.listOfTriggers[property]);
+                return post.reactionToMessage(command.listOfEmoteReactionTriggers[property]);
         }
     };
     response.toCommand = function () {
         var keyword = input.extractKeyword(data.message.content);
-        if (command.listOfStringResponses.hasOwnProperty(keyword))
-            post.message(command.listOfStringResponses[keyword].textResponse);
-        if (command.listOfFunctions.hasOwnProperty(keyword))
+
+            if (command.listOfTextResponses.hasOwnProperty(keyword)) {
+                if (command.listOfTextResponses[keyword].modCommand && !response.userIsAMod()) //check for mod
+                    return data.message.author.send('```You aren\'t allowed to use this command because you ain\'t cool enough.```'); // use the new post() class
+                post.message(command.listOfTextResponses[keyword].textResponse);
+        }
+
+        if (command.listOfFunctionResponses.hasOwnProperty(keyword))
         {
-            var functionName = command.listOfFunctions[keyword].triggers;
-            var arguments = command.listOfFunctions[keyword].arguments;
+            if (command.listOfFunctionResponses[keyword].modCommand && data.message.author.id !== '205755033210454016') //check for mod
+                return data.message.author.send('```You aren\'t allowed to use this command because you ain\'t cool enough.```'); // use the new post() class
+            var functionName = command.listOfFunctionResponses[keyword].triggers;
+            var arguments = command.listOfFunctionResponses[keyword].arguments;
             response[functionName](arguments);
         }
         data.message.delete(3000);
     };
     response.toKeyword = function () {
-        for (property in command.listOfKeywordsAndChanceToReact) {
+        for (property in command.listOfKeywords) {
             if (data.message.content.indexOf(property) != -1) {
-                if (rng.happensWithAChanceOf(command.listOfKeywordsAndChanceToReact[property].chanceOfTriggering)) {
-                    var functionName = command.listOfKeywordsAndChanceToReact[property].triggers;
+                if (rng.happensWithAChanceOf(command.listOfKeywords[property].chanceOfTriggering)) {
+                    var functionName = command.listOfKeywords[property].triggers;
                     try {
                         post.message(response[functionName]());
                     }
@@ -60,22 +72,9 @@ exports.Response = function (data) {
     response.toUnfollow = function () {
 
     };
-    response.toModCommand = function (modCommand) {
-        if (data.message.author.id === '205755033210454016') //damianowe
-        {
-            switch (modCommand) {
-                case 'fk':
-                    return post.message('http://i.imgur.com/hpW1uTO.png');
-                case 'status':
-                    {
-                        var newStatus = input.removeKeyword(data.message.content);
-                        return post.newStatus(newStatus);
-                    }
-                default: break;
-            }
-        }
-        else
-            return data.message.author.send('```You aren\'t allowed to use this command because you ain\'t cool enough.```'); // use the new post() class
+    response.toStatusChange = function () {
+        var newStatus = input.removeKeyword(data.message.content);
+        return post.newStatus(newStatus);
     };
     response.toVideoLink = function () {
         var linkToVid = input.removeKeyword(data.message.content);

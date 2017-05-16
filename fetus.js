@@ -27,7 +27,7 @@ bot.on('message', message => {
         if (message.author.id !== bot.user.id) {
             if (message.channel.id==response.database)
                 return message.delete();
-            response.toReactionTrigger();
+            response.toEmoteReactionTrigger();
             if (response.hasCommandTrigger())
                 return response.toCommand();
             response.toKeyword();

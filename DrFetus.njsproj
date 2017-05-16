@@ -139,6 +139,9 @@
     <Compile Include="classes\command.js">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="classes\data.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="classes\database.js">
       <SubType>Code</SubType>
     </Compile>

@@ -14,43 +14,50 @@ exports.Command = function (data) {
         "- /rec <link> <text>     - posts a recommendation with a custom text to the #recommendations channel```";
     command.test = 'This is a test and apparently went right';
     
-    command.listOfStringResponses = {
+    command.listOfTextResponses = {
         'test': {
-            textResponse: command.test
+            textResponse: command.test,
+            modCommand: true
+        },
+        'fk': {
+            textResponse: 'http://i.imgur.com/hpW1uTO.png',
+            modCommand: true,
         },
         'h': {
             textResponse: command.help,
+            modCommand: false,
             title: 'List of commands'
         },
         'help': {
             textResponse: command.help,
+            modCommand: false,
             title: 'List of commands'
         }
     };
-    command.listOfFunctions = {
-        'fk': {
-            triggers: 'toModCommand',
-            arguments: 'fk',
-            chanceOfTriggering: 40
-        },
+    command.listOfFunctionResponses = {
+        
         //'follow': {
         //    triggers: 'toFollow',
+        //    modCommand: false
         //},
         //'unfollow': {
-        //    triggers: 'toUnfollow'
+        //    triggers: 'toUnfollow',
+        //    modCommand: false
         //},
         'rec': {
-            triggers: 'toRecommendation'
+            triggers: 'toRecommendation',
+            modCommand: false
         },
         'status': {
-            triggers: 'toModCommand',
-            arguments: 'status'
+            triggers: 'toStatusChange',
+            modCommand: true,
         },
         'vid': {
-            triggers: 'toVideoLink'
+            triggers: 'toVideoLink',
+            modCommand: false
         }
     };
-    command.listOfKeywordsAndChanceToReact = {
+    command.listOfKeywords = {
         'fuck ': {
             triggers: 'toFuck',
             chanceOfTriggering: 40,
@@ -60,7 +67,7 @@ exports.Command = function (data) {
             chanceOfTriggering: 5
         }
     };
-    command.listOfTriggers = {
+    command.listOfEmoteReactionResponses = {
         'Ⓜ': ':mm:310140119606886421'
     };
     command.arrayOfFetus = ["None of you could beat that lol if u change your mind appreciate",
