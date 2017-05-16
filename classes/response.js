@@ -30,16 +30,21 @@ exports.Response = function (data) {
     response.toCommand = function () {
         var keyword = input.extractKeyword(data.message.content);
 
-            if (command.listOfTextResponses.hasOwnProperty(keyword)) {
-                if (command.listOfTextResponses[keyword].modCommand && !response.userIsAMod()) //check for mod
-                    return data.message.author.send('```You aren\'t allowed to use this command because you ain\'t cool enough.```'); // use the new post() class
-                post.message(command.listOfTextResponses[keyword].textResponse);
+        if (command.listOfTextResponses.hasOwnProperty(keyword)) {
+            if (command.listOfTextResponses[keyword].modCommand && !response.userIsAMod()) //check for mod
+            {
+                data.message.delete(3000);
+                return data.message.author.send('```You aren\'t allowed to use this command because you ain\'t cool enough.```'); // use the new post() class
+            }
+            post.message(command.listOfTextResponses[keyword].textResponse);
         }
-
         if (command.listOfFunctionResponses.hasOwnProperty(keyword))
         {
             if (command.listOfFunctionResponses[keyword].modCommand && data.message.author.id !== '205755033210454016') //check for mod
+            {
+                data.message.delete(3000);
                 return data.message.author.send('```You aren\'t allowed to use this command because you ain\'t cool enough.```'); // use the new post() class
+            }
             var functionName = command.listOfFunctionResponses[keyword].triggers;
             var arguments = command.listOfFunctionResponses[keyword].arguments;
             response[functionName](arguments);
