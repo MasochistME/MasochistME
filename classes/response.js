@@ -38,11 +38,15 @@ exports.Response = function (data) {
         }
     };
     response.toCapsLock = function () {
-        if (rng.happensWithAChanceOf(7))
+        if (rng.happensWithAChanceOf(3))
+            return post.reactionToMessage(":what:314442404558012418");
+        if (rng.happensWithAChanceOf(6))
+            return post.reactionToMessage(":bbcat:314445446284050443");
+        if (rng.happensWithAChanceOf(13))
             return post.reactionToMessage(":SMB5:311551327131926529");
-        if (rng.happensWithAChanceOf(14))
+        if (rng.happensWithAChanceOf(21))
             return post.reactionToMessage(":mm:310140119606886421");
-        if (rng.happensWithAChanceOf(40))
+        if (rng.happensWithAChanceOf(50))
             return post.reactionToMessage(":horage:310765183066701826");
     };
     response.toCommand = function () {
