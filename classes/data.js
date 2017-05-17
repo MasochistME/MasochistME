@@ -30,7 +30,7 @@ exports.Data = function (message, bot) {
                     data.database = '312533236800815104';
                     break;
                 }
-            case '234740225782317057': //vikmains
+            case '234740225782317057': //arcytesting
                 {
                     data.genChannel = '234740225782317057';
                     data.vidChannel = '310735697260707841';

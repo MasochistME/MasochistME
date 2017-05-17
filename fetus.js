@@ -28,6 +28,8 @@ bot.on('message', message => {
 
             if (message.channel.id==response.database)
                 return message.delete();
+            if (response.hasCapsLockTrigger())
+                response.toCapsLock();
             response.toEmoteReactionTrigger();
             if (response.hasCommandTrigger())
                 return response.toCommand();

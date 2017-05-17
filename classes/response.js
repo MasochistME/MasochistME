@@ -16,6 +16,11 @@ exports.Response = function (data) {
             return true;
         return false;
     };
+    response.hasCapsLockTrigger = function () {
+        if (data.message.content === data.message.content.toUpperCase() && data.message .content.length >= 15)
+            return true;
+        return false;
+    };
     response.userIsAMod = function () {
         if (data.message.author.id === '205755033210454016')
             return true;
@@ -27,10 +32,18 @@ exports.Response = function (data) {
         return true;
     };
     response.toEmoteReactionTrigger = function () {
-        for (property in command.listOfEmoteReactionTriggers) {
+        for (property in command.listOfEmoteReactionResponses) {
             if (data.message.content.indexOf(property) != -1)
                 return post.reactionToMessage(command.listOfEmoteReactionTriggers[property]);
         }
+    };
+    response.toCapsLock = function () {
+        if (rng.happensWithAChanceOf(7))
+            return post.reactionToMessage(":SMB5:311551327131926529");
+        if (rng.happensWithAChanceOf(14))
+            return post.reactionToMessage(":mm:310140119606886421");
+        if (rng.happensWithAChanceOf(40))
+            return post.reactionToMessage(":horage:310765183066701826");
     };
     response.toCommand = function () {
         var keyword = input.extractKeyword(data.message.content);
@@ -56,7 +69,7 @@ exports.Response = function (data) {
 
     response.toKeyword = function () {
         for (property in command.listOfKeywords) {
-            if (data.message.content.indexOf(property) != -1) {
+            if (data.message.content.toLowerCase().indexOf(property) != -1) {
                 if (rng.happensWithAChanceOf(command.listOfKeywords[property].chanceOfTriggering)) {
                     var functionName = command.listOfKeywords[property].triggers;
                     try {

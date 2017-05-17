@@ -8,7 +8,7 @@ exports.Input = function () {
     var input = this;
 
     input.extractKeyword = function (_input) {
-        output = _input.slice(1).trim();
+        var output = _input.slice(1).trim();
         if (output.indexOf(' ') !== -1)
             output = output.slice(0, output.indexOf(' ')).trim();
         return output;
