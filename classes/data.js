@@ -27,6 +27,7 @@ exports.Data = function (message, bot) {
                     data.genChannel = '263045520358899714';
                     data.vidChannel = '310035724328239105';
                     data.recChannel = '267070116649238539';
+                    data.logChannel = '315248444316975125';
                     data.database = '312533236800815104';
                     break;
                 }
@@ -35,10 +36,17 @@ exports.Data = function (message, bot) {
                     data.genChannel = '234740225782317057';
                     data.vidChannel = '310735697260707841';
                     data.recChannel = '310735697260707841';
+                    data.logChannel = '310735697260707841';
                     data.database = '313255760320790529';
                     break;
                 }
             default: return null; //zrobić tu żeby zwracało DM bota kiedy się gada z nim przez DM
         }
+    };
+
+    data.userIsNotThisBot = function () {
+        if (message.author.id !== bot.user.id)
+            return true;
+        return false;
     };
 }
