@@ -86,6 +86,7 @@ exports.Response = function (data) {
             }
         }
     };
+
     response.toFollow = function () {
         var whoToFollow = input.getIDOfMentionedPerson(data.message.content);
         var whoFollows = data.message.author.id;
@@ -96,6 +97,10 @@ exports.Response = function (data) {
     };
     response.toUnfollow = function () {
 
+    };
+    response.toMeme = function () {
+        var meme = `_"${command.arrayOfMemes[rng.chooseRandom(command.arrayOfMemes.length)]}"_`;
+        return post.message(meme);
     };
     response.toStatusChange = function () {
         var newStatus = input.removeKeyword(data.message.content);
