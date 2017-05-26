@@ -11,7 +11,6 @@
 
 exports.Data = function (message, bot) {
     var data = this;
-
     data.message = message;
     data.bot = bot;
 

@@ -1,95 +1,127 @@
 ﻿var Input = require('./input.js');
 
-exports.Command = function (data) {
+exports.Command = function (answer, data) {
     var command = this;
     var input = new Input.Input();
 
-    //TEXT RESPONSES
-    command.help = "```List of commands:\n\n" +
-        "- /vid <link>            - posts a video to the #videos channel\n" +
-        "- /rec <link> <text>     - posts a recommendation with a custom text to the #recommendations channel```";
-    command.test = 'This is a test and apparently went right';
-    
-    command.listOfTextResponses = {
+/**
+ *  listOfResponses is an object storing commands which can be triggered only with the use of "!", and which either send
+ *  a standard string type in return, or execute a function.
+ *
+ *  Properties are just command keywords.
+ *
+ *  Values:
+ *  @triggers - string response sent by bot when triggered
+ *  @typeOfResponse: 'text' (returns string), 'function' (triggers function - sending from inside of function), 'embed' (REQUIRES TITLE!)
+ *  @isModCommand - self-explanatory
+ *  <@refusal> - a special response which gets sent instead of standard one, if bot decides to refuse to execute the command
+ *  <@title> - title for embed messages (required).
+ *  <@arguments> - arguments for functions. If function triggers an embed, use this to pass title instead of <title>.
+ *  <@postInChannel> - directs the bot's response into the channel which ID is given. If value='DM' will send DM.
+*/
+    command.listOfResponses = {
         'test': {
-            textResponse: command.test,
+            triggers: answer.test,
+            typeOfResponse: `text`,
             isModCommand: true
         },
         'fk': {
-            textResponse: 'http://i.imgur.com/hpW1uTO.png',
+            triggers: 'http://i.imgur.com/hpW1uTO.png',
+            typeOfResponse: `text`,
             isModCommand: true,
         },
-        'h': {
-            textResponse: command.help,
-            isModCommand: false,
-            title: 'List of commands'
-        },
-        'help': {
-            textResponse: command.help,
-            isModCommand: false,
-            title: 'List of commands'
-        },
-        'impersonate': {
-            textResponse: input.removeKeyword(data.message.content),
-            isModCommand: false,
-            postInChannel: data.genChannel
-        }
-    };
-    command.listOfFunctionResponses = {
-        
-        //'follow': {
+         //'follow': {
         //    triggers: 'toFollow',
+        //    typeOfResponse: `function`,
         //    isModCommand: false
         //},
         //'unfollow': {
         //    triggers: 'toUnfollow',
+        //    typeOfResponse: `function`,
         //    isModCommand: false
         //},
+        'h': {
+            triggers: answer.help,
+            typeOfResponse: `text`,
+            isModCommand: false,
+            title: 'List of commands'
+        },
+        'help': {
+            triggers: answer.help,
+            typeOfResponse: `text`,
+            isModCommand: false,
+            title: 'List of commands'
+        },
+        'impersonate': {
+            triggers: 'toImpersonate',
+            typeOfResponse: `function`,
+            isModCommand: true
+        },
         'meme': {
             triggers: `toMeme`,
+            typeOfResponse: `function`,
+            refusal: `Stop asking for those stupid memes. I'm Dr. Fetus, not kela bot.`,
             isModCommand: false
         },
         'rec': {
             triggers: 'toRecommendation',
+            typeOfResponse: `function`,
             isModCommand: false,
             postInChannel: data.recChannel
         },
         'status': {
             triggers: 'toStatusChange',
+            typeOfResponse: `function`,
             isModCommand: true,
         },
         'vid': {
             triggers: 'toVideoLink',
+            typeOfResponse: `function`,
+            refusal: `...nobody is going to watch that anyway.`,
             isModCommand: false,
             postInChannel: data.vidChannel
         }
     };
+
+/**
+ *  listOfKeywords is an object storing keywords, which when found laying around inside sentences sent by users, are responded with
+ *  whatever is inside (maintains both strings (standard) and functions (via catch - currently in the process of changing it for the
+ *  typeOfResponse trigger rather).
+ *  
+ *  Properties are keywords which trigger specific responses. If you put "+" in property, all the words have to be present in the sentence for the
+ *  trigger to be... well... triggered. Keywords aren't trimmed so you can use whitespaces to manipulate results (for example to differentiate
+ *  vik in Viktor and in Rejkiavik).
+ *
+ *  Values:
+ *  @triggers - response sent by bot when triggered
+ *  @chanceOfTriggering - % chance of the response getting trigered
+ *  @typeOfResponse: 'text' (when jus returns string) or 'function' (when it returns a function's result),
+*/
     command.listOfKeywords = {
         'fuck ': {
-            triggers: 'toFuck',
+            triggers: `toFuck`,
+            typeOfResponse: `function`,
             chanceOfTriggering: 40,
         },
         'hello': {
             triggers: 'o/',
-            chanceOfTriggering: 5
+            typeOfResponse: `text`,
+            chanceOfTriggering: 10
         }
     };
-    command.listOfEmoteReactionResponses = {
-        'Ⓜ': ':mm:310140119606886421'
-    };
-    command.arrayOfFetus = [`None of you could beat that lol if u change your mind appreciate`,
-        `Almost as good as Clicker Heroes`,
-        `Why should you torture yourself with this game when you can do 100 easy ones?`,
-        `And it's not even guaranteed you're gonna win this game.`,
-        `Many friends also say this is a hardcore game :D`];
 
-    command.arrayOfMemes = [`Why should you torture yourself with one hard game when you can do 100 easy ones? you'll get more points, more achievements, more 100%s`,
-        `now i Say you whats realy hard games`,
-        `keep trying to troll or wathever, i was giving you the attention u need to keep the good work & remember i make 2-D games, btw i played ur friend breedpineppple gamess those spike i wanna escape`,
-        `i make 2-d games i could make a platformer level called 0.1% that none of you could beat lol if u change your mind appreciate`,
-        `In Norway, where most of the developers of this game are from, you used to get a Big Mac with crisp and soda for $23 (now it's more like $18). Would I chose a hamburger instead of this game? No; That'd be silly!`,
-        `really horheristo the plan? Hook\`to the moon? why he came in group ? this is unfair :c you can ask other guys my games are hard`,
-        `I need someone like you right now to remind me not to cheat. Thanks.`,
-        `who would wanna watch someone die in his chair while skipping VNs for a few hours`,
-        `I totally not belong there. no way I'm joining a group where the leader cheated CH`];
+/**
+ *  listOfEmoteReactionResponses is an object storing keywords, which when triggered make bot respond with an emoji.
+ *  Properties are keywords which trigger specific responses. 
+ *
+ *  Values:
+ *  @emoteResponse - either Unicode emoji or ID emoji which will be sent as bot's reaction
+ *  @chanceOfTriggering - % chance of the reaction getting trigered
+*/
+    command.listOfEmoteReactionResponses = {
+        'Ⓜ': {
+            emoteResponse: `:mm:310140119606886421`,
+            chanceOfTriggering: 100
+        }
+    };
 };

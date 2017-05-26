@@ -26,7 +26,6 @@ exports.Post = function (data) {
             }
         }
     };
-    //TODO: zmienic zeby przyjmowal array of args[] i robił addField tak długo aż nie przyjmie wszystkich
     post.embedToChannel = function (title, embedTitleBodyAndArgs, channelToPost) {
         var embed = new Discord.RichEmbed()
             .setTitle(title)
@@ -46,5 +45,8 @@ exports.Post = function (data) {
     };
     post.newStatus = function (newStatus) {
         data.bot.user.setGame(newStatus);
+    };
+    post.toDM = function (messageToSend) {
+        data.message.author.send(messageToSend);
     };
 };

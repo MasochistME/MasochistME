@@ -1,39 +1,40 @@
 const Discord = require('discord.js');
-const bot = new Discord.Client();
 
-bot.login(process.env.DISCORD_TOKEN);
-var Response = require('./classes/response.js');
-var Roles = require('./classes/roles.js');
-var Stream = require('./classes/stream.js');
+var UserMessage = require('./classes/userMessage.js');
+var Answer = require('./classes/answer.js');
 var Data = require('./classes/data.js');
 
+var Roles = require('./classes/roles.js');
+var Stream = require('./classes/stream.js');
+
+const bot = new Discord.Client();
+bot.login(process.env.DISCORD_TOKEN);
 
 bot.on('ready', () => {
-  console.log('I am ready! '+bot.user.id);
-  bot.user.setGame('/h for help');
+    var d = new Date();
+    bot.user.setGame(`/h for help`);
+    console.log(`${d} - ${bot.user.username} starts working!\n`);
 });
 
 bot.on('message', message => {
     var data = new Data.Data(message, bot); //poprzez date podawac dalej wszystkie message, bot, ID etc
-    try {
-        data.whatServer(message.channel.guild.id);
-    }
-    catch (err) {
-        console.log(`\n\n!!! MESSAGE SENT IN DM, CAN'T FETCH SERVER DATA !!!\n ${err}\n\n`);
-    }
+    
+    try { data.whatServer(message.channel.guild.id); }
+    catch (err) { }//this triggers when message was sent in DM
 
     try {
-        if (message.author.id !== bot.user.id) {
-            var response = new Response.Response(data);
-
-            if (message.channel.id==response.database)
+        if (data.userIsNotThisBot()) {
+            var userMessage = new UserMessage.UserMessage(data);
+            var answer = new Answer.Answer(data);
+            
+            if (message.channel.id==data.database)
                 return message.delete();
-            if (response.hasCapsLockTrigger())
-                response.toCapsLock();
-            response.toEmoteReactionTrigger();
-            if (response.hasCommandTrigger())
-                return response.toCommand();
-            response.toKeyword();
+            answer.toEmoteReactionTrigger();
+            if (userMessage.hasCapsLockTrigger())
+                answer.toCapsLock();
+            if (userMessage.hasCommandTrigger())
+                return answer.toCommand();
+            return answer.toKeyword();
         }
     }
     catch (err) {

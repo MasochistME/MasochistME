@@ -22,6 +22,14 @@ exports.Input = function () {
         var second = _input.substring(_input.indexOf(symbol)).trim();
         return [first, second];
     };
+    input.allKeywordsWereFoundInString = function (keywords, _input) {
+        _input = _input.toLowerCase();
+        for (var i = 0; i < keywords.length; i++) {
+            if (_input.indexOf(keywords[i]) == -1)
+                return false;
+        }
+        return true;
+    };
     input.getIDOfMentionedPerson = function (_input) {
         var output = input.removeKeyword(_input);
         output = output.substring(2, output.length - 1);

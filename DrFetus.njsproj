@@ -136,6 +136,9 @@
     <Folder Include="node_modules\ws\lib\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="classes\answer.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="classes\command.js">
       <SubType>Code</SubType>
     </Compile>
@@ -143,6 +146,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="classes\database.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="classes\fetusAnswerArrays.js">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="classes\input.js">
@@ -154,9 +160,13 @@
     <Compile Include="classes\stream.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="classes\response.js" />
+<<<<<<< HEAD
+=======
+    <Compile Include="classes\userMessage.js" />
+>>>>>>> origin/master
     <Compile Include="classes\RNG.js" />
     <Compile Include="classes\roles.js" />
+    <Compile Include="classes\userMessage.js" />
     <Compile Include="fetus.js" />
     <Compile Include="node_modules\discord.js\src\client\actions\Action.js" />
     <Compile Include="node_modules\discord.js\src\client\actions\ActionsManager.js" />

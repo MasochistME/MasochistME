@@ -7,6 +7,10 @@ exports.RNG = function () {
             return true;
         return false;
     };
+    rng.botRefuses = function () {
+        if (rng.happensWithAChanceOf(4))
+            return true;
+    };
     rng.chooseRandom = function (arrayLength) {
         return Math.floor(Math.random() * arrayLength);
     };
