@@ -9,7 +9,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>db537108-2dff-4aae-ad12-9fcc9c8c59a1</ProjectGuid>
+    <ProjectGuid>b822c445-39c1-4ac2-83d1-a570ac4bb95e</ProjectGuid>
     <ProjectHome>.</ProjectHome>
     <StartupFile>fetus.js</StartupFile>
     <StartWebBrowser>False</StartWebBrowser>
@@ -30,7 +30,10 @@
   <ItemGroup>
     <Content Include=".gitattributes" />
     <Content Include=".gitignore" />
-    <Content Include="drfetus.png" />
+    <Content Include=".vs\DrFetus\v15\.suo" />
+    <Content Include=".vs\slnx.sqlite" />
+    <Content Include=".vs\VSWorkspaceState.json" />
+    <Content Include="bin\Microsoft.NodejsTools.WebRole.dll" />
     <Content Include="node_modules\discord.js\.gitmodules" />
     <Content Include="node_modules\discord.js\.npmignore" />
     <Content Include="node_modules\discord.js\.tern-project" />
@@ -85,87 +88,24 @@
     <Content Include="node_modules\ws\LICENSE" />
     <Content Include="node_modules\ws\package.json" />
     <Content Include="node_modules\ws\README.md" />
+    <Content Include="obj\Debug\CoreCompileInputs.cache" />
+    <Content Include="obj\Debug\DrFetus.njsproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\DrFetus.njsprojResolveAssemblyReference.cache" />
     <Content Include="package.json" />
     <Content Include="Procfile" />
     <Content Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="classes\" />
-    <Folder Include="node_modules\" />
-    <Folder Include="node_modules\discord.js\" />
-    <Folder Include="node_modules\discord.js\src\" />
-    <Folder Include="node_modules\discord.js\src\client\" />
-    <Folder Include="node_modules\discord.js\src\client\actions\" />
-    <Folder Include="node_modules\discord.js\src\client\rest\" />
-    <Folder Include="node_modules\discord.js\src\client\rest\RequestHandlers\" />
-    <Folder Include="node_modules\discord.js\src\client\voice\" />
-    <Folder Include="node_modules\discord.js\src\client\voice\dispatcher\" />
-    <Folder Include="node_modules\discord.js\src\client\voice\opus\" />
-    <Folder Include="node_modules\discord.js\src\client\voice\player\" />
-    <Folder Include="node_modules\discord.js\src\client\voice\receiver\" />
-    <Folder Include="node_modules\discord.js\src\client\voice\util\" />
-    <Folder Include="node_modules\discord.js\src\client\websocket\" />
-    <Folder Include="node_modules\discord.js\src\client\websocket\packets\" />
-    <Folder Include="node_modules\discord.js\src\client\websocket\packets\handlers\" />
-    <Folder Include="node_modules\discord.js\src\sharding\" />
-    <Folder Include="node_modules\discord.js\src\structures\" />
-    <Folder Include="node_modules\discord.js\src\structures\interfaces\" />
-    <Folder Include="node_modules\discord.js\src\util\" />
-    <Folder Include="node_modules\discord.js\typings\" />
-    <Folder Include="node_modules\long\" />
-    <Folder Include="node_modules\long\dist\" />
-    <Folder Include="node_modules\long\doco\" />
-    <Folder Include="node_modules\long\externs\" />
-    <Folder Include="node_modules\long\scripts\" />
-    <Folder Include="node_modules\long\src\" />
-    <Folder Include="node_modules\long\tests\" />
-    <Folder Include="node_modules\prism-media\" />
-    <Folder Include="node_modules\prism-media\src\" />
-    <Folder Include="node_modules\prism-media\src\transcoders\" />
-    <Folder Include="node_modules\prism-media\src\transcoders\ffmpeg\" />
-    <Folder Include="node_modules\prism-media\src\util\" />
-    <Folder Include="node_modules\prism-media\test\" />
-    <Folder Include="node_modules\safe-buffer\" />
-    <Folder Include="node_modules\snekfetch\" />
-    <Folder Include="node_modules\snekfetch\.github\" />
-    <Folder Include="node_modules\snekfetch\src\" />
-    <Folder Include="node_modules\snekfetch\test\" />
-    <Folder Include="node_modules\tweetnacl\" />
-    <Folder Include="node_modules\ultron\" />
-    <Folder Include="node_modules\ws\" />
-    <Folder Include="node_modules\ws\lib\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="classes\answer.js">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="classes\command.js">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="classes\data.js">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="classes\database.js">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="classes\fetusAnswerArrays.js">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="classes\input.js">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="classes\post.js">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="classes\stream.js">
-      <SubType>Code</SubType>
-    </Compile>
-<<<<<<< HEAD
-=======
-    <Compile Include="classes\userMessage.js" />
->>>>>>> origin/master
+    <Compile Include="classes\answer.js" />
+    <Compile Include="classes\command.js" />
+    <Compile Include="classes\data.js" />
+    <Compile Include="classes\database.js" />
+    <Compile Include="classes\fetusAnswerArrays.js" />
+    <Compile Include="classes\input.js" />
+    <Compile Include="classes\post.js" />
     <Compile Include="classes\RNG.js" />
     <Compile Include="classes\roles.js" />
+    <Compile Include="classes\stream.js" />
     <Compile Include="classes\userMessage.js" />
     <Compile Include="fetus.js" />
     <Compile Include="node_modules\discord.js\src\client\actions\Action.js" />
@@ -353,6 +293,58 @@
     <Compile Include="node_modules\ws\lib\Validation.js" />
     <Compile Include="node_modules\ws\lib\WebSocket.js" />
     <Compile Include="node_modules\ws\lib\WebSocketServer.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include=".vs\" />
+    <Folder Include=".vs\DrFetus\" />
+    <Folder Include=".vs\DrFetus\v15\" />
+    <Folder Include="bin\" />
+    <Folder Include="classes\" />
+    <Folder Include="node_modules\" />
+    <Folder Include="node_modules\discord.js\" />
+    <Folder Include="node_modules\discord.js\src\" />
+    <Folder Include="node_modules\discord.js\src\client\" />
+    <Folder Include="node_modules\discord.js\src\client\actions\" />
+    <Folder Include="node_modules\discord.js\src\client\rest\" />
+    <Folder Include="node_modules\discord.js\src\client\rest\RequestHandlers\" />
+    <Folder Include="node_modules\discord.js\src\client\voice\" />
+    <Folder Include="node_modules\discord.js\src\client\voice\dispatcher\" />
+    <Folder Include="node_modules\discord.js\src\client\voice\opus\" />
+    <Folder Include="node_modules\discord.js\src\client\voice\player\" />
+    <Folder Include="node_modules\discord.js\src\client\voice\receiver\" />
+    <Folder Include="node_modules\discord.js\src\client\voice\util\" />
+    <Folder Include="node_modules\discord.js\src\client\websocket\" />
+    <Folder Include="node_modules\discord.js\src\client\websocket\packets\" />
+    <Folder Include="node_modules\discord.js\src\client\websocket\packets\handlers\" />
+    <Folder Include="node_modules\discord.js\src\sharding\" />
+    <Folder Include="node_modules\discord.js\src\structures\" />
+    <Folder Include="node_modules\discord.js\src\structures\interfaces\" />
+    <Folder Include="node_modules\discord.js\src\util\" />
+    <Folder Include="node_modules\discord.js\typings\" />
+    <Folder Include="node_modules\long\" />
+    <Folder Include="node_modules\long\dist\" />
+    <Folder Include="node_modules\long\doco\" />
+    <Folder Include="node_modules\long\externs\" />
+    <Folder Include="node_modules\long\scripts\" />
+    <Folder Include="node_modules\long\src\" />
+    <Folder Include="node_modules\long\tests\" />
+    <Folder Include="node_modules\prism-media\" />
+    <Folder Include="node_modules\prism-media\src\" />
+    <Folder Include="node_modules\prism-media\src\transcoders\" />
+    <Folder Include="node_modules\prism-media\src\transcoders\ffmpeg\" />
+    <Folder Include="node_modules\prism-media\src\util\" />
+    <Folder Include="node_modules\prism-media\test\" />
+    <Folder Include="node_modules\safe-buffer\" />
+    <Folder Include="node_modules\snekfetch\" />
+    <Folder Include="node_modules\snekfetch\.github\" />
+    <Folder Include="node_modules\snekfetch\src\" />
+    <Folder Include="node_modules\snekfetch\test\" />
+    <Folder Include="node_modules\tweetnacl\" />
+    <Folder Include="node_modules\ultron\" />
+    <Folder Include="node_modules\ws\" />
+    <Folder Include="node_modules\ws\lib\" />
+    <Folder Include="obj\" />
+    <Folder Include="obj\Debug\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="node_modules\discord.js\typings\discord.js-test.ts" />
