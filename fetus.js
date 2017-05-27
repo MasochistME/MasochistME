@@ -86,7 +86,7 @@ bot.on('messageDelete', message => {
     catch (err) { }//this triggers when message was sent in DM
 
     try {
-        if (data.userIsNotThisBot()) {
+        if (data.userIsNotThisBot() && !message.content.startsWih(`/`)) {
             var embed = new Discord.RichEmbed()
                 .setTitle(`MESSAGE DELETED`)
                 .setColor(0xC70000)
