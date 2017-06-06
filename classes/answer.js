@@ -165,7 +165,7 @@ exports.Answer = function (data) {
     // Zmienić to na standardowe sprawzanie kolejnego słowa kiedyś!
     answer.containsWordsToAvoid = function (userMessage) {
         var listOfAvoidThose = [`was `, `there`, `is `, `are `, `aren't`, `were `, `do `, `doing`, `being`, `having`, `not `, `if `, `then`, `than`, `could`,
-            `would`, `have`, `had `, `has `, `been`, `only`];
+            `would`, `have`, `had `, `has `, `been`, `only`, `http`];
 
         for (i in listOfAvoidThose) {
             if (userMessage.startsWith(listOfAvoidThose[i]))

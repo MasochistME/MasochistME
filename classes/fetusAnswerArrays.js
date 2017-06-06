@@ -16,5 +16,6 @@
         `who would wanna watch someone die in his chair while skipping VNs for a few hours`,
         `I totally not belong there. no way I'm joining a group where the leader cheated CH`,
         `do u still play games in slo mo sub 30 fps to get achievements? lol jk`,
-        `Pretty hardcore gamer. Looking to 100% most games I play. No cheats, no hacks, no scripts...no exceptions. Any friendly competitors?`];
+        `Pretty hardcore gamer. Looking to 100% most games I play. No cheats, no hacks, no scripts...no exceptions. Any friendly competitors?`,
+        `I do have to say that I have completed vvvvvv on normal mode... well, I'm gonna go do some idle games now, cya around...`];
 };
