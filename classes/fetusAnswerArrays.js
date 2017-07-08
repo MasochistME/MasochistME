@@ -17,5 +17,9 @@
         `I totally not belong there. no way I'm joining a group where the leader cheated CH`,
         `do u still play games in slo mo sub 30 fps to get achievements? lol jk`,
         `Pretty hardcore gamer. Looking to 100% most games I play. No cheats, no hacks, no scripts...no exceptions. Any friendly competitors?`,
-        `I do have to say that I have completed vvvvvv on normal mode... well, I'm gonna go do some idle games now, cya around...`];
+        `I do have to say that I have completed vvvvvv on normal mode... well, I'm gonna go do some idle games now, cya around...`,
+        `Really sad to see this kind of thing in the top 600 users.`,
+        `https://cdn.discordapp.com/attachments/263045520358899714/331045745614651392/unknown.png`,
+        `Look at me! I have the same color palette as Hotline Miami, I must be good!`    
+    ];
 };
