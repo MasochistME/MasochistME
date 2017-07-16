@@ -22,6 +22,7 @@
         `https://cdn.discordapp.com/attachments/263045520358899714/331045745614651392/unknown.png`,
         `Look at me! I have the same color palette as Hotline Miami, I must be good!`,
         `<:trash:331970868202831873> : 1'000 achievements and 5 cards!`,
-        `Fetus doesnt work in end/cotton. Thus why I don't have cotton no death yet.`
+        `Fetus doesnt work in end/cotton. Thus why I don't have cotton no death yet.`,
+        `horheristo was actually accused of SAMing clicker heroes achievements on astats and then deleted his profile`
     ];
 };
