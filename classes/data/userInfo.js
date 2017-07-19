@@ -80,8 +80,8 @@ exports.UI = function (data) {
         });
     };
 
-    ui.formatUserInput = function (input) {
-        var output = input.removeKeyword(data.message.content);
+    ui.formatUserInput = function (_input) {
+        var output = input.removeKeyword(_input);
         output = output.replace(/(?:\r\n|\r|\n)/g, '\n');
         return output;
     };

@@ -21,23 +21,25 @@ exports.Command = function (answer, data) {
 */
     command.listOfResponses = {
         'test': {
-            triggers: 'toDatabase',
+            triggers: `toDatabase`,
             typeOfResponse: `function`,
             isModCommand: false
         },
         'fk': {
-            triggers: 'http://i.imgur.com/hpW1uTO.png',
+            triggers: `http://i.imgur.com/hpW1uTO.png`,
             typeOfResponse: `text`,
             isModCommand: true,
         },
         'follow': {
-            triggers: 'toFollow',
+            triggers: `toFollow`,
             typeOfResponse: `function`,
+            arguments: `start`,
             isModCommand: false
         },
         'unfollow': {
-            triggers: 'toUnfollow',
+            triggers: `toFollow`,
             typeOfResponse: `function`,
+            arguments: `stop`,
             isModCommand: false
         },
         'h': {
@@ -53,7 +55,7 @@ exports.Command = function (answer, data) {
             title: `List of commands`
         },
         'impersonate': {
-            triggers: 'toImpersonate',
+            triggers: `toImpersonate`,
             typeOfResponse: `function`,
             isModCommand: true
         },
@@ -94,18 +96,18 @@ exports.Command = function (answer, data) {
             isModCommand: false
         },
         'rec': {
-            triggers: 'toRecommendation',
+            triggers: `toRecommendation`,
             typeOfResponse: `function`,
             isModCommand: false,
             postInChannel: data.recChannel
         },
         'status': {
-            triggers: 'toStatusChange',
+            triggers: `toStatusChange`,
             typeOfResponse: `function`,
             isModCommand: true,
         },
         'vid': {
-            triggers: 'toVideoLink',
+            triggers: `toVideoLink`,
             typeOfResponse: `function`,
             refusal: `...nobody is going to watch that anyway.`,
             isModCommand: false,

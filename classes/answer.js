@@ -121,13 +121,14 @@ exports.Answer = function (data) {
         if (typeOfRequest == `edit`)
             ui.edit();
     };
-    answer.toFollow = function () {
-        //todo
-        return post.message(`Not implemented yet.`); //TODO
-    };
-    answer.toUnfollow = function () {
-        //todo
-        return post.message(`Not implemented yet.`); //TODO
+    answer.toFollow = function (typeOfRequest) {
+        var Follow = require('./data/follow.js');
+        var follow = new Follow.Follow(data);
+
+        if (typeOfRequest == `start`)
+            follow.start();
+        if (typeOfRequest == `stop`)
+            follow.stop();
     };
     answer.toMeme = function (typeOfRequest) {
         if (typeOfRequest == `show`) {
