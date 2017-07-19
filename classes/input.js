@@ -14,7 +14,9 @@ exports.Input = function () {
         return output;
     };
     input.removeKeyword = function (_input) {
-        var output = _input.slice(_input.indexOf(' ')).trim();
+        var output = null;
+        if (_input.indexOf(' ') != -1)
+            output = _input.slice(_input.indexOf(' ')).trim();
         return output;
     };
     input.subStringBySymbol = function (_input, symbol) {
@@ -32,9 +34,11 @@ exports.Input = function () {
     };
     input.getIDOfMentionedPerson = function (_input) {
         var output = input.removeKeyword(_input);
-        output = output.replace('<', '');
-        output = output.replace('>', '');
-        output = output.replace('@', '');
+        if (output) {
+            output = output.replace('<', '');
+            output = output.replace('>', '');
+            output = output.replace('@', '');
+        }
         return output;
     };
     input.isLink = function (supposedLink) {

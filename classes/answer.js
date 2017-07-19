@@ -111,61 +111,15 @@ exports.Answer = function (data) {
 
 
     answer.toInfoRequest = function (typeOfRequest) {
-        var fs = require('fs')
+        var UI = require('./data/userInfo.js');
+        var ui = new UI.UI(data);
 
-        if (typeOfRequest == `show`) {
-            var userID = input.getIDOfMentionedPerson(data.message.content);
-
-            fs.readFile('../data/info.json', 'utf8', (err, userInfoJson) => {
-                if (err) {
-                    console.log(`Reading info file: ${err}`);
-                    post.message(`:no_entry: Something went wrong <:SMB4:310138833377165312>`);
-                    return;
-                };
-                userInfoJson = JSON.parse(userInfoJson);
-                for (i in userInfoJson.User) {
-                    if (userInfoJson.User[i].id == userID)
-                        return post.embed(`A few words about ${input.removeKeyword(data.message.content)}`, [[`___`, userInfoJson.User[i].info, false]]);
-                };
-                post.message(`User <@${userID}> didn't provide any info about themselves yet.`);
-                return;
-            });
-        };
-        if (typeOfRequest == `add`) {
-            fs.readFile('../data/info.json', 'utf8', (err, userInfoJson) => {
-                if (err) {
-                    console.log(`Reading info file: ${err}`);
-                    post.message(`:no_entry: Something went wrong <:SMB4:310138833377165312>`);
-                    return;
-                };
-                userInfoJson = JSON.parse(userInfoJson);
-                if (answer.userIsAlreadyInThisJson(userInfoJson.User))
-                    return post.message(`:warning: You already wrote something about yourself. If you want to edit your entry, use /editinfo .`);
-                var userInfo = {
-                    "id": data.message.author.id,
-                    "info": input.removeKeyword(data.message.content)
-                };
-                userInfoJson.User.push(userInfo);
-                fs.writeFile('../data/info.json', JSON.stringify(userInfoJson), err => {
-                    if (err) {
-                        console.log(`Writing info file: ${err}`);
-                        post.message(`:no_entry: Something went wrong <:SMB4:310138833377165312>`);
-                        return;
-                    };
-                    return post.message(`Done!`);
-                });
-            });
-        };
-        if (typeOfRequest == `edit`) {
-            return post.message(`No. You're stuck with what you wrote about yourself _forever_.`);
-        };
-    };
-    answer.userIsAlreadyInThisJson = function (input) {
-        for (i in input){
-            if (input[i].id == data.message.author.id)
-                return true;
-        };
-        return false;
+        if (typeOfRequest == `add`) 
+            ui.add();
+        if (typeOfRequest == `show`) 
+            ui.show();
+        if (typeOfRequest == `edit`)
+            ui.edit();
     };
     answer.toFollow = function () {
         //todo
