@@ -4,7 +4,8 @@
   "description": "Custom Discord bot.",
   "main": "fetus.js",
   "dependencies": {
-    "discord.js": "^11.1.0"
+    "discord.js": "^11.1.0",
+    "pg": "6.4.1"
   },
   "devDependencies": {},
   "scripts": {

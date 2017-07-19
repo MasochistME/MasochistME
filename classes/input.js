@@ -32,7 +32,9 @@ exports.Input = function () {
     };
     input.getIDOfMentionedPerson = function (_input) {
         var output = input.removeKeyword(_input);
-        output = output.substring(2, output.length - 1);
+        output = output.replace('<', '');
+        output = output.replace('>', '');
+        output = output.replace('@', '');
         return output;
     };
     input.isLink = function (supposedLink) {

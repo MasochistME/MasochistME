@@ -21,46 +21,76 @@ exports.Command = function (answer, data) {
 */
     command.listOfResponses = {
         'test': {
-            triggers: answer.test,
-            typeOfResponse: `text`,
-            isModCommand: true
+            triggers: 'toDatabase',
+            typeOfResponse: `function`,
+            isModCommand: false
         },
         'fk': {
             triggers: 'http://i.imgur.com/hpW1uTO.png',
             typeOfResponse: `text`,
             isModCommand: true,
         },
-         //'follow': {
-        //    triggers: 'toFollow',
-        //    typeOfResponse: `function`,
-        //    isModCommand: false
-        //},
-        //'unfollow': {
-        //    triggers: 'toUnfollow',
-        //    typeOfResponse: `function`,
-        //    isModCommand: false
-        //},
+        'follow': {
+            triggers: 'toFollow',
+            typeOfResponse: `function`,
+            isModCommand: false
+        },
+        'unfollow': {
+            triggers: 'toUnfollow',
+            typeOfResponse: `function`,
+            isModCommand: false
+        },
         'h': {
             triggers: answer.help,
             typeOfResponse: `text`,
             isModCommand: false,
-            title: 'List of commands'
+            title: `List of commands`
         },
         'help': {
             triggers: answer.help,
             typeOfResponse: `text`,
             isModCommand: false,
-            title: 'List of commands'
+            title: `List of commands`
         },
         'impersonate': {
             triggers: 'toImpersonate',
             typeOfResponse: `function`,
             isModCommand: true
         },
+        'addinfo': {
+            triggers: `toInfoRequest`,
+            typeOfResponse: `function`,
+            arguments: `add`,
+            isModCommand: false
+        },
+        'editinfo': {
+            triggers: `toInfoRequest`,
+            typeOfResponse: `function`,
+            arguments: `edit`,
+            isModCommand: false
+        },
+        'info': {
+            triggers: `toInfoRequest`,
+            typeOfResponse: `function`,
+            arguments: `show`,
+            isModCommand: false
+        },
+        'addmeme': {
+            triggers: `toMeme`,
+            typeOfResponse: `function`,
+            arguments: `add`,
+            isModCommand: false
+        },
         'meme': {
             triggers: `toMeme`,
             typeOfResponse: `function`,
+            arguments: `show`,
             refusal: `Stop asking for those stupid memes. I'm Dr. Fetus, not kela bot.`,
+            isModCommand: false
+        },
+        'mod': {
+            triggers: `addModPrivileges`,
+            typeOfResponse: `function`,
             isModCommand: false
         },
         'rec': {

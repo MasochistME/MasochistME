@@ -1,5 +1,4 @@
 ﻿var RNG = require('./RNG.js');
-var Database = require('./database.js');
 var Command = require('./command.js');
 var FetusAnswerArrays = require('./fetusAnswerArrays.js');
 var Post = require('./post.js');
@@ -14,11 +13,17 @@ exports.Answer = function (data) {
     answer.help = "```List of commands:\n\n" +
         "- /vid <link>            - posts a video to the #videos channel\n" +
         "- /rec <link> <text>     - posts a recommendation with a custom text to the #recommendations channel\n" +
-        "- /meme                  - posts a random meme```";
+        "- /meme                  - posts a random meme\n\n" +
+        "- /info <@mention>       - shows info of mentioned used\n" +
+        "- /addinfo <text>        - adds info about yourself which can be later shown with the /info command\n" +
+        "- /editinfo <text>       - allows you to edit info about yourself for the /info command\n\n" +
+        "- /follow <@mention>     - sends a message whenever followed person starts streaming \n" +
+        "- /unfollow <@mention>   - opts out of the function described above\n" +
+        "```";
     answer.test = 'This is a test and apparently went right';
       
 
-    answer.userIsAMod = function () {
+    answer.userIsAMod = function () { //TODO
         if (data.message.author.id === '205755033210454016')
             return true;
         return false;
@@ -105,23 +110,81 @@ exports.Answer = function (data) {
     };
 
 
+    answer.toInfoRequest = function (typeOfRequest) {
+        var fs = require('fs')
 
+        if (typeOfRequest == `show`) {
+            var userID = input.getIDOfMentionedPerson(data.message.content);
+
+            fs.readFile('../data/info.json', 'utf8', (err, userInfoJson) => {
+                if (err) {
+                    console.log(`Reading info file: ${err}`);
+                    post.message(`:no_entry: Something went wrong <:SMB4:310138833377165312>`);
+                    return;
+                };
+                userInfoJson = JSON.parse(userInfoJson);
+                for (i in userInfoJson.User) {
+                    if (userInfoJson.User[i].id == userID)
+                        return post.embed(`A few words about ${input.removeKeyword(data.message.content)}`, [[`___`, userInfoJson.User[i].info, false]]);
+                };
+                post.message(`User <@${userID}> didn't provide any info about themselves yet.`);
+                return;
+            });
+        };
+        if (typeOfRequest == `add`) {
+            fs.readFile('../data/info.json', 'utf8', (err, userInfoJson) => {
+                if (err) {
+                    console.log(`Reading info file: ${err}`);
+                    post.message(`:no_entry: Something went wrong <:SMB4:310138833377165312>`);
+                    return;
+                };
+                userInfoJson = JSON.parse(userInfoJson);
+                if (answer.userIsAlreadyInThisJson(userInfoJson.User))
+                    return post.message(`:warning: You already wrote something about yourself. If you want to edit your entry, use /editinfo .`);
+                var userInfo = {
+                    "id": data.message.author.id,
+                    "info": input.removeKeyword(data.message.content)
+                };
+                userInfoJson.User.push(userInfo);
+                fs.writeFile('../data/info.json', JSON.stringify(userInfoJson), err => {
+                    if (err) {
+                        console.log(`Writing info file: ${err}`);
+                        post.message(`:no_entry: Something went wrong <:SMB4:310138833377165312>`);
+                        return;
+                    };
+                    return post.message(`Done!`);
+                });
+            });
+        };
+        if (typeOfRequest == `edit`) {
+            return post.message(`No. You're stuck with what you wrote about yourself _forever_.`);
+        };
+    };
+    answer.userIsAlreadyInThisJson = function (input) {
+        for (i in input){
+            if (input[i].id == data.message.author.id)
+                return true;
+        };
+        return false;
+    };
     answer.toFollow = function () {
-        var whoToFollow = input.getIDOfMentionedPerson(data.message.content);
-        var whoFollows = data.message.author.id;
-        var base = new Database.Database(response, channels.get(response.database)); //TODO - make it less dmb with the "response" call
-        if (!base.databaseExists('follow'))
-            base.createDatabase('follow');
-        return base.addToDatabase('follow', whoToFollow, whoFollows);
+        //todo
+        return post.message(`Not implemented yet.`); //TODO
     };
     answer.toUnfollow = function () {
-
+        //todo
+        return post.message(`Not implemented yet.`); //TODO
     };
-    answer.toMeme = function () {
-        var fetusAnswerArrays = new FetusAnswerArrays.FetusAnswerArrays();
-        var meme = `_"${fetusAnswerArrays.memes[rng.chooseRandom(fetusAnswerArrays.memes.length)]}"_`;
+    answer.toMeme = function (typeOfRequest) {
+        if (typeOfRequest == `show`) {
+            var fetusAnswerArrays = new FetusAnswerArrays.FetusAnswerArrays();
+            var meme = `_"${fetusAnswerArrays.memes[rng.chooseRandom(fetusAnswerArrays.memes.length)]}"_`;
 
-        return post.message(meme);
+            return post.message(meme);
+        };
+        if (typeOfRequest == `add`) {
+            return post.message(`Not implemented yet.`); //TODO
+        };
     };
     answer.toStatusChange = function () {
         var newStatus = input.removeKeyword(data.message.content);
