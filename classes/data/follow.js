@@ -17,7 +17,7 @@ exports.Follow = function (data) {
         fs.readFile(followersData, 'utf8', (err, followerInfoJson) => {
             if (err) {
                 post.message(`:no_entry: Something went wrong <:SMB4:310138833377165312>`);
-                return console.log(`Reading info file: ${err}`);
+                return console.log(`Reading follow file: ${err}`);
             };
             var userNick = data.message.mentions.users.find('id', streamerID).username;
             followerInfoJson = JSON.parse(followerInfoJson);
@@ -38,7 +38,7 @@ exports.Follow = function (data) {
             fs.writeFile(followersData, JSON.stringify(followerInfoJson), err => {
                 if (err) {
                     post.message(`:no_entry: Something went wrong <:SMB4:310138833377165312>`);
-                    return console.log(`Writing info file: ${err}`);
+                    return console.log(`Writing follow file: ${err}`);
                 };
             });
             return post.message(`${data.message.author.username} now follows ${userNick}!`); 
@@ -54,7 +54,7 @@ exports.Follow = function (data) {
         fs.readFile(followersData, 'utf8', (err, followerInfoJson) => {
             if (err) {
                 post.message(`:no_entry: Something went wrong <:SMB4:310138833377165312>`);
-                return console.log(`Reading info file: ${err}`);
+                return console.log(`Reading follow file: ${err}`);
             };
             var userNick = data.message.mentions.users.find('id', streamerID).username;
             followerInfoJson = JSON.parse(followerInfoJson);
@@ -75,7 +75,7 @@ exports.Follow = function (data) {
             fs.writeFile(followersData, JSON.stringify(followerInfoJson), err => {
                 if (err) {
                     post.message(`:no_entry: Something went wrong <:SMB4:310138833377165312>`);
-                    return console.log(`Writing info file: ${err}`);
+                    return console.log(`Writing follow file: ${err}`);
                 };
             });
             return post.message(`${data.message.author.username} no longer follows ${userNick}!`); 
