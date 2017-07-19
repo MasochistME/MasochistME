@@ -21,9 +21,9 @@ exports.Command = function (answer, data) {
 */
     command.listOfResponses = {
         'test': {
-            triggers: `toDatabase`,
-            typeOfResponse: `function`,
-            isModCommand: false
+            triggers: `This is a test function.`,
+            typeOfResponse: `text`,
+            isModCommand: true
         },
         'fk': {
             triggers: `http://i.imgur.com/hpW1uTO.png`,
@@ -81,7 +81,7 @@ exports.Command = function (answer, data) {
             triggers: `toMeme`,
             typeOfResponse: `function`,
             arguments: `add`,
-            isModCommand: false
+            isModCommand: true
         },
         'meme': {
             triggers: `toMeme`,
@@ -89,6 +89,12 @@ exports.Command = function (answer, data) {
             arguments: `show`,
             refusal: `Stop asking for those stupid memes. I'm Dr. Fetus, not kela bot.`,
             isModCommand: false
+        },
+        'memelist': {
+            triggers: `toMeme`,
+            typeOfResponse: `function`,
+            arguments: `list`,
+            isModCommand: true
         },
         'mod': {
             triggers: `addModPrivileges`,
@@ -101,7 +107,7 @@ exports.Command = function (answer, data) {
             isModCommand: false,
             postInChannel: data.recChannel
         },
-        'status': {
+        'setstatus': {
             triggers: `toStatusChange`,
             typeOfResponse: `function`,
             isModCommand: true,

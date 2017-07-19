@@ -22,10 +22,11 @@ exports.Answer = function (data) {
         "```";
     answer.test = 'This is a test and apparently went right';
       
-
-    answer.userIsAMod = function () { //TODO
-        if (data.message.author.id === '205755033210454016')
-            return true;
+    answer.userIsAMod = function () { 
+        for (i in data.arrayOfMods) {
+            if (data.arrayOfMods[i] == data.message.author.id)
+                return true;
+        }
         return false;
     };
     answer.userAllowedToUseCommand = function (cmd) {
@@ -131,14 +132,17 @@ exports.Answer = function (data) {
             follow.stop();
     };
     answer.toMeme = function (typeOfRequest) {
-        if (typeOfRequest == `show`) {
-            var fetusAnswerArrays = new FetusAnswerArrays.FetusAnswerArrays();
-            var meme = `_"${fetusAnswerArrays.memes[rng.chooseRandom(fetusAnswerArrays.memes.length)]}"_`;
+        var Memes = require('./data/memes.js');
+        var memes = new Memes.Memes(data);
 
-            return post.message(meme);
+        if (typeOfRequest == `show`) {
+            memes.show();
         };
         if (typeOfRequest == `add`) {
-            return post.message(`Not implemented yet.`); //TODO
+            memes.add();
+        };
+        if (typeOfRequest == `list`) {
+            memes.showList();
         };
     };
     answer.toStatusChange = function () {

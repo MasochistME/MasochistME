@@ -18,6 +18,18 @@ exports.Data = function (message, bot) {
     data.recChannel = '';
     data.genChannel = '';
     data.database = '';
+    data.arrayOfMods = '';
+
+    data.loadModData = function (callback) {
+        var fs = require('fs');
+        var modListUrl = '../data/mods.json';
+
+        fs.readFile(modListUrl, 'utf8', (err, modListJson) => {
+            modListJson = JSON.parse(modListJson);
+            data.arrayOfMods = modListJson.Moderators;
+            callback();
+        });
+    };
 
     data.whatServer = function (serverID) {
         switch (serverID) {

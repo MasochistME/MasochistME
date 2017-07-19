@@ -41,7 +41,7 @@ exports.Follow = function (data) {
                     return console.log(`Writing info file: ${err}`);
                 };
             });
-            return post.message(`You now follow ${userNick}!`); 
+            return post.message(`${data.message.author.username} now follows ${userNick}!`); 
         });
     };
     follow.stop = function () {
@@ -78,7 +78,7 @@ exports.Follow = function (data) {
                     return console.log(`Writing info file: ${err}`);
                 };
             });
-            return post.message(`You no longer follow ${userNick}!`); 
+            return post.message(`${data.message.author.username} no longer follows ${userNick}!`); 
         });
     };
 
