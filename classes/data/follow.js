@@ -3,7 +3,7 @@
 exports.Follow = function (data) {
     var follow = this;
     var post = new Post.Post(data);
-    var followersData = '../data/follow.json';
+    var followersPath = '../data/follow.json';
 
     follow.start = function () {
         var fs = require('fs');
@@ -15,7 +15,7 @@ exports.Follow = function (data) {
 
         if (!streamerID || !streamerExists)
             return post.embed(`:warning:`, [[`___`, `You didn't mention the person who you want to follow.`, false]]);
-        fs.readFile(followersData, 'utf8', (err, followerInfoJson) => {
+        fs.readFile(followersPath, 'utf8', (err, followerInfoJson) => {
             if (err) {
                 post.embed(`:no_entry:`, [[`___`, `Something went wrong <:SMB4:310138833377165312>`, false]]);
                 return console.log(`Reading follow file: ${err}`);
@@ -36,7 +36,7 @@ exports.Follow = function (data) {
                     return post.embed(`:warning:`, [[`___`,`You already follow ${userNick}.`,false]]);
                 followerInfoJson.Streamers[id].followers.push(data.message.author.id);
             };
-            fs.writeFile(followersData, JSON.stringify(followerInfoJson), err => {
+            fs.writeFile(followersPath, JSON.stringify(followerInfoJson), err => {
                 if (err) {
                     post.embed(`:no_entry:`, [[`___`, `Something went wrong <:SMB4:310138833377165312>`, false]]);
                     return console.log(`Writing follow file: ${err}`);
@@ -55,7 +55,7 @@ exports.Follow = function (data) {
 
         if (!streamerID || !streamerExists)
             return post.embed(`:warning:`, [[`___`, `You didn't mention the person who you want to unfollow.`, false]]);
-        fs.readFile(followersData, 'utf8', (err, followerInfoJson) => {
+        fs.readFile(followersPath, 'utf8', (err, followerInfoJson) => {
             if (err) {
                 post.embed(`:no_entry:`, [[`___`, `Something went wrong <:SMB4:310138833377165312>`, false]]);
                 return console.log(`Reading follow file: ${err}`);
@@ -76,7 +76,7 @@ exports.Follow = function (data) {
                         followerInfoJson.Streamers[id].followers.splice(i,1);
                 };
             }
-            fs.writeFile(followersData, JSON.stringify(followerInfoJson), err => {
+            fs.writeFile(followersPath, JSON.stringify(followerInfoJson), err => {
                 if (err) {
                     post.embed(`:no_entry:`, [[`___`, `Something went wrong <:SMB4:310138833377165312>`, false]]);
                     return console.log(`Writing follow file: ${err}`);
@@ -89,7 +89,7 @@ exports.Follow = function (data) {
         var userID = data.message.author.id;
         var fs = require('fs');
 
-        fs.readFile(followersData, 'utf8', (err, followerInfoJson) => {
+        fs.readFile(followersPath, 'utf8', (err, followerInfoJson) => {
             if (err) {
                 post.embed(`:no_entry:`, [[`___`, `Something went wrong <:SMB4:310138833377165312>`, false]]);
                 return console.log(`Reading follow file: ${err}`);

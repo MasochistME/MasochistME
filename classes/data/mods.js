@@ -2,7 +2,7 @@
 	var mods = this;
 	var Post = require(`../post.js`);
 	var post = new Post.Post(data);
-	var modsUrl = `../data/mods.json`;
+	var modsPath = `../data/mods.json`;
 
 	mods.promote = function () {
 		var fs = require('fs');
@@ -15,7 +15,7 @@
 			return post.embed(`:warning:`, [[`___`, `You didn't mention the person who you want to mod.`, false]]);
 		var modNick = data.message.mentions.users.find('id', modID).username;
 
-		fs.readFile(modsUrl, `utf8`, (err, modsJson) => {
+        fs.readFile(modsPath, `utf8`, (err, modsJson) => {
 			if (err) {
 				post.embed(`:no_entry:`, [[`___`, `Something went wrong <:SMB4:310138833377165312>`, false]]);
 				return console.log(`Reading mods file: ${err}`);
@@ -24,7 +24,7 @@
 			if (mods.modIsOnTheList(modsJson.Moderators, modID) != -1)
 				return post.message(`:warning: ${modNick} already is a moderator.`);
 			modsJson.Moderators.push(modID);
-			fs.writeFile(modsUrl, JSON.stringify(modsJson), err => {
+            fs.writeFile(modsPath, JSON.stringify(modsJson), err => {
 				if (err) {
 					post.embed(`:no_entry:`, [[`___`, `Something went wrong <:SMB4:310138833377165312>`, false]]);
 					return console.log(`Writing mods file: ${err}`);
@@ -43,7 +43,7 @@
 
 		if (!modID || !modExists)
 			return post.embed(`:warning:`, [[`___`, `You didn't mention the person who you want to unmod.`, false]]);
-		fs.readFile(modsUrl, 'utf8', (err, modsJson) => {
+        fs.readFile(modsPath, 'utf8', (err, modsJson) => {
 			if (err) {
 				post.embed(`:no_entry:`, [[`___`, `Something went wrong <:SMB4:310138833377165312>`, false]]);
 				return console.log(`Reading mod file: ${err}`);
@@ -55,7 +55,7 @@
 				return post.embed(`:warning:`, [[`___`, `${modNick} is not a moderator.`, false]]);
 			var id = mods.modIsOnTheList(modsJson.Moderators, modID);
 			modsJson.Moderators.splice(id, 1);
-			fs.writeFile(modsUrl, JSON.stringify(modsJson), err => {
+            fs.writeFile(modsPath, JSON.stringify(modsJson), err => {
 				if (err) {
 					post.embed(`:no_entry:`, [[`___`, `Something went wrong <:SMB4:310138833377165312>`, false]]);
 					return console.log(`Writing mod file: ${err}`);
@@ -68,7 +68,7 @@
 		var fs = require('fs');
 		var modList = '';
 
-		fs.readFile(modsUrl, 'utf8', (err, modsJson) => {
+        fs.readFile(modsPath, 'utf8', (err, modsJson) => {
 			if (err) {
 				post.embed(`:no_entry:`, [[`___`, `Something went wrong <:SMB4:310138833377165312>`, false]]);
 				return console.log(`Reading mod file: ${err}`);

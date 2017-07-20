@@ -6,10 +6,10 @@ exports.UI = function (data) {
     var fs = require('fs');
     var post = new Post.Post(data);
     var input = new Input.Input();
-    var dataUrl = '../data/userInfo.json';
+    var dataPath = '../data/userInfo.json';
 
     ui.add = function () {
-        fs.readFile(dataUrl, 'utf8', (err, userInfoJson) => {
+        fs.readFile(dataPath, 'utf8', (err, userInfoJson) => {
             if (err) {
                 post.message(`:no_entry: Something went wrong <:SMB4:310138833377165312>`);
                 return console.log(`Reading info file: ${err}`);
@@ -24,7 +24,7 @@ exports.UI = function (data) {
                 "info": infoString
             };
             userInfoJson.User.push(userInfo);
-            fs.writeFile(dataUrl, JSON.stringify(userInfoJson), err => {
+            fs.writeFile(dataPath, JSON.stringify(userInfoJson), err => {
                 if (err) {
                     post.message(`:no_entry: Something went wrong <:SMB4:310138833377165312>`);
                     return console.log(`Writing info file: ${err}`);
@@ -39,7 +39,7 @@ exports.UI = function (data) {
 
         if (!userID || !userNick)
             return post.message(`:warning: You didn't mention the person whose info you want to know.`);
-        fs.readFile(dataUrl, 'utf8', (err, userInfoJson) => {
+        fs.readFile(dataPath, 'utf8', (err, userInfoJson) => {
             if (err) {
                 post.message(`:no_entry: Something went wrong <:SMB4:310138833377165312>`);
                 return console.log(`Reading info file: ${err}`);
@@ -56,7 +56,7 @@ exports.UI = function (data) {
         });
     };
     ui.edit = function () {
-        fs.readFile(dataUrl, 'utf8', (err, userInfoJson) => {
+        fs.readFile(dataPath, 'utf8', (err, userInfoJson) => {
             if (err) {
                 post.message(`:no_entry: Something went wrong <:SMB4:310138833377165312>`);
                 return console.log(`Reading info file: ${err}`);
@@ -70,7 +70,7 @@ exports.UI = function (data) {
                     break;
                 }
             }
-            fs.writeFile(dataUrl, JSON.stringify(userInfoJson), err => {
+            fs.writeFile(dataPath, JSON.stringify(userInfoJson), err => {
                 if (err) {
                     post.message(`:no_entry: Something went wrong <:SMB4:310138833377165312>`);
                     return console.log(`Editing info file: ${err}`);

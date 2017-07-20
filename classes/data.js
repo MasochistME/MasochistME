@@ -17,7 +17,6 @@ exports.Data = function (message, bot) {
     data.vidChannel = '';
     data.recChannel = '';
     data.genChannel = '';
-    data.database = '';
     data.arrayOfMods = '';
 
     data.loadModData = function (callback) {
@@ -39,7 +38,6 @@ exports.Data = function (message, bot) {
                     data.vidChannel = '310035724328239105';
                     data.recChannel = '267070116649238539';
                     data.logChannel = '315248444316975125';
-                    data.database = '312533236800815104';
                     break;
                 }
             case '234740225782317057': //arcytesting
@@ -48,7 +46,6 @@ exports.Data = function (message, bot) {
                     data.vidChannel = '310735697260707841';
                     data.recChannel = '310735697260707841';
                     data.logChannel = '310735697260707841';
-                    data.database = '313255760320790529';
                     break;
                 }
             default: return null; //zrobić tu żeby zwracało DM bota kiedy się gada z nim przez DM

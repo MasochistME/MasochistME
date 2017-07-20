@@ -3,7 +3,7 @@
 exports.Memes = function (data) {
     var memes = this;
     var post = new Post.Post(data);
-    var memesUrl = '../data/memes.json';
+    var memesPath = '../data/memes.json';
     var fs = require('fs');
 
     memes.add = function () {
@@ -11,14 +11,14 @@ exports.Memes = function (data) {
         var input = new Input.Input();
         var newMeme = input.removeKeyword(data.message.content);
 
-        fs.readFile(memesUrl, 'utf8', (err, memesJson) => {
+        fs.readFile(memesPath, 'utf8', (err, memesJson) => {
             if (err) {
                 post.message(`:no_entry: Something went wrong <:SMB4:310138833377165312>`);
                 return console.log(`Reading meme file: ${err}`);
             };
             memesJson = JSON.parse(memesJson);
             memesJson.Memes.push(newMeme);
-            fs.writeFile(memesUrl, JSON.stringify(memesJson), err => {
+            fs.writeFile(memesPath, JSON.stringify(memesJson), err => {
                 if (err) {
                     post.message(`:no_entry: Something went wrong <:SMB4:310138833377165312>`);
                     return console.log(`Writing memes file: ${err}`);
@@ -32,7 +32,7 @@ exports.Memes = function (data) {
         var rng = new RNG.RNG();
         var meme = '';
 
-        fs.readFile(memesUrl, 'utf8', (err, memesJson) => {
+        fs.readFile(memesPath, 'utf8', (err, memesJson) => {
             if (err) {
                 post.message(`:no_entry: Something went wrong <:SMB4:310138833377165312>`);
                 return console.log(`Reading meme file: ${err}`);
@@ -45,7 +45,7 @@ exports.Memes = function (data) {
     memes.showList = function () {
         var memeList = '';
 
-        fs.readFile(memesUrl, 'utf8', (err, memesJson) => {
+        fs.readFile(memesPath, 'utf8', (err, memesJson) => {
             if (err) {
                 post.message(`:no_entry: Something went wrong <:SMB4:310138833377165312>`);
                 return console.log(`Reading meme file: ${err}`);
