@@ -22,7 +22,7 @@ bot.on('message', message => {
     try { data.whatServer(message.channel.guild.id); }
     catch (err) { }//this triggers when message was sent in DM
 
-    data.loadModData(() => {
+    data.loadServerData(() => {
         try {
             if (data.userIsNotThisBot()) {
                 var userMessage = new UserMessage.UserMessage(data);

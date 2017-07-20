@@ -53,6 +53,18 @@ exports.Answer = function (data) {
         if (typeOfRequest == `list`)
             return mods.showList();
     };
+    answer.locateServer = function () {
+        var Mods = require('./data/mods.js');
+        var mods = new Mods.Mods(data);
+
+        return mods.locateServer();
+    };
+    answer.restrictCommand = function () {
+        var Mods = require('./data/mods.js');
+        var mods = new Mods.Mods(data);
+
+        return mods.restrictCommand();
+    }
 
 
     answer.toEmoteReactionTrigger = function () {
@@ -125,7 +137,7 @@ exports.Answer = function (data) {
     };
     answer.sendAppropiateResponseToCommand = function (cmd) {
         if (cmd.typeOfResponse == `text`) {
-            if (!cmd.hasOwnProperty(`postInChannel`))
+            if (cmd.postInChannel == `all`)
                 return post.message(cmd.triggers);
             if (cmd.postInChannel == `DM`)
                 return post.toDM(cmd.triggers);

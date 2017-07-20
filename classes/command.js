@@ -13,88 +13,108 @@ exports.Command = function (answer, data) {
  *  Values:
  *  @triggers - string response sent by bot when triggered
  *  @typeOfResponse: 'text' (returns string), 'function' (triggers function - sending from inside of function), 'embed' (REQUIRES TITLE!)
+ *  @postInChannel - directs the bot's response into the channel which ID is given. If value='DM' will send DM, if value='all' - is usable everywhere.
  *  @isModCommand - self-explanatory
  *  <@refusal> - a special response which gets sent instead of standard one, if bot decides to refuse to execute the command
  *  <@title> - title for embed messages (required).
  *  <@arguments> - arguments for functions. If function triggers an embed, use this to pass title instead of <title>.
- *  <@postInChannel> - directs the bot's response into the channel which ID is given. If value='DM' will send DM.
 */
     command.listOfResponses = {
         'test': {
             triggers: `This is a test function.`,
             typeOfResponse: `text`,
+            postInChannel: `all`,
             isModCommand: true
         },
         'fk': {
             triggers: `http://i.imgur.com/hpW1uTO.png`,
             typeOfResponse: `text`,
-            isModCommand: true,
+            postInChannel: `all`,
+            isModCommand: true
         },
         'follow': {
             triggers: `toFollow`,
             typeOfResponse: `function`,
             arguments: `start`,
+            postInChannel: `all`,
             isModCommand: false
         },
         'unfollow': {
             triggers: `toFollow`,
             typeOfResponse: `function`,
             arguments: `stop`,
+            postInChannel: `all`,
             isModCommand: false
         },
         'followed': {
             triggers: `toFollow`,
             typeOfResponse: `function`,
             arguments: `list`,
+            postInChannel: `all`,
             isModCommand: false
         },
         'h': {
             triggers: answer.help,
             typeOfResponse: `text`,
+            postInChannel: `all`,
             isModCommand: false,
         },
         'help': {
             triggers: answer.help,
             typeOfResponse: `text`,
+            postInChannel: `all`,
             isModCommand: false,
         },
         'hmod': {
             triggers: answer.helpMod,
             typeOfResponse: `text`,
+            postInChannel: `all`,
             isModCommand: true,
         },
         'helpmod': {
             triggers: answer.helpMod,
             typeOfResponse: `text`,
+            postInChannel: `all`,
             isModCommand: true,
         },
         'impersonate': {
             triggers: `toImpersonate`,
             typeOfResponse: `function`,
+            postInChannel: `all`,
             isModCommand: true
         },
         'addinfo': {
             triggers: `toInfoRequest`,
             typeOfResponse: `function`,
             arguments: `add`,
+            postInChannel: `all`,
             isModCommand: false
         },
         'editinfo': {
             triggers: `toInfoRequest`,
             typeOfResponse: `function`,
             arguments: `edit`,
+            postInChannel: `all`,
             isModCommand: false
         },
         'info': {
             triggers: `toInfoRequest`,
             typeOfResponse: `function`,
             arguments: `show`,
+            postInChannel: `all`,
             isModCommand: false
+        },
+        'locateserver': {
+            triggers: `locateServer`,
+            typeOfResponse: `function`,
+            postInChannel: `all`,
+            isModCommand: true
         },
         'addmeme': {
             triggers: `toMeme`,
             typeOfResponse: `function`,
             arguments: `add`,
+            postInChannel: `all`,
             isModCommand: true
         },
         'meme': {
@@ -102,49 +122,61 @@ exports.Command = function (answer, data) {
             typeOfResponse: `function`,
             arguments: `show`,
             refusal: `Stop asking for those stupid memes. I'm Dr. Fetus, not kela bot.`,
+            postInChannel: `all`,
             isModCommand: false
         },
         'memelist': {
             triggers: `toMeme`,
             typeOfResponse: `function`,
             arguments: `list`,
+            postInChannel: `all`,
             isModCommand: true
         },
         'mod': {
             triggers: `editModPrivileges`,
             typeOfResponse: `function`,
             arguments: `promote`,
+            postInChannel: `all`,
             isModCommand: true
         },
         'unmod': {
             triggers: `editModPrivileges`,
             typeOfResponse: `function`,
             arguments: `demote`,
+            postInChannel: `all`,
             isModCommand: true
         },
         'modlist': {
             triggers: `editModPrivileges`,
             typeOfResponse: `function`,
             arguments: `list`,
+            postInChannel: `all`,
             isModCommand: true
         },
         'rec': {
             triggers: `toRecommendation`,
             typeOfResponse: `function`,
-            isModCommand: false,
-            postInChannel: data.recChannel
+            postInChannel: data.recChannel,
+            isModCommand: false
+        },
+        'restrict': {
+            triggers: `restrictCommand`,
+            typeOfResponse: `function`,
+            postInChannel: `all`,
+            isModCommand: true
         },
         'setstatus': {
             triggers: `toStatusChange`,
             typeOfResponse: `function`,
+            postInChannel: `all`,
             isModCommand: true,
         },
         'vid': {
             triggers: `toVideoLink`,
             typeOfResponse: `function`,
             refusal: `...nobody is going to watch that anyway.`,
-            isModCommand: false,
-            postInChannel: data.vidChannel
+            postInChannel: data.vidChannel,
+            isModCommand: false
         }
     };
 

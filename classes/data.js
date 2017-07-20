@@ -17,16 +17,22 @@ exports.Data = function (message, bot) {
     data.vidChannel = '';
     data.recChannel = '';
     data.genChannel = '';
+
     data.arrayOfMods = '';
 
-    data.loadModData = function (callback) {
+    data.loadServerData = function (callback) {
         var fs = require('fs');
-        var modListUrl = '../data/mods.json';
+        var serverDataPath = '../data/serverData.json';
 
-        fs.readFile(modListUrl, 'utf8', (err, modListJson) => {
-            modListJson = JSON.parse(modListJson);
-            data.arrayOfMods = modListJson.Moderators;
-            callback();
+        fs.readFile(serverDataPath, 'utf8', (err, serverDataJson) => {
+            serverDataJson = JSON.parse(serverDataJson);
+            if (data.serverIsListed(serverDataJson)) {
+                data.arrayOfMods = serverDataJson.Servers[data.serverIndex(serverDataJson)].moderators;
+                return callback();
+                // add all the logic of server initial data here!!!!!!!!!
+            }
+            data.arrayOfMods = [data.message.guild.ownerID];
+            return callback();
         });
     };
 
@@ -52,6 +58,20 @@ exports.Data = function (message, bot) {
         }
     };
 
+    data.serverIsListed = function (serverDataJson) {
+        for (i in serverDataJson.Servers) {
+            if (serverDataJson.Servers[i].id == data.message.guild.id)
+                return true;
+        };
+        return false;
+    };
+    data.serverIndex = function (serverDataJson) {
+        for (i in serverDataJson.Servers) {
+            if (serverDataJson.Servers[i].id == data.message.guild.id)
+                return i;
+        };
+        return -1;
+    };
     data.userIsNotThisBot = function () {
         if (message.author.id !== bot.user.id)
             return true;
