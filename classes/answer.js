@@ -22,13 +22,16 @@ exports.Answer = function (data) {
     answer.helpMod = 
         "```" +
         "List of moderator exclusive commands:\n\n" +
-        "- /memelist              - shows a list of all memes\n" +
-        "- /addmeme               - adds a new meme\n\n" +
-        "- /mod <@mention>        - gives a person bot-related mod rights\n" +
-        "- /unmod <@mention>      - takes away bot-related mod rights from a person\n" +
-        "- /modlist               - shows a list of bot-related moderators\n\n" +
-        "- /impersonate <text>    - sends a message into #general roomas a Dr. Fetus\n" +
-        "- /setstatus <text>      - changes the Playing status of Dr. Fetus" +
+        "- /locateserver                - saves crucial server data used to moderate users and commands\n" +
+        "- /restrict <command>|<#room>  - restricts the use of command to <#room> (use 'all' if it's not to be restricted)\n\n"+
+        "- /memelist                    - shows a list of all memes\n" +
+        "- /addmeme                     - adds a new meme\n" +
+        "- /deletememe <index>          - removes meme from the list\n\n" +
+        "- /mod <@mention>              - gives a person bot-related mod rights\n" +
+        "- /unmod <@mention>            - takes away bot-related mod rights from a person\n" +
+        "- /modlist                     - shows a list of bot-related moderators\n\n" +
+        "- /impersonate <text>          - sends a message into #general roomas a Dr. Fetus\n" +
+        "- /setstatus <text>            - changes the Playing status of Dr. Fetus" +
         "```";
       
     answer.userIsAMod = function () { 
@@ -184,6 +187,8 @@ exports.Answer = function (data) {
             return memes.show();
         if (typeOfRequest == `add`) 
             return memes.add();
+        if (typeOfRequest == `delete`)
+            return memes.delete();
         if (typeOfRequest == `list`)
             return memes.showList();
     };

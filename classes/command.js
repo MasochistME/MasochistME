@@ -125,6 +125,13 @@ exports.Command = function (answer, data) {
             postInChannel: `all`,
             isModCommand: false
         },
+        'deletememe': {
+            triggers: `toMeme`,
+            typeOfResponse: `function`,
+            arguments: `delete`,
+            postInChannel: `all`,
+            isModCommand: true
+        },
         'memelist': {
             triggers: `toMeme`,
             typeOfResponse: `function`,
