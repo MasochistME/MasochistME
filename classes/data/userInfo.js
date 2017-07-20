@@ -16,7 +16,7 @@ exports.UI = function (data) {
             };
             userInfoJson = JSON.parse(userInfoJson);
             if (ui.userIsAlreadyInThisJson(userInfoJson.User))
-                return post.message(`:warning: You already wrote something about yourself. If you want to edit your entry, use \`\`/editinfo <text>\`\` .`);
+                return post.embed(`<:boshy:310151885690503169> You already wrote something about yourself.`, [[`___`, `If you want to improve your entry, use \`\`/editinfo <text>\`\` .`, false]]);
             var infoString = ui.formatUserInput(data.message.content);
 
             var userInfo = {
@@ -29,7 +29,7 @@ exports.UI = function (data) {
                     post.message(`:no_entry: Something went wrong <:SMB4:310138833377165312>`);
                     return console.log(`Writing info file: ${err}`);
                 };
-                return post.message(`Done!`);
+                return post.message(`Got it!`);
             });
         });
     };
@@ -38,7 +38,7 @@ exports.UI = function (data) {
         var userNick = data.message.mentions.users.find('id', userID);
 
         if (!userID || !userNick)
-            return post.message(`:warning: You didn't mention the person whose info you want to know.`);
+            return post.embed(`<:boshy:310151885690503169> Incorrect input`, [[`___`, `Next time tag the person whose info you want to know, loser.`, false]]);
         fs.readFile(dataPath, 'utf8', (err, userInfoJson) => {
             if (err) {
                 post.message(`:no_entry: Something went wrong <:SMB4:310138833377165312>`);
@@ -51,7 +51,7 @@ exports.UI = function (data) {
                     return post.embed(`A few words about ${userNick}`, [[`___`, userInfoJson.User[i].info, false]]);
                 }
             };
-            post.message(`User ${userNick} didn't provide any info about themselves yet.`);
+            post.embed(`<:boshy:310151885690503169> No info of this guy`, [[`___`, `${userNick} was too dumb to write a note about himself.`, false]]);
             return;
         });
     };
@@ -63,7 +63,7 @@ exports.UI = function (data) {
             };
             userInfoJson = JSON.parse(userInfoJson);
             if (!ui.userIsAlreadyInThisJson(userInfoJson.User))
-                return post.message(`:warning: You can't edit something that doesn't exist. Use \`\`/addinfo <text>\`\` command.`);
+                return post.embed(`<:boshy:310151885690503169> Can't do it`, [[`___`, `___First___ write a note, ___then___ edit it. Is it so hard to you? \n\nUse \`\`/addinfo <text>\`\` command.`, false]]);
             for (i in userInfoJson.User) {
                 if (userInfoJson.User[i].id == data.message.author.id) {
                     userInfoJson.User[i].info = input.removeKeyword(data.message.content);

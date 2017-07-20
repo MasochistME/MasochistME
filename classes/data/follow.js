@@ -14,10 +14,10 @@ exports.Follow = function (data) {
         var streamerExists = data.message.mentions.users.find('id', streamerID);
 
         if (!streamerID || !streamerExists)
-            return post.embed(`:warning:`, [[`___`, `You didn't mention the person who you want to follow.`, false]]);
+            return post.embed(`<:boshy:310151885690503169> Incorrect input`, [[`___`, `You didn't mention the person who you want to follow.`, false]]);
         fs.readFile(followersPath, 'utf8', (err, followerInfoJson) => {
             if (err) {
-                post.embed(`:no_entry:`, [[`___`, `Something went wrong <:SMB4:310138833377165312>`, false]]);
+                post.embed(`:no_entry: Error`, [[`___`, `Something went wrong <:SMB4:310138833377165312>`, false]]);
                 return console.log(`Reading follow file: ${err}`);
             };
             var userNick = data.message.mentions.users.find('id', streamerID).username;
@@ -33,16 +33,16 @@ exports.Follow = function (data) {
                 var id = follow.streamerIsOnTheList(followerInfoJson.Streamers, streamerID);
                 
                 if (follow.userAlreadyFollows(followerInfoJson.Streamers[id]))
-                    return post.embed(`:warning:`, [[`___`,`You already follow ${userNick}.`,false]]);
+                    return post.embed(`<:boshy:310151885690503169> Can't do it`, [[`___`,`You already follow ${userNick}. Why do you even bother?`,false]]);
                 followerInfoJson.Streamers[id].followers.push(data.message.author.id);
             };
             fs.writeFile(followersPath, JSON.stringify(followerInfoJson), err => {
                 if (err) {
-                    post.embed(`:no_entry:`, [[`___`, `Something went wrong <:SMB4:310138833377165312>`, false]]);
+                    post.embed(`:no_entry: Error`, [[`___`, `Something went wrong <:SMB4:310138833377165312>`, false]]);
                     return console.log(`Writing follow file: ${err}`);
                 };
             });
-            return post.embed(`Following`, [[`___`, `${data.message.author.username} now follows ${userNick}!`, false]]); 
+            return post.embed(`Follower alert`, [[`___`, `${data.message.author.username} now follows ${userNick}! Such a waste of time.`, false]]); 
         });
     };
     follow.stop = function () {
@@ -54,20 +54,20 @@ exports.Follow = function (data) {
         var streamerExists = data.message.mentions.users.find('id', streamerID);
 
         if (!streamerID || !streamerExists)
-            return post.embed(`:warning:`, [[`___`, `You didn't mention the person who you want to unfollow.`, false]]);
+            return post.embed(`<:boshy:310151885690503169> Incorrect input`, [[`___`, `You didn't mention the person who you want to unfollow.`, false]]);
         fs.readFile(followersPath, 'utf8', (err, followerInfoJson) => {
             if (err) {
-                post.embed(`:no_entry:`, [[`___`, `Something went wrong <:SMB4:310138833377165312>`, false]]);
+                post.embed(`:no_entry: Error`, [[`___`, `Something went wrong <:SMB4:310138833377165312>`, false]]);
                 return console.log(`Reading follow file: ${err}`);
             };
             var userNick = data.message.mentions.users.find('id', streamerID).username;
             followerInfoJson = JSON.parse(followerInfoJson);
 
             if (follow.streamerIsOnTheList(followerInfoJson.Streamers, streamerID) == -1)
-                return post.embed(`:warning:`, [[`___`, `You don't follow ${userNick}.`, false]]);
+                return post.embed(`<:boshy:310151885690503169> Can't do it`, [[`___`, `You don't follow ${userNick} and no one cares about this.`, false]]);
             var id = follow.streamerIsOnTheList(followerInfoJson.Streamers, streamerID);
             if (!follow.userAlreadyFollows(followerInfoJson.Streamers[i]))
-                return post.embed(`:warning:`, [[`___`, `You don't follow ${userNick}.`, false]]);
+                return post.embed(`<:boshy:310151885690503169> Can't do it`, [[`___`, `You don't follow ${userNick} and no one cares about this.`, false]]);
             if (followerInfoJson.Streamers[id].followers.length == 1)
                 followerInfoJson.Streamers.splice(id, 1);
             else {
@@ -78,11 +78,11 @@ exports.Follow = function (data) {
             }
             fs.writeFile(followersPath, JSON.stringify(followerInfoJson), err => {
                 if (err) {
-                    post.embed(`:no_entry:`, [[`___`, `Something went wrong <:SMB4:310138833377165312>`, false]]);
+                    post.embed(`:no_entry: Error`, [[`___`, `Something went wrong <:SMB4:310138833377165312>`, false]]);
                     return console.log(`Writing follow file: ${err}`);
                 };
             });
-            return post.embed(`Unfollowing`, [[`___`, `${data.message.author.username} no longer follows ${userNick}!`, false]]); 
+            return post.embed(`Unfollower alert`, [[`___`, `${data.message.author.username} no longer follows ${userNick}! It was boring anyway.`, false]]); 
         });
     };
     follow.showList = function () {
@@ -91,7 +91,7 @@ exports.Follow = function (data) {
 
         fs.readFile(followersPath, 'utf8', (err, followerInfoJson) => {
             if (err) {
-                post.embed(`:no_entry:`, [[`___`, `Something went wrong <:SMB4:310138833377165312>`, false]]);
+                post.embed(`:no_entry: Error`, [[`___`, `Something went wrong <:SMB4:310138833377165312>`, false]]);
                 return console.log(`Reading follow file: ${err}`);
             };
             followerInfoJson = JSON.parse(followerInfoJson);
@@ -106,10 +106,10 @@ exports.Follow = function (data) {
                             userFollowers = `${userFollowers}**${(parseInt(j) + 1)}**: ${followerInfoJson.Streamers[i].followers[j]} \n`;
                         }
                     }
-                    return post.embed(`Who follows ${data.message.author.username}?`, [[`___`, userFollowers, false]]);
+                    return post.embed(`People wasting time on ${data.message.author.username}'s stream`, [[`___`, userFollowers, false]]);
                 }
             };
-            return post.embed(`Forever alone`, [[`___`, `No one follows ${data.message.author.username} yet. Sob. Sob.`, false]]);
+            return post.embed(`Forever alone`, [[`___`, `No one follows ${data.message.author.username} yet. \n\nYou don't even have any friends. So sad.`, false]]);
         });
     };
 

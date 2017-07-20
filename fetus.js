@@ -23,8 +23,8 @@ bot.on('message', message => {
     catch (err) { }//this triggers when message was sent in DM
 
     data.loadServerData(() => {
-        try {
-            if (data.userIsNotThisBot()) {
+        if (data.userIsNotThisBot()) {
+            try {
                 var userMessage = new UserMessage.UserMessage(data);
                 var answer = new Answer.Answer(data);
 
@@ -35,9 +35,9 @@ bot.on('message', message => {
                     return answer.toCommand();
                 return answer.toKeyword();
             }
-        }
-        catch (err) {
-            console.log(`\n\n!!! ${err} !!!\n\n`);
+            catch (err) {
+                console.log(`\n\n!!! ${err} !!!\n\n`);
+            }
         }
     });    
 });
