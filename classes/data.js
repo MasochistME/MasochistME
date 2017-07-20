@@ -33,7 +33,7 @@ exports.Data = function (message, bot) {
                     return callback();
                     // add all the logic of server initial data here!!!!!!!!!
                 }
-                data.arrayOfMods = data.message.guild.ownerID;
+                data.arrayOfMods = [data.message.guild.ownerID];
                 return callback();
             });
         }
