@@ -22,24 +22,26 @@ bot.on('message', message => {
     try { data.whatServer(message.channel.guild.id); }
     catch (err) { }//this triggers when message was sent in DM
 
-    try {
-        if (data.userIsNotThisBot()) {
-            var userMessage = new UserMessage.UserMessage(data);
-            var answer = new Answer.Answer(data);
-            
-            if (message.channel.id==data.database)
-                return message.delete();
-            answer.toEmoteReactionTrigger();
-            if (userMessage.hasCapsLockTrigger())
-                answer.toCapsLock();
-            if (userMessage.hasCommandTrigger())
-                return answer.toCommand();
-            return answer.toKeyword();
+    data.loadModData(() => {
+        try {
+            if (data.userIsNotThisBot()) {
+                var userMessage = new UserMessage.UserMessage(data);
+                var answer = new Answer.Answer(data);
+
+                if (message.channel.id == data.database)
+                    return message.delete();
+                answer.toEmoteReactionTrigger();
+                if (userMessage.hasCapsLockTrigger())
+                    answer.toCapsLock();
+                if (userMessage.hasCommandTrigger())
+                    return answer.toCommand();
+                return answer.toKeyword();
+            }
         }
-    }
-    catch (err) {
-        console.log(`\n\n!!! ${err} !!!\n\n`);
-    }
+        catch (err) {
+            console.log(`\n\n!!! ${err} !!!\n\n`);
+        }
+    });    
 });
 
 bot.on('presenceUpdate', (oldMember, newMember) => {

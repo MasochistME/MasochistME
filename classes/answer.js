@@ -1,26 +1,35 @@
-﻿var RNG = require('./RNG.js');
-var Command = require('./command.js');
-var FetusAnswerArrays = require('./fetusAnswerArrays.js');
+﻿var Command = require('./command.js');
 var Post = require('./post.js');
 var Input = require('./input.js');
 
 exports.Answer = function (data) {
     var answer = this;
-    var rng = new RNG.RNG();
     var post = new Post.Post(data);
     var input = new Input.Input();
 
-    answer.help = "```List of commands:\n\n" +
+    answer.help = "```" +
+        "List of commands:\n\n" +
         "- /vid <link>            - posts a video to the #videos channel\n" +
-        "- /rec <link> <text>     - posts a recommendation with a custom text to the #recommendations channel\n" +
+        "- /rec <link> <text>     - posts a recommendation with a custom text to the #recommendations channel\n\n" +
         "- /meme                  - posts a random meme\n\n" +
         "- /info <@mention>       - shows info of mentioned used\n" +
         "- /addinfo <text>        - adds info about yourself which can be later shown with the /info command\n" +
         "- /editinfo <text>       - allows you to edit info about yourself for the /info command\n\n" +
         "- /follow <@mention>     - sends a message whenever followed person starts streaming \n" +
         "- /unfollow <@mention>   - opts out of the function described above\n" +
+        "- /followed              - lists all users which follow you" +
         "```";
-    answer.test = 'This is a test and apparently went right';
+    answer.helpMod = 
+        "```" +
+        "List of moderator exclusive commands:\n\n" +
+        "- /memelist              - shows a list of all memes\n" +
+        "- /addmeme               - adds a new meme\n\n" +
+        "- /mod <@mention>        - gives a person bot-related mod rights\n" +
+        "- /unmod <@mention>      - takes away bot-related mod rights from a person\n" +
+        "- /modlist               - shows a list of bot-related moderators\n\n" +
+        "- /impersonate <text>    - sends a message into #general roomas a Dr. Fetus\n" +
+        "- /setstatus <text>      - changes the Playing status of Dr. Fetus" +
+        "```";
       
     answer.userIsAMod = function () { 
         for (i in data.arrayOfMods) {
@@ -34,10 +43,23 @@ exports.Answer = function (data) {
             return false;
         return true;
     }
+    answer.editModPrivileges = function (typeOfRequest) {
+        var Mods = require('./data/mods.js');
+        var mods = new Mods.Mods(data);
+        if (typeOfRequest == `promote`)
+            return mods.promote();
+        if (typeOfRequest == `demote`)
+            return mods.demote();
+        if (typeOfRequest == `list`)
+            return mods.showList();
+    };
 
 
     answer.toEmoteReactionTrigger = function () {
         var command = new Command.Command(answer, data);
+        var RNG = require('./RNG.js');
+        var rng = new RNG.RNG();
+
         for (property in command.listOfEmoteReactionResponses) {
             var cmd = command.listOfEmoteReactionResponses[property];
             if (data.message.content.indexOf(property)==-1)
@@ -48,6 +70,9 @@ exports.Answer = function (data) {
         }
     };
     answer.toCapsLock = function () {
+        var RNG = require('./RNG.js');
+        var rng = new RNG.RNG();
+
         if (rng.happensWithAChanceOf(3))
             return post.reactionToMessage(":what:314442404558012418");
         if (rng.happensWithAChanceOf(6))
@@ -60,7 +85,10 @@ exports.Answer = function (data) {
             return post.reactionToMessage(":horage:310765183066701826");
     };
     answer.toKeyword = function () {
+        var RNG = require('./RNG.js');
+        var rng = new RNG.RNG();
         var command = new Command.Command(answer, data);
+
         for (property in command.listOfKeywords) {
             var cmd = command.listOfKeywords[property];
             if (!input.allKeywordsWereFoundInString(property.toString().split('+'), data.message.content)) 
@@ -85,6 +113,9 @@ exports.Answer = function (data) {
         answer.checkForBotRefusal(cmd);
     };
     answer.checkForBotRefusal = function (cmd) {
+        var RNG = require('./RNG.js');
+        var rng = new RNG.RNG();
+
         if (rng.botRefuses()) {
             if (cmd.refusal)
                 return post.message(cmd.refusal);
@@ -116,34 +147,33 @@ exports.Answer = function (data) {
         var ui = new UI.UI(data);
 
         if (typeOfRequest == `add`) 
-            ui.add();
+            return ui.add();
         if (typeOfRequest == `show`) 
-            ui.show();
+            return ui.show();
         if (typeOfRequest == `edit`)
-            ui.edit();
+            return ui.edit();
     };
     answer.toFollow = function (typeOfRequest) {
         var Follow = require('./data/follow.js');
         var follow = new Follow.Follow(data);
 
         if (typeOfRequest == `start`)
-            follow.start();
+            return follow.start();
         if (typeOfRequest == `stop`)
-            follow.stop();
+            return follow.stop();
+        if (typeOfRequest == `list`)
+            return follow.showList();
     };
     answer.toMeme = function (typeOfRequest) {
         var Memes = require('./data/memes.js');
         var memes = new Memes.Memes(data);
 
-        if (typeOfRequest == `show`) {
-            memes.show();
-        };
-        if (typeOfRequest == `add`) {
-            memes.add();
-        };
-        if (typeOfRequest == `list`) {
-            memes.showList();
-        };
+        if (typeOfRequest == `show`) 
+            return memes.show();
+        if (typeOfRequest == `add`) 
+            return memes.add();
+        if (typeOfRequest == `list`)
+            return memes.showList();
     };
     answer.toStatusChange = function () {
         var newStatus = input.removeKeyword(data.message.content);
@@ -160,6 +190,9 @@ exports.Answer = function (data) {
         post.messageToChannel(linkToVid + " " + data.message.author, data.vidChannel);
     };
     answer.toRecommendation = function () {
+        var RNG = require('./RNG.js');
+        var rng = new RNG.RNG();
+        var FetusAnswerArrays = require('./fetusAnswerArrays.js');
         var fetusAnswerArrays = new FetusAnswerArrays.FetusAnswerArrays();
         var linkAndText = input.removeKeyword(data.message.content).trim();
 

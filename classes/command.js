@@ -42,17 +42,31 @@ exports.Command = function (answer, data) {
             arguments: `stop`,
             isModCommand: false
         },
+        'followed': {
+            triggers: `toFollow`,
+            typeOfResponse: `function`,
+            arguments: `list`,
+            isModCommand: false
+        },
         'h': {
             triggers: answer.help,
             typeOfResponse: `text`,
             isModCommand: false,
-            title: `List of commands`
         },
         'help': {
             triggers: answer.help,
             typeOfResponse: `text`,
             isModCommand: false,
-            title: `List of commands`
+        },
+        'hmod': {
+            triggers: answer.helpMod,
+            typeOfResponse: `text`,
+            isModCommand: true,
+        },
+        'helpmod': {
+            triggers: answer.helpMod,
+            typeOfResponse: `text`,
+            isModCommand: true,
         },
         'impersonate': {
             triggers: `toImpersonate`,
@@ -97,9 +111,22 @@ exports.Command = function (answer, data) {
             isModCommand: true
         },
         'mod': {
-            triggers: `addModPrivileges`,
+            triggers: `editModPrivileges`,
             typeOfResponse: `function`,
-            isModCommand: false
+            arguments: `promote`,
+            isModCommand: true
+        },
+        'unmod': {
+            triggers: `editModPrivileges`,
+            typeOfResponse: `function`,
+            arguments: `demote`,
+            isModCommand: true
+        },
+        'modlist': {
+            triggers: `editModPrivileges`,
+            typeOfResponse: `function`,
+            arguments: `list`,
+            isModCommand: true
         },
         'rec': {
             triggers: `toRecommendation`,

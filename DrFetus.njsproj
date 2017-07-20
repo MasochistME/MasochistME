@@ -99,7 +99,15 @@
     <Compile Include="classes\answer.js" />
     <Compile Include="classes\command.js" />
     <Compile Include="classes\data.js" />
-    <Compile Include="classes\database.js" />
+    <Compile Include="classes\data\follow.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="classes\data\memes.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="classes\data\userInfo.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="classes\fetusAnswerArrays.js" />
     <Compile Include="classes\input.js" />
     <Compile Include="classes\post.js" />
@@ -300,6 +308,7 @@
     <Folder Include=".vs\DrFetus\v15\" />
     <Folder Include="bin\" />
     <Folder Include="classes\" />
+    <Folder Include="classes\data\" />
     <Folder Include="node_modules\" />
     <Folder Include="node_modules\discord.js\" />
     <Folder Include="node_modules\discord.js\src\" />

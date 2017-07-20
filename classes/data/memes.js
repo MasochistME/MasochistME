@@ -1,14 +1,14 @@
 ﻿var Post = require('../post.js');
-var Input = require('../input.js');
 
 exports.Memes = function (data) {
     var memes = this;
     var post = new Post.Post(data);
-    var input = new Input.Input();
     var memesUrl = '../data/memes.json';
     var fs = require('fs');
 
     memes.add = function () {
+        var Input = require('../input.js');
+        var input = new Input.Input();
         var newMeme = input.removeKeyword(data.message.content);
 
         fs.readFile(memesUrl, 'utf8', (err, memesJson) => {
@@ -56,7 +56,7 @@ exports.Memes = function (data) {
                     post.message(memeList);
                     memeList = '';
                 }
-                memeList += `**${i}** - ${memesJson.Memes[i]}\n`;
+                memeList += `**${parseInt(i)+1}** - ${memesJson.Memes[i]}\n`;
             }
             return post.message(memeList);
         });
