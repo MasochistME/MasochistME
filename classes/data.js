@@ -19,7 +19,7 @@ exports.Data = function (message, bot) {
     data.genChannel = '';
     data.strChannel = '';
 
-    data.arrayOfMods = '';
+    data.arrayOfMods = [];
 
     data.loadServerData = function (callback) {
         var fs = require('fs');
@@ -32,7 +32,7 @@ exports.Data = function (message, bot) {
                 return callback();
                 // add all the logic of server initial data here!!!!!!!!!
             }
-            data.arrayOfMods = [data.message.guild.ownerID];
+            data.arrayOfMods.push(data.message.guild.ownerID);
             return callback();
         });
     };
@@ -62,10 +62,12 @@ exports.Data = function (message, bot) {
     };
 
     data.serverIsListed = function (serverDataJson) {
-        for (i in serverDataJson.Servers) {
-            if (serverDataJson.Servers[i].id == data.message.guild.id)
-                return true;
-        };
+        if (data.message){
+            for (i in serverDataJson.Servers) {
+                if (serverDataJson.Servers[i].id == data.message.guild.id)
+                    return true;
+            };
+        }
         return false;
     };
     data.serverIndex = function (serverDataJson) {
