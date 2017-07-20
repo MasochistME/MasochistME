@@ -17,6 +17,7 @@ exports.Data = function (message, bot) {
     data.vidChannel = '';
     data.recChannel = '';
     data.genChannel = '';
+    data.strChannel = '';
 
     data.arrayOfMods = '';
 
@@ -43,6 +44,7 @@ exports.Data = function (message, bot) {
                     data.genChannel = '263045520358899714';
                     data.vidChannel = '310035724328239105';
                     data.recChannel = '267070116649238539';
+                    data.strChannel = '337592878140227585';
                     data.logChannel = '315248444316975125';
                     break;
                 }
@@ -51,6 +53,7 @@ exports.Data = function (message, bot) {
                     data.genChannel = '234740225782317057';
                     data.vidChannel = '310735697260707841';
                     data.recChannel = '310735697260707841';
+                    data.strChannel = '310735697260707841';
                     data.logChannel = '310735697260707841';
                     break;
                 }
