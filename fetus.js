@@ -45,11 +45,16 @@ bot.on('message', message => {
 });
 
 bot.on('presenceUpdate', (oldMember, newMember) => {
+    var data = new Data.Data('', bot);
+
+    try { data.whatServer(newMember.guild.id); }
+    catch (err) { }//this triggers when message was sent in DM
+
     var roles = new Roles.Roles(newMember);
-    var stream = new Stream.Stream(newMember);
+    var stream = new Stream.Stream(newMember, data);
     var game = newMember.presence.game;
     
-	if (game && game.url)
+    if (game && game.url)
         stream.addStreamingRoleIfTheyDontHaveItYet();
 	if (!game || (game && !game.url))
         stream.removeStreamingRoleIfTheyStoppedStreaming();

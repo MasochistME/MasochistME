@@ -22,19 +22,21 @@ exports.Data = function (message, bot) {
     data.arrayOfMods = [];
 
     data.loadServerData = function (callback) {
-        var fs = require('fs');
-        var serverDataPath = '../data/serverData.json';
+        if (data.message.guild) { //if it was send in guild channel, not in DM
+            var fs = require('fs');
+            var serverDataPath = '../data/serverData.json';
 
-        fs.readFile(serverDataPath, 'utf8', (err, serverDataJson) => {
-            serverDataJson = JSON.parse(serverDataJson);
-            if (data.serverIsListed(serverDataJson)) {
-                data.arrayOfMods = serverDataJson.Servers[data.serverIndex(serverDataJson)].moderators;
+            fs.readFile(serverDataPath, 'utf8', (err, serverDataJson) => {
+                serverDataJson = JSON.parse(serverDataJson);
+                if (data.serverIsListed(serverDataJson)) {
+                    data.arrayOfMods.push(serverDataJson.Servers[data.serverIndex(serverDataJson)].moderators);
+                    return callback();
+                    // add all the logic of server initial data here!!!!!!!!!
+                }
+                data.arrayOfMods.push(data.message.guild.ownerID);
                 return callback();
-                // add all the logic of server initial data here!!!!!!!!!
-            }
-            data.arrayOfMods.push(data.message.guild.ownerID);
-            return callback();
-        });
+            });
+        }
     };
 
     data.whatServer = function (serverID) {
