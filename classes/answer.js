@@ -30,7 +30,6 @@ exports.Answer = function (data) {
         "- /mod <@mention>              - gives a person bot-related mod rights\n" +
         "- /unmod <@mention>            - takes away bot-related mod rights from a person\n" +
         "- /modlist                     - shows a list of bot-related moderators\n\n" +
-        "- /impersonate <text>          - sends a message into #general roomas a Dr. Fetus\n" +
         "- /setstatus <text>            - changes the Playing status of Dr. Fetus" +
         "```";
       

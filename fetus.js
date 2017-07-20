@@ -28,8 +28,6 @@ bot.on('message', message => {
                 var userMessage = new UserMessage.UserMessage(data);
                 var answer = new Answer.Answer(data);
 
-                if (message.channel.id == data.database)
-                    return message.delete();
                 answer.toEmoteReactionTrigger();
                 if (userMessage.hasCapsLockTrigger())
                     answer.toCapsLock();
