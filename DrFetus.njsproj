@@ -34,6 +34,9 @@
     <Content Include=".vs\slnx.sqlite" />
     <Content Include=".vs\VSWorkspaceState.json" />
     <Content Include="bin\Microsoft.NodejsTools.WebRole.dll" />
+    <Content Include="classes\data\mods.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="node_modules\discord.js\.gitmodules" />
     <Content Include="node_modules\discord.js\.npmignore" />
     <Content Include="node_modules\discord.js\.tern-project" />

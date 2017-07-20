@@ -38,6 +38,7 @@ exports.Input = function () {
             output = output.replace('<', '');
             output = output.replace('>', '');
             output = output.replace('@', '');
+            output = output.replace('!', '');
         }
         return output;
     };
