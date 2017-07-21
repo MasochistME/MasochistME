@@ -7,6 +7,7 @@ exports.Stream = function (member, data) {
     stream.addStreamingRoleIfTheyDontHaveItYet = function () {
         var roleName = 'Live Stream';
         var d = new Date();
+
         if (!roles.userHasRole(roleName)) {
             roles.addRoleToUser(roleName);
             stream.informFollowers();
@@ -15,6 +16,8 @@ exports.Stream = function (member, data) {
     };
     stream.removeStreamingRoleIfTheyStoppedStreaming = function () {
         var roleName = 'Live Stream';
+        var d = new Date();
+
         if (roles.userHasRole(roleName)) {
             roles.removeRoleFromUser(roleName);
             console.log(`\n${d} - ${member.user.username} stopped streaming!`);
