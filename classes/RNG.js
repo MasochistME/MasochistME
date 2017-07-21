@@ -8,7 +8,7 @@ exports.RNG = function () {
         return false;
     };
     rng.botRefuses = function () {
-        if (rng.happensWithAChanceOf(4))
+        if (rng.happensWithAChanceOf(1))
             return true;
     };
     rng.chooseRandom = function (arrayLength) {

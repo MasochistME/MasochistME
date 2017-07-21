@@ -6,17 +6,18 @@ exports.Stream = function (member, data) {
 
     stream.addStreamingRoleIfTheyDontHaveItYet = function () {
         var roleName = 'Live Stream';
+        var d = new Date();
         if (!roles.userHasRole(roleName)) {
             roles.addRoleToUser(roleName);
             stream.informFollowers();
-            console.log(`${member.user.username} started streaming!`);
+            console.log(`\n${d} - ${member.user.username} started streaming!`);
         }
     };
     stream.removeStreamingRoleIfTheyStoppedStreaming = function () {
         var roleName = 'Live Stream';
         if (roles.userHasRole(roleName)) {
             roles.removeRoleFromUser(roleName);
-            console.log(`${member.user.username} stopped streaming!`);
+            console.log(`\n${d} - ${member.user.username} stopped streaming!`);
         }
     };
     stream.informFollowers = function () {

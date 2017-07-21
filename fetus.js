@@ -36,7 +36,8 @@ bot.on('message', message => {
                 return answer.toKeyword();
             }
             catch (err) {
-                console.log(`\n\n!!! ${err} !!!\n\n`);
+                var d = new Date();
+                console.log(`\n${d} - message post - ${err}`);
             }
         }
     });    
@@ -80,7 +81,8 @@ bot.on('messageUpdate', (oldMessage, newMessage) => {
         }
     }
     catch (err) {
-        console.log('\n\BUG IN MESSAGE UPDATE EVENT\n' + err);
+        var d = new Date();
+        console.log(`\n${d} - message update - ${err}`);
     }
 });
 
@@ -104,7 +106,8 @@ bot.on('messageDelete', message => {
         }
     }
     catch (err) {
-        console.log('\n\BUG IN MESSAGE DELETE EVENT\n' + err);
+        var d = new Date();
+        console.log(`\n${d} - message delete - ${err}`);
     }
 });
 
