@@ -228,7 +228,7 @@ exports.Command = function (answer, data) {
             chanceOfTriggering: 100
         },
         'dark souls': {
-            emoteRespons: `:likeDS:371262717664952321`,
+            emoteResponse: `:likeDS:371262717664952321`,
             chanceOfTriggering: 100
         }
     };
