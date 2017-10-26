@@ -226,6 +226,10 @@ exports.Command = function (answer, data) {
         'Ⓜ': {
             emoteResponse: `:mm:310140119606886421`,
             chanceOfTriggering: 100
+        },
+        'dark souls': {
+            emoteRespons: `:likeDS:371262717664952321`,
+            chanceOfTriggering: 100
         }
     };
 };
