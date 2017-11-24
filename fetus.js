@@ -12,7 +12,7 @@ bot.login(process.env.DISCORD_TOKEN);
 
 bot.on('ready', () => {
     var d = new Date();
-    bot.user.setGame(`/h for help`);
+    data.bot.user.setPresence({ game: { name: "/h for help", type: 0 } });
     console.log(`${d} - ${bot.user.username} starts working!\n`);
 });
 

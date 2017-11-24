@@ -44,7 +44,7 @@ exports.Post = function (data) {
         data.message.react(reactionEmoji);
     };
     post.newStatus = function (newStatus) {
-        data.bot.user.setGame(newStatus);
+        data.bot.user.setPresence({ game: { name: newStatus, type: 0 } });
     };
     post.toDM = function (messageToSend) {
         data.message.author.send(messageToSend);
