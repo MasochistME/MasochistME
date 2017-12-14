@@ -2,7 +2,7 @@
 var http = require('http');
 var url = require('url');
 var fs = require('fs');
-var port = 8080;
+var port = process.env.PORT || 1337;
 //----------------------------------------------
 var groupID = `103582791436640751`;
 var steamKey = process.env.KEY;
