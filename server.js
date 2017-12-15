@@ -8,6 +8,7 @@ var groupID = `103582791436640751`;
 var steamKey = process.env.KEY;
 var updating = false;
 var server = http.createServer((request, response) => {
+    response.setHeader('Access-Control-Allow-Origin', 'http://arcyvilk.com');
     var pathName = url.parse(request.url).pathname;
 
     if (pathName == "/gamesup" && !updating) {
