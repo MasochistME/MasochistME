@@ -7,7 +7,7 @@ var port = process.env.PORT || 1337;
 var groupID = `103582791436640751`;
 var steamKey = process.env.KEY;
 var updating = false;
-var server = http.createServer();
+var server = http.createServer((req, res) => { res.setHeader("Access-Control-Allow-Origin", "*"); });
 
 server.on('request', (request, response) => {
     var pathName = url.parse(request.url).pathname;
