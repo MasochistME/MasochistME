@@ -139,7 +139,7 @@ a:hover{
     margin: 0 100px;
     text-align: center;
     background-color: #444a5b;
-    color: #aaa;
+    color: #aac;
     box-sizing: border-box;
     z-index: 2;
 }
@@ -174,7 +174,7 @@ a:hover{
     max-height: 20px;
     max-width: 200px;
     border: 1px solid #596077;
-    color:#eee;
+    color:#aac;
 }
 #footer{
     text-align:right;

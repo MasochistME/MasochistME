@@ -1,11 +1,18 @@
 ﻿var lastUpdated = 0;
+var urls = {
+    server: "http://195.181.241.222",
+    //server:"http://127.0.0.1:1337",
+    steamData: "/data/data.json",
+    update: "/update",
+};
+
 window.onload = function () {
     loadPageContents();
 };
 function loadPageContents() {
-    var steamData = "/data/data.json";
+    var path = `${urls.server}${urls.steamData}`;
 
-    getUrlContent(steamData, data => {
+    getUrlContent(path, data => {
         data = JSON.parse(data);
         lastUpdated = data.lastUpdated;
 
@@ -26,7 +33,7 @@ function updateData() {
         return;
     }
     document.getElementById("update-button").innerHTML = "Updating...";
-    getUrlContent(steamData, data => {
+    getUrlContent(urls.update, data => {
         document.getElementById("update-button").innerHTML = "Updated!";
     });
 }
@@ -102,6 +109,7 @@ function showDetails(id) {
 // AJAX stuffs
 function getUrlContent(url, callback) {
     var ajax = new XMLHttpRequest();
+
     ajax.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             callback(ajax.responseText);
