@@ -2,7 +2,7 @@
 var http = require('http');
 var url = require('url');
 var fs = require('fs');
-var port = process.env.PORT || 1337;
+var port = 1337;
 //----------------------------------------------
 var groupID = `103582791436640751`;
 var steamKey = process.env.KEY;
@@ -216,14 +216,12 @@ function getGameDataJson(data) {
 
 // FETCH FUNCTIONS
 function responseSend(response, code, data) {
-    var headers = {
+    response.writeHead(code, {
         'Access-Control-Request-Method': '*',
         'Access-Control-Allow-Methods': 'OPTIONS, GET',
         'Access-Control-Allow-Headers': '*',
         'Access-Control-Allow-Origin': 'http://arcyvilk.com'
-    };
-    response.writeHead(code, headers);
-    console.log(headers);
+    });
     response.write(data);
     response.end();
 }
