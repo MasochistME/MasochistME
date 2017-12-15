@@ -216,12 +216,14 @@ function getGameDataJson(data) {
 
 // FETCH FUNCTIONS
 function responseSend(response, code, data) {
-    response.writeHead(code, {
+    var headers = {
         'Access-Control-Request-Method': '*',
         'Access-Control-Allow-Methods': 'OPTIONS, GET',
         'Access-Control-Allow-Headers': '*',
         'Access-Control-Allow-Origin': 'http://arcyvilk.com'
-    });
+    };
+    response.writeHead(code, headers);
+    console.log(headers);
     response.write(data);
     response.end();
 }
