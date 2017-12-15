@@ -216,7 +216,8 @@ function getGameDataJson(data) {
 
 // FETCH FUNCTIONS
 function responseSend(response, code, data) {
-    response.writeHead(code, { 'Access-Control-Allow-Origin': `*` });
+    rsponse.setHeader("Access-Control-Allow-Origin", "http://arcyvilk.com");
+    response.writeHead(code, { 'Access-Control-Allow-Origin': '*' });
     response.write(data);
     response.end();
 }
