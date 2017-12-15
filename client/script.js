@@ -1,7 +1,7 @@
 ﻿var lastUpdated = 0;
 var urls = {
-    server: "http://195.181.241.222",
-    //server:"http://127.0.0.1:1337",
+    //server: "http://195.181.241.222",
+    server:"http://127.0.0.1:1337",
     steamData: "/data/data.json",
     update: "/update",
 };

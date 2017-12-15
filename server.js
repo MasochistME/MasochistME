@@ -8,7 +8,6 @@ var groupID = `103582791436640751`;
 var steamKey = process.env.KEY;
 var updating = false;
 var server = http.createServer((request, response) => {
-    response.setHeader('Access-Control-Allow-Origin', 'http://arcyvilk.com');
     var pathName = url.parse(request.url).pathname;
 
     if (pathName == "/gamesup" && !updating) {
@@ -217,8 +216,12 @@ function getGameDataJson(data) {
 
 // FETCH FUNCTIONS
 function responseSend(response, code, data) {
-    response.setHeader('Access-Control-Allow-Origin', 'http://arcyvilk.com');
-    response.writeHead(code);
+    response.writeHead(code, {
+        'Access-Control-Request-Method': '*',
+        'Access-Control-Allow-Methods': 'OPTIONS, GET',
+        'Access-Control-Allow-Headers': '*',
+        'Access-Control-Allow-Origin': 'http://arcyvilk.com'
+    });
     response.write(data);
     response.end();
 }
