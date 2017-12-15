@@ -7,7 +7,7 @@ var port = process.env.PORT || 1337;
 var groupID = `103582791436640751`;
 var steamKey = process.env.KEY;
 var updating = false;
-var server = http.createServer((req, res) => { res.setHeader("Access-Control-Allow-Origin", "*"); });
+var server = http.createServer();
 
 server.on('request', (request, response) => {
     var pathName = url.parse(request.url).pathname;
@@ -214,8 +214,9 @@ function getGameDataJson(data) {
     return games;
 }
 
-function responseSend(response,code,data) {
-    response.writeHead(code);
+// FETCH FUNCTIONS
+function responseSend(response, code, data) {
+    response.writeHead(code, { 'Access-Control-Allow-Origin': `*` });
     response.write(data);
     response.end();
 }
