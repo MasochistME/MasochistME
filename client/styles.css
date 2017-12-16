@@ -8,6 +8,13 @@ body{
     background-size:cover;
     background-attachment:fixed;
 }
+div {
+    user-select: none;
+    moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+}
 a {
 	color:#a5adcc;
     text-decoration:none;
@@ -80,6 +87,21 @@ a:hover{
 }
 #desc-content {
     padding: 20px;
+}
+#load {
+    background-color: #596077;
+    padding: 20px;
+    display: flex;
+    align-items:center;
+    flex-direction: column;
+    justify-content: center;
+}
+#load p{
+    padding:0;
+    margin:5px;
+}
+#load img{
+    margin-bottom:10px;
 }
 #content ul {
     list-style-type:none;

@@ -15,7 +15,7 @@
 			<div id="nav">
 				<ul>
                     <li><a href="index.html">About</a></li>
-                    <li><a href="players.html">Ranking</a></li>
+                    <li><a href="players.html" class="nav-active">Ranking</a></li>
                     <li><a href="games.html">Game list</a></li>
                     <li><a href="http://store.steampowered.com/curator/7119343/" target="_blank">Curator</a></li>
                     <li id="button-update"><a href="#" onclick="alert('This option is currently disabled.');" id="update-button">Update</a></li><!--onclick="updateData();"-->
@@ -31,7 +31,13 @@
                     Aliquam a sem est. Quisque non porta lectus.</p>
                 </div>
             </div>
-            <div id="content"></div>
+            <div id="content">
+                <div id="load">
+                    <img src="img/load.gif" alt="loading" />
+                    <p>Loading members data, please wait...</p>
+                    <p style="font-size: 0.8em">If this takes longer than usual, try reloading page or checking if you have JavaScript enabled.</p>
+                </div>
+            </div>
             <div id="footer"><a href="https://arcyvilk.com" target="_blank">arcyvilk.com | 2017</a></div>
 		</div>
 	</div>
