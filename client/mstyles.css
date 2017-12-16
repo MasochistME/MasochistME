@@ -23,30 +23,21 @@ h1, h2, h3, h4, h5, h6 {
 a:hover{
 	text-shadow: 0px 0px 10px #fff;
 }
-#wrapper{
-	
-}
 #wrapper-content {
     margin:0 auto;
-    width: 90%;
-    max-width: 960px;
+    width: 100%;
     box-sizing: border-box;
 }
 #header{
-	height:100px;
-    padding:40px;
-    text-transform:uppercase;
-    font-size:1.2em;
-    letter-spacing:0.6em;
-	box-sizing: border-box;
+	display:none;
 }
 #nav{
-	height:50px;
+    display:flex;
 	box-sizing: border-box;
 	background-color:#323644;
 }
 #nav #button-update{
-    float:right;
+    color: #a88 !important;
 }
 #nav ul{
 	list-style-type:none;
@@ -60,11 +51,10 @@ a:hover{
 #nav ul li a{
 	display:block;
 	margin:0;
-	padding:15px 20px;
+    padding: 5px 10px;
 	text-decoration:none;
 	box-sizing: border-box;
 	text-transform:uppercase;
-	letter-spacing:0.2em;
 }
 #nav ul li a:hover{
     background-color:#222;
@@ -91,7 +81,7 @@ a:hover{
     display:flex;
     justify-content:space-between;
     margin:0;
-    padding:5px;
+    padding:0;
     width:100%;
     background-color:#596077;
     border-bottom:1px solid #88a;
@@ -113,24 +103,23 @@ a:hover{
     margin: 0;
 }
 .member-order {
-    width: 64px;
-    max-width:64px;
+    width: 25px;
+    max-width:25px;
+    font-weight:bold;
     text-align: center;
-    font-size:1.2em;
 }
 .member-avatar {
-    min-width: 64px;
-    min-height: 64px;
-    max-width: 64px;
-    max-height: 64px;
+    min-width: 50px;
+    min-height: 50px;
+    max-width: 50px;
+    max-height: 50px;
     box-sizing: border-box;
-    border: 4px solid #88a;
 }
 .game-avatar {
-    max-width: 128px;
-    width: 128px;
-    height:50px;
-    max-height:50px;
+    max-width: 64px;
+    width:64px;
+    height:30px;
+    max-height:30px;
     background-repeat:no-repeat;
     background-size:contain;
     box-sizing: border-box;
@@ -139,22 +128,18 @@ a:hover{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 20px;
+    padding: 0 5px;
     width: 100%;
-    max-width: 90%;
 }
 .game-info{
-    padding:0 20px 0 10px;
+    padding:0;
 }
 .member-name, .game-title {
-    margin-left: 20px;
+    margin-left:5px;
     text-transform: uppercase;
-    letter-spacing: 0.2em;
 }
 .game-desc{
-    font-size:.8em;
-    text-align:right;
-    max-width:50%
+    display:none;
 }
 .member-rating p{
     margin:0;
@@ -163,11 +148,11 @@ a:hover{
 }
 .rating{
     display:inline-block;
-    padding:20px;
+    padding:0 10px;
 }
 .member-details, .game-details {
     display: none;
-    margin: 0 100px;
+    margin: 0 10px;
     text-align: center;
     background-color: #444a5b;
     color: #aac;
@@ -206,14 +191,13 @@ a:hover{
     margin: 0;
     padding: 0;
     height: 20px;
-    width: 200px;
+    width: 50%;
     max-height: 20px;
     max-width: 200px;
     border: 1px solid #596077;
     color: #aac;
 }
 #footer{
-    text-align:right;
-    font-size:0.9em;
-    padding:10px 0;
+    text-align:center;
+    padding:5px;
 }
