@@ -244,6 +244,8 @@ function updateMemberAchievements(memberList, callback) {
                         all++;
                     }
                     completionRate = (completed / all) * 100;
+                    if (completionRate == 100)
+                        memberList[memberKeys[memberIndex]].ranking[group.gameList[gameKeys[gameIndex]].rating]++;
                     memberList[memberKeys[memberIndex]].games[gameKeys[gameIndex]].completionRate = completionRate;
                     memberList[memberKeys[memberIndex]].games[gameKeys[gameIndex]].lastUnlocked = lastUnlocked;
                 }
