@@ -29,7 +29,7 @@ var server = http.createServer((request, response) => {
                                     group.lastUpdated = Date.now();
                                     updating = false;
                                     console.log(`Update finished!`);
-                                    responseSend(response, 200, JSON.stringify(group));
+                                    responseSend(response, 200, JSON.stringify(group), {'Content-Type':'application/json'});
                                     fs.writeFile(`data/data.json`, JSON.stringify(group), error => {
                                         if (error)
                                             console.log(error);
@@ -46,8 +46,11 @@ var server = http.createServer((request, response) => {
         fs.readFile(__dirname + pathName, (err, data) => {
             if (err)
                 responseSend(response, 404, `<h1>404</h1><p>Nie znaleziono strony!</p><p>${JSON.stringify(err)}</p>`);
-            else
-                responseSend(response, 200, data);
+            else{
+				if (pathName.indexOf('.json')!=-1)
+					responseSend(response, 200, data, {'Content-Type':'application/json'});
+				else responseSend(response, 200, data);
+			}
         });
     }
 }).listen(port, "0.0.0.0");
@@ -267,13 +270,21 @@ function updateMemberAchievements(memberList, callback) {
 }
 
 // FETCH FUNCTIONS
-function responseSend(response, code, data) {
-    response.writeHead(code, {
-        'Access-Control-Request-Method': '*',
+function responseSend(response, code, data, headers) {
+	var head = {
+		'Access-Control-Request-Method': '*',
         'Access-Control-Allow-Methods': 'OPTIONS, GET',
         'Access-Control-Allow-Headers': '*',
         'Access-Control-Allow-Origin': 'http://arcyvilk.com'
-    });
+	};
+	if (headers){
+		for (let key in headers){
+			head[key]=headers[key];
+		}
+	}
+	console.log(head);
+	
+    response.writeHead(code, head);
     response.write(data);
     response.end();
 }
