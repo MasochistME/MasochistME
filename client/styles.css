@@ -209,33 +209,40 @@ a:hover{
 .m-game-image {
     margin: 0;
     padding: 0;
-    max-height: 50px;
+    max-height: 36px;
+    min-height:36px;
 }
 .g-member-image {
     margin: 2px;
     padding: 0;
     max-height: 35px;
+    min-height: 35px;
 }
 .m-game-info, .g-member-info {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    max-width: 90%;
-    margin: 0 20px;
+    margin: 0 10px;
 }
+.m-game-title, .g-member-name { }
+.m-game-completion, .g-member-completion, .m-game-times { float: right; }
 .m-game-completion, .g-member-completion {
-    margin: 0;
+    margin: 0 10px;
     padding: 0;
     height: 20px;
     width: 200px;
-    max-height: 20px;
-    max-width: 200px;
+    min-width: 200px;
+    background-image:url('img/progress.png');
     border: 1px solid #596077;
     color: #aac;
 }
-#footer{
-    text-align:right;
-    font-size:0.9em;
-    padding:10px 0;
+.m-game-times, .g-member-times {
+    font-size: 0.9em;
+    color: #596077;
+}
+#footer {
+    text-align: right;
+    font-size: 0.9em;
+    padding: 10px 0;
 }

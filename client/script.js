@@ -3,8 +3,8 @@ var urls = {
     server: "http://195.181.241.222:1337",
     //server:"http://127.0.0.1:1337",
     steamData: "/data/data.json",
-    update: "/update",
-    test: "/test"
+    //test: "/test",
+    update: "/update"
 };
 
 window.onload = function () {
@@ -34,7 +34,7 @@ function updateData() {
     var time = (parseInt(Date.now()) - parseInt(lastUpdated)) / 1000;
     
     if (time < 3600)
-        return alert(`Hold on! It was updated ${time} seconds ago. Wait ${3600 - time} seconds to update again.`);
+        return alert(`Hold on! It was updated ${parseInt(time/60)} minutes ago. Wait ${parseInt((3600 - time)/60)} minutes to update again.`);
     if (document.getElementById("update-button").innerHTML == "Updating...") 
         return alert(`Easy man, it's still updating!`);
     document.getElementById("update-button").innerHTML = "Updating...";
@@ -54,7 +54,7 @@ var Members = function () {
         for (let id in data.memberList)
             sorted.push({ "id": id, "avatar": data.memberList[id].avatar, "name": data.memberList[id].name, "games": data.memberList[id].games, "ranking": data.memberList[id].ranking });
         sorted.sort((b, a) => {
-            return (a.ranking["1"] + a.ranking["2"] + a.ranking["3"]) - (b.ranking["1"] + b.ranking["2"] + b.ranking["3"]);
+            return (a.ranking["1"] + a.ranking["2"]*2 + a.ranking["3"]*3) - (b.ranking["1"] + b.ranking["2"]*2 + b.ranking["3"]*3);
         });
 
         for (let i in sorted) {
@@ -69,14 +69,32 @@ var Members = function () {
 
             for (let j in sortedglist){
                 var r = rateGame(data.gameList[sortedglist[j].id].rating);
-                glist += `<li class="m-game"><img alt="game header" src="${data.gameList[sortedglist[j].id].img}" class="m-game-image"/><div class="m-game-info">` +
+                glist += `<li class="m-game"><img alt="game header" src="${data.gameList[sortedglist[j].id].img}" class="m-game-image"/>` +
+                    `<div class="m-game-info">` +
                     `<div class="m-game-title">${r} ${data.gameList[sortedglist[j].id].title}</div>` +
-                    `<div class="m-game-completion" style="background-image:url('img/progress.png'); background-position-y: ${20 * parseInt(sortedglist[j].completionRate) + 20}px;">${parseInt(sortedglist[j].completionRate)}%</div></div></li>`;
+                    `<div class="m-game-times">`;
+                if (sortedglist[j].completionRate == 100) {
+                    var time = new Date(data.memberList[sorted[i].id].games[sortedglist[j].id].lastUnlocked * 1000);
+                    var d = {
+                        'year': time.getFullYear(),
+                        'month': time.getMonth() + 1,
+                        'date': time.getDate(),
+                        'hour': time.getHours(),
+                        'min': time.getMinutes()
+                    }
+                    for (let i in d){
+                        if (d[i] < 10)
+                            d[i] = `0${d[i]}`;
+                    }
+                    glist += `<div class="m-game-completion-timer">${d.year}.${d.month}.${d.date}, ${d.hour}:${d.min}</div>`;
+                }
+                glist += `<div class="m-game-playtime">${parseInt((data.memberList[sorted[i].id].games[sortedglist[j].id].playtime) / 60)} h</div></div></div>` +
+                    `<div class="m-game-completion" style="background-position-y: ${20 * parseInt(sortedglist[j].completionRate) + 20}px;">${parseInt(sortedglist[j].completionRate)}%</div></li>`;
             }
             list += `<li class="member" id="id-member-${sorted[i].id}" onclick="showDetails(this.id, 'member');"><div class="member-order"><p class="strong">${parseInt(i) + 1}</p></div>` +
                 `<img class="member-avatar" src="${sorted[i].avatar}" alt="avatar"/><div class="member-info">` +
                 `<div class="member-name">${sorted[i].name}</div>` +
-                `<div class="member-rating"><div class="rating rating-total">Total: ${sorted[i].ranking["1"] + sorted[i].ranking["2"] + sorted[i].ranking["3"]}</div>` +
+                `<div class="member-rating"><div class="rating rating-total">Points: ${sorted[i].ranking["1"] + sorted[i].ranking["2"]*2 + sorted[i].ranking["3"]*3}</div>` +
                 `<div class="rating rating-fullstar">★ ${sorted[i].ranking["3"]}</div>` +
                 `<div class="rating rating-halfstar">☆ ${sorted[i].ranking["2"]}</div>` +
                 `<div class="rating rating-other">✓ ${sorted[i].ranking["1"]}</div></div></div></li>` +
@@ -103,11 +121,30 @@ var Games = function () {
             var mlist = '';
             for (let member in data.memberList) {
                 for (let game in data.memberList[member].games) {
-                    if (game == sorted[i].id)
+                    if (game == sorted[i].id) {
                         mlist += `<li class='g-member'><img alt='member-avatar' class='g-member-image' src='${data.memberList[member].avatar}' />` +
-                            `<div class='g-member-info'><div class='g-member-name'>${data.memberList[member].name}</div>` +
+                            `<div class='g-member-info'>` +
+                            `<div class='g-member-name'>${data.memberList[member].name}</div>` +
+                            `<div class='g-member-times'>`;
+                        if (data.memberList[member].games[sorted[i].id].completionRate == 100) {
+                            var time = new Date(data.memberList[member].games[sorted[i].id].lastUnlocked * 1000);
+                            var d = {
+                                'year': time.getFullYear(),
+                                'month': time.getMonth() + 1,
+                                'date': time.getDate(),
+                                'hour': time.getHours(),
+                                'min': time.getMinutes()
+                            }
+                            for (let i in d) {
+                                if (d[i] < 10)
+                                    d[i] = `0${d[i]}`;
+                            }
+                            mlist += `<div class="g-member-completion-timer">${d.year}.${d.month}.${d.date}, ${d.hour}:${d.min}</div>`;
+                        }
+                        mlist += `<div class="g-member-playtime">${parseInt((data.memberList[member].games[sorted[i].id].playtime) / 60)} h</div></div></div>` +
                             `<div class='g-member-completion' style="background-image:url('img/progress.png'); ` +
-                            `background-position-y: ${20 * parseInt(data.memberList[member].games[game].completionRate) + 20 }px;">${parseInt(data.memberList[member].games[game].completionRate)}%</div></div></li >`;
+                            `background-position-y: ${20 * parseInt(data.memberList[member].games[game].completionRate) + 20}px;">${parseInt(data.memberList[member].games[game].completionRate)}%</div></li >`;
+                    }
                 }
             }
             list += `<li class="game" id="id-game-${sorted[i].id}" onclick="showDetails(this.id, 'game')"><div class="game-avatar" style="background-image:url(${data.gameList[sorted[i].id].img})"></div>` +

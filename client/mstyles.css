@@ -202,13 +202,14 @@ a:hover{
     max-height: 35px;
 }
 .m-game-info, .g-member-info {
-    display: flex;
+    display: block;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    max-width: 90%;
-    margin: 0 20px;
+    margin: 0 10px;
 }
+.m-game-title, .g-member-name { float: left; }
+.m-game-completion, .g-member-completion, .m-game-times { float: right; }
 .m-game-completion, .g-member-completion {
     margin: 0;
     padding: 0;
@@ -216,8 +217,14 @@ a:hover{
     width: 50%;
     max-height: 20px;
     max-width: 200px;
+    background-image: url('img/progress.png');
     border: 1px solid #596077;
     color: #aac;
+}
+.m-game-times, .g-member-times {
+    margin: 0 5px;
+    font-size: 0.9em;
+    color: #596077;
 }
 #footer{
     text-align:center;

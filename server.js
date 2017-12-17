@@ -209,21 +209,21 @@ function updateMembersOwnedGames(memberList, callback) {
     iterateThroughMemberOwnedGames(0);
 }
 function updateMemberAchievements(memberList, callback) {
-    //iterujemy przez memberlist, a potem przez memberlist[member].games
-    //dla każdej gry w memberlist[member].games robimy call do api odnośnie achievementów z tej konkretnej gry
-    //i wszystko zapisujemy do tego konkretnego memberlist
     var memberKeys = Object.keys(memberList);
 
     console.log(`7. Updating achievements of all guild members.`)
 
     var iterateThroughMemberList = function (memberIndex) {
-        console.log(`- updating achievements of ${memberKeys[memberIndex]} (${parseInt(memberIndex)+1}/${memberKeys.length})`);
         var gameKeys = Object.keys(memberList[memberKeys[memberIndex]].games);
+
+        console.log(`- updating achievements of ${memberKeys[memberIndex]} (${parseInt(memberIndex) + 1}/${memberKeys.length})`);
 
         var iterateThroughGameList = function (gameIndex) {
             var url = `https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v1/?appid=${gameKeys[gameIndex]}&steamid=${memberKeys[memberIndex]}&key=${steamKey}&format=json`;
             returnRequest(url, data => {
+
                 console.log(`-- game ${gameKeys[gameIndex]} (${parseInt(gameIndex) + 1}/${gameKeys.length})`);
+
                 if (data == "error") {
                     console.log(`Error while downloading data of ${id}s owned games!`);
                     return "error";
