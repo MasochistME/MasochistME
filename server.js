@@ -27,8 +27,13 @@ var server = http.createServer((request, response) => {
                             updateMembersOwnedGames(basicMemberList, advancedMemberList => {
                                 updateMemberAchievements(advancedMemberList, fullMemberList => {
                                     group.lastUpdated = Date.now();
+                                    updating = false;
                                     console.log(`Update finished!`);
                                     responseSend(response, 200, JSON.stringify(group));
+                                    fs.writeFile(`data/data.json`, JSON.stringify(group), error => {
+                                        if (error)
+                                            console.log(error);
+                                    });
                                 });
                             });
                         });
