@@ -4,50 +4,39 @@ var url = require('url');
 var fs = require('fs');
 var port = 1337;
 //----------------------------------------------
-var groupID = `103582791436640751`;
 var steamKey = process.env.KEY;
 var updating = false;
+var group = {
+    groupID: '103582791436640751',
+    groupDesc: '',
+    groupHead: '',
+    memberList: {},
+    gameList: {}
+};
+
 var server = http.createServer((request, response) => {
     var pathName = url.parse(request.url).pathname;
 
-    if (pathName == "/gamesup" && !updating) {
-        var gamesUrl = `http://store.steampowered.com/api/appdetails?appids=`;
+    if (pathName == "/update" && !updating) {
         updating = true;
-
-        fs.readFile("./data/data.json", "utf8", (err, group) => {
-            if (err)
-                return console.log("error");
-            group = JSON.parse(group.trim());
-
-            var gameKeys = Object.keys(group.gameList);
-            var getGameList = function (id) {
-                returnRequest(`${gamesUrl}${gameKeys[id]}`, d => {
-                    if (d == "error") {
-                        console.log("Error while downloading game data!");
-                        return "error";
-                    }
-                    d = JSON.parse(d);
-                    group.gameList[gameKeys[id]].title = d[gameKeys[id]].data.name;
-                    group.gameList[gameKeys[id]].img = d[gameKeys[id]].data.header_image;
-                    if (id < gameKeys.length - 1)
-                        getGameList(id + 1);
-                    else {
-                        responseSend(response, 200, JSON.stringify(group));
-                        updating = false;
-                        fs.writeFile(`data/data.json`, JSON.stringify(group), error => {
-                            if (error)
-                                console.log(error);
-                            console.log("Game list updated!");
-                            return;
+        updateCuratedGames(curatedGamesData => {
+            updateGamesInfo(curatedGamesData, () => {
+                updateGroupData(groupDetails => {
+                    updateMemberIDs(groupDetails, memberList => {
+                        updateBasicMemberData(memberList, basicMemberList => {
+                            updateMembersOwnedGames(basicMemberList, advancedMemberList => {
+                                updateMemberAchievements(advancedMemberList, fullMemberList => {
+                                    group.lastUpdated = Date.now();
+                                    console.log(`Update finished!`);
+                                    responseSend(response, 200, JSON.stringify(group));
+                                });
+                            });
                         });
-                    };
+                    });
                 });
-            }
-            getGameList(0);
-        })
+            });
+        });
     }
-    else if (pathName == "/update" && !updating)
-        updateData(response);
     else {
         fs.readFile(__dirname + pathName, (err, data) => {
             if (err)
@@ -59,159 +48,215 @@ var server = http.createServer((request, response) => {
 }).listen(port, "0.0.0.0");
 console.log(`Server listens on port ${port}.`);
 
-function updateData(response) {
-    var groupUrl = `http://steamcommunity.com/gid/${groupID}/memberslistxml/?xml=1`;
-    var memberUrl = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${steamKey}&steamids=`;
-    var curatedUrl = `http://store.steampowered.com/curator/7119343-0.1%25/ajaxgetfilteredrecommendations/render/?query=&start=0&count=1000&tagids=&sort=recent&types=0`;
-    var gamesUrl = `http://store.steampowered.com/api/appdetails?appids=`;
-    var group = {
-        groupDesc: '',
-        groupHead: '',
-        memberList: {},
-        gameList: {}
-    };
+function updateCuratedGames(callback) {
+    var url = `http://store.steampowered.com/curator/7119343-0.1%25/ajaxgetfilteredrecommendations/render/?query=&start=0&count=1000&tagids=&sort=recent&types=0`;
+    console.log(`${Date.now()} - call for update`)
+    console.log(`1. Updating list of curated games.`); 
 
-    updating = true;
-    returnRequest(groupUrl, data => {
+    returnRequest(url, data => {
+        var helper;
+        var games = {};
+
+        if (data == "error") {
+            console.log("Error while downloading curated games data!");
+            return "error";
+        }
+        data = JSON.parse(data.trim());
+        data = data.results_html;
+        data = data.replace(/\r|\n|\t|&quot;/g, "");
+        data = data.replace(/\'/g, '"');
+        helper = data.split(`<div class="recommendation" >`);
+
+        for (let i in helper) {
+            if (helper[i].indexOf(`data-ds-appid`) != -1) {
+                var gameId = helper[i].substring(helper[i].indexOf(`data-ds-appid="`) + `data-ds-appid="`.length, helper[i].indexOf(`" onmouseover`)).trim();
+                var gameDesc = helper[i].substring(helper[i].indexOf(`<div class="recommendation_desc">"`) + `<div class="recommendation_desc">"`.length, helper[i].indexOf(`"</div>`)).trim();
+                var gameRating = 1;
+
+                if (gameDesc.startsWith("🌟"))
+                    gameRating  = 3;
+                if (gameDesc.startsWith("☆"))
+                    gameRating  = 2;
+                games[gameId] = { "desc": gameDesc, "rating": gameRating };
+            }
+        }
+        callback(games);
+    });
+}
+function updateGamesInfo(gamesData, callback) {
+    var gameArray = '';
+    var url = `http://store.steampowered.com/api/appdetails?appids=`;
+    var gameKeys = Object.keys(gamesData);
+
+    console.log(`2. Updating games data.`)
+
+    var getGameList = function (id) {
+        returnRequest(`${url}${gameKeys[id]}`, data => {
+            console.log(`- updating game ${gameKeys[id]} (${parseInt(id) + 1}/${gameKeys.length})`);
+            if (data == "error") {
+                console.log(`! Error while updating game ${gameKeys[id]}!`);
+                return "error";
+            }
+            data = JSON.parse(data.trim());
+            gamesData[gameKeys[id]].title = data[gameKeys[id]].data.name;
+            gamesData[gameKeys[id]].img = data[gameKeys[id]].data.header_image;
+            if (id < gameKeys.length - 1)
+                getGameList(id + 1);
+            else {
+                group.gameList = gamesData;
+                return callback();
+            }
+        });
+    }
+    getGameList(0);
+}
+function updateGroupData(callback) {
+    var url = `http://steamcommunity.com/gid/${group.groupID}/memberslistxml/?xml=1`;
+
+    console.log(`3. Updating guild data.`)
+
+    returnRequest(url, data => {
         if (data == "error") {
             console.log("Error while downloading group data!");
             return "error";
         }
         var json = JSON.parse(data);
-        var memberIDList = "";
-
         group.groupDesc = json.elements[0].elements[1].elements[3].elements[0].cdata;
-        group.groupHead = json.elements[0].elements[1].elements[2].elements[0].cdata;
-        for (let i in json.elements[0].elements) {
-            if (json.elements[0].elements[i].name == "members") {
-                for (let j in json.elements[0].elements[i].elements) {
-                    group.memberList[json.elements[0].elements[i].elements[j].elements[0].text] = {
-                        "name": "",
-                        "avatar": "",
-                        "games": {},
-                        "ranking": {
-                            "1": 0,
-                            "2": 0,
-                            "3": 0,
-                        }
-                    };
-                    memberIDList += `${json.elements[0].elements[i].elements[j].elements[0].text},`;
-                }
-            }
+        group.groupHead = json.elements[0].elements[1].elements[2].elements[0].cdata;        
+        callback(json.elements[0].elements);
+    });
+}
+function updateMemberIDs(groupDetails, callback) {
+    var memberList = {};
+
+    console.log(`4. Updating list of guild members.`)
+
+    for (let i in groupDetails) {
+        if (groupDetails[i].name == "members") {
+            for (let j in groupDetails[i].elements) {
+                memberList[groupDetails[i].elements[j].elements[0].text] = {
+                    "name": "",
+                    "avatar": "",
+                    "games": {},
+                    "ranking": {
+                        "1": 0,
+                        "2": 0,
+                        "3": 0,
+                    }
+                };
+            };
+        };
+    };
+    callback(memberList);
+}
+function updateBasicMemberData(memberList, callback) {
+    var url = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${steamKey}&steamids=`;
+    for (let id in memberList)
+        url += `${id},`;
+
+    console.log(`5. Updating basic details of guild members.`)
+
+    returnRequest(url, data => {
+        if (data == "error") {
+            console.log("Error while downloading members data!");
+            return "error";
         }
-        returnRequest(`${memberUrl}${memberIDList}`, memberData => {
-            if (memberData == "error") {
-                console.log("Error while downloading members data!");
+        data = JSON.parse(data);
+        for (let i in data.response.players) {
+            memberList[data.response.players[i].steamid].name = data.response.players[i].personaname;
+            memberList[data.response.players[i].steamid].avatar = data.response.players[i].avatarmedium;
+        }
+        callback(memberList);
+    });
+};
+function updateMembersOwnedGames(memberList, callback) {
+    var url = `https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=${steamKey}&steamid=`;
+    var memberArray = Object.keys(memberList);
+
+    console.log(`6. Updating list of curated games owned by all guild members.`)
+
+    var iterateThroughMemberOwnedGames = function (i) {
+        var id = memberArray[i];
+
+        returnRequest(`${url}${id}`, data => {
+            console.log(`- updating ${id}s games (${parseInt(i)+1}/${memberArray.length})`)
+            if (data == "error") {
+                console.log(`Error while downloading data of ${id}s owned games!`);
                 return "error";
             }
-            memberData = JSON.parse(memberData);
-
-            for (let i in memberData.response.players) {
-                group.memberList[memberData.response.players[i].steamid].name = memberData.response.players[i].personaname;
-                group.memberList[memberData.response.players[i].steamid].avatar = memberData.response.players[i].avatarmedium;
+            data = JSON.parse(data);
+            var memberOwned = data.response.games;
+            for (let ownedGame in memberOwned) {
+                for (let curatedGame in group.gameList) {
+                    if (memberOwned[ownedGame].appid == curatedGame) {
+                        memberList[id].games[curatedGame] = {};
+                        memberList[id].games[curatedGame].playtime = memberOwned[ownedGame].playtime_forever;
+                        continue;
+                    }
+                }
             }
-            returnRequest(curatedUrl, gamesData => {
-                if (gamesData == "error") {
-                    console.log("Error while downloading curated games data!");
+            if (i < memberArray.length - 1)
+                iterateThroughMemberOwnedGames(i+1);
+            else
+                return callback(memberList);
+        });
+    }
+    iterateThroughMemberOwnedGames(0);
+}
+function updateMemberAchievements(memberList, callback) {
+    //iterujemy przez memberlist, a potem przez memberlist[member].games
+    //dla każdej gry w memberlist[member].games robimy call do api odnośnie achievementów z tej konkretnej gry
+    //i wszystko zapisujemy do tego konkretnego memberlist
+    var memberKeys = Object.keys(memberList);
+
+    console.log(`7. Updating achievements of all guild members.`)
+
+    var iterateThroughMemberList = function (memberIndex) {
+        console.log(`- updating achievements of ${memberKeys[memberIndex]} (${parseInt(memberIndex)+1}/${memberKeys.length})`);
+        var gameKeys = Object.keys(memberList[memberKeys[memberIndex]].games);
+
+        var iterateThroughGameList = function (gameIndex) {
+            var url = `https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v1/?appid=${gameKeys[gameIndex]}&steamid=${memberKeys[memberIndex]}&key=${steamKey}&format=json`;
+            returnRequest(url, data => {
+                console.log(`-- game ${gameKeys[gameIndex]} (${parseInt(gameIndex) + 1}/${gameKeys.length})`);
+                if (data == "error") {
+                    console.log(`Error while downloading data of ${id}s owned games!`);
                     return "error";
                 }
-                gamesData = JSON.parse(gamesData);
-                group.gameList = getGameDataJson(gamesData);
-                group.lastUpdated = Date.now();
+                data = JSON.parse(data);
+                if (data.playerstats.success) {
+                    var completed = 0;
+                    var all = 0;
+                    var completionRate = 0;
+                    var lastUnlocked = 0;
+                    var achievements = data.playerstats.achievements;
 
-                var gameKeys = Object.keys(group.gameList);
-                var memberKeys = Object.keys(group.memberList);
-
-                var iterateThroughGames = function (game) {
-                    returnRequest(gamesUrl, gameData => {
-                        if (gameData == "error") {
-                            console.log("Error while downloading game data!");
-                            return "error";
-                        }
-                        group.gameList[gameKeys[game]].title = gameData.data.name;
-                        group.gameList[gameKeys[game]].img = gameData.data.header_image;
-
-                        if (game < gameKeys.length - 1)
-                            iterateThroughGames(game + 1);
-                        else {
-                            var iterateThroughMembers = function (member) {
-                                var iterateThroughAchievements = function (game) {
-                                    var achievementsUrl = `https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v1/?appid=${gameKeys[game]}&key=${steamKey}&steamid=${memberKeys[member]}&format=json`;
-
-                                    returnRequest(achievementsUrl, achData => {
-                                        if (achData == "error") {
-                                            console.log("Error while downloading achievement data!");
-                                            return "error";
-                                        }
-                                        achData = JSON.parse(achData);
-
-                                        if (achData.playerstats.success) {
-                                            var completed = 0;
-                                            var all = 0;
-
-                                            for (let i in achData.playerstats.achievements) {
-                                                if (achData.playerstats.achievements[i].achieved == 1)
-                                                    completed++;
-                                                all++;
-                                            }
-                                            group.memberList[memberKeys[member]].games[gameKeys[game]] = { "completionRate": (completed / all) * 100 };
-                                        }
-                                        console.log(`member ${member}, game ${game}`);
-                                        if (game < gameKeys.length - 1)
-                                            iterateThroughAchievements(game + 1);
-                                        else {
-                                            if (member < memberKeys.length - 1)
-                                                iterateThroughMembers(member + 1);
-                                            else {
-                                                for (let memberID in group.memberList) {
-                                                    for (let gameID in group.memberList[memberID].games) {
-                                                        if (group.memberList[memberID].games[gameID].completionRate == 100)
-                                                            group.memberList[memberID].ranking[group.gameList[gameID].rating]++;
-                                                    }
-                                                }
-                                                responseSend(response, 200, JSON.stringify(group));
-                                                updating = false;
-                                                fs.writeFile(`data/data.json`, JSON.stringify(group), error => {
-                                                    if (error)
-                                                        console.log(error);
-                                                });
-                                            }
-                                        }
-                                    });
-                                }
-                                iterateThroughAchievements(0);
-                            }
-                            iterateThroughMembers(0);
-                        }
-                    });
+                    for (let i in achievements) {
+                        if (lastUnlocked < achievements[i].unlocktime)
+                            lastUnlocked = achievements[i].unlocktime;
+                        if (achievements[i].achieved == 1)
+                            completed++;
+                        all++;
+                    }
+                    completionRate = (completed / all) * 100;
+                    memberList[memberKeys[memberIndex]].games[gameKeys[gameIndex]].completionRate = completionRate;
+                    memberList[memberKeys[memberIndex]].games[gameKeys[gameIndex]].lastUnlocked = lastUnlocked;
                 }
-                iterateThroughGames(0);
+                if (gameIndex < gameKeys.length - 1)
+                    iterateThroughGameList(gameIndex + 1);
+                else {
+                    if (memberIndex < memberKeys.length - 1)
+                        iterateThroughMemberList(memberIndex + 1);
+                    else {
+                        group.memberList = memberList;
+                        return callback(group);
+                    }
+                }
             });
-        });
-    })
-}
-// PARSING FUNCTIONS
-function getGameDataJson(data) {
-    var helper;
-    var games = {};
-
-    data.results_html = data.results_html.replace(/\r|\n|\t|&quot;/g, "");
-    data.results_html = data.results_html.replace(/\'/g, '"');
-    helper = data.results_html.split(`<div class="recommendation" >`);
-
-    for (let i in helper) {
-        if (helper[i].indexOf(`data-ds-appid`) != -1) {
-            var gid = helper[i].substring(helper[i].indexOf(`data-ds-appid="`) + `data-ds-appid="`.length, helper[i].indexOf(`" onmouseover`)).trim();
-            var gdesc = helper[i].substring(helper[i].indexOf(`<div class="recommendation_desc">"`) + `<div class="recommendation_desc">"`.length, helper[i].indexOf(`"</div>`)).trim();
-            var grat = 1;
-            if (gdesc.startsWith("🌟"))
-                grat = 3;
-            if (gdesc.startsWith("☆"))
-                grat = 2;
-            games[gid] = { "desc": gdesc, "rating": grat };
         }
+        iterateThroughGameList(0);
     }
-    return games;
+    iterateThroughMemberList(0);
 }
 
 // FETCH FUNCTIONS

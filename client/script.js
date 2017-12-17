@@ -1,9 +1,10 @@
 ﻿var lastUpdated = 0;
 var urls = {
-    server: "http://195.181.241.222",
+    server: "http://195.181.241.222:1337",
     //server:"http://127.0.0.1:1337",
     steamData: "/data/data.json",
     update: "/update",
+    test: "/test"
 };
 
 window.onload = function () {
@@ -12,6 +13,9 @@ window.onload = function () {
 };
 function loadPageContents(page) {
     getUrlContent(`${urls.server}${urls.steamData}`, data => {
+        if (data == `500`)
+            return alert(`Internal server error. Please try again later`);
+
         data = JSON.parse(data);
         lastUpdated = data.lastUpdated;
         document.getElementById("header").innerHTML = data.groupHead;
@@ -28,18 +32,14 @@ function loadPageContents(page) {
 };
 function updateData() {
     var time = (parseInt(Date.now()) - parseInt(lastUpdated)) / 1000;
-    var steamData = "/update";
-
-    if (document.getElementById("update-button").innerHTML == "Updating...") {
-        alert(`Easy man, it's still updating!`);
-        return;
-    }
-    if (time < 3600) {
-        alert(`Hold on! It was updated ${time} seconds ago. Wait ${3600 - time} seconds to update again.`);
-        return;
-    }
+    
+    if (time < 3600)
+        return alert(`Hold on! It was updated ${time} seconds ago. Wait ${3600 - time} seconds to update again.`);
+    if (document.getElementById("update-button").innerHTML == "Updating...") 
+        return alert(`Easy man, it's still updating!`);
     document.getElementById("update-button").innerHTML = "Updating...";
-    getUrlContent(urls.update, data => {
+    getUrlContent(`${urls.server}${urls.update}`, data => {
+        alert(data);
         document.getElementById("update-button").innerHTML = "Updated!";
     });
 }
@@ -144,11 +144,12 @@ function showDetails(id, type) {
 // AJAX stuffs
 function getUrlContent(url, callback) {
     var ajax = new XMLHttpRequest();
-
+    
     ajax.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
+        if (this.readyState == 4 && this.status == 200)
             callback(ajax.responseText);
-        }
+        if (this.status == 500)
+            callback(`500`);
     };
     ajax.open("GET", url, true);
     ajax.send();
