@@ -10,33 +10,47 @@
 <body id="page-games">
     <script src="script.js" type="text/javascript"></script>
     <div id="wrapper">
-            <div id="header"></div>
-            <div id="nav">
-                <ul>
-                    <li><a href="index.html">About</a></li>
-                    <li><a href="players.html">Ranking</a></li>
-                    <li><a href="games.html" class="nav-active">Game list</a></li>
-                    <li><a href="http://store.steampowered.com/curator/7119343/" target="_blank">Curator</a></li>
-                    <li id="button-update"><a href="#" onclick="updateData();" id="update-button">Update</a></li>
-                </ul>
-            </div>
-            <div id="desc">
-                <div id="desc-content">
-                    <h1>Curated games</h1>
-                    <p>Here's the list of games that 0.1% curates, as well as the percentage completion comparision between our members.</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor vulputate odio, eu imperdiet erat ullamcorper efficitur. 
-                    Maecenas mattis laoreet metus, a consectetur lorem varius et. Sed fringilla sit amet libero nec bibendum. 
-                    Aliquam a sem est. Quisque non porta lectus.</p>
-                </div>
-            </div>
-            <div id="content">
-                <div id="load">
-                    <img src="img/load.gif" alt="loading" />
-                    <p>Loading games data, please wait...</p>
-                    <p style="font-size: 0.8em">If this takes longer than usual, try reloading page or checking if you have JavaScript enabled.</p>
-                </div>
-            </div>
-            <div id="footer"><a href="https://arcyvilk.com" target="_blank">arcyvilk.com | 2017</a></div>
+        <div id="header"></div>
+        <div id="nav">
+            <ul>
+                <li><a href="index.html">About</a></li>
+                <li><a href="players.html">Ranking</a></li>
+                <li><a href="games.html" class="nav-active">Game list</a></li>
+                <li><a href="http://store.steampowered.com/curator/7119343/" target="_blank">Curator</a></li>
+                <li id="button-update"><a href="#" onclick="updateData();" id="update-button">Update</a></li>
+            </ul>
         </div>
+        <div id="desc">
+            <div id="wrapper-leaderboards" onclick="showLeaderboards('hide'); event.cancelBubble=true;">
+                <div id="leaderboards">
+                </div>
+            </div>
+            <div id="desc-content">
+                <h1>Curated games</h1>
+                <p>Here's the list of games that 0.1% curates, as well as the percentage completion comparision between our members.</p>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor vulputate odio, eu imperdiet erat ullamcorper efficitur.
+                    Maecenas mattis laoreet metus, a consectetur lorem varius et. Sed fringilla sit amet libero nec bibendum.
+                    Aliquam a sem est. Quisque non porta lectus.
+                </p>
+            </div>
+            <div id="game-choice">
+                <input type="checkbox" name="game" value="3" id="game-choice-3" class="game-choice-checkbox" checked onclick="showGamesRated(this.id, 3);"/>
+                <label for="game-choice-3">show ★ games</label>
+                <input type="checkbox" name="game" value="2" id="game-choice-2" class="game-choice-checkbox" checked onclick="showGamesRated(this.id, 2);"/>
+                <label for="game-choice-2">show ☆ games</label>
+                <input type="checkbox" name="game" value="1" id="game-choice-1" class="game-choice-checkbox" checked onclick="showGamesRated(this.id, 1);"/>
+                <label for="game-choice-1">show ✓ games</label>
+            </div>
+        </div>
+        <div id="content">
+            <div id="load">
+                <img src="img/load.gif" alt="loading" />
+                <p>Loading games data, please wait...</p>
+                <p style="font-size: 0.8em">If this takes longer than usual, try reloading page or checking if you have JavaScript enabled.</p>
+            </div>
+        </div>
+        <div id="footer"><a href="https://arcyvilk.com" target="_blank">arcyvilk.com | 2017</a></div>
+    </div>
 </body>
 </html>

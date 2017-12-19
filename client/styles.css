@@ -80,10 +80,14 @@ a:hover{
     box-sizing: border-box;
 }
 #desc {
+    position:relative;
     background-color: #596077;
 }
 #desc-content {
     padding: 20px;
+}
+#desc-content p{
+    margin: 10px 0 0 0;
 }
 #load {
     background-color: #596077;
@@ -119,14 +123,14 @@ a:hover{
     background-color: #88a;
     color: #222;
 }
-.member, .game {
+.member {
     display: block;
     box-sizing: content-box;
     max-width: 100%;
     cursor: pointer;
-    z-index: 1;
 }
-.member-avatar, .game-avatar, .member-info .member-name, .member-rating {
+.game { cursor:pointer; }
+.member-avatar, .member-info .member-name, .member-rating {
     float: left;
     padding: 0;
     margin: 0;
@@ -145,16 +149,7 @@ a:hover{
     box-sizing: border-box;
     border: 4px solid #88a;
 }
-.game-avatar {
-    max-width: 128px;
-    width: 128px;
-    height:50px;
-    max-height:50px;
-    background-repeat:no-repeat;
-    background-size:contain;
-    box-sizing: border-box;
-}
-.member-info, .game-info {
+.member-info{
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -162,18 +157,10 @@ a:hover{
     width: 100%;
     max-width: 90%;
 }
-.game-info{
-    padding:0 20px 0 10px;
-}
-.member-name, .game-title {
+.member-name {
     margin-left: 20px;
     text-transform: uppercase;
     letter-spacing: 0.2em;
-}
-.game-desc{
-    font-size:.8em;
-    text-align:right;
-    max-width:50%
 }
 .member-rating p{
     margin:0;
@@ -184,21 +171,46 @@ a:hover{
     display:inline-block;
     padding:20px;
 }
-.member-details, .game-details {
+.member-details {
     display: none;
     margin: 0 100px;
     text-align: center;
     background-color: #444a5b;
     color: #aac;
     box-sizing: border-box;
-    z-index: 2;
 }
-.member-progress{
-    margin:0;
-    padding:0;
-    list-style-type:none;
+#wrapper-leaderboards {
+    position: fixed;
+    display:none;
+    align-content:center;
+    justify-content:center;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    background-color:rgba(0,0,0,0.6);
+    z-index:1;
 }
-.member-progress li, .game-completed-by li{
+#leaderboards {
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    top: 10%;
+    width: 700px;
+    height:auto;
+    max-height: 80%;
+    padding: 10px;
+    overflow-y: scroll;
+    background-color: #444a5b;
+}
+#game-statistics ul { list-style-type: none; }
+.member-progress, .game-leaderboards {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+.member-progress li, .game-completed-by li, .g-member{
     display:flex;
     align-items:center;
     border-bottom:1px solid #596077;
@@ -237,6 +249,57 @@ a:hover{
 .m-game-times, .g-member-times {
     font-size: 0.9em;
     color: #596077;
+}
+#game-choice {
+    display:flex;
+    justify-content:center;
+    padding-bottom:10px;
+}
+#game-choice .game-choice-checkbox { margin-left:20px; }
+#game-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    overflow: hidden;
+    background-color: #596077;
+}
+.game {
+    width: 30%;
+    max-width: 300px;
+    height: 145px;
+    margin: 5px;
+    background-size: 300px;
+    background-position: center;
+    background-repeat:no-repeat;
+    text-align: center;
+    border: 2px solid #88a;
+    box-sizing: border-box;
+    transition: background-size ease-out 0.5s;
+}
+.game:hover{
+    background-size:380px;
+}
+.game-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 100%;
+    height: 100%;
+    padding: 0 5px;
+    box-sizing: border-box;
+    background-color: rgba(0, 0, 0, 0);
+    opacity: 0;
+    overflow: hidden;
+    transition: background-color linear 0.5s, opacity 0.5s;
+}
+.game:hover .game-info {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+.game-rating{ font-size:1.5em; }
+.game-desc{ font-size:0.9em; }
+.rated-1, .rated-2, .rated-3 {
+    display:block;
 }
 #footer {
     text-align: right;

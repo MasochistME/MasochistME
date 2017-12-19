@@ -282,8 +282,6 @@ function responseSend(response, code, data, headers) {
 			head[key]=headers[key];
 		}
 	}
-	console.log(head);
-	
     response.writeHead(code, head);
     response.write(data);
     response.end();
