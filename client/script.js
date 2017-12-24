@@ -3,15 +3,34 @@ var urls = {
     server: "http://195.181.241.222:1337",
     //server:"http://127.0.0.1:1337",
     steamData: "/data/data.json",
-    //test: "/test",
     update: "/update"
 };
 var data = {};
 
-window.onload = function () {
+// REDONE INTO JQUERY
+$(document).ready(function () {
     var page = document.getElementsByTagName("body")[0].id;
     loadPageContents(page);
-};
+
+    $('#searchbar').on('input', function (e) {
+        var searchedString = $(this).val().toLowerCase().trim();
+
+        if ($('body').attr('id') == 'page-players') {
+            $('.member').each(function () {
+                if ($(this).children('.member-info').children('.member-name').html().toLowerCase().indexOf(searchedString) != -1)
+                    $(this).css('display', 'flex');
+                else $(this).css('display', 'none');
+            });
+        }
+        if ($('body').attr('id') == 'page-games') {
+            $('.game').each(function () {
+                if ($(this).children('.game-info').children('.game-title').html().toLowerCase().indexOf(searchedString) != -1)
+                    $(this).css('display', 'flex');
+                else $(this).css('display', 'none');
+            });
+        }
+    });
+});
 function loadPageContents(page) {
     getUrlContent(`${urls.server}${urls.steamData}`, response => {
         if (response == `500`)
@@ -19,25 +38,23 @@ function loadPageContents(page) {
 
         data = JSON.parse(response);
         lastUpdated = data.lastUpdated;
-        document.getElementById("header").innerHTML = data.groupHead;
-
-        if (page == "page-players") 
-            document.getElementById("content").innerHTML = `<ul>${createMembersList(data)}</ul>`;
+        if (page == "page-players")
+            $('#content').html(`<ul>${createMembersList(data)}</ul>`);
         if (page == "page-games")
-            document.getElementById("content").innerHTML = `<div id="game-list">${createGamesList(data)}</div>`;
+            $('#content').html(`<div id="game-list">${createGamesList(data)}</div>`);
     });
 };
 function updateData() {
     var time = (parseInt(Date.now()) - parseInt(lastUpdated)) / 1000;
-    
+
     if (time < 3600)
-        return alert(`Hold on! It was updated ${parseInt(time/60)} minutes ago. Wait ${parseInt((3600 - time)/60)} minutes to update again.`);
-    if (document.getElementById("update-button").innerHTML == "Updating...") 
+        return alert(`Hold on! It was updated ${parseInt(time / 60)} minutes ago. Wait ${parseInt((3600 - time) / 60)} minutes to update again.`);
+    if ($('#update-button').html() == "Updating...")
         return alert(`Easy man, it's still updating!`);
-    document.getElementById("update-button").innerHTML = "Updating...";
+    $('#update-button').html("Updating...");
     getUrlContent(`${urls.server}${urls.update}`, data => {
         alert(data);
-        document.getElementById("update-button").innerHTML = "Updated!";
+        $('#update-button').html("Updated!");
     });
 }
 
@@ -168,8 +185,7 @@ function createLeaderboard(gameId) {
                 `${parseInt(data.memberList[member].games[gameId].completionRate)}%</div></li >`;
         }
     }
-
-    document.getElementById(`leaderboards`).innerHTML = `<h1>Leaderboards: ${data.gameList[gameId].title}</h1>` +
+    $(`#leaderboards`).html(`<h1>Leaderboards: ${data.gameList[gameId].title}</h1>` +
         `<div id="game-statistics">` +
         `<ul>` +
         `<li>Fastest time: ${records.fastest.time} hours (${records.fastest.player})</li>` +
@@ -177,7 +193,7 @@ function createLeaderboard(gameId) {
         `<li>Number of completions: ${records.numberOfCompletions}</li>` +
         `</ul>`+
         `</div>` +
-        `<ul class="game-leaderboards">${list}</ul></div>`;
+        `<ul class="game-leaderboards">${list}</ul></div>`);
     showLeaderboards('show');
 }
 function getGameRecords(gameId) {
@@ -207,24 +223,21 @@ function getGameRecords(gameId) {
 
 // DISPLAYING FUNCTIONS
 function showLeaderboards(action) {
-    var leaderboards = document.getElementById("wrapper-leaderboards");
-
     if (action == 'hide')
-        document.getElementById("wrapper-leaderboards").style.display = "none";
-    if (action == 'show') {
-        document.getElementById("wrapper-leaderboards").style.display = "flex";
-    }
+        $("#wrapper-leaderboards").css("display", "none");
+    if (action == 'show')
+        $("#wrapper-leaderboards").css("display", "flex");
 };
 function showDetails(id, type) {
     id = id.replace(`id-${type}-`, "");
-    var el = document.getElementById(`id-${type}-details-${id}`).style.display;
+    var el = document.getElementById(`id-${type}-details-${id}`).style.display; //????
 
     if (el != "block")
-        document.getElementById(`id-${type}-details-${id}`).style.display = "block";
+        $(`#id-${type}-details-${id}`).css("display","block");
     else
-        document.getElementById(`id-${type}-details-${id}`).style.display = "none";
+        $(`#id-${type}-details-${id}`).css("display", "none");
 };
-function showGamesRated(id, rating) {
+function showGamesRated(id, rating) { // ??????????????
     var el = document.getElementsByClassName(`rated-${rating}`);
 
     if (document.getElementById(id).checked) {
@@ -235,6 +248,9 @@ function showGamesRated(id, rating) {
         for (let i in el)
             el[i].style.display = "none";
     }
+}
+function search(type) {
+
 }
 //PARSING
 function whichPlace(place) {
