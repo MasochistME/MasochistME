@@ -13,23 +13,11 @@ $(document).ready(function () {
     loadPageContents(page);
 
     $('#searchbar').on('input', function (e) {
-        var searchedString = $(this).val().toLowerCase().trim();
-
-        if ($('body').attr('id') == 'page-players') {
-            $('.member').each(function () {
-                if ($(this).children('.member-info').children('.member-name').html().toLowerCase().indexOf(searchedString) != -1)
-                    $(this).css('display', 'flex');
-                else $(this).css('display', 'none');
-            });
-        }
-        if ($('body').attr('id') == 'page-games') {
-            $('.game').each(function () {
-                if ($(this).children('.game-info').children('.game-title').html().toLowerCase().indexOf(searchedString) != -1)
-                    $(this).css('display', 'flex');
-                else $(this).css('display', 'none');
-            });
-        }
+        displayElementsFittingSearchOptions();
     });
+    $('.game-choice-checkbox').on('click', function () {
+        displayElementsFittingSearchOptions();
+    })
 });
 function loadPageContents(page) {
     getUrlContent(`${urls.server}${urls.steamData}`, response => {
@@ -222,6 +210,30 @@ function getGameRecords(gameId) {
 }
 
 // DISPLAYING FUNCTIONS
+function displayElementsFittingSearchOptions() {
+    var searchedString = $('#searchbar').val().toLowerCase().trim();
+
+    if ($('body').attr('id') == 'page-players') {
+        $('.member').each(function () {
+            if (searchedString == '' || $(this).children('.member-info').children('.member-name').html().toLowerCase().indexOf(searchedString) != -1)
+                $(this).css('display', 'flex');
+            else $(this).css('display', 'none');
+        });
+    }
+    if ($('body').attr('id') == 'page-games') {
+        $('.game').each(function () {
+            $(this).css('display', 'none');
+            if (searchedString == '' || $(this).children('.game-info').children('.game-title').html().toLowerCase().indexOf(searchedString) != -1) {   
+                for (let score = 1; score <= 3; score++) {
+                    if ($(this).is(`.rated-${score}`) && $(`#game-choice-${score}`).is(':checked')) {
+                        $(this).css('display', 'flex');
+                        continue;
+                    }
+                }
+            }
+        });
+    }
+}
 function showLeaderboards(action) {
     if (action == 'hide')
         $("#wrapper-leaderboards").css("display", "none");
@@ -237,21 +249,6 @@ function showDetails(id, type) {
     else
         $(`#id-${type}-details-${id}`).css("display", "none");
 };
-function showGamesRated(id, rating) { // ??????????????
-    var el = document.getElementsByClassName(`rated-${rating}`);
-
-    if (document.getElementById(id).checked) {
-        for (let i in el)
-            el[i].style.display = "block";
-    }
-    else {
-        for (let i in el)
-            el[i].style.display = "none";
-    }
-}
-function search(type) {
-
-}
 //PARSING
 function whichPlace(place) {
     switch (place) {
