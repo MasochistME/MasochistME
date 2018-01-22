@@ -212,14 +212,16 @@ exports.Command = function (answer, data) {
             typeOfResponse: `text`,
             chanceOfTriggering: 10
         },
-        ' kela ': {
+        ' kela': {
             triggers: 'toMeme',
             typeOfResponse: `function`,
+            arguments: `show`,
             chanceOfTriggering: 15
         },
-        ' kela420 ': {
+        ' kela420': {
             triggers: 'toMeme',
             typeOfResponse: `function`,
+            arguments: `show`,
             chanceOfTriggering: 15
         }
     };
