@@ -7,11 +7,13 @@ var port = 1337;
 var steamKey = process.env.KEY;
 var updating = false;
 var group = {
+	lastUpdated: 0,
     groupID: '103582791436640751',
     groupDesc: '',
     groupHead: '',
     memberList: {},
-    gameList: {}
+    gameList: {},
+	log: []
 };
 
 var server = http.createServer((request, response) => {
@@ -19,6 +21,7 @@ var server = http.createServer((request, response) => {
 
     if (pathName == "/update" && !updating) {
         updating = true;
+		group.lastUpdated = Date.now();
         updateCuratedGames(curatedGamesData => {
             updateGamesInfo(curatedGamesData, () => {
                 updateGroupData(groupDetails => {
@@ -26,7 +29,6 @@ var server = http.createServer((request, response) => {
                         updateBasicMemberData(memberList, basicMemberList => {
                             updateMembersOwnedGames(basicMemberList, advancedMemberList => {
                                 updateMemberAchievements(advancedMemberList, fullMemberList => {
-                                    group.lastUpdated = Date.now();
                                     updating = false;
                                     console.log(`Update finished!`);
                                     responseSend(response, 200, JSON.stringify(group), {'Content-Type':'application/json'});
@@ -242,13 +244,32 @@ function updateMemberAchievements(memberList, callback) {
                     for (let i in achievements) {
                         if (lastUnlocked < achievements[i].unlocktime)
                             lastUnlocked = achievements[i].unlocktime;
-                        if (achievements[i].achieved == 1)
+                        if (achievements[i].achieved == 1){
                             completed++;
+							if ((achievements[i].unlocktime*1000) - group.lastUpdated <= 604800000) { // if achievement was unlocked within the last week
+								group.log.push({
+									"date": achievements[i].unlocktime*1000,
+									"type": "achievement",
+									"achievname": achievements[i].apiname,
+									"player": data.playerstats.steamID,
+									"game": data.playerstats.gameName
+								});
+							}
+						}
                         all++;
                     }
                     completionRate = (completed / all) * 100;
-                    if (completionRate == 100)
+                    if (completionRate == 100){
                         memberList[memberKeys[memberIndex]].ranking[group.gameList[gameKeys[gameIndex]].rating]++;
+						if (lastUnlocked - group.lastUpdated <= 604800000) { // if game was 100%'d within the last week
+							group.log.push({
+									"date": lastUnlocked,
+									"type": "complete",
+									"player": data.playerstats.steamID,
+									"game": data.playerstats.gameName
+							});
+						}
+					}
                     memberList[memberKeys[memberIndex]].games[gameKeys[gameIndex]].completionRate = completionRate;
                     memberList[memberKeys[memberIndex]].games[gameKeys[gameIndex]].lastUnlocked = lastUnlocked;
                 }
