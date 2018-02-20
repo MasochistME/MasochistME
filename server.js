@@ -246,7 +246,7 @@ function updateMemberAchievements(memberList, callback) {
                             lastUnlocked = achievements[i].unlocktime;
                         if (achievements[i].achieved == 1){
                             completed++;
-							if (group.lastUpdated - achievements[i].unlocktime <= 604800000) { // if achievement was unlocked within the last week
+							if (group.lastUpdated - (achievements[i].unlocktime*1000) <= 604800000) { // if achievement was unlocked within the last week
 								group.log.push({
 									"date": achievements[i].unlocktime*1000,
 									"type": "achievement",
@@ -261,7 +261,7 @@ function updateMemberAchievements(memberList, callback) {
                     completionRate = (completed / all) * 100;
                     if (completionRate == 100){
                         memberList[memberKeys[memberIndex]].ranking[group.gameList[gameKeys[gameIndex]].rating]++;
-						if (group.lastUpdated - lastUnlocked <= 604800000) { // if game was 100%'d within the last week
+						if (group.lastUpdated - (lastUnlocked*1000) <= 604800000) { // if game was 100%'d within the last week
 							group.log.push({
 									"date": lastUnlocked,
 									"type": "complete",
