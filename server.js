@@ -266,7 +266,7 @@ function updateMemberAchievements(memberList, callback) {
 									"date": lastUnlocked * 1000,
 									"type": "complete",
 									"player": data.playerstats.steamID,
-									"game": data.playerstats.gameName
+									"game": gameKeys[gameIndex]
 							});
 						}
 					}
