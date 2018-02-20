@@ -252,7 +252,7 @@ function updateMemberAchievements(memberList, callback) {
 									"type": "achievement",
 									"achievname": achievements[i].apiname,
 									"player": data.playerstats.steamID,
-									"game": data.playerstats.gameName
+									"game": gameKeys[gameIndex]
 								});
 							}
 						}
@@ -263,7 +263,7 @@ function updateMemberAchievements(memberList, callback) {
                         memberList[memberKeys[memberIndex]].ranking[group.gameList[gameKeys[gameIndex]].rating]++;
 						if (group.lastUpdated - (lastUnlocked*1000) <= 604800000) { // if game was 100%'d within the last week
 							group.log.push({
-									"date": lastUnlocked,
+									"date": lastUnlocked * 1000,
 									"type": "complete",
 									"player": data.playerstats.steamID,
 									"game": data.playerstats.gameName
