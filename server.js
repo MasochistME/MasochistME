@@ -246,7 +246,7 @@ function updateMemberAchievements(memberList, callback) {
                             lastUnlocked = achievements[i].unlocktime;
                         if (achievements[i].achieved == 1){
                             completed++;
-							if ((achievements[i].unlocktime*1000) - group.lastUpdated <= 604800000) { // if achievement was unlocked within the last week
+							if (achievements[i].unlocktime - group.lastUpdated <= 604800000) { // if achievement was unlocked within the last week
 								group.log.push({
 									"date": achievements[i].unlocktime*1000,
 									"type": "achievement",
