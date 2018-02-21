@@ -12,8 +12,7 @@ var group = {
     groupDesc: '',
     groupHead: '',
     memberList: {},
-    gameList: {},
-	log: []
+    gameList: {}
 };
 
 var server = http.createServer((request, response) => {
@@ -22,6 +21,7 @@ var server = http.createServer((request, response) => {
     if (pathName == "/update" && !updating) {
         updating = true;
 		group.lastUpdated = Date.now();
+		group.log = [];
         updateCuratedGames(curatedGamesData => {
             updateGamesInfo(curatedGamesData, () => {
                 updateGroupData(groupDetails => {
@@ -245,7 +245,7 @@ function updateMemberAchievements(memberList, callback) {
                         if (lastUnlocked < achievements[i].unlocktime)
                             lastUnlocked = achievements[i].unlocktime;
                         if (achievements[i].achieved == 1){
-                            completed++;
+                            completed++;/*
 							if (group.lastUpdated - (achievements[i].unlocktime*1000) <= 604800000) { // if achievement was unlocked within the last week
 								group.log.push({
 									"date": achievements[i].unlocktime*1000,
@@ -254,7 +254,7 @@ function updateMemberAchievements(memberList, callback) {
 									"player": data.playerstats.steamID,
 									"game": gameKeys[gameIndex]
 								});
-							}
+							}*/
 						}
                         all++;
                     }
