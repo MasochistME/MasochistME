@@ -71,7 +71,13 @@ function updateCuratedGames(callback) {
             console.log("Error while downloading curated games data!");
             return "error";
         }
-        data = JSON.parse(data.trim());
+		try{
+			data = JSON.parse(data.trim());
+		}
+		catch(e){
+			console.log("ERROR - Couldn't parse the JSON!");
+			return;
+		}
         data = data.results_html;
         data = data.replace(/\r|\n|\t|&quot;/g, "");
         data = data.replace(/\'/g, '"');
@@ -107,7 +113,13 @@ function updateGamesInfo(gamesData, callback) {
                 console.log(`! Error while updating game ${gameKeys[id]}!`);
                 return "error";
             }
-            data = JSON.parse(data.trim());
+			try{
+				data = JSON.parse(data.trim());
+			}
+			catch(e){
+				console.log("ERROR - Couldn't parse the JSON!");
+				return;
+			}
             gamesData[gameKeys[id]].title = data[gameKeys[id]].data.name;
             gamesData[gameKeys[id]].img = data[gameKeys[id]].data.header_image;
             if (id < gameKeys.length - 1)
@@ -122,6 +134,7 @@ function updateGamesInfo(gamesData, callback) {
 }
 function updateGroupData(callback) {
     var url = `http://steamcommunity.com/gid/${group.groupID}/memberslistxml/?xml=1`;
+	var json;
 
     console.log(`3. Updating guild data.`)
 
@@ -130,7 +143,13 @@ function updateGroupData(callback) {
             console.log("Error while downloading group data!");
             return "error";
         }
-        var json = JSON.parse(data);
+		try{
+			json = JSON.parse(data);
+		}
+		catch(e){
+			console.log("ERROR - Couldn't parse the JSON!");
+			return;
+		}
         group.groupDesc = json.elements[0].elements[1].elements[3].elements[0].cdata;
         group.groupHead = json.elements[0].elements[1].elements[2].elements[0].cdata;        
         callback(json.elements[0].elements);
@@ -171,7 +190,13 @@ function updateBasicMemberData(memberList, callback) {
             console.log("Error while downloading members data!");
             return "error";
         }
-        data = JSON.parse(data);
+		try{
+			data = JSON.parse(data);
+		}
+		catch(e){
+			console.log("ERROR - Couldn't parse the JSON!");
+			return;
+		}
         for (let i in data.response.players) {
             memberList[data.response.players[i].steamid].name = data.response.players[i].personaname;
             memberList[data.response.players[i].steamid].avatar = data.response.players[i].avatarmedium;
@@ -194,7 +219,13 @@ function updateMembersOwnedGames(memberList, callback) {
                 console.log(`Error while downloading data of ${id}s owned games!`);
                 return "error";
             }
-            data = JSON.parse(data);
+			try{
+				data = JSON.parse(data);
+			}
+			catch(e){
+				console.log("ERROR - Couldn't parse the JSON!");
+				return;
+			}
             var memberOwned = data.response.games;
             for (let ownedGame in memberOwned) {
                 for (let curatedGame in group.gameList) {
@@ -233,7 +264,13 @@ function updateMemberAchievements(memberList, callback) {
                     console.log(`Error while downloading data of ${id}s owned games!`);
                     return "error";
                 }
-                data = JSON.parse(data);
+				try{
+					data = JSON.parse(data);
+				}
+				catch(e){
+					console.log("ERROR - Couldn't parse the JSON!");
+					return;
+				}
                 if (data.playerstats.success) {
                     var completed = 0;
                     var all = 0;
