@@ -90,6 +90,8 @@ function updateCuratedGames(callback) {
                 var gameRating = 1;
 
                 if (gameDesc.startsWith("🌟"))
+                    gameRating  = 5;
+                if (gameDesc.startsWith("✪"))
                     gameRating  = 3;
                 if (gameDesc.startsWith("☆"))
                     gameRating  = 2;
