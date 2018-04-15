@@ -208,7 +208,7 @@ function updateBasicMemberData(memberList, callback) {
     });
 };
 function updateMembersOwnedGames(memberList, callback) {
-    var url = `https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=${steamKey}&steamid=`;
+    var url = `http://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=${steamKey}&steamid=`;
     var memberArray = Object.keys(memberList);
 
     console.log(`6. Updating list of curated games owned by all guild members.`)
@@ -258,7 +258,7 @@ function updateMemberAchievements(memberList, callback) {
         console.log(`- updating achievements of ${memberKeys[memberIndex]} (${parseInt(memberIndex) + 1}/${memberKeys.length})`);
 
         var iterateThroughGameList = function (gameIndex) {
-            var url = `https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v1/?appid=${gameKeys[gameIndex]}&steamid=${memberKeys[memberIndex]}&key=${steamKey}&format=json`;
+            var url = `http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v1/?appid=${gameKeys[gameIndex]}&steamid=${memberKeys[memberIndex]}&key=${steamKey}&format=json`;
             returnRequest(url, data => {
 
                 console.log(`-- game ${gameKeys[gameIndex]} (${parseInt(gameIndex) + 1}/${gameKeys.length})`);
