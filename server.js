@@ -1,42 +1,43 @@
 ﻿'use strict';
-var http = require('http');
-var url = require('url');
-var fs = require('fs');
-var port = 1337;
+const http = require('http');
+const url = require('url');
+const fs = require('fs');
+const port = 1337;
 //----------------------------------------------
-var steamKey = process.env.KEY;
-var updating = false;
-var group = { };
-var path = `data/data.json`;
+const steamKey = process.env.KEY;
+const path = `data/data.json`;
+let updating = false;
+let group = { };
+
 
 serverStart();
 console.log(`Server listens on port ${port}.`);
 
-function serverStart(){
-	fs.readFile(path, 'utf8', (err, data) => {
-		if (err){
-			console.log('Cannot read the data file!');
-			group = {
-				lastUpdated: 0,
-				groupID: '103582791436640751',
-				groupDesc: '',
-				groupHead: '',
-				memberList: {},
-				gameList: {}
-			};
-			console.log('Fresh data object created!');
-		}
-		else{
-			console.log('Data file succesfully fetched!');
-			try{
-				group = JSON.parse(data);
-			}
-			catch(e){
-				console.log("ERROR - Couldn't parse the JSON!");
-				return;
-			}
-		}
-	})
+
+function serverStart() {
+    const createNewServerObject = () => { 
+        console.log('Cannot read the data file - creating new server data object...');
+
+        group = {
+            lastUpdated: 0,
+            groupID: '103582791436640751',
+            groupDesc: '',
+            groupHead: '',
+            memberList: {},
+            gameList: {}
+        };
+    }
+
+    const loadOldServerObject = data => { 
+        console.log('Server data file succesfully fetched!');
+
+        try { group = JSON.parse(data); }
+        catch(e) { return console.log(e); }
+    }
+
+    fs.readFile(path, 'utf8', (err, data) => {
+        err ? createNewServerObject() : loadOldServerObject(data)
+    })
 }
 
 var server = http.createServer((request, response) => {
