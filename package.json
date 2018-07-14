@@ -16,8 +16,8 @@
     "build": "npm-run-all -p build-css build-js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "build-css": "node-sass-chokidar src/ -o src/",
-    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive"
+    "build-css": "node-sass-chokidar src/styles/sass -o src/styles/css/",
+    "watch-css": "npm run build-css && node-sass-chokidar src/styles/sass -o src/styles/css/ --watch --recursive"
   },
   "description": "0.1% - games that masochists love.",
   "main": "index.js",
