@@ -1,0 +1,100 @@
+@import url(https://fonts.googleapis.com/css?family=Cardo|Cinzel)
+@import 'vars'
+
+.flex-row
+  display: flex
+  flex-direction: row
+  align-items: center
+  justify-content: space-between
+.flex-column
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: center
+.wrapper-main
+  width: 100%
+  height: 100vh 
+  font-family: $font-cardo
+.header
+  width: 100%
+  height: 70px
+  justify-content: space-evenly
+  background-color: $superdarkgrey
+  color: $mediumgrey
+  font-family: $font-cinzel 
+  p 
+    margin: 0
+  .p-big
+    font-size: 1.5em
+    letter-spacing: 0.3em
+  div 
+    margin: 10px
+.wrapper-nav
+  width: 100%
+  height: 100px 
+  background-color: $darkgrey 
+  color: $lightgrey
+  font-family: $font-cardo
+  font-size: 0.8em
+  text-transform: uppercase
+  letter-spacing: 2px
+  ul
+    margin: 0
+    padding: 0
+    height: 100%
+    list-style-type: none
+    li 
+      border-right: 3px solid $superdarkgrey
+      height: 100% 
+      width: 20% 
+      box-sizing: border-box
+      &:hover
+        background-color: $superdarkgrey
+        cursor: pointer
+      p 
+        margin: 10px 0 0 0
+      i 
+        font-size: 1.4em
+.wrapper-middle
+  display: flex
+  flex-direction: row 
+  width: 100%
+  height: 100%
+.wrapper-content
+  width: 70%
+  height: 100%
+  padding: 20px
+  background-color: $lightgrey
+.wrapper-miniheader
+  width: 100%
+  height: 100px
+  padding: 0 20px
+  box-sizing: border-box
+  color: $mediumgrey
+  font-family: $font-cinzel
+  text-transform: uppercase
+  letter-spacing: 0.3em
+  font-size: 2em
+  background-color: $superdarkgrey
+  background-image: url('../../img/miniheader.png')
+  background-repeat: no-repeat
+  background-position-x: right
+  background-size: contain
+  p 
+    margin: 0
+  i
+    margin-right: 20px
+    font-size: 2.3em
+.wrapper-sidebar
+  width: 30%
+  height: 100%
+  background-color: $mediumgrey
+
+.button
+  padding: 5px 10px
+  border-left: 1px solid $mediumgrey
+  p
+    margin: 0 10px
+  &:hover
+    color: $lightyellow
+    cursor: pointer
