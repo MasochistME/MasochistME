@@ -20,17 +20,27 @@ const items = [
         text: "event log",
         icon: "fas fa-history",
         link: "events"
+    },
+    {
+        text: "curator",
+        icon: "fab fa-steam",
+        link: "curator"        
     }
 ]
 
 export default class Nav extends React.Component{
     render() {
         return (
-            <ul>
+            <ul className='flex-row'>
                 {
                     items.map((item, index) => 
-                        <li key={ `nav-${index}` }>
-                            { item.text }
+                        <li 
+                            key={ `nav-${index}` }
+                            className='flex-column'>
+                            <div className='flex-column'>
+                                <i className={ item.icon } />
+                                <p>{ item.text }</p>
+                            </div>
                         </li>
                     )
                 }
