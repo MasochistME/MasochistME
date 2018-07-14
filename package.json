@@ -1,25 +1,34 @@
 {
-  "name": "onepointpercent",
-  "version": "0.0.1",
-  "description": "onepointpercent",
-  "main": "server.js",
-  "author": "Arcyvilk",
-  "scripts": {
-    "start": "node server.js"
-  },
+  "name": "pointonepercent",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "es6-promise": "^4.1.1",
-    "isomorphic-fetch": "^2.2.1",
-    "xml-js": "^1.5.2"
+    "node-sass-chokidar": "^1.3.0",
+    "npm-run-all": "^4.1.3",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-scripts": "1.1.4"
   },
-  "devDependencies": {},
-  "license": "ISC",
+  "scripts": {
+    "start-js": "react-scripts start",
+    "start": "npm-run-all -p watch-css start-js",
+    "build-js": "react-scripts build",
+    "build": "npm-run-all -p build-css build-js",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "build-css": "node-sass-chokidar src/ -o src/",
+    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive"
+  },
+  "description": "0.1% - games that masochists love.",
+  "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Arcyvilk/Point-one-percent.git"
+    "url": "git+https://github.com/Arcyvilk/PointOnePercent.git"
   },
+  "author": "Arcyvilk",
+  "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Arcyvilk/Point-one-percent/issues"
+    "url": "https://github.com/Arcyvilk/PointOnePercent/issues"
   },
-  "homepage": "https://github.com/Arcyvilk/Point-one-percent#readme"
+  "homepage": "https://github.com/Arcyvilk/PointOnePercent#readme"
 }
