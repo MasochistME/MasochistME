@@ -1,0 +1,6 @@
+[
+    {
+        "id": "games",
+        "path": "./data/games.json"
+    }
+]
