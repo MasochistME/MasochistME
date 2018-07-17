@@ -1,21 +1,18 @@
 import React from 'react'
 import tabs from '../config/tabs.json'
+import NavItem from './NavItem'
 
-export default class Nav extends React.Component{
+export default class Nav extends React.Component {
     render() {
         return (
             <ul className='flex-row'>
-                {
+                {   
                     tabs.map((item, index) => 
-                        <li 
-                            key={ `nav-${index}` }
-                            className='flex-column'>
-                            <div className='flex-column'>
-                                <i className={ item.icon } />
-                                <p>{ item.text }</p>
-                            </div>
-                        </li>
-                    )
+                        <NavItem 
+                            key={ `nav-${index} `}
+                            item={ item } 
+                            index={ index } 
+                        />)
                 }
             </ul>
         )
