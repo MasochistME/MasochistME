@@ -5,7 +5,7 @@ export default class Login extends React.Component{
         return (
             <div className='button flex-row'>
                 <p>Not logged in</p>
-                <i class="fas fa-sign-in-alt"></i>
+                <i className="fas fa-sign-in-alt"></i>
             </div>
         )
     }

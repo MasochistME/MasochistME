@@ -1,6 +1,5 @@
 import React from 'react'
 import Login from './Login'
-import Update from './Update'
 
 export default class Header extends React.Component{
     render() {
