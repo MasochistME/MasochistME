@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import './styles/css/App.css'
 import Wrapper from './components/Wrapper'
-import Header from './components/Header';
+import Header from './components/Header'
 import Nav from './components/Nav'
 import ContentWrapper from './components/ContentWrapper'
+import SidebarWrapper from './components/SidebarWrapper'
 
 export default class App extends Component {
   render() {
@@ -15,7 +16,7 @@ export default class App extends Component {
         </Wrapper>
         <Wrapper type='middle'>
           <ContentWrapper />
-          <Wrapper type='sidebar' />
+          <SidebarWrapper />
         </Wrapper>
         <Wrapper type='footer' />
       </Wrapper>
