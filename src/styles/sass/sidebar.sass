@@ -9,6 +9,7 @@
     width: 30%
     height: 100%
     padding: 15px
+    box-sizing: border-box
     background-color: $lightgrey-transparent
     font-family: $font-cinzel
     .section-title
@@ -20,19 +21,25 @@
 .section
     margin: 0 0 20px 0
     width: 100%
+    box-sizing: border-box
 .update-progress-bar-border
+    position: relative
+    display: flex
+    flex-direction: column
+    align-items: center
     width: 100%
-    height: 10px
+    height: 20px
     background-color: $darkgrey
-    border-radius: 10px
     border: 1px solid $darkgrey
 .update-progress-bar
-    width: 65%
+    width: 0%
     height: 100%
+    align-self: flex-start  
     background-color: $lightgrey
-    border-radius: 10px
+    
 .small-event
     width: 100%
     padding: 3px
     margin-bottom: 1px
+    box-sizing: border-box
     background-color: $lightgrey-transparent

@@ -13,10 +13,6 @@ const returnProperSection = section => {
 export default class SidebarSection extends React.Component{
     render() {
         const { props } = this;
-        return (
-            <div className='section'>
-                { returnProperSection(props.section) }
-            </div>
-        )
+        return returnProperSection(props.section)
     }
 }
