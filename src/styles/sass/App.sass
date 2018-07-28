@@ -13,6 +13,7 @@
   align-items: center
   justify-content: center
 .wrapper-main
+  position: relative
   display: flex
   flex-direction: column
   align-items: center
@@ -22,7 +23,8 @@
   background-size: cover
   background-repeat: no-repeat
   width: 100%
-  height: 100vh 
+  height: auto
+  min-height: 100vh
   font-family: $font-cardo
 .header
   width: 100%
@@ -47,6 +49,8 @@
   font-size: 0.8em
   text-transform: uppercase
   letter-spacing: 2px
+  position: sticky
+  top: 0px
   ul
     margin: 0
     padding: 0
@@ -71,18 +75,19 @@
   flex-direction: row 
   width: 100%
   max-width: 1300px
-  height: 100%
+  height: auto
 .wrapper-content
   width: 70%
   height: 100%
   padding: 10px
+  box-sizing: border-box
   background-color: $superlightgrey
 .wrapper-miniheader
   width: 100%
   height: 100px
   padding: 0 20px
   box-sizing: border-box
-  color: $lightgrey
+  color: $superlightgrey
   font-family: $font-cinzel
   text-transform: uppercase
   letter-spacing: 0.3em
@@ -101,7 +106,12 @@
 .wrapper-sidebar
   width: 30%
   height: 100%
-  background-color: $lightgrey
+  background-color: $lightgrey-transparent
+
+.wrapper-page
+  padding: 10px
+  box-sizing: border-box
+  background-color: $lightestgreyever
 
 .button
   padding: 5px 10px
