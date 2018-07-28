@@ -3,7 +3,6 @@ import blog from '../../mock/blog' //THIS IS FOR DEV PURPOSES - GONNA BE CHANGED
 
 export default class PageHome extends React.Component{
     render() {
-        console.log(blog)
         return (
             <div>
                 {
