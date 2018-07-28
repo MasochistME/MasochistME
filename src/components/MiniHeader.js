@@ -1,6 +1,7 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
-export default class MiniHeader extends React.Component{
+class MiniHeader extends React.Component{
     constructor() {
         super()
         this.state = {
@@ -8,14 +9,24 @@ export default class MiniHeader extends React.Component{
             icon: "fas fa-gamepad"
         }
     }
+
     render() {
+        const { props } = this;
+        const findTab = () => props.state.tabs.find(tab => tab.link === props.state.activeTab)
+
         return (
             <div className='wrapper-miniheader flex-row'>
                 <div className='flex-row'>
-                    <i className={ this.state.icon } />
-                    <p>{ this.state.title }</p>
+                    <i className={ findTab().icon } />
+                    <p>{ findTab().text }</p>
                 </div>
             </div>
         )
     }
 } 
+
+const mapStateToProps = state => ( { state })
+
+export default connect(
+    mapStateToProps
+)( MiniHeader )

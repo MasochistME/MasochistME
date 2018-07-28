@@ -18,10 +18,9 @@ const assignPageType = tab => {
 class Page extends React.Component{
     render() {
         const { props } = this;
-        console.log(props.state.link) //UNDEFINED
         return (
             <div className={ `wrapper-page` }>
-                { assignPageType(props.state.link) }
+                { assignPageType(props.state.activeTab) }
             </div>
         )
     }

@@ -1,13 +1,14 @@
 import React from 'react'
-import tabs from '../config/tabs.json'
+import { connect } from 'react-redux'
 import NavItem from './NavItem'
 
-export default class Nav extends React.Component {
+class Nav extends React.Component {
     render() {
+        const { props } = this;
         return (
             <ul className='flex-row'>
                 {   
-                    tabs.map((item, index) => 
+                    props.state.tabs.map((item, index) => 
                         <NavItem 
                             key={ `nav-${index} `}
                             item={ item } 
@@ -18,3 +19,9 @@ export default class Nav extends React.Component {
         )
     }
 }
+
+const mapStateToProps = state => ( { state })
+
+export default connect(
+    mapStateToProps
+)( Nav )

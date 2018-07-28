@@ -1,9 +1,11 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
+import tabs from '../config/tabs.json'
 import { CHANGE_TAB } from './modules/Tabs'
 
 const defaultState = {
-    activeTab: "home"
+    activeTab: "home",
+    tabs: tabs
 }
 const enhancers = [ ]
 const middleWare = [ thunk ]
