@@ -2,10 +2,13 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import tabs from '../config/tabs.json'
 import { CHANGE_TAB } from './modules/Tabs'
+import { SEARCH_GAMES_VALUE, SEARCH_MEMBERS_VALUE } from './modules/Search'
 
 const defaultState = {
     activeTab: "home",
-    tabs: tabs
+    tabs: tabs,
+    searchGame: "",
+    searchMember: ""
 }
 const enhancers = [ ]
 const middleWare = [ thunk ]
@@ -19,6 +22,14 @@ const reducer = (state = defaultState, action) => {
         case CHANGE_TAB: return {
             ...state,
             activeTab: action.tab
+        }
+        case SEARCH_GAMES_VALUE: return {
+            ...state,
+            searchGame: action.game
+        }
+        case SEARCH_MEMBERS_VALUE: return {
+            ...state,
+            searchMember: action.member
         }
         default: return state
     }

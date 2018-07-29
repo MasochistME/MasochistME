@@ -33,54 +33,5 @@
         "rating": 5,
         "title": "Jamestown",
         "img": "https://steamcdn-a.akamaihd.net/steam/apps/94200/header.jpg?t=1447354283"
-    },
-    {
-        "id": "40800",
-        "desc": "🌟 101 Hardcore gaming - if you never played it, now is the time to learn the ropes.",
-        "rating": 5,
-        "title": "Super Meat Boy",
-        "img": "https://steamcdn-a.akamaihd.net/steam/apps/40800/header.jpg?t=1508355251"
-    },
-    {
-        "id": "63710",
-        "desc": "☆ Simulates running IRL",
-        "rating": 2,
-        "title": "BIT.TRIP RUNNER",
-        "img": "https://steamcdn-a.akamaihd.net/steam/apps/63710/header.jpg?t=1478114972"
-    },
-    {
-        "id": "65300",
-        "desc": "☆ High precision platformer with a very high learning curve. Completing it is just the first step...",
-        "rating": 2,
-        "title": "Dustforce DX",
-        "img": "https://steamcdn-a.akamaihd.net/steam/apps/65300/header.jpg?t=1529257110"
-    },
-    {
-        "id": "70300",
-        "desc": "🌟 One gameplay mechanic: reverse gravity. An infinite number of places to die.",
-        "rating": 5,
-        "title": "VVVVVV",
-        "img": "https://steamcdn-a.akamaihd.net/steam/apps/70300/header.jpg?t=1478255501"
-    },
-    {
-        "id": "94200",
-        "desc": "🌟 It\"s not touhou, but as far as bullet-hells go - your dedication will play a big role in completing it.",
-        "rating": 5,
-        "title": "Jamestown",
-        "img": "https://steamcdn-a.akamaihd.net/steam/apps/94200/header.jpg?t=1447354283"
-    },
-    {
-        "id": "70300",
-        "desc": "🌟 One gameplay mechanic: reverse gravity. An infinite number of places to die.",
-        "rating": 5,
-        "title": "VVVVVV",
-        "img": "https://steamcdn-a.akamaihd.net/steam/apps/70300/header.jpg?t=1478255501"
-    },
-    {
-        "id": "94200",
-        "desc": "🌟 It\"s not touhou, but as far as bullet-hells go - your dedication will play a big role in completing it.",
-        "rating": 5,
-        "title": "Jamestown",
-        "img": "https://steamcdn-a.akamaihd.net/steam/apps/94200/header.jpg?t=1447354283"
     }
 ]
