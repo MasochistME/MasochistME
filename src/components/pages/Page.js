@@ -19,7 +19,7 @@ class Page extends React.Component{
     render() {
         const { props } = this;
         return (
-            <div className={ `wrapper-page` }>
+            <div className='wrapper-page'>
                 { assignPageType(props.state.activeTab) }
             </div>
         )
