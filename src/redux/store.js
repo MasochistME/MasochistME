@@ -1,14 +1,18 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import tabs from '../config/tabs.json'
+import rating from '../config/rating.json'
 import { CHANGE_TAB } from './modules/Tabs'
 import { SEARCH_GAMES_VALUE, SEARCH_MEMBERS_VALUE } from './modules/Search'
+import { SHOW_GAMES_RATED } from './modules/CheckBoxes'
 
+const ratingArray = () => rating.map(r => r.score.toString())
 const defaultState = {
     activeTab: "home",
     tabs: tabs,
     searchGame: "",
-    searchMember: ""
+    searchMember: "",
+    showGamesRated: [ ...ratingArray() ]
 }
 const enhancers = [ ]
 const middleWare = [ thunk ]
@@ -30,6 +34,10 @@ const reducer = (state = defaultState, action) => {
         case SEARCH_MEMBERS_VALUE: return {
             ...state,
             searchMember: action.member
+        }
+        case SHOW_GAMES_RATED: return {
+            ...state,
+            showGamesRated: action.showGamesRated
         }
         default: return state
     }

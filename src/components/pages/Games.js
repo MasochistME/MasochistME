@@ -28,8 +28,9 @@ class PageGames extends React.Component{
                 </div>
                 <div className='wrapper-games'>
                     {
-                        games.map(game => 
+                        games.map(game =>
                             game.title.toLowerCase().indexOf(props.state.searchGame.toLowerCase()) !== -1
+                            && props.state.showGamesRated.find(score => parseInt(score,10) === parseInt(game.rating,10))
                             ? <div 
                                 key={ `id-game-${game.id}` }
                                 className={ `game rated-${game.rating}` }
