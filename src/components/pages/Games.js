@@ -2,9 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import CheckBoxGameChoice from '../CheckBoxGameChoice'
 import SearchBar from '../SearchBar'
-import { swapRatingToIcon } from '../../helpers/helper'
 import rating from '../../config/rating'
 import games from '../../mock/games' //THIS IS FOR DEV PURPOSES - GONNA BE CHANGED TO JSON DOWNLOADED FRMO THE SERVER
+import { swapRatingToIcon } from '../../helpers/helper';
 
 class PageGames extends React.Component{
     render() {
@@ -39,7 +39,9 @@ class PageGames extends React.Component{
                                 <div
                                     className='game-info'
                                 >
-                                    <div className='game-rating'>{ swapRatingToIcon(game.rating) }</div>
+                                    <div className='game-rating'>
+                                        <i className={ swapRatingToIcon(game.rating) }></i>
+                                    </div>
                                     <div className='game-title'>{ game.title }</div>
                                     <div className='game-desc'>{ game.desc }</div>
                                 </div>

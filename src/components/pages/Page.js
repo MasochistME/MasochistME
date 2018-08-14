@@ -2,14 +2,14 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PageHome from './Home'
 import PageGames from './Games'
-import PageMembers from './Members'
+import PageRanking from './Ranking'
 import PageEvents from './Events'
 
 const assignPageType = tab => {
     switch (tab) {
         case 'home': return <PageHome />
         case 'games': return <PageGames />
-        case 'members': return <PageMembers />
+        case 'ranking': return <PageRanking />
         case 'events': return <PageEvents />
         default: return <PageHome />
     }
