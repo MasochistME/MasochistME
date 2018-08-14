@@ -1,18 +1,22 @@
 [
     {
         "icon": "★",
+        "link": "fas fa-star",
         "score": 5
     },
     {
         "icon": "✪",
+        "link": "fas fa-star-half-alt",
         "score": 3
     },
     {
         "icon": "☆",
+        "link": "far fa-star",
         "score": 2
     },
     {
         "icon": "✓",
+        "link": "far fa-check-square",
         "score": 1
     }    
 ]

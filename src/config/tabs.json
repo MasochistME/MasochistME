@@ -5,9 +5,9 @@
         "link": "home"
     },
     {
-        "text": "members",
-        "icon": "fas fa-users",
-        "link": "members"
+        "text": "ranking",
+        "icon": "fas fa-medal",
+        "link": "ranking"
     },
     {
         "text": "game list",
