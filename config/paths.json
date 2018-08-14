@@ -2,5 +2,17 @@
     {
         "id": "games",
         "path": "./data/games.json"
+    },
+    {
+        "id": "ranking",
+        "path": "./data/ranking.json"
+    },
+    {
+        "id": "events",
+        "path": "./data/events.json"
+    },
+    {
+        "id": "blog",
+        "path": "./data/blog.json"
     }
 ]
