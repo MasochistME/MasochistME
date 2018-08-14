@@ -1,6 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Cardo|Cinzel|Dosis|Raleway)
 @import 'blog'
 @import 'games'
+@import 'ranking'
 @import 'sidebar'
 @import 'vars/colors'
 @import 'vars/fonts'
@@ -80,13 +81,12 @@
   flex-direction: row 
   width: 100%
   max-width: 1500px
-  margin-left: 50px
   height: auto
 .wrapper-content
+  position: relative
   width: 70%
-  height: 100%
+  height: auto
   box-sizing: border-box
-  background-color: $lightestgreyever
 .wrapper-miniheader
   width: 100%
   height: 100px
@@ -106,7 +106,7 @@
     margin: 0
     text-shadow: 0px 0px 5px #000
   i
-    margin-right: 20px
+    margin-right: 20px 
     font-size: 2.3em
 .wrapper-page, .wrapper-description
   padding: 10px
@@ -114,9 +114,10 @@
   p
     margin: 0 0 10px 0
 .wrapper-page
-  background-color: $lightestgreyever
-.wrapper-description
+  padding: 0
+  border: 10px solid $lightestgreyever
   background-color: $superlightgrey
+  box-sizing: border-box
 .page-description
   padding: 0 0 10px 0
   margin: 0 0 10px 0
