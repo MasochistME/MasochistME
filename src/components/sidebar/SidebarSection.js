@@ -1,5 +1,6 @@
 import React from 'react'
-import { SectionUpdate, SectionTop, SectionHistory } from './Sections'
+import SectionUpdate from './sections/SectionUpdate'
+import { SectionTop, SectionHistory } from './Sections'
 
 const returnProperSection = section => {
     switch(section) {
