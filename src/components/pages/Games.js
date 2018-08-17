@@ -36,9 +36,7 @@ class PageGames extends React.Component{
                                 className={ `game rated-${game.rating}` }
                                 style={{ backgroundImage:`url(${game.img})`}}
                                 >                     
-                                <div
-                                    className='game-info'
-                                >
+                                <div className='game-info'>
                                     <div className='game-rating'>
                                         <i className={ swapRatingToIcon(game.rating) }></i>
                                     </div>

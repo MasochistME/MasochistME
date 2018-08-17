@@ -3,22 +3,40 @@ import { connect } from 'react-redux'
 import { searchGames, searchMembers } from '../redux/modules/Search';
 
 class SearchBar extends React.Component {
+    constructor() {
+        super()
+        this.state = {
+            searchFor: null
+        }
+        this.adjustToTab = this.adjustToTab.bind(this);
+    }
+
+    componentDidMount = () => this.adjustToTab()
+
+    adjustToTab = () => {
+        switch(this.props.state.activeTab) {
+            case 'games': return this.setState({ searchFor: 'games' })
+            case 'ranking': return this.setState({ searchFor: 'members' })
+            default: return
+        }
+    }
     update = event => {
         const searchString = event.target.value
-        if (this.props.state.activeTab === 'games')
-            this.props.dispatch(searchGames(searchString))
-        if (this.props.state.activeTab === 'memberss')
-            this.props.dispatch(searchMembers(searchString))
+        switch(this.state.searchFor) {
+            case 'games': return this.props.dispatch(searchGames(searchString))
+            case 'members': return this.props.dispatch(searchMembers(searchString))
+            default: return
+        }
     }
 
     render() {
         return(
             <div className='wrapper-searchbar'>
-                <label for='searchbar' className='searchbar-label'>Search game</label>
+                <label for='searchbar' className='searchbar-label'>Find { this.state.searchFor }</label>
                 <input 
                     className='searchbar' 
                     type='text' 
-                    placeholder='game title here'
+                    placeholder={ `${this.state.searchFor} here` }
                     onChange={ this.update }
                 />
             </div>)
