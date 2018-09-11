@@ -85,7 +85,7 @@ function updateCuratedGames(callback) {
 
         for (let i in helper) {
             if (helper[i].indexOf(`data-ds-appid`) != -1) {
-                var gameId = helper[i].substring(helper[i].indexOf(`data-ds-appid="`) + `data-ds-appid="`.length, helper[i].indexOf(`" onmouseover`)).trim();
+                var gameId = helper[i].substring(helper[i].indexOf(`data-ds-appid="`) + `data-ds-appid="`.length, helper[i].indexOf(`" data-ds-tagids`)).trim();
                 var gameDesc = helper[i].substring(helper[i].indexOf(`<div class="recommendation_desc">"`) + `<div class="recommendation_desc">"`.length, helper[i].indexOf(`"</div>`)).trim();
                 var gameRating = 1;
 
