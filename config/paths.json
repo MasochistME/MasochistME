@@ -1,18 +1,18 @@
 [
     {
         "id": "games",
-        "path": "./data/games.json"
+        "path": "../api/games.json"
     },
     {
         "id": "ranking",
-        "path": "./data/ranking.json"
+        "path": "../data/ranking.json"
     },
     {
         "id": "events",
-        "path": "./data/events.json"
+        "path": "../data/events.json"
     },
     {
         "id": "blog",
-        "path": "./data/blog.json"
+        "path": "../data/blog.json"
     }
 ]

@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import './styles/css/index.css'
 import registerServiceWorker from './registerServiceWorker'
-import App from './App'
-import store from './redux/store'
+import App from './components/App'
+import store from './shared/store/store'
 
 class Root extends React.Component {
     render() {

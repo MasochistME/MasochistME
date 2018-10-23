@@ -1,0 +1,4 @@
+{
+    "curatedgames": "http://store.steampowered.com/curator/7119343-0.1%25/ajaxgetfilteredrecommendations/render/?query=&start=0&count=1000&tagids=&sort=recent&types=0",
+    "gamesinfo": "http://store.steampowered.com/api/appdetails?appids="
+}
