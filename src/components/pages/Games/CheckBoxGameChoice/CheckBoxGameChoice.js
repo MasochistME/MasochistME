@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { swapRatingToIcon } from '../../../../shared/helpers/helper'
 import { showGamesRated } from '../../../../shared/store/modules/CheckBoxes'
 
 class CheckBoxGameChoice extends React.Component{
@@ -14,7 +13,6 @@ class CheckBoxGameChoice extends React.Component{
 
     render() {
         const score = this.props.score
-        const icon = swapRatingToIcon(score)
         return (
             <div>
                 <input 
@@ -26,7 +24,7 @@ class CheckBoxGameChoice extends React.Component{
                     defaultChecked 
                     onChange={ this.changeRatingVisibility }
                 />
-                <label for={ `game-choice-${ score }` }>show <i className={ icon }></i> games</label>
+                <label for={ `game-choice-${ score }` }>show <i className={ this.props.icon }></i> games</label>
             </div>
         )
     }
@@ -34,6 +32,7 @@ class CheckBoxGameChoice extends React.Component{
 
 const mapStateToProps = state => ({ state })
 const mapDispatchToProps = dispatch => ({ dispatch })
+
 export default connect(
     mapStateToProps,
     mapDispatchToProps

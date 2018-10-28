@@ -15,14 +15,14 @@ export default class SectionUpdate extends React.Component {
     }
 
     checkStatus() {
-        let url = `${this.domain}/api/status`
+        let url = `${this.domain}/status`
         axios.get(url)
             .then(res => this.setState({ ...res.data }))
             .catch(err => console.log(err))
     }
 
     sendUpdateRequest() {
-        let url = `${this.domain}/api/update`
+        let url = `${this.domain}/update`
         axios.get(url)
             .then(res => console.log(res.data.content))
             .catch(err => console.log(err))

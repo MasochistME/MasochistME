@@ -4,7 +4,6 @@ import axios from 'axios'
 import _ from 'lodash'
 import CheckBoxGameChoice from './CheckBoxGameChoice'
 import SearchBar from '../../../shared/components/SearchBar'
-import rating from '../../../shared/config/rating'
 // import games from '../../mock/games.json' //THIS IS FOR DEV PURPOSES - GONNA BE CHANGED TO JSON DOWNLOADED FRMO THE SERVER
 import { swapRatingToIcon } from '../../../shared/helpers/helper';
 
@@ -12,15 +11,19 @@ class PageGames extends React.Component{
     constructor() {
         super()
         this.state = {
-            games: [ ]
+            games: [ ],
+            rating: [ ]
         }
-        this.updateTimeout = null;
         this.loadGames = this.loadGames.bind(this)
+        this.loadRating = this.loadRating.bind(this)
+        this.updateTimeout = null;
     }
 
     componentDidMount() {
+        this.loadRating()
         this.loadGames()
     }
+
     componentWillUnmount() {
         clearInterval(this.updateTimeout)
     }
@@ -34,8 +37,18 @@ class PageGames extends React.Component{
             .catch(err => console.log(err.message))
     }
 
+    loadRating() {
+        axios.get('http://localhost:3001/data/rating')  
+            .then(response => {
+                if (response.status === 200)
+                    return this.setState({ rating: response.data })
+            }).catch(err => console.trace(err))
+    }
+
     render() {
         const { props } = this
+        const rating = this.state.rating;
+
         return (
             <div className='flex-column'>
                 <div className='wrapper-description'>
@@ -49,7 +62,8 @@ class PageGames extends React.Component{
                         {
                             rating.map(r => <CheckBoxGameChoice 
                                 key={ `checkbox-game-${ r.score }` }
-                                score={ r.score } /> )
+                                score={ r.score } 
+                                icon={ swapRatingToIcon(r.score, rating) }/> )
                         }
                     </div>
                 </div>
@@ -65,7 +79,7 @@ class PageGames extends React.Component{
                                 >                     
                                 <div className='game-info'>
                                     <div className='game-rating'>
-                                        <i className={ swapRatingToIcon(game.rating) }></i>
+                                        <i className={ swapRatingToIcon(game.rating, rating) }></i>
                                     </div>
                                     <div className='game-title'>{ game.title }</div>
                                     <div className='game-desc'>{ game.desc }</div>

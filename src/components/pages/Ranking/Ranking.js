@@ -1,12 +1,45 @@
 import React from 'react'
+import axios from 'axios'
 import { connect } from 'react-redux'
-import ranking from '../../../shared/mock/ranking'
-import rating from '../../../shared/config/rating'
 import SearchBar from '../../../shared/components/SearchBar'
 
-class PageRanking extends React.Component{
+class PageRanking extends React.Component {
+    constructor() {
+        super()
+        this.state = { 
+            rating: [ ],
+            members: [ ]
+        };
+        this.loadRating = this.loadRating.bind(this)
+        this.loadMembers = this.loadMembers.bind(this)
+    }
+
+    componentDidMount() {
+        this.loadRating()
+        this.loadMembers()
+    }
+
+    loadRating() {
+        axios.get('http://localhost:3001/data/rating')
+            .then(response => {
+                if (response.status === 200) 
+                    return this.setState({ rating: response.data })
+            }).catch(err => console.trace(err))
+    }
+
+    loadMembers() {
+        axios.get('http://localhost:3001/api/members')
+            .then(response => {
+                if (response.status === 200) 
+                    return this.setState({ members: response.data })
+            }).catch(err => console.trace(err))
+    }
+
     render() {
         const { props } = this;
+        const rating = this.state.rating;
+        const ranking = this.state.members; //change names here
+
         return (
             <div className="flex-column">
                 <div className='wrapper-description'>
