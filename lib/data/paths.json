@@ -4,6 +4,10 @@
         "path": "../api/games.json"
     },
     {
+        "id": "members",
+        "path": "../api/members.json"
+    },
+    {
         "id": "ranking",
         "path": "../data/ranking.json"
     },
@@ -14,5 +18,9 @@
     {
         "id": "blog",
         "path": "../data/blog.json"
+    },
+    {
+        "id": "rating",
+        "path": "./data/rating.json"
     }
 ]
