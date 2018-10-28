@@ -1,3 +1,1 @@
-import rating from '../config/rating'
-
-export const swapRatingToIcon = score => rating.find(r => r.score === score).link
+export const swapRatingToIcon = (score, rating) => rating.find(r => r.score === score).link
