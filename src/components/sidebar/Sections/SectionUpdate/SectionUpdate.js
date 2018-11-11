@@ -39,7 +39,7 @@ export default class SectionUpdate extends React.Component {
                         </div>
                         )
                     : (
-                        <button className='update-button' onClick={() => this.sendUpdateRequest() }>Update</button>
+                        <button className='custom-button update-button' onClick={() => this.sendUpdateRequest() }>Update</button>
                     )
             }
             
