@@ -5,7 +5,7 @@ import rating from '../config/rating.json'
 import { CHANGE_TAB } from './modules/Tabs'
 import { SEARCH_GAMES_VALUE, SEARCH_MEMBERS_VALUE } from './modules/Search'
 import { SHOW_GAMES_RATED } from './modules/CheckBoxes'
-import { SHOW_LOGIN_MODAL } from './modules/Login'
+import { SHOW_LOGIN_MODAL, LOG_IN_USER, LOG_OUT_USER } from './modules/Login'
 
 const ratingArray = () => rating.map(r => r.score.toString())
 const defaultState = {
@@ -14,7 +14,9 @@ const defaultState = {
     searchGame: "",
     searchMember: "",
     showLoginModal: false,
-    showGamesRated: [ ...ratingArray() ]
+    showGamesRated: [ ...ratingArray() ],
+    username: null,
+    logged: false
 }
 const enhancers = [ ]
 const middleWare = [ thunk ]
@@ -44,6 +46,16 @@ const reducer = (state = defaultState, action) => {
         case SHOW_LOGIN_MODAL: return {
             ...state,
             showLoginModal: !state.showLoginModal
+        }
+        case LOG_IN_USER: return {
+            ...state,
+            username: action.username,
+            logged: true
+        }
+        case LOG_OUT_USER: return {
+            ...state,
+            username: null,
+            logged: false
         }
         default: return state
     }
