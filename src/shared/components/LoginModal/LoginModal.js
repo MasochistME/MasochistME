@@ -1,4 +1,5 @@
 import React from 'react'
+import fs from 'fs'
 import { connect } from 'react-redux'
 import { showLoginModal, logInUser } from '../../store/modules/Login'
 import { sha256 } from '../../helpers/hash'
@@ -11,21 +12,36 @@ class LoginModal extends React.Component {
         super()
         this.state = {
             username: null,
-            password: null
+            password: null,
+            repeatedPassword: null,
+            registration: false
         }
     }
 
     handleUsernameChange = event => this.setState({ username: event.target.value })
     handlePasswordChange = event => this.setState({ password: sha256(event.target.value) })
+    handleRepeatedPasswordChange = event => this.setState({ repeatedPassword: sha256(event.target.value) })
 
     showLogin = () => this.props.dispatch(showLoginModal())
+    showRegistration = () => this.setState({ registration: !this.state.registration })
 
+    logInOrRegister = () => {
+        this.state.registration
+            ? this.register()
+            : this.logIn()
+    }
     logIn = () => {
         if (logins.hasOwnProperty(this.state.username) && logins[this.state.username] === this.state.password) {
             this.showLogin()
             return this.props.dispatch(logInUser(this.state.username))
         }
         alert(`Incorrect password or username.`)
+    }
+    register = () => {
+        if (this.state.password !== this.state.repeatedPassword)
+            return alert("Passwords differ.")
+        logins[this.state.username] = this.state.password
+        alert("User created! Now you can log in.")
     }
 
     render() {
@@ -41,12 +57,36 @@ class LoginModal extends React.Component {
                             ></input>
                         <input 
                             className="login-modal-input" 
+                            placeholder="Email"
+                            hidden="true"
+                            ></input>
+                        <input 
+                            className="login-modal-input" 
                             placeholder="Password" 
                             type="password"
                             onChange={ this.handlePasswordChange }
                             ></input>
-                        <button className="custom-button login-modal-button" onClick={ () => this.logIn() }>Log in</button>
-                        <a href="/">Register</a>
+                        <input 
+                            className="login-modal-input" 
+                            placeholder="Repeat password" 
+                            type="password"
+                            onChange={ this.handleRepeatedPasswordChange }
+                            hidden={ !this.state.registration }
+                            ></input>
+                        <button className="custom-button login-modal-button" onClick={ () => this.logInOrRegister() }>
+                            {
+                                !this.state.registration
+                                    ? "Log in"
+                                    : "Register"
+                            }
+                        </button>
+                        <div onClick={ () => this.showRegistration() }>
+                            {
+                                this.state.registration
+                                    ? "Log in"
+                                    : "Register"
+                            }
+                        </div>
                     </div>
                     <button className="custom-button" onClick={ () => this.showLogin() }>Close</button>
                 </div>
