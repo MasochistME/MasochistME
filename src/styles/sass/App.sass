@@ -3,6 +3,7 @@
 @import 'games'
 @import 'ranking'
 @import 'sidebar'
+@import 'loginmodal'
 @import 'vars/colors'
 @import 'vars/fonts'
 
@@ -16,6 +17,24 @@
   flex-direction: column
   align-items: center
   justify-content: center
+.display-flex
+  display: flex
+.display-none
+  display: none
+
+.custom-button
+    background-color: $darkgrey 
+    color: $superlightgrey
+    border: none
+    font-family: $font-cardo
+    text-transform: uppercase
+    font-size: 1.1em 
+    height: 40px
+    cursor: pointer 
+    &:hover
+        background-color: $superdarkgrey
+
+
 .wrapper-main
   position: relative
   display: flex
