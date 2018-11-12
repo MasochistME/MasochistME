@@ -95,7 +95,7 @@ class PageGames extends React.Component{
 }
 
 const mapStateToProps = state => ({ 
-    searchGames: state.searchGames, 
+    searchGame: state.searchGame, 
     showGamesRated: state.showGamesRated 
 })
 
