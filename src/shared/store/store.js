@@ -16,6 +16,7 @@ const defaultState = {
     showLoginModal: false,
     showGamesRated: [ ...ratingArray() ],
     username: null,
+    privilege: null,
     logged: false
 }
 const enhancers = [ ]
@@ -50,11 +51,13 @@ const reducer = (state = defaultState, action) => {
         case LOG_IN_USER: return {
             ...state,
             username: action.username,
+            privilege: action.privilege,
             logged: true
         }
         case LOG_OUT_USER: return {
             ...state,
             username: null,
+            privilege: null,
             logged: false
         }
         default: return state

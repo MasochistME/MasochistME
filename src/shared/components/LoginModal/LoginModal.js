@@ -12,6 +12,7 @@ class LoginModal extends React.Component {
         this.state = {
             username: null,
             password: null,
+            privilege: null,
             repeatedPassword: null,
             registration: false
         }
@@ -30,9 +31,9 @@ class LoginModal extends React.Component {
             : this.logIn()
     }
     logIn = () => {
-        if (logins.hasOwnProperty(this.state.username) && logins[this.state.username] === this.state.password) {
+        if (logins.hasOwnProperty(this.state.username) && logins[this.state.username].password === this.state.password) {
             this.showLogin()
-            return this.props.dispatch(logInUser(this.state.username))
+            return this.props.dispatch(logInUser(this.state.username, logins[this.state.username].privilege))
         }
         alert(`Incorrect password or username.`)
     }
