@@ -2,26 +2,43 @@
     { 
         "text": "homepage",
         "icon": "fas fa-home",
-        "link": "home"
+        "link": "home",
+        "visible": true,
+        "external": false
     },
     {
         "text": "ranking",
         "icon": "fas fa-medal",
-        "link": "ranking"
+        "link": "ranking",
+        "visible": true,
+        "external": false
     },
     {
         "text": "game list",
         "icon": "fas fa-gamepad",
-        "link": "games"
+        "link": "games",
+        "visible": true,
+        "external": false
     },
     {
         "text": "event log",
         "icon": "fas fa-history",
-        "link": "events"
+        "link": "events",
+        "visible": true,
+        "external": false
+    },
+    {
+        "text": "profile",
+        "icon": "fas fa-address-card",
+        "link": "profile",
+        "visible": false,
+        "external": false       
     },
     {
         "text": "curator",
         "icon": "fab fa-steam",
-        "link": "curator"        
+        "link": "https://store.steampowered.com/curator/7119343",
+        "visible": true,
+        "external": true       
     }
 ]

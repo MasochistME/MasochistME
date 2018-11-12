@@ -8,12 +8,15 @@ class Nav extends React.Component {
         return (
             <ul className='flex-row'>
                 {   
-                    props.state.tabs.map((item, index) => 
-                        <NavItem 
-                            key={ `nav-${index} `}
-                            item={ item } 
-                            index={ index } 
-                        />)
+                    props.state.tabs.map((item, index) =>
+                        item.visible
+                            ? <NavItem 
+                                key={ `nav-${index} `}
+                                item={ item } 
+                                index={ index } 
+                            />
+                            : null
+                    )
                 }
             </ul>
         )

@@ -4,6 +4,7 @@ import PageHome from '../Home'
 import PageGames from '../Games'
 import PageRanking from '../Ranking'
 import PageEvents from '../Events'
+import PageProfile from '../Profile'
 
 const assignPageType = tab => {
     switch (tab) {
@@ -11,6 +12,7 @@ const assignPageType = tab => {
         case 'games': return <PageGames />
         case 'ranking': return <PageRanking />
         case 'events': return <PageEvents />
+        case 'profile': return <PageProfile />
         default: return <PageHome />
     }
 }
