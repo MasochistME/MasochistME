@@ -8,10 +8,7 @@ class Profile extends React.Component {
             <div className='flex-column'>
                 <div className='wrapper-description'>
                     <div className='page-description'>
-                        <p>This is your profile.</p>
-                        <ul>
-                            <li>Privilege: <span style={{ fontWeight: "bold" }}>{ props.privilege }</span></li>
-                        </ul>
+                        <h1>{ `${props.username} (${props.privilege})` }</h1>
                     </div>
                 </div>
                 <div className='wrapper-profile'>
@@ -23,7 +20,8 @@ class Profile extends React.Component {
 }
 
 const mapStateToProps = state => ({ 
-    privilege: state.privilege 
+    username: state.username,
+    privilege: state.privilege
 })
 
 export default connect(

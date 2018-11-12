@@ -56,35 +56,35 @@ class PageRanking extends React.Component {
                 </div>
                 <ul className="ranking-list">
                     {
-                        ranking.map((member, index) => 
-                            member.name.toLowerCase().indexOf(props.searchMember.toLowerCase()) !== -1
-                            ? 
-                                <li 
-                                    className="member flex-row"
-                                    key={ `member-${member.id}` }
-                                >
-                                    <div className="member-position">{ index+1 }</div>
-                                    <img className="member-avatar" src={ member.avatar } alt="avatar"/>
-                                    <div className="member-info flex-row">
-                                        <div className="member-status"></div>
-                                        <div className="member-name">{ member.name }</div>
-                                        <div className="member-ranking flex-row">
-                                            { 
-                                                rating.map(score => 
-                                                    <div className="member-rating-score">
-                                                        <i className={ score.link } style={{ paddingRight: "5px"}}/> 
-                                                        { member.ranking[score.score] !== undefined
-                                                            ? member.ranking[score.score]
-                                                            : "NaN" }
-                                                    </div>
-                                                )
-                                            }
+                        ranking.length > 0
+                            ? ranking.map((member, index) => 
+                                member.name.toLowerCase().indexOf(props.searchMember.toLowerCase()) !== -1
+                                    ? <li 
+                                        className="member flex-row"
+                                        key={ `member-${member.id}` }
+                                        >
+                                        <div className="member-position">{ index+1 }</div>
+                                        <img className="member-avatar" src={ member.avatar } alt="avatar"/>
+                                        <div className="member-info flex-row">
+                                            <div className="member-status"></div>
+                                            <div className="member-name">{ member.name }</div>
+                                            <div className="member-ranking flex-row">
+                                                { 
+                                                    rating.map(score => 
+                                                        <div className="member-rating-score">
+                                                            <i className={ score.link } style={{ paddingRight: "5px"}}/> 
+                                                            { member.ranking[score.score] !== undefined
+                                                                ? member.ranking[score.score]
+                                                                : "NaN" }
+                                                        </div>
+                                                    )
+                                                }
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
-                            : null
-                        )
-                    } 
+                                    </li>
+                                : null
+                            ) : null
+                        } 
                 </ul>
             </div>
         )

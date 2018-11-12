@@ -54,7 +54,7 @@ class PageGames extends React.Component{
                 <div className='wrapper-description'>
                     <div className='page-description'>
                         <p>Here's the list of games that 0.1% curates, as well as the percentage completion comparision between our members.</p>
-                        <p>In the 0.1% community, we grade the ranks of our members by how many curated games they've completed, as well as the difficulty of those games (rated with 1, 2, 3 or 5 points). Each game specifies on their description their own difficulty.</p>
+                        <p>In the 0.1% community, we grade the ranks of our members by how many curated games they've completed, as well as the difficulty of those games. Each game specifies their own difficulty in the description.</p>
                         <p>The list also includes which three members completed the game first (with a gold, silver and bronze medals, respectively), as well as the member who has completed it the fastest based on Steam timestamps (with a trophy).</p>
                     </div>
                     <SearchBar />
@@ -63,7 +63,7 @@ class PageGames extends React.Component{
                             rating.map(r => <CheckBoxGameChoice 
                                 key={ `checkbox-game-${ r.score }` }
                                 score={ r.score } 
-                                icon={ swapRatingToIcon(r.score, rating) }/> )
+                                icon={ swapRatingToIcon(r.score, rating) || null }/> )
                         }
                     </div>
                 </div>
@@ -79,7 +79,7 @@ class PageGames extends React.Component{
                                 >                     
                                 <div className='game-info'>
                                     <div className='game-rating'>
-                                        <i className={ swapRatingToIcon(game.rating, rating) }></i>
+                                        <i className={ swapRatingToIcon(game.rating, rating) || null }></i>
                                     </div>
                                     <div className='game-title'>{ game.title }</div>
                                     <div className='game-desc'>{ game.desc }</div>
