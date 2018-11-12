@@ -57,7 +57,7 @@ class PageRanking extends React.Component {
                 <ul className="ranking-list">
                     {
                         ranking.map((member, index) => 
-                            member.name.toLowerCase().indexOf(props.state.searchMember.toLowerCase()) !== -1
+                            member.name.toLowerCase().indexOf(props.searchMember.toLowerCase()) !== -1
                             ? 
                                 <li 
                                     className="member flex-row"
@@ -91,7 +91,9 @@ class PageRanking extends React.Component {
     }
 }
 
-const mapStateToProps = state => ({ state })
+const mapStateToProps = state => ({ 
+    searchMember: state.searchMember 
+})
 
 export default connect(
     mapStateToProps

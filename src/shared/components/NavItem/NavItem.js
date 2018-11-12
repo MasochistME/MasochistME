@@ -14,7 +14,7 @@ class NavItem extends React.Component {
             <li 
                 onClick={ () => this.openTab(props) } 
                 className={ 
-                    props.item.link === props.state.activeTab
+                    props.item.link === props.activeTab
                         ? `flex-column tab-active`
                         : `flex-column` }>
                 <div className='flex-column'>
@@ -26,7 +26,9 @@ class NavItem extends React.Component {
     }
 }
 
-const mapStateToProps = state => ({ state })
+const mapStateToProps = state => ({ 
+    activeTab: state.activeTab 
+})
 const mapDispatchToProps = dispatch => ({ dispatch })
 
 export default connect(

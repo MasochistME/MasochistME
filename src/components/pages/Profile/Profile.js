@@ -22,7 +22,9 @@ class Profile extends React.Component {
     }
 }
 
-const mapStateToProps = state => ({ privilege: state.privilege })
+const mapStateToProps = state => ({ 
+    privilege: state.privilege 
+})
 
 export default connect(
     mapStateToProps

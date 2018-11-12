@@ -14,7 +14,7 @@ class SearchBar extends React.Component {
     componentDidMount = () => this.adjustToTab()
 
     adjustToTab = () => {
-        switch(this.props.state.activeTab) {
+        switch(this.props.activeTab) {
             case 'games': return this.setState({ searchFor: 'games' })
             case 'ranking': return this.setState({ searchFor: 'members' })
             default: return
@@ -43,7 +43,9 @@ class SearchBar extends React.Component {
     }
 }
 
-const mapStateToProps = state => ({ state })
+const mapStateToProps = state => ({ 
+    activeTab: state.activeTab 
+})
 const mapDispatchToProps = dispatch => ({ dispatch })
 
 export default connect(

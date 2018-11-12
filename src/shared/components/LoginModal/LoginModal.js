@@ -47,7 +47,7 @@ class LoginModal extends React.Component {
     render() {
         const { props } = this;
         return (
-            <div className={ loginModalVisible(props.state.showLoginModal) }>
+            <div className={ loginModalVisible(props.showLoginModal) }>
                 <div className="login-modal">
                     <div className="login-modal-form">
                         <input 
@@ -95,7 +95,9 @@ class LoginModal extends React.Component {
     }    
 }
 
-const mapStateToProps = state => ({ state })
+const mapStateToProps = state => ({ 
+    showLoginModal: state.showLoginModal 
+})
 const mapDispatchToProps = dispatch => ({ dispatch })
 
 export default connect(

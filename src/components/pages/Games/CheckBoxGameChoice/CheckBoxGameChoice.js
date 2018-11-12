@@ -6,8 +6,8 @@ class CheckBoxGameChoice extends React.Component{
     changeRatingVisibility = event => {
         let visibleGamesRatedArray = [ ];
         event.target.checked
-            ? visibleGamesRatedArray = [ event.target.value ].concat(this.props.state.showGamesRated)
-            : visibleGamesRatedArray = this.props.state.showGamesRated.filter(rating => rating !== event.target.value)
+            ? visibleGamesRatedArray = [ event.target.value ].concat(this.props.showGamesRated)
+            : visibleGamesRatedArray = this.props.showGamesRated.filter(rating => rating !== event.target.value)
         this.props.dispatch(showGamesRated(visibleGamesRatedArray))
     }
 
@@ -30,7 +30,9 @@ class CheckBoxGameChoice extends React.Component{
     }
 }
 
-const mapStateToProps = state => ({ state })
+const mapStateToProps = state => ({ 
+    showGamesRated: state.showGamesRated 
+})
 const mapDispatchToProps = dispatch => ({ dispatch })
 
 export default connect(
