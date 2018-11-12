@@ -1,5 +1,4 @@
 import React from 'react'
-import fs from 'fs'
 import { connect } from 'react-redux'
 import { showLoginModal, logInUser } from '../../store/modules/Login'
 import { sha256 } from '../../helpers/hash'
