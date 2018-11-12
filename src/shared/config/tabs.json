@@ -40,5 +40,12 @@
         "link": "https://store.steampowered.com/curator/7119343",
         "visible": true,
         "external": true       
+    },
+    {
+        "text": "patreon",
+        "icon": "fas fa-heart",
+        "link": "https://www.patreon.com/arcyvilk",
+        "visible": true,
+        "external": true       
     }
 ]
