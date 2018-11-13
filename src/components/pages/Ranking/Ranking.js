@@ -10,7 +10,8 @@ class PageRanking extends React.Component {
         super()
         this.state = { 
             rating: [ ],
-            members: [ ]
+            members: [ ],
+            games: [ ]
         };
         this.load = this.load.bind(this)
     }
@@ -22,6 +23,7 @@ class PageRanking extends React.Component {
     async load() {
         await this.loadRating()
         await this.loadMembers()
+        await this.loadGames()
     }
 
     loadRating = () => {
@@ -49,6 +51,14 @@ class PageRanking extends React.Component {
             }).catch(err => console.trace(err))
     }
 
+    loadGames = () => {
+        axios.get('http://localhost:3001/api/games')
+            .then(response => {
+                if (response.status === 200)
+                    return this.setState({ games: response.data })
+            }).catch(err => console.trace(err))
+    }
+
     render() {
         const { props } = this;
         const rating = this.state.rating;
@@ -59,7 +69,7 @@ class PageRanking extends React.Component {
                 return;
             return ranking.map((member, index) => 
                 member.name.toLowerCase().indexOf(props.searchMember.toLowerCase()) !== -1
-                    ? <Member member={ member } index={ index } rating={ this.state.rating } />
+                    ? <Member member={ member } index={ index } rating={ this.state.rating } games={ this.state.games } />
                     : null
                 )
             }

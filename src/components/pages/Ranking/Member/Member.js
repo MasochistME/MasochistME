@@ -11,14 +11,14 @@ export default class Member extends React.Component{
     changeDetailsVisibility = () => this.setState({ show: !this.state.show })
 
     render() {
-        const { member, index, rating } = this.props
+        const { member, index, rating, games } = this.props
         return (
             <li 
                 className="member flex-column"
                 key={ `member-${member.id}` }
                 onClick={ this.changeDetailsVisibility }>
                     <MemberSummary member={ member } index={ index } rating={ rating } />
-                    <MemberDetails show={ this.state.show }/>
+                    <MemberDetails member={ member } show={ this.state.show } games = { games }/>
             </li>
         )
     }
