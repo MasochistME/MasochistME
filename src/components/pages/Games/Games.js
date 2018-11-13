@@ -14,35 +14,38 @@ class PageGames extends React.Component{
             games: [ ],
             rating: [ ]
         }
-        this.loadGames = this.loadGames.bind(this)
-        this.loadRating = this.loadRating.bind(this)
         this.updateTimeout = null;
+        this.load = this.load.bind(this)
     }
 
     componentDidMount() {
-        this.loadRating()
-        this.loadGames()
+        this.load()
     }
 
     componentWillUnmount() {
         clearInterval(this.updateTimeout)
     }
 
-    loadGames() {
+    async load() {
+        await this.loadRating()
+        await this.loadGames()
+    }
+
+    loadRating = () => {
+        axios.get('http://localhost:3001/data/rating')  
+            .then(response => {
+                if (response.status === 200)
+                    return this.setState({ rating: response.data })
+            }).catch(err => console.trace(err))
+    }
+
+    loadGames = () => {
         axios.get('http://localhost:3001/api/games')
             .then(response => {
                 if (response.status === 200)
                     return this.setState({ games: _.orderBy(response.data, ['title', 'score'], ['asc', 'desc']) })
             })
             .catch(err => console.log(err.message))
-    }
-
-    loadRating() {
-        axios.get('http://localhost:3001/data/rating')  
-            .then(response => {
-                if (response.status === 200)
-                    return this.setState({ rating: response.data })
-            }).catch(err => console.trace(err))
     }
 
     render() {
@@ -63,7 +66,7 @@ class PageGames extends React.Component{
                             rating.map(r => <CheckBoxGameChoice 
                                 key={ `checkbox-game-${ r.score }` }
                                 score={ r.score } 
-                                icon={ swapRatingToIcon(r.score, rating) || null }/> )
+                                icon={ rating ? swapRatingToIcon(r.score, rating) : "fas fa-spinner" }/> )
                         }
                     </div>
                 </div>
@@ -79,7 +82,7 @@ class PageGames extends React.Component{
                                 >                     
                                 <div className='game-info'>
                                     <div className='game-rating'>
-                                        <i className={ swapRatingToIcon(game.rating, rating) || null }></i>
+                                        <i className={ game && rating ? swapRatingToIcon(game.rating, rating) : "fas fa-spinner" }></i>
                                     </div>
                                     <div className='game-title'>{ game.title }</div>
                                     <div className='game-desc'>{ game.desc }</div>

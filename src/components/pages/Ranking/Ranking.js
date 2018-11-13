@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import _ from 'lodash'
 import { connect } from 'react-redux'
 import SearchBar from '../../../shared/components/SearchBar'
 
@@ -10,28 +11,40 @@ class PageRanking extends React.Component {
             rating: [ ],
             members: [ ]
         };
-        this.loadRating = this.loadRating.bind(this)
-        this.loadMembers = this.loadMembers.bind(this)
+        this.load = this.load.bind(this)
     }
 
     componentDidMount() {
-        this.loadRating()
-        this.loadMembers()
+        this.load()
     }
 
-    loadRating() {
+    async load() {
+        await this.loadRating()
+        await this.loadMembers()
+    }
+
+    loadRating = () => {
         axios.get('http://localhost:3001/data/rating')
             .then(response => {
-                if (response.status === 200) 
+                if (response.status === 200)
                     return this.setState({ rating: response.data })
             }).catch(err => console.trace(err))
     }
 
-    loadMembers() {
+    loadMembers = () => {
         axios.get('http://localhost:3001/api/members')
             .then(response => {
-                if (response.status === 200) 
-                    return this.setState({ members: response.data })
+                if (response.status === 200) {
+                    let members = response.data;
+                    members.map(member => {
+                        let summary = 0
+                        this.state.rating.map(r => summary += r.score * member.ranking[r.score])
+                        member.points = summary
+                        return member   
+                    })
+                    members = _.orderBy(members, ['points'], ['desc'])
+                    return this.setState({ members: members })
+                }
             }).catch(err => console.trace(err))
     }
 
@@ -39,6 +52,42 @@ class PageRanking extends React.Component {
         const { props } = this;
         const rating = this.state.rating;
         const ranking = this.state.members; //change names here
+
+        const createRankingList = () => {
+            if (ranking.length <= 0)
+                return;
+            return ranking.map((member, index) => 
+                member.name.toLowerCase().indexOf(props.searchMember.toLowerCase()) !== -1
+                    ? <li 
+                        className="member flex-row"
+                        key={ `member-${member.id}` }
+                        >
+                        <div className="member-position">{ index+1 }</div>
+                        <img className="member-avatar" src={ member.avatar } alt="avatar"/>
+                        <div className="member-info flex-row">
+                            <div className="member-status"></div>
+                            <div className="member-name">{ member.name }</div>
+                            <div className="member-ranking flex-row">
+                                <div>
+                                    { member.points }
+                                    <span style={{ fontWeight: "bold" }}> Σ</span>
+                                </div>
+                                {   
+                                    rating.map(score => {
+                                        return <div className="member-rating-score">
+                                            { member.ranking[score.score] !== undefined
+                                                ? member.ranking[score.score]
+                                                : "NaN" }
+                                            <i className={ score.link } style={{ paddingRight: "5px"}}/> 
+                                        </div>
+                                    })
+                                }
+                            </div>
+                        </div>
+                    </li>
+                : null
+                )
+            }
 
         return (
             <div className="flex-column">
@@ -56,35 +105,8 @@ class PageRanking extends React.Component {
                 </div>
                 <ul className="ranking-list">
                     {
-                        ranking.length > 0
-                            ? ranking.map((member, index) => 
-                                member.name.toLowerCase().indexOf(props.searchMember.toLowerCase()) !== -1
-                                    ? <li 
-                                        className="member flex-row"
-                                        key={ `member-${member.id}` }
-                                        >
-                                        <div className="member-position">{ index+1 }</div>
-                                        <img className="member-avatar" src={ member.avatar } alt="avatar"/>
-                                        <div className="member-info flex-row">
-                                            <div className="member-status"></div>
-                                            <div className="member-name">{ member.name }</div>
-                                            <div className="member-ranking flex-row">
-                                                { 
-                                                    rating.map(score => 
-                                                        <div className="member-rating-score">
-                                                            <i className={ score.link } style={{ paddingRight: "5px"}}/> 
-                                                            { member.ranking[score.score] !== undefined
-                                                                ? member.ranking[score.score]
-                                                                : "NaN" }
-                                                        </div>
-                                                    )
-                                                }
-                                            </div>
-                                        </div>
-                                    </li>
-                                : null
-                            ) : null
-                        } 
+                        createRankingList()
+                    }
                 </ul>
             </div>
         )
