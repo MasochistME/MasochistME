@@ -1,4 +1,5 @@
 import React from 'react'
+import MemberGameProgressBar from '../MemberGameProgressBar'
 
 export default class MemberGame extends React.Component {
     render() {
@@ -21,7 +22,7 @@ export default class MemberGame extends React.Component {
                         <div>{ Math.round(parseInt(game.playtime_forever,10)/60) } h</div>
                     </div>
                 </div>
-                <div className="m-game-completion">{ Math.floor(game.completionRate) }%</div>
+                <MemberGameProgressBar percentage={ Math.floor(game.completionRate) }/>
             </div>
         )
     }
