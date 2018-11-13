@@ -22,5 +22,9 @@
     {
         "id": "rating",
         "path": "./data/rating.json"
+    },
+    {
+        "id": "update",
+        "path": "../api/update.json"
     }
 ]
