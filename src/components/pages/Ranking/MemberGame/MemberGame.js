@@ -6,11 +6,11 @@ export default class MemberGame extends React.Component {
 
         return (
             <div className="m-game flex-row">
-                <img className="m-game-logo" src={ game.image } alt="logo"></img>
+                <img className="m-game-logo" src={ game.img } alt="logo"></img>
                 <div className="m-game-info" >
-                    <div className="m-game-title">
-                        <div>{ game.rating }</div>
-                        <div>{ game.title }</div>
+                    <div className="flex-row">
+                        <i className={ game.rating } />
+                        <div className="m-game-title"> { game.title }</div>
                     </div>
                     <div className="m-game-times flex-column">
                         {

@@ -12,13 +12,14 @@ export default class Member extends React.Component{
 
     render() {
         const { member, index, rating, games } = this.props
+
         return (
             <li 
                 className="member flex-column"
                 key={ `member-${member.id}` }
                 onClick={ this.changeDetailsVisibility }>
                     <MemberSummary member={ member } index={ index } rating={ rating } />
-                    <MemberDetails member={ member } show={ this.state.show } games = { games }/>
+                    <MemberDetails member={ member } show={ this.state.show } rating={ rating } games={ games }/>
             </li>
         )
     }
