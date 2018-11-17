@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { showLoginModal, logOutUser } from '../../store/modules/Login'
 import { changeTab } from '../../store/modules/Tabs'
+import login_button from '../../../shared/images/steam_login.png'
 
 class Login extends React.Component{
     showLogin = () => this.props.dispatch(showLoginModal())
@@ -13,10 +14,7 @@ class Login extends React.Component{
             <div>
                 { !this.props.logged
                     ? (
-                        <div className='button flex-row' onClick={ this.showLogin }>
-                            <p>Log in</p>
-                            <i className="fas fa-sign-in-alt"></i>
-                        </div>
+                        <img class="button" src={ login_button } alt="Login via Steam" onClick={ this.showLogin }></img>
                         )
                     : (
                         <div className="flex-row">
