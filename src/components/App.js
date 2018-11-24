@@ -9,7 +9,7 @@ import Nav from '../shared/components/Nav'
 import ContentWrapper from '../shared/components/layout/ContentWrapper'
 import SidebarWrapper from './sidebar/SidebarWrapper' 
 import LoginModal from '../shared/components/LoginModal/index'
-import { cacheGames, cacheMembers, cacheRating } from '../shared/store/modules/Cache'
+import { cacheGames, cacheMembers, cacheRating, cacheEvents } from '../shared/store/modules/Cache'
 
 class App extends Component {
   constructor() {
@@ -20,7 +20,6 @@ class App extends Component {
   loadRating = () => {
     axios.get('http://localhost:3001/data/rating')  
         .then(response => {
-          console.log(response.data)
             if (response.status === 200)
               return this.props.dispatch(cacheRating(response.data))
         }).catch(err => console.trace(err))
@@ -29,7 +28,6 @@ class App extends Component {
   loadGames = () => {
       axios.get('http://localhost:3001/api/games')
           .then(response => {
-            console.log(response.data)
               if (response.status === 200)
                 return this.props.dispatch(cacheGames(_.orderBy(response.data, ['title', 'score'], ['asc', 'desc'])))
           })
@@ -39,7 +37,6 @@ class App extends Component {
   loadMembers = () => {
     axios.get('http://localhost:3001/api/members')
         .then(response => {
-          console.log(response.data)
             if (response.status === 200) {
                 let members = response.data;
                 members.map(member => {
@@ -54,10 +51,19 @@ class App extends Component {
         }).catch(err => console.trace(err))
   }
 
+  loadEvents = () => {
+    axios.get('http://localhost:3001/api/events')  
+        .then(response => {
+            if (response.status === 200)
+              return this.props.dispatch(cacheEvents(response.data))
+        }).catch(err => console.trace(err))
+  }
+
   load() {
     this.loadRating()
     this.loadMembers()
     this.loadGames()
+    this.loadEvents()
     this.setState({ loaded: true })
   }
 

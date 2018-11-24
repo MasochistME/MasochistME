@@ -8,12 +8,8 @@
         "path": "../api/members.json"
     },
     {
-        "id": "ranking",
-        "path": "../data/ranking.json"
-    },
-    {
         "id": "events",
-        "path": "../data/events.json"
+        "path": "../api/log.json"
     },
     {
         "id": "blog",
