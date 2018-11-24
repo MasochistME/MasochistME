@@ -1,75 +1,22 @@
 import React from 'react'
-import axios from 'axios'
-import _ from 'lodash'
 import { connect } from 'react-redux'
 import SearchBar from '../../../shared/components/SearchBar'
 import Member from './Member';
 
 class PageRanking extends React.Component {
-    constructor() {
-        super()
-        this.state = { 
-            rating: [ ],
-            members: [ ],
-            games: [ ]
-        };
-        this.load = this.load.bind(this)
-    }
-
-    componentDidMount() {
-        this.load()
-    }
-
-    async load() {
-        await this.loadRating()
-        await this.loadMembers()
-        await this.loadGames()
-    }
-
-    loadRating = () => {
-        axios.get('http://localhost:3001/data/rating')
-            .then(response => {
-                if (response.status === 200)
-                    return this.setState({ rating: response.data })
-            }).catch(err => console.trace(err))
-    }
-
-    loadMembers = () => {
-        axios.get('http://localhost:3001/api/members')
-            .then(response => {
-                if (response.status === 200) {
-                    let members = response.data;
-                    members.map(member => {
-                        let summary = 0
-                        this.state.rating.map(r => summary += r.score * member.ranking[r.score])
-                        member.points = summary
-                        return member   
-                    })
-                    members = _.orderBy(members, ['points'], ['desc'])
-                    return this.setState({ members: members })
-                }
-            }).catch(err => console.trace(err))
-    }
-
-    loadGames = () => {
-        axios.get('http://localhost:3001/api/games')
-            .then(response => {
-                if (response.status === 200)
-                    return this.setState({ games: response.data })
-            }).catch(err => console.trace(err))
-    }
-
     render() {
         const { props } = this;
-        const rating = this.state.rating;
-        const ranking = this.state.members; //change names here
+        const rating = this.props.rating;
+        const ranking = this.props.members; //change names here
+
+        console.log('rendering...')
 
         const createRankingList = () => {
             if (ranking.length <= 0)
                 return;
             return ranking.map((member, index) => 
                 member.name.toLowerCase().indexOf(props.searchMember.toLowerCase()) !== -1
-                    ? <Member member={ member } index={ index } rating={ this.state.rating } games={ this.state.games } />
+                    ? <Member member={ member } index={ index } rating={ this.props.rating } games={ this.props.games } />
                     : null
                 )
             }
@@ -87,7 +34,7 @@ class PageRanking extends React.Component {
                     <SearchBar />
                 </div>
                 <ul className="ranking-list">
-                    { createRankingList() }
+                    { createRankingList() || <div>Skeleton</div>}
                 </ul>
             </div>
         )
@@ -95,7 +42,10 @@ class PageRanking extends React.Component {
 }
 
 const mapStateToProps = state => ({ 
-    searchMember: state.searchMember 
+    searchMember: state.searchMember,
+    members: state.members,
+    rating: state.rating,
+    games: state.games
 })
 
 export default connect(

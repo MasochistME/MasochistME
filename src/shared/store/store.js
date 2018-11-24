@@ -6,8 +6,11 @@ import { CHANGE_TAB } from './modules/Tabs'
 import { SEARCH_GAMES_VALUE, SEARCH_MEMBERS_VALUE } from './modules/Search'
 import { SHOW_GAMES_RATED } from './modules/CheckBoxes'
 import { SHOW_LOGIN_MODAL, LOG_IN_USER, LOG_OUT_USER } from './modules/Login'
+import { CACHE_GAMES, CACHE_MEMBERS, CACHE_RATING } from './modules/Cache'
 
 const ratingArray = () => rating.map(r => r.score.toString())
+
+// STORES
 const defaultState = {
     activeTab: "home",
     tabs: tabs,
@@ -17,8 +20,12 @@ const defaultState = {
     showGamesRated: [ ...ratingArray() ],
     username: null,
     privilege: null,
-    logged: false
+    logged: false,
+    games: null,
+    members: null,
+    rating: null
 }
+
 const enhancers = [ ]
 const middleWare = [ thunk ]
 const composedEnhancers = compose(
@@ -59,6 +66,18 @@ const reducer = (state = defaultState, action) => {
             username: null,
             privilege: null,
             logged: false
+        }
+        case CACHE_GAMES: return {
+            ...state,
+            games: action.data
+        }
+        case CACHE_MEMBERS: return {
+            ...state,
+            members: action.data
+        }
+        case CACHE_RATING: return {
+            ...state,
+            rating: action.data
         }
         default: return state
     }

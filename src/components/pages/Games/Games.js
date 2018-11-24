@@ -1,56 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import axios from 'axios'
-import _ from 'lodash'
 import CheckBoxGameChoice from './CheckBoxGameChoice'
 import SearchBar from '../../../shared/components/SearchBar'
-// import games from '../../mock/games.json' //THIS IS FOR DEV PURPOSES - GONNA BE CHANGED TO JSON DOWNLOADED FRMO THE SERVER
 import { swapRatingToIcon } from '../../../shared/helpers/helper';
 
 class PageGames extends React.Component{
-    constructor() {
-        super()
-        this.state = {
-            games: [ ],
-            rating: [ ]
-        }
-        this.updateTimeout = null;
-        this.load = this.load.bind(this)
-    }
-
-    componentDidMount() {
-        this.load()
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.updateTimeout)
-    }
-
-    async load() {
-        await this.loadRating()
-        await this.loadGames()
-    }
-
-    loadRating = () => {
-        axios.get('http://localhost:3001/data/rating')  
-            .then(response => {
-                if (response.status === 200)
-                    return this.setState({ rating: response.data })
-            }).catch(err => console.trace(err))
-    }
-
-    loadGames = () => {
-        axios.get('http://localhost:3001/api/games')
-            .then(response => {
-                if (response.status === 200)
-                    return this.setState({ games: _.orderBy(response.data, ['title', 'score'], ['asc', 'desc']) })
-            })
-            .catch(err => console.log(err.message))
-    }
-
     render() {
         const { props } = this
-        const rating = this.state.rating;
+        const rating = this.props.rating;
 
         return (
             <div className='flex-column'>
@@ -61,6 +18,7 @@ class PageGames extends React.Component{
                         <p>The list also includes which three members completed the game first (with a gold, silver and bronze medals, respectively), as well as the member who has completed it the fastest based on Steam timestamps (with a trophy).</p>
                     </div>
                     <SearchBar />
+                    { rating ?
                     <div className='wrapper-choicebar'>
                         {
                             rating.map(r => <CheckBoxGameChoice 
@@ -69,10 +27,14 @@ class PageGames extends React.Component{
                                 icon={ rating ? swapRatingToIcon(r.score, rating) : "fas fa-spinner" }/> )
                         }
                     </div>
+                    : <div>SKELETON</div>
+                    }
                 </div>
                 <div className='wrapper-games'>
                     {
-                        this.state.games.map(game =>
+                        this.props.games
+                        ?
+                        this.props.games.map(game =>
                             game.title.toLowerCase().indexOf(props.searchGame.toLowerCase()) !== -1
                             && props.showGamesRated.find(score => parseInt(score,10) === parseInt(game.rating,10))
                             ? <div 
@@ -90,6 +52,7 @@ class PageGames extends React.Component{
                             </div>
                             : null
                         )
+                        : <div>SKELETON</div>
                     }
                 </div>
             </div>
@@ -99,7 +62,9 @@ class PageGames extends React.Component{
 
 const mapStateToProps = state => ({ 
     searchGame: state.searchGame, 
-    showGamesRated: state.showGamesRated 
+    showGamesRated: state.showGamesRated,
+    games: state.games,
+    rating: state.rating
 })
 
 export default connect(

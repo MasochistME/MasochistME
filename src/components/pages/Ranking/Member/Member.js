@@ -19,7 +19,11 @@ export default class Member extends React.Component{
                 key={ `member-${member.id}` }
                 onClick={ this.changeDetailsVisibility }>
                     <MemberSummary member={ member } index={ index } rating={ rating } />
-                    <MemberDetails member={ member } show={ this.state.show } rating={ rating } games={ games }/>
+                    {
+                        this.state.show
+                            ? <MemberDetails member={ member } show={ this.state.show } rating={ rating } games={ games }/>
+                            : null
+                    }
             </li>
         )
     }
