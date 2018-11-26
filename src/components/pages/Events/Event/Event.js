@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import logo from '../../../../shared/images/logo.png'
 
 class GameEvent extends React.Component {
     render() {
@@ -8,8 +9,8 @@ class GameEvent extends React.Component {
         return (
             game
                 ? <div className="event-info flex-row">
-                    <img className="event-img" alt="game-img" src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/86/861f46d859ae289c3f83924174c3c783cd58b0ab_full.jpg"></img>
-                    <div className="event-desc"><span style={{ fontWeight: "bold" }}>{ game.title }</span> has been curated!</div>
+                    <img className="event-img" alt="game-img" src={ logo }></img>
+                    <div className="event-desc"><span className="bold">{ game.title }</span> has been curated!</div>
                     <div className="event-summary flex-row">
                         <i className="fas fa-plus-square"></i> 
                         <i className="fas fa-star"></i> 
@@ -29,10 +30,10 @@ class MemberEvent extends React.Component {
             member
                 ? <div className="event-info flex-row">
                     <img className="event-img" alt="avatar" src={ member.avatar }></img>
-                    <div className="event-desc"><span style={{ fontWeight: "bold" }}>{ member.name }</span> has joined the group!</div>
+                    <div className="event-desc"><span className="bold">{ member.name }</span> has joined the group!</div>
                     <div className="flex-row">
                         <i className="fas fa-user-plus"></i>
-                        <img className="event-img" alt="game-img" src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/86/861f46d859ae289c3f83924174c3c783cd58b0ab_full.jpg"></img>
+                        <img className="event-img" alt="game-img" src={ logo }></img>
                     </div>
                 </div>
                 : null
@@ -48,7 +49,7 @@ class CompleteEvent extends React.Component {
             game && member
                 ? <div className="event-info flex-row">
                     <img className="event-img" src={ member.avatar } alt="game-img"></img>
-                    <div className="event-desc"><span style={{ fontWeight: "bold" }}>{ member.name }</span> 100%'d <span style={{ fontWeight: "bold" }}>{ game.title }</span>!</div>
+                    <div className="event-desc"><span className="bold">{ member.name }</span> 100%'d <span className="bold">{ game.title }</span>!</div>
                     <div className="flex-row">
                         <span role="img" aria-label="100">💯</span>
                         <i className="fas fa-star"></i>
@@ -61,7 +62,7 @@ class CompleteEvent extends React.Component {
 }
 
 class Event extends React.Component {
-    makeEvent = event => {
+    sortEvents = event => {
         switch (event.type) {
             case "newGame": return <GameEvent event={ event } games={ this.props.games } />
             case "newMember": return <MemberEvent event={ event } members={ this.props.members } />
@@ -79,7 +80,7 @@ class Event extends React.Component {
                 key={ `event-${Date.now()}` }
             >
                 <div className="event-date"> { new Date(props.event.date).toLocaleString() } </div>
-                { this.makeEvent(props.event) }
+                { this.sortEvents(props.event) }
             </li>
         )
     }

@@ -2,36 +2,54 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 class SectionHistory extends React.Component {
-    sortEvents = event => {
-        if (event.type === 'newMember')
-            return '100%'
-        if (event.type === 'newGame')
-            return 'new game'
-        if (event.type === 'complete')
-            return 'complete'
+    sortEvents = (event, eventIndex) => {
+        const player = this.props.members.find(m => m.id === event.player)
+        const game = this.props.games.find(g => g.id === event.game)
+
+        switch (event.type) {
+            case 'newMember':
+                return player
+                    ? (
+                    <li className='small-event' key={ `sidebar-event-${eventIndex}` }>
+                        <span className="bold">{player.name}</span> has joined the group!
+                    </li>)
+                    : null
+            case 'newGame':
+                return game
+                    ? (
+                    <li className='small-event' key={ `sidebar-event-${eventIndex}` }>
+                        <span className="bold">{game.title}</span> has been curated!
+                    </li>)
+                    : null
+            case 'complete':
+                return player && game
+                    ? (
+                    <li className='small-event' key={ `sidebar-event-${eventIndex}` }>
+                        <span className="bold">{player.name}</span> 100%'d <span className="bold">{game.title}</span>!
+                    </li>)
+                    : null
+            default: return null
+        }
     }
 
     render() {
         const { props } = this;
+
         return (
         <div className='section'>
-            <p className='section-title'>Last 10 events</p>
-            <div>
-                {
-                    props.events.map((event, eventIndex) => 
-                        <div className='small-event' key={ `sidebar-event-${eventIndex}` }>
-                            { this.sortEvents(event) }
-                        </div>
-                    )
-                }
-            </div>
+            <h3 className='section-title'>Last 10 events</h3>
+            <ul>
+                { props.events.map((event, eventIndex) => this.sortEvents(event, eventIndex) )}
+            </ul>
         </div>)
     }
 }
 
 
 const mapStateToProps = state => ({ 
-    events: state.events
+    events: state.events,
+    games: state.games,
+    members: state.members
 })
 
 export default connect(

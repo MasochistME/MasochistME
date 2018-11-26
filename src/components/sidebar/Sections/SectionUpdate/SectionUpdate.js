@@ -30,18 +30,18 @@ export default class SectionUpdate extends React.Component {
 
     render() {
         return(
-        <div className='section flex-column'>
-            <p className='section-title'>Last updated: { new Date(this.state.lastUpdate).toLocaleString() }</p>
+        <div className='section'>
+            <h3 className='section-title'>Last updated: { new Date(this.state.lastUpdate).toLocaleString() }</h3>
+            <div className="flex-column">
             {
                 this.state.updating
                     ? ( <div className='update-progress-bar-border' title={ `${this.state.updateStatus}%`}>
                             <div className='update-progress-bar' style={{ width:`${this.state.updateStatus}%` }}></div>
                         </div>
                         )
-                    : (
-                        <button className='custom-button update-button' onClick={() => this.sendUpdateRequest() }>Update</button>
-                    )
+                    : ( <button className='custom-button update-button' onClick={() => this.sendUpdateRequest() }>Update</button> )
             }
+            </div>
             
                 
         </div>)

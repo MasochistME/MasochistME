@@ -14,7 +14,7 @@ export default class MemberSummary extends React.Component {
                     <div className="member-ranking flex-row">
                         <div className="member-rating-score">
                             { member.points }
-                            <span style={{ fontWeight: "bold" }}> Σ</span>
+                            <span className="bold"> Σ</span>
                         </div>
                         {   
                             rating.map((score, scoreIndex) => {

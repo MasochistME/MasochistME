@@ -40,11 +40,11 @@ export default class SectionTrivia extends React.Component {
     render() {
         return(
         <div className='section'>
-            <p className='section-title'>Trivia</p>
-            <p>Members total: <span style={{ fontWeight: "bold" }}>{ this.state.members }</span></p>
+            <h3 className='section-title'>Trivia</h3>
+            <p>Members total: <span className="bold">{ this.state.members }</span></p>
             <p>Curated games:</p>
             <ul>
-                <li>total: <span style={{ fontWeight: "bold" }}>{ this.state.games.total }</span></li>
+                <li>total: <span className="bold">{ this.state.games.total }</span></li>
             </ul>
         </div>)
     }
