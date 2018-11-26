@@ -20,6 +20,7 @@ const defaultState = {
     showGamesRated: [ ...ratingArray() ],
     username: null,
     privilege: null,
+    banned: false,
     logged: false,
     games: [],
     members: [],
@@ -60,13 +61,16 @@ const reducer = (state = defaultState, action) => {
             ...state,
             username: action.username,
             privilege: action.privilege,
-            logged: true
+            logged: true,
+            banned: action.banned
         }
         case LOG_OUT_USER: return {
             ...state,
             username: null,
             privilege: null,
-            logged: false
+            logged: false,
+            banned: false,
+            activeTab: "home"
         }
         case CACHE_GAMES: return {
             ...state,

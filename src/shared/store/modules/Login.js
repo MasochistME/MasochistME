@@ -9,11 +9,12 @@ export function showLoginModal() {
         type: SHOW_LOGIN_MODAL
     }
 }
-export function logInUser(username, privilege) {
+export function logInUser(username, privilege, banned) {
     return {
         type: LOG_IN_USER,
         username: username,
-        privilege: privilege
+        privilege: privilege,
+        banned: banned
     }
 }
 export function logOutUser() {
