@@ -8,22 +8,28 @@
     align-items: center
     width: 30%
     height: 100%
-    padding: 15px
     box-sizing: border-box
     background-color: rgba($lightgrey, 0.8)
     font-family: $font-cinzel
     .section-title
+        width: 100%
         padding: 0
         margin: 0 0 10px 0
         font-size: 1.4em
         text-transform: uppercase
         text-align: center
+        background-color: rgba($superdarkgrey, 0.8)
+        color: $superlightgrey
 .section
     margin: 0 0 20px 0
     width: 100%
     box-sizing: border-box
+    div, p, ol, ul
+        padding: 0 15px
     p, ul 
         margin: 2px 0
+    ul li
+        margin: 0 30px
 .update-progress-bar-border
     position: relative
     display: flex
@@ -31,12 +37,14 @@
     align-items: center
     width: 100%
     height: 10px
-    margin: 14px 0
+    margin: 15px
+    padding: 0 !important
     background-color: $darkgrey
     border: 1px solid $darkgrey
 .update-progress-bar
     width: 0%
     height: 100%
+    padding: 0 !important
     align-self: flex-start  
     background-color: $lightgrey
 .update-button
@@ -47,4 +55,11 @@
     padding: 3px
     margin-bottom: 1px
     box-sizing: border-box
-    background-color: rgba($lightgrey, 0.8)
+.small-member
+    display: flex
+    flex-direction: row
+    justify-content: space-between
+    align-items: center
+    width: 100%
+    padding: 3px
+    margin-bottom: 1px
