@@ -16,7 +16,6 @@ export default class Member extends React.Component{
         return (
             <li 
                 className="member flex-column"
-                key={ `member-${member.id}` }
                 onClick={ this.changeDetailsVisibility }>
                     <MemberSummary member={ member } index={ index } rating={ rating } />
                     {

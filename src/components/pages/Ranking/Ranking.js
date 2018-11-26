@@ -9,14 +9,12 @@ class PageRanking extends React.Component {
         const rating = this.props.rating;
         const ranking = this.props.members; //change names here
 
-        console.log('rendering...')
-
         const createRankingList = () => {
             if (ranking.length <= 0)
                 return;
-            return ranking.map((member, index) => 
+            return ranking.map((member, memberIndex) => 
                 member.name.toLowerCase().indexOf(props.searchMember.toLowerCase()) !== -1
-                    ? <Member member={ member } index={ index } rating={ this.props.rating } games={ this.props.games } />
+                    ? <Member member={ member } index={ memberIndex } rating={ this.props.rating } games={ this.props.games } key={ `member-${member.id}` }/>
                     : null
                 )
             }
@@ -27,7 +25,7 @@ class PageRanking extends React.Component {
                     <div className='page-description'>
                     <p>Ranking system utilizes the games' score system. Depending on the game's individual difficulty level, it is given one of { rating.length } possible marks:</p>
 				        <ul>
-                            { rating.map(r => <li><i className={ r.link } /> - worth { r.score } pts - { r.desc } </li>) }
+                            { rating.map((r, rIndex) => <li key={ `r-${rIndex}` }><i className={ r.link } /> - worth { r.score } pts - { r.desc } </li>) }
 				        </ul>
                     <p>Completing a game might mean earning its most demanding achievement, or getting the in-game 100%; but for the sake of simplicity the ranking system present here assumes that completing a game means earning 100% of its Steam achievements. You are awarded points depending on the completed game's difficulty level, which are later summarized and used to determine your placement on the ranking ladder.</p>
                     </div>

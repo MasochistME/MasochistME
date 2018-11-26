@@ -18,8 +18,8 @@ class SectionHistory extends React.Component {
             <p className='section-title'>Last 10 events</p>
             <div>
                 {
-                    props.events.map(event => 
-                        <div className='small-event'>
+                    props.events.map((event, eventIndex) => 
+                        <div className='small-event' key={ `sidebar-event-${eventIndex}` }>
                             { this.sortEvents(event) }
                         </div>
                     )

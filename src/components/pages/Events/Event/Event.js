@@ -11,7 +11,7 @@ class GameEvent extends React.Component {
                     <img className="event-img" alt="game-img" src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/86/861f46d859ae289c3f83924174c3c783cd58b0ab_full.jpg"></img>
                     <div className="event-desc"><span style={{ fontWeight: "bold" }}>{ game.title }</span> has been curated!</div>
                     <div className="event-summary flex-row">
-                        <i class="fas fa-plus-square"></i> 
+                        <i className="fas fa-plus-square"></i> 
                         <i className="fas fa-star"></i> 
                         <img className="event-img" alt="game-img" src={ game.img }></img>
                     </div>
@@ -31,7 +31,7 @@ class MemberEvent extends React.Component {
                     <img className="event-img" alt="avatar" src={ member.avatar }></img>
                     <div className="event-desc"><span style={{ fontWeight: "bold" }}>{ member.name }</span> has joined the group!</div>
                     <div className="flex-row">
-                        <i class="fas fa-user-plus"></i>
+                        <i className="fas fa-user-plus"></i>
                         <img className="event-img" alt="game-img" src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/86/861f46d859ae289c3f83924174c3c783cd58b0ab_full.jpg"></img>
                     </div>
                 </div>

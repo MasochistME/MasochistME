@@ -5,7 +5,7 @@ export default class Update extends React.Component{
         return (
             <div className='button flex-row'>
                 <p>Update</p>
-                <i class="fas fa-edit"></i>
+                <i className="fas fa-edit"></i>
             </div>
         )
     }

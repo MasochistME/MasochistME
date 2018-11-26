@@ -7,7 +7,7 @@ export default class SidebarWrapper extends React.Component{
         return (
             <div className='wrapper-sidebar'>
                 {
-                    sidebar.map(section => <SidebarSection section={ section } />)
+                    sidebar.map((section, sectionIndex) => <SidebarSection section={ section } key={ `section-${sectionIndex}` }/>)
                 }
             </div>
         )

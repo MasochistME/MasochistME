@@ -13,8 +13,8 @@ class Login extends React.Component{
         return (
             <div>
                 { !this.props.logged
-                    ? (
-                        <img class="button" src={ login_button } alt="Login via Steam" onClick={ this.showLogin }></img>
+                    ? ( 
+                        <img className="button" src={ login_button } alt="Login via Steam" onClick={ this.showLogin }></img>
                         )
                     : (
                         <div className="flex-row">
@@ -23,7 +23,7 @@ class Login extends React.Component{
                             </div>
                             <div className='button flex-row' onClick={ this.logOut }>
                                 <p>Log out</p>
-                                <i class="fas fa-sign-out-alt"></i>
+                                <i className="fas fa-sign-out-alt"></i>
                             </div>
                         </div>
                     )

@@ -6,8 +6,8 @@ export default class PageHome extends React.Component{
         return (
             <div>
                 {
-                    blog.map(entry => 
-                        <div className='blog-entry'>
+                    blog.map((entry, entryIndex) => 
+                        <div className='blog-entry' key={ `entry-${entryIndex}` }>
                             <h1>
                                 { entry.title}
                             </h1>

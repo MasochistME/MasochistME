@@ -24,7 +24,7 @@ class CheckBoxGameChoice extends React.Component{
                     defaultChecked 
                     onChange={ this.changeRatingVisibility }
                 />
-                <label for={ `game-choice-${ score }` }>show <i className={ this.props.icon }></i> games</label>
+                <label htmlFor={ `game-choice-${ score }` }>show <i className={ this.props.icon }></i> games</label>
             </div>
         )
     }

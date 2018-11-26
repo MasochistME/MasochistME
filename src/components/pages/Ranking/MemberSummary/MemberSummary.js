@@ -17,8 +17,8 @@ export default class MemberSummary extends React.Component {
                             <span style={{ fontWeight: "bold" }}> Σ</span>
                         </div>
                         {   
-                            rating.map(score => {
-                                return <div className="member-rating-score">
+                            rating.map((score, scoreIndex) => {
+                                return <div className="member-rating-score" key={`member-rating-score-${scoreIndex}`}>
                                     { member.ranking[score.score] !== undefined
                                         ? member.ranking[score.score]
                                         : "NaN" }
