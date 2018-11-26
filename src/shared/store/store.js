@@ -39,7 +39,9 @@ const reducer = (state = defaultState, action) => {
     switch (action.type) {
         case CHANGE_TAB: return {
             ...state,
-            activeTab: action.tab
+            activeTab: action.tab,
+            searchGame: "",
+            searchMember: ""
         }
         case SEARCH_GAMES_VALUE: return {
             ...state,
