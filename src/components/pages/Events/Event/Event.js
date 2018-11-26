@@ -6,14 +6,15 @@ class GameEvent extends React.Component {
     render() {
         const { props } = this
         const game = props.games.find(g => g.id === props.event.game)
+        const rating = props.rating.find(r => r.score === game.rating)
         return (
-            game
+            game && rating
                 ? <div className="event-info flex-row">
                     <img className="event-img" alt="game-img" src={ logo }></img>
                     <div className="event-desc"><span className="bold">{ game.title }</span> has been curated!</div>
                     <div className="event-summary flex-row">
                         <i className="fas fa-plus-square"></i> 
-                        <i className="fas fa-star"></i> 
+                        <i className={ rating.link }></i> 
                         <img className="event-img" alt="game-img" src={ game.img }></img>
                     </div>
                 </div>
@@ -31,7 +32,7 @@ class MemberEvent extends React.Component {
                 ? <div className="event-info flex-row">
                     <img className="event-img" alt="avatar" src={ member.avatar }></img>
                     <div className="event-desc"><span className="bold">{ member.name }</span> has joined the group!</div>
-                    <div className="flex-row">
+                    <div className="event-summary flex-row">
                         <i className="fas fa-user-plus"></i>
                         <img className="event-img" alt="game-img" src={ logo }></img>
                     </div>
@@ -45,14 +46,16 @@ class CompleteEvent extends React.Component {
         const { props } = this
         const member = props.members.find(m => m.id === props.event.player)
         const game = props.games.find(g => g.id === props.event.game)
+        const rating = props.rating.find(r => r.score === game.rating)
+
         return (
-            game && member
+            game && member && rating
                 ? <div className="event-info flex-row">
                     <img className="event-img" src={ member.avatar } alt="game-img"></img>
                     <div className="event-desc"><span className="bold">{ member.name }</span> 100%'d <span className="bold">{ game.title }</span>!</div>
-                    <div className="flex-row">
+                    <div className="event-summary flex-row">
                         <span role="img" aria-label="100">💯</span>
-                        <i className="fas fa-star"></i>
+                        <i className={ rating.link }></i>
                         <img className="event-img" src={ game.img } alt="game-img"></img>
                     </div>
                 </div>
@@ -64,9 +67,9 @@ class CompleteEvent extends React.Component {
 class Event extends React.Component {
     sortEvents = event => {
         switch (event.type) {
-            case "newGame": return <GameEvent event={ event } games={ this.props.games } />
+            case "newGame": return <GameEvent event={ event } games={ this.props.games } rating={ this.props.rating } />
             case "newMember": return <MemberEvent event={ event } members={ this.props.members } />
-            case "complete": return <CompleteEvent event={ event } games={ this.props.games } members={ this.props.members } />
+            case "complete": return <CompleteEvent event={ event } games={ this.props.games } members={ this.props.members } rating={ this.props.rating } />
             default: return
         }
     }
@@ -87,9 +90,9 @@ class Event extends React.Component {
 }
 
 const mapStateToProps = state => ({ 
-    rating: state.rating,
     games: state.games,
-    members: state.members
+    members: state.members,
+    rating: state.rating
 })
 
 export default connect(
