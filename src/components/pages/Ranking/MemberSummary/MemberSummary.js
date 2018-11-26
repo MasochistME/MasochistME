@@ -9,7 +9,9 @@ export default class MemberSummary extends React.Component {
                 <div className="member-position">{ index+1 }</div>
                 <img className="member-avatar" src={ member.avatar } alt="avatar"/>
                 <div className="member-info flex-row">
-                    <div className="member-status"></div>
+                    <div className="member-status" title="This member has their Steam profile set to private.">
+                        { member.points === 0 ? "⚠️" : null }
+                    </div>
                     <div className="member-name">{ member.name }</div>
                     <div className="member-ranking flex-row">
                         <div className="member-rating-score">
