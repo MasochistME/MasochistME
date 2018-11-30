@@ -20,7 +20,7 @@ export default class SectionTrivia extends React.Component {
     }
 
     loadGames() {
-        axios.get('http://localhost:3001/api/games')
+        axios.get('/rest/api/games')
             .then(response => this.setState({ games: {
                 total: response.data.length
             }}
@@ -28,12 +28,12 @@ export default class SectionTrivia extends React.Component {
     }
 
     loadRating() {
-        axios.get('http://localhost:3001/data/rating')
+        axios.get('/rest/data/rating')
             .then(response => this.setState({ rating: response.data }))
     }
 
     loadMembers() {
-        axios.get('http://localhost:3001/api/members')
+        axios.get('/rest/api/members')
             .then(response => this.setState({ members: response.data.length }))
     }
 

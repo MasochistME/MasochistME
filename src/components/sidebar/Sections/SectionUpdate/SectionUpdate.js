@@ -10,19 +10,18 @@ export default class SectionUpdate extends React.Component {
         this.checkStatus = this.checkStatus.bind(this);
         this.sendUpdateRequest = this.sendUpdateRequest.bind(this);
         
-        this.domain = 'http://localhost:3001' //this will get changed when backend and frontend have the same port
         this.statusInterval = setInterval(() => this.checkStatus(), 1000);
     }
 
     checkStatus() {
-        let url = `${this.domain}/status`
+        let url = `/rest/status`
         axios.get(url)
             .then(res => this.setState({ ...res.data }))
             .catch(err => console.log(err))
     }
 
     sendUpdateRequest() {
-        let url = `${this.domain}/update`
+        let url = `/rest/update`
         axios.get(url)
             .then(res => console.log(res.data.content))
             .catch(err => console.log(err))

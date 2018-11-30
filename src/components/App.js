@@ -18,7 +18,7 @@ class App extends Component {
   }
 
   loadRating = () => {
-    axios.get('http://localhost:3001/data/rating')  
+    axios.get('/rest/data/rating')  
         .then(response => {
             if (response.status === 200)
               return this.props.dispatch(cacheRating(response.data))
@@ -26,7 +26,7 @@ class App extends Component {
   }
 
   loadGames = () => {
-      axios.get('http://localhost:3001/api/games')
+      axios.get('/rest/api/games')
           .then(response => {
               if (response.status === 200)
                 return this.props.dispatch(cacheGames(_.orderBy(response.data, ['title', 'score'], ['asc', 'desc'])))
@@ -35,7 +35,7 @@ class App extends Component {
   }
 
   loadMembers = () => {
-    axios.get('http://localhost:3001/api/members')
+    axios.get('/rest/api/members')
         .then(response => {
             if (response.status === 200) {
                 let members = response.data;
@@ -52,7 +52,7 @@ class App extends Component {
   }
 
   loadEvents = () => {
-    axios.get('http://localhost:3001/api/events')  
+    axios.get('/rest/api/events')  
         .then(response => {
             if (response.status === 200)
               return this.props.dispatch(cacheEvents(response.data))
