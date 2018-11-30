@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 
 class SectionHistory extends React.Component {
     sortEvents = (event, eventIndex) => {
-        const player = this.props.members.find(m => m.id === event.player)
-        const game = this.props.games.find(g => g.id === event.game)
+        const player = this.props.members.find(m => Number(m.id) === Number(event.player))
+        const game = this.props.games.find(g => Number(g.id) === Number(event.game))
 
         switch (event.type) {
             case 'newMember':
@@ -39,7 +39,9 @@ class SectionHistory extends React.Component {
         <div className='section'>
             <h3 className='section-title'>Last 10 events</h3>
             <ul>
-                { props.events.map((event, eventIndex) => this.sortEvents(event, eventIndex) )}
+                { props.events
+                    .slice(0,10)
+                    .map((event, eventIndex) => this.sortEvents(event, eventIndex) )}
             </ul>
         </div>)
     }

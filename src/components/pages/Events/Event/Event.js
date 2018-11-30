@@ -5,8 +5,8 @@ import logo from '../../../../shared/images/logo.png'
 class GameEvent extends React.Component {
     render() {
         const { props } = this
-        const game = props.games.find(g => g.id === props.event.game)
-        const rating = props.rating.find(r => r.score === game.rating)
+        const game = props.games.find(g => Number(g.id) === Number(props.event.game))
+        const rating = props.rating.find(r => Number(r.score) === Number(game.rating))
         return (
             game && rating
                 ? <div className="event-info flex-row">
@@ -26,7 +26,7 @@ class GameEvent extends React.Component {
 class MemberEvent extends React.Component {
     render() {
         const { props } = this
-        const member = props.members.find(m => m.id === props.event.player)
+        const member = props.members.find(m => Number(m.id) === Number(props.event.player))
         return (
             member
                 ? <div className="event-info flex-row">
@@ -44,9 +44,9 @@ class MemberEvent extends React.Component {
 class CompleteEvent extends React.Component {
     render() {
         const { props } = this
-        const member = props.members.find(m => m.id === props.event.player)
-        const game = props.games.find(g => g.id === props.event.game)
-        const rating = props.rating.find(r => r.score === game.rating)
+        const member = props.members.find(m => Number(m.id) === Number(props.event.player))
+        const game = props.games.find(g => Number(g.id) === Number(props.event.game))
+        const rating = props.rating.find(r => Number(r.score) === Number(game.rating))
 
         return (
             game && member && rating
