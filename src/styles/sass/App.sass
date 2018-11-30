@@ -26,17 +26,21 @@
 .bold
   font-weight: bold
 
+.custom-button, .ban-button
+  background-color: $darkgrey 
+  color: $superlightgrey
+  border: none
+  font-family: $font-cardo
+  text-transform: uppercase
+  cursor: pointer 
+  &:hover
+    background-color: $superdarkgrey
 .custom-button
-    background-color: $darkgrey 
-    color: $superlightgrey
-    border: none
-    font-family: $font-cardo
-    text-transform: uppercase
-    font-size: 1.1em 
-    height: 40px
-    cursor: pointer 
-    &:hover
-        background-color: $superdarkgrey
+  height: 40px
+  font-size: 1.1em 
+.ban-button
+  height: 32px
+  box-sizing: border-box
 
 
 .wrapper-main
