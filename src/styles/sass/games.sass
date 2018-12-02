@@ -14,6 +14,18 @@
   box-sizing: border-box
   background-color: $superlightgrey
 
+.game-extended
+    position: fixed
+    top: 0
+    left: 0
+    z-index: 1000
+    width: 100vw
+    height: 100vh
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    background-color: rgba($superdarkgrey, 0.8)
 .game
     display: block
     width: 300px
@@ -47,3 +59,57 @@
         background-color: rgba($superdarkgrey, 0.8)
 .game-desc
     font-size: 0.85em
+
+.leaderboards
+    position: relative
+    display: block
+    margin: 0 auto
+    text-align: center
+    padding: 10px
+    width: 700px
+    max-width: 95%
+    height: auto
+    max-height: 80%
+    overflow-y: scroll
+    background-color: $mediumgrey
+    color: $lightestgreyever
+    h2
+        border-bottom: 1px solid $lightestgreyever
+        margin: 10px
+    ul
+        list-style-type: none
+        margin: 0
+        padding: 10px
+.leaderboards-member
+    display: flex
+    align-items: center
+    border-bottom: 1px solid $darkgrey
+    border-top: 1px solid $lightgrey
+    img
+        margin: 2px
+        padding: 0
+        max-height: 35px
+        min-height: 35px
+.leaderboards-member-info
+    width: 100%
+    padding: 0 10px
+    justify-content: space-between
+.leaderboards-member-times
+    color: $lightgrey
+    font-size: 0.9em
+.leaderboards-member-completion
+    position: relative
+    min-width: 200px
+    height: 15px
+    margin-right: 7px
+    border: 1px solid $darkgrey
+.leaderboards-member-completion-progress
+    position: absolute
+    height: 100%
+    background-color: $lightestgreyever
+.leaderboards-member-completion-percentage
+    position: absolute
+    width: 100%
+    font-size: 0.8em
+    text-align: center
+    color: $darkgrey
