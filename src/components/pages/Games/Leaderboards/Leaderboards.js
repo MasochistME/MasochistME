@@ -62,7 +62,7 @@ class Leaderboards extends React.Component {
                                         <div className='leaderboards-member-name'>{ this.assignTrophyIfDeserved(member, memberIndex) + member.name }</div>                                        
                                         <div className='leaderboards-member-times'>{ this.assignDateIfFinished(member) }</div>
                                     </div>
-                                    <LeaderboardsProgressBar percentage={ member.completionRate }/>
+                                    <LeaderboardsProgressBar percentage={ Math.floor(member.completionRate) }/>
                                 </li>
                             ))
                     }
