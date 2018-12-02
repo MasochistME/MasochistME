@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import CheckBoxGameChoice from './CheckBoxGameChoice'
 import SearchBar from '../../../shared/components/SearchBar'
 import { swapRatingToIcon } from '../../../shared/helpers/helper';
+import Game from './Game/Game';
 
 class PageGames extends React.Component{
     render() {
@@ -27,7 +28,7 @@ class PageGames extends React.Component{
                                 icon={ rating ? swapRatingToIcon(r.score, rating) : "fas fa-spinner" }/> )
                         }
                     </div>
-                    : <div>SKELETON</div>
+                    : null
                     }
                 </div>
                 <div className='wrapper-games'>
@@ -37,22 +38,10 @@ class PageGames extends React.Component{
                         this.props.games.map(game =>
                             game.title.toLowerCase().indexOf(props.searchGame.toLowerCase()) !== -1
                             && props.showGamesRated.find(score => parseInt(score,10) === parseInt(game.rating,10))
-                            ? <div 
-                                key={ `id-game-${game.id}` }
-                                className={ `game rated-${game.rating}` }
-                                style={{ backgroundImage:`url(${game.img})`}}
-                                >                     
-                                <div className='game-info'>
-                                    <div className='game-rating'>
-                                        <i className={ game && rating ? swapRatingToIcon(game.rating, rating) : "fas fa-spinner" }></i>
-                                    </div>
-                                    <div className='game-title'>{ game.title }</div>
-                                    <div className='game-desc'>{ game.desc }</div>
-                                </div>
-                            </div>
+                            ? <Game key={ `id-game-${game.id}` } game={ game } rating={ rating } />
                             : null
                         )
-                        : <div>SKELETON</div>
+                        : null
                     }
                 </div>
             </div>
