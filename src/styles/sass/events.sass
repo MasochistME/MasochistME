@@ -1,5 +1,6 @@
 @import 'vars/colors'
 @import 'vars/fonts'
+@import 'vars/media'
 
 .wrapper-events
   display: flex
@@ -40,6 +41,8 @@
   margin: 0 5px
 .event-desc
   width: 100%
+  @media (max-width: $tablets)
+    display: none
 .event-summary > *
   margin: 0 5px
   display: flex

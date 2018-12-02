@@ -8,6 +8,7 @@
 @import 'loginmodal'
 @import 'vars/colors'
 @import 'vars/fonts'
+@import 'vars/media'
 
 .flex-row
   display: flex
@@ -67,11 +68,13 @@
   font-family: $font-cinzel 
   p 
     margin: 0
-  .p-big
-    font-size: 1.5em
-    letter-spacing: 0.3em
   div 
     margin: 10px
+.header-motto
+  font-size: 1.5em
+  letter-spacing: 0.3em
+  @media (max-width: $small-netbooks)
+    display: none 
 .wrapper-nav
   width: 100%
   height: 100px 
@@ -84,6 +87,8 @@
   position: sticky
   top: 0px
   z-index: 1000
+  @media (max-width: $tablets)
+    height: 50px
   ul
     margin: 0
     padding: 0
@@ -101,6 +106,8 @@
         background-color: $superdarkgrey
       p 
         margin: 10px 0 0 0
+        @media (max-width: $tablets)
+          display: none
       i 
         font-size: 1.4em
 .wrapper-middle
@@ -114,6 +121,8 @@
   width: 70%
   height: auto
   box-sizing: border-box
+  @media (max-width: $netbooks)
+    width: 100%
 .wrapper-miniheader
   width: 100%
   height: 100px
@@ -135,6 +144,8 @@
   i
     margin-right: 20px 
     font-size: 2.3em
+    @media (max-width: $tablets)
+      display: none
 .wrapper-page, .wrapper-description
   padding: 10px
   box-sizing: border-box

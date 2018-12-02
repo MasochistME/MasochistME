@@ -6,7 +6,7 @@ export default class Header extends React.Component{
         return (
             <div className='header flex-row'>
                 <i className='fab fa-steam' />
-                <p className='p-big'>Games that masochists love.</p>
+                <p className='header-motto'>Games that masochists love.</p>
                 <Login />
             </div>
         )

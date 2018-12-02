@@ -10,23 +10,23 @@ class SectionHistory extends React.Component {
             case 'newMember':
                 return player
                     ? (
-                    <li className='small-event' key={ `sidebar-event-${eventIndex}` }>
-                        <span className="bold">{player.name}</span> has joined the group!
-                    </li>)
+                    <p className='small-event' key={ `sidebar-event-${eventIndex}` }>
+                        <span className="bold">- {player.name}</span> has joined the group!
+                    </p>)
                     : null
             case 'newGame':
                 return game
                     ? (
-                    <li className='small-event' key={ `sidebar-event-${eventIndex}` }>
-                        <span className="bold">{game.title}</span> has been curated!
-                    </li>)
+                    <p className='small-event' key={ `sidebar-event-${eventIndex}` }>
+                        <span className="bold">- {game.title}</span> has been curated!
+                    </p>)
                     : null
             case 'complete':
                 return player && game
                     ? (
-                    <li className='small-event' key={ `sidebar-event-${eventIndex}` }>
-                        <span className="bold">{player.name}</span> 100%'d <span className="bold">{game.title}</span>!
-                    </li>)
+                    <p className='small-event' key={ `sidebar-event-${eventIndex}` }>
+                        <span className="bold">- {player.name}</span> 100%'d <span className="bold">{game.title}</span>!
+                    </p>)
                     : null
             default: return null
         }
@@ -38,11 +38,9 @@ class SectionHistory extends React.Component {
         return (
         <div className='section'>
             <h3 className='section-title'>Last 10 events</h3>
-            <ul>
                 { props.events
                     .slice(0,10)
                     .map((event, eventIndex) => this.sortEvents(event, eventIndex) )}
-            </ul>
         </div>)
     }
 }

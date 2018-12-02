@@ -1,5 +1,6 @@
 @import 'vars/colors'
 @import 'vars/fonts'
+@import 'vars/media'
     
 .wrapper-sidebar
     position: relative
@@ -20,6 +21,8 @@
         text-align: center
         background-color: rgba($superdarkgrey, 0.8)
         color: $superlightgrey
+    @media (max-width: $netbooks)
+        display: none
 .section
     margin: 0 0 20px 0
     width: 100%
@@ -29,7 +32,7 @@
     p, ul 
         margin: 2px 0
     ul li
-        margin: 0 30px
+        margin: 0 0 0 30px
 .update-progress-bar-border
     position: relative
     display: flex

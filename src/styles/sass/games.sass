@@ -1,5 +1,6 @@
 @import 'vars/colors'
 @import 'vars/fonts'
+@import 'vars/media'
 
 .wrapper-games 
   display: flex
@@ -63,13 +64,13 @@
 .leaderboards
     position: relative
     display: block
-    margin: 0 auto
+    box-sizing: border-box
     text-align: center
     padding: 10px
     width: 700px
-    max-width: 95%
+    max-width: 90%
     height: auto
-    max-height: 80%
+    max-height: 90%
     overflow-y: scroll
     background-color: $mediumgrey
     color: $lightestgreyever
@@ -94,19 +95,30 @@
     width: 100%
     padding: 0 10px
     justify-content: space-between
+.leaderboards-member-name
+    @media (max-width: $big-phones)
+        display: none
 .leaderboards-member-times
     color: $lightgrey
     font-size: 0.9em
+    @media (max-width: $tablets)
+        display: none
 .leaderboards-member-completion
     position: relative
     min-width: 200px
     height: 15px
     margin-right: 7px
     border: 1px solid $darkgrey
+    @media (max-width: $tablets)
+        min-width: 100px !important
+        border: none
+        color: $lightestgreyever
 .leaderboards-member-completion-progress
     position: absolute
     height: 100%
     background-color: $lightestgreyever
+    @media (max-width: $tablets)
+        display: none
 .leaderboards-member-completion-percentage
     position: absolute
     width: 100%
