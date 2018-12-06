@@ -49,7 +49,7 @@ class CompleteEvent extends React.Component {
                 <img className="event-img" src={ member ? member.avatar : "" } alt="game-img"></img>
                 <div className="event-desc"><span className="bold">{ member ? member.name : "-" }</span> 100%'d <span className="bold">{ game ? game.title : "-" }</span>!</div>
                 <div className="event-summary flex-row">
-                    <span role="img" aria-label="100">💯</span>
+                    <i class="fas fa-check-square"></i>
                     <i className={ rating ? rating.link : "far fa-question-circle" }></i>
                     <img className="event-img" src={ game.img } alt="game-img"></img>
                 </div>
