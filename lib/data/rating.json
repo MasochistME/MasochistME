@@ -19,7 +19,7 @@
     },
     {
         "icon": "✓",
-        "link": "far fa-check-square",
+        "link": "fas fa-check",
         "score": 1,
         "desc": "a relatively tame difficulty"
     }    
