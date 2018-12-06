@@ -5,7 +5,8 @@ export default class SectionUpdate extends React.Component {
     constructor() {
         super()
         this.state = {
-            updating: false
+            updating: false,
+            updateTimeout: 3600000
         }        
         this.checkStatus = this.checkStatus.bind(this);
         this.sendUpdateRequest = this.sendUpdateRequest.bind(this);
@@ -33,6 +34,16 @@ export default class SectionUpdate extends React.Component {
             : "Unknown"
     }
 
+    timeoutBeforeUpdate() {
+        return Math.ceil((this.state.updateTimeout - (Date.now() - this.state.lastUpdate))/60000)
+    }
+
+    blockUpdateIfTooSoon() {
+        if (this.timeoutBeforeUpdate() > 0)
+            return true
+        return false
+    }
+
     render() {
         return(
         <div className='section'>
@@ -44,7 +55,21 @@ export default class SectionUpdate extends React.Component {
                             <div className='update-progress-bar' style={{ width:`${this.state.updateStatus}%` }}></div>
                         </div>
                         )
-                    : ( <button className='custom-button update-button' onClick={() => this.sendUpdateRequest() }>Update</button> )
+                    : ( <button className={
+                            this.blockUpdateIfTooSoon()
+                                ? 'custom-button update-button button-blocked'
+                                : 'custom-button update-button'} 
+                        onClick={() => 
+                            this.blockUpdateIfTooSoon()
+                                ? null
+                                : this.sendUpdateRequest()
+                        }
+                        title={
+                            this.blockUpdateIfTooSoon()
+                                ? `${this.timeoutBeforeUpdate()} minutes till you can update again`
+                                : "Update"
+                        }
+                        >Update</button> )
             }
             </div>
             
