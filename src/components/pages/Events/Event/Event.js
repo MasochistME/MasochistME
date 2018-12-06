@@ -8,17 +8,15 @@ class GameEvent extends React.Component {
         const game = props.games.find(g => Number(g.id) === Number(props.event.game))
         const rating = props.rating.find(r => Number(r.score) === Number(game.rating))
         return (
-            game && rating
-                ? <div className="event-info flex-row">
-                    <img className="event-img" alt="game-img" src={ logo }></img>
-                    <div className="event-desc"><span className="bold">{ game.title }</span> has been curated!</div>
-                    <div className="event-summary flex-row">
-                        <i className="fas fa-plus-square"></i> 
-                        <i className={ rating.link }></i> 
-                        <img className="event-img" alt="game-img" src={ game.img }></img>
-                    </div>
+            <div className="event-info flex-row">
+                <img className="event-img" alt="game-img" src={ logo }></img>
+                <div className="event-desc"><span className="bold">{ game ? game.title : "-" }</span> has been curated!</div>
+                <div className="event-summary flex-row">
+                    <i className="fas fa-plus-square"></i> 
+                    <i className={ rating ? rating.link : "far fa-question-circle" }></i> 
+                    <img className="event-img" alt="game-img" src={ game ? game.img : "" }></img>
                 </div>
-                : null
+            </div>
         )
     }
 }
@@ -28,16 +26,14 @@ class MemberEvent extends React.Component {
         const { props } = this
         const member = props.members.find(m => Number(m.id) === Number(props.event.player))
         return (
-            member
-                ? <div className="event-info flex-row">
-                    <img className="event-img" alt="avatar" src={ member.avatar }></img>
-                    <div className="event-desc"><span className="bold">{ member.name }</span> has joined the group!</div>
-                    <div className="event-summary flex-row">
-                        <i className="fas fa-user-plus"></i>
-                        <img className="event-img" alt="game-img" src={ logo }></img>
-                    </div>
+            <div className="event-info flex-row">
+                <img className="event-img" alt="avatar" src={ member ? member.avatar : "" }></img>
+                <div className="event-desc"><span className="bold">{ member ? member.name : "-" }</span> has joined the group!</div>
+                <div className="event-summary flex-row">
+                    <i className="fas fa-user-plus"></i>
+                    <img className="event-img" alt="game-img" src={ logo }></img>
                 </div>
-                : null
+            </div>
         )
     }
 }
@@ -49,17 +45,15 @@ class CompleteEvent extends React.Component {
         const rating = props.rating.find(r => Number(r.score) === Number(game.rating))
 
         return (
-            game && member && rating
-                ? <div className="event-info flex-row">
-                    <img className="event-img" src={ member.avatar } alt="game-img"></img>
-                    <div className="event-desc"><span className="bold">{ member.name }</span> 100%'d <span className="bold">{ game.title }</span>!</div>
-                    <div className="event-summary flex-row">
-                        <span role="img" aria-label="100">💯</span>
-                        <i className={ rating.link }></i>
-                        <img className="event-img" src={ game.img } alt="game-img"></img>
-                    </div>
+            <div className="event-info flex-row">
+                <img className="event-img" src={ member ? member.avatar : "" } alt="game-img"></img>
+                <div className="event-desc"><span className="bold">{ member ? member.name : "-" }</span> 100%'d <span className="bold">{ game ? game.title : "-" }</span>!</div>
+                <div className="event-summary flex-row">
+                    <span role="img" aria-label="100">💯</span>
+                    <i className={ rating ? rating.link : "far fa-question-circle" }></i>
+                    <img className="event-img" src={ game.img } alt="game-img"></img>
                 </div>
-                : null
+            </div>
         )
     }
 }
