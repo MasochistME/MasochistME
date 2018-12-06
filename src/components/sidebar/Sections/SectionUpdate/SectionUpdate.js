@@ -27,10 +27,16 @@ export default class SectionUpdate extends React.Component {
             .catch(err => console.log(err))
     }
 
+    getUpdateDate(date) {
+        return date
+            ? new Date(date).toLocaleString()
+            : "Unknown"
+    }
+
     render() {
         return(
         <div className='section'>
-            <h3 className='section-title'>Last updated: { new Date(this.state.lastUpdate).toLocaleString() }</h3>
+            <h3 className='section-title'>Last updated: { this.getUpdateDate(this.state.lastUpdate) }</h3>
             <div className="flex-column">
             {
                 this.state.updating
