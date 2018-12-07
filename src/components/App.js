@@ -9,7 +9,7 @@ import Nav from '../shared/components/Nav'
 import ContentWrapper from '../shared/components/layout/ContentWrapper'
 import SidebarWrapper from './sidebar/SidebarWrapper' 
 import LoginModal from '../shared/components/LoginModal/index'
-import { cacheGames, cacheMembers, cacheRating, cacheEvents } from '../shared/store/modules/Cache'
+import { cacheGames, cacheMembers, cacheRating, cacheEvents, cacheBlog } from '../shared/store/modules/Cache'
 
 class App extends Component {
   constructor() {
@@ -59,11 +59,21 @@ class App extends Component {
         }).catch(err => console.trace(err))
   }
 
+  loadBlog = () => {
+    axios.get('/rest/api/blog')  
+        .then(response => {
+          console.log(response.data)
+            if (response.status === 200)
+              return this.props.dispatch(cacheBlog(response.data))
+        }).catch(err => console.trace(err))
+  }
+
   load() {
     this.loadRating()
     this.loadMembers()
     this.loadGames()
     this.loadEvents()
+    this.loadBlog()
     this.setState({ loaded: true })
   }
 

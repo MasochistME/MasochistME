@@ -13,7 +13,7 @@
     },
     {
         "id": "blog",
-        "path": "../data/blog.json"
+        "path": "../api/blog.json"
     },
     {
         "id": "rating",
