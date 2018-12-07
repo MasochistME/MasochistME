@@ -24,3 +24,4 @@ src/img/psd
 config.json
 /out
 package-lock.json
+/api/*.*
