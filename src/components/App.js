@@ -29,7 +29,7 @@ class App extends Component {
       axios.get('/rest/api/games')
           .then(response => {
               if (response.status === 200)
-                return this.props.dispatch(cacheGames(_.orderBy(response.data, ['title', 'score'], ['asc', 'desc'])))
+                return this.props.dispatch(cacheGames(_.orderBy(response.data, ['rating', 'title'], ['desc', 'asc'])))
           })
           .catch(err => console.log(err.message))
   }

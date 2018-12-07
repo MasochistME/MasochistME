@@ -10,7 +10,7 @@ class PageEvents extends React.Component {
             <div className='flex-column'>
                 <div className='wrapper-description'>
                     <div className='page-description'>
-                        <p>This is the list showcasing last 100 events.</p>
+                        <p>This is the list showcasing the last 100 events.</p>
                         <p>There are three different types of events:</p>
                         <ul>
                             <li>new game being curated,</li>

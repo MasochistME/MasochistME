@@ -21,6 +21,23 @@ class Leaderboards extends React.Component {
             : null
     }
 
+    summarizeCompletions = leaderboard => {
+        let sum = 0
+        leaderboard
+            .filter(member => member.completionRate === 100)
+            .map(entry => sum = sum+1)
+        return sum
+    }
+
+    summarizeCompletionTime = leaderboard => {
+        let sum = 0;
+        leaderboard
+            .filter(member => member.completionRate === 100)
+            .map(entry => sum += entry.playtime)
+        sum = parseFloat(sum/60).toFixed(1)
+        return sum
+    }
+
     render() {
         const { props } = this
         const visible = props.show
@@ -36,7 +53,8 @@ class Leaderboards extends React.Component {
                         avatar: member.avatar,
                         gameId: game.id,
                         completionRate: memberGameStats.completionRate,
-                        lastUnlocked: memberGameStats.lastUnlocked
+                        lastUnlocked: memberGameStats.lastUnlocked,
+                        playtime: memberGameStats.playtime_forever
                     }
                     : null
             })
@@ -48,8 +66,8 @@ class Leaderboards extends React.Component {
                     <h2>Leaderboards: { game.title }</h2>
                     <div className="game-statistics">
                         <ul>
-                            <li>Average completion time: { 0 }</li>
-                            <li>Number of completions: { 0 }</li>
+                            <li>Average completion time: { this.summarizeCompletionTime(leaderboards) }</li>
+                            <li>Number of completions: { this.summarizeCompletions(leaderboards) }</li>
                         </ul>
                     </div>
                     <ul className="game-leaderboards">
