@@ -24,3 +24,8 @@ src/img/psd
 config.json
 /out
 package-lock.json
+/api/update.json
+/api/games.json
+/api/log.json
+/api/members.json
+/api/blog.json

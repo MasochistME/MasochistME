@@ -1,8 +1,12 @@
 import React from 'react'
-import blog from '../../../shared/mock/blog' //THIS IS FOR DEV PURPOSES - GONNA BE CHANGED TO JSON DOWNLOADED FRMO THE SERVER
+import { connect } from 'react-redux'
+import _ from 'lodash'
 
-export default class PageHome extends React.Component{
+class PageHome extends React.Component{
     render() {
+        const { props } = this
+        const blog = _.orderBy(props.blog, ['date'], ['desc'])
+        
         return (
             <div>
                 {
@@ -14,7 +18,7 @@ export default class PageHome extends React.Component{
                             <h2>
                                 ~{ entry.author }, { new Date(entry.date).toLocaleDateString() }
                             </h2>
-                            <p>{ entry.content }</p>
+                            <div dangerouslySetInnerHTML={{__html: entry.content}}></div>
                         </div>
                     )
                 }
@@ -22,3 +26,11 @@ export default class PageHome extends React.Component{
         )
     }
 }
+
+const mapStateToProps = state => ({ 
+    blog: state.blog 
+})
+
+export default connect(
+  mapStateToProps
+)( PageHome )

@@ -31,11 +31,11 @@ class Leaderboards extends React.Component {
 
     summarizeCompletionTime = leaderboard => {
         let sum = 0;
-        leaderboard
+        let completed = leaderboard
             .filter(member => member.completionRate === 100)
             .map(entry => sum += entry.playtime)
-        sum = parseFloat(sum/60).toFixed(1)
-        return sum
+        let average = Math.round((sum/60)/completed.length)
+        return Number.isNaN(average) ? "no known completion times" : `${average} h`
     }
 
     render() {
