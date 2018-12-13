@@ -8,13 +8,13 @@
     {
         "icon": "✪",
         "link": "fas fa-star-half-alt",
-        "score": 6,
+        "score": 5,
         "desc": "hardcore difficulty with guaranteed progress"
     },
     {
         "icon": "☆",
         "link": "far fa-star",
-        "score": 3,
+        "score": 2,
         "desc": "already much harder/longer"
     },
     {
