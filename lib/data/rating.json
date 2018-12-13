@@ -2,19 +2,19 @@
     {
         "icon": "🌟",
         "link": "fas fa-star",
-        "score": 5,
+        "score": 10,
         "desc": "requires an insane amount of dedication and determinaton"
     },
     {
         "icon": "✪",
         "link": "fas fa-star-half-alt",
-        "score": 3,
+        "score": 6,
         "desc": "hardcore difficulty with guaranteed progress"
     },
     {
         "icon": "☆",
         "link": "far fa-star",
-        "score": 2,
+        "score": 3,
         "desc": "already much harder/longer"
     },
     {
