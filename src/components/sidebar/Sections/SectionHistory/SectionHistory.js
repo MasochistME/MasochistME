@@ -44,7 +44,7 @@ class SectionHistory extends React.Component {
                         <span className="bold">- {game.title}</span> {
                             event.oldNumber < event.newNumber
                                 ? `got ${event.newNumber - event.oldNumber} new achievements!`
-                                : `has ${event.oldNumber - event.newNumber} achievements removed!`
+                                : `had ${event.oldNumber - event.newNumber} achievements removed!`
                         }
                     </p>)
                     : null
