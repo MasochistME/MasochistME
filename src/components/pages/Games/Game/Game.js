@@ -29,7 +29,7 @@ export default class Game extends React.Component {
                     >                     
                     <div className='game-info'>
                         <div className='game-rating'>
-                            <i className={ game && rating ? swapRatingToIcon(game.rating, rating) : "fas fa-spinner" }></i>
+                            <i className={ game ? swapRatingToIcon(game.rating, rating) : "fas fa-spinner" }></i>
                         </div>
                         <div className='game-title'>{ game.title }</div>
                         <div className='game-desc'>{ game.desc }</div>

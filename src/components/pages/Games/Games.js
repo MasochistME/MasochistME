@@ -25,7 +25,7 @@ class PageGames extends React.Component{
                             rating.map(r => <CheckBoxGameChoice 
                                 key={ `checkbox-game-${ r.score }` }
                                 score={ r.score } 
-                                icon={ rating ? swapRatingToIcon(r.score, rating) : "fas fa-spinner" }/> )
+                                icon={ swapRatingToIcon(r.score, rating) }/> )
                         }
                     </div>
                     : null

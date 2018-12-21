@@ -70,7 +70,7 @@ class TierChangeEvent extends React.Component {
                 <div className="event-desc">
                     <span className="bold">{ game ? game.title : "-" }</span> 
                     { demoted ? " demoted " : " promoted " }
-                    from <i className={ props.event.oldTier ? swapRatingToIcon(props.event.oldTier, props.rating) : "fas fa-spinner" }></i> to <i className={ props.event.newTier ? swapRatingToIcon(props.event.newTier, props.rating) : "fas fa-spinner" }></i>!
+                    from <i className={ swapRatingToIcon(props.event.oldTier, props.rating) }></i> to <i className={ swapRatingToIcon(props.event.newTier, props.rating) }></i>!
                 </div>
                 <div className="event-summary flex-row">
                     { demoted
@@ -94,9 +94,13 @@ class AchievementNumberChangeEvent extends React.Component {
             <div className="event-info flex-row">
                 <img className="event-img" alt="game-img" src={ logo }></img>
                 <div className="event-desc">
-                    <span className="bold">{ game ? game.title : "-" }</span>
-                     - number of achievements changed from <span className="bold">{ props.event.oldNumber }</span> 
-                     to <span className="bold">{props.event.newNumber }</span>!
+                    <span className="bold">{ game ? game.title : "-" } </span>
+                    {
+                        props.event.oldNumber < props.event.newNumber
+                            ? `got ${props.event.newNumber - props.event.oldNumber} new achievements!`
+                            : `had ${props.event.oldNumber - props.event.newNumber} achievements removed!`
+                    }
+                    
                 </div>
                 <div className="event-summary flex-row">
                     <i className="fas fa-tasks"></i> 
