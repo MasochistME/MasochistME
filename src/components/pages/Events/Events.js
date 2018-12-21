@@ -11,11 +11,13 @@ class PageEvents extends React.Component {
                 <div className='wrapper-description'>
                     <div className='page-description'>
                         <p>This is the list showcasing the last 100 events.</p>
-                        <p>There are three different types of events:</p>
+                        <p>There are five different types of events:</p>
                         <ul>
                             <li>new game being curated,</li>
                             <li>new member joining the community,</li>
-                            <li>member of the community finishing 100% of the game.</li>
+                            <li>member of the community finishing 100% of the game,</li>
+                            <li>game promoting or demoting a tier,</li>
+                            <li>game having achievements added or removed.</li>
                         </ul>
                         <p>In the future, there will be additional events tied to badges.</p>
                     </div>
