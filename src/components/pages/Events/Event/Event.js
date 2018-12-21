@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { swapRatingToIcon } from '../../../../shared/helpers/helper'
 import logo from '../../../../shared/images/logo.png'
 
 class GameEvent extends React.Component {
@@ -20,7 +21,6 @@ class GameEvent extends React.Component {
         )
     }
 }
-
 class MemberEvent extends React.Component {
     render() {
         const { props } = this
@@ -57,6 +57,61 @@ class CompleteEvent extends React.Component {
         )
     }
 }
+class TierChangeEvent extends React.Component {
+    render() {
+        const { props } = this
+        const game = props.games.find(g => Number(g.id) === Number(props.event.game))
+        const rating = props.rating.find(r => Number(r.score) === Number(game.rating))
+        const demoted = props.event.oldTier > props.event.newTier
+
+        return (
+            <div className="event-info flex-row">
+                <img className="event-img" alt="game-img" src={ logo }></img>
+                <div className="event-desc">
+                    <span className="bold">{ game ? game.title : "-" }</span> 
+                    { demoted ? " demoted " : " promoted " }
+                    from <i className={ swapRatingToIcon(props.event.oldTier, props.rating) }></i> to <i className={ swapRatingToIcon(props.event.newTier, props.rating) }></i>!
+                </div>
+                <div className="event-summary flex-row">
+                    { demoted
+                        ? <i className="fas fa-caret-square-down"></i> 
+                        : <i className="fas fa-caret-square-up"></i> 
+                    }
+                    <i className={ rating ? rating.link : "far fa-question-circle" }></i> 
+                    <img className="event-img" alt="game-img" src={ game ? game.img : "" }></img>
+                </div>
+            </div>
+        )
+    }
+}
+class AchievementNumberChangeEvent extends React.Component {
+    render() {
+        const { props } = this
+        const game = props.games.find(g => Number(g.id) === Number(props.event.game))
+        const rating = props.rating.find(r => Number(r.score) === Number(game.rating))
+
+        return (
+            <div className="event-info flex-row">
+                <img className="event-img" alt="game-img" src={ logo }></img>
+                <div className="event-desc">
+                    <span className="bold">{ game ? game.title : "-" } </span>
+                    {
+                        props.event.oldNumber < props.event.newNumber
+                            ? `got ${props.event.newNumber - props.event.oldNumber} new achievements!`
+                            : `had ${props.event.oldNumber - props.event.newNumber} achievements removed!`
+                    }
+                    
+                </div>
+                <div className="event-summary flex-row">
+                    <i className="fas fa-tasks"></i> 
+                    <i className={ rating ? rating.link : "far fa-question-circle" }></i> 
+                    <img className="event-img" alt="game-img" src={ game ? game.img : "" }></img>
+                </div>
+            </div>
+        )
+    }
+}
+
 
 class Event extends React.Component {
     sortEvents = event => {
@@ -64,6 +119,8 @@ class Event extends React.Component {
             case "newGame": return <GameEvent event={ event } games={ this.props.games } rating={ this.props.rating } />
             case "newMember": return <MemberEvent event={ event } members={ this.props.members } />
             case "complete": return <CompleteEvent event={ event } games={ this.props.games } members={ this.props.members } rating={ this.props.rating } />
+            case "tierChange": return <TierChangeEvent event={ event } games={ this.props.games } rating={ this.props.rating } />
+            case "achievementNumberChange": return <AchievementNumberChangeEvent event={ event } games={ this.props.games } rating={ this.props.rating } />
             default: return
         }
     }
