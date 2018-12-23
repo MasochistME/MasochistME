@@ -63,7 +63,11 @@ class Leaderboards extends React.Component {
         return (
             visible
                 ? <div className="leaderboards">
-                    <h2>{ game.title }</h2>
+                    <h2>
+                        <a href={ `https://store.steampowered.com/app/${ game.id }` } target='_blank' rel='noopener noreferrer' >
+                            { game.title } <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </h2>
                     <div className="game-statistics">
                         <ul>
                             <li>Average completion time: { this.summarizeCompletionTime(leaderboards) }</li>
