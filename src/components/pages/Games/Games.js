@@ -18,15 +18,17 @@ class PageGames extends React.Component{
                         <p>In the 0.1% community, we grade the ranks of our members by how many curated games they've completed, as well as the difficulty of those games. Each game specifies their own difficulty in the description.</p>
                         <p>The list also includes which three members completed the game first (with a gold, silver and bronze medals, respectively), as well as the member who has completed it the fastest based on Steam timestamps (with a trophy).</p>
                     </div>
-                    <SearchBar />
                     { rating ?
-                    <div className='wrapper-choicebar'>
-                        {
-                            rating.map(r => <CheckBoxGameChoice 
-                                key={ `checkbox-game-${ r.score }` }
-                                score={ r.score } 
-                                icon={ swapRatingToIcon(r.score, rating) }/> )
-                        }
+                    <div className='wrapper-filter'>
+                        <div className='wrapper-choicebar'>
+                            {
+                                rating.map(r => <CheckBoxGameChoice 
+                                    key={ `checkbox-game-${ r.score }` }
+                                    score={ r.score } 
+                                    icon={ swapRatingToIcon(r.score, rating) }/> )
+                            }
+                        </div>
+                        <SearchBar />
                     </div>
                     : null
                     }

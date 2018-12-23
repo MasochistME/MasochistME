@@ -1,18 +1,28 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { changeTab, showMemberProfile } from '../../../../shared/store/modules/Tabs';
 
-export default class MemberSummary extends React.Component {
+class MemberSummary extends React.Component {
+    showProfile = id => {
+        this.props.dispatch(changeTab('member'))
+        this.props.dispatch(showMemberProfile(id))
+    }
+
     render() {
         const { member, index, rating } = this.props
+        const disabled = member.points === 0 ? true : false
 
         return(
-            <div className="member-summary flex-row">
+            <div className={disabled ? 'member-disabled member-summary flex-row' : 'member-summary flex-row' }>
                 <div className="member-position">{ index+1 }</div>
                 <img className="member-avatar" src={ member.avatar } alt="avatar"/>
                 <div className="member-info flex-row">
-                    <div className="member-status" title="This member has their Steam profile set to private.">
-                        { member.points === 0 ? "⚠️" : null }
-                    </div>
-                    <div className="member-name">{ member.name }</div>
+                    {
+                        disabled
+                            ? <icon className="fas fa-exclamation-triangle" title="This member has their Steam profile set to private."></icon> 
+                            : <div></div>
+                    }
+                    <div className="member-name" onClick={ () => this.showProfile(member.id) }>{ member.name }</div>
                     <div className="member-ranking flex-row">
                         <div className="member-rating-score">
                             { member.points }
@@ -34,3 +44,8 @@ export default class MemberSummary extends React.Component {
         )
     }
 }
+
+const mapDispatchToProps = dispatch => ({ dispatch })
+export default connect(
+    mapDispatchToProps
+)( MemberSummary )

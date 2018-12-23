@@ -26,6 +26,8 @@
   display: none
 .bold
   font-weight: bold
+.under
+  text-decoration: underline
 
 .custom-button, .ban-button
   background-color: $superdarkgrey 
@@ -180,11 +182,21 @@
   padding: 2px
   margin-right: 10px
 
+.wrapper-filter
+  display: flex
+  justify-content: space-around
 .wrapper-choicebar
   display: flex
   justify-content: center
+  margin-bottom: 5px
 .game-choice-checkbox
-  margin-left: 20px
+  display: none
+  &:not(:checked) + label
+    color: $newmediumgrey 
+.checkbox-label
+  margin: 0px 30px
+  font-size: 1.4em
+  cursor: pointer
 
 .button
   padding: 5px 10px

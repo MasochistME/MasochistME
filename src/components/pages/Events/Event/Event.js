@@ -14,12 +14,12 @@ class GameEvent extends React.Component {
                 <img className="event-img" alt="game-img" src={ logo }></img>
                 {
                     game
-                        ? <div className="event-desc"><span className="bold">{ game ? game.title : `Game ${props.event.game}` }</span> has been curated!</div>
-                        : <div className="event-desc"><span className="bold">{ game ? game.title : `Game ${props.event.game}` }</span> (no longer curated) has been curated!</div>
+                        ? <div className="event-desc"><span className="bold under">{ game ? game.title : `Game ${props.event.game}` }</span> has been curated!</div>
+                        : <div className="event-desc"><span className="bold under">{ game ? game.title : `Game ${props.event.game}` }</span> (no longer curated) has been curated!</div>
                 }
                 
                 <div className="event-summary flex-row">
-                    <i className="fas fa-plus-square"></i> 
+                    <i className={ game ? "fas fa-plus-square" : "fas fa-exclamation-triangle" }></i> 
                     <i className={ rating ? rating.link : "far fa-question-circle" }></i> 
                     <img className="event-img" alt="game-img" src={ game ? game.img : logo }></img>
                 </div>
@@ -35,11 +35,11 @@ const MemberEvent = props => {
             <img className="event-img" alt="avatar" src={ member ? member.avatar : logo }></img>
             {
                 member
-                    ? <div className="event-desc"><span className="bold">{ member ? member.name : `User ${props.event.player}` }</span> has joined the group!</div>
-                    : <div className="event-desc"><span className="bold">{ member ? member.name : `User ${props.event.player}` }</span> (no longer member of the group) has joined the group!</div>
+                    ? <div className="event-desc"><span className="bold under">{ member ? member.name : `User ${props.event.player}` }</span> has joined the group!</div>
+                    : <div className="event-desc"><span className="bold under">{ member ? member.name : `User ${props.event.player}` }</span> (no longer member of the group) has joined the group!</div>
             }
             <div className="event-summary flex-row">
-                <i className="fas fa-user-plus"></i>
+                <i className={ member ? "fas fa-user-plus" : "fas fa-exclamation-triangle" }></i>
                 <img className="event-img" alt="game-img" src={ logo }></img>
             </div>
         </div>
@@ -56,15 +56,15 @@ const CompleteEvent = props => {
             {
                 member 
                     ? game //member yes
-                        ? <div className="event-desc"><span className="bold">{ member ? member.name : `User ${props.event.player}` }</span> 100%'d <span className="bold">{ game ? game.title : `game ${props.event.game}` }</span>!</div>
-                        : <div className="event-desc"><span className="bold">{ member ? member.name : `User ${props.event.player}` }</span> 100%'d <span className="bold">{ game ? game.title : `game ${props.event.game}` }</span> (no longer curated)!</div>
+                        ? <div className="event-desc"><span className="bold under">{ member ? member.name : `User ${props.event.player}` }</span> completed <span className="bold under">{ game ? game.title : `game ${props.event.game}` }</span>!</div>
+                        : <div className="event-desc"><span className="bold under">{ member ? member.name : `User ${props.event.player}` }</span> completed <span className="bold under">{ game ? game.title : `game ${props.event.game}` }</span> (no longer curated)!</div>
                     : game //member no
-                        ? <div className="event-desc"><span className="bold">{ member ? member.name : `User ${props.event.player}` }</span> (no longer member of the group) 100%'d <span className="bold">{ game ? game.title : `game ${props.event.game}` }</span>!</div>
-                        : <div className="event-desc"><span className="bold">{ member ? member.name : `User ${props.event.player}` }</span> (no longer member of the group) 100%'d <span className="bold">{ game ? game.title : `game ${props.event.game}` }</span> (no longer curated)!</div>
+                        ? <div className="event-desc"><span className="bold under">{ member ? member.name : `User ${props.event.player}` }</span> (no longer member of the group) completed <span className="bold under">{ game ? game.title : `game ${props.event.game}` }</span>!</div>
+                        : <div className="event-desc"><span className="bold under">{ member ? member.name : `User ${props.event.player}` }</span> (no longer member of the group) completed <span className="bold under">{ game ? game.title : `game ${props.event.game}` }</span> (no longer curated)!</div>
             }
             
             <div className="event-summary flex-row">
-                <i class="fas fa-check-square"></i>
+                <i class={ member ? "fas fa-check-square" : "fas fa-exclamation-triangle" }></i>
                 <i className={ rating ? rating.link : "far fa-question-circle" }></i>
                 <img className="event-img" src={ game ? game.img : logo } alt="game-img"></img>
             </div>
@@ -81,14 +81,14 @@ const TierChangeEvent = props => {
             ? <div className="event-info flex-row">
                 <img className="event-img" alt="game-img" src={ logo }></img>
                 <div className="event-desc">
-                    <span className="bold">{ game ? game.title : "-" }</span> 
+                    <span className="bold under">{ game ? game.title : "-" }</span> 
                     { demoted ? " demoted " : " promoted " }
                     from <i className={ swapRatingToIcon(props.event.oldTier, props.rating) }></i> to <i className={ swapRatingToIcon(props.event.newTier, props.rating) }></i>!
                 </div>
                 <div className="event-summary flex-row">
                     { demoted
-                        ? <i className="fas fa-caret-square-down"></i> 
-                        : <i className="fas fa-caret-square-up"></i> 
+                        ? <i className={ game ? "fas fa-caret-square-down" : "fas fa-exclamation-triangle" }></i> 
+                        : <i className={ game ? "fas fa-caret-square-up" : "fas fa-exclamation-triangle" }></i> 
                     }
                     <i className={ rating ? rating.link : "far fa-question-circle" }></i> 
                     <img className="event-img" alt="game-img" src={ game ? game.img : logo }></img>
@@ -106,7 +106,7 @@ const AchievementNumberChangeEvent = props => {
             ? <div className="event-info flex-row">
                 <img className="event-img" alt="game-img" src={ logo }></img>
                 <div className="event-desc">
-                    <span className="bold">{ game ? game.title : "-" } </span>
+                    <span className="bold under">{ game ? game.title : "-" } </span>
                     {
                         props.event.oldNumber < props.event.newNumber
                             ? `got ${props.event.newNumber - props.event.oldNumber} new achievements!`
@@ -115,7 +115,7 @@ const AchievementNumberChangeEvent = props => {
                     
                 </div>
                 <div className="event-summary flex-row">
-                    <i className="fas fa-tasks"></i> 
+                    <i className={ game ? "fas fa-tasks" : "fas fa-exclamation-triangle" }></i> 
                     <i className={ rating ? rating.link : "far fa-question-circle" }></i> 
                     <img className="event-img" alt="game-img" src={ game ? game.img : logo }></img>
                 </div>
