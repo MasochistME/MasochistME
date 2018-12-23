@@ -163,6 +163,8 @@
   padding: 0
   box-sizing: border-box
   margin: 30px 30px 0 0 
+  @media (max-width: $netbooks)
+    margin: 0
 .wrapper-description
   background-color: $darkbluetransparent
   width: 100%
@@ -174,10 +176,16 @@
 .wrapper-searchbar
   display: flex
   justify-content: flex-end
+  @media (max-width: $tablets)
+    justify-content: center
+    align-items: center
+    margin: 15px 0
 .searchbar
   width: 200px
   font-family: $font-raleway
   margin-bottom: 20px
+  @media (max-width: $tablets)
+    margin-bottom: 0
 .searchbar-label
   padding: 2px
   margin-right: 10px
@@ -185,6 +193,9 @@
 .wrapper-filter
   display: flex
   justify-content: space-around
+  @media (max-width: $tablets)
+    flex-direction: column
+    justify-content: center
 .wrapper-choicebar
   display: flex
   justify-content: center
