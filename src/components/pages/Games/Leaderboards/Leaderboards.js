@@ -63,7 +63,7 @@ class Leaderboards extends React.Component {
         return (
             visible
                 ? <div className="leaderboards">
-                    <h2>Leaderboards: { game.title }</h2>
+                    <h2>{ game.title }</h2>
                     <div className="game-statistics">
                         <ul>
                             <li>Average completion time: { this.summarizeCompletionTime(leaderboards) }</li>

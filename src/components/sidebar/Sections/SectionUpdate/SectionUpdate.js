@@ -53,6 +53,7 @@ export default class SectionUpdate extends React.Component {
                 this.state.updating
                     ? ( <div className='update-progress-bar-border' title={ `${this.state.updateStatus}%`}>
                             <div className='update-progress-bar' style={{ width:`${this.state.updateStatus}%` }}></div>
+                            <div className='update-progress-bar-percentage'>Updating...</div>
                         </div>
                         )
                     : ( <button className={

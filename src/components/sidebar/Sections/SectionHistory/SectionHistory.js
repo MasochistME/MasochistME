@@ -13,35 +13,36 @@ class SectionHistory extends React.Component {
                 return player
                     ? (
                     <p className='small-event' key={ `sidebar-event-${eventIndex}` }>
-                        <span className="bold">- {player.name}</span> has joined the group!
+                        <i className="fas fa-user-plus"></i><span className="bold"> {player.name}</span> has joined the group!
                     </p>)
                     : null
             case 'newGame':
                 return game
                     ? (
                     <p className='small-event' key={ `sidebar-event-${eventIndex}` }>
-                        <span className="bold">- {game.title}</span> has been curated!
+                        <i className="fas fa-plus-square"></i><span className="bold"> {game.title}</span> has been curated!
                     </p>)
                     : null
             case 'complete':
                 return player && game
                     ? (
                     <p className='small-event' key={ `sidebar-event-${eventIndex}` }>
-                        <span className="bold">- {player.name}</span> 100%'d <span className="bold">{game.title}</span>!
+                        <i className="fas fa-check-square"></i><span className="bold"> {player.name}</span> completed <span className="bold">{game.title}</span>!
                     </p>)
                     : null
             case 'tierChange':
                 return game
                     ? (
                     <p className='small-event' key={ `sidebar-event-${eventIndex}` }>
-                        <span className="bold">- {game.title}</span> changed its tier to <icon className={ swapRatingToIcon(game.rating, rating) }></icon>!
+                        <i className="fas fa-undo-alt"></i><span className="bold"> {game.title}</span> changed its tier to <icon className={ swapRatingToIcon(game.rating, rating) }></icon>!
                     </p>)
                     : null
             case 'achievementNumberChange':
                 return game
                     ? (
                     <p className='small-event' key={ `sidebar-event-${eventIndex}` }>
-                        <span className="bold">- {game.title}</span> {
+                        <i className="fas fa-tasks"></i>
+                        <span className="bold"> {game.title}</span> {
                             event.oldNumber < event.newNumber
                                 ? `got ${event.newNumber - event.oldNumber} new achievements!`
                                 : `had ${event.oldNumber - event.newNumber} achievements removed!`
@@ -57,7 +58,7 @@ class SectionHistory extends React.Component {
 
         return (
         <div className='section'>
-            <h3 className='section-title'>Last 10 events</h3>
+            <h3 className='section-title'>Last events</h3>
                 { props.events
                     .slice(0,10)
                     .map((event, eventIndex) => this.sortEvents(event, eventIndex) )}

@@ -8,7 +8,7 @@ class PageHome extends React.Component{
         const blog = _.orderBy(props.blog, ['date'], ['desc'])
         
         return (
-            <div>
+            <div className='page-blog'>
                 {
                     blog.map((entry, entryIndex) => 
                         <div className='blog-entry' key={ `entry-${entryIndex}` }>
