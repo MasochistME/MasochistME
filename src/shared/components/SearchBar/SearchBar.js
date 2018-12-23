@@ -32,11 +32,11 @@ class SearchBar extends React.Component {
     render() {
         return(
             <div className='wrapper-searchbar'>
-                <label htmlFor='searchbar' className='searchbar-label'>Find { this.state.searchFor }</label>
+                <label htmlFor='searchbar' className='searchbar-label'>Search:</label>
                 <input 
                     className='searchbar' 
                     type='text' 
-                    placeholder={ `${this.state.searchFor} here` }
+                    placeholder={ 'for ' + this.state.searchFor }
                     onChange={ this.update }
                 />
             </div>)
