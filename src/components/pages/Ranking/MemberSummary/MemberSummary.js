@@ -1,13 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { changeTab, showMemberProfile } from '../../../../shared/store/modules/Tabs';
 
 class MemberSummary extends React.Component {
-    showProfile = id => {
-        this.props.dispatch(changeTab('member'))
-        this.props.dispatch(showMemberProfile(id))
-    }
-
     render() {
         const { member, index, rating } = this.props
         const disabled = member.points === 0 ? true : false
@@ -22,7 +16,7 @@ class MemberSummary extends React.Component {
                             ? <icon className="fas fa-exclamation-triangle" title="This member has their Steam profile set to private."></icon> 
                             : <div></div>
                     }
-                    <div className="member-name" onClick={ () => this.showProfile(member.id) }>{ member.name }</div>
+                    <div className="member-name">{ member.name }</div>
                     <div className="member-ranking flex-row">
                         <div className="member-rating-score">
                             { member.points }
