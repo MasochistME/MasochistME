@@ -18,15 +18,17 @@
 
 .member-summary
     width: 100%
-    background-color: $contentbgtransparent
-    border-bottom: 1px solid $mediumgrey
-    border-top: 1px solid $superlightgrey
+    background-color: $darkbluetransparent
+    border-bottom: 1px solid $newdark
+    border-top: 1px solid $newmediumgrey
+.member-disabled
+    background-color: $darkredtransparent
 .member-details
     width: 100%
     padding: 0 55px
     box-sizing: border-box
     &:first-child
-        border-top: none !important
+        border-top: none
     @media (max-width: $small-netbooks)
         padding: 0
 
@@ -39,7 +41,7 @@
     height: 100%
     text-align: center
     font-size: 1.2em
-    border-right: 1px solid $mediumgrey
+    border-right: 1px solid $newdark
     @media (max-width: $tablets)
         display: none
 .member-avatar
@@ -49,7 +51,7 @@
     max-height: 64px 
     box-sizing: border-box 
     padding: 4px
-    border-left: 1px solid $superlightgrey
+    border-left: 1px solid $newmediumgrey
     @media (max-width: $tablets)
         display: none
 .member-info
@@ -75,9 +77,13 @@
     width: 100%
     height: 37px
     align-items: center
-    background-color: $contentbgtransparent
-    border-bottom: 1px solid $mediumgrey
-    border-top: 1px solid $superlightgrey
+    background-color: $darkbluetransparent
+    border-bottom: 1px solid $newdark
+    border-top: 1px solid $newmediumgrey
+    &:first-child
+        border-top: none 
+    &:last-child
+        border-bottom: none 
 .m-game-logo
     margin: 0
     padding: 0
@@ -92,7 +98,8 @@
     justify-content: space-between
     margin: 0 10px
 .m-game-times
-    font-size: 0.9em
+    font-size: 0.7em
+    font-family: $font-verdana
     color: $superlightgrey
 .m-game-title
     margin-left: 5px
@@ -101,7 +108,7 @@
     min-width: 200px
     height: 15px
     margin-right: 7px
-    border: 1px solid $darkgrey
+    border: 1px solid $newdark
     @media (max-width: $small-tablets)
         border: none
         min-width: 100px
@@ -111,11 +118,13 @@
 .m-game-completion-progress
     position: absolute
     height: 100%
-    background-color: $superlightgrey
+    background-color: $newmediumgrey
     @media (max-width: $small-tablets)
         display: none
 .m-game-completion-percentage
     position: absolute
     width: 100%
-    font-size: 0.8em
+    font-size: 0.77em
+    font-family: $font-verdana
+    letter-spacing: 0.1em 
     text-align: center
