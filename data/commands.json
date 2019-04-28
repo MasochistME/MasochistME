@@ -1,0 +1,12 @@
+{
+    "options": {
+        "commandSymbol": "/"
+    },
+    "list": [
+        {
+            "keyword": "test",
+            "text": "Test.",
+            "isModOnly": true
+        }
+    ]
+}

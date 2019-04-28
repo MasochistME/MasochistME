@@ -1,0 +1,41 @@
+{
+  "name": "drfetus",
+  "version": "2.0.0",
+  "description": "A custom bot for the 0.1% community!",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "build": "rimraf dist/ && babel ./ --out-dir dist/ --extensions \".js,.ts\" --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
+    "fetus": "node dist/fetus.js",
+    "start": "npm run build && npm run fetus",
+    "start-dev": "node fetus",
+    "check-types": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PointOnePercent/DrFetus.git"
+  },
+  "author": "Arcyvilk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PointOnePercent/DrFetus/issues"
+  },
+  "homepage": "https://github.com/PointOnePercent/DrFetus#readme",
+  "dependencies": {
+    "@types/node": "^11.13.4",
+    "axios": "^0.18.0",
+    "discord.js": "^11.4.2",
+    "rimraf": "^2.6.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.3",
+    "@babel/core": "^7.4.3",
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.3",
+    "@babel/plugin-transform-async-to-generator": "^7.4.0",
+    "@babel/polyfill": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "@babel/preset-es2015": "^7.0.0-beta.53",
+    "@babel/preset-typescript": "^7.3.3"
+  }
+}
