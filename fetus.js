@@ -14,7 +14,7 @@ const ready = bot => {
     if (!fs.existsSync(path))
         fs.mkdirSync(path);
     cache.bot = bot;
-    log.INFO('Great Herald started working!');
+    log.INFO('Dr. Fetus reporting for destruction!');
 }
 
 bot.on('ready', () => ready(bot));
