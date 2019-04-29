@@ -1,10 +1,6 @@
 import Discord from 'discord.js';
-
 import { TextCommand } from './commands/logic';
-
 import { cache } from '../cache';
-import reactions from '../data/reactions.json';
-
 import { getKeyword } from './helpers';
 import { 
     chooseRandom,
@@ -46,8 +42,8 @@ const checkForReactionTriggers = (msg:Discord.Message) => {
     let chosenReaction;
 
     if (isMessageRant(msg)) 
-        appropiateReactions = reactions.filter((reaction:any) => reaction.id === 'rant');
-    else appropiateReactions = reactions.filter((reaction:any) => 
+        appropiateReactions = cache["reactions"].filter((reaction:any) => reaction.id === 'rant');
+    else appropiateReactions = cache["reactions"].filter((reaction:any) => 
         reaction.keywords.filter((keyword:string) => msg.content.includes(keyword)).length === reaction.keywords.length && reaction.keywords.length > 0);
     if (appropiateReactions.length === 0)
         return;
