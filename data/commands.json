@@ -1,11 +1,19 @@
 {
     "options": {
-        "commandSymbol": "/"
+        "commandSymbol": "!"
     },
     "list": [
         {
             "keyword": "test",
             "text": "Test.",
+            "isModOnly": true
+        },
+        {
+            "keyword": "meme",
+            "refusal": "I'm Dr. Fetus, not kela bot."
+        },
+        {
+            "keyword": "addmeme",
             "isModOnly": true
         }
     ]

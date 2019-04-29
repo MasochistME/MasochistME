@@ -1,8 +1,8 @@
 import '@babel/polyfill';
 import Discord from 'discord.js';
-import fs from 'fs';
 import { log } from './log';
 import { classifyMessage } from './lib/message';
+import { connectToDb, updateCache } from './lib/db';
 import { cache } from './cache';
 
 import config from './config.json';
@@ -10,9 +10,10 @@ import config from './config.json';
 const bot = new Discord.Client();
 
 const ready = bot => {
-    const path = `${__dirname}/data/local`;
-    if (!fs.existsSync(path))
-        fs.mkdirSync(path);
+    connectToDb();
+    const interval = 900000;
+    const updateInterval = setInterval(updateCache, interval);
+
     cache.bot = bot;
     log.INFO('Dr. Fetus reporting for destruction!');
 }

@@ -23,7 +23,7 @@ class Command {
         this.isDisabled = command.isDisabled || false;
         this.isModOnly = command.isModOnly || false;
         this.isProtected = command.isProtected || true;
-        this.refusal = command.refusal || 'I won\'t execute your petty command.';
+        this.refusal = command.refusal || 'Your commands tire me.';
         this.canBeExecuted = this._canBeExecuted(msg);
     }
 

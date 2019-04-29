@@ -9,7 +9,7 @@ export const getKeyword = (msg:Discord.Message) => {
     return keyword.toLowerCase();
 };
 
-export const removeKeyword = (msg:Discord.Message) => msg.content.substring(msg.content.indexOf(' '));
+export const removeKeyword = (msg:Discord.Message) => msg.content.substring(msg.content.indexOf(' ')).trim();
 
 export const hasSeparator = (msg:Discord.Message) => removeKeyword(msg).includes('|');
 

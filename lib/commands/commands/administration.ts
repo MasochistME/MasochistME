@@ -15,7 +15,7 @@ export const impersonate = (msg:Discord.Message) => {
     // @ts-ignore
     const channel = cache.bot.channels.get(messageAndGuild[1]);
     if (!channel) {
-        msg.channel.send(`I don't have access to this channel, you dummy.`);
+        msg.channel.send(`I don't have access to this channel, you dumbass.`);
         return;
     }
     channel.send(messageAndGuild[0])
