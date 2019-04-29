@@ -1,6 +1,6 @@
 import { MongoClient } from 'mongodb';
 import { log } from '../log';
-import { cache } from '../cache';
+import { cache, collections } from '../cache';
 
 export const connectToDb = () => {
     const dbName = 'fetus';
@@ -18,12 +18,10 @@ export const connectToDb = () => {
     MongoClient.connect(url, callback);
 }
 
-export const updateCache = () => {
-    const collections = [ 'memes', 'members', 'games' ];
+export const updateCache = () => 
     collections.map(collection => findCollection(cache["db"], collection, (err, data) => {
         err ? log.WARN(err) : cache[collection] = data;
-    }))
-}
+    }));
 
 export const insertData = (col, key, value, cb) => {
     cache["db"].collection(col).insertOne({ [key]: value }, (err, result) => {

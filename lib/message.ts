@@ -2,7 +2,7 @@ import Discord from 'discord.js';
 
 import { TextCommand } from './commands/logic';
 
-import commands from '../data/commands.json'
+import { cache } from '../cache';
 import reactions from '../data/reactions.json';
 
 import { getKeyword } from './helpers';
@@ -23,7 +23,7 @@ const isChannelDM = (msg:Discord.Message) => msg.author.id === msg.channel.id;
 const isUserAdmin = (msg:Discord.Message) => msg.member.hasPermission('ADMINISTRATOR');
 const isUserBot = (msg:Discord.Message) => msg.author.bot;
 const isUserArcy = (msg:Discord.Message) => msg.author.id === '165962236009906176';
-const messageStartsWithCommandSymbol = (msg:Discord.Message) => msg.content.startsWith(commands.options.commandSymbol);
+const messageStartsWithCommandSymbol = (msg:Discord.Message) => msg.content.startsWith(cache["options"].find(option => option.option === 'commandSymbol').value);
 const isMessageRant = (msg:Discord.Message) => msg.content === msg.content.toUpperCase() && msg.content.length > 20;
 
 const answer = (msg:Discord.Message, answer:string) => msg.channel.send(answer);
@@ -58,7 +58,7 @@ const checkForReactionTriggers = (msg:Discord.Message) => {
         chosenReaction.response && msg.channel.send(chosenReaction.response);
     }
 };
-const commandObject = (msg:Discord.Message) => commands.list.find(cmd => cmd.keyword === getKeyword(msg));
+const commandObject = (msg:Discord.Message) => cache["commands"].find(cmd => cmd.keyword === getKeyword(msg));
 
 // MAIN FUNCTION
 
