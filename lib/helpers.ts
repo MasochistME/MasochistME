@@ -8,11 +8,10 @@ export const getKeyword = (msg:Discord.Message) => {
         : msg.content.substring(1);
     return keyword.toLowerCase();
 };
-
-export const removeKeyword = (msg:Discord.Message) => msg.content.substring(msg.content.indexOf(' ')).trim();
-
-export const hasSeparator = (msg:Discord.Message) => removeKeyword(msg).includes('|');
-
+export const removeKeyword = (msg:Discord.Message) => 
+    msg.content.substring(msg.content.indexOf(' ')).trim();
+export const hasSeparator = (msg:Discord.Message) => 
+    removeKeyword(msg).includes('|');
 export const extractNicknameAndServer = (msg:Discord.Message) => {
     if (!hasSeparator(msg)) {
         msg.channel.send('This command requires the symbol **|** to separate region from nickname.');
@@ -26,9 +25,8 @@ export const extractNicknameAndServer = (msg:Discord.Message) => {
         server
     }
 }
-
-export const extractArguments = (msg:Discord.Message) => removeKeyword(msg).split('|');
-
+export const extractArguments = (msg:Discord.Message) => 
+    removeKeyword(msg).split('|');
 export const createEmbed = (title: string, fields:[ IEmbedField ], color?: string) => {
     const embed = new Discord.RichEmbed()
         .setTitle(title)
@@ -36,3 +34,8 @@ export const createEmbed = (title: string, fields:[ IEmbedField ], color?: strin
     fields.map(field => embed.addField(field.title, field.content));
     return embed;
 }
+export const isLink = (supposedLink:string) => {
+    if (supposedLink.startsWith('http'))
+        return true;
+    return false;
+};

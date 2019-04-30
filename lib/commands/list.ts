@@ -15,6 +15,8 @@ import {
     hmod,
     meme,
     addmeme,
+    vid,
+    rec,
 } from './commands/standard';
 
 export const Command: { [key:string]: (command:ICommand, msg:Discord.Message) => string | void} = {
@@ -24,4 +26,6 @@ export const Command: { [key:string]: (command:ICommand, msg:Discord.Message) =>
     addmeme: (command:ICommand, msg:Discord.Message) => new CustomCommand(command, msg).execute(addmeme, msg),
     status: (command:ICommand, msg:Discord.Message) => new CustomCommand(command, msg).execute(status, msg),
     impersonate: (command:ICommand, msg:Discord.Message) => new CustomCommand(command, msg).execute(impersonate),
+    vid: (command:ICommand, msg:Discord.Message) => new CustomCommand(command, msg).execute(vid, msg),
+    rec: (command:ICommand, msg:Discord.Message) => new CustomCommand(command, msg).execute(rec, msg),
 };
