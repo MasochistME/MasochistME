@@ -1,17 +1,11 @@
 import Discord from 'discord.js';
 import { TextCommand } from './commands/logic';
 import { cache } from '../cache';
-import { getKeyword } from './helpers';
-import { 
-    chooseRandom,
-    happensWithAChanceOf,
-} from './rng';
+import { getKeyword, getCommandSymbol } from './helpers';
+import { chooseRandom, happensWithAChanceOf } from './rng';
 import { Command } from './commands/list';
 
-import { 
-    IReaction, 
-    IReactionDetails 
-} from './types/reaction';
+import { IReaction, IReactionDetails } from './types/reaction';
 
 // LOGIC
 
@@ -19,7 +13,7 @@ const isChannelDM = (msg:Discord.Message) => msg.author.id === msg.channel.id;
 const isUserAdmin = (msg:Discord.Message) => msg.member.hasPermission('ADMINISTRATOR');
 const isUserBot = (msg:Discord.Message) => msg.author.bot;
 const isUserArcy = (msg:Discord.Message) => msg.author.id === '165962236009906176';
-const messageStartsWithCommandSymbol = (msg:Discord.Message) => msg.content.startsWith(cache["options"].find(option => option.option === 'commandSymbol').value);
+const messageStartsWithCommandSymbol = (msg:Discord.Message) => msg.content.startsWith(getCommandSymbol());
 const isMessageRant = (msg:Discord.Message) => msg.content === msg.content.toUpperCase() && msg.content.length > 20;
 
 const answer = (msg:Discord.Message, answer:string) => msg.channel.send(answer);

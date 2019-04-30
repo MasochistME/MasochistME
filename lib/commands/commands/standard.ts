@@ -1,6 +1,6 @@
 import Discord from "discord.js";
 import { chooseRandom } from '../../rng';
-import { removeKeyword, createEmbed, isLink, extractArguments } from '../../helpers';
+import { removeKeyword, createEmbed, isLink, extractArguments, getCommandSymbol, splitByFirstSymbol } from '../../helpers';
 import { insertData } from '../../db';
 import { cache } from '../../../cache';
 
@@ -10,7 +10,7 @@ export const help = (msg:Discord.Message) => {
     let embed;
     cache["commands"]
         .filter(cmd => !cmd.isModOnly && cmd.description)
-        .map(cmd => content += `- \`\`${cmd.keyword}\`\` - ${cmd.description}\n`);
+        .map(cmd => content += `- \`\`${getCommandSymbol()}${cmd.keyword}\`\` - ${cmd.description}\n`);
     embed = createEmbed('📜 Standard commands', [{ title: 'List:', content }]);
     msg.channel.send(embed);
 }
@@ -19,18 +19,35 @@ export const hmod = (msg:Discord.Message) => {
     let embed;
     cache["commands"]
         .filter(cmd => cmd.isModOnly && cmd.description)
-        .map(cmd => content += `- \`\`${cmd.keyword}\`\` - ${cmd.description}\n`);
+        .map(cmd => content += `- \`\`${getCommandSymbol()}${cmd.keyword}\`\` - ${cmd.description}\n`);
     embed = createEmbed('📜 Moderation commands', [{ title: 'List:', content }]);
     msg.channel.send(embed);
 }
 export const vid = (msg:Discord.Message) => {
     const vid = removeKeyword(msg);
-    const channel = cache["options"].find(option => option.option === 'room_vid').value;
+    const room_vid = cache["options"].find(option => option.option === 'room_vid')
+        ? cache["options"].find(option => option.option === 'room_vid').value
+        : null;
+    const channel = cache["bot"].channels.get(room_vid);
+
+    if (vid.length === 0) {
+        msg.channel.send('You forgot about something, dumbass.');
+        return;
+    }
     if (!isLink(vid)) {
         msg.channel.send('_This_ is not a link.');
         return;
     }
-    cache["bot"].channels.get(channel).send(`${vid} - ${msg.author}`);
+    if (!channel) {
+        msg.channel.send(`I don't have access to this channel, you dumbass.`);
+        return;
+    }
+    try {
+        channel.send(`${vid} - ${msg.author}`);
+    }
+    catch (err) {
+        msg.channel.send(`Something fucked up. ${err.message}`)
+    }
 }
 export const rec = (msg:Discord.Message) => {
     const recFetus = [
@@ -41,9 +58,15 @@ export const rec = (msg:Discord.Message) => {
         'Many friends also say this is a hardcore game :D',
         'This are real chellenge for mans'
     ];
+    const rec = splitByFirstSymbol(msg, ' ');
+    const recText = rec[1] 
+        ? `${rec[0]} - _"${rec[1]}"_ - ${msg.author}`
+        : `_"${chooseRandom(recFetus)}"_ - @Dr. Fetus \n ${rec[0]} - ${msg.author}`;
+    const room_rec = cache["options"].find(option => option.option === 'room_rec') 
+        ? cache["options"].find(option => option.option === 'room_rec').value 
+        : null;
+    const channel = cache["bot"].channels.get(room_rec);
 
-    const rec = extractArguments(msg);
-    const channel = cache["options"].find(option => option.option === 'room_rec').value;
     if (rec.length === 0) {
         msg.channel.send('You forgot about something, dumbass.');
         return;
@@ -52,8 +75,16 @@ export const rec = (msg:Discord.Message) => {
         msg.channel.send('_This_ is not a link.');
         return;
     }
-    const recText = rec[1] ? rec[1] : chooseRandom(recFetus);
-    cache["bot"].channels.get(channel).send(`${rec[0]} - _${recText}_ - ${msg.author}`);
+    if (!channel) {
+        msg.channel.send(`I don't have access to this channel, you dumbass.`);
+        return;
+    }
+    try {
+        channel.send(recText);
+    }
+    catch (err) {
+        msg.channel.send(`Something fucked up. ${err.message}`)
+    }
 }
 
 export const meme = (msg:Discord.Message) => msg.channel.send(`_"${chooseRandom(cache["memes"]).meme}"_`);
