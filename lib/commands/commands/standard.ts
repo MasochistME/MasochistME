@@ -1,7 +1,6 @@
 import Discord from "discord.js";
 import { chooseRandom } from '../../rng';
-import { removeKeyword, createEmbed, isLink, extractArguments, getCommandSymbol, splitByFirstSymbol } from '../../helpers';
-import { insertData } from '../../db';
+import { removeKeyword, createEmbed, isLink, getCommandSymbol, splitByFirstSymbol } from '../../helpers';
 import { cache } from '../../../cache';
 
 // @ts-ignore
@@ -86,9 +85,3 @@ export const rec = (msg:Discord.Message) => {
         msg.channel.send(`Something fucked up. ${err.message}`)
     }
 }
-
-export const meme = (msg:Discord.Message) => msg.channel.send(`_"${chooseRandom(cache["memes"]).meme}"_`);
-export const addmeme = (msg:Discord.Message) => insertData('memes', 'meme', removeKeyword(msg), err => 
-    err
-        ? msg.react('❌')
-        : msg.react('✅'));

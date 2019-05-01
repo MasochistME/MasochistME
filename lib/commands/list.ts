@@ -6,18 +6,10 @@ import {
     CustomCommand,
 } from './logic';
 
-import { 
-    status, 
-    impersonate,
-} from './commands/administration';
-import { 
-    help,
-    hmod,
-    meme,
-    addmeme,
-    vid,
-    rec,
-} from './commands/standard';
+import { status, impersonate } from './commands/administration';
+import { help, hmod, vid, rec } from './commands/standard';
+import { meme, addmeme } from './commands/meme';
+import { follow, unfollow, followers, following } from './commands/follow';
 
 export const Command: { [key:string]: (command:ICommand, msg:Discord.Message) => string | void} = {
     help: (command:ICommand, msg:Discord.Message) => new CustomCommand(command, msg).execute(help, msg),

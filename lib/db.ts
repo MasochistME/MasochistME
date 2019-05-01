@@ -35,4 +35,128 @@ export const insertData = (col, key, value, cb) => {
     });
 }
 
-const findCollection = (db, col, cb) => db.collection(col).find({}).toArray((err, data) => cb(err, data));
+export const insertMany = (collection:string, manyObjects:Array<object>, cb) => {
+    cache["db"].collection(collection).insertMany(manyObjects, (err, result) => {
+        if (err) {
+            log.WARN(`Error during inserting data.`);
+            return cb(err);
+        }
+        updateCache();
+        log.INFO(`Succesfully added data to ${collection.toUpperCase()} collection.`)
+        return cb(null);
+    });
+}
+
+export const updateOne = (collection:string, filter:Object, set:Object, cb) => {
+    cache["db"].collection(collection).updateOne(
+        filter, 
+        { $set: set },
+        // { $unset: unset },
+        (err, result) => {
+        if (err) {
+            log.WARN(`Error during inserting data.`);
+            return cb(err);
+        }
+        updateCache();
+        log.INFO(`Succesfully updated data in ${collection.toUpperCase()} collection.`)
+        return cb(null);
+    });
+}
+
+export const updateMany = (collection:string, filter:Object, set:Array<object>, cb) => {
+    cache["db"].collection(collection).updateMany(
+        filter, 
+        { $set: set },
+        // { $unset: unset },
+        (err, result) => {
+        if (err) {
+            log.WARN(`Error during inserting data.`);
+            return cb(err);
+        }
+        updateCache();
+        log.INFO(`Succesfully updated data in ${collection.toUpperCase()} collection.`)
+        return cb(null);
+    });
+}
+
+export const replaceOne = (collection:string, filter:Object, replacement:Object, cb) => {
+    cache["db"].collection(collection).replaceOne(
+        filter, 
+        replacement,
+        { upsert: true },
+        (err, result) => {
+        if (err) {
+            log.WARN(`Error during inserting data.`);
+            return cb(err);
+        }
+        updateCache();
+        log.INFO(`Succesfully replaced data in ${collection.toUpperCase()} collection.`)
+        return cb(null);
+    });
+}
+
+export const replaceMany = (collection:string, filter:Object, replacement:Array<object>, cb) => {
+    cache["db"].collection(collection).replaceMany(
+        filter, 
+        replacement,
+        { upsert: true },
+        (err, result) => {
+        if (err) {
+            log.WARN(`Error during inserting data.`);
+            return cb(err);
+        }
+        updateCache();
+        log.INFO(`Succesfully replaced data in ${collection.toUpperCase()} collection.`)
+        return cb(null);
+    });
+}
+
+export const upsertOne = (collection:string, filter:Object, object:Object, cb) => {
+    cache["db"].collection(collection).updateOne(filter, {$set: object}, { upsert: true }, (err, result) => {
+        if (err) {
+            log.WARN(`Error during inserting data.`);
+            return cb(err);
+        }
+        updateCache();
+        log.INFO(`Succesfully upserted data to ${collection.toUpperCase()} collection.`)
+        return cb(null);
+    });
+}
+
+export const upsertMany = (collection:string, filter:Object, manyObjects:Array<object>, cb) => {
+    cache["db"].collection(collection).updateMany(filter, {$set: manyObjects}, { upsert: true }, (err, result) => {
+        if (err) {
+            log.WARN(`Error during inserting data.`);
+            return cb(err);
+        }
+        updateCache();
+        log.INFO(`Succesfully upserted data to ${collection.toUpperCase()} collection.`)
+        return cb(null);
+    });
+}
+
+export const deleteOne = (collection:string, filter:Object, cb) => {
+    cache["db"].collection(collection).deleteOne(filter, (err, result) => {
+        if (err) {
+            log.WARN(`Error during inserting data.`);
+            return cb(err);
+        }
+        updateCache();
+        log.INFO(`Succesfully deleted data from ${collection.toUpperCase()} collection.`)
+        return cb(null);
+    });
+}
+
+export const deleteMany = (collection:string, filter:Object, cb) => {
+    cache["db"].collection(collection).deleteMany(filter, (err, result) => {
+        if (err) {
+            log.WARN(`Error during inserting data.`);
+            return cb(err);
+        }
+        updateCache();
+        log.INFO(`Succesfully deleted data from ${collection.toUpperCase()} collection.`)
+        return cb(null);
+    });
+}
+
+const findCollection = (database, collection, cb) => database.collection(collection).find({}).toArray((err, data) => cb(err, data));
