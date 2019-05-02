@@ -3,6 +3,7 @@ import Discord from 'discord.js';
 import { log } from './log';
 import { classifyMessage } from './lib/message';
 import { handleStream } from './lib/stream';
+import { msgEdit, msgDelete, userJoin, userLeave } from './lib/events';
 import { connectToDb, updateCache } from './lib/db';
 import { cache } from './cache';
 
@@ -22,5 +23,9 @@ const ready = bot => {
 bot.on('ready', () => ready(bot));
 bot.on('message', classifyMessage);
 bot.on('presenceUpdate', handleStream)
+bot.on('messageUpdate', msgEdit)
+bot.on('messageDelete', msgDelete)
+bot.on('guildMemberAdd', userJoin)
+bot.on('guildMemberRemove', userLeave)
 
 bot.login(config.DISCORD_TOKEN);

@@ -13,13 +13,14 @@ export type ICommandSettings = {
 }
 export type IEmbedField = {
     title: string,
-    content: string
+    content: string,
+    inline?: boolean
 }
 export type IExecuteText = {
     execute: (content:string) => string | void;
 }
 export type IExecuteEmbed = {
-    execute: (title:string, fields:[ IEmbedField ], color?:string) => string | void;
+    execute: (title:string, fields:Array<IEmbedField>, color?:string) => string | void;
 }
 export type IExecuteCustom = {
     execute: (fn:Function, ...args:Array<any>) => any;
