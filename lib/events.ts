@@ -1,4 +1,5 @@
 import Discord from "discord.js";
+import { log } from '../log';
 import { createEmbed } from './helpers';
 import { cache } from '../cache';
 
@@ -9,8 +10,7 @@ const sendLog = (embed:Discord.RichEmbed) => {
     const channel = cache["bot"].channels.get(room_log);
     if (channel)
         channel.send(embed)
-            .then(() => console.log(';)'))
-            .catch(err => console.log(err))
+            .catch(err => log.WARN(`Something went wrong. ${ err }`))
 }
 
 export const msgEdit = (oldMessage:Discord.Message, newMessage:Discord.Message) => { 
