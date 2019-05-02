@@ -1,6 +1,6 @@
 import Discord from 'discord.js';
 import { log } from '../../../log';
-import { removeKeyword, extractArguments } from '../../helpers';
+import { removeKeyword, extractArguments, createEmbed } from '../../helpers';
 import { cache } from '../../../cache';
 
 // @ts-ignore
@@ -23,4 +23,15 @@ export const impersonate = (msg:Discord.Message) => {
             msg.channel.send(`Something fucked up.`)
             log.WARN(e);
         });
+}
+
+export const options = (msg:Discord.Message) => {
+    const options = cache["options"].map(option => {
+        return {
+            title: option.option,
+            content: option.option.startsWith('room_') ? `<#${option.value}>` : option.value
+        }
+    })
+    const embed = createEmbed('⚙️ Dr. Fetus settings', options);
+    msg.channel.send(embed);
 }

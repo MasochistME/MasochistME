@@ -2,6 +2,7 @@ import '@babel/polyfill';
 import Discord from 'discord.js';
 import { log } from './log';
 import { classifyMessage } from './lib/message';
+import { handleStream } from './lib/stream';
 import { connectToDb, updateCache } from './lib/db';
 import { cache } from './cache';
 
@@ -20,5 +21,6 @@ const ready = bot => {
 
 bot.on('ready', () => ready(bot));
 bot.on('message', classifyMessage);
+bot.on('presenceUpdate', handleStream)
 
 bot.login(config.DISCORD_TOKEN);
