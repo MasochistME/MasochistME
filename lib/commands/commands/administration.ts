@@ -1,4 +1,5 @@
 import Discord from 'discord.js';
+import _ from 'lodash';
 import { log } from '../../../log';
 import { removeKeyword, extractArguments, createEmbed } from '../../helpers';
 import { cache } from '../../../cache';
@@ -26,12 +27,14 @@ export const impersonate = (msg:Discord.Message) => {
 }
 
 export const options = (msg:Discord.Message) => {
-    const options = cache["options"].map(option => {
+    let options = cache["options"].map(option => {
         return {
             title: option.option,
-            content: option.option.startsWith('room_') ? `<#${option.value}>` : option.value
+            content: option.option.startsWith('room_') ? `<#${option.value}>` : option.value,
+            inline: true
         }
     })
+    options = _.orderBy(options, ['title'], ['asc']);
     const embed = createEmbed('⚙️ Dr. Fetus settings', options);
     msg.channel.send(embed);
 }
