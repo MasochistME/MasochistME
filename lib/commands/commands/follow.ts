@@ -1,10 +1,10 @@
 import Discord from "discord.js";
 import { log } from '../../../log';
 import { createEmbed  } from '../../helpers';
-import { upsertOne, upsertMany } from '../../db';
+import { upsertOne } from '../../db';
 import { cache } from '../../../cache';
 
-export const follow = (msg:Discord.Message) => { // change this so list is people following X, not who X follows!!!
+export const follow = (msg:Discord.Message) => {
     let embed:Discord.RichEmbed;
     let content = '';
     let usersToFollow = msg.mentions.users.map(streamer => streamer.id);
@@ -26,7 +26,7 @@ export const follow = (msg:Discord.Message) => { // change this so list is peopl
         embed = createEmbed('Follower alert', [{ title: '---', content }]);
         usersToFollow.map(user => {
             const followers = cache["follow"].find(streamer => streamer.id === user) 
-                ? cache["follow"].find(streamer => streamer.id === user).push(msg.author.id)
+                ? cache["follow"].find(streamer => streamer.id === user).followers.push(msg.author.id)
                 : {
                     id: user,
                     followers: [ msg.author.id ]
@@ -40,44 +40,37 @@ export const follow = (msg:Discord.Message) => { // change this so list is peopl
     msg.channel.send(embed);
 }
 export const unfollow = (msg:Discord.Message) => {
-    // let following = cache["follow"].find(user => user.id === msg.author.id);
-    // const usersAlreadyFollowed = following ? following.list : [];
-    // const usersToUnfollow = msg.mentions.users
-    //     .filter(user => usersAlreadyFollowed.includes(user.id))
-    //     .map(user => {
-    //         return {
-    //             id: user.id,
-    //             username: user.username
-    //         }})
-    // const usersToNotUnfollow = msg.mentions.users
-    //     .filter(user => !usersAlreadyFollowed.includes(user.id))
-    //     .map(user => {
-    //         return {
-    //             id: user.id,
-    //             username: user.username
-    //         }})
-    // const newFollowersList = usersAlreadyFollowed
-    //     .filter(user => !usersToUnfollow.some(unfollow => unfollow.id === user));    
-    // let content:string = '';
-    // let embed:Discord.RichEmbed;
-    
-    // if (usersToNotUnfollow.length > 0)
-    //     content += `You don't follow ${usersToNotUnfollow.map(user => user.username).join(', ')}, you fool.\n`;
-    // if (usersToUnfollow.length > 0)
-    //     content += `${msg.author.username} no longer follows ${usersToUnfollow.map(user => user.username).join(', ')}! It was boring anyway.`;
-    // if (msg.mentions.users.map(u => u.id).length === 0)
-    //     embed = createEmbed('<:boshy:310151885690503169> Incorrect input', [{ title: `---`, content: `You didn't mention the person who you want to follow.` }]);
-    // else {
-    //     embed = createEmbed('Unfollower alert', [{ title: '---', content }]);
-    //     if (!following)
-    //         following = { id: msg.author.id, list: newFollowersList };
-    //     else following.list = newFollowersList;
-    //     upsertOne('follow', { id: msg.author.id }, following, err => {
-    //         embed = createEmbed('<:boshy:310151885690503169> Something went wrong', [{ title: `---`, content: `Something went wrong.` }])
-    //         err && log.WARN(err)
-    //     });
-    // }
-    // msg.channel.send(embed);
+    let embed:Discord.RichEmbed;
+    let content = '';
+    let usersToUnfollow = new Array();
+    let usersToNotUnfollow = msg.mentions.users.map(streamer => streamer.id);
+
+    cache["follow"].map(streamer => {
+        if (streamer.followers.includes(msg.author.id))
+            usersToUnfollow.push(streamer.id);
+    })
+    usersToNotUnfollow = usersToNotUnfollow.filter(user => !usersToUnfollow.includes(user));
+
+    if (usersToNotUnfollow.length > 0)
+        content += `You don't follow ${usersToNotUnfollow.map(user => msg.guild.members.find(member => member.id === user).user.username).join(', ')}, you fool.\n`;
+    if (usersToUnfollow.length > 0)
+        content += `${msg.author.username} no longer follows ${usersToUnfollow.map(user => msg.guild.members.find(member => member.id === user).user.username).join(', ')}. It was boring anyway.`;    
+    if (msg.mentions.users.map(streamer => streamer.id).length === 0)
+        embed = createEmbed('<:boshy:310151885690503169> Incorrect input', [{ title: `---`, content: `You didn't mention users who you want to unfollow.` }]);
+    else {
+        embed = createEmbed('Unfollower alert', [{ title: '---', content }]);
+        usersToUnfollow.map(user => {
+            let followers = cache["follow"].find(streamer => streamer.id === user);
+            if (followers) {
+                followers.followers = followers.followers.filter(follower => follower !== msg.author.id)
+                upsertOne('follow', { id: user }, followers, err => {
+                    embed = createEmbed('<:boshy:310151885690503169> Something went wrong', [{ title: `---`, content: `Something went wrong.` }])
+                    err && log.WARN(err);
+                });
+            }
+        });
+    };
+    msg.channel.send(embed);
 }
 export const followers = (msg:Discord.Message) => {
     let followers = cache["follow"].find(user => user.id === msg.author.id);
