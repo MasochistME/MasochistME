@@ -1,7 +1,8 @@
 export type IReactionDetails = {
     chance: number,
     emoji?: string,
-    response?: string
+    response?: string,
+    function?: string,
 }
 
 export type IReaction = {

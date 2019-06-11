@@ -4,7 +4,7 @@ import {
     IExecuteText, 
     IExecuteCustom, 
     IExecuteEmbed, 
-    IEmbedField
+    IEmbedField,
 } from '../types/command';
 import { botRefuses } from '../rng';
 import { isUserAdmin } from '../message';
@@ -44,6 +44,14 @@ class Command {
     }
 }
 
+class Reaction {
+    public channel: Discord.TextChannel | Discord.DMChannel | Discord.GroupDMChannel;
+
+    constructor(msg:Discord.Message) {
+        this.channel = msg.channel;
+    }
+}
+
 export class TextCommand extends Command implements IExecuteText {
     public execute(content:string) {
         this.canBeExecuted && this.channel.send(content);
@@ -58,5 +66,11 @@ export class EmbedCommand extends Command implements IExecuteEmbed {
 export class CustomCommand extends Command implements IExecuteCustom {
     public execute(fn:Function, ...args:Array<any>) { 
         this.canBeExecuted && fn(...args);
+    }
+}
+
+export class CustomReaction extends Reaction implements IExecuteCustom {
+    public execute(fn:Function, ...args:Array<any>) { 
+        fn(...args);
     }
 }

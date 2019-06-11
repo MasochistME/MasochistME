@@ -10,7 +10,7 @@ export const help = (msg:Discord.Message) => {
     cache["commands"]
         .filter(cmd => !cmd.isModOnly && cmd.description)
         .map(cmd => content += `- \`\`${getCommandSymbol()}${cmd.keyword}\`\` - ${cmd.description}\n`);
-    embed = createEmbed('📜 Standard commands', [{ title: 'List:', content }]);
+    embed = createEmbed('📜 Standard commands', [{ title: 'List:', content: content || 'There\'s no commands.' }]);
     msg.channel.send(embed);
 }
 export const hmod = (msg:Discord.Message) => {
@@ -19,7 +19,7 @@ export const hmod = (msg:Discord.Message) => {
     cache["commands"]
         .filter(cmd => cmd.isModOnly && cmd.description)
         .map(cmd => content += `- \`\`${getCommandSymbol()}${cmd.keyword}\`\` - ${cmd.description}\n`);
-    embed = createEmbed('📜 Moderation commands', [{ title: 'List:', content }]);
+    embed = createEmbed('📜 Moderation commands', [{ title: 'List:', content: content || 'There\'s no moderation commands.'  }]);
     msg.channel.send(embed);
 }
 export const vid = (msg:Discord.Message) => {

@@ -1,5 +1,6 @@
 import Discord from 'discord.js';
 import { TextCommand } from './commands/logic';
+import { Reaction } from './commands/reactions';
 import { cache } from '../cache';
 import { getKeyword, getCommandSymbol } from './helpers';
 import { chooseRandom, happensWithAChanceOf } from './rng';
@@ -38,7 +39,7 @@ const checkForReactionTriggers = (msg:Discord.Message) => {
     if (isMessageRant(msg)) 
         appropiateReactions = cache["reactions"].filter((reaction:any) => reaction.id === 'rant');
     else appropiateReactions = cache["reactions"].filter((reaction:any) => 
-        reaction.keywords.filter((keyword:string) => msg.content.includes(keyword)).length === reaction.keywords.length && reaction.keywords.length > 0);
+        reaction.keywords.filter((keyword:string) => msg.content.toLowerCase().includes(keyword)).length === reaction.keywords.length && reaction.keywords.length > 0);
     if (appropiateReactions.length === 0)
         return;
     chosenTrigger = chooseRandom(appropiateReactions);
@@ -46,6 +47,7 @@ const checkForReactionTriggers = (msg:Discord.Message) => {
     if (chosenReaction) {
         chosenReaction.emoji && msg.react(chosenReaction.emoji);
         chosenReaction.response && msg.channel.send(chosenReaction.response);
+        chosenReaction.function && Reaction[chosenReaction.function] && Reaction[chosenReaction.function](msg);
     }
 };
 const commandObject = (msg:Discord.Message) => cache["commands"].find(cmd => cmd.keyword === getKeyword(msg));

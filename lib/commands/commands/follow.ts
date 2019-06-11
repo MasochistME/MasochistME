@@ -4,7 +4,7 @@ import { createEmbed  } from '../../helpers';
 import { upsertOne } from '../../db';
 import { cache } from '../../../cache';
 
-export const follow = (msg:Discord.Message) => {
+export const follow = (msg:Discord.Message) => { // change this so list is people following X, not who X follows!!!
     let following = cache["follow"].find(user => user.id === msg.author.id);
     const usersAlreadyFollowed = following ? following.list : [];
     const usersToFollow = msg.mentions.users
@@ -121,4 +121,16 @@ export const following = (msg:Discord.Message) => {
         content += followedUsers.join('\n- ');
     embed = createEmbed('Users you follow', [{ title: `---`, content }]);
     msg.channel.send(embed);
+}
+
+export const live = (msg:Discord.Message) => {
+    // const room_stream = cache["options"].find(option => option.option === 'room_stream')
+    //     ? cache["options"].find(option => option.option === 'room_stream').value
+    //     : null;
+    // const channel = cache["bot"].channels.get(room_stream);
+    // if (channel && followers) {
+    //     channel.send(embed)
+    //         .catch(err => log.WARN(`Something went wrong. ${ err }`))
+    //     channel.send()
+    // }
 }
