@@ -1,8 +1,12 @@
 import Discord from 'discord.js';
-import { CustomReaction } from './logic';
+import { 
+    TextReaction,
+    CustomReaction,
+} from './logic';
 
-import { fuck } from './reactions/words';
+import { fuck, mega } from './reactions/words';
 
 export const Reaction: { [key:string]: (msg:Discord.Message) => string | void} = {
     fuck: (msg:Discord.Message) => new CustomReaction(msg).execute(fuck, msg),
+    mega: (msg:Discord.Message) => new CustomReaction(msg).execute(mega, msg),
 };

@@ -1,4 +1,5 @@
 import Discord from 'discord.js';
+import { happensWithAChanceOf } from '../../rng';
 
 export const fuck = (msg:Discord.Message) => {
     const listOfAvoidThose = ['was','there','is','are','aren\'t','were','do','doing','being','having','not','if','then','than','could',
@@ -33,4 +34,14 @@ export const fuck = (msg:Discord.Message) => {
         return;
     
     msg.channel.send(`Yeah! Fuck ${customizeFuck()}`)
+}
+
+export const mega = (msg:Discord.Message) => {
+    const sentenceArray = msg.content.toLowerCase().split(' ')
+    if (sentenceArray.includes('hi'))
+        return msg.channel.send('Hi Mega 1 <:hi:435199913199009793>');
+    else {
+        if (happensWithAChanceOf(10))
+            return msg.channel.send('Hi Mega 2 <:hi:435199913199009793>');
+    }
 }

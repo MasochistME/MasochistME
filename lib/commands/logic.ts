@@ -69,6 +69,11 @@ export class CustomCommand extends Command implements IExecuteCustom {
     }
 }
 
+export class TextReaction extends Reaction implements IExecuteText {
+    public execute(content:string) {
+        this.channel.send(content);
+    }
+}
 export class CustomReaction extends Reaction implements IExecuteCustom {
     public execute(fn:Function, ...args:Array<any>) { 
         fn(...args);

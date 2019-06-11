@@ -32,14 +32,17 @@ const answerCommand = (msg:Discord.Message) => {
     msg.react('❔');
 };
 const checkForReactionTriggers = (msg:Discord.Message) => {
-    let appropiateReactions;
+    let appropiateReactions = new Array();
     let chosenTrigger;
     let chosenReaction;
 
+    if (msg.author.id == '431975056919363594')
+        appropiateReactions.push(...cache["reactions"].filter((reaction:any) => reaction.id === 'mega'));
     if (isMessageRant(msg)) 
-        appropiateReactions = cache["reactions"].filter((reaction:any) => reaction.id === 'rant');
-    else appropiateReactions = cache["reactions"].filter((reaction:any) => 
-        reaction.keywords.filter((keyword:string) => msg.content.toLowerCase().includes(keyword)).length === reaction.keywords.length && reaction.keywords.length > 0);
+        appropiateReactions.push(...cache["reactions"].filter((reaction:any) => reaction.id === 'rant'));
+    appropiateReactions.push(...cache["reactions"].filter((reaction:any) => 
+        reaction.keywords.filter((keyword:string) => msg.content.toLowerCase().includes(keyword)).length === reaction.keywords.length && reaction.keywords.length > 0));
+
     if (appropiateReactions.length === 0)
         return;
     chosenTrigger = chooseRandom(appropiateReactions);
