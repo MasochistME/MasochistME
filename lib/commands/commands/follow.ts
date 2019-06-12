@@ -1,8 +1,9 @@
 import Discord from "discord.js";
 import { log } from '../../../log';
-import { createEmbed  } from '../../helpers';
+import { createEmbed, removeKeyword, isLink } from '../../helpers';
 import { upsertOne } from '../../db';
 import { cache } from '../../../cache';
+import { informFollowers } from '../../stream';
 
 export const follow = (msg:Discord.Message) => {
     let embed:Discord.RichEmbed;
@@ -118,13 +119,17 @@ export const following = (msg:Discord.Message) => {
 }
 
 export const live = (msg:Discord.Message) => {
-    // const room_stream = cache["options"].find(option => option.option === 'room_stream')
-    //     ? cache["options"].find(option => option.option === 'room_stream').value
-    //     : null;
-    // const channel = cache["bot"].channels.get(room_stream);
-    // if (channel && followers) {
-    //     channel.send(embed)
-    //         .catch(err => log.WARN(`Something went wrong. ${ err }`))
-    //     channel.send()
-    // }
+    const member = msg.guild.members.find(member => member.id === msg.author.id);
+    const url = removeKeyword(msg);
+    
+    if (url.length === 0) {
+        msg.channel.send('You forgot about something, dumbass.');
+        return;
+    }
+    if (!isLink(url)) {
+        msg.channel.send('_This_ is not a link.');
+        return;
+    }
+
+    informFollowers(member, url)
 }

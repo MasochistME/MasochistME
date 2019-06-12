@@ -28,7 +28,7 @@ const removeStreamRole = (member:Discord.GuildMember) => {
             .catch(err => console.trace(err))
 }
 
-const informFollowers = (member:Discord.GuildMember) => {
+export const informFollowers = (member:Discord.GuildMember, url?:string) => {
     const followers = cache["follow"].find(streamer => streamer.id === member.id);    
     const room_stream = cache["options"].find(option => option.option === 'room_stream') 
         ? cache["options"].find(option => option.option === 'room_stream').value 
@@ -43,7 +43,7 @@ const informFollowers = (member:Discord.GuildMember) => {
         return;
     }
     embed = createEmbed(`${member.user.username.toUpperCase()} started streaming!`, 
-        [{ title: `---`, content: member.presence.game.url }]);
+        [{ title: `---`, content: url || member.presence.game.url }]);
 
     channel.send(embed);
     channel.send(`**Tagging:** ${followers.followers.map(f => `<@${f}>`).join(', ')}`);
