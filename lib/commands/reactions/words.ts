@@ -6,7 +6,7 @@ export const fuck = (msg:Discord.Message) => {
         'would','have','had','has','been','only','http','tbh','ton','wanna'];
     const listOfDoubleWordsToRespond = ['your','his','her','my','our','mine','the','a','an'];
     const sentenceArray = msg.content.toLowerCase()
-        .replace(/[,.;!?]/g, '')
+        .replace(/[,.;!?"]/g, '')
         .split(' ');
     const thingToFuckIndex = sentenceArray.indexOf('fuck') + 1;
     let thingToFuck = sentenceArray[thingToFuckIndex];
