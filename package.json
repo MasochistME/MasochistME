@@ -1,6 +1,6 @@
 {
   "name": "drfetus",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A custom Dr. Fetus Bot for the 0.1% community!",
   "main": "index.js",
   "scripts": {
