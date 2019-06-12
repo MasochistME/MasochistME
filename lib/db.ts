@@ -1,10 +1,11 @@
 import { MongoClient } from 'mongodb';
 import { log } from '../log';
 import { cache, collections } from '../cache';
+import config from '../config.json';
 
 export const connectToDb = () => {
     const dbName = 'fetus';
-    const url = `mongodb://89.47.165.141:27017/${dbName}`;
+    const url = config.DATABASE_URL;
     
     const callback = (err, client) => {
         if (err)
@@ -14,7 +15,7 @@ export const connectToDb = () => {
         cache["db"] = client.db(dbName);
         updateCache();
     };
-
+    
     MongoClient.connect(url, callback);
 }
 
