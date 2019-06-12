@@ -1,6 +1,6 @@
 {
   "name": "drfetus",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A custom Dr. Fetus Bot for the 0.1% community!",
   "main": "index.js",
   "scripts": {
@@ -23,7 +23,7 @@
   "homepage": "https://github.com/PointOnePercent/DrFetus#readme",
   "dependencies": {
     "@types/node": "^11.13.4",
-    "axios": "^0.18.0",
+    "axios": ">=0.18.1",
     "discord.js": "^11.4.2",
     "mongodb": "^3.2.3",
     "rimraf": "^2.6.3"
