@@ -8,14 +8,16 @@ import {
 
 import { status, impersonate, options } from './commands/administration';
 import { help, hmod, vid, rec } from './commands/standard';
-import { meme, addmeme } from './commands/meme';
+import { meme, memelist, addmeme, deletememe } from './commands/meme';
 import { follow, unfollow, followers, following, live } from './commands/follow';
 
 export const Command: { [key:string]: (command:ICommand, msg:Discord.Message) => string | void} = {
     help: (command:ICommand, msg:Discord.Message) => new CustomCommand(command, msg).execute(help, msg),
     hmod: (command:ICommand, msg:Discord.Message) => new CustomCommand(command, msg).execute(hmod, msg),
     meme: (command:ICommand, msg:Discord.Message) => new CustomCommand(command, msg).execute(meme, msg),
+    memelist: (command:ICommand, msg:Discord.Message) => new CustomCommand(command, msg).execute(memelist, msg),
     addmeme: (command:ICommand, msg:Discord.Message) => new CustomCommand(command, msg).execute(addmeme, msg),
+    deletememe: (command:ICommand, msg:Discord.Message) => new CustomCommand(command, msg).execute(deletememe, msg),
     status: (command:ICommand, msg:Discord.Message) => new CustomCommand(command, msg).execute(status, msg),
     impersonate: (command:ICommand, msg:Discord.Message) => new CustomCommand(command, msg).execute(impersonate),
     vid: (command:ICommand, msg:Discord.Message) => new CustomCommand(command, msg).execute(vid, msg),

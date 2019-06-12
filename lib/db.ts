@@ -55,7 +55,7 @@ export const updateOne = (collection:string, filter:Object, set:Object, cb) => {
         // { $unset: unset },
         (err, result) => {
         if (err) {
-            log.WARN(`Error during inserting data.`);
+            log.WARN(`Error during updating data.`);
             return cb(err);
         }
         updateCache();
@@ -71,7 +71,7 @@ export const updateMany = (collection:string, filter:Object, set:Array<object>, 
         // { $unset: unset },
         (err, result) => {
         if (err) {
-            log.WARN(`Error during inserting data.`);
+            log.WARN(`Error during updating data.`);
             return cb(err);
         }
         updateCache();
@@ -87,7 +87,7 @@ export const replaceOne = (collection:string, filter:Object, replacement:Object,
         { upsert: true },
         (err, result) => {
         if (err) {
-            log.WARN(`Error during inserting data.`);
+            log.WARN(`Error during replacing data.`);
             return cb(err);
         }
         updateCache();
@@ -103,7 +103,7 @@ export const replaceMany = (collection:string, filter:Object, replacement:Array<
         { upsert: true },
         (err, result) => {
         if (err) {
-            log.WARN(`Error during inserting data.`);
+            log.WARN(`Error during replacing data.`);
             return cb(err);
         }
         updateCache();
@@ -115,7 +115,7 @@ export const replaceMany = (collection:string, filter:Object, replacement:Array<
 export const upsertOne = (collection:string, filter:Object, object:Object, cb) => {
     cache["db"].collection(collection).updateOne(filter, {$set: object}, { upsert: true }, (err, result) => {
         if (err) {
-            log.WARN(`Error during inserting data.`);
+            log.WARN(`Error during upserting data.`);
             return cb(err);
         }
         updateCache();
@@ -127,7 +127,7 @@ export const upsertOne = (collection:string, filter:Object, object:Object, cb) =
 export const upsertMany = (collection:string, filter:Object, manyObjects:Array<object>, cb) => {
     cache["db"].collection(collection).updateMany(filter, {$set: manyObjects}, { upsert: true }, (err, result) => {
         if (err) {
-            log.WARN(`Error during inserting data.`);
+            log.WARN(`Error during upserting data.`);
             return cb(err);
         }
         updateCache();
@@ -139,7 +139,7 @@ export const upsertMany = (collection:string, filter:Object, manyObjects:Array<o
 export const deleteOne = (collection:string, filter:Object, cb) => {
     cache["db"].collection(collection).deleteOne(filter, (err, result) => {
         if (err) {
-            log.WARN(`Error during inserting data.`);
+            log.WARN(`Error during deleting data.`);
             return cb(err);
         }
         updateCache();
@@ -151,7 +151,7 @@ export const deleteOne = (collection:string, filter:Object, cb) => {
 export const deleteMany = (collection:string, filter:Object, cb) => {
     cache["db"].collection(collection).deleteMany(filter, (err, result) => {
         if (err) {
-            log.WARN(`Error during inserting data.`);
+            log.WARN(`Error during deleting data.`);
             return cb(err);
         }
         updateCache();
