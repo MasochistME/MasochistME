@@ -6,7 +6,7 @@ import {
     CustomCommand,
 } from './logic';
 
-import { status, impersonate, options } from './commands/administration';
+import { status, impersonate, options, updatecache } from './commands/administration';
 import { help, hmod, vid, rec } from './commands/standard';
 import { meme, memelist, addmeme, deletememe } from './commands/meme';
 import { follow, unfollow, followers, following, live } from './commands/follow';
@@ -28,4 +28,5 @@ export const Command: { [key:string]: (command:ICommand, msg:Discord.Message) =>
     following: (command:ICommand, msg:Discord.Message) => new CustomCommand(command, msg).execute(following, msg),
     options: (command:ICommand, msg:Discord.Message) => new CustomCommand(command, msg).execute(options, msg),
     live: (command:ICommand, msg:Discord.Message) => new CustomCommand(command, msg).execute(live, msg),
+    updatecache: (command:ICommand, msg:Discord.Message) => new CustomCommand(command, msg).execute(updatecache),
 };

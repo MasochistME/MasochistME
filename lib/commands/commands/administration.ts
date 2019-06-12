@@ -3,6 +3,7 @@ import _ from 'lodash';
 import { log } from '../../../log';
 import { removeKeyword, extractArguments, createEmbed } from '../../helpers';
 import { cache } from '../../../cache';
+import { updateCache } from '../../db';
 
 // @ts-ignore
 export const status = (msg:Discord.Message) => cache.bot.user.setPresence({ game: { name: removeKeyword(msg), type: 0}})
@@ -38,3 +39,5 @@ export const options = (msg:Discord.Message) => {
     const embed = createEmbed('⚙️ Dr. Fetus settings', options);
     msg.channel.send(embed);
 }
+
+export const updatecache = (msg:Discord.Message) => updateCache()

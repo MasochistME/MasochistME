@@ -3,7 +3,7 @@ import { happensWithAChanceOf } from '../../rng';
 
 export const fuck = (msg:Discord.Message) => {
     const listOfAvoidThose = ['was','there','is','are','aren\'t','were','do','doing','being','having','not','if','then','than','could',
-        'would','have','had','has','been','only','http','tbh','ton','wanna'];
+        'would','have','had','has','been','only','http','tbh','ton','wanna','to','too'];
     const listOfDoubleWordsToRespond = ['your','his','her','my','our','mine','the','a','an'];
     const sentenceArray = msg.content.toLowerCase()
         .replace(/[,.;!?"]/g, '')
