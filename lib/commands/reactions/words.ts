@@ -4,7 +4,7 @@ import { happensWithAChanceOf } from '../../rng';
 export const fuck = (msg:Discord.Message) => {
     const listOfAvoidThose = ['was','there','is','are','aren\'t','were','do','doing','being','having','not','if','then','than','could',
         'would','have','had','has','been','only','http','tbh','ton','wanna','to','too'];
-    const listOfDoubleWordsToRespond = ['your','his','her','my','our','mine','the','a','an'];
+    const listOfDoubleWordsToRespond = ['your','his','my','our','mine','the','a','an'];
     const sentenceArray = msg.content.toLowerCase()
         .replace(/[,.;!?"]/g, '')
         .split(' ');
@@ -28,7 +28,7 @@ export const fuck = (msg:Discord.Message) => {
         return `${thingToFuck}!`;
     }
 
-    if (thingToFuckIndex === 0)
+    if (!thingToFuck)
         return;
     if (listOfAvoidThose.includes(thingToFuck))
         return;
