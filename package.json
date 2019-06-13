@@ -1,14 +1,14 @@
 {
   "name": "drfetus",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "A custom Dr. Fetus Bot for the 0.1% community!",
   "main": "index.js",
   "scripts": {
     "test": "test",
     "build": "rimraf dist/ && babel ./ --out-dir dist/ --extensions \".js,.ts\" --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
-    "fetus": "node dist/fetus.js",
-    "start": "npm run build && npm run fetus",
+    "start": "node dist/fetus.js",
     "start-dev": "node fetus",
+    "fetus": "npm run build && npm run start",
     "check-types": "tsc"
   },
   "repository": {
