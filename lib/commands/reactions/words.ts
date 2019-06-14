@@ -1,10 +1,10 @@
 import Discord from 'discord.js';
 import { happensWithAChanceOf } from '../../rng';
+import { cache } from '../../../cache';
 
 export const fuck = (msg:Discord.Message) => {
-    const listOfAvoidThose = ['was','there','is','are','aren\'t','were','do','doing','being','having','not','if','then','than','could',
-        'would','have','had','has','been','only','http','tbh','ton','wanna','to','too'];
-    const listOfDoubleWordsToRespond = ['your','his','my','our','mine','the','a','an'];
+    const listOfAvoidThose = cache["special"].find(special => special.id === 'nofuckstogive').list || [];
+    const listOfDoubleWordsToRespond = cache["special"].find(special => special.id === 'doublefuckstogive').list || [];
     const sentenceArray = msg.content.toLowerCase()
         .replace(/[,.;!?"]/g, '')
         .split(' ');
@@ -39,9 +39,9 @@ export const fuck = (msg:Discord.Message) => {
 export const mega = (msg:Discord.Message) => {
     const sentenceArray = msg.content.toLowerCase().split(' ')
     if (sentenceArray.includes('hi'))
-        return msg.channel.send('Hi Mega 1 <:hi:435199913199009793>');
+        return msg.channel.send('Hi Mega <:hi:435199913199009793>');
     else {
         if (happensWithAChanceOf(10))
-            return msg.channel.send('Hi Mega 2 <:hi:435199913199009793>');
+            return msg.channel.send('Hi Mega <:hi:435199913199009793>');
     }
 }

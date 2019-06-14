@@ -1,7 +1,7 @@
 import Discord from 'discord.js';
 import { MongoClient } from 'mongodb';
 
-export const collections = [ 'commands', 'options', 'reactions', 'memes', 'follow' ];
+export const collections = [ 'commands', 'options', 'reactions', 'memes', 'special', 'follow' ];
 
 type IBotCache = {
     db?: MongoClient,
@@ -10,6 +10,7 @@ type IBotCache = {
     options?: Array<any>,
     reactions?: Array<any>,
     memes?: Array<string>,
+    special?: Array<any>
     follow?: undefined,
 }
 
@@ -20,6 +21,7 @@ let botCache:IBotCache = {
     reactions: undefined,
     options: undefined,
     memes: undefined,
+    special: undefined,
     follow: undefined,
 };
 
