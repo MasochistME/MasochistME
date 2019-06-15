@@ -6,7 +6,7 @@ export default class SectionUpdate extends React.Component {
         super()
         this.state = {
             updating: false,
-            updateTimeout: 3600000
+            updateTimeout: 43200000
         }        
         this.checkStatus = this.checkStatus.bind(this);
         this.sendUpdateRequest = this.sendUpdateRequest.bind(this);
@@ -35,7 +35,9 @@ export default class SectionUpdate extends React.Component {
     }
 
     timeoutBeforeUpdate() {
-        return Math.ceil((this.state.updateTimeout - (Date.now() - this.state.lastUpdate))/60000)
+        const timeout = Math.ceil((this.state.updateTimeout - (Date.now() - this.state.lastUpdate))/60000)
+        console.log(timeout);
+        return timeout;
     }
 
     blockUpdateIfTooSoon() {
@@ -67,7 +69,7 @@ export default class SectionUpdate extends React.Component {
                         }
                         title={
                             this.blockUpdateIfTooSoon()
-                                ? `${this.timeoutBeforeUpdate()} minutes till you can update again`
+                                ? `${Math.ceil((this.state.updateTimeout - (Date.now() - this.state.lastUpdate))/3600000)}:${Math.ceil(((this.state.updateTimeout - (Date.now() - this.state.lastUpdate))%3600000)/60000)} hours till you can update again`
                                 : "Update"
                         }
                         >Update</button> )
