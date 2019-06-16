@@ -36,7 +36,6 @@ export default class SectionUpdate extends React.Component {
 
     timeoutBeforeUpdate() {
         const timeout = Math.ceil((this.state.updateTimeout - (Date.now() - this.state.lastUpdate))/60000)
-        console.log(timeout);
         return timeout;
     }
 

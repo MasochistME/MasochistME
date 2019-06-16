@@ -12,7 +12,7 @@ export default class MemberDetails extends React.Component {
             return memberGames.map(game => {
                 let gameDetails = games.find(g => Number(g.id) === Number(game.appid))
                 if (!gameDetails) 
-                    gameDetails = { title: "unknown", rating: "unknown", img: "unknown"}
+                    gameDetails = { title: "unknown", rating: "unknown", img: "unknown", playtime_forever: 0 }
                 let ratingIcon = rating.find(r => r.score === gameDetails.rating);
                 return <MemberGame game={{ 
                     ...game, 
