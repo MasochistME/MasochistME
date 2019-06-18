@@ -4,6 +4,7 @@ import { Reaction } from './commands/reactions';
 import { cache } from '../cache';
 import { getKeyword, getCommandSymbol } from './helpers';
 import { chooseRandom, happensWithAChanceOf } from './rng';
+import { badgeCreation } from './commands/commands/badges';
 import { Command } from './commands/list';
 
 import { IReaction, IReactionDetails } from './types/reaction';
@@ -55,6 +56,8 @@ const checkForReactionTriggers = (msg:Discord.Message) => {
 };
 const commandObject = (msg:Discord.Message) => cache["commands"].find(cmd => cmd.keyword === getKeyword(msg));
 
+const badgeCreationActive = () => cache["addbadge"].inProgress
+
 // MAIN FUNCTION
 
 const classifyMessage = (msg:Discord.Message) => {
@@ -67,6 +70,10 @@ const classifyMessage = (msg:Discord.Message) => {
     }
     if (messageStartsWithCommandSymbol(msg)) {
         answerCommand(msg);
+        return;
+    }
+    if (badgeCreationActive()) {
+        badgeCreation(msg);
         return;
     }
     checkForReactionTriggers(msg);

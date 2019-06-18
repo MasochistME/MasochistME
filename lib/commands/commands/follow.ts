@@ -32,7 +32,7 @@ export const follow = (msg:Discord.Message) => {
                     id: user,
                     followers: [ msg.author.id ]
                 } 
-            upsertOne('follow', { id: user }, followers, err => {
+            upsertOne('fetus', 'follow', { id: user }, followers, err => {
                 embed = createEmbed('<:boshy:310151885690503169> Something went wrong', [{ title: `---`, content: `Something went wrong.` }])
                 err && log.WARN(err);
             });
@@ -64,7 +64,7 @@ export const unfollow = (msg:Discord.Message) => {
             let followers = cache["follow"].find(streamer => streamer.id === user);
             if (followers) {
                 followers.followers = followers.followers.filter(follower => follower !== msg.author.id)
-                upsertOne('follow', { id: user }, followers, err => {
+                upsertOne('fetus', 'follow', { id: user }, followers, err => {
                     embed = createEmbed('<:boshy:310151885690503169> Something went wrong', [{ title: `---`, content: `Something went wrong.` }])
                     err && log.WARN(err);
                 });

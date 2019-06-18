@@ -10,6 +10,7 @@ import { status, impersonate, options, updatecache } from './commands/administra
 import { help, hmod, vid, rec } from './commands/standard';
 import { meme, memelist, addmeme, deletememe } from './commands/meme';
 import { follow, unfollow, followers, following, live } from './commands/follow';
+import { addbadge } from './commands/badges';
 
 export const Command: { [key:string]: (command:ICommand, msg:Discord.Message) => string | void} = {
     help: (command:ICommand, msg:Discord.Message) => new CustomCommand(command, msg).execute(help, msg),
@@ -29,4 +30,5 @@ export const Command: { [key:string]: (command:ICommand, msg:Discord.Message) =>
     options: (command:ICommand, msg:Discord.Message) => new CustomCommand(command, msg).execute(options, msg),
     live: (command:ICommand, msg:Discord.Message) => new CustomCommand(command, msg).execute(live, msg),
     updatecache: (command:ICommand, msg:Discord.Message) => new CustomCommand(command, msg).execute(updatecache),
+    addbadge: (command:ICommand, msg:Discord.Message) => new CustomCommand(command, msg).execute(addbadge, msg),
 };
