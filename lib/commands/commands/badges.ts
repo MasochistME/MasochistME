@@ -1,12 +1,45 @@
 import Discord from 'discord.js';
 import _ from 'lodash';
 import { insertMany } from '../../db';
-import { createEmbed } from '../../helpers';
+import { createEmbed, removeKeyword } from '../../helpers';
 import { cache } from '../../../cache';
 import { log } from '../../../log';
 
-const timeout = 6000;
+const timeout = 300000;
 const fields:Array<string> = [ 'game id', 'name', 'image', 'points', 'requirements', 'description'];
+
+// addbadge stuff
+export const addbadge = (msg:Discord.Message) => {
+    cache["addbadge"].inProgress = true;
+    cache["addbadge"].activeField = fields[0].replace(' ', '');
+
+    const embed = badgeScreenEmbed(true);
+
+    msg.channel.send(embed)
+        .then(sentEmbed => {
+            const reactions = [ '✅', '❌' ];
+            const iterateReactions = (index:number) => {
+                if (index >= reactions.length)
+                    return;
+                // @ts-ignore:next-line
+                sentEmbed.react(reactions[index]);
+                setTimeout(() => iterateReactions(index + 1), 500);
+            }
+            iterateReactions(0);
+            // @ts-ignore:next-line
+            cache["addbadge"].msgId = sentEmbed.id;
+            cache["addbadge"].authorId = msg.author.id;
+            cache["addbadge"].channelId = msg.channel.id;
+            const filter = (reaction, user) => user.id === cache["addbadge"].authorId && (reaction.emoji.name === '❌' || reaction.emoji.name === '✅');
+            // @ts-ignore:next-line
+            sentEmbed.awaitReactions(filter, {
+                time: timeout,
+                maxEmojis: 1
+            }).then(collected => finalizeBadge(collected))
+            .catch(e => console.log(e))
+        })
+        .catch(err => log.WARN(err));
+}
 
 const badgeScreenEmbed = (active:boolean) => {
     let content = '';
@@ -53,38 +86,6 @@ export const badgeCreation = (msg:Discord.Message) => {
     
     msg.channel.fetchMessage(cache["addbadge"].msgId)
         .then(message => message.edit(badgeScreenEmbed(true)))
-}
-
-export const addbadge = (msg:Discord.Message) => {
-    cache["addbadge"].inProgress = true;
-    cache["addbadge"].activeField = fields[0].replace(' ', '');
-
-    const embed = badgeScreenEmbed(true);
-
-    msg.channel.send(embed)
-        .then(sentEmbed => {
-            const reactions = [ '✅', '❌' ];
-            const iterateReactions = (index:number) => {
-                if (index >= reactions.length)
-                    return;
-                // @ts-ignore:next-line
-                sentEmbed.react(reactions[index]);
-                setTimeout(() => iterateReactions(index + 1), 500);
-            }
-            iterateReactions(0);
-            // @ts-ignore:next-line
-            cache["addbadge"].msgId = sentEmbed.id;
-            cache["addbadge"].authorId = msg.author.id;
-            cache["addbadge"].channelId = msg.channel.id;
-            const filter = (reaction, user) => user.id === cache["addbadge"].authorId && (reaction.emoji.name === '❌' || reaction.emoji.name === '✅');
-            // @ts-ignore:next-line
-            sentEmbed.awaitReactions(filter, {
-                time: timeout,
-                maxEmojis: 1
-            }).then(collected => finalizeBadge(collected))
-            .catch(e => console.log(e))
-        })
-        .catch(err => log.WARN(err));
 }
 
 export const finalizeBadge = (collected:any) => {
@@ -145,4 +146,34 @@ const expireBadge = () => {
                 .catch();
         })
     clearBadge();
+}
+
+// other
+export const editbadge = (msg:Discord.Message) => {
+    const badgeId = removeKeyword(msg);
+    console.log(cache)
+    const badge = cache["badges"].list.find(b => b.id === badgeId);
+    
+    if (!badge) {
+        msg.channel.send(createEmbed('Invalid badge ID', [{ title: '\_\_\_', content: 'Cannot edit badge that doesn\'t exist.' }]));
+        return;
+    }
+    msg.channel.send('Edited! :3');
+    // ***
+}
+
+export const deletebadge = (msg:Discord.Message) => {
+    const badgeId = removeKeyword(msg);
+    const badge = cache["badges"].list.find(b => b.id === badgeId);
+    
+    if (!badge) {
+        msg.channel.send(createEmbed('Invalid badge ID', [{ title: '\_\_\_', content: 'Cannot delete badge that doesn\'t exist.' }]));
+        return;
+    }
+    msg.channel.send('Deleted! :3');
+    // ***
+}
+
+export const badgelist = () => {
+
 }
