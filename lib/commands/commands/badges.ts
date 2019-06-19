@@ -51,7 +51,7 @@ const badgeScreenEmbed = (active:boolean) => {
                 ? `➡ ${field}\n`
                 : `🔲 ${field}\n`
     });
-    return createEmbed('Badge adding screen', [
+    return createEmbed('🥇 Badge adding screen', [
         { 
             title: '\_\_\_', 
             content
@@ -106,8 +106,7 @@ export const finalizeBadge = (collected:any) => {
         return;
     }
     if (collected.name === '✅') {
-        insertMany('badges', 'list', [{ 
-            id: 'dupa',
+        insertMany('badges', 'badges', [{ 
             name: cache["addbadge"].badge.name,
             img: cache["addbadge"].badge.image,
             points: cache["addbadge"].badge.points,
@@ -152,7 +151,7 @@ const expireBadge = () => {
 export const editbadge = (msg:Discord.Message) => {
     const badgeId = removeKeyword(msg);
     console.log(cache)
-    const badge = cache["badges"].list.find(b => b.id === badgeId);
+    const badge = cache["badges"].badges.find(b => b.id === badgeId);
     
     if (!badge) {
         msg.channel.send(createEmbed('Invalid badge ID', [{ title: '\_\_\_', content: 'Cannot edit badge that doesn\'t exist.' }]));
@@ -164,7 +163,7 @@ export const editbadge = (msg:Discord.Message) => {
 
 export const deletebadge = (msg:Discord.Message) => {
     const badgeId = removeKeyword(msg);
-    const badge = cache["badges"].list.find(b => b.id === badgeId);
+    const badge = cache["badges"].badges.find(b => b.id === badgeId);
     
     if (!badge) {
         msg.channel.send(createEmbed('Invalid badge ID', [{ title: '\_\_\_', content: 'Cannot delete badge that doesn\'t exist.' }]));
@@ -174,6 +173,18 @@ export const deletebadge = (msg:Discord.Message) => {
     // ***
 }
 
-export const badgelist = () => {
+export const badgelist = (msg:Discord.Message) => {
+    let content = '';
 
+    cache["badges"] = _.orderBy(cache["badges"], ['gameId'], ['asc']);
+    cache["badges"].map((badge, index) => {
+        let helper = content + `\`\`${badge._id}\`\` - ${ badge.name.toUpperCase() } - ${ badge.description }\n`;
+        if (helper.length >= 2000) {
+            msg.channel.send(createEmbed('🥇 List of badges', [{ title: '\_\_\_', content: helper }]));
+            content = '';
+        }
+        content += `\`\`${badge._id}\`\` - ${ badge.name.toUpperCase() } - ${ badge.description }\n`;
+        if (index === cache["badges"].length - 1)
+            msg.channel.send(createEmbed('🥇 List of badges', [{ title: '\_\_\_', content: helper }]));
+    })
 }
