@@ -1,7 +1,7 @@
 import Discord from "discord.js";
 import { log } from '../../../log';
 import { createEmbed, removeKeyword, isLink } from '../../helpers';
-import { upsertOne } from '../../db';
+import { upsertOne, updateCache } from '../../db';
 import { cache } from '../../../cache';
 import { informFollowers } from '../../stream';
 
@@ -26,15 +26,22 @@ export const follow = (msg:Discord.Message) => {
     else {
         embed = createEmbed('Follower alert', [{ title: '---', content }]);
         usersToFollow.map(user => {
-            const followers = cache["follow"].find(streamer => streamer.id === user) 
-                ? cache["follow"].find(streamer => streamer.id === user).followers.push(msg.author.id)
-                : {
+            let followers = cache["follow"].find(streamer => streamer.id === user);
+            if (!followers) {
+                followers = {
                     id: user,
-                    followers: [ msg.author.id ]
-                } 
+                    followers: [ msg.author.id ] 
+                }
+            }
+            else followers.followers.push(msg.author.id);
             upsertOne('fetus', 'follow', { id: user }, followers, err => {
-                embed = createEmbed('<:boshy:310151885690503169> Something went wrong', [{ title: `---`, content: `Something went wrong.` }])
-                err && log.WARN(err);
+                if (err) {
+                    embed = createEmbed('<:boshy:310151885690503169> Something went wrong', [{ title: `---`, content: err }]);
+                    log.WARN(err);
+                    msg.channel.send(embed);
+                    return;
+                }
+                updateCache('fetus');
             });
         });
     };
@@ -47,7 +54,7 @@ export const unfollow = (msg:Discord.Message) => {
     let usersToNotUnfollow = msg.mentions.users.map(streamer => streamer.id);
 
     cache["follow"].map(streamer => {
-        if (streamer.followers.includes(msg.author.id))
+        if (streamer.followers.includes(msg.author.id) && usersToNotUnfollow.includes(streamer.id))
             usersToUnfollow.push(streamer.id);
     })
     usersToNotUnfollow = usersToNotUnfollow.filter(user => !usersToUnfollow.includes(user));
@@ -65,8 +72,13 @@ export const unfollow = (msg:Discord.Message) => {
             if (followers) {
                 followers.followers = followers.followers.filter(follower => follower !== msg.author.id)
                 upsertOne('fetus', 'follow', { id: user }, followers, err => {
-                    embed = createEmbed('<:boshy:310151885690503169> Something went wrong', [{ title: `---`, content: `Something went wrong.` }])
-                    err && log.WARN(err);
+                    if (err) {
+                        embed = createEmbed('<:boshy:310151885690503169> Something went wrong', [{ title: `---`, content: err }])
+                        log.WARN(err);
+                        msg.channel.send(embed);
+                        return;
+                    }
+                    updateCache('fetus');
                 });
             }
         });

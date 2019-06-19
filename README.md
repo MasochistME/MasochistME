@@ -10,7 +10,12 @@ An example configuration looks like this:
 ```
 {
     "DISCORD_TOKEN": "iAMaSUPERsecretTOKENdoNOTgiveMEtoANYONE666",
-    "DATABASE_URL": "mongodb://username:password@host_ip:host_port/database_name?authSource=auth_database_name"
+    "DATABASE_URL": [
+        {
+            "symbol": database_name,
+            "url": "mongodb://username:password@host_ip:host_port/database_name?authSource=auth_database_name"
+        }
+    ]
 }
 ```
 ## Starting the bot
@@ -23,4 +28,4 @@ How to start the bot on Ubuntu remote server:
 - clone the repository - `git clone http://github.com/PointOnePercent/DrFetus`
 - install dependencies - `npm install`
 - don't forget to start mongoDB instance and set up the `config.json` file
-- start the bot with `npm start` command
+- start the bot with `npm run fetus` command
