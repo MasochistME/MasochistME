@@ -10,7 +10,12 @@ An example configuration looks like this:
 ```
 {
     "DISCORD_TOKEN": "iAMaSUPERsecretTOKENdoNOTgiveMEtoANYONE666",
-    "DATABASE_URL": "mongodb://username:password@host_ip:host_port/database_name?authSource=auth_database_name"
+    "DATABASE_URL": [
+        {
+            "symbol": database_name,
+            "url": "mongodb://username:password@host_ip:host_port/database_name?authSource=auth_database_name"
+        }
+    ]
 }
 ```
 ## Starting the bot
