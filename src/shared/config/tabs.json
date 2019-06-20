@@ -42,9 +42,9 @@
         "external": true       
     },
     {
-        "text": "patreon",
+        "text": "support us",
         "icon": "fas fa-heart",
-        "link": "https://www.patreon.com/arcyvilk",
+        "link": "https://www.patreon.com/pointonepercent",
         "visible": true,
         "external": true       
     }
