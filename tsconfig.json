@@ -8,8 +8,8 @@
     "noImplicitThis": true,
     "strictNullChecks": true,
     "module": "commonJS",
-    "esModuleInterop": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "esModuleInterop": true
   },
   "include": [
     "./*", "helpers/log.ts"
