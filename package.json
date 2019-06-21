@@ -1,0 +1,32 @@
+{
+  "name": "dds",
+  "version": "1.0.0",
+  "description": "Data Delivery Service",
+  "main": "dds.js",
+  "scripts": {
+    "build": "rimraf dist/ && babel ./ --out-dir dist/ --extensions \".js,.ts\" --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
+    "start": "node dist/dds.js",
+    "start-dev": "node dds",
+    "dds": "npm run build && npm run start"
+  },
+  "author": "Arcyvilk",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "rimraf": "^2.6.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/node": "^7.4.5",
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
+    "@babel/plugin-transform-async-to-generator": "^7.4.4",
+    "@babel/polyfill": "^7.4.4",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-es2015": "^7.0.0-beta.53",
+    "@babel/preset-typescript": "^7.3.3",
+    "lodash": "^4.17.11",
+    "typescript": "^3.5.2"
+  }
+}
