@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
+    "mongo": "^0.1.0",
     "rimraf": "^2.6.3"
   },
   "devDependencies": {
@@ -28,5 +29,13 @@
     "@babel/preset-typescript": "^7.3.3",
     "lodash": "^4.17.11",
     "typescript": "^3.5.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PointOnePercent/dds-microservice.git"
+  },
+  "bugs": {
+    "url": "https://github.com/PointOnePercent/dds-microservice/issues"
+  },
+  "homepage": "https://github.com/PointOnePercent/dds-microservice#readme"
 }
