@@ -4,6 +4,8 @@ Microservice responsible for serving data to all PointOnePercent related clients
 
 ## Configuration
 
+Create a ``config.json``file in the main directory and give it following structure:
+
 ```
 {
     "PORT" : <port you want your microservice to use>,
