@@ -2,6 +2,7 @@ import { MongoClient, ObjectId } from 'mongodb';
 import axios from 'axios';
 import { log } from '../helpers/log';
 import { connectToDb } from '../helpers/db';
+import { hash } from '../helpers/hash';
 import config from '../config.json';
 
 /**
@@ -81,8 +82,18 @@ export const getPatron = async (req, res) => {
  * Adds a patron.
  * @param req.params.tier
  * @param req.params.vanityid 
+ * @param req.auth
  */
 export const addPatron = async (req, res) => {
+    if (!req.headers.auth) {
+        res.sendStatus(401);
+        return;
+    }
+    if (hash('sha256', req.headers.auth) !== config.AUTH) {
+        res.sendStatus(403);
+        return;
+    }
+
     const { client, db } = await connectToDb();
     const urlVanity = 'http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001';
     const paramsVanity = {
@@ -120,8 +131,18 @@ export const addPatron = async (req, res) => {
 /**
  * Updates a patron.
  * @param req.params.steamid
+ * @param req.auth
  */
 export const updatePatron = async (req, res) => {
+    if (!req.headers.auth) {
+        res.sendStatus(401);
+        return;
+    }
+    if (hash('sha256', req.headers.auth) !== config.AUTH) {
+        res.sendStatus(403);
+        return;
+    }
+
     const { client, db } = await connectToDb();
     const urlVanity = 'http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001';
     const paramsVanity = {
@@ -159,9 +180,19 @@ export const updatePatron = async (req, res) => {
 /**
  * Deletes a patron.
  * @param req.params.steamid
+ * @param req.auth
  */
 export const deletePatron = async (req, res) => {
     const { client, db } = await connectToDb();
+
+    if (!req.headers.auth) {
+        res.sendStatus(401);
+        return;
+    }
+    if (hash('sha256', req.headers.auth) !== config.AUTH) {
+        res.sendStatus(403);
+        return;
+    }
 
     db.collection('patrons').deleteOne({ steamid: req.params.steamid }, (err, patron) => {
         if (err) {
