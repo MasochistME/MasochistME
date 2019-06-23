@@ -45,6 +45,7 @@ export const addBadge = async (req, res) => {
         return;
     }
     if (hash('sha256', req.headers.auth) !== config.AUTH) {
+        log.WARN(`An unauthorized attempt to add badge noted with ${req.headers.auth} credentials.`)
         res.sendStatus(403);
         return;
     }
@@ -78,6 +79,7 @@ export const updateBadge = async (req, res) => {
         return;
     }
     if (hash('sha256', req.headers.auth) !== config.AUTH) {
+        log.WARN(`An unauthorized attempt to add badge noted with ${req.headers.auth} credentials.`)
         res.sendStatus(403);
         return;
     }
@@ -111,6 +113,7 @@ export const deleteBadge = async (req, res) => {
         return;
     }
     if (hash('sha256', req.headers.auth) !== config.AUTH) {
+        log.WARN(`An unauthorized attempt to add badge noted with ${req.headers.auth} credentials.`)
         res.sendStatus(403);
         return;
     }
