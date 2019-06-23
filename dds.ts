@@ -8,6 +8,15 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use((req, res, next) => {
+    res.set({
+      'Access-Control-Request-Method': 'GET',
+      'Access-Control-Allow-Methods': 'OPTIONS, GET',
+      'Access-Control-Allow-Headers': '*',
+      'Access-Control-Allow-Origin': config.CORS
+    });
+    next()
+})
 
 app.use('/rest', router);
 

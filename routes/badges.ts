@@ -1,6 +1,8 @@
-import { MongoClient, ObjectId } from 'mongodb';
+import { ObjectId } from 'mongodb';
 import { log } from '../helpers/log';
 import { connectToDb } from '../helpers/db';
+import { hash } from '../helpers/hash';
+import config from '../config.json';
 
 export const getAllBadges = async (req, res) => {
     const { client, db } = await connectToDb();
@@ -38,13 +40,21 @@ export const getBadge = async (req, res) => {
 };
 
 export const addBadge = async (req, res) => {
-    const { client, db } = await connectToDb();
-    const data = db.collection('badges');
-    
+    if (!req.headers.auth) {
+        res.sendStatus(401);
+        return;
+    }
+    if (hash('sha256', req.headers.auth) !== config.AUTH) {
+        res.sendStatus(403);
+        return;
+    }
     if (!req.body) { // validation!!!
         res.sendStatus(400);
         return;
     }
+
+    const { client, db } = await connectToDb();
+    const data = db.collection('badges');
 
     data.insertOne(req.body, (err, badge) => {
         if (err) {
@@ -63,13 +73,21 @@ export const addBadge = async (req, res) => {
 };
 
 export const updateBadge = async (req, res) => {
-    const { client, db } = await connectToDb();
-    const data = db.collection('badges');
-    
+    if (!req.headers.auth) {
+        res.sendStatus(401);
+        return;
+    }
+    if (hash('sha256', req.headers.auth) !== config.AUTH) {
+        res.sendStatus(403);
+        return;
+    }
     if (!req.body) { // validation!!!
         res.sendStatus(400);
         return;
     }
+
+    const { client, db } = await connectToDb();
+    const data = db.collection('badges');  
 
     data.updateOne({ '_id': ObjectId(req.params.id) }, { $set: req.body }, { upsert: true }, (err, badge) => {
         if (err) {
@@ -88,6 +106,15 @@ export const updateBadge = async (req, res) => {
 };
 
 export const deleteBadge = async (req, res) => {
+    if (!req.headers.auth) {
+        res.sendStatus(401);
+        return;
+    }
+    if (hash('sha256', req.headers.auth) !== config.AUTH) {
+        res.sendStatus(403);
+        return;
+    }
+
     const { client, db } = await connectToDb();
     const data = db.collection('badges');
     
