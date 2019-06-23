@@ -10,7 +10,9 @@ Create a ``config.json``file in the main directory and give it following structu
 {
     "PORT" : <port you want your microservice to use>,
     "DATABASE_URL": "mongodb://DB_USERNAME:DB_PWD@DB_HOST_NAME:DB_HOST_PORT/DB_NAME?authSource=DB_AUTH",
-    "STEAM_KEY": <steam token>
+    "STEAM_KEY": <steam token>,
+    "CORS": "http://masochist.me",
+    "AUTH": <authorization token HASH>
 }
 ```
 
