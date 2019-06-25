@@ -25,5 +25,6 @@ To function properly, you need to have MongoDB database set up. The needed strut
 - clone the repository - ``git clone https://github.com/PointOnePercent/dds-microservice``
 - install all dependencies - ``npm install``
 - set up the MongoDB database (data structure will be released soon)
+- set up the ``config.json`` file
 - to start the microservice, use the ``npm run dds`` command
 - it is recommended to use ``forever`` CLI tool to run the microserive continuously on your host with the use of ``forever start -c 'npm run dds' ./`` command, run in the main directory
