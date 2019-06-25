@@ -60,7 +60,7 @@ class App extends Component {
   }
 
   loadPatrons = () => {
-    axios.get('http://localhost:3002/rest/patrons')  
+    axios.get('/rest/api/patrons')  
         .then(response => {
             if (response.status === 200)
               return this.props.dispatch(cachePatrons(response.data))
