@@ -4,6 +4,7 @@ export const CACHE_MEMBERS = 'CACHE_MEMBERS'
 export const CACHE_RATING = 'CACHE_RATING'
 export const CACHE_EVENTS = 'CACHE_EVENTS'
 export const CACHE_BLOG = 'CACHE_BLOG'
+export const CACHE_PATRONS = 'CACHE_PATRONS'
 
 // ACTION CREATORS
 export function cacheGames(data) {
@@ -33,6 +34,12 @@ export function cacheEvents(data) {
 export function cacheBlog(data) {
     return {
         type: CACHE_BLOG,
+        data: data
+    }
+}
+export function cachePatrons(data) {
+    return {
+        type: CACHE_PATRONS,
         data: data
     }
 }
