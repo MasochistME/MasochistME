@@ -35,16 +35,16 @@
         "external": false       
     },
     {
+        "text": "support",
+        "icon": "fas fa-heart",
+        "link": "support",
+        "visible": true,
+        "external": false       
+    },
+    {
         "text": "curator",
         "icon": "fab fa-steam",
         "link": "https://store.steampowered.com/curator/7119343",
-        "visible": true,
-        "external": true       
-    },
-    {
-        "text": "support us",
-        "icon": "fas fa-heart",
-        "link": "https://www.patreon.com/pointonepercent",
         "visible": true,
         "external": true       
     }
