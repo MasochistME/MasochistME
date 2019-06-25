@@ -33,7 +33,12 @@ class PageSupport extends React.Component{
                     </div>
                 </div>
                 <div className='wrapper-support flex-column'>
-                    { patrons.map(tier => <SupportTier tier={tier}/>) }
+                    { patrons.length !== 0
+                        ? patrons.map(tier => <SupportTier tier={tier}/>)
+                        : <div className='flex-column'>
+                            <i class="fas fa-spinner"></i>
+                            <span style={{ fontSize: '0.9em', marginTop: '10px' }}>If you see no list of Patrons here, reload the website or clear cookies.</span>
+                        </div> }
                 </div>
             </div>
         )
