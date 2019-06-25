@@ -22,7 +22,7 @@ To function properly, you need to have MongoDB database set up. The needed strut
 
 ## Setting up
 
-- clone the repository - ``git clone https://github.com/PointOnePercent/dds-microservice``
+- clone the repository - ``git clone https://github.com/PointOnePercent/pop-dds``
 - install all dependencies - ``npm install``
 - set up the MongoDB database (data structure will be released soon)
 - set up the ``config.json`` file
