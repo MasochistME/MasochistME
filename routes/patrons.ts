@@ -1,4 +1,3 @@
-import { MongoClient, ObjectId } from 'mongodb';
 import axios from 'axios';
 import { log } from '../helpers/log';
 import { connectToDb } from '../helpers/db';
@@ -132,6 +131,7 @@ export const addPatron = async (req, res) => {
 /**
  * Updates a patron.
  * @param req.params.steamid
+ * @param req.params.tier
  * @param req.auth
  */
 export const updatePatron = async (req, res) => {
