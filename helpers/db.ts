@@ -15,3 +15,21 @@ export const connectToDb:any = () =>
             });
         })
     });
+
+export const getDataFromDB:any = (dataType:string, field?:object) => new Promise(async (resolve, reject) => {
+    const { client, db } = await connectToDb();
+    const data = db.collection(dataType);
+    const fieldToFind = field ? field : { };
+
+    data.find(fieldToFind).toArray((err, response) => {
+        if (err) {
+            log.WARN(err);
+            client.close();
+            reject(err);
+        }
+        else {
+            client.close();
+            resolve(response);
+        }        
+    })
+})

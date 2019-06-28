@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { log } from '../helpers/log';
-import { connectToDb } from '../helpers/db';
+import { connectToDb, getDataFromDB } from '../helpers/db';
 import { hash } from '../helpers/hash';
 import config from '../config.json';
 
@@ -29,33 +29,15 @@ type TGameEvent = {
     game:string
 }
 
-const RATE_DELAY = 1000;
-
-const wait = async(data:any) => new Promise(resolve => setTimeout(resolve.bind(null, data), RATE_DELAY))
-
 const fillGameData = (id, desc, score) => ({
     id: id,
     desc: desc, 
     rating: score   
 })
 
-const getDataFromDB:any = (dataType:string) => new Promise(async (resolve, reject) => {
-    const { client, db } = await connectToDb();
-    const data = db.collection(dataType);
-    
-    data.find({ }).toArray((err, response) => {
-        if (err) {
-            log.WARN(err);
-            client.close();
-            reject(err);
-        }
-        else {
-            client.close();
-            resolve(response);
-        }        
-    })
-})
-
+/**
+ * Returns all curated games
+ */
 export const getCuratorGames = async (req, res) => { 
     try {
         const games = await getDataFromDB('games');
@@ -66,6 +48,24 @@ export const getCuratorGames = async (req, res) => {
     }    
 }
 
+/**
+ * Returns all curated games from particular tier
+ * @param req.params.tier
+ */
+export const getCuratedGamesFromTier = async (req, res) => { 
+    try {
+        const games = await getDataFromDB('games', { rating: req.params.tier });
+        res.status(200).send(games);
+    }
+    catch(err) {
+        res.status(500).send(err)
+    }    
+}
+
+/**
+ * Updates the list of curated games
+ * @param req.headers.force_update - to force update all games
+ */
 export const updateCuratorGames = async (req, res) => { 
     const urlCuratedGames = 'http://store.steampowered.com/curator/7119343-0.1%25/ajaxgetfilteredrecommendations/render?query=&start=0&count=1000&tagids=&sort=recent&types=0';
     const points:Array<TRating> = await getDataFromDB('points');
@@ -80,7 +80,7 @@ export const updateCuratorGames = async (req, res) => {
     res.status(202).send('Initiated UPDATE on curated games list.');
     log.INFO('--> [UPDATE] curated games list');
     /*
-        downloads current curated games' list 
+        Downloads current curated games' list.
     */
     response.data.results_html
         .replace(/\r|\n|\t|&quot;/g, "")
@@ -91,24 +91,42 @@ export const updateCuratorGames = async (req, res) => {
                 let id = rec.substring(rec.indexOf(`data-ds-appid="`) + `data-ds-appid="`.length, rec.indexOf(`" data-ds-tagids`)).trim();
                 let desc = rec.substring(rec.indexOf(`<div class="recommendation_desc">"`) + `<div class="recommendation_desc">"`.length,
                     rec.indexOf(`"</div>`)).trim();
-                let scoreIsDefined = points.find(r => desc.startsWith(r.icon))
+                let scoreIsDefined = points.find(r => desc.trim().startsWith(r.symbol))
                 let score = scoreIsDefined
-                    ? scoreIsDefined.score
-                    : 1
+                    ? scoreIsDefined.id
+                    : "1"
                 games.push(fillGameData(id, desc, score))                
             }
         })
-    games = games.filter((game:TGame) => !gamesDB.find(gameDB => gameDB.id === game.id));
-
     /*  
-        compares it with the games' list saved in database
-        games which are not in database are updated now
-        [TODO] handling games which got their number of achievements changed
+        Compares it with the games' list saved in database.
+        Games which are not in database are updated now.
+        All games get force updated in presence of force_update header.
+        [TODO] handling games which got their number of achievements changed!!!
     */
+    if (!req.headers.force_update)
+        games = games.filter((game:TGame) => !gamesDB.find(gameDB => gameDB.id === game.id));
+    if (games.length === 0) {
+        log.INFO('--> [UPDATE] curated games list [DONE]');
+        return;
+    }
     const getGameDetails = async (index:number) => {
         const gameId = games[index].id;
         const urlGamesDetails = `http://store.steampowered.com/api/appdetails?appids=${gameId}`;
-        const game = await axios.get(urlGamesDetails);
+        let game;
+        try {
+            game = await axios.get(urlGamesDetails);
+        }
+        catch(err) {
+            log.INFO(`- saving game ${gameId} failed`);
+            log.WARN(err);
+            if (games[index+1])
+                setTimeout(() => getGameDetails(index + 1), config.DELAY)
+            else {
+                log.INFO('--> [UPDATE] curated games list [DONE]');
+                return; 
+            }
+        }
         const gameDetails:TGame = {
             id: gameId,
             desc: games[index].desc,
@@ -127,8 +145,10 @@ export const updateCuratorGames = async (req, res) => {
             game: gameId            
         }
         const { client, db } = await connectToDb();
-        db.collection('events').insertOne(eventDetails, (err, data) => { });
-        db.collection('games').insertOne(gameDetails, (err, data) => {
+        if (!req.headers.force_update) {
+            db.collection('events').insertOne(eventDetails, (err, data) => { });
+        }
+        db.collection('games').updateOne({id: gameId}, {$set: gameDetails}, { upsert: true }, (err, data) => {
             if (err) {
                 log.INFO(`- saving game ${gameId} (${gameDetails.title.toUpperCase()}) failed`);
                 log.WARN(err);
@@ -136,19 +156,21 @@ export const updateCuratorGames = async (req, res) => {
             }
             else {
                 // @ts-ignore:next-line
-                log.INFO(`- game ${gameId} (${gameDetails.title.toUpperCase()})`);
+                log.INFO(`- [${index+1}/${games.length}] - game ${gameId} (${gameDetails.title.toUpperCase()})`);
                 client.close();
             }
             if (games[index+1]) {
-                setTimeout(() => getGameDetails(index + 1), 1000);
+                setTimeout(() => getGameDetails(index + 1), config.DELAY);
             }
             else {
                 log.INFO('--> [UPDATE] curated games list [DONE]');
+                return; 
             }
         })
     }
     getGameDetails(0);
 }
+
 export const getCuratorMembers = (req, res) => {
     const url = 'http://steamcommunity.com/gid/7119343/memberslistxml/?xml=1';
 }
