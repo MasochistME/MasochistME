@@ -8,13 +8,20 @@ class PageRanking extends React.Component {
         const { props } = this;
         const rating = this.props.rating;
         const ranking = this.props.members; //change names here
+        const patrons = this.props.patrons;
 
         const createRankingList = () => {
             if (ranking.length <= 0)
                 return;
             return ranking.map((member, memberIndex) => 
                 member.name.toLowerCase().indexOf(props.searchMember.toLowerCase()) !== -1
-                    ? <Member member={ member } index={ memberIndex } rating={ this.props.rating } games={ this.props.games } key={ `member-${member.id}` }/>
+                    ? <Member 
+                        member={ member } 
+                        index={ memberIndex } 
+                        rating={ this.props.rating } 
+                        games={ this.props.games } 
+                        patron={ patrons.find(tier => tier.list.find(p => p.steamid === member.id) ? { tier: tier.tier, description: tier.description } : false) } 
+                        key={ `member-${member.id}` }/>
                     : null
                 )
             }
@@ -43,7 +50,8 @@ const mapStateToProps = state => ({
     searchMember: state.searchMember,
     members: state.members,
     rating: state.rating,
-    games: state.games
+    games: state.games,
+    patrons: state.patrons
 })
 
 export default connect(

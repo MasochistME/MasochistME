@@ -1,51 +1,60 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import axios from 'axios'
 
-export default class SectionTrivia extends React.Component {
+class SectionTrivia extends React.Component {
     constructor() {
         super()
         this.state = {
-            members: 0,
             games: {
-                total: 0
+                total: 0,
+                all: []
             }
         }
         this.loadGames = this.loadGames.bind(this)
-        this.loadMembers = this.loadMembers.bind(this)
     }
 
     componentDidMount() {
-        this.loadMembers()
         this.loadGames()
     }
 
     loadGames() {
         axios.get('/rest/api/games')
             .then(response => this.setState({ games: {
-                total: response.data.length
+                total: response.data.length,
+                all: response.data
             }}
         ))
     }
 
-    loadRating() {
-        axios.get('/rest/data/rating')
-            .then(response => this.setState({ rating: response.data }))
-    }
-
-    loadMembers() {
-        axios.get('/rest/api/members')
-            .then(response => this.setState({ members: response.data.length }))
-    }
-
     render() {
+        const members = this.props.members;
+        const rating = this.props.rating;
+
         return(
         <div className='section'>
             <h3 className='section-title'>Trivia</h3>
-            <p>Members total: <span className="bold">{ this.state.members }</span></p>
+            <p>Members total: <span className="bold">{ members.length }</span></p>
             <p>Curated games:</p>
             <ul>
                 <li>total: <span className="bold">{ this.state.games.total }</span></li>
+                <ul>
+                    {
+                        rating ? rating.map(tier => 
+                            <li><i class={ tier.link} /><span className="bold">{ ` : ${ this.state.games.all.filter(game => game.rating === tier.score).length }` }</span></li>)
+                            : null
+                    }
+                </ul>
             </ul>
         </div>)
     }
 }
+
+const mapStateToProps = state => ({ 
+    members: state.members,
+    rating: state.rating
+})
+
+export default connect(
+  mapStateToProps
+)( SectionTrivia )

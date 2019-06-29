@@ -22,7 +22,7 @@ class PageSupport extends React.Component{
                                 paddingBottom: '3px'
                             }}>Hall of Fame</p>
                             <p>...for all of those, who voluntarily donated their money to support <span style={{ fontWeight: 'bold' }}>0.1%</span>. 
-                            They are the ones making funding the masochist.me domain and the hosting server possible. Soon we'll also commission pixel art to enrich the website's graphics.</p>
+                            They are the ones funding the masochist.me domain and the hosting server, as well as assisting websites development. Soon we'll also commission pixel art to enrich the website's graphics.</p>
                             <p>If you also wish to participate:</p>
                             <p>
                                 <a href='https://www.patreon.com/pointonepercent' rel="noopener noreferrer" target='_blank'>
