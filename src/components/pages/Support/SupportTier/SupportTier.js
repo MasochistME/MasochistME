@@ -15,7 +15,7 @@ class SupportTier extends React.Component{
                 </h2>
                 <div className='support-patrons'>
                 {
-                    patrons.map(patron => <SupportPatron patron={ patron } tier={ tier.tier }/>)
+                    patrons.map((patron, index) => <SupportPatron key={ `patron-${index}` } patron={ patron } tier={ tier.tier }/>)
                 }
                 </div>
             </div>

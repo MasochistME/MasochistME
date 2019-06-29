@@ -40,8 +40,8 @@ class SectionTrivia extends React.Component {
                 <li>total: <span className="bold">{ this.state.games.total }</span></li>
                 <ul>
                     {
-                        rating ? rating.map(tier => 
-                            <li><i class={ tier.link} /><span className="bold">{ ` : ${ this.state.games.all.filter(game => game.rating === tier.score).length }` }</span></li>)
+                        rating ? rating.map((tier, index) => 
+                            <li key={ `${tier.score}-${index}` }><i className={ tier.link} /><span className="bold">{ ` : ${ this.state.games.all.filter(game => game.rating === tier.score).length }` }</span></li>)
                             : null
                     }
                 </ul>

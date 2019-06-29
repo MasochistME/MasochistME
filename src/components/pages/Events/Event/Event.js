@@ -64,7 +64,7 @@ const CompleteEvent = props => {
             }
             
             <div className="event-summary flex-row">
-                <i class={ member ? "fas fa-check-square" : "fas fa-exclamation-triangle" }></i>
+                <i className={ member ? "fas fa-check-square" : "fas fa-exclamation-triangle" }></i>
                 <i className={ rating ? rating.link : "far fa-question-circle" }></i>
                 <img className="event-img" src={ game ? game.img : logo } alt="game-img"></img>
             </div>
