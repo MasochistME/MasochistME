@@ -139,7 +139,6 @@ class Event extends React.Component {
     render() {
         const { props } = this
         const event = this.sortEvents(props.event)
-        console.log(event)
         return (
             event
                 ? <li 
