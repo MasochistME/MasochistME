@@ -50,10 +50,19 @@
     max-width: 64px 
     max-height: 64px 
     box-sizing: border-box 
-    padding: 4px
+    padding: 2px
     border-left: 1px solid $newmediumgrey
     @media (max-width: $tablets)
         display: none
+.member-patron
+    &.tier1
+        border: 2px solid $tier1
+    &.tier2
+        border: 2px solid $tier2
+    &.tier3
+        border: 2px solid $tier3
+    &.tier4
+        border: 2px solid $tier4
 .member-info
     align-items: center
     justify-content: space-between
