@@ -58,7 +58,7 @@ class LoginModal extends React.Component {
                         <input 
                             className="login-modal-input" 
                             placeholder="Email"
-                            hidden="true"
+                            hidden={ true }
                             ></input>
                         <input 
                             className="login-modal-input" 

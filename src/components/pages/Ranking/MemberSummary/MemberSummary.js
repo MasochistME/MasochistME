@@ -3,13 +3,16 @@ import { connect } from 'react-redux'
 
 class MemberSummary extends React.Component {
     render() {
-        const { member, index, rating } = this.props
+        const { member, index, rating, patron } = this.props
         const disabled = member.points === 0 ? true : false
+        const tier = patron 
+            ? patron.tier
+            : null
 
         return(
             <div className={disabled ? 'member-disabled member-summary flex-row' : 'member-summary flex-row' }>
                 <div className="member-position">{ index+1 }</div>
-                <img className="member-avatar" src={ member.avatar } alt="avatar"/>
+                <img className={ `member-avatar ${tier ? `member-patron tier${tier}` : ''}`} src={ member.avatar } alt="avatar" title={ tier ? `This member is a tier ${ patron.description.toUpperCase() } supporter` : ''} />
                 <div className="member-info flex-row">
                     {
                         disabled
