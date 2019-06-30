@@ -19,12 +19,28 @@ class Profile extends React.Component {
                                     : ''
                             }
                         </div>
-                        <div className="flex-row">
+                        <div className="profile-basic flex-row">
                             <img src={ user.avatar }
                                 className={ `profile-avatar ${ patron ? `tier${patron.tier}` : ''}` }
                                 alt="avatar" />
-                            <div>Quisque lacinia nisl tristique ultrices dignissim. Curabitur ac neque tincidunt, dictum sapien quis, feugiat felis. Morbi iaculis massa vel nunc malesuada vulputate. Quisque quis sem nisl. Vestibulum finibus lorem in ante euismod suscipit. Nam justo diam, semper ac nibh auctor, tristique varius nisi. Praesent ultrices facilisis urna, vel varius mauris eleifend in. Vivamus ut venenatis quam. Suspendisse dolor augue, maximus eget lacus elementum, euismod accumsan neque. Aliquam erat volutpat. Donec nec lorem elementum, tempus elit in, faucibus dolor. Vivamus molestie tincidunt ipsum, pretium scelerisque augue imperdiet id. Etiam tempus placerat lorem quis posuere. </div>
+                            <div>Currently there's no info provided about this user.</div>
                         </div>
+                        <div className='flex-row'>
+                            <div></div>
+                            <div className='profile-date'>
+                                {
+                                    Date.now() - user.updated > 3600000
+                                        ? <button className='custom-button'>Update</button>
+                                        : `Last updated: ${new Date(user.updated).toLocaleString()}`
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div className='flex-column'>
+                        <h2>Badges</h2>
+                    </div>
+                    <div className='flex-column'>
+                        <h2>Statistics</h2>
                     </div>
                 </div>
             </div>

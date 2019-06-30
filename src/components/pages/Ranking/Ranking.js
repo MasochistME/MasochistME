@@ -38,9 +38,17 @@ class PageRanking extends React.Component {
                     </div>
                     <SearchBar />
                 </div>
-                <ul className="ranking-list">
-                    { createRankingList() || <div>Skeleton</div>}
-                </ul>
+                <div className='wrapper-ranking'>
+                    <ul className="ranking-list">
+                        { ranking.length > 0
+                            ? createRankingList()
+                            : <div className='flex-column'>
+                                <i class="fas fa-spinner"></i>
+                                <span style={{ fontSize: '0.9em', marginTop: '10px' }}>If you see no ranking here, reload the website.</span>
+                            </div>
+                        }
+                    </ul>
+                </div>
             </div>
         )
     }
