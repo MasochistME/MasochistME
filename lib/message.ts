@@ -1,4 +1,5 @@
 import Discord from 'discord.js';
+import { log } from '../log';
 import { TextCommand } from './commands/logic';
 import { Reaction } from './commands/reactions';
 import { cache } from '../cache';
@@ -17,16 +18,24 @@ const isUserArcy = (msg:Discord.Message) => msg.author.id === '16596223600990617
 const messageStartsWithCommandSymbol = (msg:Discord.Message) => msg.content.startsWith(getCommandSymbol());
 const isMessageRant = (msg:Discord.Message) => msg.content === msg.content.toUpperCase() && msg.content.length > 20;
 
+const deleteCommand = (msg:Discord.Message) => {
+    setTimeout(() => {
+        msg.delete()
+            .then()
+            .catch(err => log.WARN(err))
+    }, 10000);
+}
 const answer = (msg:Discord.Message, answer:string) => msg.channel.send(answer);
-
 const answerCommand = (msg:Discord.Message) => {
     const command = commandObject(msg);
     if (command && command.text) {
         new TextCommand(command, msg).execute(command.text);
+        deleteCommand(msg);
         return;
     }
     if (command && Command[getKeyword(msg)]) {
         Command[getKeyword(msg)](command, msg)
+        deleteCommand(msg);
         return;
     }
     msg.react('❔');
@@ -55,6 +64,8 @@ const checkForReactionTriggers = (msg:Discord.Message) => {
 };
 const commandObject = (msg:Discord.Message) => cache["commands"].find(cmd => cmd.keyword === getKeyword(msg));
 
+const badgeCreationActive = () => cache["addbadge"].inProgress
+
 // MAIN FUNCTION
 
 const classifyMessage = (msg:Discord.Message) => {
@@ -69,6 +80,10 @@ const classifyMessage = (msg:Discord.Message) => {
         answerCommand(msg);
         return;
     }
+    // if (badgeCreationActive()) {
+    //     badgeCreation(msg);
+    //     return;
+    // }
     checkForReactionTriggers(msg);
 }
 
