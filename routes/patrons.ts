@@ -100,14 +100,14 @@ export const addPatron = async (req, res) => {
         key: config.STEAM_KEY,
         vanityurl: req.params.vanityid
     };
-    const userVanity = await axios.get(urlVanity, { params: paramsVanity }); // [TODO] add trycatch
+    const userVanity = await axios.get(urlVanity, { params: paramsVanity }); // TODO add trycatch
 
     const urlSummary = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002';
     const paramsSummary = {
         key: config.STEAM_KEY,
         steamids: userVanity.data.response.steamid
     }
-    const userSummary = await axios.get(urlSummary, { params: paramsSummary }); // [TODO] add trycatch
+    const userSummary = await axios.get(urlSummary, { params: paramsSummary }); // TODO add trycatch
     const patron = {
         steamid: userVanity.data.response.steamid,
         name: userSummary.data.response.players[0].name || req.params.vanityid,
@@ -151,14 +151,14 @@ export const updatePatron = async (req, res) => {
         key: config.STEAM_KEY,
         vanityurl: req.params.vanityid
     };
-    const userVanity = await axios.get(urlVanity, { params: paramsVanity }); // [TODO] add trycatch
+    const userVanity = await axios.get(urlVanity, { params: paramsVanity }); // TODO add trycatch
 
     const urlSummary = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002';
     const paramsSummary = {
         key: config.STEAM_KEY,
         steamids: userVanity.data.response.steamid
     }
-    const userSummary = await axios.get(urlSummary, { params: paramsSummary }); // [TODO] add trycatch
+    const userSummary = await axios.get(urlSummary, { params: paramsSummary }); // TODO add trycatch
     const patron = {
         steamid: userVanity.data.response.steamid,
         name: userSummary.data.response.players[0].name || req.params.vanityid,

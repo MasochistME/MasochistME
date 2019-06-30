@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { log } from '../helpers/log';
 import { connectToDb, getDataFromDB } from '../helpers/db';
-import { hash } from '../helpers/hash';
 import config from '../config.json';
 
 type TRating = {
@@ -102,7 +101,7 @@ export const updateCuratorGames = async (req, res) => {
         Compares it with the games' list saved in database.
         Games which are not in database are updated now.
         All games get force updated in presence of force_update header.
-        [TODO] handling games which got their number of achievements changed!!!
+        TODO handling games which got their number of achievements changed!!!
     */
     if (!req.headers.force_update)
         games = games.filter((game:TGame) => !gamesDB.find(gameDB => gameDB.id === game.id));
@@ -150,6 +149,7 @@ export const updateCuratorGames = async (req, res) => {
         }
         db.collection('games').updateOne({id: gameId}, {$set: gameDetails}, { upsert: true }, (err, data) => {
             if (err) {
+                // @ts-ignore:next-line
                 log.INFO(`- saving game ${gameId} (${gameDetails.title.toUpperCase()}) failed`);
                 log.WARN(err);
                 client.close();

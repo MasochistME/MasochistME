@@ -1,16 +1,21 @@
 import express from 'express';
 export const router = express.Router();
 
-import { getAllBadges, getBadge, addBadge, updateBadge, deleteBadge } from './badges';
+import { getSteamID, getRating } from './special';
+import { getAllBadges, getBadge, addBadge, updateBadge, deleteBadge, giveBadge } from './badges';
 import { getAllPatrons, getPatronsByTier, getPatron, addPatron, updatePatron, deletePatron } from './patrons';
 import { getCuratorGames, getCuratedGamesFromTier, updateCuratorGames, getCuratorMembers } from './curator';
-import { getUser, updateUser } from './users';
+import { getAllUsers, getUser, updateUser } from './users';
+
+router.get('/special/vanityid/:vanityid', getSteamID);
+router.get('/special/rating', getRating);
 
 router.get('/badges', getAllBadges);
 router.post('/badges', addBadge);
 router.get('/badges/:id', getBadge);
 router.put('/badges/:id', updateBadge);
 router.delete('/badges/:id', deleteBadge);
+router.put('/badges/badge/:badgeid/user/:steamid', giveBadge);
 
 router.get('/patrons', getAllPatrons);
 router.get('/patrons/tier/:tier', getPatronsByTier);
@@ -24,6 +29,6 @@ router.get('/curator/games/tier/:tier', getCuratedGamesFromTier);
 router.put('/curator/games', updateCuratorGames);
 router.get('/curator/members', getCuratorMembers);
 
-// router.get('/members/all');
+router.get('/users', getAllUsers);
 router.get('/users/user/:steamid', getUser);
 router.put('/users/user/:steamid', updateUser);

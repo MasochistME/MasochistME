@@ -5,6 +5,19 @@ import { hash } from '../helpers/hash';
 import config from '../config.json';
 
 /**
+ * Returns all users.
+ */
+export const getAllUsers = async (req, res) => {
+    try {
+        const users = await getDataFromDB('users');
+        res.status(200).send(users);
+    }
+    catch (err) {
+        res.status(err.code).send(err);
+    }
+}
+
+/**
  * Returns particular user's data.
  * @param req.params.steamid
  */
@@ -33,6 +46,7 @@ const getUserGames = (userID:number, curatedGames:any, userGames:any) => new Pro
     }
     catch(err) {
         log.INFO(`- user ${ userID} has their profile set to private`)
+        log.INFO(games);
         resolve([ ]);
         return;
     }
@@ -64,25 +78,32 @@ const getUserAchievements = (userID:number, games:object) => new Promise((resolv
         log.INFO(`-- game ${ gameID }`);
         try {
             response = await axios.get(url);
+
+            let numberOfAllAchievements = response.data.playerstats.achievements.length;
+            let numberOfUnlockedAchievements = response.data.playerstats.achievements.filter(achievement => achievement.achieved == 1).length;
+            let lastUnlocked = 0;
+            response.data.playerstats.achievements.map(achievement => 
+                achievement.unlocktime > lastUnlocked
+                    ? lastUnlocked = achievement.unlocktime
+                    : null
+            )
+            let completionRate = 100*numberOfUnlockedAchievements/numberOfAllAchievements;
+            
+            games[index].completionRate = completionRate;
+            games[index].lastUnlocked = lastUnlocked;
         }
         catch (err) {
-            log.WARN(`--> [UPDATE] achievements of ${ userID } [ERROR]`);
+            log.WARN(`--> game ${ gameID } - [ERROR] - ${ url }`);
             log.WARN(err);
-            reject(err);
+            if (games[index+1]) {
+                setTimeout(() => getAchievementsDetails(index + 1), config.DELAY);
+            }
+            else {
+                log.INFO(`--> [UPDATE] achievements for ${ userID } [DONE]`);
+                resolve(games);
+                return;
+            }
         }
-
-        let numberOfAllAchievements = response.data.playerstats.achievements.length;
-        let numberOfUnlockedAchievements = response.data.playerstats.achievements.filter(achievement => achievement.achieved == 1).length;
-        let lastUnlocked = 0;
-        response.data.playerstats.achievements.map(achievement => 
-            achievement.unlocktime > lastUnlocked
-                ? lastUnlocked = achievement.unlocktime
-                : null
-        )
-        let completionRate = 100*numberOfUnlockedAchievements/numberOfAllAchievements;
-        
-        games[index].completionRate = completionRate;
-        games[index].lastUnlocked = lastUnlocked;
 
         if (games[index+1]) {
             setTimeout(() => getAchievementsDetails(index + 1), config.DELAY);
@@ -92,7 +113,7 @@ const getUserAchievements = (userID:number, games:object) => new Promise((resolv
             resolve(games);
         }
         
-        // [TODO] logic for new completion event
+        // TODO logic for new completion event
 
         // if (completionRate === 100
         //     && Date.now() - (lastUnlocked*1000) <= 604800000
@@ -147,7 +168,7 @@ export const updateUser = async (req, res) => {
     let userGamesData;
 
     try {
-        log.INFO(`--> [UPDATE] user ${req.params.steamid} [START]`)
+        log.INFO(`--> [UPDATE] user ${req.params.steamid} [START]`) // TODO block too early updates
         userData = await axios.get(userUrl);
         userGamesData = await axios.get(userGamesUrl);
     }
@@ -175,7 +196,9 @@ export const updateUser = async (req, res) => {
         url: `https://steamcommunity.com/profiles/${req.params.steamid}`,
         games: gamesAsync,
         ranking: rankingAsync,
-        private: userGamesData.data ? false : true
+        badges: [], // FIXME this removes all the badges
+        private: userGamesData.data ? false : true,
+        updated: Date.now()
     };
 
     db.collection('users').updateOne({ id: req.params.steamid }, {$set: user}, { upsert: true }, (err, data) => {

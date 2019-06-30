@@ -1,9 +1,12 @@
 import { ObjectId } from 'mongodb';
 import { log } from '../helpers/log';
-import { connectToDb } from '../helpers/db';
+import { connectToDb, getDataFromDB } from '../helpers/db';
 import { hash } from '../helpers/hash';
 import config from '../config.json';
 
+/**
+ * Returns all badges
+ */
 export const getAllBadges = async (req, res) => {
     const { client, db } = await connectToDb();
     const data = db.collection('badges');
@@ -20,6 +23,10 @@ export const getAllBadges = async (req, res) => {
     })
 };
 
+/**
+ * Returns a specific badge by its id
+ * @param res.params.id
+ */
 export const getBadge = async (req, res) => {
     const { client, db } = await connectToDb();
     const data = db.collection('badges');
@@ -39,6 +46,9 @@ export const getBadge = async (req, res) => {
     })
 };
 
+/**
+ * Adds a badge
+ */
 export const addBadge = async (req, res) => {
     if (!req.headers.auth) {
         res.sendStatus(401);
@@ -73,6 +83,10 @@ export const addBadge = async (req, res) => {
     })
 };
 
+/**
+ * Updates badge by its id
+ * @param req.params.id
+ */
 export const updateBadge = async (req, res) => {
     if (!req.headers.auth) {
         res.sendStatus(401);
@@ -107,6 +121,10 @@ export const updateBadge = async (req, res) => {
     })
 };
 
+/**
+ * Deletes badge by its id
+ * @param req.params.id
+ */
 export const deleteBadge = async (req, res) => {
     if (!req.headers.auth) {
         res.sendStatus(401);
@@ -136,3 +154,55 @@ export const deleteBadge = async (req, res) => {
         client.close();
     })
 };
+
+/**
+ * Gives badge to user by its id and user's steam id
+ * @param req.params.badgeid
+ * @param req.params.steamid
+ */
+export const giveBadge = async (req, res) => {
+    const { client, db } = await connectToDb();
+    const newBadge = {
+        id: req.params.badgeid,
+        unlocked: Date.now()
+    };
+    let badge; 
+    let user; 
+    
+    try {
+        user = await getDataFromDB('users', { id: req.params.steamid });
+        badge = await getDataFromDB('badges', { _id: ObjectId(req.params.badgeid) });
+    }
+    catch(err) {
+        res.status(500).send(err);
+        return;
+    }    
+    if (badge.length === 0 || user.length === 0) {
+        res.sendStatus(404);
+        return;
+    }
+
+    user = user[0];
+
+    if (user.badges) {
+        if (user.badges.find(badge => badge.id === req.params.badgeid)) {
+            res.status(202).send(`User ${req.params.steamid} already has badge ${req.params.badgeid}`);
+            return;
+        }
+        user.badges.push(newBadge);
+    }
+    else user.badges = [ newBadge ];
+
+    db.collection('users').updateOne({ id: req.params.steamid }, {$set: user}, { upsert: true }, (err, data) => {
+        if (err) {
+            log.WARN(`--> [ADD] badge ${req.params.badgeid} => user ${req.params.steamid} [ERROR]`)
+            log.WARN(err);
+        }
+        else {
+            log.INFO(`--> [ADD] badge ${req.params.badgeid} => user ${req.params.steamid} [DONE]`)
+        }
+    });
+    client.close();
+
+    res.status(200).send(newBadge);
+}
