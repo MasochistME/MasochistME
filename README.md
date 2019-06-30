@@ -12,7 +12,8 @@ Create a ``config.json``file in the main directory and give it following structu
     "DATABASE_URL": "mongodb://DB_USERNAME:DB_PWD@DB_HOST_NAME:DB_HOST_PORT/DB_NAME?authSource=DB_AUTH",
     "STEAM_KEY": <steam token>,
     "CORS": "http://masochist.me",
-    "AUTH": <authorization token HASH>
+    "AUTH": <authorization token HASH>,
+    "DELAY" <delay between API requests (in ms)>
 }
 ```
 
