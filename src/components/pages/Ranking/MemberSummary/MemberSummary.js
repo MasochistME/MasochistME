@@ -1,7 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { changeTab } from '../../../../shared/store/modules/Tabs'
+import { showProfile } from '../../../../shared/store/modules/Profiles'
 
 class MemberSummary extends React.Component {
+    showProfile = id => {
+        this.props.dispatch(showProfile(id));
+        this.props.dispatch(changeTab('profile'));
+    }
+
     render() {
         const { member, index, rating, patron } = this.props
         const disabled = member.points === 0 ? true : false
@@ -19,7 +26,7 @@ class MemberSummary extends React.Component {
                             ? <icon className="fas fa-exclamation-triangle" title="This member has their Steam profile set to private."></icon> 
                             : <div></div>
                     }
-                    <div className="member-name">{ member.name }</div>
+                    <div className="member-name" onClick={ () => this.showProfile( member.id ) }>{ member.name }</div>
                     <div className="member-ranking flex-row">
                         <div className="member-rating-score">
                             { member.points }
@@ -28,10 +35,10 @@ class MemberSummary extends React.Component {
                         {   
                             rating.map((score, scoreIndex) => {
                                 return <div className="member-rating-score" key={`member-rating-score-${scoreIndex}`}>
-                                    { member.ranking[score.score] !== undefined
-                                        ? member.ranking[score.score]
+                                    { member.ranking[score.id] !== undefined
+                                        ? member.ranking[score.id]
                                         : "NaN" }
-                                    <i className={ score.link } style={{ paddingRight: "5px"}}/> 
+                                    <i className={ score.icon } style={{ paddingRight: "5px"}}/> 
                                 </div>
                             })
                         }

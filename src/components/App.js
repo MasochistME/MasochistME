@@ -41,7 +41,7 @@ class App extends Component {
                 let members = response.data;
                 members.map(member => {
                     let summary = 0
-                    this.props.state.rating.map(r => summary += r.score * member.ranking[r.score])
+                    this.props.state.rating.map(r => summary += r.score * member.ranking[r.id]) 
                     member.points = summary
                     return member   
                 })

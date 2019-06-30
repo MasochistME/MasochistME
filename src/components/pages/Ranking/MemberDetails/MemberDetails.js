@@ -17,7 +17,7 @@ export default class MemberDetails extends React.Component {
                 return <MemberGame game={{ 
                     ...game, 
                     title: gameDetails.title,
-                    rating: ratingIcon ? ratingIcon.link : 'fas fa-spinner',
+                    rating: ratingIcon ? ratingIcon.icon : 'fas fa-spinner',
                     img: gameDetails.img
                 }} /> 
             })
