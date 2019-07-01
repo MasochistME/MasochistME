@@ -17,7 +17,7 @@
 .profile-basic
   background-color: rgba($superdarkgrey,0.3)
   margin-bottom: 10px
-  padding: 10px
+  padding-right: 10px
   box-sizing: border-box
   box-shadow: 0 0 5px $superdarkgrey
   border-bottom: 1px solid $mediumgrey
@@ -31,20 +31,22 @@
   height: 128px
   min-height: 128px
   margin: 15px
-  border: 5px solid #fff
-  background-color: $black
   border-radius: 10px
   box-sizing: border-box
   box-shadow: 0 0 10px $black
   padding: 2px
   &.tier1
-    border-color: $tier1
+    border: 5px solid $tier1
+    background-color: $black
   &.tier2
-    border-color: $tier2
+    border: 5px solid $tier2
+    background-color: $black
   &.tier3
-    border-color: $tier3
+    border: 5px solid $tier3
+    background-color: $black
   &.tier4
-    border-color: $tier4
+    border: 5px solid $tier4
+    background-color: $black
 .profile-patron
   cursor: help
 .profile-date
@@ -52,12 +54,31 @@
   letter-spacing: 0.1em
   font-size: 0.8em
 
+.profile-badges
+  display: flex
+  flex-direction: flex-row
+  flex-wrap: wrap
+  justify-content: center
+  align-items: center
+  padding: 10px
+  margin-bottom: 20px
+  border-radius: 10px
+  background-color: $darkbluetransparent
+  box-shadow: 0 0 10px $superdarkgrey
+  box-sizing: border-box
 .profile-badge
   border-radius: 10px
   border: 3px solid $superlightgrey
   box-sizing: border-box
   cursor: help
   box-shadow: 0 0 5px $superdarkgrey
+
+.profile-graphs
+  display: flex
+  flex-direction: row
+  align-items: center
+  justify-content: center
+  flex-wrap: wrap
 
 // .wrapper-profile > *
 //   width: 100%
