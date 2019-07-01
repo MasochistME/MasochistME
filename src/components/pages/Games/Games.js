@@ -24,7 +24,7 @@ class PageGames extends React.Component{
                             {
                                 rating.map(r => <CheckBoxGameChoice 
                                     key={ `checkbox-game-${ r.id }` }
-                                    score={ r.score } 
+                                    score={ r.id } 
                                     icon={ swapRatingToIcon(r.id, rating) }/> )
                             }
                         </div>
@@ -39,7 +39,7 @@ class PageGames extends React.Component{
                         ?
                         this.props.games.map(game =>
                             game.title.toLowerCase().indexOf(props.searchGame.toLowerCase()) !== -1
-                            && props.showGamesRated.find(score => parseInt(score,10) === parseInt(game.rating,10))
+                            && props.showGamesRated.find(score => score === game.rating)
                             ? <Game key={ `id-game-${game.id}` } game={ game } rating={ rating } />
                             : null
                         )

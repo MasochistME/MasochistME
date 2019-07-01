@@ -9,7 +9,7 @@ import { SHOW_PROFILE } from './modules/Profiles'
 import { SHOW_LOGIN_MODAL, LOG_IN_USER, LOG_OUT_USER } from './modules/Login'
 import { CACHE_GAMES, CACHE_MEMBERS, CACHE_RATING, CACHE_EVENTS, CACHE_BLOG, CACHE_PATRONS, CACHE_BADGES } from './modules/Cache'
 
-const ratingArray = () => rating.map(r => r.score.toString())
+const ratingArray = () => rating.map(r => r.id) // TODO get this from database
 
 // STORES
 const defaultState = {
