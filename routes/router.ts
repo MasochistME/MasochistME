@@ -6,6 +6,7 @@ import { getAllBadges, getBadge, addBadge, updateBadge, deleteBadge, giveBadge }
 import { getAllPatrons, getPatronsByTier, getPatron, addPatron, updatePatron, deletePatron } from './patrons';
 import { getCuratorGames, getCuratedGamesFromTier, updateCuratorGames, getCuratorMembers } from './curator';
 import { getAllUsers, getUser, updateUser } from './users';
+import { getEvents } from './events';
 
 router.get('/special/vanityid/:vanityid', getSteamID);
 router.get('/special/rating', getRating);
@@ -16,6 +17,7 @@ router.get('/badges/:id', getBadge);
 router.put('/badges/:id', updateBadge);
 router.delete('/badges/:id', deleteBadge);
 router.put('/badges/badge/:badgeid/user/:steamid', giveBadge);
+// TODO take badge from user
 
 router.get('/patrons', getAllPatrons);
 router.get('/patrons/tier/:tier', getPatronsByTier);
@@ -32,3 +34,6 @@ router.get('/curator/members', getCuratorMembers);
 router.get('/users', getAllUsers);
 router.get('/users/user/:steamid', getUser);
 router.put('/users/user/:steamid', updateUser);
+
+router.get('/events', getEvents)
+// TODO add events 
