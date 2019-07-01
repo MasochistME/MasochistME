@@ -18,7 +18,7 @@ class App extends Component {
   }
 
   loadRating = () => {
-    axios.get('/rest/data/rating')  
+    axios.get('/rest/api/rating')  
         .then(response => {
             if (response.status === 200)
               return this.props.dispatch(cacheRating(response.data))
