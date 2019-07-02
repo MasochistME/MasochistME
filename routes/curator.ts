@@ -20,7 +20,11 @@ type TGame = {
         total:number,
         list:Array<number>
     },
-    url?:string
+    url?:string,
+    sale?: {
+        onSale:boolean,
+        discount:number
+    }
 }
 type TGameEvent = {
     date:number,
@@ -119,13 +123,17 @@ export const updateCuratorGames = async (req, res) => {
         catch(err) {
             log.INFO(`- saving game ${gameId} failed`);
             log.WARN(err);
-            if (games[index+1])
+            if (games[index+1]) {
                 setTimeout(() => getGameDetails(index + 1), config.DELAY)
+                return;
+            }
             else {
                 log.INFO('--> [UPDATE] curated games list [DONE]');
                 return; 
             }
         }
+
+        let price = game.data[gameId].data.price_overview;
         const gameDetails:TGame = {
             id: gameId,
             desc: games[index].desc,
@@ -136,7 +144,17 @@ export const updateCuratorGames = async (req, res) => {
                 total: game.data[gameId].data.achievements.total,
                 list: []
             },
-            url: urlGamesDetails
+            url: urlGamesDetails,
+            sale: {
+                onSale: price 
+                    ? price.discount_percent 
+                        ? true 
+                        : false
+                    : false,
+                discount: price
+                    ? price.discount_percent
+                    : 0
+            }
         }
         const eventDetails:TGameEvent = {
             date: Date.now(),

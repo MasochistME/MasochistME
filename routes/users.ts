@@ -96,7 +96,7 @@ const getUserAchievements = (userID:number, games:object) => new Promise((resolv
             log.WARN(`--> game ${ gameID } - [ERROR] - ${ url }`);
             log.WARN(err);
             if (games[index+1]) {
-                setTimeout(() => getAchievementsDetails(index + 1), config.DELAY);
+                setTimeout(() => getAchievementsDetails(index + 1), config.DELAY); // FIXME if this screws up uptade doubles
             }
             else {
                 log.INFO(`--> [UPDATE] achievements for ${ userID } [DONE]`);
