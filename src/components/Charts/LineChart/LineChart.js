@@ -19,7 +19,7 @@ export default class LineChart extends React.Component {
 				borderColor: [
 					colors[index]
 				],
-				steppedLine: 'before'
+				// steppedLine: 'before'
 			}
 		})
 
