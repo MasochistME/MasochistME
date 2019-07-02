@@ -15,18 +15,24 @@ class MemberSummary extends React.Component {
         const tier = patron 
             ? patron.tier
             : null
+        const shekelmaster = tier == 4
 
         return(
-            <div className={disabled ? 'member-disabled member-summary flex-row' : 'member-summary flex-row' }>
+            <div className={`member-summary flex-row ${disabled ? 'member-disabled' : ''} ${shekelmaster ? 'member-shekelmaster' : '' }` }>
                 <div className="member-position">{ index+1 }</div>
-                <img className={ `member-avatar ${tier ? `member-patron tier${tier}` : ''}`} src={ member.avatar } alt="avatar" title={ tier ? `This member is a tier ${ patron.description.toUpperCase() } supporter` : ''} />
+                <img className="member-avatar" src={ member.avatar } alt="avatar" />
+                {
+                    tier 
+                        ? <i className={ `fas fa-donate member-patron tier${tier}` } title={ patron.description.toUpperCase() } />
+                        : <i className='fas fa-donate member-patron' style={{ color: 'transparent' }}/>
+                }
                 <div className="member-info flex-row">
                     {
                         disabled
                             ? <icon className="fas fa-exclamation-triangle" title="This member has their Steam profile set to private."></icon> 
                             : <div></div>
                     }
-                    <div className="member-name" onClick={ () => this.showProfile( member.id ) }>{ member.name }</div>
+                    <div className={ `member-name ${ shekelmaster ? `tier${tier}` : ''}` } onClick={ () => this.showProfile( member.id ) }>{ member.name }</div>
                     <div className="member-ranking flex-row">
                         <div className="member-rating-score">
                             { member.points }

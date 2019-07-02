@@ -1,14 +1,116 @@
 import React from 'react'
 import _ from 'lodash'
+import moment from 'moment';
 import { connect } from 'react-redux'
 import axios from 'axios'
 import DoughnutChart from '../../Charts/DoughnutChart';
+import LineChart from '../../Charts/LineChart';
 
 const sendUpdateRequest = (id) => {
     let url = `/rest/users/user/${id}`;
     axios.put(url)
         .then(res => console.log(res.data.content))
         .catch(err => console.log(err));
+}
+const summarizeTotalTimes = (type, scope, rating, user, games) => {
+    let data = [
+        // {
+        //     sum: 0,
+        //     label: 'Total',
+        //     id: 'total'
+        // }
+    ];
+    let userGames = user.games;
+
+    rating.map(r => data.push({
+        sum: 0,
+        label: r.symbol,
+        id: r.id
+    }));
+    
+    if (scope === 'completed')
+        userGames = userGames.filter(game => game.completionRate === 100)
+
+    userGames.map(game => {
+        // data[0].sum = data[0].sum + parseInt(game.playtime_forever);
+        return { ...game, rating: games.find(g => parseInt(g.id) === game.appid).rating };
+    }).map(game => {
+        const index = data.findIndex(d => d.id === game.rating);
+        data[index].sum += parseInt(game.playtime_forever);
+        return game;
+    });
+
+    return data.map(d => d[type])
+}
+const summarizeTotalGames = (type, rating, user, games) => {
+    let data = [];
+
+    rating.map(r => data.push({
+        sum: 0,
+        label: r.symbol,
+        id: r.id
+    }));
+    
+    user.games.filter(game => game.completionRate === 100)
+        .map(game => {
+            return { ...game, rating: games.find(g => parseInt(g.id) === game.appid).rating }})
+        .map(game => {
+            const index = data.findIndex(d => d.id === game.rating);
+            data[index].sum += 1;
+            return game;
+        });
+    return data.map(d => d[type])
+}
+const getTimelines = (type, rating, user, games) => {
+    let data = [ ];
+    let gamesTotal = 0;
+    let pointsTotal = 0;
+    var startDate = 0;
+    var endDate = 0;
+
+    let timelines = user.games.filter(game => game.completionRate === 100);
+    timelines = _.orderBy(timelines, ['lastUnlocked'], ['asc']);
+
+    startDate = moment(new Date(timelines[0].lastUnlocked * 1000));
+    endDate = moment(new Date(timelines[timelines.length - 1].lastUnlocked * 1000));
+
+    while (startDate.isBefore(endDate)) {
+        data.push({
+            label: startDate.format("YYYY-MM"),
+            games: 0,
+            points: 0
+        });
+        startDate.add(1, 'month');
+    }
+    
+    data = data
+        .map(date => {
+            const gamesCompletedInMonth = timelines
+                .filter(game => {
+                    const month = new Date(game.lastUnlocked*1000).getMonth() + 1;
+                    const year = new Date(game.lastUnlocked*1000).getFullYear(); 
+                    return date.label === `${year}-${month < 10 ? `0${month}` : month}`;
+                }
+                ).map(game => {
+                    try {
+                        date.points += rating.find(r => r.id === games.find(g => parseInt(g.id) === game.appid).rating).score;
+                    }
+                    catch (err) {
+                        console.log(err);
+                        date.points = 0;
+                    }
+                    return game;
+                })
+        if (gamesCompletedInMonth.length !== 0) {
+            gamesTotal = gamesTotal + gamesCompletedInMonth.length;
+            pointsTotal = pointsTotal + date.points;
+        }
+        date.games = gamesTotal;
+        date.points = pointsTotal;
+        return date;
+    })
+
+    return data.map(d => d[type])
 }
 
 class Profile extends React.Component {
@@ -27,72 +129,6 @@ class Profile extends React.Component {
                 .filter(badge => user.badges.find(b => b.id === badge._id))
                 .map(badge => badge = {...badge, game: games.find(game => game.id === badge.gameId).title})
             , ['points'], ['desc']);
-
-        const summarizeTotalTimes = (type, scope) => {
-            let data = [
-                // {
-                //     sum: 0,
-                //     label: 'Total',
-                //     id: 'total'
-                // }
-            ];
-
-            rating.map(r => data.push({
-                sum: 0,
-                label: r.symbol,
-                id: r.id
-            }));
-            
-            if (scope === 'completed')
-                user.games = user.games.filter(game => game.completionRate === 100)
-
-            user.games.map(game => {
-                // data[0].sum = data[0].sum + parseInt(game.playtime_forever);
-                return { ...game, rating: games.find(g => parseInt(g.id) === game.appid).rating };
-            }).map(game => {
-                const index = data.findIndex(d => d.id === game.rating);
-                data[index].sum += parseInt(game.playtime_forever);
-                return game;
-            });
-
-            if (type === 'labels') {
-                return data.map(d => d.label)
-            }
-            if (type === 'data') {
-                return data.map(d => d.sum)
-            }
-            else {
-                return []
-            }
-        }
-
-        const summarizeTotalGames = type => {
-            let data = [];
-
-            rating.map(r => data.push({
-                sum: 0,
-                label: r.symbol,
-                id: r.id
-            }));
-            
-            user.games.filter(game => game.completionRate === 100)
-                .map(game => {
-                    return { ...game, rating: games.find(g => parseInt(g.id) === game.appid).rating }})
-                .map(game => {
-                    const index = data.findIndex(d => d.id === game.rating);
-                    data[index].sum += 1;
-                    return game;
-                });
-            if (type === 'labels') {
-                return data.map(d => d.label)
-            }
-            if (type === 'data') {
-                return data.map(d => d.sum)
-            }
-            else {
-                return []
-            }
-        }
 
         return (
             <div className='flex-column'>
@@ -137,18 +173,31 @@ class Profile extends React.Component {
                         <div className='profile-graphs'>
                             <DoughnutChart 
                                 title='HOURS PLAYED (TOTAL)'
-                                labels={ summarizeTotalTimes('labels', 'total') }
-                                dataset={ summarizeTotalTimes('data', 'total') }
+                                labels={ summarizeTotalTimes('label', 'total', rating, user, games) }
+                                dataset={ summarizeTotalTimes('sum', 'total', rating, user, games) }
                             />
                             <DoughnutChart 
                                 title='HOURS PLAYED (COMPLETED)'
-                                labels={ summarizeTotalTimes('labels', 'completed') }
-                                dataset={ summarizeTotalTimes('data', 'completed') }
+                                labels={ summarizeTotalTimes('label', 'completed', rating, user, games) }
+                                dataset={ summarizeTotalTimes('sum', 'completed', rating, user, games) }
                             />
                             <DoughnutChart 
                                 title='GAMES COMPLETED'
-                                labels={ summarizeTotalGames('labels') }
-                                dataset={ summarizeTotalGames('data' ) }
+                                labels={ summarizeTotalGames('label', rating, user, games) }
+                                dataset={ summarizeTotalGames('sum', rating, user, games) }
+                            />
+                            <LineChart
+                                title='COMPLETION TIMELINE'
+                                labels={ getTimelines('label', rating, user, games) }
+                                datasets={ [{
+                                        label: 'games',
+                                        data: getTimelines('games', rating, user, games) 
+                                    },
+                                    {
+                                        label: 'points',
+                                        data: getTimelines('points', rating, user, games) 
+                                    }]
+                                }
                             />
                         </div>
                     </div>

@@ -11,7 +11,7 @@ export default class SectionUpdate extends React.Component {
         this.checkStatus = this.checkStatus.bind(this);
         this.sendUpdateRequest = this.sendUpdateRequest.bind(this);
         
-        this.statusInterval = setInterval(() => this.checkStatus(), 1000);
+        // this.statusInterval = setInterval(() => this.checkStatus(), 1000);
     }
 
     checkStatus() {
