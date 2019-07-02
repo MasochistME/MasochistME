@@ -37,11 +37,11 @@ class SectionTrivia extends React.Component {
             <p>Members total: <span className="bold">{ members.length }</span></p>
             <p>Curated games:</p>
             <ul>
-                <li>total: <span className="bold">{ this.state.games.total }</span></li>
+                <li style={{ marginLeft: '30px' }} >total: <span className="bold">{ this.state.games.total }</span></li>
                 <ul>
                     {
                         rating ? rating.map((tier, index) => 
-                            <li key={ `${tier.score}-${index}` }><i className={ tier.icon } /><span className="bold">{ ` : ${ this.state.games.all.filter(game => game.rating === tier.id).length }` }</span></li>)
+                            <li style={{ marginLeft: '30px' }} key={ `${tier.score}-${index}` }><i className={ tier.icon } /><span className="bold">{ ` : ${ this.state.games.all.filter(game => game.rating === tier.id).length }` }</span></li>)
                             : null
                     }
                 </ul>
