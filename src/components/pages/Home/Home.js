@@ -8,7 +8,7 @@ class PageHome extends React.Component{
         const blog = _.orderBy(props.blog, ['date'], ['desc'])
         
         return (
-            <div className='flex-column'>
+            <div>
                 <div className='wrapper-description fancy'>
                     <h3>A dedicated group for dedicated gamers</h3>
                     <div className='page-description fancy'>
