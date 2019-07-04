@@ -6,6 +6,7 @@ import { getAllBadges, getBadge, addBadge, updateBadge, deleteBadge, giveBadge }
 import { getAllPatrons, getPatronsByTier, getPatron, addPatron, updatePatron, deletePatron } from './patrons';
 import { getCuratorGames, getCuratedGamesFromTier, updateCuratorGames, getCuratorMembers } from './curator';
 import { getAllUsers, getUser, updateUser } from './users';
+import { getAllBlogEntries } from './blog';
 import { getEvents } from './events';
 
 router.get('/special/vanityid/:vanityid', getSteamID);
@@ -34,6 +35,8 @@ router.get('/curator/members', getCuratorMembers);
 router.get('/users', getAllUsers);
 router.get('/users/user/:steamid', getUser);
 router.put('/users/user/:steamid', updateUser);
+
+router.get('/blog', getAllBlogEntries);
 
 router.get('/events', getEvents)
 // TODO add events 

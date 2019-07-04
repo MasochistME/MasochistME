@@ -159,7 +159,7 @@ const getUserRanking = (curatedGames, userGames) => new Promise(async(resolve, r
  * Updates one particular user data.
  * @param req.params.steamid 
  */
-export const updateUser = async (req, res) => {
+export const updateUser = async (req, res) => { // TODO remove badges that dont exist anymore
     const curatedGames = await getDataFromDB('games');
     const userUrl = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${config.STEAM_KEY}&steamids=${req.params.steamid}`;
     const userGamesUrl = `https://steamcommunity.com/profiles/${req.params.steamid}/games/?tab=all`;
@@ -186,7 +186,7 @@ export const updateUser = async (req, res) => {
     res.status(202).send(`Initiated update of user ${req.params.steamid}.`);
 
     const gamesAsync = await getUserGames(req.params.steamid, curatedGames, userGamesData);
-    const rankingAsync = await getUserRanking(curatedGames, gamesAsync);
+    const rankingAsync = await getUserRanking(curatedGames, gamesAsync); // FIXME this doesn't update
 
     userData = userData.data.response.players[0];
     let user = { 

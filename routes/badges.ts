@@ -125,7 +125,7 @@ export const updateBadge = async (req, res) => {
  * Deletes badge by its id
  * @param req.params.id
  */
-export const deleteBadge = async (req, res) => {
+export const deleteBadge = async (req, res) => { // TODO handle badges assigned to people after being deleted
     if (!req.headers.auth) {
         res.sendStatus(401);
         return;

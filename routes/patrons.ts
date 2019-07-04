@@ -146,22 +146,24 @@ export const updatePatron = async (req, res) => {
     }
 
     const { client, db } = await connectToDb();
-    const urlVanity = 'http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001';
-    const paramsVanity = {
-        key: config.STEAM_KEY,
-        vanityurl: req.params.vanityid
-    };
-    const userVanity = await axios.get(urlVanity, { params: paramsVanity }); // TODO add trycatch
-
     const urlSummary = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002';
     const paramsSummary = {
         key: config.STEAM_KEY,
-        steamids: userVanity.data.response.steamid
+        steamids: req.params.steamid
     }
-    const userSummary = await axios.get(urlSummary, { params: paramsSummary }); // TODO add trycatch
+    let userSummary;
+    try {
+        userSummary = await axios.get(urlSummary, { params: paramsSummary });
+    } 
+    catch(err) {
+        log.WARN(urlSummary);
+        log.WARN(JSON.stringify(paramsSummary));
+        log.WARN(err);
+        return;
+    }
     const patron = {
-        steamid: userVanity.data.response.steamid,
-        name: userSummary.data.response.players[0].name || req.params.vanityid,
+        steamid: req.params.steamid,
+        name: userSummary.data.response.players[0].personaname || userSummary.data.response.players[0].name || 'unknown',
         avatar: userSummary.data.response.players[0].avatarfull || 'https://image.flaticon.com/icons/svg/37/37943.svg',
         tier: req.params.tier
     }
@@ -172,7 +174,7 @@ export const updatePatron = async (req, res) => {
             res.status(err.code).send(err);
         }
         else {
-            log.INFO(`Patron ${userSummary.data.response.players[0].name|| req.params.vanityid} updated.`);
+            log.INFO(`Patron ${userSummary.data.response.players[0].name|| req.params.steamid} updated.`);
             res.status(201).send(patron);
         }        
         client.close();
