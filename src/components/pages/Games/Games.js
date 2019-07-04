@@ -10,7 +10,7 @@ class PageGames extends React.Component{
     render() {
         const { props } = this
         const rating = this.props.rating;
-        const games = this.props.games ? _.orderBy(this.props.games, [game => game.title.toLowerCase()], ['desc']) : null
+        const games = this.props.games ? _.orderBy(this.props.games, ['rating', game => game.title.toLowerCase()], ['desc', 'asc']) : null
 
         return (
             <div className='flex-column'>

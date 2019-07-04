@@ -9,12 +9,12 @@ class PageHome extends React.Component{
         
         return (
             <div>
-                <div className='wrapper-description fancy'>
+                {/* <div className='wrapper-description fancy'>
                     <h3>A dedicated group for dedicated gamers</h3>
                     <div className='page-description fancy'>
                         <p>Is being top 1% too casual for you? Then this is your home. This group's aim is to band together the most determined gamers out there that aim to do the impossible! The ones that forget to sleep, neglect their beloved ones, need a minute to adjust to sunlight, will only eat to survive.... OK, exaggerated, but you get the point.</p>
                     </div>
-                </div>
+                </div> */}
                 <div className='page-blog'>
                     {
                         blog.map((entry, entryIndex) => 
