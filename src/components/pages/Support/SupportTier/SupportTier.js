@@ -6,7 +6,7 @@ class SupportTier extends React.Component{
     render() {
         const { props } = this;
         const tier = props.tier;
-        const patrons = _.orderBy(tier.list, ['name'], ['asc']);
+        const patrons = _.orderBy(tier.list, [patron => patron.name.toLowerCase()], ['asc']);
         
         return (
             <div className='support-tier flex-column'>
