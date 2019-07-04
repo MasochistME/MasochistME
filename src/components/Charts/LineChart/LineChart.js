@@ -6,11 +6,12 @@ export default class LineChart extends React.Component {
 	
 	componentDidMount = () => {
 		const barChartRef = this.chartRef.current.getContext("2d");
-		const colors = ['#BEC9E0',
-			'#9e9db5',
-			'#7b7a8d',
-			'#242630',
-			'#141620',
+		const colors = [
+			'rgba(190, 201, 224, 1)',
+			'rgba(158, 157, 181, 1)',
+			'rgba(123, 122, 141, 1)',
+			'rgba(36, 38, 48, 1)',
+			'#rgba(20, 22, 32, 1)',
 		]
 		const datasets = this.props.datasets.map((dataset, index) => {
 			return {
@@ -19,9 +20,23 @@ export default class LineChart extends React.Component {
 				borderColor: [
 					colors[index]
 				],
+				pointBorderColor: colors[index],
+				pointBackgroundColor: colors[index],
+				lineTension: 0.2,
 				// steppedLine: 'before'
 			}
 		})
+
+		const axisOptions = [{
+			gridLines: {
+				color: '#242630',
+			},
+			ticks: {
+				fontColor: '#BEC9E0',
+				fontFamily: "'Dosis', 'Verdana', sans-serif",
+				fontSize: '16'
+			}
+		}]
 
 		new Chart(barChartRef, {
 			type: 'line',
@@ -30,21 +45,20 @@ export default class LineChart extends React.Component {
                 datasets
             },
             options: {
-                title: {
-                    display: true,
-					text: this.props.title,
-					fontColor: '#BEC9E0',
-					fontFamily: "'Raleway', 'Verdana', sans-serif",
-                    fontSize: '14',
-                    fontStyle: 'normal',
-					position: 'top'
-                },
+				defaultFontColor: '#BEC9E0',
+				defaultFontFamily: "'Raleway', 'Verdana', sans-serif",
+				defaultFontSize: '14',
+				defaultFontStyle: 'normal',
                 legend: {
 					labels: {
 						fontColor: 'white',
 						fontFamily: 'Georgia',
 						textTransform: 'uppercase'
 					}
+				},
+				scales: {
+					yAxes: axisOptions,
+					xAxes: axisOptions,
 				}
             }
 		})
@@ -52,13 +66,11 @@ export default class LineChart extends React.Component {
 
 	render() {
         return (
-            <div>
-                <canvas
-					style={{ width: '100%', height: '500px' }}
-                    id="myChart"
-                    ref={this.chartRef}
-                />
-            </div>
+			<canvas
+				style={{ width: '100%', height: '500px' }}
+				id="myChart"
+				ref={this.chartRef}
+			/>
         )
     }
 }

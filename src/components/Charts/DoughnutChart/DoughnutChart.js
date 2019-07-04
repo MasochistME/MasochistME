@@ -26,20 +26,13 @@ export default class DoughnutChart extends React.Component {
                 ]
             },
             options: {
-                title: {
-                    display: true,
-					text: this.props.title,
-					fontColor: '#BEC9E0',
-					fontFamily: "'Raleway', 'Verdana', sans-serif",
-                    fontSize: '14',
-                    fontStyle: 'normal',
-					position: 'top'
-                },
                 legend: {
+					position: 'bottom',
 					labels: {
 						fontColor: 'white',
 						fontFamily: 'Georgia',
-						textTransform: 'uppercase'
+						textTransform: 'uppercase',
+						usePointStyle: true,
 					}
 				}
             }
@@ -48,13 +41,11 @@ export default class DoughnutChart extends React.Component {
 
 	render() {
         return (
-            <div>
-                <canvas
-					style={{ width: '300px', height: '300px' }}
-                    id="myChart"
-                    ref={this.chartRef}
-                />
-            </div>
+			<canvas
+				style={{ width: '300px', height: '300px' }}
+				id="myChart"
+				ref={this.chartRef}
+			/>
         )
     }
 }
