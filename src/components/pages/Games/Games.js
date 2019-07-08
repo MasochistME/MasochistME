@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import _ from 'lodash'
 import CheckBoxGameChoice from './CheckBoxGameChoice'
 import SearchBar from '../../../shared/components/SearchBar'
 import { swapRatingToIcon } from '../../../shared/helpers/helper';
@@ -9,6 +10,7 @@ class PageGames extends React.Component{
     render() {
         const { props } = this
         const rating = this.props.rating;
+        const games = this.props.games ? _.orderBy(this.props.games, ['rating', game => game.title.toLowerCase()], ['desc', 'asc']) : null
 
         return (
             <div className='flex-column'>
@@ -35,15 +37,13 @@ class PageGames extends React.Component{
                 </div>
                 <div className='wrapper-games'>
                     {
-                        this.props.games
-                        ?
-                        this.props.games.map(game =>
-                            game.title.toLowerCase().indexOf(props.searchGame.toLowerCase()) !== -1
-                            && props.showGamesRated.find(score => parseInt(score,10) === parseInt(game.rating,10))
-                            ? <Game key={ `id-game-${game.id}` } game={ game } rating={ rating } />
+                        games
+                            ? games.map(game =>
+                                game.title.toLowerCase().indexOf(props.searchGame.toLowerCase()) !== -1
+                                && props.showGamesRated.find(score => parseInt(score,10) === parseInt(game.rating,10))
+                                ? <Game key={ `id-game-${game.id}` } game={ game } rating={ rating } />
+                                : null)
                             : null
-                        )
-                        : null
                     }
                 </div>
             </div>
