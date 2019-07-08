@@ -2,6 +2,7 @@ import axios from 'axios';
 import { log } from '../helpers/log';
 import { connectToDb, getDataFromDB } from '../helpers/db';
 import { hash } from '../helpers/hash';
+import cache from '../cache';
 import config from '../config.json';
 
 /**
@@ -75,7 +76,7 @@ const getUserAchievements = (userID:number, games:object) => new Promise((resolv
         let url = `http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v1/?appid=${ gameID }&steamid=${ userID }&key=${ config.STEAM_KEY }&format=json`;
         let response;
 
-        log.INFO(`-- game ${ gameID }`);
+        log.INFO(`-- [${index+1}/${Object.keys(games).length}] game ${ gameID } (user ${userID})`);
         try {
             response = await axios.get(url);
 
@@ -93,7 +94,7 @@ const getUserAchievements = (userID:number, games:object) => new Promise((resolv
             games[index].lastUnlocked = lastUnlocked;
         }
         catch (err) {
-            log.WARN(`--> game ${ gameID } - [ERROR] - ${ url }`);
+            log.WARN(`--> [${index+1}/${Object.keys(games).length}] game ${ gameID } (user ${userID}) - [ERROR] - ${ url }`);
             log.WARN(err);
             if (games[index+1]) {
                 setTimeout(() => getAchievementsDetails(index + 1), config.DELAY); // FIXME if this screws up uptade doubles
@@ -161,6 +162,7 @@ const getUserRanking = (curatedGames, userGames) => new Promise(async(resolve, r
  */
 export const updateUser = async (req, res) => { // TODO remove badges that dont exist anymore
     const curatedGames = await getDataFromDB('games');
+    const userToUpdate = await getDataFromDB('users', { id: req.params.steamid });
     const userUrl = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${config.STEAM_KEY}&steamids=${req.params.steamid}`;
     const userGamesUrl = `https://steamcommunity.com/profiles/${req.params.steamid}/games/?tab=all`;
     const { client, db } = await connectToDb();
@@ -173,17 +175,31 @@ export const updateUser = async (req, res) => { // TODO remove badges that dont 
         userGamesData = await axios.get(userGamesUrl);
     }
     catch(err) {
+        res.status(err.code).send(err);
         log.WARN(`--> [UPDATE] user ${req.params.steamid} [ERROR]`);
         log.WARN(err);
-        res.status(err.code).send(err);
         return;
     }
     if (!userData || !userData.data || !userData.data.response || !userData.data.response.players) {
+        res.status(500).send('Cannot update, retry in a few minutes');
         log.WARN(`--> [UPDATE] updating user ${req.params.steamid} [ERROR]`);
-        res.sendStatus(500);
+        return; 
+    }
+    if (userToUpdate[0] && userToUpdate[0].updated && Date.now() - userToUpdate[0].updated < 3600000) {
+        res.status(202).send(`This user had been updated less than an hour ago`);
+        log.WARN(`--> [UPDATE] updating user ${req.params.steamid} [DONE]`);
         return;
     }
-    res.status(202).send(`Initiated update of user ${req.params.steamid}.`);
+    if (cache.updating.length === 1) {
+        res.status(202).send('Too many users are updating now - retry in a few minutes');
+        log.WARN(`--> [UPDATE] updating user ${req.params.steamid} [DONE]`);
+        return;
+    }
+    res.status(202).send('Updating... refresh in a few minutes');
+    cache.updating.push({
+        user: req.params.steamid,
+        progress: 0
+    })
 
     const gamesAsync = await getUserGames(req.params.steamid, curatedGames, userGamesData);
     const rankingAsync = await getUserRanking(curatedGames, gamesAsync); // FIXME this doesn't update
@@ -207,6 +223,9 @@ export const updateUser = async (req, res) => { // TODO remove badges that dont 
             log.WARN(err);
         }
         else {
+            const index = cache.updating.findIndex(user => user.user === req.params.steamid);
+            const newCache = cache.updating.splice(index, 1);
+            cache.updating = newCache;
             log.INFO(`--> [UPDATE] user ${req.params.steamid} [DONE]`)
         }
     });
