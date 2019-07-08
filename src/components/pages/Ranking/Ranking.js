@@ -1,14 +1,15 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import SearchBar from '../../../shared/components/SearchBar'
+import React from 'react';
+import _ from 'lodash';
+import { connect } from 'react-redux';
+import SearchBar from '../../../shared/components/SearchBar';
 import Member from './Member';
 
 class PageRanking extends React.Component {
     render() {
         const { props } = this;
         const rating = this.props.rating;
-        const ranking = this.props.members.filter(member => member.member); //change names here
         const patrons = this.props.patrons;
+        const ranking = _.orderBy(this.props.members.filter(member => member.member), [member => member.points ? member.points : 0], ['desc']); //change names here
 
         const createRankingList = () => {
             if (ranking.length <= 0)
