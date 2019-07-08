@@ -7,12 +7,6 @@ import DoughnutChart from '../../Charts/DoughnutChart';
 import LineChart from '../../Charts/LineChart';
 import ChartWrapper from '../../Charts/ChartWrapper/index';
 
-const sendUpdateRequest = (id) => {
-    let url = `/rest/users/user/${id}`;
-    axios.put(url)
-        .then(res => console.log(res.data.content))
-        .catch(err => console.log(err));
-}
 const summarizeTotalTimes = (type, scope, rating, user, games) => {
     let data = [
         // {
@@ -117,8 +111,27 @@ const getTimelines = (type, rating, user, games) => {
 class Profile extends React.Component {
     constructor() {
         super();
-        this.state = { updating: false }
+        this.state = { 
+            updating: false,
+            message: ''
+        }
     }
+
+    sendUpdateRequest = (id) => {
+        let url = `/rest/users/user/${id}`;
+        this.setState({ 
+            updating: true,
+            message: 'Updating... refresh in a few minutes'
+        });
+        axios.put(url)
+            .then(res => {
+                if (res.data) {
+                    this.setState({ message: res.data })
+                }
+            })
+            .catch(err => console.log(err));
+    }
+
     render() {
         const { props } = this;
         const user = props.members.find(member => member.id === props.id);
@@ -151,10 +164,12 @@ class Profile extends React.Component {
                             }
                         </div>
                         <div className='profile-date flex-row' style={{ marginBottom: '5px' }}>
-                            { `Last updated: ${new Date(user.updated).toLocaleString()}` }
+                            { <span>{`Last updated: ${new Date(user.updated).toLocaleString()}`}</span> }
                             {
                                 Date.now() - user.updated > 3600000
-                                    ? <button className='custom-button' onClick={() => sendUpdateRequest(user.id) }>Update</button>
+                                    ? this.state.updating
+                                        ? <span style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '40px' }}>{ this.state.message }</span>
+                                        : <button className='custom-button' onClick={() => this.sendUpdateRequest(user.id) }>Update</button>
                                     : <button className='custom-button button-blocked' title={ `${parseInt((3600000 - (Date.now()-user.updated))/60000)} minutes till you can update again` }>Update</button>
                             }
                         </div>
@@ -179,42 +194,47 @@ class Profile extends React.Component {
                         }
                     </div>
                     */ }
-                    <div className='flex-column'>
-                        <div className='profile-graphs'>
-                            <ChartWrapper title='HOURS PLAYED (TOTAL)'>
-                                <DoughnutChart 
-                                    labels={ summarizeTotalTimes('label', 'total', rating, user, games) }
-                                    dataset={ summarizeTotalTimes('sum', 'total', rating, user, games) }
-                                />
-                            </ChartWrapper>
-                            <ChartWrapper title='HOURS PLAYED (COMPLETED)'>
-                                <DoughnutChart 
-                                    labels={ summarizeTotalTimes('label', 'completed', rating, user, games) }
-                                    dataset={ summarizeTotalTimes('sum', 'completed', rating, user, games) }
-                                />
-                            </ChartWrapper>
-                            <ChartWrapper title='GAMES COMPLETED'>
-                                <DoughnutChart 
-                                    labels={ summarizeTotalGames('label', rating, user, games) }
-                                    dataset={ summarizeTotalGames('sum', rating, user, games) }
-                                />
-                            </ChartWrapper>
-                            <ChartWrapper title='COMPLETION TIMELINE' style={{ width: '100%' }}>
-                                <LineChart
-                                    labels={ getTimelines('label', rating, user, games) }
-                                    datasets={ [{
-                                            label: 'games',
-                                            data: getTimelines('games', rating, user, games) 
-                                        },
-                                        {
-                                            label: 'points',
-                                            data: getTimelines('points', rating, user, games) 
-                                        }]
-                                    }
-                                />
-                            </ChartWrapper>
+                    {
+                        user.points !== 0 
+                        ?
+                        <div className='flex-column'>
+                            <div className='profile-graphs'>
+                                <ChartWrapper title='HOURS PLAYED (TOTAL)'>
+                                    <DoughnutChart 
+                                        labels={ summarizeTotalTimes('label', 'total', rating, user, games) }
+                                        dataset={ summarizeTotalTimes('sum', 'total', rating, user, games) }
+                                    />
+                                </ChartWrapper>
+                                <ChartWrapper title='HOURS PLAYED (COMPLETED)'>
+                                    <DoughnutChart 
+                                        labels={ summarizeTotalTimes('label', 'completed', rating, user, games) }
+                                        dataset={ summarizeTotalTimes('sum', 'completed', rating, user, games) }
+                                    />
+                                </ChartWrapper>
+                                <ChartWrapper title='GAMES COMPLETED'>
+                                    <DoughnutChart 
+                                        labels={ summarizeTotalGames('label', rating, user, games) }
+                                        dataset={ summarizeTotalGames('sum', rating, user, games) }
+                                    />
+                                </ChartWrapper>
+                                <ChartWrapper title='COMPLETION TIMELINE' style={{ width: '100%' }}>
+                                    <LineChart
+                                        labels={ getTimelines('label', rating, user, games) }
+                                        datasets={ [{
+                                                label: 'games',
+                                                data: getTimelines('games', rating, user, games) 
+                                            },
+                                            {
+                                                label: 'points',
+                                                data: getTimelines('points', rating, user, games) 
+                                            }]
+                                        }
+                                    />
+                                </ChartWrapper>
+                            </div>
                         </div>
-                    </div>
+                        : null
+                    }
                 </div>
             </div>
         )

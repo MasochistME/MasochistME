@@ -35,7 +35,7 @@ class MemberSummary extends React.Component {
                     <div className={ `member-name ${ shekelmaster ? `tier${tier}` : ''}` } onClick={ () => this.showProfile( member.id ) }>{ member.name }</div>
                     <div className="member-ranking flex-row">
                         <div className="member-rating-score">
-                            { member.points }
+                            { member.points ? member.points : 0}
                             <span className="bold"> Σ</span>
                         </div>
                         {   
@@ -43,7 +43,7 @@ class MemberSummary extends React.Component {
                                 return <div className="member-rating-score" key={`member-rating-score-${scoreIndex}`}>
                                     { member.ranking[score.id] !== undefined
                                         ? member.ranking[score.id]
-                                        : "NaN" }
+                                        : 0 }
                                     <i className={ score.icon } style={{ paddingRight: "5px"}}/> 
                                 </div>
                             })

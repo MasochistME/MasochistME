@@ -7,7 +7,7 @@ class PageRanking extends React.Component {
     render() {
         const { props } = this;
         const rating = this.props.rating;
-        const ranking = this.props.members; //change names here
+        const ranking = this.props.members.filter(member => member.member); //change names here
         const patrons = this.props.patrons;
 
         const createRankingList = () => {
