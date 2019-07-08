@@ -41,13 +41,15 @@ const fillGameData = (id, desc, score) => ({
 /**
  * Returns all curated games
  */
-export const getCuratorGames = async (req, res) => { 
+export const getCuratorGames = async (req?, res?) => { 
     try {
         const games = await getDataFromDB('games');
-        res.status(200).send(games);
+        if (res)
+            res.status(200).send(games);
     }
     catch(err) {
-        res.status(500).send(err)
+        if (res)
+            res.status(500).send(err)
     }    
 }
 
@@ -69,7 +71,7 @@ export const getCuratedGamesFromTier = async (req, res) => {
  * Updates the list of curated games
  * @param req.headers.force_update - to force update all games
  */
-export const updateCuratorGames = async (req, res) => { 
+export const updateCuratorGames = async (req?, res?) => { 
     const urlCuratedGames = 'http://store.steampowered.com/curator/7119343-0.1%25/ajaxgetfilteredrecommendations/render?query=&start=0&count=1000&tagids=&sort=recent&types=0';
     const points:Array<TRating> = await getDataFromDB('points');
     const gamesDB:Array<TGame> = await getDataFromDB('games');
@@ -77,10 +79,12 @@ export const updateCuratorGames = async (req, res) => {
     let games:Array<TGame> = [ ];
 
     if (!response || !response.data || !response.data.results_html) {
-        res.sendStatus(500);
+        if (res)
+            res.sendStatus(500);
         return;
     }
-    res.status(202).send('Initiated UPDATE on curated games list.');
+    if (res)
+        res.status(202).send('Initiated UPDATE on curated games list.');
     log.INFO('--> [UPDATE] curated games list');
     /*
         Downloads current curated games' list.
@@ -107,7 +111,7 @@ export const updateCuratorGames = async (req, res) => {
         All games get force updated in presence of force_update header.
         TODO handling games which got their number of achievements changed!!!
     */
-    if (!req.headers.force_update)
+    if (req && req.headers && !req.headers.force_update)
         games = games.filter((game:TGame) => !gamesDB.find(gameDB => gameDB.id === game.id));
     if (games.length === 0) {
         log.INFO('--> [UPDATE] curated games list [DONE]');
@@ -160,9 +164,9 @@ export const updateCuratorGames = async (req, res) => {
             date: Date.now(),
             type:'newGame',
             game: gameId            
-        }
+        } // TODO add event if achievement number changes
         const { client, db } = await connectToDb();
-        if (!req.headers.force_update) {
+        if (req && req.headers && !req.headers.force_update) {
             db.collection('events').insertOne(eventDetails, (err, data) => { });
         }
         db.collection('games').updateOne({id: gameId}, {$set: gameDetails}, { upsert: true }, (err, data) => {
@@ -219,16 +223,22 @@ const extractMemberIDs = raw => {
 }
 
 
-export const getCuratorMembers = (req, res) => new Promise((resolve, reject) => {
+export const getCuratorMembers = (req?, res?) => new Promise((resolve, reject) => {
     const url = 'http://steamcommunity.com/gid/7119343/memberslistxml/?xml=1';
+    log.INFO('--> [UPDATE] curator members list [START]')
     axios.get(url)
         .then(curator => {
             let members = extractMemberIDs(curator.data);
             resolve(members);
-            res.send(members);
+            if (res)
+                res.send(members);
+            log.INFO('--> [UPDATE] curator members list [DONE]')
         })
         .catch(err => {
             reject(err);
-            res.status(500).send(err);
+            if (res)
+                res.status(500).send(err);
+            log.WARN('--> [UPDATE] curator members list [ERROR]')
+            log.WARN(err)
         })
 })

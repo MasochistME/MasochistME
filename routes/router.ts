@@ -1,7 +1,7 @@
 import express from 'express';
 export const router = express.Router();
 
-import { initiateMainUpdate } from './update';
+import { initiateMainUpdate, getStatus } from './update';
 import { getSteamID, getRating } from './special';
 import { getAllBadges, getBadge, addBadge, updateBadge, deleteBadge, giveBadge } from './badges';
 import { getAllPatrons, getPatronsByTier, getPatron, addPatron, updatePatron, deletePatron } from './patrons';
@@ -42,3 +42,4 @@ router.get('/events', getEvents)
 // TODO add events 
 
 router.get('/update', initiateMainUpdate)
+router.get('/status', getStatus)

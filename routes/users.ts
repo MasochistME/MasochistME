@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { log } from '../helpers/log';
 import { connectToDb, getDataFromDB } from '../helpers/db';
-import { hash } from '../helpers/hash';
 import cache from '../cache';
 import config from '../config.json';
 
@@ -97,7 +96,8 @@ const getUserAchievements = (userID:number, games:object) => new Promise((resolv
             log.WARN(`--> [${index+1}/${Object.keys(games).length}] game ${ gameID } (user ${userID}) - [ERROR] - ${ url }`);
             log.WARN(err);
             if (games[index+1]) {
-                setTimeout(() => getAchievementsDetails(index + 1), config.DELAY); // FIXME if this screws up uptade doubles
+                setTimeout(() => getAchievementsDetails(index + 1), config.DELAY);
+                return;
             }
             else {
                 log.INFO(`--> [UPDATE] achievements for ${ userID } [DONE]`);
