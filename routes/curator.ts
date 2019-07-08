@@ -189,6 +189,46 @@ export const updateCuratorGames = async (req, res) => {
     getGameDetails(0);
 }
 
-export const getCuratorMembers = (req, res) => {
-    const url = 'http://steamcommunity.com/gid/7119343/memberslistxml/?xml=1';
+const extractMemberIDs = raw => {
+    const rawMembers = raw
+        .toString()
+        .substring(
+            raw.indexOf("<steamID64>"), 
+            raw.indexOf("</members>")
+        )
+    const memberIDs = rawMembers.split("</steamID64>");
+    return memberIDs
+        .map(id => {
+            const memberID = id
+                .replace('</steamID64>', '')
+                .replace('<steamID64>', '')
+                .replace('\r\n', ''); 
+            return {
+                name: '',
+                avatar: '',
+                url: `https://steamcommunity.com/profiles/${memberID}`,
+                games: [],
+                ranking: [],
+                badges: [],
+                private: false,
+                updated: 0,
+                member: true,
+                id: memberID
+            }
+        }).filter(m => m.id.length > 0)
 }
+
+
+export const getCuratorMembers = (req, res) => new Promise((resolve, reject) => {
+    const url = 'http://steamcommunity.com/gid/7119343/memberslistxml/?xml=1';
+    axios.get(url)
+        .then(curator => {
+            let members = extractMemberIDs(curator.data);
+            resolve(members);
+            res.send(members);
+        })
+        .catch(err => {
+            reject(err);
+            res.status(500).send(err);
+        })
+})

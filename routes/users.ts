@@ -190,8 +190,13 @@ export const updateUser = async (req, res) => { // TODO remove badges that dont 
         log.WARN(`--> [UPDATE] updating user ${req.params.steamid} [DONE]`);
         return;
     }
-    if (cache.updating.length === 1) {
+    if (cache.updating.length === 3) {
         res.status(202).send('Too many users are updating now - retry in a few minutes');
+        log.WARN(`--> [UPDATE] updating user ${req.params.steamid} [DONE]`);
+        return;
+    }
+    if (cache.updating.find(updating => updating.user === req.params.steamid)) {
+        res.status(202).send('This user is already being updated');
         log.WARN(`--> [UPDATE] updating user ${req.params.steamid} [DONE]`);
         return;
     }
@@ -214,7 +219,8 @@ export const updateUser = async (req, res) => { // TODO remove badges that dont 
         ranking: rankingAsync,
         badges: [], // FIXME this removes all the badges
         private: userGamesData.data ? false : true,
-        updated: Date.now()
+        updated: Date.now(),
+        // member: false // TODO check if Steam user is member!!!
     };
 
     db.collection('users').updateOne({ id: req.params.steamid }, {$set: user}, { upsert: true }, (err, data) => {
