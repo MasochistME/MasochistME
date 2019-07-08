@@ -164,7 +164,7 @@ class Profile extends React.Component {
                             }
                         </div>
                         <div className='profile-date flex-row' style={{ marginBottom: '5px' }}>
-                            { <span>{`Last updated: ${new Date(user.updated).toLocaleString()}`}</span> }
+                            { <span>{`Last updated: ${user.updated === 0 ? 'never' : new Date(user.updated).toLocaleString()}`}</span> }
                             {
                                 Date.now() - user.updated > 3600000
                                     ? this.state.updating
@@ -195,7 +195,7 @@ class Profile extends React.Component {
                     </div>
                     */ }
                     {
-                        user.points !== 0 
+                        !isNaN(user.points) && user.points !== 0
                         ?
                         <div className='flex-column'>
                             <div className='profile-graphs'>
