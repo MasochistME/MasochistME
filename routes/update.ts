@@ -2,24 +2,8 @@ import axios from 'axios';
 import { log } from '../helpers/log';
 import { connectToDb, getDataFromDB } from '../helpers/db';
 import { getCuratorMembers, updateCuratorGames } from './curator';
+import { TMemberJoinedEvent, TMemberLeftEvent } from './types/events';
 import config from '../config.json';
-
-type TMemberJoinedEvent = {
-    date:number,
-    type:'memberJoined',
-    member:string
-}
-type TMemberLeftEvent = {
-    date:number,
-    type:'memberLeft',
-    member:string
-}
-type TTierChangeEvent = {
-    date:number,
-    type:'tierChange',
-    oldTier:string,
-    newTier:string
-}
 
 const updateDelay = 43200000
 
@@ -38,9 +22,7 @@ export const getStatus = async (req, res) => {
 export const initiateMainUpdate = async (req, res) => {
     const { client, db } = await connectToDb();
     const usersFromDB = await getDataFromDB('users');
-    const gamesFromDB = await getDataFromDB('games');
     let members; 
-    let games;
 
     try {
         const lastUpdated = await getDataFromDB('special', { id: 'lastUpdated' }); // don't update too fast
@@ -64,27 +46,12 @@ export const initiateMainUpdate = async (req, res) => {
         return;
     }
     try {
-        games = await updateCuratorGames();
+        await updateCuratorGames(); // TODO event for achievement number change
     }
     catch(err) {
         log.WARN(err);
         return;
     }
-
-    games.map(game => {
-        const oldGame = gamesFromDB.find(gameFromDB => game.id === gameFromDB.id);
-        if (oldGame && oldGame.rating !== game.rating) {
-            log.INFO(`--> [UPDATE] events - game ${game.id} changed tier`)
-            const eventDetails:TTierChangeEvent = {
-                date: Date.now(),
-                type:'tierChange',
-                oldTier: oldGame.rating,
-                newTier: game.rating
-            }
-            db.collection('events').insertOne(eventDetails, (err, data) => { });
-        }
-    })
-
 
     usersFromDB.map(userFromDB => {
         if (userFromDB.member && !members.find(member => userFromDB.id === member.id)) {

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { log } from '../helpers/log';
 import { connectToDb, getDataFromDB } from '../helpers/db';
+import { TGameEvent, TTierChangeEvent } from './types/events';
 import config from '../config.json';
 
 type TRating = {
@@ -25,11 +26,6 @@ type TGame = {
         onSale:boolean,
         discount:number
     }
-}
-type TGameEvent = {
-    date:number,
-    type:'newGame',
-    game:string
 }
 
 const fillGameData = (id, desc, score) => ({
@@ -164,7 +160,20 @@ export const updateCuratorGames = async (req?, res?) => {
             }
         }
 
-        if (!gamesDB.find(gameDB => gameDB.id === gameId)) {
+        const oldGame = gamesDB.find(gameDB => gameDB.id === gameId);
+        if (oldGame && oldGame.rating !== games[index].rating) {
+            log.INFO(`--> [UPDATE] events - game ${gameId} changed tier`)
+            const eventDetails:TTierChangeEvent = {
+                date: Date.now(),
+                type:'tierChange',
+                game: gameId,
+                oldTier: oldGame.rating,
+                newTier: games[index].rating
+            }
+            db.collection('events').insertOne(eventDetails, (err, data) => { });
+        }
+
+        if (!oldGame) {
             const eventDetails:TGameEvent = {
                 date: Date.now(),
                 type:'newGame',
