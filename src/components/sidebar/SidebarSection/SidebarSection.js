@@ -3,6 +3,7 @@ import SectionUpdate from '../Sections/SectionUpdate'
 import SectionHistory from '../Sections/SectionHistory'
 import SectionTop from '../Sections/SectionTop'
 import SectionTrivia from '../Sections/SectionTrivia'
+import SectionSale from '../Sections/SectionSale'
 
 const returnProperSection = section => {
     switch(section) {
@@ -10,6 +11,7 @@ const returnProperSection = section => {
         case 'trivia': return <SectionTrivia />
         case 'top': return <SectionTop />
         case 'history': return <SectionHistory />
+        case 'sales': return <SectionSale />
         default: return null
     }
 }

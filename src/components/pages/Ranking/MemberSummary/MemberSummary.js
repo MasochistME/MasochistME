@@ -1,37 +1,50 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { changeTab } from '../../../../shared/store/modules/Tabs'
+import { showProfile } from '../../../../shared/store/modules/Profiles'
 
 class MemberSummary extends React.Component {
+    showProfile = id => {
+        this.props.dispatch(showProfile(id));
+        this.props.dispatch(changeTab('profile'));
+    }
+
     render() {
         const { member, index, rating, patron } = this.props
         const disabled = member.points === 0 ? true : false
         const tier = patron 
             ? patron.tier
             : null
+        const shekelmaster = tier == 4
 
         return(
-            <div className={disabled ? 'member-disabled member-summary flex-row' : 'member-summary flex-row' }>
+            <div className={`member-summary flex-row ${disabled ? 'member-disabled' : ''} ${shekelmaster ? 'member-shekelmaster' : '' }` }>
                 <div className="member-position">{ index+1 }</div>
-                <img className={ `member-avatar ${tier ? `member-patron tier${tier}` : ''}`} src={ member.avatar } alt="avatar" title={ tier ? `This member is a tier ${ patron.description.toUpperCase() } supporter` : ''} />
+                <img className="member-avatar" src={ member.avatar } alt="avatar" />
+                {
+                    tier 
+                        ? <i className={ `fas fa-donate member-patron tier${tier}` } title={ patron.description.toUpperCase() } />
+                        : <i className='fas fa-donate member-patron' style={{ color: 'transparent' }}/>
+                }
                 <div className="member-info flex-row">
                     {
                         disabled
                             ? <icon className="fas fa-exclamation-triangle" title="This member has their Steam profile set to private."></icon> 
                             : <div></div>
                     }
-                    <div className="member-name">{ member.name }</div>
+                    <div className={ `member-name ${ shekelmaster ? `tier${tier}` : ''}` } onClick={ () => this.showProfile( member.id ) }>{ member.name }</div>
                     <div className="member-ranking flex-row">
                         <div className="member-rating-score">
-                            { member.points }
+                            { member.points ? member.points : 0}
                             <span className="bold"> Σ</span>
                         </div>
                         {   
                             rating.map((score, scoreIndex) => {
                                 return <div className="member-rating-score" key={`member-rating-score-${scoreIndex}`}>
-                                    { member.ranking[score.score] !== undefined
-                                        ? member.ranking[score.score]
-                                        : "NaN" }
-                                    <i className={ score.link } style={{ paddingRight: "5px"}}/> 
+                                    { member.ranking[score.id] !== undefined
+                                        ? member.ranking[score.id]
+                                        : 0 }
+                                    <i className={ score.icon } style={{ paddingRight: "5px"}}/> 
                                 </div>
                             })
                         }

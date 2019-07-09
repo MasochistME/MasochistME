@@ -9,7 +9,7 @@ import Nav from '../shared/components/Nav'
 import ContentWrapper from '../shared/components/layout/ContentWrapper'
 import SidebarWrapper from './sidebar/SidebarWrapper' 
 import LoginModal from '../shared/components/LoginModal/index'
-import { cacheGames, cacheMembers, cacheRating, cacheEvents, cacheBlog, cachePatrons } from '../shared/store/modules/Cache'
+import { cacheGames, cacheMembers, cacheRating, cacheEvents, cacheBlog, cachePatrons, cacheBadges } from '../shared/store/modules/Cache'
 
 class App extends Component {
   constructor() {
@@ -18,7 +18,7 @@ class App extends Component {
   }
 
   loadRating = () => {
-    axios.get('/rest/data/rating')  
+    axios.get('/rest/api/rating')  
         .then(response => {
             if (response.status === 200)
               return this.props.dispatch(cacheRating(response.data))
@@ -41,7 +41,7 @@ class App extends Component {
                 let members = response.data;
                 members.map(member => {
                     let summary = 0
-                    this.props.state.rating.map(r => summary += r.score * member.ranking[r.score])
+                    this.props.state.rating.map(r => summary += r.score * member.ranking[r.id]) 
                     member.points = summary
                     return member   
                 })
@@ -75,6 +75,14 @@ class App extends Component {
         }).catch(err => console.trace(err))
   }
 
+  loadBadges = () => {
+    axios.get('/rest/api/badges')  
+        .then(response => {
+            if (response.status === 200)
+              return this.props.dispatch(cacheBadges(response.data))
+        }).catch(err => console.trace(err))
+  }
+
   load() {
     this.loadRating()
     this.loadMembers()
@@ -82,6 +90,7 @@ class App extends Component {
     this.loadEvents()
     this.loadBlog()
     this.loadPatrons()
+    this.loadBadges()
     this.setState({ loaded: true })
   }
 

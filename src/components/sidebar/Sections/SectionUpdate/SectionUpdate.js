@@ -6,36 +6,30 @@ export default class SectionUpdate extends React.Component {
         super()
         this.state = {
             updating: false,
-            updateTimeout: 43200000
-        }        
-        this.checkStatus = this.checkStatus.bind(this);
-        this.sendUpdateRequest = this.sendUpdateRequest.bind(this);
-        
-        this.statusInterval = setInterval(() => this.checkStatus(), 1000);
-    }
-
-    checkStatus() {
-        let url = `/rest/status`
-        axios.get(url)
-            .then(res => this.setState({ ...res.data }))
-            .catch(err => console.log(err))
-    }
+            updateTimeout: 43200000,
+            lastUpdated: this.getUpdateDate()
+        }           
+    }   
 
     sendUpdateRequest() {
-        let url = `/rest/update`
+        let url = `http://localhost:3002/rest/update`
         axios.get(url)
             .then(res => console.log(res.data.content))
             .catch(err => console.log(err))
     }
 
-    getUpdateDate(date) {
-        return date
-            ? new Date(date).toLocaleString()
-            : "Unknown"
+    getUpdateDate() {
+        let url = `http://localhost:3002/rest/status`
+        axios.get(url)
+            .then(res => this.setState({ lastUpdated: res.data.lastUpdated }))
+            .catch(err => {
+                this.setState({ lastUpdated: 'unknown' })
+                console.log(err);
+            })
     }
 
     timeoutBeforeUpdate() {
-        const timeout = Math.ceil((this.state.updateTimeout - (Date.now() - this.state.lastUpdate))/60000)
+        const timeout = Math.ceil((this.state.updateTimeout - (Date.now() - this.state.lastUpdated))/60000)
         return timeout;
     }
 
@@ -48,7 +42,7 @@ export default class SectionUpdate extends React.Component {
     render() {
         return(
         <div className='section'>
-            <h3 className='section-title'>Last updated: { this.getUpdateDate(this.state.lastUpdate) }</h3>
+            <h3 className='section-title'>Last updated: { new Date(this.state.lastUpdated).toLocaleString() }</h3>
             <div className="flex-column">
             {
                 this.state.updating
@@ -68,14 +62,12 @@ export default class SectionUpdate extends React.Component {
                         }
                         title={
                             this.blockUpdateIfTooSoon()
-                                ? `${Math.ceil((this.state.updateTimeout - (Date.now() - this.state.lastUpdate))/3600000)}:${Math.ceil(((this.state.updateTimeout - (Date.now() - this.state.lastUpdate))%3600000)/60000)} hours till you can update again`
+                                ? `${Math.ceil((this.state.updateTimeout - (Date.now() - this.state.lastUpdated))/3600000)}:${Math.ceil(((this.state.updateTimeout - (Date.now() - this.state.lastUpdated))%3600000)/60000)} hours till you can update again`
                                 : "Update"
                         }
                         >Update</button> )
             }
             </div>
-            
-                
         </div>)
     }
 }

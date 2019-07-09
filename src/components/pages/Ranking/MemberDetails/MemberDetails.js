@@ -13,11 +13,11 @@ export default class MemberDetails extends React.Component {
                 let gameDetails = games.find(g => Number(g.id) === Number(game.appid))
                 if (!gameDetails) 
                     gameDetails = { title: "unknown", rating: "unknown", img: "unknown", playtime_forever: 0 }
-                let ratingIcon = rating.find(r => r.score === gameDetails.rating);
+                let ratingIcon = rating.find(r => r.id === gameDetails.rating);
                 return <MemberGame game={{ 
                     ...game, 
                     title: gameDetails.title,
-                    rating: ratingIcon ? ratingIcon.link : 'fas fa-spinner',
+                    rating: ratingIcon ? ratingIcon.icon : 'fas fa-spinner',
                     img: gameDetails.img
                 }} /> 
             })

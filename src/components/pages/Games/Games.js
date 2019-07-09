@@ -25,9 +25,9 @@ class PageGames extends React.Component{
                         <div className='wrapper-choicebar'>
                             {
                                 rating.map(r => <CheckBoxGameChoice 
-                                    key={ `checkbox-game-${ r.score }` }
-                                    score={ r.score } 
-                                    icon={ swapRatingToIcon(r.score, rating) }/> )
+                                    key={ `checkbox-game-${ r.id }` }
+                                    score={ r.id } 
+                                    icon={ swapRatingToIcon(r.id, rating) }/> )
                             }
                         </div>
                         <SearchBar />

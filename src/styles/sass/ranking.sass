@@ -2,6 +2,9 @@
 @import 'vars/fonts'
 @import 'vars/media'
     
+.wrapper-ranking
+    width: 100%
+
 .ranking-list
     list-style-type: none
     margin: 0
@@ -31,6 +34,9 @@
         border-top: none
     @media (max-width: $small-netbooks)
         padding: 0
+.member-shekelmaster
+    background-color: $tier4-transparent
+    border: 1px solid $tier4-muted
 
 .member-position
     display: flex
@@ -50,19 +56,23 @@
     max-width: 64px 
     max-height: 64px 
     box-sizing: border-box 
-    padding: 2px
+    padding: 5px
     border-left: 1px solid $newmediumgrey
     @media (max-width: $tablets)
         display: none
 .member-patron
+    margin-left: 10px
+    cursor: help
+    color: $superdarkgrey
+    font-size: 1.3em
     &.tier1
-        border: 2px solid $tier1
+        text-shadow: 0 0 5px $tier1
     &.tier2
-        border: 2px solid $tier2
+        text-shadow: 0 0 5px $tier2
     &.tier3
-        border: 2px solid $tier3
+        text-shadow: 0 0 5px $tier3
     &.tier4
-        border: 2px solid $tier4
+        text-shadow: 0 0 5px $tier4
 .member-info
     align-items: center
     justify-content: space-between
@@ -74,6 +84,14 @@
         padding: 0 5px
 .member-name
     text-transform: uppercase
+    &.tier1
+        color: $tier1
+    &.tier2
+        color: $tier2
+    &.tier3
+        color: $tier3
+    &.tier4
+        color: $tier4
 .member-rating-score
     display: flex
     padding: 5px    

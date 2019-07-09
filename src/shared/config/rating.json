@@ -2,25 +2,25 @@
     {
         "icon": "🌟",
         "link": "fas fa-star",
-        "score": 10,
+        "id": "4",
         "desc": "requires an insane amount of dedication and determinaton"
     },
     {
         "icon": "✪",
         "link": "fas fa-star-half-alt",
-        "score": 5,
+        "id": "3",
         "desc": "hardcore difficulty with guaranteed progress"
     },
     {
         "icon": "☆",
         "link": "far fa-star",
-        "score": 2,
+        "id": "2",
         "desc": "already much harder/longer"
     },
     {
         "icon": "✓",
         "link": "fas fa-check",
-        "score": 1,
+        "id": "1",
         "desc": "a relatively tame difficulty"
     }    
 ]

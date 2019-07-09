@@ -3,7 +3,7 @@
 
 .wrapper-profile
   display: flex
-  flex-direction: row
+  flex-direction: column
   flex-wrap: wrap
   justify-content: center
   align-items: center
@@ -12,31 +12,98 @@
   padding: 10px
   width: 100%
   box-sizing: border-box
-  background-color: $superlightgrey
-.wrapper-profile > *
-  width: 100%
-.profile-section
-  border-top: 1px solid $lightgrey
-  margin-bottom: 20px 
-.profile-section-user, .profile-section-admin
-  padding: 10px 30px
-  background-color: rgba($superlightgrey, 0.8)
-  h3
-    margin: 0 0 20px 0
-  input
-    width: 70%
-  ul
-    list-style-type: none
-    margin: 0
-    padding: 0
-  ul li
-    padding: 5px
-    border-bottom: 1px solid $mediumgrey
-    border-top: 1px solid $superlightgrey
-.profile-management-member
+  background-color: $darkbluetransparent
+
+.profile-basic
+  background-color: rgba($superdarkgrey,0.3)
+  margin-bottom: 10px
+  padding-right: 10px
+  box-sizing: border-box
+  box-shadow: 0 0 5px $superdarkgrey
+  border-bottom: 1px solid $mediumgrey
+  border-right: 1px solid $mediumgrey
+  border-left: 1px solid $superdarkgrey
+  border-top: 1px solid $superdarkgrey
+
+.profile-avatar 
+  width: 128px
+  min-width: 128px
+  height: 128px
+  min-height: 128px
+  margin: 15px
+  border-radius: 10px
+  box-sizing: border-box
+  box-shadow: 0 0 10px $black
+  padding: 2px
+  &.tier1
+    // border: 5px solid $tier1
+    background-color: $black
+  &.tier2
+    border: 5px solid $tier2
+    background-color: $black
+  &.tier3
+    border: 5px solid $tier3
+    background-color: $black
+  &.tier4
+    border: 5px solid $tier4
+    background-color: $black
+.profile-patron
+  cursor: help
+.profile-date
+  text-transform: uppercase
+  letter-spacing: 0.1em
+  font-size: 0.8em
+
+.profile-badges
+  display: flex
+  flex-direction: flex-row
+  flex-wrap: wrap
+  justify-content: center
+  align-items: center
+  padding: 10px
+  margin-bottom: 20px
+  border-radius: 10px
+  background-color: $darkbluetransparent
+  box-shadow: 0 0 10px $superdarkgrey
+  box-sizing: border-box
+.profile-badge
+  border-radius: 10px
+  border: 3px solid $superlightgrey
+  box-sizing: border-box
+  cursor: help
+  box-shadow: 0 0 5px $superdarkgrey
+
+.profile-graphs
   display: flex
   flex-direction: row
-  justify-content: space-between
   align-items: center
-  height: 32px
-  border-bottom: 1px solid $darkgrey
+  justify-content: space-between
+  flex-wrap: wrap
+
+// .wrapper-profile > *
+//   width: 100%
+// .profile-section
+//   border-top: 1px solid $lightgrey
+//   margin-bottom: 20px 
+// .profile-section-user, .profile-section-admin
+//   padding: 10px 30px
+//   background-color: rgba($superlightgrey, 0.8)
+//   h3
+//     margin: 0 0 20px 0
+//   input
+//     width: 70%
+//   ul
+//     list-style-type: none
+//     margin: 0
+//     padding: 0
+//   ul li
+//     padding: 5px
+//     border-bottom: 1px solid $mediumgrey
+//     border-top: 1px solid $superlightgrey
+// .profile-management-member
+//   display: flex
+//   flex-direction: row
+//   justify-content: space-between
+//   align-items: center
+//   height: 32px
+//   border-bottom: 1px solid $darkgrey

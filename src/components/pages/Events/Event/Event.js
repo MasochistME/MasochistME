@@ -20,7 +20,7 @@ class GameEvent extends React.Component {
                 
                 <div className="event-summary flex-row">
                     <i className={ game ? "fas fa-plus-square" : "fas fa-exclamation-triangle" }></i> 
-                    <i className={ rating ? rating.link : "far fa-question-circle" }></i> 
+                    <i className={ rating ? rating.icon : "far fa-question-circle" }></i> 
                     <img className="event-img" alt="game-img" src={ game ? game.img : logo }></img>
                 </div>
             </div>
@@ -65,7 +65,7 @@ const CompleteEvent = props => {
             
             <div className="event-summary flex-row">
                 <i className={ member ? "fas fa-check-square" : "fas fa-exclamation-triangle" }></i>
-                <i className={ rating ? rating.link : "far fa-question-circle" }></i>
+                <i className={ rating ? rating.icon : "far fa-question-circle" }></i>
                 <img className="event-img" src={ game ? game.img : logo } alt="game-img"></img>
             </div>
         </div>
@@ -90,7 +90,7 @@ const TierChangeEvent = props => {
                         ? <i className={ game ? "fas fa-caret-square-down" : "fas fa-exclamation-triangle" }></i> 
                         : <i className={ game ? "fas fa-caret-square-up" : "fas fa-exclamation-triangle" }></i> 
                     }
-                    <i className={ rating ? rating.link : "far fa-question-circle" }></i> 
+                    <i className={ rating ? rating.icon : "far fa-question-circle" }></i> 
                     <img className="event-img" alt="game-img" src={ game ? game.img : logo }></img>
                 </div>
             </div>
@@ -116,7 +116,7 @@ const AchievementNumberChangeEvent = props => {
                 </div>
                 <div className="event-summary flex-row">
                     <i className={ game ? "fas fa-tasks" : "fas fa-exclamation-triangle" }></i> 
-                    <i className={ rating ? rating.link : "far fa-question-circle" }></i> 
+                    <i className={ rating ? rating.icon : "far fa-question-circle" }></i> 
                     <img className="event-img" alt="game-img" src={ game ? game.img : logo }></img>
                 </div>
             </div>
