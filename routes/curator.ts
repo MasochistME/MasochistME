@@ -105,7 +105,6 @@ export const updateCuratorGames = async (req?, res?) => {
         Compares it with the games' list saved in database.
         Games which are not in database are updated now.
         All games get force updated in presence of force_update header.
-        TODO handling games which got their number of achievements changed!!!
     */
     if (req && req.headers && !req.headers.force_update)
         games = games.filter((game:TGame) => !gamesDB.find(gameDB => gameDB.id === game.id));

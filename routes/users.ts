@@ -150,24 +150,7 @@ const getUserAchievements = (userID:number, games:object, userToUpdate:any) => n
         else {
             log.INFO(`--> [UPDATE] achievements for ${ userID } [DONE]`);
             resolve(games);
-        }
-        
-        // TODO logic for new completion event
-
-        // if (completionRate === 100
-        //     && Date.now() - (lastUnlocked*1000) <= 604800000
-        //     && cache.log.filter(log => log.type == "complete" 
-        //         && Number(log.player) === Number(cache.members[memberIndex].id) 
-        //         && Number(log.game) === Number(cache.members[memberIndex].games[gameIndex].appid)).length == 0) 
-        //     {
-        //         cache.log.push({
-        //             "date": lastUnlockedAchievement * 1000,
-        //             "type": "complete",
-        //             "player": cache.members[memberIndex].id,
-        //             "game": cache.members[memberIndex].games[gameIndex].appid
-        //         });
-        //         console.log(`-- new 100% detected - adding to log file`);
-        // }     
+        } 
     }
     getAchievementsDetails(0);
 })

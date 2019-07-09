@@ -5,7 +5,7 @@ import { getCuratorMembers, updateCuratorGames } from './curator';
 import { TMemberJoinedEvent, TMemberLeftEvent } from './types/events';
 import config from '../config.json';
 
-const updateDelay = 43200000
+const updateDelay = config.BIG_DELAY;
 
 export const getStatus = async (req, res) => {
     try {
@@ -46,7 +46,7 @@ export const initiateMainUpdate = async (req, res) => {
         return;
     }
     try {
-        await updateCuratorGames(); // TODO event for achievement number change
+        await updateCuratorGames(); 
     }
     catch(err) {
         log.WARN(err);
@@ -65,6 +65,14 @@ export const initiateMainUpdate = async (req, res) => {
             db.collection('events').insertOne(eventDetails, (err, data) => { });
         }
     })
+
+    const finalize = () => {
+        db.collection('special').updateOne({ id: 'lastUpdated' }, {$set: {
+            id: 'lastUpdated',
+            timestamp: Date.now()
+        }}, { upsert: true }, (err, data) => { })
+        client.close();
+    }
 
     const iterateMembers = async (index:number) => {
         if (!usersFromDB.find(userFromDB => userFromDB.id === members[index].id)) {            
@@ -95,7 +103,7 @@ export const initiateMainUpdate = async (req, res) => {
                 setTimeout(() => iterateMembers(index + 1), config.DELAY);
             }
             else {
-                client.close();
+                finalize();
                 return;
             }
         }
@@ -104,11 +112,7 @@ export const initiateMainUpdate = async (req, res) => {
                 setTimeout(() => iterateMembers(index + 1), config.DELAY);
             }
             else {
-                client.close();
-                db.collection('special').updateOne({ id: 'lastUpdated' }, {$set: {
-                    id: 'lastUpdated',
-                    timestamp: Date.now()
-                }}, { upsert: true }, (err, data) => { })
+                finalize();
                 return;
             }
         }
