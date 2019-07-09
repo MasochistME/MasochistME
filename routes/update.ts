@@ -14,6 +14,12 @@ type TMemberLeftEvent = {
     type:'memberLeft',
     member:string
 }
+type TTierChangeEvent = {
+    date:number,
+    type:'tierChange',
+    oldTier:string,
+    newTier:string
+}
 
 const updateDelay = 43200000
 
@@ -32,6 +38,7 @@ export const getStatus = async (req, res) => {
 export const initiateMainUpdate = async (req, res) => {
     const { client, db } = await connectToDb();
     const usersFromDB = await getDataFromDB('users');
+    const gamesFromDB = await getDataFromDB('games');
     let members; 
     let games;
 
@@ -56,7 +63,6 @@ export const initiateMainUpdate = async (req, res) => {
         log.WARN(err);
         return;
     }
-
     try {
         games = await updateCuratorGames();
     }
@@ -64,14 +70,31 @@ export const initiateMainUpdate = async (req, res) => {
         log.WARN(err);
         return;
     }
+
+    games.map(game => {
+        const oldGame = gamesFromDB.find(gameFromDB => game.id === gameFromDB.id);
+        if (oldGame && oldGame.rating !== game.rating) {
+            log.INFO(`--> [UPDATE] events - game ${game.id} changed tier`)
+            const eventDetails:TTierChangeEvent = {
+                date: Date.now(),
+                type:'tierChange',
+                oldTier: oldGame.rating,
+                newTier: game.rating
+            }
+            db.collection('events').insertOne(eventDetails, (err, data) => { });
+        }
+    })
+
+
     usersFromDB.map(userFromDB => {
         if (userFromDB.member && !members.find(member => userFromDB.id === member.id)) {
             log.INFO(`--> [UPDATE] events - member ${userFromDB.id} left`)
             const eventDetails:TMemberLeftEvent = {
                 date: Date.now(),
-                type:'memberLeft', // TODO remove his member status!!!
+                type:'memberLeft',
                 member: userFromDB.id
             }
+            db.collection('users').updateOne({ id: userFromDB.id }, { $set: { member: false }}, (err, data) => { })
             db.collection('events').insertOne(eventDetails, (err, data) => { });
         }
     })
@@ -122,7 +145,6 @@ export const initiateMainUpdate = async (req, res) => {
                 return;
             }
         }
-        
     }
     iterateMembers(0);
 }

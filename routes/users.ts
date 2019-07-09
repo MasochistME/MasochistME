@@ -31,7 +31,7 @@ export const getUser = async (req, res) => {
     }
 }
 
-const getUserGames = (userID:number, curatedGames:any) => new Promise(async (resolve, reject) =>{
+const getUserGames = (userID:number, curatedGames:any, userToUpdate:any) => new Promise(async (resolve, reject) =>{
     log.INFO(`--> [UPDATE] games of user ${userID}`);
 
     const userGamesUrl = `https://steamcommunity.com/profiles/${userID}/games/?tab=all`;
@@ -78,7 +78,7 @@ const getUserGames = (userID:number, curatedGames:any) => new Promise(async (res
             }
         })
     try {
-        resolve(await getUserAchievements(userID, games));
+        resolve(await getUserAchievements(userID, games, userToUpdate));
     }
     catch(err) {
         resolve([ ])
@@ -86,7 +86,7 @@ const getUserGames = (userID:number, curatedGames:any) => new Promise(async (res
     return;
 })
 
-const getUserAchievements = (userID:number, games:object) => new Promise((resolve, reject) => {
+const getUserAchievements = (userID:number, games:object, userToUpdate:any) => new Promise((resolve, reject) => {
     log.INFO(`--> achievements of user ${ userID }`);
 
     const getAchievementsDetails = async (index:number) => {
@@ -115,6 +115,20 @@ const getUserAchievements = (userID:number, games:object) => new Promise((resolv
             
             games[index].completionRate = completionRate;
             games[index].lastUnlocked = lastUnlocked;
+
+            // event when 100%
+            const userGames = userToUpdate[0].games.find(g => g.appid === gameID)
+            if (userGames && (userGames.completionRate !== 100 && completionRate === 100)) {
+                log.INFO(`--> [UPDATE] events - user ${userID} completed ${gameID}`)
+                const eventDetails = {
+                    date: lastUnlocked,
+                    type:'complete',
+                    member: userID,
+                    game: gameID
+                }
+                const { client, db } = await connectToDb();
+                db.collection('events').insertOne(eventDetails, (err, data) => { });
+            }
         }
         catch (err) {
             log.WARN(`--> [${index+1}/${Object.keys(games).length}] game ${ gameID } (user ${userID}) - [ERROR] - ${ url }`);
@@ -227,7 +241,7 @@ export const updateUser = async (req, res) => { // TODO remove badges that dont 
         progress: 0
     })
 
-    const gamesAsync = await getUserGames(req.params.steamid, curatedGames);
+    const gamesAsync = await getUserGames(req.params.steamid, curatedGames, userToUpdate);
     const rankingAsync = await getUserRanking(curatedGames, gamesAsync); 
 
     userData = userData.data.response.players[0];
@@ -239,6 +253,7 @@ export const updateUser = async (req, res) => { // TODO remove badges that dont 
         games: gamesAsync,
         ranking: rankingAsync,
         badges: [], // FIXME this removes all the badges
+        // @ts-ignore:next-line
         private: gamesAsync.length === 0 ? false : true,
         updated: Date.now(),
         // member: false // TODO check if Steam user is member!!!

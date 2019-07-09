@@ -120,12 +120,15 @@ export const updateCuratorGames = async (req?, res?) => {
     const getGameDetails = async (index:number) => {
         const gameId = games[index].id;
         const urlGamesDetails = `http://store.steampowered.com/api/appdetails?appids=${gameId}`;
+        const { client, db } = await connectToDb();
         let game;
+
         try {
             game = await axios.get(urlGamesDetails);
         }
         catch(err) {
             log.INFO(`- saving game ${gameId} failed`);
+            log.INFO(`-- ${urlGamesDetails}`);
             log.WARN(err);
             if (games[index+1]) {
                 setTimeout(() => getGameDetails(index + 1), config.DELAY)
@@ -160,15 +163,17 @@ export const updateCuratorGames = async (req?, res?) => {
                     : 0
             }
         }
-        const eventDetails:TGameEvent = {
-            date: Date.now(),
-            type:'newGame',
-            game: gameId            
-        } // TODO add event if achievement number changes
-        const { client, db } = await connectToDb();
-        if (req && req.headers && !req.headers.force_update) {
+
+        if (!gamesDB.find(gameDB => gameDB.id === gameId)) {
+            const eventDetails:TGameEvent = {
+                date: Date.now(),
+                type:'newGame',
+                game: gameId           
+            };
             db.collection('events').insertOne(eventDetails, (err, data) => { });
+            log.INFO(`--> [UPDATE] events - game ${gameId} curated`)
         }
+
         db.collection('games').updateOne({id: gameId}, {$set: gameDetails}, { upsert: true }, (err, data) => {
             if (err) {
                 // @ts-ignore:next-line
