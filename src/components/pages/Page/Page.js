@@ -20,10 +20,6 @@ const assignPageType = tab => {
 }
 
 class Page extends React.Component{
-    componentDidMount() {
-        window.scrollTo(0, 0);
-    }
-
     render() {
         const { props } = this;
         return (

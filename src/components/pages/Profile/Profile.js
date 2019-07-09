@@ -132,6 +132,10 @@ class Profile extends React.Component {
             .catch(err => console.log(err));
     }
 
+    componentDidMount() {
+        window.scrollTo(0, 0);
+    }
+
     render() {
         const { props } = this;
         const user = props.members.find(member => member.id === props.id);
@@ -154,8 +158,8 @@ class Profile extends React.Component {
                             <h1 style={{ margin: '0' }}>
                                 <a href={ `https://steamcommunity.com/profiles/${user.id}` } target='_blank' rel='noopener noreferrer'>
                                     <i className="fab fa-steam" style={{ marginRight: '10px' }} />
+                                    { user.name } 
                                 </a>
-                                { user.name } 
                             </h1>
                             {
                                 patron

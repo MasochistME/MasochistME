@@ -1,10 +1,11 @@
 import React from 'react'
+import _ from 'lodash'
 import { connect } from 'react-redux'
 import Event from './Event'
 
 class PageEvents extends React.Component {
     render() {
-        const { props } = this
+        const events = _.orderBy(this.props.events, ['date'], ['desc']).slice(0,100);
 
         return (
             <div className='flex-column'>
@@ -14,6 +15,7 @@ class PageEvents extends React.Component {
                         <p>There are six different types of events:</p>
                         <ul className='event-types'>
                             <li><i className="fas fa-user-plus"></i> - new member joining the community,</li>
+                            <li><i className="fas fa-user-minus"></i> - member leaving the community,</li>
                             <li><i className="fas fa-plus-square"></i> - new game being curated,</li>
                             <li><i className="fas fa-check-square"></i> - member of the community finishing 100% of the game,</li>
                             <li><i className="fas fa-caret-square-up"></i> - game promoting a tier,</li>
@@ -25,9 +27,7 @@ class PageEvents extends React.Component {
                 </div>
                 <div className="wrapper-events">
                     <ul className="events-list"> 
-                    { props.events.slice(0, 100)
-                        .map((event, eventIndex) => <Event event={ event } key={ `event-${eventIndex}` }/>)
-                    }
+                    { events.map((event, eventIndex) => <Event event={ event } key={ `event-${eventIndex}` }/>) }
                     </ul>
                 </div>
             </div>

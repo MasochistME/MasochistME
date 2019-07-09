@@ -7,7 +7,7 @@ class GameEvent extends React.Component {
     render() {
         const { props } = this
         const game = props.games.find(g => Number(g.id) === Number(props.event.game))
-        const rating = props.rating.find(r => game ? Number(r.score) === Number(game.rating) : null)
+        const rating = props.rating.find(r => game ? Number(r.id) === Number(game.rating) : null)
 
         return (
             <div className="event-info flex-row">
@@ -28,27 +28,32 @@ class GameEvent extends React.Component {
     }
 }
 const MemberEvent = props => {
-    const member = props.members.find(m => Number(m.id) === Number(props.event.player))
+    const member = props.members.find(m => Number(m.id) === Number(props.event.member))
+    const action = props.action;
 
     return (
         <div className="event-info flex-row">
             <img className="event-img" alt="avatar" src={ member ? member.avatar : logo }></img>
             {
                 member
-                    ? <div className="event-desc"><span className="bold under">{ member ? member.name : `User ${props.event.player}` }</span> has joined the group!</div>
-                    : <div className="event-desc"><span className="bold under">{ member ? member.name : `User ${props.event.player}` }</span> (no longer member of the group) has joined the group!</div>
+                    ? <div className="event-desc"><span className="bold under">{ member ? member.name : `User ${props.event.member}` }</span> has { action === 'join' ? 'joined' : 'left'} the group!</div>
+                    : <div className="event-desc"><span className="bold under">{ member ? member.name : `User ${props.event.member}` }</span> has { action === 'join' ? 'joined' : 'left'} the group!</div>
             }
             <div className="event-summary flex-row">
-                <i className={ member ? "fas fa-user-plus" : "fas fa-exclamation-triangle" }></i>
+                <i className={ member 
+                    ? action === 'join' 
+                        ? 'fas fa-user-plus' 
+                        : 'fas fa-user-minus'
+                    : "fas fa-exclamation-triangle" }></i>
                 <img className="event-img" alt="game-img" src={ logo }></img>
             </div>
         </div>
     )
 }
 const CompleteEvent = props => {
-    const member = props.members.find(m => Number(m.id) === Number(props.event.player))
+    const member = props.members.find(m => Number(m.id) === Number(props.event.member))
     const game = props.games.find(g => Number(g.id) === Number(props.event.game))
-    const rating = props.rating.find(r => game ? Number(r.score) === Number(game.rating) : null)
+    const rating = props.rating.find(r => game ? Number(r.id) === Number(game.rating) : null)
 
     return (
         <div className="event-info flex-row">
@@ -56,11 +61,11 @@ const CompleteEvent = props => {
             {
                 member 
                     ? game //member yes
-                        ? <div className="event-desc"><span className="bold under">{ member ? member.name : `User ${props.event.player}` }</span> completed <span className="bold under">{ game ? game.title : `game ${props.event.game}` }</span>!</div>
-                        : <div className="event-desc"><span className="bold under">{ member ? member.name : `User ${props.event.player}` }</span> completed <span className="bold under">{ game ? game.title : `game ${props.event.game}` }</span> (no longer curated)!</div>
+                        ? <div className="event-desc"><span className="bold under">{ member ? member.name : `User ${props.event.member}` }</span> completed <span className="bold under">{ game ? game.title : `game ${props.event.game}` }</span>!</div>
+                        : <div className="event-desc"><span className="bold under">{ member ? member.name : `User ${props.event.member}` }</span> completed <span className="bold under">{ game ? game.title : `game ${props.event.game}` }</span> (no longer curated)!</div>
                     : game //member no
-                        ? <div className="event-desc"><span className="bold under">{ member ? member.name : `User ${props.event.player}` }</span> (no longer member of the group) completed <span className="bold under">{ game ? game.title : `game ${props.event.game}` }</span>!</div>
-                        : <div className="event-desc"><span className="bold under">{ member ? member.name : `User ${props.event.player}` }</span> (no longer member of the group) completed <span className="bold under">{ game ? game.title : `game ${props.event.game}` }</span> (no longer curated)!</div>
+                        ? <div className="event-desc"><span className="bold under">{ member ? member.name : `User ${props.event.member}` }</span> (no longer member of the group) completed <span className="bold under">{ game ? game.title : `game ${props.event.game}` }</span>!</div>
+                        : <div className="event-desc"><span className="bold under">{ member ? member.name : `User ${props.event.member}` }</span> (no longer member of the group) completed <span className="bold under">{ game ? game.title : `game ${props.event.game}` }</span> (no longer curated)!</div>
             }
             
             <div className="event-summary flex-row">
@@ -73,8 +78,8 @@ const CompleteEvent = props => {
 }
 const TierChangeEvent = props => {
     const game = props.games.find(g => Number(g.id) === Number(props.event.game))
-    const rating = props.rating.find(r => game ? Number(r.score) === Number(game.rating) : null)
-    const demoted = props.event.oldTier > props.event.newTier
+    const rating = props.rating.find(r => game ? Number(r.id) === Number(game.rating) : null)
+    const demoted = Number(props.event.oldTier) > Number(props.event.newTier)
 
     return (
         game && rating
@@ -99,7 +104,7 @@ const TierChangeEvent = props => {
 }
 const AchievementNumberChangeEvent = props => {
     const game = props.games.find(g => Number(g.id) === Number(props.event.game))
-    const rating = props.rating.find(r => game ? Number(r.score) === Number(game.rating) : null)
+    const rating = props.rating.find(r => game ? Number(r.id) === Number(game.rating) : null)
 
     return (
         game && rating
@@ -128,7 +133,8 @@ class Event extends React.Component {
     sortEvents = event => {
         switch (event.type) {
             case "newGame": return <GameEvent event={ event } games={ this.props.games } rating={ this.props.rating } />
-            case "newMember": return <MemberEvent event={ event } members={ this.props.members } />
+            case "memberJoined": return <MemberEvent event={ event } members={ this.props.members } action='join' />
+            case "memberLeft": return <MemberEvent event={ event } members={ this.props.members } action='leave' />
             case "complete": return <CompleteEvent event={ event } games={ this.props.games } members={ this.props.members } rating={ this.props.rating } />
             case "tierChange": return <TierChangeEvent event={ event } games={ this.props.games } rating={ this.props.rating } />
             case "achievementNumberChange": return <AchievementNumberChangeEvent event={ event } games={ this.props.games } rating={ this.props.rating } />
@@ -139,6 +145,7 @@ class Event extends React.Component {
     render() {
         const { props } = this
         const event = this.sortEvents(props.event)
+
         return (
             event
                 ? <li 
