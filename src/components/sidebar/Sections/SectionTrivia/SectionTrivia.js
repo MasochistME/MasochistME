@@ -28,7 +28,7 @@ class SectionTrivia extends React.Component {
     }
 
     render() {
-        const members = this.props.members;
+        const members = this.props.members.filter(member => member.member);
         const rating = this.props.rating;
 
         return(

@@ -1,19 +1,27 @@
 import React from 'react'
+import _ from 'lodash'
 import { connect } from 'react-redux'
 import { swapRatingToIcon } from '../../../../shared/helpers/helper'
 
 class SectionHistory extends React.Component {
     sortEvents = (event, eventIndex) => {
-        const player = this.props.members.find(m => Number(m.id) === Number(event.player))
+        const player = this.props.members.find(m => Number(m.id) === Number(event.member))
         const game = this.props.games.find(g => Number(g.id) === Number(event.game))
         const rating = this.props.rating
 
         switch (event.type) {
-            case 'newMember':
+            case 'memberJoined':
                 return player
                     ? (
                     <p className='small-event' key={ `sidebar-event-${eventIndex}` }>
                         <i className="fas fa-user-plus"></i><span className="bold"> {player.name}</span> has joined the group!
+                    </p>)
+                    : null
+            case 'memberLeft':
+                return player
+                    ? (
+                    <p className='small-event' key={ `sidebar-event-${eventIndex}` }>
+                        <i className="fas fa-user-minus"></i><span className="bold"> {player.name}</span> has left the group!
                     </p>)
                     : null
             case 'newGame':
@@ -54,14 +62,12 @@ class SectionHistory extends React.Component {
     }
 
     render() {
-        const { props } = this;
+        const events = _.orderBy(this.props.events, ['date'], ['desc']).slice(0,10);
 
         return (
         <div className='section'>
             <h3 className='section-title'>Last events</h3>
-                { props.events
-                    .slice(0,10)
-                    .map((event, eventIndex) => this.sortEvents(event, eventIndex) )}
+                { events.map((event, eventIndex) => this.sortEvents(event, eventIndex) )}
         </div>)
     }
 }

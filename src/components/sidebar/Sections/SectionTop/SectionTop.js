@@ -1,4 +1,5 @@
 import React from 'react'
+import _ from 'lodash';
 import { connect } from 'react-redux'
 
 class SectionTop extends React.Component { 
@@ -11,7 +12,8 @@ class SectionTop extends React.Component {
 
     render() {
         const { props } = this;
-        const members = props.members.slice(0, 10)
+        const members = _.orderBy(props.members, [member => member.points ? member.points : 0], ['desc']).slice(0, 10)
+
         return(
         <div className='section'>
             <h3 className='section-title'>Top 10 members</h3>
