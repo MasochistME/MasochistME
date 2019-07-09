@@ -7,12 +7,12 @@ import config from '../config.json';
 type TMemberJoinedEvent = {
     date:number,
     type:'memberJoined',
-    id:string
+    member:string
 }
 type TMemberLeftEvent = {
     date:number,
     type:'memberLeft',
-    id:string
+    member:string
 }
 
 const updateDelay = 43200000
@@ -69,8 +69,8 @@ export const initiateMainUpdate = async (req, res) => {
             log.INFO(`--> [UPDATE] events - member ${userFromDB.id} left`)
             const eventDetails:TMemberLeftEvent = {
                 date: Date.now(),
-                type:'memberLeft',
-                id: userFromDB.id
+                type:'memberLeft', // TODO remove his member status!!!
+                member: userFromDB.id
             }
             db.collection('events').insertOne(eventDetails, (err, data) => { });
         }
@@ -96,7 +96,7 @@ export const initiateMainUpdate = async (req, res) => {
             const eventDetails:TMemberJoinedEvent = {
                 date: Date.now(),
                 type:'memberJoined',
-                id: members[index].id
+                member: members[index].id
             }
             db.collection('events').insertOne(eventDetails, (err, data) => {})
             db.collection('users').insertOne(members[index], (err, data) => {})

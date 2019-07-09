@@ -31,38 +31,57 @@ export const getUser = async (req, res) => {
     }
 }
 
-const getUserGames = (userID:number, curatedGames:any, userGames:any) => new Promise(async (resolve, reject) =>{
+const getUserGames = (userID:number, curatedGames:any) => new Promise(async (resolve, reject) =>{
     log.INFO(`--> [UPDATE] games of user ${userID}`);
-    if (!userGames.data) {
+
+    const userGamesUrl = `https://steamcommunity.com/profiles/${userID}/games/?tab=all`;
+    const userGamesFallbackUrl = `http://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=${config.STEAM_KEY}&steamid=${userID}`;
+    let userGames;
+    let userGamesFallback;
+    let games;
+
+    userGames = await axios.get(userGamesUrl);
+    userGamesFallback = await axios.get(userGamesFallbackUrl);
+
+    if (!userGames.data && !userGamesFallback.data) {
         log.INFO(`- user ${ userID} has their profile set to private`)
         resolve([ ]);
         return;
     }
 
-    let games = userGames.data.substring((userGames.data.indexOf('rgGames =')) + 9);
-        games = games.substring(0, games.indexOf('];')+1).trim();
+    games = userGames.data.substring((userGames.data.indexOf('rgGames =')) + 9);
+    games = games.substring(0, games.indexOf('];')+1).trim();
     try {
         games = JSON.parse(games);
     }
     catch(err) {
-        log.INFO(`- user ${ userID} has their profile set to private`)
-        log.INFO(games);
-        resolve([ ]);
-        return;
+        if (userGamesFallback.data.response.games) {
+            log.INFO(`--> [UPDATE] game list [FALLBACK]`)
+            games = userGamesFallback.data.response.games;
+        }
+        else {
+            log.INFO(`- user ${ userID} has their profile set to private`)
+            resolve([ ]);
+            return;
+        }
     }
 
     games = games.filter(game => !!curatedGames.find(cachedgame => cachedgame.id == game.appid))
         .map(game => {
             return {
                 appid: game.appid,
-                playtime_forever: game.hours_forever ? game.hours_forever.replace(',', '') : 0
+                playtime_forever: game.hours_forever 
+                    ? game.hours_forever.replace(',', '') 
+                    : game.playtime_forever
+                        ? game.playtime_forever / 60
+                        : 0
             }
         })
     try {
         resolve(await getUserAchievements(userID, games));
     }
     catch(err) {
-        reject([ ])
+        resolve([ ])
     }    
     return;
 })
@@ -76,6 +95,11 @@ const getUserAchievements = (userID:number, games:object) => new Promise((resolv
         let response;
 
         log.INFO(`-- [${index+1}/${Object.keys(games).length}] game ${ gameID } (user ${userID})`);
+
+        const updateIndex = cache.updating.findIndex(user => user.user === userID);
+        if (updateIndex && cache.updating[updateIndex])
+            cache.updating[updateIndex].progress = 100*(index+1)/Object.keys(games).length;
+
         try {
             response = await axios.get(url);
 
@@ -148,7 +172,7 @@ const getUserRanking = (curatedGames, userGames) => new Promise(async(resolve, r
     userGames
         .filter(game => game.completionRate == 100)
         .map(filteredgame => {
-            let game = curatedGames.find(cachedgame => cachedgame.id == filteredgame.appid)
+            let game = curatedGames.find(cachedgame => cachedgame.id == filteredgame.appid);
             game && ranking[game.rating]
                 ? ranking[game.rating] += 1
                 : ranking[game.rating] = 1;
@@ -164,15 +188,12 @@ export const updateUser = async (req, res) => { // TODO remove badges that dont 
     const curatedGames = await getDataFromDB('games');
     const userToUpdate = await getDataFromDB('users', { id: req.params.steamid });
     const userUrl = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${config.STEAM_KEY}&steamids=${req.params.steamid}`;
-    const userGamesUrl = `https://steamcommunity.com/profiles/${req.params.steamid}/games/?tab=all`;
     const { client, db } = await connectToDb();
     let userData;
-    let userGamesData;
 
     try {
-        log.INFO(`--> [UPDATE] user ${req.params.steamid} [START]`) // TODO block too early updates
+        log.INFO(`--> [UPDATE] user ${req.params.steamid} [START]`)
         userData = await axios.get(userUrl);
-        userGamesData = await axios.get(userGamesUrl);
     }
     catch(err) {
         res.status(err.code).send(err);
@@ -187,17 +208,17 @@ export const updateUser = async (req, res) => { // TODO remove badges that dont 
     }
     if (userToUpdate[0] && userToUpdate[0].updated && Date.now() - userToUpdate[0].updated < 3600000) {
         res.status(202).send(`This user had been updated less than an hour ago`);
-        log.WARN(`--> [UPDATE] updating user ${req.params.steamid} [DONE]`);
+        log.WARN(`--> [UPDATE] updating user ${req.params.steamid} [INTERRUPTED]`);
         return;
     }
-    if (cache.updating.length === 3) {
+    if (cache.updating.length >= 4) {
         res.status(202).send('Too many users are updating now - retry in a few minutes');
-        log.WARN(`--> [UPDATE] updating user ${req.params.steamid} [DONE]`);
+        log.WARN(`--> [UPDATE] updating user ${req.params.steamid} [INTERRUPTED]`);
         return;
     }
     if (cache.updating.find(updating => updating.user === req.params.steamid)) {
         res.status(202).send('This user is already being updated');
-        log.WARN(`--> [UPDATE] updating user ${req.params.steamid} [DONE]`);
+        log.WARN(`--> [UPDATE] updating user ${req.params.steamid} [INTERRUPTED]`);
         return;
     }
     res.status(202).send('Updating... refresh in a few minutes');
@@ -206,8 +227,8 @@ export const updateUser = async (req, res) => { // TODO remove badges that dont 
         progress: 0
     })
 
-    const gamesAsync = await getUserGames(req.params.steamid, curatedGames, userGamesData);
-    const rankingAsync = await getUserRanking(curatedGames, gamesAsync); // FIXME this doesn't update
+    const gamesAsync = await getUserGames(req.params.steamid, curatedGames);
+    const rankingAsync = await getUserRanking(curatedGames, gamesAsync); 
 
     userData = userData.data.response.players[0];
     let user = { 
@@ -218,7 +239,7 @@ export const updateUser = async (req, res) => { // TODO remove badges that dont 
         games: gamesAsync,
         ranking: rankingAsync,
         badges: [], // FIXME this removes all the badges
-        private: userGamesData.data ? false : true,
+        private: gamesAsync.length === 0 ? false : true,
         updated: Date.now(),
         // member: false // TODO check if Steam user is member!!!
     };
