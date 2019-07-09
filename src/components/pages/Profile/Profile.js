@@ -221,7 +221,7 @@ class Profile extends React.Component {
                                         dataset={ summarizeTotalGames('sum', rating, user, games) }
                                     />
                                 </ChartWrapper>
-                                <ChartWrapper title='COMPLETION TIMELINE' style={{ width: '100%' }}>
+                                <ChartWrapper title='COMPLETION TIMELINE' width='100' >
                                     <LineChart
                                         labels={ getTimelines('label', rating, user, games) }
                                         datasets={ [{
