@@ -8,40 +8,49 @@ import config from '../config.json';
 const updateDelay = config.BIG_DELAY;
 
 export const getStatus = async (req, res) => {
+    let lastUpdated;
     try {
-        const lastUpdated = await getDataFromDB('special', { id: 'lastUpdated' });
-        res.status(200).send({ lastUpdated: lastUpdated[0].timestamp });
-        return;
+        lastUpdated = await getDataFromDB('special', { id: 'lastUpdated' });
     }
     catch(err) {
         log.WARN(err);
-        res.status(500).send(err)
+        res.status(500).send(err);
+        return;
     }
+    res.status(200).send({ lastUpdated: lastUpdated[0].timestamp });
+    return;
 }
 
-export const initiateMainUpdate = async (req, res) => {
+export const initiateMainUpdate = async (req?, res?) => {
     const { client, db } = await connectToDb();
     const usersFromDB = await getDataFromDB('users');
     let members; 
 
+    log.INFO(`--> [UPDATE] main update [INITIALIZED]`);
+
     try {
         const lastUpdated = await getDataFromDB('special', { id: 'lastUpdated' }); // don't update too fast
         if (Date.now() - lastUpdated[0].timestamp < updateDelay) {
-            res.status(202).send(`Wait ${(updateDelay - (Date.now() - lastUpdated[0].timestamp))/60000 } min before updating`);
+            if (res)
+                res.status(202).send(`Wait ${(updateDelay - (Date.now() - lastUpdated[0].timestamp))/60000 } min before updating`);
             return;
         }
     }
     catch(err) {
+        log.WARN(`--> [UPDATE] main update [ERR]`);
         log.WARN(err);
-        res.status(500).send(err)
+        if (res)
+            res.status(500).send(err)
     }
 
-    res.sendStatus(202);
+    if (res)
+        res.sendStatus(202);
 
     try {
         members = await getCuratorMembers();
     }
     catch(err) {
+        log.WARN(`--> [UPDATE] main update [ERR]`);
         log.WARN(err);
         return;
     }
@@ -49,6 +58,7 @@ export const initiateMainUpdate = async (req, res) => {
         await updateCuratorGames(); 
     }
     catch(err) {
+        log.WARN(`--> [UPDATE] main update [ERR]`);
         log.WARN(err);
         return;
     }
