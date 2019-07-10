@@ -7,19 +7,19 @@ export default class SectionUpdate extends React.Component {
         this.state = {
             updating: false,
             updateTimeout: 43200000,
-            lastUpdated: this.getUpdateDate()
+            lastUpdated: 'unknown'
         }           
     }   
 
     sendUpdateRequest() {
-        let url = `http://localhost:3002/rest/update`
+        let url = `/rest/update`
         axios.get(url)
             .then(res => console.log(res.data.content))
             .catch(err => console.log(err))
     }
 
     getUpdateDate() {
-        let url = `http://localhost:3002/rest/status`
+        let url = `/rest/status`
         axios.get(url)
             .then(res => this.setState({ lastUpdated: res.data.lastUpdated }))
             .catch(err => {
@@ -39,12 +39,16 @@ export default class SectionUpdate extends React.Component {
         return false
     }
 
+    componentDidMount() {
+        this.getUpdateDate();
+    }
+
     render() {
-        const nextUpdate = this.state.lastUpdated + 43200000;
+        const nextUpdate = this.state.lastUpdated !== 'unknown' ? new Date(this.state.lastUpdated + 43200000).toLocaleString() : 'unknown';
 
         return(
         <div className='section'>
-            <h3 className='section-title' style={{ height: '100%' }}>{`Next update: ${new Date(nextUpdate).toLocaleString()}`}</h3>
+            <h3 className='section-title' style={{ height: '100%' }}>{`Next update: ${nextUpdate}`}</h3>
             {/* <h3 className='section-title'>Last updated: { new Date(this.state.lastUpdated).toLocaleString() }</h3>
             <div className="flex-column">
             {
