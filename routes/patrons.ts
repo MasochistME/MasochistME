@@ -146,21 +146,17 @@ export const updatePatron = async (req, res) => {
     }
 
     const { client, db } = await connectToDb();
-    const urlSummary = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002';
-    const paramsSummary = {
-        key: config.STEAM_KEY,
-        steamids: req.params.steamid
-    }
+    const urlSummary = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${config.STEAM_KEY}&steamids=${req.params.steamid}`;
     let userSummary;
     try {
-        userSummary = await axios.get(urlSummary, { params: paramsSummary });
+        userSummary = await axios.get(urlSummary);
     } 
     catch(err) {
         log.WARN(urlSummary);
-        log.WARN(JSON.stringify(paramsSummary));
         log.WARN(err);
         return;
     }
+
     const patron = {
         steamid: req.params.steamid,
         name: userSummary.data.response.players[0].personaname || userSummary.data.response.players[0].name || 'unknown',
@@ -168,13 +164,13 @@ export const updatePatron = async (req, res) => {
         tier: req.params.tier
     }
 
-    db.collection('patrons').updateOne({ id: req.params.steamid }, { $set: patron }, (err, data) => {
+    db.collection('patrons').updateOne({ steamid: req.params.steamid }, { $set: patron }, (err, data) => {
         if (err) {
             log.WARN(err);
             res.status(err.code).send(err);
         }
         else {
-            log.INFO(`Patron ${userSummary.data.response.players[0].name|| req.params.steamid} updated.`);
+            log.INFO(`Patron ${userSummary.data.response.players[0].name || req.params.steamid} updated.`);
             res.status(201).send(patron);
         }        
         client.close();

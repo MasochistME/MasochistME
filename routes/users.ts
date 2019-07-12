@@ -114,7 +114,7 @@ const getUserAchievements = (userID:number, games:object, userToUpdate:any) => n
             let completionRate = 100*numberOfUnlockedAchievements/numberOfAllAchievements;
             
             games[index].completionRate = completionRate;
-            games[index].lastUnlocked = lastUnlocked;
+            games[index].lastUnlocked = lastUnlocked * 1000;
 
             // event when 100%
             const userGames = userToUpdate[0].games.find(g => g.appid === gameID)
