@@ -35,7 +35,7 @@ export default class Game extends React.Component {
                         <div className='game-desc'>{ game.desc }</div>
                     </div>
                 </div>
-                <Leaderboards show={ this.state.extended } game={ game } />
+                <Leaderboards show={ this.state.extended } game={ game } rating={ game.rating }/>
             </div>
         )
     }

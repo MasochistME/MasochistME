@@ -2,6 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 import LeaderboardsProgressBar from './LeaderboardsProgressBar'
+import StackedBarChart from '../../../Charts/StackedBarChart'
+import ChartWrapper from '../../../Charts/ChartWrapper'
 
 class Leaderboards extends React.Component {
     assignTrophyIfDeserved = (leaderboards, index) => {
@@ -36,14 +38,39 @@ class Leaderboards extends React.Component {
             .map(entry => sum += parseInt(entry.playtime ? entry.playtime.replace(',','') : 0)*60);
         let average = Math.round((sum/60)/completed.length);
         
-        return Number.isNaN(average) ? "no known completion times" : `${average} h`
+        return Number.isNaN(average) ? 0 : average
+    }
+
+    summarizeCompletionTimeAll = (games, members, rating) => {
+        let sum = 0;
+        let number = 0;
+        const gameIDs = games.filter(game => game.rating === rating)
+            .map(game => game.id)
+        members.map(member => {
+            member.games.map(game => {
+                if (gameIDs.find(g => g == game.appid)) {
+                    sum = sum + parseInt(game.playtime_forever);
+                    number = number + 1;
+                }
+                return game;
+            })
+            return member;
+        })
+        if (sum !== 0 && number !== 0)
+            return parseInt(sum / number);
+        else return 0;        
     }
 
     render() {
         const { props } = this
         const visible = props.show
         const game = props.game
+        const games = props.games
+        const members = props.members
+        const rating = props.rating
+
         let leaderboards = props.members
+            .filter(member => member.member)
             .filter(member => member.games.find(g => Number(g.appid) === Number(game.id)))
             .map(member => {
                 const memberGameStats = member.games.find(g => Number(g.appid) === Number(game.id))
@@ -70,10 +97,24 @@ class Leaderboards extends React.Component {
                         </a>
                     </h2>
                     <div className="game-statistics">
-                        <ul>
-                            <li>Average completion time: { this.summarizeCompletionTime(leaderboards) }</li>
-                            <li>Number of completions: { this.summarizeCompletions(leaderboards) }</li>
-                        </ul>
+                        <ChartWrapper 
+                            title={[ `Average completion time`, `Completions: ${this.summarizeCompletions(leaderboards)}` ]}
+                        >
+                            <StackedBarChart 
+                                labels={ [ 'hours' ] }
+                                datasets={ [ {
+                                    label: 'this game',
+                                    data: [ this.summarizeCompletionTime(leaderboards) ],
+                                    colorNormal: '#e30000ff',
+                                    colorTransparent: '#e3000033'
+                                }, {
+                                    label: 'games from this tier', 
+                                    data: [ this.summarizeCompletionTimeAll(games, members, rating) ],
+                                    colorNormal: '#141620ff',
+                                    colorTransparent: '#14162066',
+                                } ]}
+                            />
+                        </ChartWrapper>
                     </div>
                     <ul className="game-leaderboards">
                     {
@@ -98,7 +139,8 @@ class Leaderboards extends React.Component {
 
 
 const mapStateToProps = state => ({ 
-    members: state.members
+    members: state.members,
+    games: state.games
 })
 
 export default connect(
