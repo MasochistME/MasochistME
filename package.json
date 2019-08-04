@@ -34,7 +34,7 @@
     "@babel/preset-es2015": "^7.0.0-beta.53",
     "@babel/preset-typescript": "^7.3.3",
     "@types/node": "^12.0.10",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.13",
     "typescript": "^3.5.2"
   },
   "repository": {
