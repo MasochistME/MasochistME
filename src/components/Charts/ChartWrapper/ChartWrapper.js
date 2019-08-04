@@ -5,8 +5,8 @@ export default class ChartWrapper extends React.Component {
         const { children, title, width } = this.props;
 
         return (
-            <div className='wrapper-chart flex-column' style={ width ? { width: `${width}%` } : {} }>
-                <h3 className='chart-title'>
+            <div className='profile-section flex-column' style={ width ? { width: `${width}%` } : {} }>
+                <h3 className='profile-section-title'>
                     { 
                         typeof title === 'object'
                             ? title.map(t => <p>{ t }</p> ) 

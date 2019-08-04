@@ -54,31 +54,48 @@
   letter-spacing: 0.1em
   font-size: 0.8em
 
-.profile-badges
+.profile-graphs, .profile-badges
   display: flex
-  flex-direction: flex-row
-  flex-wrap: wrap
-  justify-content: center
+  flex-direction: row
   align-items: center
-  padding: 10px
-  margin-bottom: 20px
-  border-radius: 10px
-  background-color: $darkbluetransparent
-  box-shadow: 0 0 10px $superdarkgrey
-  box-sizing: border-box
+  justify-content: space-between
+  flex-wrap: wrap
+  width: 100%
+
 .profile-badge
   border-radius: 10px
   border: 3px solid $superlightgrey
   box-sizing: border-box
   cursor: help
   box-shadow: 0 0 5px $superdarkgrey
+  margin: 10px
 
-.profile-graphs
-  display: flex
-  flex-direction: row
-  align-items: center
-  justify-content: space-between
-  flex-wrap: wrap
+.profile-section
+  padding: 0
+  margin: 0 10px 10px 10px
+  box-sizing: border-box
+  box-shadow: 0 0 20px $superdarkgrey
+  background-color: rgba($superlightgrey, 0.1)
+  canvas
+    margin: 10px 0 10px 0
+  .profile-section-title
+    display: flex
+    justify-content: center
+    align-items: center
+    flex-wrap: wrap
+    flex-direction: column
+    width: 100%
+    height: auto
+    padding: 5px 0 5px
+    margin: 0
+    font-size: 1.3em
+    text-transform: uppercase
+    font-family: $font-dosis
+    text-transform: uppercase
+    background-color: rgba($newdark, 0.8)
+    color: $superlightgrey
+    p
+      margin: 0
 
 // .wrapper-profile > *
 //   width: 100%
