@@ -235,7 +235,7 @@ export const updateUser = async (req, res) => { // TODO remove badges that dont 
         url: `https://steamcommunity.com/profiles/${req.params.steamid}`,
         games: gamesAsync,
         ranking: rankingAsync,
-        badges: [], // FIXME this removes all the badges
+        badges: userToUpdate[0].badges,
         // @ts-ignore:next-line
         private: gamesAsync.length === 0 ? false : true,
         updated: Date.now(),
