@@ -1,28 +1,29 @@
 import Discord from 'discord.js';
-import { MongoClient } from 'mongodb';
-
-export const collections = [ 'commands', 'options', 'reactions', 'memes', 'special', 'follow' ];
 
 type IBotCache = {
-    db?: MongoClient,
     bot?: Discord.Client,
-    commands?: Array<any>,
-    options?: Array<any>,
-    reactions?: Array<any>,
-    memes?: Array<string>,
-    special?: Array<any>
-    follow?: undefined,
+    dbs?: { },
+    addbadge?: { 
+        inProgress:boolean,
+        msgId:string,
+        authorId:string,
+        channelId:string,
+        activeField:string,
+        badge: {}
+    },
 }
 
 let botCache:IBotCache = {
-    db: undefined,
     bot: undefined,
-    commands: undefined,
-    reactions: undefined,
-    options: undefined,
-    memes: undefined,
-    special: undefined,
-    follow: undefined,
+    dbs: { },
+    addbadge: { 
+        inProgress: false,
+        msgId: '',
+        authorId: '',
+        channelId: '',
+        activeField: '',
+        badge: { }
+    },
 };
 
 class BotCache {

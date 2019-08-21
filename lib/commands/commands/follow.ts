@@ -34,14 +34,14 @@ export const follow = (msg:Discord.Message) => {
                 }
             }
             else followers.followers.push(msg.author.id);
-            upsertOne('follow', { id: user }, followers, err => {
+            upsertOne('fetus', 'follow', { id: user }, followers, err => {
                 if (err) {
                     embed = createEmbed('<:boshy:310151885690503169> Something went wrong', [{ title: `---`, content: err }]);
                     log.WARN(err);
                     msg.channel.send(embed);
                     return;
                 }
-                updateCache();
+                updateCache('fetus');
             });
         });
     };
@@ -71,13 +71,14 @@ export const unfollow = (msg:Discord.Message) => {
             let followers = cache["follow"].find(streamer => streamer.id === user);
             if (followers) {
                 followers.followers = followers.followers.filter(follower => follower !== msg.author.id)
-                upsertOne('follow', { id: user }, followers, err => {
+                upsertOne('fetus', 'follow', { id: user }, followers, err => {
                     if (err) {
                         embed = createEmbed('<:boshy:310151885690503169> Something went wrong', [{ title: `---`, content: err }])
                         log.WARN(err);
                         msg.channel.send(embed);
                         return;
                     }
+                    updateCache('fetus');
                 });
             }
         });

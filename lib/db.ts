@@ -1,55 +1,57 @@
 import { MongoClient } from 'mongodb';
 import { log } from '../log';
-import { cache, collections } from '../cache';
-import config from '../config.json';
+import { cache } from '../cache';
 
-export const connectToDb = () => {
-    const dbName = 'fetus';
-    const url = config.DATABASE_URL;
-    
+export const connectToDb = (dbObject:any) => {
     const callback = (err, client) => {
         if (err)
             log.WARN(`Error while connecting to database: ${err}`);
-        log.INFO('Succesfully connected to the database!');
+        log.INFO(`Succesfully connected to the ${dbObject.symbol.toUpperCase()} database!`);
 
-        cache["db"] = client.db(dbName);
-        updateCache();
+        cache["dbs"][dbObject.symbol] = client.db(dbObject.symbol);
+        updateCache(dbObject.symbol);
     };
     
-    MongoClient.connect(url, callback);
+    MongoClient.connect(dbObject.url, callback);
 }
 
-export const updateCache = () => 
-    collections.map(collection => findCollection(cache["db"], collection, (err, data) => {
-        err ? log.WARN(err) : cache[collection] = data;
-    }));
+export const updateCache = (dbSymbol:string) => {
+    cache["dbs"][dbSymbol].listCollections().toArray((err, collections) => {
+        collections.map(collection => {
+            findCollection(cache["dbs"][dbSymbol], collection.name, (err, data) => {
+                err ? log.WARN(err) : cache[collection.name] = data;
+            })
+        })
+    })
+}
 
-export const insertData = (col, key, value, cb) => {
-    cache["db"].collection(col).insertOne({ [key]: value }, (err, result) => {
+export const insertData = (dbSymbol:string, col, key, value, cb) => {
+    cache["dbs"][dbSymbol].collection(col).insertOne({ [key]: value }, (err, result) => {
         if (err) {
             log.WARN(`Error during inserting ${key.toUpperCase()} data.`);
             return cb(err);
         }
-        updateCache();
-        log.INFO(`Succesfully added data to ${col.toUpperCase()} collection.`)
+        updateCache(dbSymbol);
+        log.INFO(`Succesfully added data to ${dbSymbol.toUpperCase()}.${col.toUpperCase()} collection.`)
         return cb(null);
     });
 }
 
-export const insertMany = (collection:string, manyObjects:Array<object>, cb) => {
-    cache["db"].collection(collection).insertMany(manyObjects, (err, result) => {
+export const insertMany = (dbSymbol:string, collection:string, manyObjects:Array<object>, cb) => {
+    cache["dbs"][dbSymbol].collection(collection).insertMany(manyObjects, (err, result) => {
         if (err) {
             log.WARN(`Error during inserting data.`);
             return cb(err);
         }
-        updateCache();
-        log.INFO(`Succesfully added data to ${collection.toUpperCase()} collection.`)
+        updateCache(dbSymbol);
+        console.log(result)
+        log.INFO(`Succesfully added data to ${dbSymbol.toUpperCase()}.${collection.toUpperCase()} collection.`)
         return cb(null);
     });
 }
 
-export const updateOne = (collection:string, filter:Object, set:Object, cb) => {
-    cache["db"].collection(collection).updateOne(
+export const updateOne = (dbSymbol:string, collection:string, filter:Object, set:Object, cb) => {
+    cache["dbs"][dbSymbol].collection(collection).updateOne(
         filter, 
         { $set: set },
         // { $unset: unset },
@@ -58,14 +60,14 @@ export const updateOne = (collection:string, filter:Object, set:Object, cb) => {
             log.WARN(`Error during updating data.`);
             return cb(err);
         }
-        updateCache();
-        log.INFO(`Succesfully updated data in ${collection.toUpperCase()} collection.`)
+        updateCache(dbSymbol);
+        log.INFO(`Succesfully updated data in ${dbSymbol.toUpperCase()}.${collection.toUpperCase()} collection.`)
         return cb(null);
     });
 }
 
-export const updateMany = (collection:string, filter:Object, set:Array<object>, cb) => {
-    cache["db"].collection(collection).updateMany(
+export const updateMany = (dbSymbol:string, collection:string, filter:Object, set:Array<object>, cb) => {
+    cache["dbs"][dbSymbol].collection(collection).updateMany(
         filter, 
         { $set: set },
         // { $unset: unset },
@@ -74,14 +76,14 @@ export const updateMany = (collection:string, filter:Object, set:Array<object>, 
             log.WARN(`Error during updating data.`);
             return cb(err);
         }
-        updateCache();
-        log.INFO(`Succesfully updated data in ${collection.toUpperCase()} collection.`)
+        updateCache(dbSymbol);
+        log.INFO(`Succesfully updated data in ${dbSymbol.toUpperCase()}.${collection.toUpperCase()} collection.`)
         return cb(null);
     });
 }
 
-export const replaceOne = (collection:string, filter:Object, replacement:Object, cb) => {
-    cache["db"].collection(collection).replaceOne(
+export const replaceOne = (dbSymbol:string, collection:string, filter:Object, replacement:Object, cb) => {
+    cache["dbs"][dbSymbol].collection(collection).replaceOne(
         filter, 
         replacement,
         { upsert: true },
@@ -90,14 +92,14 @@ export const replaceOne = (collection:string, filter:Object, replacement:Object,
             log.WARN(`Error during replacing data.`);
             return cb(err);
         }
-        updateCache();
-        log.INFO(`Succesfully replaced data in ${collection.toUpperCase()} collection.`)
+        updateCache(dbSymbol);
+        log.INFO(`Succesfully replaced data in ${dbSymbol.toUpperCase()}.${collection.toUpperCase()} collection.`)
         return cb(null);
     });
 }
 
-export const replaceMany = (collection:string, filter:Object, replacement:Array<object>, cb) => {
-    cache["db"].collection(collection).replaceMany(
+export const replaceMany = (dbSymbol:string, collection:string, filter:Object, replacement:Array<object>, cb) => {
+    cache["dbs"][dbSymbol].collection(collection).replaceMany(
         filter, 
         replacement,
         { upsert: true },
@@ -106,56 +108,56 @@ export const replaceMany = (collection:string, filter:Object, replacement:Array<
             log.WARN(`Error during replacing data.`);
             return cb(err);
         }
-        updateCache();
-        log.INFO(`Succesfully replaced data in ${collection.toUpperCase()} collection.`)
+        updateCache(dbSymbol);
+        log.INFO(`Succesfully replaced data in ${dbSymbol.toUpperCase()}.${collection.toUpperCase()} collection.`)
         return cb(null);
     });
 }
 
-export const upsertOne = (collection:string, filter:Object, object:Object, cb) => {
-    cache["db"].collection(collection).updateOne(filter, {$set: object}, { upsert: true }, (err, result) => {
+export const upsertOne = (dbSymbol:string, collection:string, filter:Object, object:Object, cb) => {
+    cache["dbs"][dbSymbol].collection(collection).updateOne(filter, {$set: object}, { upsert: true }, (err, result) => {
         if (err) {
             log.WARN(`Error during upserting data.`);
             return cb(err);
         }
-        updateCache();
-        log.INFO(`Succesfully upserted data to ${collection.toUpperCase()} collection.`)
+        updateCache(dbSymbol);
+        log.INFO(`Succesfully upserted data to ${dbSymbol.toUpperCase()}.${collection.toUpperCase()} collection.`)
         return cb(null);
     });
 }
 
-export const upsertMany = (collection:string, filter:Object, manyObjects:Array<object>, cb) => {
-    cache["db"].collection(collection).updateMany(filter, {$set: manyObjects}, { upsert: true }, (err, result) => {
+export const upsertMany = (dbSymbol:string, collection:string, filter:Object, manyObjects:Array<object>, cb) => {
+    cache["dbs"][dbSymbol].collection(collection).updateMany(filter, {$set: manyObjects}, { upsert: true }, (err, result) => {
         if (err) {
             log.WARN(`Error during upserting data.`);
             return cb(err);
         }
-        updateCache();
-        log.INFO(`Succesfully upserted data to ${collection.toUpperCase()} collection.`)
+        updateCache(dbSymbol);
+        log.INFO(`Succesfully upserted data to ${dbSymbol.toUpperCase()}.${collection.toUpperCase()} collection.`)
         return cb(null);
     });
 }
 
-export const deleteOne = (collection:string, filter:Object, cb) => {
-    cache["db"].collection(collection).deleteOne(filter, (err, result) => {
+export const deleteOne = (dbSymbol:string, collection:string, filter:Object, cb) => {
+    cache["dbs"][dbSymbol].collection(collection).deleteOne(filter, (err, result) => {
         if (err) {
             log.WARN(`Error during deleting data.`);
             return cb(err);
         }
-        updateCache();
-        log.INFO(`Succesfully deleted data from ${collection.toUpperCase()} collection.`)
+        updateCache(dbSymbol);
+        log.INFO(`Succesfully deleted data from ${dbSymbol.toUpperCase()}.${collection.toUpperCase()} collection.`)
         return cb(null);
     });
 }
 
-export const deleteMany = (collection:string, filter:Object, cb) => {
-    cache["db"].collection(collection).deleteMany(filter, (err, result) => {
+export const deleteMany = (dbSymbol:string, collection:string, filter:Object, cb) => {
+    cache["dbs"][dbSymbol].collection(collection).deleteMany(filter, (err, result) => {
         if (err) {
             log.WARN(`Error during deleting data.`);
             return cb(err);
         }
-        updateCache();
-        log.INFO(`Succesfully deleted data from ${collection.toUpperCase()} collection.`)
+        updateCache(dbSymbol);
+        log.INFO(`Succesfully deleted data from ${dbSymbol.toUpperCase()}.${collection.toUpperCase()} collection.`)
         return cb(null);
     });
 }

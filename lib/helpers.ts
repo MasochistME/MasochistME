@@ -38,10 +38,12 @@ export const splitByFirstSymbol = (msg:Discord.Message, symbol:string) => {
     return args;
 }
 
-export const createEmbed = (title: string, fields:Array<IEmbedField>, color?: string) => {
+export const createEmbed = (title: string, fields:Array<IEmbedField>, color?: string, thumbnail?: string, footer?: string) => {
     const embed = new Discord.RichEmbed()
         .setTitle(title)
         .setColor(color ? `0x${color}` : '0xFDC000')
+        .setThumbnail(thumbnail ? thumbnail : '')
+        .setFooter(footer ? footer : '')
     fields.map(field => embed.addField(field.title, field.content, field.inline ? field.inline : false));
     return embed;
 }

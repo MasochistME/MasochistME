@@ -4,7 +4,7 @@ import { log } from './log';
 import { classifyMessage } from './lib/message';
 import { handleStream } from './lib/stream';
 import { msgEdit, msgDelete, userJoin, userLeave } from './lib/events';
-import { connectToDb, updateCache } from './lib/db';
+import { connectToDb } from './lib/db';
 import { cache } from './cache';
 
 import config from './config.json';
@@ -12,9 +12,7 @@ import config from './config.json';
 const bot = new Discord.Client();
 
 const ready = bot => {
-    connectToDb();
-    const interval = 900000;
-    const updateInterval = setInterval(updateCache, interval);
+    config.DATABASES.map(db => connectToDb(db));
 
     cache.bot = bot;
     log.INFO('Dr. Fetus reporting for destruction!');

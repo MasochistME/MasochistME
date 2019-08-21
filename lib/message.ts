@@ -5,6 +5,7 @@ import { Reaction } from './commands/reactions';
 import { cache } from '../cache';
 import { getKeyword, getCommandSymbol } from './helpers';
 import { chooseRandom, happensWithAChanceOf } from './rng';
+import { badgeCreation } from './commands/commands/badges';
 import { Command } from './commands/list';
 
 import { IReaction, IReactionDetails } from './types/reaction';
@@ -80,10 +81,10 @@ const classifyMessage = (msg:Discord.Message) => {
         answerCommand(msg);
         return;
     }
-    // if (badgeCreationActive()) {
-    //     badgeCreation(msg);
-    //     return;
-    // }
+    if (badgeCreationActive()) {
+        badgeCreation(msg);
+        return;
+    }
     checkForReactionTriggers(msg);
 }
 

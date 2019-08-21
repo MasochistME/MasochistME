@@ -19,7 +19,7 @@ export const memelist = (msg:Discord.Message) => {
             msg.channel.send(content);
     })
 }
-export const addmeme = (msg:Discord.Message) => insertData('memes', 'meme', removeKeyword(msg), err => 
+export const addmeme = (msg:Discord.Message) => insertData('fetus', 'memes', 'meme', removeKeyword(msg), err => 
     err
         ? msg.react('❌')
         : msg.react('✅'));
@@ -36,7 +36,7 @@ export const deletememe = (msg:Discord.Message) => {
         }
         else {
             memeToDelete = cache["memes"][memeIndex].meme;
-            deleteOne('memes', { meme: memeToDelete }, err => 
+            deleteOne('fetus', 'memes', { meme: memeToDelete }, err => 
                 err
                     ? msg.react('❌')
                     : msg.react('✅'));
