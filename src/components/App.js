@@ -37,18 +37,26 @@ class App extends Component {
   loadMembers = () => {
     axios.get('/rest/api/members')
         .then(response => {
-            if (response.status === 200) {
-                let members = response.data;
-                members.map(member => {
-                    let summary = 0
-                    this.props.state.rating.map(r => summary += r.score * member.ranking[r.id]) 
-                    member.points = summary
-                    return member   
-                })
-                members = _.orderBy(members, ['points'], ['desc'])
-                return this.props.dispatch(cacheMembers(members))
-            }
-        }).catch(err => console.trace(err))
+          if (response.status === 200) {
+            let members = response.data;
+            members.map(member => {
+                let summary = 0
+                this.props.state.rating.map(r => summary += r.score * member.ranking[r.id])
+                member.badges.map(badge => {
+                  const membersBadge = this.props.state.badges.find(b => badge.id == b['_id']);
+                  if (membersBadge) {
+                      if (typeof membersBadge.points !== 'number')
+                          membersBadge.points = parseInt(membersBadge.points);
+                      summary += membersBadge.points;
+                  }
+              })
+              member.points = summary
+              return member   
+            })
+            members = _.orderBy(members, ['points'], ['desc'])
+            return this.props.dispatch(cacheMembers(members))
+        }
+      }).catch(err => console.trace(err))
   }
 
   loadEvents = () => {
@@ -84,13 +92,13 @@ class App extends Component {
   }
 
   load() {
+    this.loadBadges()
     this.loadRating()
     this.loadMembers()
     this.loadGames()
     this.loadEvents()
     this.loadBlog()
     this.loadPatrons()
-    this.loadBadges()
     this.setState({ loaded: true })
   }
 
