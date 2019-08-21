@@ -1,7 +1,9 @@
 import Discord from 'discord.js';
+import { ObjectId } from 'mongodb';
+import axios from 'axios';
 import _ from 'lodash';
-import { insertMany } from '../../db';
-import { createEmbed, removeKeyword } from '../../helpers';
+import { insertMany, deleteOne } from '../../db';
+import { createEmbed, removeKeyword, extractArguments } from '../../helpers';
 import { cache } from '../../../cache';
 import { log } from '../../../log';
 
@@ -9,28 +11,86 @@ const timeout = 300000;
 const fields:Array<string> = [ 'game id', 'name', 'image', 'points', 'requirements', 'description'];
 
 export const editbadge = (msg:Discord.Message) => {
-    const badgeId = removeKeyword(msg);
-    console.log(cache)
-    const badge = cache["badges"].badges.find(b => b.id === badgeId);
+    // const badgeId = removeKeyword(msg);
+
+    // if (!badgeId) {
+    //     msg.channel.send(createEmbed('Invalid badge ID', [{ title: '\_\_\_', content: 'Cannot edit badge that doesn\'t exist.' }]));
+    //     return;
+    // }
+
+    // const badge = cache["badges"].find(b => b['_id'] == badgeId);
     
-    if (!badge) {
-        msg.channel.send(createEmbed('Invalid badge ID', [{ title: '\_\_\_', content: 'Cannot edit badge that doesn\'t exist.' }]));
-        return;
-    }
-    msg.channel.send('Edited! :3');
-    // ***
+    // if (!badge) {
+    //     msg.channel.send(createEmbed('Invalid badge ID', [{ title: '\_\_\_', content: 'Cannot edit badge that doesn\'t exist.' }]));
+    //     return;
+    // }
+    msg.channel.send('This is WIP!');
 }
 
 export const deletebadge = (msg:Discord.Message) => {
     const badgeId = removeKeyword(msg);
-    const badge = cache["badges"].badges.find(b => b.id === badgeId);
+
+    if (!badgeId) {
+        msg.channel.send(createEmbed('Invalid badge ID', [{ title: '\_\_\_', content: 'Cannot delete badge that doesn\'t exist.' }]));
+        return;
+    }
+
+    const badge = cache["badges"].find(b => b['_id'] == badgeId);
     
     if (!badge) {
         msg.channel.send(createEmbed('Invalid badge ID', [{ title: '\_\_\_', content: 'Cannot delete badge that doesn\'t exist.' }]));
         return;
     }
-    msg.channel.send('Deleted! :3');
-    // ***
+    else {
+        deleteOne('masochist', 'badges', { '_id': ObjectId(badgeId) }, err => 
+            err
+                ? msg.react('❌')
+                : msg.react('✅'));
+    }
+}
+
+export const givebadge = (msg:Discord.Message) => {
+    const [ badgeId, userId ] = extractArguments(msg);
+
+    if (!badgeId || !userId) {
+        msg.channel.send(createEmbed('Invalid syntax', [{ title: '\_\_\_', content: 'Badge or user is invalid.' }]));
+        return;
+    }
+
+    const badge = cache["badges"].find(b => b['_id'] == badgeId);
+    const user = cache["users"].find(u => u.id == userId);
+    const url = `http://localhost:3002/rest/badges/badge/${badgeId}/user/${userId}`;
+    
+    if (!badge || !user) {
+        msg.channel.send(createEmbed('Invalid ID', [{ title: '\_\_\_', content: 'Badge or user doesn\'t exist.'  }]));
+        return;
+    }
+
+    axios.put(url)
+        .then(() => msg.channel.send('Given! :3'))
+        .catch(error => msg.channel.send(`Error: ${error}`))
+}
+
+export const takebadge = (msg:Discord.Message) => {
+    const [ badgeId, userId ] = extractArguments(msg);
+
+    if (!badgeId || !userId) {
+        msg.channel.send(createEmbed('Invalid syntax', [{ title: '\_\_\_', content: 'Badge or user is invalid.' }]));
+        return;
+    }
+
+    const badge = cache["badges"].find(b => b['_id'] == badgeId);
+    const user = cache["users"].find(u => u.id == userId);
+    const url = `http://localhost:3002/rest/badges/badge/${badgeId}/user/${userId}`;
+    
+    if (!badge || !user) {
+        msg.channel.send(createEmbed('Invalid ID', [{ title: '\_\_\_', content: 'Badge or user doesn\'t exist.'  }]));
+        return;
+    }
+
+    axios.delete(url)
+        .then(() => msg.channel.send('Taken! :3'))
+        .catch(error => msg.channel.send(`Error: ${error}`))
 }
 
 export const badgelist = (msg:Discord.Message) => {
