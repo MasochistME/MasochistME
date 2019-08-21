@@ -3,7 +3,7 @@ export const router = express.Router();
 
 import { initiateMainUpdate, getStatus } from './update';
 import { getSteamID, getRating } from './special';
-import { getAllBadges, getBadge, addBadge, updateBadge, deleteBadge, giveBadge } from './badges';
+import { getAllBadges, getBadge, addBadge, updateBadge, deleteBadge, giveBadge, takeBadge } from './badges';
 import { getAllPatrons, getPatronsByTier, getPatron, addPatron, updatePatron, deletePatron } from './patrons';
 import { getCuratorGames, getCuratedGamesFromTier, updateCuratorGames, getCuratorMembers } from './curator';
 import { getAllUsers, getUser, updateUser } from './users';
@@ -19,7 +19,7 @@ router.get('/badges/:id', getBadge);
 router.put('/badges/:id', updateBadge);
 router.delete('/badges/:id', deleteBadge);
 router.put('/badges/badge/:badgeid/user/:steamid', giveBadge);
-// TODO take badge from user
+router.delete('/badges/badge/:badgeid/user/:steamid', takeBadge);
 
 router.get('/patrons', getAllPatrons);
 router.get('/patrons/tier/:tier', getPatronsByTier);

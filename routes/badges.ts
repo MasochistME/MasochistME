@@ -206,3 +206,48 @@ export const giveBadge = async (req, res) => {
 
     res.status(200).send(newBadge);
 }
+
+/**
+ * Takes badge from user by its id and user's steam id
+ * @param req.params.badgeid
+ * @param req.params.steamid
+ */
+export const takeBadge = async (req, res) => {
+    const { client, db } = await connectToDb();
+    const badgeId = req.params.badgeid;
+    let user; 
+    
+    try {
+        user = await getDataFromDB('users', { id: req.params.steamid });
+    }
+    catch(err) {
+        res.status(500).send(err);
+        return;
+    }
+
+    user = user[0];
+
+    if (user.badges) {
+        const badgeIndex = user.badges.findIndex(badge => badge.id === req.params.badgeid);
+        if (badgeIndex === -1) {
+            res.status(202).send(`User ${req.params.steamid} doesn't have badge ${req.params.badgeid}`);
+            return;
+        }
+        else {
+            user.badges.splice(badgeIndex, 1);
+        }
+    }
+
+    db.collection('users').updateOne({ id: req.params.steamid }, {$set: user}, { upsert: true }, (err, data) => {
+        if (err) {
+            log.WARN(`--> [DELETE] badge ${req.params.badgeid} => user ${req.params.steamid} [ERROR]`)
+            log.WARN(err);
+        }
+        else {
+            log.INFO(`--> [DELETE] badge ${req.params.badgeid} => user ${req.params.steamid} [DONE]`)
+        }
+    });
+    client.close();
+
+    res.sendStatus(200);
+}
