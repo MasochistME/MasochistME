@@ -44,7 +44,6 @@ export const insertMany = (dbSymbol:string, collection:string, manyObjects:Array
             return cb(err);
         }
         updateCache(dbSymbol);
-        console.log(result)
         log.INFO(`Succesfully added data to ${dbSymbol.toUpperCase()}.${collection.toUpperCase()} collection.`)
         return cb(null);
     });
