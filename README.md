@@ -28,4 +28,10 @@ How to start the bot on Ubuntu remote server:
 - clone the repository - `git clone http://github.com/PointOnePercent/DrFetus`
 - install dependencies - `npm install`
 - don't forget to start mongoDB instance and set up the `config.json` file
-- start the bot with `npm run fetus` command
+- start the bot with `npm run fetus` command (or `forever start -c "npm run fetus" ./` if you want to rum daemon)
+
+How to stop the daemon
+- forever stop <process number>
+- `ps -ef | grep fetus`
+- `kill <PID>`
+
