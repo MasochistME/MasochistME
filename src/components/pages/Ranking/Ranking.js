@@ -21,6 +21,7 @@ class PageRanking extends React.Component {
                         index={ memberIndex } 
                         rating={ this.props.rating } 
                         games={ this.props.games } 
+                        badges={ this.props.badges }
                         patron={ patrons.find(tier => tier.list.find(p => p.steamid === member.id) ? { tier: tier.tier, description: tier.description } : false) } 
                         key={ `member-${member.id}` }/>
                     : null
@@ -60,7 +61,8 @@ const mapStateToProps = state => ({
     members: state.members,
     rating: state.rating,
     games: state.games,
-    patrons: state.patrons
+    patrons: state.patrons,
+    badges: state.badges
 })
 
 export default connect(

@@ -9,8 +9,21 @@ class MemberSummary extends React.Component {
         this.props.dispatch(changeTab('profile'));
     }
 
+    summarizeBadgePoints = (member, badges) => {
+        let sum = 0;
+        member.badges.map(badge => {
+            const membersBadge = badges.find(b => badge.id == b['_id']);
+            if (membersBadge) {
+                if (typeof membersBadge.points !== 'number')
+                    membersBadge.points = parseInt(membersBadge.points);
+                sum += membersBadge.points;
+            }
+        })
+        return sum;
+    }
+
     render() {
-        const { member, index, rating, patron } = this.props
+        const { member, index, rating, patron, badges } = this.props
         const disabled = member.points === 0 ? true : false
         const tier = patron 
             ? patron.tier
@@ -34,8 +47,8 @@ class MemberSummary extends React.Component {
                     }
                     <div className={ `member-name ${ shekelmaster ? `tier${tier}` : ''}` } onClick={ () => this.showProfile( member.id ) }>{ member.name }</div>
                     <div className="member-ranking flex-row">
-                        <div className="member-rating-score">
-                            { member.points ? member.points : 0}
+                        <div className="member-rating-score" title="Sum of all points">
+                            { member.points ? member.points + this.summarizeBadgePoints(member, badges) : 0 }
                             <span className="bold"> Σ</span>
                         </div>
                         {   
@@ -48,6 +61,10 @@ class MemberSummary extends React.Component {
                                 </div>
                             })
                         }
+                        <div className="member-rating-score" title="Sum of points for badges">
+                            { this.summarizeBadgePoints(member, badges) }
+                            <i className='fas fa-medal' style={{ paddingRight: "5px"}}/> 
+                        </div>
                     </div>
                 </div>
             </div>

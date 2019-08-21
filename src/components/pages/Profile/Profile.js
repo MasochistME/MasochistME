@@ -195,7 +195,7 @@ class Profile extends React.Component {
                                             className='profile-badge' 
                                             src={ badge.img } 
                                             alt='badge' 
-                                            title={ `${badge.game.toUpperCase()}\n${badge.name}\n"${badge.description}"` } 
+                                            title={ `${badge.game.toUpperCase()} - ${badge.name} (${badge.points} pts)\n"${badge.description}"` } 
                                             key={ `badge-${index}`}/>)
                                     }
                                     </div>
