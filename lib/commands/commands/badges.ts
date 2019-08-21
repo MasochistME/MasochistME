@@ -172,6 +172,7 @@ const badgeScreenEmbed = (footer?:string) => {
 }
 
 export const badgeCreation = (msg:Discord.Message) => {
+    console.log(cache["addbadge"]);
     if (!cache["addbadge"].inProgress || msg.author.id !== cache["addbadge"].author || msg.channel.id !== cache["addbadge"].channel) {
         return;
     }
