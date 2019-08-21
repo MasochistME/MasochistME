@@ -131,6 +131,8 @@ export const addbadge = (msg:Discord.Message) => {
             cache["addbadge"].msgId = sentEmbed.id;
             cache["addbadge"].authorId = msg.author.id;
             cache["addbadge"].channelId = msg.channel.id;
+            log.INFO(`Badge creation start detected!`)
+            log.INFO(JSON.stringify(cache["addbadge"]));
             const filter = (reaction, user) => user.id === cache["addbadge"].authorId && (reaction.emoji.name === '❌' || reaction.emoji.name === '✅');
             // @ts-ignore:next-line
             sentEmbed.awaitReactions(filter, {
@@ -172,7 +174,6 @@ const badgeScreenEmbed = (footer?:string) => {
 }
 
 export const badgeCreation = (msg:Discord.Message) => {
-    console.log(cache["addbadge"]);
     if (!cache["addbadge"].inProgress || msg.author.id !== cache["addbadge"].author || msg.channel.id !== cache["addbadge"].channel) {
         return;
     }
