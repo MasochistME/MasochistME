@@ -142,13 +142,11 @@ class Profile extends React.Component {
         const patron = props.patrons.find(tier => tier.list.find(p => p.steamid === user.id) ? { tier: tier.tier, description: tier.description } : false);
         const games = props.games;
         const rating = props.rating;
-        /*
         const badges = _.orderBy(
             props.badges
                 .filter(badge => user.badges.find(b => b.id === badge._id))
                 .map(badge => badge = {...badge, game: games.find(game => game.id === badge.gameId).title})
             , ['points'], ['desc']);
-        */
 
         return (
             <div className='flex-column'>
@@ -185,57 +183,61 @@ class Profile extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div className='wrapper-profile'>
-                    { /*
-                    <div className='profile-badges'>
-                        {
-                            badges.map((badge, index) => <img 
-                                className='profile-badge' 
-                                src={ badge.img } 
-                                alt='badge' 
-                                title={ `${badge.game.toUpperCase()}\n${badge.name}\n"${badge.description}"` } 
-                                key={ `badge-${index}`}/>)
-                        }
-                    </div>
-                    */ }
+                <div className='wrapper-profile flex-column'>
+                    {
+                        badges.length !== 0
+                            ? <div className='profile-badges'>
+                                <div className='profile-section' style={{ width: '100%' }}>
+                                    <h3 className='profile-section-title'>Badges</h3>
+                                    <div style={{ width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+                                    {
+                                        badges.map((badge, index) => <img 
+                                            className='profile-badge' 
+                                            src={ badge.img } 
+                                            alt='badge' 
+                                            title={ `${badge.game.toUpperCase()}\n${badge.name}\n"${badge.description}"` } 
+                                            key={ `badge-${index}`}/>)
+                                    }
+                                    </div>
+                                </div>
+                            </div>
+                            : null
+                    }
                     {
                         !isNaN(user.points) && user.points !== 0
-                        ?
-                        <div className='flex-column'>
-                            <div className='profile-graphs'>
-                                <ChartWrapper title='HOURS PLAYED (TOTAL)'>
-                                    <DoughnutChart 
-                                        labels={ summarizeTotalTimes('label', 'total', rating, user, games) }
-                                        dataset={ summarizeTotalTimes('sum', 'total', rating, user, games) }
-                                    />
-                                </ChartWrapper>
-                                <ChartWrapper title='HOURS PLAYED (COMPLETED)'>
-                                    <DoughnutChart 
-                                        labels={ summarizeTotalTimes('label', 'completed', rating, user, games) }
-                                        dataset={ summarizeTotalTimes('sum', 'completed', rating, user, games) }
-                                    />
-                                </ChartWrapper>
-                                <ChartWrapper title='GAMES COMPLETED'>
-                                    <DoughnutChart 
-                                        labels={ summarizeTotalGames('label', rating, user, games) }
-                                        dataset={ summarizeTotalGames('sum', rating, user, games) }
-                                    />
-                                </ChartWrapper>
-                                <ChartWrapper title='COMPLETION TIMELINE' width='100' >
-                                    <LineChart
-                                        labels={ getTimelines('label', rating, user, games) }
-                                        datasets={ [{
-                                                label: 'games',
-                                                data: getTimelines('games', rating, user, games) 
-                                            },
-                                            {
-                                                label: 'points',
-                                                data: getTimelines('points', rating, user, games) 
-                                            }]
-                                        }
-                                    />
-                                </ChartWrapper>
-                            </div>
+                        ? <div className='profile-graphs'>
+                            <ChartWrapper title='HOURS PLAYED (TOTAL)'>
+                                <DoughnutChart 
+                                    labels={ summarizeTotalTimes('label', 'total', rating, user, games) }
+                                    dataset={ summarizeTotalTimes('sum', 'total', rating, user, games) }
+                                />
+                            </ChartWrapper>
+                            <ChartWrapper title='HOURS PLAYED (COMPLETED)'>
+                                <DoughnutChart 
+                                    labels={ summarizeTotalTimes('label', 'completed', rating, user, games) }
+                                    dataset={ summarizeTotalTimes('sum', 'completed', rating, user, games) }
+                                />
+                            </ChartWrapper>
+                            <ChartWrapper title='GAMES COMPLETED'>
+                                <DoughnutChart 
+                                    labels={ summarizeTotalGames('label', rating, user, games) }
+                                    dataset={ summarizeTotalGames('sum', rating, user, games) }
+                                />
+                            </ChartWrapper>
+                            <ChartWrapper title='COMPLETION TIMELINE' width='100' >
+                                <LineChart
+                                    labels={ getTimelines('label', rating, user, games) }
+                                    datasets={ [{
+                                            label: 'games',
+                                            data: getTimelines('games', rating, user, games) 
+                                        },
+                                        {
+                                            label: 'points',
+                                            data: getTimelines('points', rating, user, games) 
+                                        }]
+                                    }
+                                />
+                            </ChartWrapper>
                         </div>
                         : null
                     }
@@ -248,7 +250,7 @@ class Profile extends React.Component {
 const mapStateToProps = state => ({ 
     members: state.members,
     patrons: state.patrons,
-    // badges: state.badges,
+    badges: state.badges,
     games: state.games,
     rating: state.rating,
     id: state.profileID
