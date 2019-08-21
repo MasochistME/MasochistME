@@ -11,6 +11,7 @@ import { help, hmod, vid, rec } from './commands/standard';
 import { meme, memelist, addmeme, deletememe } from './commands/meme';
 import { follow, unfollow, followers, following, live } from './commands/follow';
 import { addbadge, editbadge, deletebadge, badgelist, givebadge, takebadge } from './commands/badges';
+import { showmembers } from './commands/members';
 
 export const Command: { [key:string]: (command:ICommand, msg:Discord.Message) => string | void} = {
     help: (command:ICommand, msg:Discord.Message) => new CustomCommand(command, msg).execute(help, msg),
@@ -36,4 +37,5 @@ export const Command: { [key:string]: (command:ICommand, msg:Discord.Message) =>
     badgelist: (command:ICommand, msg:Discord.Message) => new CustomCommand(command, msg).execute(badgelist, msg),
     givebadge: (command:ICommand, msg:Discord.Message) => new CustomCommand(command, msg).execute(givebadge, msg),
     takebadge: (command:ICommand, msg:Discord.Message) => new CustomCommand(command, msg).execute(takebadge, msg),
+    showmembers: (command:ICommand, msg:Discord.Message) => new CustomCommand(command, msg).execute(showmembers, msg),
 };
