@@ -174,7 +174,7 @@ const badgeScreenEmbed = (footer?:string) => {
 }
 
 export const badgeCreation = (msg:Discord.Message) => {
-    if (!cache["addbadge"].inProgress || msg.author.id !== cache["addbadge"].author || msg.channel.id !== cache["addbadge"].channel) {
+    if (!cache["addbadge"].inProgress || msg.author.id !== cache["addbadge"].authorId || msg.channel.id !== cache["addbadge"].channelId) {
         return;
     }
     const activeField = cache["addbadge"].activeField;
