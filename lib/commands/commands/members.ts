@@ -22,6 +22,9 @@ export const showmembers = (msg:Discord.Message) => {
                     }
                     members += `\n- **${user.name}** - ${user.id}`;
                 })
+
+                const embed = createEmbed('Members', [{ title: '\_\_\_', content: members }]);
+                msg.channel.send(embed);
             }
         })
         .catch(err => msg.channel.send(`Error: ${err}`));
