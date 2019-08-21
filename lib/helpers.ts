@@ -22,7 +22,7 @@ export const hasSeparator = (msg:Discord.Message) =>
     removeKeyword(msg).includes('|');
 
 export const extractArguments = (msg:Discord.Message) => {
-    const args = removeKeyword(msg).trim().split('|');
+    const args = removeKeyword(msg).trim().split(' ');
     if (args.length === 1 && args[0] === '')
         return [];
     return args;

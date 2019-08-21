@@ -1,19 +1,120 @@
 import Discord from 'discord.js';
+import { ObjectId } from 'mongodb';
+import axios from 'axios';
 import _ from 'lodash';
-import { insertMany } from '../../db';
-import { createEmbed, removeKeyword } from '../../helpers';
+import { insertMany, deleteOne } from '../../db';
+import { createEmbed, removeKeyword, extractArguments } from '../../helpers';
 import { cache } from '../../../cache';
 import { log } from '../../../log';
 
 const timeout = 300000;
 const fields:Array<string> = [ 'game id', 'name', 'image', 'points', 'requirements', 'description'];
 
+export const editbadge = (msg:Discord.Message) => {
+    // const badgeId = removeKeyword(msg);
+
+    // if (!badgeId) {
+    //     msg.channel.send(createEmbed('Invalid badge ID', [{ title: '\_\_\_', content: 'Cannot edit badge that doesn\'t exist.' }]));
+    //     return;
+    // }
+
+    // const badge = cache["badges"].find(b => b['_id'] == badgeId);
+    
+    // if (!badge) {
+    //     msg.channel.send(createEmbed('Invalid badge ID', [{ title: '\_\_\_', content: 'Cannot edit badge that doesn\'t exist.' }]));
+    //     return;
+    // }
+    msg.channel.send('This is WIP!');
+}
+
+export const deletebadge = (msg:Discord.Message) => {
+    const badgeId = removeKeyword(msg);
+
+    if (!badgeId) {
+        msg.channel.send(createEmbed('Invalid badge ID', [{ title: '\_\_\_', content: 'Cannot delete badge that doesn\'t exist.' }]));
+        return;
+    }
+
+    const badge = cache["badges"].find(b => b['_id'] == badgeId);
+    
+    if (!badge) {
+        msg.channel.send(createEmbed('Invalid badge ID', [{ title: '\_\_\_', content: 'Cannot delete badge that doesn\'t exist.' }]));
+        return;
+    }
+    else {
+        deleteOne('masochist', 'badges', { '_id': ObjectId(badgeId) }, err => 
+            err
+                ? msg.react('❌')
+                : msg.react('✅'));
+    }
+}
+
+export const givebadge = (msg:Discord.Message) => {
+    const [ badgeId, userId ] = extractArguments(msg);
+
+    if (!badgeId || !userId) {
+        msg.channel.send(createEmbed('Invalid syntax', [{ title: '\_\_\_', content: 'Badge or user is invalid.' }]));
+        return;
+    }
+
+    const badge = cache["badges"].find(b => b['_id'] == badgeId);
+    const user = cache["users"].find(u => u.id == userId);
+    const url = `http://localhost:3002/rest/badges/badge/${badgeId}/user/${userId}`;
+    
+    if (!badge || !user) {
+        msg.channel.send(createEmbed('Invalid ID', [{ title: '\_\_\_', content: 'Badge or user doesn\'t exist.'  }]));
+        return;
+    }
+
+    axios.put(url)
+        .then(() => msg.channel.send('Given! :3'))
+        .catch(error => msg.channel.send(`Error: ${error}`))
+}
+
+export const takebadge = (msg:Discord.Message) => {
+    const [ badgeId, userId ] = extractArguments(msg);
+
+    if (!badgeId || !userId) {
+        msg.channel.send(createEmbed('Invalid syntax', [{ title: '\_\_\_', content: 'Badge or user is invalid.' }]));
+        return;
+    }
+
+    const badge = cache["badges"].find(b => b['_id'] == badgeId);
+    const user = cache["users"].find(u => u.id == userId);
+    const url = `http://localhost:3002/rest/badges/badge/${badgeId}/user/${userId}`;
+    
+    if (!badge || !user) {
+        msg.channel.send(createEmbed('Invalid ID', [{ title: '\_\_\_', content: 'Badge or user doesn\'t exist.'  }]));
+        return;
+    }
+
+    axios.delete(url)
+        .then(() => msg.channel.send('Taken! :3'))
+        .catch(error => msg.channel.send(`Error: ${error}`))
+}
+
+export const badgelist = (msg:Discord.Message) => {
+    let content = '';
+
+    cache["badges"] = _.orderBy(cache["badges"], ['gameId'], ['asc']);
+    cache["badges"].map((badge, index) => {
+        let helper = content + `\`\`${badge._id}\`\` - ${ badge.name.toUpperCase() } - ${ badge.description }\n`;
+        if (helper.length >= 2000) {
+            msg.channel.send(createEmbed('🥇 List of badges', [{ title: '\_\_\_', content: helper }]));
+            content = '';
+        }
+        content += `\`\`${badge._id}\`\` - ${ badge.name.toUpperCase() } - ${ badge.description }\n`;
+        if (index === cache["badges"].length - 1)
+            msg.channel.send(createEmbed('🥇 List of badges', [{ title: '\_\_\_', content: helper }]));
+    })
+}
+
 // addbadge stuff
 export const addbadge = (msg:Discord.Message) => {
     cache["addbadge"].inProgress = true;
     cache["addbadge"].activeField = fields[0].replace(' ', '');
 
-    const embed = badgeScreenEmbed(true);
+    const embed = badgeScreenEmbed();
 
     msg.channel.send(embed)
         .then(sentEmbed => {
@@ -41,7 +142,7 @@ export const addbadge = (msg:Discord.Message) => {
         .catch(err => log.WARN(err));
 }
 
-const badgeScreenEmbed = (active:boolean) => {
+const badgeScreenEmbed = (footer?:string) => {
     let content = '';
     fields.map(field => {
         const fieldNoSpaces = field.replace(' ', '');
@@ -64,9 +165,9 @@ const badgeScreenEmbed = (active:boolean) => {
     ],
     '0xFDC000',
     cache["addbadge"].badge.image ? cache["addbadge"].badge.image : 'https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/256x256/question.png',
-    active
-        ? `Unfinished badge expires at ${ new Date(Date.now() + timeout).toLocaleString()}.`
-        : `Badge expired at ${ new Date(Date.now()).toLocaleString()}.`
+    footer
+        ? footer
+        : `Unfinished badge expires at ${ new Date(Date.now() + timeout).toLocaleString()}.`
     );
 }
 
@@ -85,7 +186,7 @@ export const badgeCreation = (msg:Discord.Message) => {
         cache["addbadge"].activeField = '';
     
     msg.channel.fetchMessage(cache["addbadge"].msgId)
-        .then(message => message.edit(badgeScreenEmbed(true)))
+        .then(message => message.edit(badgeScreenEmbed()))
 }
 
 export const finalizeBadge = (collected:any) => {
@@ -96,17 +197,17 @@ export const finalizeBadge = (collected:any) => {
         }
     })[0];
     if (!collected) {
-        expireBadge();
+        expireBadge(`Badge expired at ${ new Date(Date.now()).toLocaleString()}.`);
         return;
     }
     if (collected.name === '❌') {
         const embed = createEmbed('❌ Badge cancelled', [{ title: '\_\_\_', content: 'Good, it sucked anyway.' }]);
         collected.message.channel.send(embed);
-        clearBadge();
+        expireBadge(`Badge cancelled at ${ new Date(Date.now()).toLocaleString()}.`)
         return;
     }
     if (collected.name === '✅') {
-        insertMany('badges', 'badges', [{ 
+        insertMany('masochist', 'badges', [{ 
             name: cache["addbadge"].badge.name,
             img: cache["addbadge"].badge.image,
             points: cache["addbadge"].badge.points,
@@ -116,10 +217,13 @@ export const finalizeBadge = (collected:any) => {
             enabled: true,
             legacy: false,
             }], (err, result) => {
-                if (err)
-                    return collected.message.channel.send(createEmbed('❌ Error saving badge', [{ title: '\_\_\_', content: err }]))
+                if (err) {
+                    collected.message.channel.send(createEmbed('❌ Error saving badge', [{ title: '\_\_\_', content: err }]));
+                    expireBadge(`Badge cancelled at ${ new Date(Date.now()).toLocaleString()}.`)
+                    return;
+                }
                 collected.message.channel.send(createEmbed('✅ Badge added', [{ title: '\_\_\_', content: 'Done, fucker.' }]));
-                clearBadge();
+                expireBadge(`Badge saved at ${ new Date(Date.now()).toLocaleString()}.`)
             }
         )
     }
@@ -134,57 +238,14 @@ const clearBadge = () => cache["addbadge"] = {
     badge: {}
 }
 
-const expireBadge = () => {
+const expireBadge = (footer?:string) => {
     const badgeRoom = cache["addbadge"].channelId;
     const channel = cache["bot"].channels.get(badgeRoom);
     channel.fetchMessage(cache["addbadge"].msgId)
         .then(message => {
-            message.edit(badgeScreenEmbed(false));
+            message.edit(badgeScreenEmbed(footer));
             message.clearReactions()
-                .then()
-                .catch();
+                .then(() => clearBadge())
+                .catch(err => log.WARN(err));
         })
-    clearBadge();
-}
-
-// other
-export const editbadge = (msg:Discord.Message) => {
-    const badgeId = removeKeyword(msg);
-    console.log(cache)
-    const badge = cache["badges"].badges.find(b => b.id === badgeId);
-    
-    if (!badge) {
-        msg.channel.send(createEmbed('Invalid badge ID', [{ title: '\_\_\_', content: 'Cannot edit badge that doesn\'t exist.' }]));
-        return;
-    }
-    msg.channel.send('Edited! :3');
-    // ***
-}
-
-export const deletebadge = (msg:Discord.Message) => {
-    const badgeId = removeKeyword(msg);
-    const badge = cache["badges"].badges.find(b => b.id === badgeId);
-    
-    if (!badge) {
-        msg.channel.send(createEmbed('Invalid badge ID', [{ title: '\_\_\_', content: 'Cannot delete badge that doesn\'t exist.' }]));
-        return;
-    }
-    msg.channel.send('Deleted! :3');
-    // ***
-}
-
-export const badgelist = (msg:Discord.Message) => {
-    let content = '';
-
-    cache["badges"] = _.orderBy(cache["badges"], ['gameId'], ['asc']);
-    cache["badges"].map((badge, index) => {
-        let helper = content + `\`\`${badge._id}\`\` - ${ badge.name.toUpperCase() } - ${ badge.description }\n`;
-        if (helper.length >= 2000) {
-            msg.channel.send(createEmbed('🥇 List of badges', [{ title: '\_\_\_', content: helper }]));
-            content = '';
-        }
-        content += `\`\`${badge._id}\`\` - ${ badge.name.toUpperCase() } - ${ badge.description }\n`;
-        if (index === cache["badges"].length - 1)
-            msg.channel.send(createEmbed('🥇 List of badges', [{ title: '\_\_\_', content: helper }]));
-    })
 }
