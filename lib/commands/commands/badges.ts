@@ -209,8 +209,11 @@ export const finalizeBadge = (collected:any) => {
         expireBadge(`Badge cancelled at ${ new Date(Date.now()).toLocaleString()}.`)
         return;
     }
-    if (cache["addbadge"].badge.gameid.toLowerCase() === 'none') {
-        isNonSteamGame = false;
+    try {
+        parseInt(cache["addbadge"].badge.gameid)
+    }
+    catch(err) {
+        isNonSteamGame = true;
     }
     if (collected.name === '✅') {
         insertMany('masochist', 'badges', [{ 
@@ -219,7 +222,8 @@ export const finalizeBadge = (collected:any) => {
             points: cache["addbadge"].badge.points,
             requirements: cache["addbadge"].badge.requirements,
             description: cache["addbadge"].badge.description,
-            gameId: isNonSteamGame ? cache["addbadge"].badge.gameid : 'none',
+            gameId: isNonSteamGame ? cache["addbadge"].badge.gameid : null,
+            game: isNonSteamGame ? cache["addbadge"].badge.gameid : null,
             enabled: true,
             legacy: false,
             isNonSteamGame,
