@@ -192,6 +192,7 @@ export const badgeCreation = (msg:Discord.Message) => {
 }
 
 export const finalizeBadge = (collected:any) => {
+    let isNonSteamGame = false;
     collected = collected.map(col => {
         return {
             name: col.emoji.name,
@@ -208,6 +209,9 @@ export const finalizeBadge = (collected:any) => {
         expireBadge(`Badge cancelled at ${ new Date(Date.now()).toLocaleString()}.`)
         return;
     }
+    if (cache["addbadge"].badge.gameid.toLowerCase() === 'none') {
+        isNonSteamGame = false;
+    }
     if (collected.name === '✅') {
         insertMany('masochist', 'badges', [{ 
             name: cache["addbadge"].badge.name,
@@ -215,9 +219,10 @@ export const finalizeBadge = (collected:any) => {
             points: cache["addbadge"].badge.points,
             requirements: cache["addbadge"].badge.requirements,
             description: cache["addbadge"].badge.description,
-            gameId: cache["addbadge"].badge.gameid,
+            gameId: isNonSteamGame ? cache["addbadge"].badge.gameid : 'none',
             enabled: true,
             legacy: false,
+            isNonSteamGame,
             }], (err, result) => {
                 if (err) {
                     collected.message.channel.send(createEmbed('❌ Error saving badge', [{ title: '\_\_\_', content: err }]));
