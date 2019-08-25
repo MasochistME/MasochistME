@@ -145,7 +145,12 @@ class Profile extends React.Component {
         const badges = _.orderBy(
             props.badges
                 .filter(badge => user.badges.find(b => b.id === badge._id))
-                .map(badge => badge = {...badge, game: games.find(game => game.id === badge.gameId).title})
+                .map(badge => badge = {
+                    ...badge, 
+                    game: badge.isNonSteamGame
+                        ? badge.game
+                        : games.find(game => game.id === badge.gameId).title
+                    })
             , ['points'], ['desc']);
 
         return (

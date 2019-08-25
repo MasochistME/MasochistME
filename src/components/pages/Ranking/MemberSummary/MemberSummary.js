@@ -48,7 +48,7 @@ class MemberSummary extends React.Component {
                     <div className={ `member-name ${ shekelmaster ? `tier${tier}` : ''}` } onClick={ () => this.showProfile( member.id ) }>{ member.name }</div>
                     <div className="member-ranking flex-row">
                         <div className="member-rating-score" title="Sum of all points">
-                            { member.points ? member.points + this.summarizeBadgePoints(member, badges) : 0 }
+                            { member.points ? member.points : 0 }
                             <span className="bold"> Σ</span>
                         </div>
                         {   
