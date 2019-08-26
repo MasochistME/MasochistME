@@ -145,24 +145,28 @@ export const addbadge = (msg:Discord.Message) => {
 }
 
 const badgeScreenEmbed = (footer?:string) => {
-    let content = '';
-    fields.map(field => {
+    let content = fields.map(field => {
         const fieldNoSpaces = field.replace(' ', '');
-        content += cache["addbadge"].badge[fieldNoSpaces] 
-            ? `✅ ${field} - ${ cache["addbadge"].badge[fieldNoSpaces] }\n` 
-            : cache["addbadge"].activeField === fieldNoSpaces 
-                ? `➡ ${field}\n`
-                : `🔲 ${field}\n`
+        return {
+            title: cache["addbadge"].badge[fieldNoSpaces] 
+                ? `✅ ${field}`
+                : cache["addbadge"].activeField === fieldNoSpaces 
+                    ? `➡ ${field}`
+                    : `🔲 ${field}`,
+            content: cache["addbadge"].badge[fieldNoSpaces]
+                ? cache["addbadge"].badge[fieldNoSpaces]
+                : '-',
+            inline: true
+        }
     });
     return createEmbed('🥇 Badge adding screen', [
-        { 
-            title: '\_\_\_', 
-            content
-        },
+        ...content,
         { 
             title: 'Instruction', 
             content: `Field indicated by ️️️➡️ is the one you are filling now.
-                \n✅ to save, ❌ to cancel.`
+                \nIf the badge is for non-Steam game, write its name in \`\`game id\`\` field.
+                \n✅ to save, ❌ to cancel.`,
+            inline: false
         }
     ],
     '0xFDC000',
