@@ -94,19 +94,20 @@ export const takebadge = (msg:Discord.Message) => {
 }
 
 export const badgelist = (msg:Discord.Message) => {
-    let content = '';
+    let badges = '';
 
     cache["badges"] = _.orderBy(cache["badges"], ['gameId'], ['asc']);
-    cache["badges"].map((badge, index) => {
-        let helper = content + `\`\`${badge._id}\`\` - ${ badge.name.toUpperCase() } - ${ badge.description }\n`;
-        if (helper.length >= 2000) {
-            msg.channel.send(createEmbed('🥇 List of badges', [{ title: '\_\_\_', content: helper }]));
-            content = '';
+    cache["badges"].map(badge => {
+        if (`${badges}\`\`${badge._id}\`\` - ${ badge.name.toUpperCase() } - ${ badge.description }\n`.length >= 1024) {
+            const embed = createEmbed('🥇 List of badges', [{ title: '\_\_\_', content: badges }]);
+            msg.channel.send(embed);
+            badges = '';
         }
-        content += `\`\`${badge._id}\`\` - ${ badge.name.toUpperCase() } - ${ badge.description }\n`;
-        if (index === cache["badges"].length - 1)
-            msg.channel.send(createEmbed('🥇 List of badges', [{ title: '\_\_\_', content: helper }]));
+        badges += `\`\`${badge._id}\`\` - ${ badge.name.toUpperCase() } - ${ badge.description }\n`;
     })
+
+    const embed = createEmbed('🥇 List of badges', [{ title: '\_\_\_', content: badges }]);
+    msg.channel.send(embed);
 }
 
 // addbadge stuff
