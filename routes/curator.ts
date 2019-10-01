@@ -143,7 +143,9 @@ export const updateCuratorGames = async (req?, res?) => {
             title: game.data[gameId].data.name || 'unknown',
             img: game.data[gameId].data.header_image || 'http://',
             achievements: {
-                total: game.data[gameId].data.achievements.total,
+                total: game.data[gameId].data.achievements 
+                    ? game.data[gameId].data.achievements.total
+                    : 0,
                 list: []
             },
             url: urlGamesDetails,
