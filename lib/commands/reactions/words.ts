@@ -32,6 +32,8 @@ export const fuck = (msg:Discord.Message) => {
         return;
     if (listOfAvoidThose.includes(thingToFuck))
         return;
+    if (msg.author.id == '159203133115990016')
+        return;
     
     msg.channel.send(`Yeah! Fuck ${customizeFuck()}`)
 }
