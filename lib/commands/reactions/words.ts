@@ -12,8 +12,8 @@ export const fuck = (msg:Discord.Message) => {
     let thingToFuck = sentenceArray[thingToFuckIndex];
 
     const customizeFuck = () => {
-        if (thingToFuck === 'arcy')
-            return '... Or not. She\' nice.';
+        if (thingToFuck === 'arcy' || thingToFuck === 'arcyvilk' || thingToFuck === '<@165962236009906176>')
+            return '... Okay no, go fuck yourself.';
         if (thingToFuck === 'you')
             return 'you too!';
         if (thingToFuck === 'me')
@@ -28,11 +28,11 @@ export const fuck = (msg:Discord.Message) => {
         return `${thingToFuck}!`;
     }
 
+    if (msg.author.id == '159203133115990016')
+        return;
     if (!thingToFuck)
         return;
     if (listOfAvoidThose.includes(thingToFuck))
-        return;
-    if (msg.author.id == '159203133115990016')
         return;
     
     msg.channel.send(`Yeah! Fuck ${customizeFuck()}`)
