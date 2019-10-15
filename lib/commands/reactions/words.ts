@@ -28,7 +28,7 @@ export const fuck = (msg:Discord.Message) => {
         return `${thingToFuck}!`;
     }
 
-    if (msg.author.id == '159203133115990016')
+    if (msg.author.id == '159203133115990016' && happensWithAChanceOf(50))
         return;
     if (!thingToFuck)
         return;
