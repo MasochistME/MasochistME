@@ -13,8 +13,8 @@ class SectionSale extends React.Component {
                 { 
                     games
                         .filter(game => game.sale.onSale)
-                        .map(game => (
-                            <li className='sale-brick' style={{ backgroundImage: `url(${game.img})` }} >
+                        .map((game, index) => (
+                            <li key={ `sale-${index}` } className='sale-brick' style={{ backgroundImage: `url(${game.img})` }} >
                                 <a className='sale-link' href={ `https://store.steampowered.com/app/${game.id}` } target='_blank' rel='noopener noreferrer' >
                                     <span className='link'>-{ game.sale.discount }%</span>
                                 </a>

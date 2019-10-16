@@ -194,7 +194,7 @@ class Profile extends React.Component {
                             ? <div className='profile-badges'>
                                 <div className='profile-section' style={{ width: '100%' }}>
                                     <h3 className='profile-section-title'>Badges</h3>
-                                    <div style={{ width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+                                    <div style={{ width: '100%', display: 'flex', flexFlow: 'row wrap', justifyContent: 'center' }}>
                                     {
                                         badges.map((badge, index) => <img 
                                             className='profile-badge' 

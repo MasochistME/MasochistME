@@ -45,7 +45,7 @@ class PageRanking extends React.Component {
                         { ranking.length > 0
                             ? createRankingList()
                             : <div className='flex-column'>
-                                <i class="fas fa-spinner"></i>
+                                <i className="fas fa-spinner"></i>
                                 <span style={{ fontSize: '0.9em', marginTop: '10px' }}>If you see no ranking here, reload the website.</span>
                             </div>
                         }
