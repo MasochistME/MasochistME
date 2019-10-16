@@ -4,8 +4,16 @@ import { changeTab } from '../../../../shared/store/modules/Tabs'
 import { showProfile } from '../../../../shared/store/modules/Profiles'
 
 class MemberSummary extends React.Component {
-    showProfile = id => {
-        this.props.dispatch(showProfile(id));
+    constructor() {
+        super()
+        this.state = { 
+            detailsVisible: false,
+            member: 0
+        }
+    }
+
+    showProfile = () => {
+        this.props.dispatch(showProfile(this.state.member));
         this.props.dispatch(changeTab('profile'));
     }
 
@@ -22,6 +30,16 @@ class MemberSummary extends React.Component {
         return sum;
     }
 
+    detailsVisible = (event) => {
+        this.setState({ detailsVisible: !this.state.detailsVisible })
+        this.props.showDetailsCallback();
+        event.stopPropagation();
+    }
+
+    componentDidMount = () => {
+        this.setState({ member: this.props.member.id })
+    }
+
     render() {
         const { member, index, rating, patron, badges } = this.props
         const disabled = member.points === 0 ? true : false
@@ -31,7 +49,7 @@ class MemberSummary extends React.Component {
         const shekelmaster = tier == 4
 
         return(
-            <div className={`member-summary flex-row ${disabled ? 'member-disabled' : ''} ${shekelmaster ? 'member-shekelmaster' : '' }` }>
+            <div className={`member-summary flex-row ${disabled ? 'member-disabled' : ''} ${shekelmaster ? 'member-shekelmaster' : '' }` } onClick={ this.showProfile }>
                 <div className="member-position">{ index+1 }</div>
                 <img className="member-avatar" src={ member.avatar } alt="avatar" />
                 {
@@ -40,12 +58,16 @@ class MemberSummary extends React.Component {
                         : <i className='fas fa-donate member-patron' style={{ color: 'transparent' }}/>
                 }
                 <div className="member-info flex-row">
-                    {
-                        disabled
-                            ? <icon className="fas fa-exclamation-triangle" title="This member has their Steam profile set to private."></icon> 
-                            : <div></div>
-                    }
-                    <div className={ `member-name ${ shekelmaster ? `tier${tier}` : ''}` } onClick={ () => this.showProfile( member.id ) }>{ member.name }</div>
+                    <i className={ `fas fa-angle-down icon-hover ${ this.state.detailsVisible ? 'icon-active' : '' }`} onClick={ this.detailsVisible }/>
+                    <div className='flex-row'>
+                        {
+                            disabled
+                                ? <i className="fas fa-exclamation-triangle" title="This member has their Steam profile set to private." />
+                                : <div></div>
+                        }
+                        <div className={ `member-name ${ shekelmaster ? `tier${tier}` : ''}` }>{ member.name }</div>
+                    </div>
+                    <div className='dummy'></div>
                     <div className="member-ranking flex-row">
                         <div className="member-rating-score" title="Sum of all points">
                             { member.points ? member.points : 0 }

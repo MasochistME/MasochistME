@@ -80,7 +80,7 @@ class Leaderboards extends React.Component {
                         name: member.name,
                         avatar: member.avatar,
                         gameId: game.id,
-                        completionRate: memberGameStats.completionRate,
+                        completionRate: memberGameStats.completionRate ? memberGameStats.completionRate : 0,
                         lastUnlocked: memberGameStats.lastUnlocked,
                         playtime: memberGameStats.playtime_forever
                     }
@@ -93,7 +93,7 @@ class Leaderboards extends React.Component {
                 ? <div className="leaderboards">
                     <h2>
                         <a href={ `https://store.steampowered.com/app/${ game.id }` } target='_blank' rel='noopener noreferrer' >
-                            { game.title } <i class="fas fa-external-link-alt"></i>
+                            { game.title } <i className="fas fa-external-link-alt"></i>
                         </a>
                     </h2>
                     <div className="game-statistics">

@@ -4,6 +4,7 @@ import MemberGameProgressBar from '../MemberGameProgressBar'
 export default class MemberGame extends React.Component {
     render() {
         const game = this.props.game
+        const percentage = isNaN(Math.floor(game.completionRate)) ? 0 : Math.floor(game.completionRate)
 
         return (
             <div className="m-game flex-row">
@@ -22,7 +23,7 @@ export default class MemberGame extends React.Component {
                         <div style={{ display: "none" }}>{ Math.round(parseInt(game.playtime_forever ? game.playtime_forever.replace(',','') : 0,10)) } h</div>
                     </div>
                 </div>
-                <MemberGameProgressBar percentage={ Math.floor(game.completionRate) }/>
+                <MemberGameProgressBar percentage={ percentage }/>
             </div>
         )
     }

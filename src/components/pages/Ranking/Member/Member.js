@@ -2,7 +2,7 @@ import React from 'react'
 import MemberSummary from '../MemberSummary';
 import MemberDetails from '../MemberDetails';
 
-export default class Member extends React.Component{
+export default class Member extends React.Component {
     constructor() {
         super()
         this.state = { show: false }
@@ -15,12 +15,11 @@ export default class Member extends React.Component{
 
         return (
             <li 
-                className="member flex-column"
-                onClick={ this.changeDetailsVisibility }>
-                    <MemberSummary member={ member } index={ index } rating={ rating } patron={ patron } badges={ badges } />
+                className="member flex-column">
+                    <MemberSummary member={ member } index={ index } rating={ rating } patron={ patron } badges={ badges } showDetailsCallback={ this.changeDetailsVisibility }/>
                     {
                         this.state.show
-                            ? <MemberDetails member={ member } show={ this.state.show } rating={ rating } games={ games }/>
+                            ? <MemberDetails member={ member } show={ this.state.show } rating={ rating } badges={ badges } games={ games }/>
                             : null
                     }
             </li>

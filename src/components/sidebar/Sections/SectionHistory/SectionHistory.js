@@ -42,7 +42,7 @@ class SectionHistory extends React.Component {
                 return game
                     ? (
                     <p className='small-event' key={ `sidebar-event-${eventIndex}` }>
-                        <i className="fas fa-undo-alt"></i><span className="bold"> {game.title}</span> changed its tier to <icon className={ swapRatingToIcon(game.rating, rating) }></icon>!
+                        <i className="fas fa-undo-alt"></i><span className="bold"> {game.title}</span> changed its tier to <i className={ swapRatingToIcon(game.rating, rating) } />!
                     </p>)
                     : null
             case 'achievementNumberChange':
