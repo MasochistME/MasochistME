@@ -58,7 +58,7 @@ class MemberSummary extends React.Component {
                         : <i className='fas fa-donate member-patron' style={{ color: 'transparent' }}/>
                 }
                 <div className="member-info flex-row">
-                    <i className={ `fas fa-angle-down icon-hover ${ this.state.detailsVisible ? 'icon-active' : '' }`} onClick={ this.detailsVisible }/>
+                    <i className={ `fas fa-chevron-down icon-hover ${ this.state.detailsVisible ? 'icon-active' : '' }`} onClick={ this.detailsVisible }/>
                     <div className='flex-row'>
                         {
                             disabled
