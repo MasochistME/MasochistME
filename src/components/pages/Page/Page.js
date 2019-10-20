@@ -5,6 +5,7 @@ import PageGames from '../Games'
 import PageRanking from '../Ranking'
 import PageEvents from '../Events'
 import PageSupport from '../Support'
+import PageBadges from '../Badges'
 import PageProfile from '../Profile'
 
 const assignPageType = tab => {
@@ -15,6 +16,7 @@ const assignPageType = tab => {
         case 'events': return <PageEvents />
         case 'support': return <PageSupport />
         case 'profile': return <PageProfile />
+        case 'badges': return <PageBadges />
         default: return <PageHome />
     }
 }

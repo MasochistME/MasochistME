@@ -62,12 +62,19 @@ class Leaderboards extends React.Component {
     }
 
     render() {
-        const { props } = this
-        const visible = props.show
-        const game = props.game
-        const games = props.games
-        const members = props.members
-        const rating = props.rating
+        const { props } = this;
+        const visible = props.show;
+        const { game, games, members, rating } = this.props;
+        const badges = _.orderBy(
+            this.props.badges
+                .filter(badge => badge.gameId === game.id)
+                .map(badge => badge = {
+                    ...badge, 
+                    game: badge.isNonSteamGame
+                        ? badge.game
+                        : games.find(game => game.id === badge.gameId).title
+                    })
+            , ['points'], ['desc']);
 
         let leaderboards = props.members
             .filter(member => member.member)
@@ -98,7 +105,7 @@ class Leaderboards extends React.Component {
                     </h2>
                     <div className="game-statistics">
                         <ChartWrapper 
-                            title={[ `Average completion time`, `Completions: ${this.summarizeCompletions(leaderboards)}` ]}
+                            title={[ `Completions: ${this.summarizeCompletions(leaderboards)}`, `Average completion time` ]}
                         >
                             <StackedBarChart 
                                 labels={ [ 'hours' ] }
@@ -116,6 +123,37 @@ class Leaderboards extends React.Component {
                             />
                         </ChartWrapper>
                     </div>
+                    {
+                        badges.length > 0
+                            ? <div className="game-badges">
+                                <div className='profile-section flex-column'>
+                                    <h3 className='profile-section-title'>Badges</h3>
+                                    <div className='flex-column' style={{ width: '100%', height: '100%', padding: '10px', boxSizing: 'border-box' }}>
+                                        {
+                                            badges.map((badge, index) => (
+                                                <div className='badge-description flex-column'>
+                                                    <p style={{ margin: 0, fontWeight: 'bold' }}>{badge.name.toUpperCase()}</p>
+                                                    <div className='flex-row' style={{ width: '100%' }}>
+                                                        <img 
+                                                            className='profile-badge'
+                                                            style={{ margin: '5px 10px 5px 5px' }}
+                                                            src={ badge.img } 
+                                                            alt='badge' 
+                                                            key={ `badge-${index}`}/>
+                                                            <div className='flex-column' style={{ width: '100%' }}>
+                                                                <p className='badge-field'>Points: {badge.points} pts</p>
+                                                                <p className='badge-field'>Proof: {badge.requirements}</p>
+                                                                <p className='badge-field'>Description: {badge.description}</p>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                            ))
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            : null
+                    }
                     <ul className="game-leaderboards">
                     {
                         leaderboards
@@ -140,7 +178,8 @@ class Leaderboards extends React.Component {
 
 const mapStateToProps = state => ({ 
     members: state.members,
-    games: state.games
+    games: state.games,
+    badges: state.badges
 })
 
 export default connect(
