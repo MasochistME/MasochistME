@@ -38,7 +38,7 @@
         "text": "badges",
         "icon": "fas fa-ribbon",
         "link": "badges",
-        "visible": true,
+        "visible": false,
         "external": false       
     },
     {
