@@ -128,7 +128,7 @@ class Leaderboards extends React.Component {
                             ? <div className="game-badges">
                                 <div className='profile-section flex-column'>
                                     <h3 className='profile-section-title'>Badges</h3>
-                                    <div className='flex-column' style={{ width: '100%', height: '100%', padding: '10px', boxSizing: 'border-box' }}>
+                                    <div className='flex-column' style={{ width: '100%', height: '100%', padding: '0 10px 10px 10px', boxSizing: 'border-box' }}>
                                         {
                                             badges.map((badge, index) => (
                                                 <div className='badge-description flex-column'>
