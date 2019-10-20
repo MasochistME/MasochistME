@@ -35,6 +35,13 @@
         "external": false       
     },
     {
+        "text": "badges",
+        "icon": "fas fa-ribbon",
+        "link": "badges",
+        "visible": true,
+        "external": false       
+    },
+    {
         "text": "support",
         "icon": "fas fa-heart",
         "link": "support",
