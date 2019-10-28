@@ -35,7 +35,13 @@ class Leaderboards extends React.Component {
         let sum = 0;
         let completed = leaderboard
             .filter(member => member.completionRate === 100)
-            .map(entry => sum += parseInt(entry.playtime ? entry.playtime.replace(',','') : 0)*60);
+            .map(entry => {
+                entry.playtime
+                    ? typeof entry.playtime === "number"
+                        ? sum += entry.playtime * 60
+                        : sum += parseInt(entry.playtime.replace(',',''))*60
+                    : 0
+            })
         let average = Math.round((sum/60)/completed.length);
         
         return Number.isNaN(average) ? 0 : average

@@ -20,7 +20,13 @@ export default class MemberGame extends React.Component {
                                 ? <div className="m-game-completion-timer">{ new Date(game.lastUnlocked*1000).toLocaleString() }</div>
                                 : null
                         }
-                        <div style={{ display: "none" }}>{ Math.round(parseInt(game.playtime_forever ? game.playtime_forever.replace(',','') : 0,10)) } h</div>
+                        <div style={{ display: "none" }}>{ 
+                                game.playtime_forever
+                                    ? typeof game.playtime_forever === "number"
+                                        ? Math.round(game.playtime_forever, 10)
+                                        : Math.round(parseInt(game.playtime_forever.replace(',',''), 10))
+                                    : 0
+                            } h</div>
                     </div>
                 </div>
                 <MemberGameProgressBar percentage={ percentage }/>
