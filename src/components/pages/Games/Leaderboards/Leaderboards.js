@@ -40,7 +40,8 @@ class Leaderboards extends React.Component {
                     ? typeof entry.playtime === "number"
                         ? sum += entry.playtime * 60
                         : sum += parseInt(entry.playtime.replace(',',''))*60
-                    : 0
+                    : sum += 0
+                return entry;
             })
         let average = Math.round((sum/60)/completed.length);
         

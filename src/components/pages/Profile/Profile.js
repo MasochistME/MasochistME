@@ -26,13 +26,16 @@ const summarizeTotalTimes = (type, scope, rating, user, games) => {
     if (scope === 'completed')
         userGames = userGames.filter(game => game.completionRate === 100)
 
-    userGames.map(game => {
-        // data[0].sum = data[0].sum + parseInt(game.playtime_forever);
-        return { ...game, rating: games.find(g => parseInt(g.id) === game.appid).rating };
-    }).map(game => {
-        const index = data.findIndex(d => d.id === game.rating);
-        data[index].sum += parseInt(game.playtime_forever);
-        return game;
+    userGames
+        .filter(game => games.find(g => parseInt(g.id) === game.appid))
+        .map(game => {
+            game = { 
+                ...game, 
+                rating: games.find(g => parseInt(g.id) === game.appid).rating 
+            };
+            const index = data.findIndex(d => d.id === game.rating);
+            data[index].sum += parseInt(game.playtime_forever);
+            return game;
     });
 
     return data.map(d => d[type])
@@ -46,10 +49,13 @@ const summarizeTotalGames = (type, rating, user, games) => {
         id: r.id
     }));
     
-    user.games.filter(game => game.completionRate === 100)
+    user.games
+        .filter(game => game.completionRate === 100 && games.find(g => parseInt(g.id) === game.appid))            
         .map(game => {
-            return { ...game, rating: games.find(g => parseInt(g.id) === game.appid).rating }})
-        .map(game => {
+            game = {
+                ...game, 
+                rating: games.find(g => parseInt(g.id) === game.appid).rating 
+            };
             const index = data.findIndex(d => d.id === game.rating);
             data[index].sum += 1;
             return game;
@@ -84,9 +90,8 @@ const getTimelines = (type, rating, user, games) => {
                 .filter(game => {
                     const month = new Date(game.lastUnlocked*1000).getMonth() + 1;
                     const year = new Date(game.lastUnlocked*1000).getFullYear(); 
-                    return date.label === `${year}-${month < 10 ? `0${month}` : month}`;
-                }
-                ).map(game => {
+                    return date.label === `${year}-${month < 10 ? `0${month}` : month}` && games.find(g => parseInt(g.id) === game.appid);
+                }).map(game => {
                     try {
                         date.points += rating.find(r => r.id === games.find(g => parseInt(g.id) === game.appid).rating).score;
                     }
@@ -149,7 +154,7 @@ class Profile extends React.Component {
                     ...badge, 
                     game: badge.isNonSteamGame
                         ? badge.game
-                        : games.find(game => game.id === badge.gameId).title
+                        : games.find(game => game.id === badge.gameId) ? games.find(game => game.id === badge.gameId).title : 'unknown'
                     })
             , ['points'], ['desc']);
 
