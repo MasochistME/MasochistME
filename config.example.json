@@ -1,0 +1,9 @@
+{
+    "PORT" : "PORT",
+    "CORS": "domain",
+    "DATABASE_URL": "mongodb://login:password!host:port/db?authSource=administratorlogin",
+    "STEAM_KEY": "STEAM_KEY",
+    "AUTH": "DISCORD_KEY",
+    "DELAY": 3000,
+    "BIG_DELAY": 43200000
+}
