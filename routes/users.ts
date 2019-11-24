@@ -117,17 +117,19 @@ const getUserAchievements = (userID:number, games:object, userToUpdate:any) => n
             games[index].lastUnlocked = lastUnlocked;
 
             // event when 100%
-            const userGames = userToUpdate[0].games.find(g => g.appid === gameID)
-            if (userGames && (userGames.completionRate !== 100 && completionRate === 100)) {
-                log.INFO(`--> [UPDATE] events - user ${userID} completed ${gameID}`)
-                const eventDetails = {
-                    date: lastUnlocked * 1000,
-                    type:'complete',
-                    member: userID,
-                    game: gameID
+            if (userToUpdate[0]) { //this user is not in database YET
+                const userGames = userToUpdate[0].games.find(g => g.appid === gameID)
+                if (userGames && (userGames.completionRate !== 100 && completionRate === 100)) {
+                    log.INFO(`--> [UPDATE] events - user ${userID} completed ${gameID}`)
+                    const eventDetails = {
+                        date: lastUnlocked * 1000,
+                        type:'complete',
+                        member: userID,
+                        game: gameID
+                    }
+                    const { client, db } = await connectToDb();
+                    db.collection('events').insertOne(eventDetails, (err, data) => { });
                 }
-                const { client, db } = await connectToDb();
-                db.collection('events').insertOne(eventDetails, (err, data) => { });
             }
         }
         catch (err) {
@@ -235,9 +237,9 @@ export const updateUser = async (req, res) => { // TODO remove badges that dont 
         url: `https://steamcommunity.com/profiles/${req.params.steamid}`,
         games: gamesAsync,
         ranking: rankingAsync,
-        badges: userToUpdate[0].badges,
+        badges: userToUpdate[0] ? userToUpdate[0].badges : [],
         // @ts-ignore:next-line
-        private: gamesAsync.length === 0 ? false : true,
+        private: gamesAsync.length === 0 ? true : false,
         updated: Date.now(),
         // member: false // TODO check if Steam user is member!!!
     };

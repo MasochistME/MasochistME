@@ -91,7 +91,8 @@ export const updateCuratorGames = async (req?, res?) => {
         .split(`<div class="recommendation" >`)
         .map(rec => {
             if (rec.indexOf(`data-ds-appid`) != -1) {
-                let id = rec.substring(rec.indexOf(`data-ds-appid="`) + `data-ds-appid="`.length, rec.indexOf(`" data-ds-tagids`)).trim();
+                let id = rec.substring(rec.indexOf(`data-ds-appid="`) + `data-ds-appid="`.length).trim();
+                id = id.substring(0, id.indexOf('"')).trim();
                 let desc = rec.substring(rec.indexOf(`<div class="recommendation_desc">"`) + `<div class="recommendation_desc">"`.length,
                     rec.indexOf(`"</div>`)).trim();
                 let scoreIsDefined = points.find(r => desc.trim().startsWith(r.symbol))
