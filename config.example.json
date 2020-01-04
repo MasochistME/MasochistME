@@ -1,0 +1,8 @@
+{
+    "DISCORD_TOKEN": "TOKEN",
+    "DATABASES": [
+        {
+            "symbol":"string",
+            "url": "mongodb://LOGIN:PASSWORD@HOST:PORT/DATABASE?authSource=PERMISSION"
+        }]
+}
