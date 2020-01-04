@@ -1,41 +1,33 @@
 import Discord from 'discord.js';
+import nlp from 'compromise';
 import { happensWithAChanceOf } from '../../rng';
 import { cache } from '../../../cache';
 
 export const fuck = (msg:Discord.Message) => {
     const listOfAvoidThose = cache["special"].find(special => special.id === 'nofuckstogive').list || [];
-    const listOfDoubleWordsToRespond = cache["special"].find(special => special.id === 'doublefuckstogive').list || [];
-    const sentenceArray = msg.content.toLowerCase()
-        .replace(/[,.;!?"]/g, '')
-        .split(' ');
-    const thingToFuckIndex = sentenceArray.indexOf('fuck') + 1;
-    let thingToFuck = sentenceArray[thingToFuckIndex];
-
     const customizeFuck = () => {
-        if (thingToFuck === 'arcy' || thingToFuck === 'arcyvilk' || thingToFuck === '<@165962236009906176>')
-            return '... Okay no, go fuck yourself.';
-        if (thingToFuck === 'you')
-            return 'you too!';
-        if (thingToFuck === 'me')
-            return 'you!';
-        if (thingToFuck === 'fetus' || thingToFuck === 'dr fetus' || thingToFuck === 'dr. fetus' || thingToFuck === 'doctor fetus')
-            return 'fetus! ...wait _what_.';
-        if (listOfDoubleWordsToRespond.includes(thingToFuck)) {
-            if (thingToFuck == 'my')
-                thingToFuck = 'your';
-            return `${thingToFuck} ${sentenceArray[thingToFuckIndex + 1] || 'thing'}!`;
+        let message = nlp(msg.content);
+        let thingToFuck:String|null = null;
+        if (message.has('^fuck #Determiner #Noun'))
+            thingToFuck = message.match('^fuck').lookAhead('#Determiner #Noun').text();
+        if (message.has('^fuck #Verb'))
+            thingToFuck = message.match('^fuck').lookAhead('#Verb').text();
+        if (message.has('^fuck #Noun')) {
+            thingToFuck = message.match('^fuck').lookAhead('#Noun').text();
+            if (thingToFuck === 'arcy' || thingToFuck === 'arcyvilk' || thingToFuck === '<@165962236009906176>')
+                thingToFuck = '... Actually no, fuck _you_';
+            if (thingToFuck === 'you')
+                thingToFuck = 'you too';
+            if (thingToFuck === 'me')
+                thingToFuck = 'you!';
+            if (thingToFuck === 'fetus' || thingToFuck === 'dr fetus' || thingToFuck === 'dr. fetus' || thingToFuck === 'doctor fetus')
+                thingToFuck = 'fetus! ...wait _what_...';
         }
-        return `${thingToFuck}!`;
+        return thingToFuck;
     }
-
-    if (msg.author.id == '159203133115990016' && happensWithAChanceOf(50))
-        return;
-    if (!thingToFuck)
-        return;
-    if (listOfAvoidThose.includes(thingToFuck))
-        return;
-    
-    msg.channel.send(`Yeah! Fuck ${customizeFuck()}`)
+    const thingToFuck = customizeFuck();
+    if (thingToFuck && !listOfAvoidThose.includes(thingToFuck.toLowerCase()))
+        msg.channel.send(`Yeah! Fuck ${thingToFuck}!`)
 }
 
 export const mega = (msg:Discord.Message) => {
