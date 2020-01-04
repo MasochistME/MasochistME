@@ -24,6 +24,7 @@
   "dependencies": {
     "@types/node": "^11.13.4",
     "axios": ">=0.18.1",
+    "compromise": "^12.2.1",
     "discord.js": "^11.4.2",
     "mongodb": "^3.2.3",
     "rimraf": "^2.6.3"
