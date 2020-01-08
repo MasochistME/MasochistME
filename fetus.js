@@ -24,7 +24,6 @@ const init = bot => {
     bot.on('guildMemberRemove', userLeave);
 
     cache.bot = bot;
-    setTimeout(() => console.log(cache.special), 5000)
     log.INFO(`${new Date().toLocaleString()} - Dr. Fetus reporting for destruction!`);        
 }
 
