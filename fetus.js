@@ -11,9 +11,10 @@ import config from './config.json';
 
 const bot = new Discord.Client();
 
-const ready = bot =>
-    config.DATABASES.map(db => connectToDb(db)
-        .then(() => init(bot)));
+const ready = () => {
+    config.DATABASES.map(db => connectToDb(db));
+    init(bot);
+}
 
 const init = bot => {
     bot.on('message', classifyMessage);
@@ -28,5 +29,5 @@ const init = bot => {
 }
 
 bot.login(config.DISCORD_TOKEN);
-bot.on('ready', () => ready(bot));
+bot.on('ready', ready);
 
