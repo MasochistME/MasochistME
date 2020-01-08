@@ -2,28 +2,30 @@ import { MongoClient } from 'mongodb';
 import { log } from '../log';
 import { cache } from '../cache';
 
-export const connectToDb = (dbObject:any) => {
+export const connectToDb = (dbObject:any) => new Promise((resolve, reject) => {
     const callback = (err, client) => {
         if (err)
             log.WARN(`Error while connecting to database: ${err}`);
         log.INFO(`Succesfully connected to the ${dbObject.symbol.toUpperCase()} database!`);
 
         cache["dbs"][dbObject.symbol] = client.db(dbObject.symbol);
-        updateCache(dbObject.symbol);
-    };
-    
-    MongoClient.connect(dbObject.url, callback);
-}
+        updateCache(dbObject.symbol)
+            .then(resolve);
+    }
+    MongoClient.connect(dbObject.url, callback)
+})
 
-export const updateCache = (dbSymbol:string) => {
+export const updateCache = (dbSymbol:string) => new Promise(resolve =>
     cache["dbs"][dbSymbol].listCollections().toArray((err, collections) => {
-        collections.map(collection => {
+        collections.map((collection, index) => {
             findCollection(cache["dbs"][dbSymbol], collection.name, (err, data) => {
                 err ? log.WARN(err) : cache[collection.name] = data;
             })
+            if (index === collections.length - 1) 
+                resolve();
         })
     })
-}
+)
 
 export const insertData = (dbSymbol:string, col, key, value, cb) => {
     cache["dbs"][dbSymbol].collection(col).insertOne({ [key]: value }, (err, result) => {

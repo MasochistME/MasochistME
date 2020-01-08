@@ -11,19 +11,23 @@ import config from './config.json';
 
 const bot = new Discord.Client();
 
-const ready = bot => {
-    config.DATABASES.map(db => connectToDb(db));
+const ready = bot =>
+    config.DATABASES.map(db => connectToDb(db)
+        .then(() => init(bot)));
+
+const init = bot => {
+    bot.on('message', classifyMessage);
+    bot.on('presenceUpdate', handleStream);
+    bot.on('messageUpdate', msgEdit);
+    bot.on('messageDelete', msgDelete);
+    bot.on('guildMemberAdd', userJoin);
+    bot.on('guildMemberRemove', userLeave);
 
     cache.bot = bot;
-    log.INFO('Dr. Fetus reporting for destruction!');
+    setTimeout(() => console.log(cache.special), 5000)
+    log.INFO(`${new Date().toLocaleString()} - Dr. Fetus reporting for destruction!`);        
 }
 
-bot.on('ready', () => ready(bot));
-bot.on('message', classifyMessage);
-bot.on('presenceUpdate', handleStream)
-bot.on('messageUpdate', msgEdit)
-bot.on('messageDelete', msgDelete)
-bot.on('guildMemberAdd', userJoin)
-bot.on('guildMemberRemove', userLeave)
-
 bot.login(config.DISCORD_TOKEN);
+bot.on('ready', () => ready(bot));
+
