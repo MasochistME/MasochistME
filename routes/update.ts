@@ -10,7 +10,7 @@ const updateDelay = config.BIG_DELAY;
 export const getStatus = async (req, res) => {
     let lastUpdated;
     try {
-        lastUpdated = await getDataFromDB('special', { id: 'lastUpdated' });
+        lastUpdated = await getDataFromDB('update', { id: 'lastUpdated' });
     }
     catch(err) {
         log.WARN(err);
@@ -29,7 +29,7 @@ export const initiateMainUpdate = async (req?, res?) => {
     log.INFO(`--> [UPDATE] main update [INITIALIZED]`);
 
     try {
-        const lastUpdated = await getDataFromDB('special', { id: 'lastUpdated' }); // don't update too fast
+        const lastUpdated = await getDataFromDB('update', { id: 'lastUpdated' }); // don't update too fast
         if (Date.now() - lastUpdated[0].timestamp < updateDelay) {
             if (res)
                 res.status(202).send(`Wait ${(updateDelay - (Date.now() - lastUpdated[0].timestamp))/60000 } min before updating`);
@@ -77,7 +77,7 @@ export const initiateMainUpdate = async (req?, res?) => {
     })
 
     const finalize = () => {
-        db.collection('special').updateOne({ id: 'lastUpdated' }, {$set: {
+        db.collection('update').updateOne({ id: 'lastUpdated' }, {$set: {
             id: 'lastUpdated',
             timestamp: Date.now()
         }}, { upsert: true }, (err, data) => { })

@@ -20,7 +20,7 @@ app.listen(config.PORT, () => console.log(`Server listening at port ${ config.PO
 // ------------
 
 const update = async () => {
-    const lastUpdated = await getDataFromDB('special', { id: 'lastUpdated' });
+    const lastUpdated = await getDataFromDB('update', { id: 'lastUpdated' });
 
     if (Date.now() - lastUpdated[0].timestamp > config.BIG_DELAY)
         initiateMainUpdate();
