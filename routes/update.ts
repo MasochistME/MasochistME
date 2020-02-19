@@ -31,7 +31,7 @@ export const initiateMainUpdate = async (req?, res?) => {
     try {
         const lastUpdated = await getDataFromDB('update', { id: 'lastUpdated' }); // don't update too fast
         if (Date.now() - lastUpdated[0].timestamp < updateDelay) {
-            if (res && !res.param.forceupdate)
+            if (res && !req.params.forceupdate)
                 res.status(202).send(`Wait ${(updateDelay - (Date.now() - lastUpdated[0].timestamp))/60000 } min before updating`);
             return;
         }
