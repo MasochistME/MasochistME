@@ -41,7 +41,7 @@ class App extends Component {
             let members = response.data;
             members.map(member => {
                 let summary = 0
-                this.props.state.rating.map(r => summary += r.score * member.ranking[r.id])
+                this.props.state.rating.map(r => summary += member.ranking[r.id] ? r.score * member.ranking[r.id] : 0)
                 member.badges.map(badge => {
                   const membersBadge = this.props.state.badges.find(b => badge.id == b['_id']);
                   if (membersBadge) {
