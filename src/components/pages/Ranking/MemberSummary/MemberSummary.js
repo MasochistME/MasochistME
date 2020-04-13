@@ -43,7 +43,7 @@ class MemberSummary extends React.Component {
     render() {
         const { member, index, rating, patron, badges } = this.props
         const badgePoints = this.summarizeBadgePoints(member, badges);
-        const disabled = member.points - badgePoints <== 0 ? true : false
+        const disabled = (member.points - badgePoints) <= 0 ? true : false
         const tier = patron 
             ? patron.tier
             : null
