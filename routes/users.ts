@@ -90,61 +90,64 @@ const getUserAchievements = (userID:number, games:object, userToUpdate:any) => n
     log.INFO(`--> achievements of user ${ userID }`);
 
     const getAchievementsDetails = async (index:number) => {
-        let gameID = games[index].appid;
-        let url = `http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v1/?appid=${ gameID }&steamid=${ userID }&key=${ config.STEAM_KEY }&format=json`;
-        let response;
+        if (games[index]) {              
+        	let gameID = games[index].appid;
+	        let url = `http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v1/?appid=${ gameID }&steamid=${ userID }&key=${ config.STEAM_KEY }&format=json`;
+	        let response;
 
-        log.INFO(`-- [${index+1}/${Object.keys(games).length}] game ${ gameID } (user ${userID})`);
+	        log.INFO(`-- [${index+1}/${Object.keys(games).length}] game ${ gameID } (user ${userID})`);
 
-        const updateIndex = cache.updating.findIndex(user => user.user === userID);
-        if (updateIndex && cache.updating[updateIndex])
-            cache.updating[updateIndex].progress = 100*(index+1)/Object.keys(games).length;
-
-        try {
-            response = await axios.get(url);
-
-            let numberOfAllAchievements = response.data.playerstats.achievements.length;
-            let numberOfUnlockedAchievements = response.data.playerstats.achievements.filter(achievement => achievement.achieved == 1).length;
-            let lastUnlocked = 0;
-            response.data.playerstats.achievements.map(achievement => 
-                achievement.unlocktime > lastUnlocked
-                    ? lastUnlocked = achievement.unlocktime
-                    : null
-            )
-            let completionRate = 100*numberOfUnlockedAchievements/numberOfAllAchievements;
-            
-            games[index].completionRate = completionRate;
-            games[index].lastUnlocked = lastUnlocked;
-
-            // event when 100%
-            if (userToUpdate[0]) { //this user is not in database YET
-                const userGames = userToUpdate[0].games.find(g => g.appid === gameID)
-                if (userGames && (userGames.completionRate !== 100 && completionRate === 100)) {
-                    log.INFO(`--> [UPDATE] events - user ${userID} completed ${gameID}`)
-                    const eventDetails = {
-                        date: lastUnlocked * 1000,
-                        type:'complete',
-                        member: userID,
-                        game: gameID
-                    }
-                    const { client, db } = await connectToDb();
-                    db.collection('events').insertOne(eventDetails, (err, data) => { });
-                }
-            }
-        }
-        catch (err) {
-            log.WARN(`--> [${index+1}/${Object.keys(games).length}] game ${ gameID } (user ${userID}) - [ERROR] - ${ url }`);
-            log.WARN(err);
-            if (games[index+1]) {
-                setTimeout(() => getAchievementsDetails(index + 1), config.DELAY);
-                return;
-            }
-            else {
-                log.INFO(`--> [UPDATE] achievements for ${ userID } [DONE]`);
-                resolve(games);
-                return;
-            }
-        }
+	        const updateIndex = cache.updating.findIndex(user => user.user === userID);
+	        if (updateIndex && cache.updating[updateIndex])
+	            cache.updating[updateIndex].progress = 100*(index+1)/Object.keys(games).length;
+	
+        	try {
+	            response = await axios.get(url);
+	
+	            let numberOfAllAchievements = response.data.playerstats.achievements.length;
+	            let numberOfUnlockedAchievements = response.data.playerstats.achievements.filter(achievement => achievement.achieved == 1).length;
+	            let lastUnlocked = 0;
+	            response.data.playerstats.achievements.map(achievement => 
+	                achievement.unlocktime > lastUnlocked
+	                    ? lastUnlocked = achievement.unlocktime
+	                    : null
+	            )
+	            let completionRate = 100*numberOfUnlockedAchievements/numberOfAllAchievements;
+	            
+	            games[index].completionRate = completionRate;
+	            games[index].lastUnlocked = lastUnlocked;
+		    games[index].achievements = response.data.playerstats.achievements.filter(achievement => achievement.achieved === 1);
+	
+	            // event when 100%
+	            if (userToUpdate[0]) { //this user is not in database YET
+	                const userGames = userToUpdate[0].games.find(g => g.appid === gameID)
+	                if (userGames && (userGames.completionRate !== 100 && completionRate === 100)) {
+	                    log.INFO(`--> [UPDATE] events - user ${userID} completed ${gameID}`)
+	                    const eventDetails = {
+	                        date: lastUnlocked * 1000,
+	                        type:'complete',
+	                        member: userID,
+	                        game: gameID
+	                    }
+	                    const { client, db } = await connectToDb();
+	                    db.collection('events').insertOne(eventDetails, (err, data) => { });
+	                }
+	            }
+	        }
+	        catch (err) {
+	            log.WARN(`--> [${index+1}/${Object.keys(games).length}] game ${ gameID } (user ${userID}) - [ERROR] - ${ url }`);
+	            log.WARN(err);
+	            if (games[index+1]) {
+	                setTimeout(() => getAchievementsDetails(index + 1), config.DELAY);
+	                return;
+	            }
+	            else {
+	                log.INFO(`--> [UPDATE] achievements for ${ userID } [DONE]`);
+	                resolve(games);
+	                return;
+	            }
+	        }
+	}
 
         if (games[index+1]) {
             setTimeout(() => getAchievementsDetails(index + 1), config.DELAY);
