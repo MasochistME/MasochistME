@@ -42,7 +42,8 @@ class MemberSummary extends React.Component {
 
     render() {
         const { member, index, rating, patron, badges } = this.props
-        const disabled = member.points === 0 ? true : false
+        const badgePoints = this.summarizeBadgePoints(member, badges);
+        const disabled = (member.points - badgePoints) <= 0 ? true : false
         const tier = patron 
             ? patron.tier
             : null
@@ -91,7 +92,7 @@ class MemberSummary extends React.Component {
                             })  
                         }
                         <div className="member-rating-score" title="Sum of points for badges">
-                            { this.summarizeBadgePoints(member, badges) }
+                            { badgePoints }
                             <i className='fas fa-medal' style={{ paddingRight: "5px"}}/> 
                         </div>
                     </div>
