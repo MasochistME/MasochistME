@@ -1,15 +1,12 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import tabs from '../config/tabs.json'
-import rating from '../config/rating.json'
 import { CHANGE_TAB } from './modules/Tabs'
 import { SEARCH_GAMES_VALUE, SEARCH_MEMBERS_VALUE } from './modules/Search'
 import { SHOW_GAMES_RATED } from './modules/CheckBoxes'
 import { SHOW_PROFILE } from './modules/Profiles'
 import { SHOW_LOGIN_MODAL, LOG_IN_USER, LOG_OUT_USER } from './modules/Login'
 import { CACHE_GAMES, CACHE_MEMBERS, CACHE_RATING, CACHE_EVENTS, CACHE_BLOG, CACHE_PATRONS, CACHE_BADGES } from './modules/Cache'
-
-const ratingArray = () => rating.map(r => r.id) // TODO get this from database
 
 // STORES
 const defaultState = {
@@ -18,7 +15,7 @@ const defaultState = {
     searchGame: "",
     searchMember: "",
     showLoginModal: false,
-    showGamesRated: [ ...ratingArray() ],
+    showGamesRated: [],
     username: null,
     privilege: null,
     banned: false,

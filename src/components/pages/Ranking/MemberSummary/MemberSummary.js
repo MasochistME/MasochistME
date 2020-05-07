@@ -52,11 +52,18 @@ class MemberSummary extends React.Component {
             <div className={`member-summary flex-row ${disabled ? 'member-disabled' : ''} ${shekelmaster ? 'member-shekelmaster' : '' }` } onClick={ this.showProfile }>
                 <div className="member-position">{ index+1 }</div>
                 <img className="member-avatar" src={ member.avatar } alt="avatar" />
+                <div className="member-icons" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'spaceBetween', alignItems: 'center' }}>
                 {
                     tier 
                         ? <i className={ `fas fa-donate member-patron tier${tier}` } title={ patron.description.toUpperCase() } />
                         : <i className='fas fa-donate member-patron' style={{ color: 'transparent' }}/>
                 }
+                {
+                    member.updated < 1585080000000
+                        ? <i className={ `fas fa-exclamation-circle` } title={ "This member wasn't updated after the game tier rework. Their info might be outdated." } style={{ color: 'pink', marginLeft: '10px', cursor: 'help', opacity: '0.3' }}/>
+                        : <i className='fas fa-exclamation-circle' style={{ color: 'transparent', marginLeft: '10px' }}/>
+                }
+                </div>
                 <div className="member-info flex-row">
                     <i className={ `fas fa-chevron-down icon-hover ${ this.state.detailsVisible ? 'icon-active' : '' }`} onClick={ this.detailsVisible }/>
                     <div className='flex-row'>
@@ -81,7 +88,7 @@ class MemberSummary extends React.Component {
                                         : 0 }
                                     <i className={ score.icon } style={{ paddingRight: "5px"}}/> 
                                 </div>
-                            })
+                            })  
                         }
                         <div className="member-rating-score" title="Sum of points for badges">
                             { this.summarizeBadgePoints(member, badges) }

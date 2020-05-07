@@ -10,6 +10,7 @@ import ContentWrapper from '../shared/components/layout/ContentWrapper'
 import SidebarWrapper from './sidebar/SidebarWrapper' 
 import LoginModal from '../shared/components/LoginModal/index'
 import { cacheGames, cacheMembers, cacheRating, cacheEvents, cacheBlog, cachePatrons, cacheBadges } from '../shared/store/modules/Cache'
+import { showGamesRated } from '../shared/store/modules/CheckBoxes';
 
 class App extends Component {
   constructor() {
@@ -20,8 +21,10 @@ class App extends Component {
   loadRating = () => {
     axios.get('/rest/api/rating')  
         .then(response => {
-            if (response.status === 200)
-              return this.props.dispatch(cacheRating(response.data))
+            if (response.status === 200) {
+              this.props.dispatch(showGamesRated(response.data.map(r => r.id)));
+              this.props.dispatch(cacheRating(response.data));
+            }
         }).catch(err => console.trace(err))
   }
 
