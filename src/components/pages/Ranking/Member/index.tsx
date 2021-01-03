@@ -1,47 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SlideDown } from 'react-slidedown';
 import MemberSummary from '../MemberSummary';
 import MemberDetails from '../MemberDetails';
 
 import 'react-slidedown/lib/slidedown.css';
 
-export default class Member extends React.Component {
-  constructor() {
-    super();
-    this.state = { show: false };
-  }
+type TMember = {
+  member: any;
+  rating: any;
+  games: any;
+  patron: any;
+  badges: any;
+  index: number;
+};
+export default function Member(props: TMember): JSX.Element {
+  const { member, index, rating, games, patron, badges } = props;
+  const [show, setShow] = useState(false);
 
-  changeDetailsVisibility = () => this.setState({ show: !this.state.show });
+  const changeDetailsVisibility = (): any => setShow(!show);
 
-  render() {
-    const { member, index, rating, games, patron, badges } = this.props;
-    const details = this.state.show ? (
-      <MemberDetails
-        key={`details-${member.id}`}
+  const details = show ? (
+    <MemberDetails
+      key={`details-${member.id}`}
+      member={member}
+      show={show}
+      rating={rating}
+      badges={badges}
+      games={games}
+    />
+  ) : null;
+
+  return (
+    <li className="member flex-column">
+      <MemberSummary
         member={member}
-        show={this.state.show}
+        index={index}
         rating={rating}
+        patron={patron}
         badges={badges}
-        games={games}
+        onShowDetails={changeDetailsVisibility}
       />
-    ) : null;
-
-    return (
-      <li className="member flex-column">
-        <MemberSummary
-          member={member}
-          index={index}
-          rating={rating}
-          patron={patron}
-          badges={badges}
-          showDetailsCallback={this.changeDetailsVisibility}
-        />
-        <SlideDown
-          className={'my-dropdown-slidedown'}
-          style={{ width: '100%' }}>
-          {details}
-        </SlideDown>
-      </li>
-    );
-  }
+      <SlideDown className={'my-dropdown-slidedown'} style={{ width: '100%' }}>
+        {details}
+      </SlideDown>
+    </li>
+  );
 }

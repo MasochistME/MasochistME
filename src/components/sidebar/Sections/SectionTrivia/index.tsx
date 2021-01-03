@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { Section, SectionTitle } from '../../';
 
-export default function SectionTrivia() {
+export default function SectionTrivia(): JSX.Element {
   const members = useSelector((state: any) =>
     state.members.filter((member: any) => member.member),
   );

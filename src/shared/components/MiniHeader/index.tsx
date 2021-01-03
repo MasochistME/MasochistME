@@ -1,31 +1,21 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-class MiniHeader extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      title: 'Game List',
-      icon: 'fas fa-gamepad',
-    };
-  }
+export default function MiniHeader(): JSX.Element {
+  // const title = 'Game List';
+  // const icon = 'fas fa-gamepad';
 
-  render() {
-    const { props } = this;
-    const findTab = () =>
-      props.state.tabs.find(tab => tab.link === props.state.activeTab);
+  const tabs = useSelector((state: any) => state.tabs);
+  const activeTab = useSelector((state: any) => state.activeTab);
 
-    return (
-      <div className="wrapper-miniheader flex-row">
-        <div className="flex-row">
-          <i className={findTab().icon} />
-          <p>{findTab().text}</p>
-        </div>
+  const findTab = () => tabs.find((tab: any) => tab.link === activeTab);
+
+  return (
+    <div className="wrapper-miniheader flex-row">
+      <div className="flex-row">
+        <i className={findTab().icon} />
+        <p>{findTab().text}</p>
       </div>
-    );
-  }
+    </div>
+  );
 }
-
-const mapStateToProps = state => ({ state });
-
-export default connect(mapStateToProps)(MiniHeader);
