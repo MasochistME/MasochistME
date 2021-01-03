@@ -64,7 +64,7 @@ export const initiateMainUpdate = async (req?, res?) => {
     }
 
     usersFromDB.map(userFromDB => {
-        if (userFromDB.member && !members.find(member => userFromDB.id === member.id)) {
+        if (userFromDB.member && !members.find(member => userFromDB.id === member.id) && !userFromDB.protected) {
             log.INFO(`--> [UPDATE] events - member ${userFromDB.id} left`)
             const eventDetails:TMemberLeftEvent = {
                 date: Date.now(),
