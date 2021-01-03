@@ -1,54 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { swapRatingToIcon } from '../../../../shared/helpers/helper';
 import Leaderboards from '../Leaderboards/index';
 
-export default class Game extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      extended: false,
-    };
-  }
+type TGame = {
+  game: any;
+  rating: any;
+};
 
-  extendLeaderboards = event => {
+export default function Game(props: TGame): JSX.Element {
+  const { game, rating } = props;
+  const [extended, setExtended] = useState(false);
+
+  const onExtend = (event: any) => {
     event.cancelBubble = true;
-    this.setState({ extended: !this.state.extended });
+    setExtended(!extended);
   };
 
-  render() {
-    const game = this.props.game;
-    const rating = this.props.rating;
-
-    return (
+  return (
+    <div className={extended ? 'game-extended' : ''} onClick={onExtend}>
       <div
-        className={this.state.extended ? 'game-extended' : ''}
-        onClick={this.extendLeaderboards}>
-        <div
-          className={
-            this.state.extended
-              ? `game rated-${game.rating} display-none`
-              : `game rated-${game.rating}`
-          }
-          style={{ backgroundImage: `url(${game.img})` }}>
-          <div className="game-info">
-            <div className="game-rating">
-              <i
-                className={
-                  game
-                    ? swapRatingToIcon(game.rating, rating)
-                    : 'fas fa-spinner'
-                }></i>
-            </div>
-            <div className="game-title">{game.title}</div>
-            <div className="game-desc">{game.desc}</div>
+        className={
+          extended
+            ? `game rated-${game.rating} display-none`
+            : `game rated-${game.rating}`
+        }
+        style={{ backgroundImage: `url(${game.img})` }}>
+        <div className="game-info">
+          <div className="game-rating">
+            <i
+              className={
+                game ? swapRatingToIcon(game.rating, rating) : 'fas fa-spinner'
+              }></i>
           </div>
+          <div className="game-title">{game.title}</div>
+          <div className="game-desc">{game.desc}</div>
         </div>
-        <Leaderboards
-          show={this.state.extended}
-          game={game}
-          rating={game.rating}
-        />
       </div>
-    );
-  }
+      <Leaderboards show={extended} game={game} rating={game.rating} />
+    </div>
+  );
 }

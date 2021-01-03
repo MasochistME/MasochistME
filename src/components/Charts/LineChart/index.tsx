@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Chart from 'chart.js';
 
-export default class LineChart extends React.Component {
-  chartRef = React.createRef();
+type TLineChart = {
+  datasets: any;
+  labels: any;
+};
 
-  componentDidMount = () => {
-    const barChartRef = this.chartRef.current.getContext('2d');
+export default function LineChart(props: TLineChart): JSX.Element {
+  const { datasets, labels } = props;
+  const chartRef = React.createRef();
+
+  useEffect(() => {
+    const barChartRef = chartRef.current.getContext('2d');
     const colors = [
       'rgba(190, 201, 224, 1)',
       'rgba(158, 157, 181, 1)',
@@ -13,7 +19,7 @@ export default class LineChart extends React.Component {
       'rgba(36, 38, 48, 1)',
       '#rgba(20, 22, 32, 1)',
     ];
-    const datasets = this.props.datasets.map((dataset, index) => {
+    const ds = datasets.map((dataset: any, index: number) => {
       return {
         label: dataset.label,
         data: dataset.data,
@@ -32,7 +38,7 @@ export default class LineChart extends React.Component {
         },
         ticks: {
           fontColor: '#BEC9E0',
-          fontFamily: '\'Dosis\', \'Verdana\', sans-serif',
+          fontFamily: "'Dosis', 'Verdana', sans-serif",
           fontSize: '16',
         },
       },
@@ -41,8 +47,8 @@ export default class LineChart extends React.Component {
     new Chart(barChartRef, {
       type: 'line',
       data: {
-        labels: this.props.labels,
-        datasets,
+        labels,
+        datasets: ds,
       },
       options: {
         defaultFontColor: '#BEC9E0',
@@ -62,15 +68,13 @@ export default class LineChart extends React.Component {
         },
       },
     });
-  };
+  }, []);
 
-  render() {
-    return (
-      <canvas
-        style={{ width: '100%', height: '500px' }}
-        id="myChart"
-        ref={this.chartRef}
-      />
-    );
-  }
+  return (
+    <canvas
+      style={{ width: '100%', height: '500px' }}
+      id="myChart"
+      ref={chartRef}
+    />
+  );
 }
