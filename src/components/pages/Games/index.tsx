@@ -4,7 +4,7 @@ import _ from 'lodash';
 import CheckBoxGameChoice from './CheckBoxGameChoice';
 import SearchBar from '../../../shared/components/SearchBar';
 import { swapRatingToIcon } from '../../../shared/helpers/helper';
-import Game from './Game/Game';
+import Game from './Game';
 
 class PageGames extends React.Component {
   render() {
