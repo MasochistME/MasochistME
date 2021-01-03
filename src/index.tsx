@@ -8,13 +8,13 @@ import App from './components/App'
 import store from './shared/store/store'
 
 class Root extends React.Component {
-    render() {
-        return (
-            <Provider store={ store }>
-                <App />
-            </Provider>
-        )
-    }
+  render() {
+    return (
+      <Provider store={ store }>
+          <App />
+      </Provider>
+    )
+  }
 }
 
 ReactDOM.render(
