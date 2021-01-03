@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { swapRatingToIcon } from '../../../../shared/helpers/helper';
 import { SmallEvent, Section, SectionTitle } from '../../';
 
-export default function SectionHistory() {
+export default function SectionHistory(): JSX.Element {
   const events = useSelector((state: any) =>
     orderBy(state.events, ['date'], ['desc']).slice(0, 10),
   );
@@ -73,13 +73,9 @@ export default function SectionHistory() {
         if (!content) {
           return null;
         }
-        const { text, icon, member } = content;
+        const { text, icon } = content;
         if (!text) {
           return null;
-        }
-        let player;
-        if (member) {
-          player = members.find((m: any) => Number(m.id) === Number(member));
         }
 
         return (

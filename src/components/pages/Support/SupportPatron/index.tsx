@@ -1,30 +1,36 @@
 import React from 'react';
 
-class SupportPatreonAvatar extends React.Component {
-  render() {
-    return (
-      <img
-        className={`patron-avatar avatar-tier${this.props.tier}`}
-        src={this.props.avatar}
-        alt="avatar"
-      />
-    );
-  }
+type TSupportParteonAvatar = {
+  tier: any;
+  avatar: any;
+};
+
+export function SupportPatreonAvatar(
+  props: TSupportParteonAvatar,
+): JSX.Element {
+  const { tier, avatar } = props;
+
+  return (
+    <img
+      className={`patron-avatar avatar-tier${tier}`}
+      src={avatar}
+      alt="avatar"
+    />
+  );
 }
 
-class SupportPatron extends React.Component {
-  render() {
-    const { props } = this;
-    const patron = props.patron;
-    const tier = props.tier;
+type TSupportPatron = {
+  patron: any;
+  tier: any;
+};
 
-    return (
-      <div className="patron">
-        <SupportPatreonAvatar avatar={patron.avatar} tier={tier} />
-        <p className="patron-nickname">{patron.name}</p>
-      </div>
-    );
-  }
+export default function SupportPatron(props: TSupportPatron): JSX.Element {
+  const { patron, tier } = props;
+
+  return (
+    <div className="patron">
+      <SupportPatreonAvatar avatar={patron.avatar} tier={tier} />
+      <p className="patron-nickname">{patron.name}</p>
+    </div>
+  );
 }
-
-export default SupportPatron;

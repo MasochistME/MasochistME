@@ -11,7 +11,7 @@ const FlexColumn = styled.div`
   justify-content: center;
 `;
 
-export default function SectionTop() {
+export default function SectionTop(): JSX.Element {
   const members = useSelector((state: any) =>
     orderBy(
       state.members,

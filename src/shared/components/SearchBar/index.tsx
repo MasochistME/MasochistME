@@ -1,60 +1,59 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { searchGames, searchMembers } from '../../store/modules/Search';
 
-class SearchBar extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      searchFor: null,
-    };
-    this.adjustToTab = this.adjustToTab.bind(this);
-  }
+export default function SearchBar(): JSX.Element {
+  const dispatch = useDispatch();
+  const activeTab = useSelector((state: any) => state.activeTab);
 
-  componentDidMount = () => this.adjustToTab();
+  const [searchFor, setSearchFor] = useState(undefined as string | undefined);
 
-  adjustToTab = () => {
-    switch (this.props.activeTab) {
-      case 'games':
-        return this.setState({ searchFor: 'games' });
-      case 'ranking':
-        return this.setState({ searchFor: 'members' });
+  const adjustToTab = (): void => {
+    switch (activeTab) {
+      case 'games': {
+        setSearchFor('games');
+        return;
+      }
+      case 'ranking': {
+        setSearchFor('members');
+        return;
+      }
       default:
         return;
     }
   };
-  update = event => {
+
+  const update = (event: any): void => {
     const searchString = event.target.value;
-    switch (this.state.searchFor) {
-      case 'games':
-        return this.props.dispatch(searchGames(searchString));
-      case 'members':
-        return this.props.dispatch(searchMembers(searchString));
+    switch (searchFor) {
+      case 'games': {
+        dispatch(searchGames(searchString));
+        return;
+      }
+      case 'members': {
+        dispatch(searchMembers(searchString));
+        return;
+      }
       default:
         return;
     }
   };
 
-  render() {
-    return (
-      <div className="wrapper-searchbar">
-        <label htmlFor="searchbar" className="searchbar-label">
-          Search:
-        </label>
-        <input
-          className="searchbar"
-          type="text"
-          placeholder={'for ' + this.state.searchFor}
-          onChange={this.update}
-        />
-      </div>
-    );
-  }
+  useEffect(() => {
+    adjustToTab();
+  }, []);
+
+  return (
+    <div className="wrapper-searchbar">
+      <label htmlFor="searchbar" className="searchbar-label">
+        Search:
+      </label>
+      <input
+        className="searchbar"
+        type="text"
+        placeholder={'for ' + searchFor}
+        onChange={update}
+      />
+    </div>
+  );
 }
-
-const mapStateToProps = state => ({
-  activeTab: state.activeTab,
-});
-const mapDispatchToProps = dispatch => ({ dispatch });
-
-export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

@@ -15,7 +15,7 @@ export const SectionSaleUl = styled.ul`
   list-style-type: none;
 `;
 
-export default function SectionSale() {
+export default function SectionSale(): JSX.Element {
   const games = useSelector((state: any) =>
     orderBy(state.games, ['sale.discount'], ['desc']),
   );
