@@ -1,55 +1,66 @@
-import React from 'react'
-import axios from 'axios'
+import React from 'react';
+import axios from 'axios';
 
 export default class SectionUpdate extends React.Component {
-    constructor() {
-        super()
-        this.state = {
-            updating: false,
-            updateTimeout: 43200000,
-            lastUpdated: 'unknown'
-        }           
-    }   
+  constructor() {
+    super();
+    this.state = {
+      updating: false,
+      updateTimeout: 43200000,
+      lastUpdated: 'unknown',
+    };
+  }
 
-    sendUpdateRequest() {
-        let url = `/rest/update`
-        axios.get(url)
-            .then(res => console.log(res.data.content))
-            .catch(err => console.log(err))
+  sendUpdateRequest() {
+    const url = '/rest/update';
+    axios
+      .get(url)
+      .then(res => console.log(res.data.content))
+      .catch(err => console.log(err));
+  }
+
+  getUpdateDate() {
+    const url = '/rest/status';
+    axios
+      .get(url)
+      .then(res => this.setState({ lastUpdated: res.data.lastUpdated }))
+      .catch(err => {
+        this.setState({ lastUpdated: 'unknown' });
+        console.log(err);
+      });
+  }
+
+  timeoutBeforeUpdate() {
+    const timeout = Math.ceil(
+      (this.state.updateTimeout - (Date.now() - this.state.lastUpdated)) /
+        60000,
+    );
+    return timeout;
+  }
+
+  blockUpdateIfTooSoon() {
+    if (this.timeoutBeforeUpdate() > 0) {
+      return true;
     }
+    return false;
+  }
 
-    getUpdateDate() {
-        let url = `/rest/status`
-        axios.get(url)
-            .then(res => this.setState({ lastUpdated: res.data.lastUpdated }))
-            .catch(err => {
-                this.setState({ lastUpdated: 'unknown' })
-                console.log(err);
-            })
-    }
+  componentDidMount() {
+    this.getUpdateDate();
+  }
 
-    timeoutBeforeUpdate() {
-        const timeout = Math.ceil((this.state.updateTimeout - (Date.now() - this.state.lastUpdated))/60000)
-        return timeout;
-    }
+  render() {
+    const nextUpdate =
+      this.state.lastUpdated !== 'unknown'
+        ? new Date(this.state.lastUpdated + 43200000).toLocaleString()
+        : 'unknown';
 
-    blockUpdateIfTooSoon() {
-        if (this.timeoutBeforeUpdate() > 0)
-            return true
-        return false
-    }
-
-    componentDidMount() {
-        this.getUpdateDate();
-    }
-
-    render() {
-        const nextUpdate = this.state.lastUpdated !== 'unknown' ? new Date(this.state.lastUpdated + 43200000).toLocaleString() : 'unknown';
-
-        return(
-        <div className='section'>
-            <h3 className='section-title' style={{ height: '100%' }}>{`Next update: ${nextUpdate}`}</h3>
-            {/* <h3 className='section-title'>Last updated: { new Date(this.state.lastUpdated).toLocaleString() }</h3>
+    return (
+      <div className="section">
+        <h3
+          className="section-title"
+          style={{ height: '100%' }}>{`Next update: ${nextUpdate}`}</h3>
+        {/* <h3 className='section-title'>Last updated: { new Date(this.state.lastUpdated).toLocaleString() }</h3>
             <div className="flex-column">
             {
                 this.state.updating
@@ -75,6 +86,7 @@ export default class SectionUpdate extends React.Component {
                         >Update</button> )
             }
             </div> */}
-        </div>)
-    }
+      </div>
+    );
+  }
 }

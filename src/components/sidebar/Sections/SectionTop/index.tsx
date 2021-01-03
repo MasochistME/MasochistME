@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 import styled from 'styled-components';
 import { orderBy } from 'lodash';
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 import { SmallMember, Section, SectionTitle } from '../../';
 
 const FlexColumn = styled.div`
@@ -9,24 +9,33 @@ const FlexColumn = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-`
+`;
 
-export default function SectionTop() { 
-  const members = useSelector((state: any) => orderBy(state.members, [member => member.points ? member.points : 0], ['desc']).slice(0, 10));
+export default function SectionTop() {
+  const members = useSelector((state: any) =>
+    orderBy(
+      state.members,
+      [member => (member.points ? member.points : 0)],
+      ['desc'],
+    ).slice(0, 10),
+  );
 
-  const memberRow = (member: any, index: number) => 
-    <SmallMember key={ `sidebar-member-${index}` }>
-        <div>{ index+1 }.</div>
-        <div><span className="bold">{ member.name }</span></div>
-        <div>{ member.points } pts</div>
+  const memberRow = (member: any, index: number) => (
+    <SmallMember key={`sidebar-member-${index}`}>
+      <div>{index + 1}.</div>
+      <div>
+        <span className="bold">{member.name}</span>
+      </div>
+      <div>{member.points} pts</div>
     </SmallMember>
+  );
 
   return (
     <Section>
-        <SectionTitle>Top 10 members</SectionTitle>
-        <FlexColumn>
-            { members.map((member, memberIndex) => memberRow(member, memberIndex)) }
-        </FlexColumn>
+      <SectionTitle>Top 10 members</SectionTitle>
+      <FlexColumn>
+        {members.map((member, memberIndex) => memberRow(member, memberIndex))}
+      </FlexColumn>
     </Section>
-  )
+  );
 }
