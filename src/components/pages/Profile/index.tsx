@@ -1,7 +1,7 @@
-import React from 'react';
-import _ from 'lodash';
+import React, { useState, useEffect } from 'react';
+import { orderBy } from 'lodash';
 import moment from 'moment';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
 import DoughnutChart from '../../Charts/DoughnutChart';
 import LineChart from '../../Charts/LineChart';
@@ -79,7 +79,7 @@ const getTimelines = (type, rating, user, games) => {
   let endDate = 0;
 
   let timelines = user.games.filter(game => game.completionRate === 100);
-  timelines = _.orderBy(timelines, ['lastUnlocked'], ['asc']);
+  timelines = orderBy(timelines, ['lastUnlocked'], ['asc']);
 
   startDate = moment(new Date(timelines[0].lastUnlocked * 1000));
   endDate = moment(
@@ -128,241 +128,227 @@ const getTimelines = (type, rating, user, games) => {
   return data.map(d => d[type]);
 };
 
-class Profile extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      updating: false,
-      message: '',
-    };
-  }
+export default function Profile(): JSX.Element {
+  const [updating, setUpdating] = useState(false);
+  const [message, setMessage] = useState('');
 
-  sendUpdateRequest = id => {
-    const url = `/rest/users/user/${id}`;
-    this.setState({
-      updating: true,
-      message: 'Updating... refresh in a few minutes',
-    });
-    axios
-      .put(url)
-      .then(res => {
-        if (res.data) {
-          this.setState({ message: res.data });
-        }
-      })
-      .catch(err => console.log(err));
-  };
-
-  componentDidMount() {
-    window.scrollTo(0, 0);
-  }
-
-  render() {
-    const { props } = this;
-    const user = props.members.find(member => member.id === props.id);
-    const patron = props.patrons.find(tier =>
-      tier.list.find(p => p.steamid === user.id)
-        ? { tier: tier.tier, description: tier.description }
-        : false,
-    );
-    const games = props.games;
-    const rating = props.rating;
-    const badges = _.orderBy(
-      props.badges
-        .filter(badge => user.badges.find(b => b.id === badge._id))
+  const members = useSelector((state: any) => state.members);
+  const patrons = useSelector((state: any) => state.patrons);
+  const badges = useSelector((state: any) =>
+    orderBy(
+      state.badges
+        .filter((badge: any) =>
+          user.badges.find((b: any) => b.id === badge._id),
+        )
         .map(
-          badge =>
+          (badge: any) =>
             (badge = {
               ...badge,
               game: badge.isNonSteamGame
                 ? badge.game
-                : games.find(game => game.id === badge.gameId)
-                ? games.find(game => game.id === badge.gameId).title
+                : games.find((game: any) => game.id === badge.gameId)
+                ? games.find((game: any) => game.id === badge.gameId).title
                 : 'unknown',
             }),
         ),
       ['points'],
       ['desc'],
-    );
+    ),
+  );
+  const games = useSelector((state: any) => state.games);
+  const rating = useSelector((state: any) => state.rating);
+  const id = useSelector((state: any) => state.profileID);
 
-    return (
-      <div className="flex-column">
-        <div className="wrapper-description">
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const sendUpdateRequest = (id: any) => {
+    setUpdating(true);
+    setMessage('Updating... refresh in a few minutes');
+
+    const url = `/rest/users/user/${id}`;
+    axios
+      .put(url)
+      .then(res => {
+        if (res.data) {
+          setMessage(res.data);
+        }
+      })
+      .catch(err => console.log(err));
+  };
+
+  const user = members.find((member: any) => member.id === id);
+  const patron = patrons.find((tier: any) =>
+    tier.list.find((p: any) => p.steamid === user.id)
+      ? { tier: tier.tier, description: tier.description }
+      : false,
+  );
+
+  return (
+    <div className="flex-column">
+      <div className="wrapper-description">
+        <div
+          className="page-description"
+          style={{ paddingBottom: '0', marginBottom: '0' }}>
+          <div className="flex-row">
+            <h1 style={{ margin: '0' }}>
+              <a
+                href={`https://steamcommunity.com/profiles/${user.id}`}
+                target="_blank"
+                rel="noopener noreferrer">
+                <i className="fab fa-steam" style={{ marginRight: '10px' }} />
+                {user.name}
+              </a>
+            </h1>
+            {patron ? (
+              <div
+                className="profile-patron"
+                title={`This user is a tier ${patron.description.toUpperCase()} supporter`}>
+                <i className="fas fa-medal" />{' '}
+                {patron.description.toUpperCase()}{' '}
+              </div>
+            ) : (
+              ''
+            )}
+          </div>
           <div
-            className="page-description"
-            style={{ paddingBottom: '0', marginBottom: '0' }}>
-            <div className="flex-row">
-              <h1 style={{ margin: '0' }}>
-                <a
-                  href={`https://steamcommunity.com/profiles/${user.id}`}
-                  target="_blank"
-                  rel="noopener noreferrer">
-                  <i className="fab fa-steam" style={{ marginRight: '10px' }} />
-                  {user.name}
-                </a>
-              </h1>
-              {patron ? (
-                <div
-                  className="profile-patron"
-                  title={`This user is a tier ${patron.description.toUpperCase()} supporter`}>
-                  <i className="fas fa-medal" />{' '}
-                  {patron.description.toUpperCase()}{' '}
-                </div>
-              ) : (
-                ''
-              )}
-            </div>
-            <div
-              className="profile-date flex-row"
-              style={{ marginBottom: '5px' }}>
-              {
-                <span>{`Last updated: ${
-                  user.updated === 0
-                    ? 'never'
-                    : new Date(user.updated).toLocaleString()
-                }`}</span>
-              }
-              {Date.now() - user.updated > 3600000 ? (
-                this.state.updating ? (
-                  <span
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      height: '40px',
-                    }}>
-                    {this.state.message}
-                  </span>
-                ) : (
-                  <button
-                    className="custom-button"
-                    onClick={() => this.sendUpdateRequest(user.id)}>
-                    Update
-                  </button>
-                )
+            className="profile-date flex-row"
+            style={{ marginBottom: '5px' }}>
+            {
+              <span>{`Last updated: ${
+                user.updated === 0
+                  ? 'never'
+                  : new Date(user.updated).toLocaleString()
+              }`}</span>
+            }
+            {Date.now() - user.updated > 3600000 ? (
+              updating ? (
+                <span
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: '40px',
+                  }}>
+                  {message}
+                </span>
               ) : (
                 <button
-                  className="custom-button button-blocked"
-                  title={`${parseInt(
-                    (3600000 - (Date.now() - user.updated)) / 60000,
-                  )} minutes till you can update again`}>
+                  className="custom-button"
+                  onClick={() => sendUpdateRequest(user.id)}>
                   Update
                 </button>
-              )}
-            </div>
-            <div className="profile-basic flex-row">
-              <img
-                src={user.avatar}
-                className={`profile-avatar ${
-                  patron ? `tier${patron.tier}` : ''
-                }`}
-                alt="avatar"
-              />
-              <div>Currently there's no info provided about this user.</div>
-            </div>
+              )
+            ) : (
+              <button
+                className="custom-button button-blocked"
+                title={`${Number(
+                  (3600000 - (Date.now() - user.updated)) / 60000,
+                )} minutes till you can update again`}>
+                Update
+              </button>
+            )}
+          </div>
+          <div className="profile-basic flex-row">
+            <img
+              src={user.avatar}
+              className={`profile-avatar ${patron ? `tier${patron.tier}` : ''}`}
+              alt="avatar"
+            />
+            <div>Currently there&lsquo;s no info provided about this user.</div>
           </div>
         </div>
-        <div className="wrapper-profile flex-column">
-          {badges.length !== 0 ? (
-            <div className="profile-badges">
-              <div className="profile-section" style={{ width: '100%' }}>
-                <h3 className="profile-section-title">Badges</h3>
-                <div
-                  style={{
-                    width: '100%',
-                    display: 'flex',
-                    flexFlow: 'row wrap',
-                    justifyContent: 'center',
-                  }}>
-                  {badges.map((badge, index) => (
-                    <img
-                      className="profile-badge"
-                      src={badge.img}
-                      alt="badge"
-                      title={`${badge.game.toUpperCase()} - ${badge.name} (${
-                        badge.points
-                      } pts)\n"${badge.description}"`}
-                      key={`badge-${index}`}
-                    />
-                  ))}
-                </div>
+      </div>
+      <div className="wrapper-profile flex-column">
+        {badges.length !== 0 ? (
+          <div className="profile-badges">
+            <div className="profile-section" style={{ width: '100%' }}>
+              <h3 className="profile-section-title">Badges</h3>
+              <div
+                style={{
+                  width: '100%',
+                  display: 'flex',
+                  flexFlow: 'row wrap',
+                  justifyContent: 'center',
+                }}>
+                {badges.map((badge, index) => (
+                  <img
+                    className="profile-badge"
+                    src={badge.img}
+                    alt="badge"
+                    title={`${badge.game.toUpperCase()} - ${badge.name} (${
+                      badge.points
+                    } pts)\n"${badge.description}"`}
+                    key={`badge-${index}`}
+                  />
+                ))}
               </div>
             </div>
-          ) : null}
-          {!isNaN(user.points) && user.points !== 0 ? (
-            <div className="profile-graphs">
-              <ChartWrapper title="HOURS PLAYED (TOTAL)">
-                <DoughnutChart
-                  labels={summarizeTotalTimes(
-                    'label',
-                    'total',
-                    rating,
-                    user,
-                    games,
-                  )}
-                  dataset={summarizeTotalTimes(
-                    'sum',
-                    'total',
-                    rating,
-                    user,
-                    games,
-                  )}
-                />
-              </ChartWrapper>
-              <ChartWrapper title="HOURS PLAYED (COMPLETED)">
-                <DoughnutChart
-                  labels={summarizeTotalTimes(
-                    'label',
-                    'completed',
-                    rating,
-                    user,
-                    games,
-                  )}
-                  dataset={summarizeTotalTimes(
-                    'sum',
-                    'completed',
-                    rating,
-                    user,
-                    games,
-                  )}
-                />
-              </ChartWrapper>
-              <ChartWrapper title="GAMES COMPLETED">
-                <DoughnutChart
-                  labels={summarizeTotalGames('label', rating, user, games)}
-                  dataset={summarizeTotalGames('sum', rating, user, games)}
-                />
-              </ChartWrapper>
-              <ChartWrapper title="COMPLETION TIMELINE" width="100">
-                <LineChart
-                  labels={getTimelines('label', rating, user, games)}
-                  datasets={[
-                    {
-                      label: 'games',
-                      data: getTimelines('games', rating, user, games),
-                    },
-                    {
-                      label: 'points',
-                      data: getTimelines('points', rating, user, games),
-                    },
-                  ]}
-                />
-              </ChartWrapper>
-            </div>
-          ) : null}
-        </div>
+          </div>
+        ) : null}
+        {!isNaN(user.points) && user.points !== 0 ? (
+          <div className="profile-graphs">
+            <ChartWrapper title="HOURS PLAYED (TOTAL)">
+              <DoughnutChart
+                labels={summarizeTotalTimes(
+                  'label',
+                  'total',
+                  rating,
+                  user,
+                  games,
+                )}
+                dataset={summarizeTotalTimes(
+                  'sum',
+                  'total',
+                  rating,
+                  user,
+                  games,
+                )}
+              />
+            </ChartWrapper>
+            <ChartWrapper title="HOURS PLAYED (COMPLETED)">
+              <DoughnutChart
+                labels={summarizeTotalTimes(
+                  'label',
+                  'completed',
+                  rating,
+                  user,
+                  games,
+                )}
+                dataset={summarizeTotalTimes(
+                  'sum',
+                  'completed',
+                  rating,
+                  user,
+                  games,
+                )}
+              />
+            </ChartWrapper>
+            <ChartWrapper title="GAMES COMPLETED">
+              <DoughnutChart
+                labels={summarizeTotalGames('label', rating, user, games)}
+                dataset={summarizeTotalGames('sum', rating, user, games)}
+              />
+            </ChartWrapper>
+            <ChartWrapper title="COMPLETION TIMELINE" width={100}>
+              <LineChart
+                labels={getTimelines('label', rating, user, games)}
+                datasets={[
+                  {
+                    label: 'games',
+                    data: getTimelines('games', rating, user, games),
+                  },
+                  {
+                    label: 'points',
+                    data: getTimelines('points', rating, user, games),
+                  },
+                ]}
+              />
+            </ChartWrapper>
+          </div>
+        ) : null}
       </div>
-    );
-  }
+    </div>
+  );
 }
-
-const mapStateToProps = state => ({
-  members: state.members,
-  patrons: state.patrons,
-  badges: state.badges,
-  games: state.games,
-  rating: state.rating,
-  id: state.profileID,
-});
-
-export default connect(mapStateToProps)(Profile);

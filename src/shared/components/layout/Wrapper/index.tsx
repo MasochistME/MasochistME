@@ -2,7 +2,7 @@ import React from 'react';
 
 type WrapperProps = {
   type: string;
-  children: React.ReactChildren;
+  children?: React.ReactNode;
 };
 
 export default function Wrapper(props: WrapperProps): JSX.Element {

@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import _ from 'lodash';
+import { orderBy } from 'lodash';
 import '../styles/css/App.css';
 import Wrapper from '../shared/components/layout/Wrapper';
 import Header from '../shared/components/Header';
@@ -20,32 +20,33 @@ import {
 } from '../shared/store/modules/Cache';
 import { showGamesRated } from '../shared/store/modules/CheckBoxes';
 
-class App extends Component {
-  constructor() {
-    super();
-    this.state = { loaded: false };
-  }
+export default function App(): JSX.Element {
+  const dispatch = useDispatch();
+  const [loaded, setLoaded] = useState(false);
 
-  loadRating = () => {
+  const rating = useSelector((state: any) => state.rating);
+  const badges = useSelector((state: any) => state.badges);
+
+  const loadRating = () => {
     axios
       .get('/rest/api/rating')
       .then(response => {
-        if (response.status === 200) {
-          this.props.dispatch(showGamesRated(response.data.map(r => r.id)));
-          this.props.dispatch(cacheRating(response.data));
+        if (response?.status === 200) {
+          dispatch(showGamesRated(response.data.map((r: any) => r.id)));
+          dispatch(cacheRating(response.data));
         }
       })
       .catch(err => console.trace(err));
   };
 
-  loadGames = () => {
+  const loadGames = () => {
     axios
       .get('/rest/api/games')
       .then(response => {
-        if (response.status === 200) {
-          return this.props.dispatch(
+        if (response?.status === 200) {
+          return dispatch(
             cacheGames(
-              _.orderBy(response.data, ['rating', 'title'], ['desc', 'asc']),
+              orderBy(response.data, ['rating', 'title'], ['desc', 'asc']),
             ),
           );
         }
@@ -53,23 +54,23 @@ class App extends Component {
       .catch(err => console.log(err.message));
   };
 
-  loadMembers = () => {
+  const loadMembers = () => {
     axios
       .get('/rest/api/members')
       .then(response => {
-        if (response.status === 200) {
+        if (response?.status === 200) {
           let members = response.data;
-          members.map(member => {
+          members.map((member: any) => {
             let summary = 0;
-            this.props.state.rating.map(
+            rating.map(
               r =>
                 (summary += member.ranking[r.id]
                   ? r.score * member.ranking[r.id]
                   : 0),
             );
-            member.badges.map(badge => {
-              const membersBadge = this.props.state.badges.find(
-                b => badge.id == b['_id'],
+            member.badges.map((badge: any) => {
+              const membersBadge = badges.find(
+                (b: any) => badge.id == b['_id'],
               );
               if (membersBadge) {
                 if (typeof membersBadge.points !== 'number') {
@@ -81,91 +82,86 @@ class App extends Component {
             member.points = summary;
             return member;
           });
-          members = _.orderBy(members, ['points'], ['desc']);
-          return this.props.dispatch(cacheMembers(members));
+          members = orderBy(members, ['points'], ['desc']);
+          return dispatch(cacheMembers(members));
         }
       })
       .catch(err => console.trace(err));
   };
 
-  loadEvents = () => {
+  const loadEvents = () => {
     axios
       .get('/rest/api/events')
       .then(response => {
-        if (response.status === 200) {
-          return this.props.dispatch(cacheEvents(response.data));
+        if (response?.status === 200) {
+          return dispatch(cacheEvents(response.data));
         }
       })
       .catch(err => console.trace(err));
   };
 
-  loadPatrons = () => {
+  const loadPatrons = () => {
     axios
       .get('/rest/api/patrons')
       .then(response => {
-        if (response.status === 200) {
-          return this.props.dispatch(cachePatrons(response.data));
+        if (response?.status === 200) {
+          return dispatch(cachePatrons(response.data));
         }
       })
       .catch(err => console.trace(err));
   };
 
-  loadBlog = () => {
+  const loadBlog = () => {
     axios
       .get('/rest/api/blog')
       .then(response => {
-        if (response.status === 200) {
-          return this.props.dispatch(cacheBlog(response.data));
+        if (response?.status === 200) {
+          return dispatch(cacheBlog(response.data));
         }
       })
       .catch(err => console.trace(err));
   };
 
-  loadBadges = () => {
+  const loadBadges = () => {
     axios
       .get('/rest/api/badges')
       .then(response => {
-        if (response.status === 200) {
-          return this.props.dispatch(cacheBadges(response.data));
+        if (response?.status === 200) {
+          return dispatch(cacheBadges(response.data));
         }
       })
       .catch(err => console.trace(err));
   };
 
-  load() {
-    this.loadBadges();
-    this.loadRating();
-    this.loadMembers();
-    this.loadGames();
-    this.loadEvents();
-    this.loadBlog();
-    this.loadPatrons();
-    this.setState({ loaded: true });
-  }
+  const load = () => {
+    loadBadges();
+    loadRating();
+    loadMembers();
+    loadGames();
+    loadEvents();
+    loadBlog();
+    loadPatrons();
+    setLoaded(true);
+  };
 
-  componentDidMount = () => this.load();
+  useEffect(() => {
+    load();
+  }, []);
 
-  render() {
-    return this.state.loaded ? (
-      <Wrapper type="main">
-        <LoginModal />
-        <Header />
-        <Wrapper type="nav">
-          <Nav />
-        </Wrapper>
-        <Wrapper type="middle">
-          <ContentWrapper />
-          <SidebarWrapper />
-        </Wrapper>
-        <Wrapper type="footer" />
+  return loaded ? (
+    <Wrapper type="main">
+      <LoginModal />
+      <Header />
+      <Wrapper type="nav">
+        <Nav />
       </Wrapper>
-    ) : (
-      <div>Not loaded yet.</div>
-    );
-  }
+      <Wrapper type="middle">
+        <ContentWrapper />
+        <SidebarWrapper />
+      </Wrapper>
+      <Wrapper type="footer" />
+    </Wrapper>
+  ) : (
+    <div>Loading...</div>
+  );
 }
-
-const mapStateToProps = state => ({ state });
-const mapDispatchToProps = dispatch => ({ dispatch });
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
