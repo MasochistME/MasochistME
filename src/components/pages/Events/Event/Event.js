@@ -133,25 +133,25 @@ const CustomEvent = props => {
   // {
   //   text: String;
   //   icon: String;
-  //   member: String;
+  //   member?: String;
   // }
   const content = props.event.content;
   
-  if (content)
-    const { text, icon, memberId: member } = content;
-    const member = props.members.find(m => Number(m.id) === Number(memberId))
-    return (
-        <div className="event-info flex-row">
-            <img className="event-img" alt="avatar" src={ member ? member.avatar : logo }></img>
-            {  
-              <div className="event-desc">{ text.replace('<b>', '<span className="bold under">').replace('</b>', '</span>') }</div>
-            }
-            <div className="event-summary flex-row">
-                <i className={ icon ? icon : "fas fa-birthday-cake" }></i>
-                <img className="event-img" alt="custom-img" src={ logo }></img>
-            </div>
-        </div>
-    );
+  if (!content) return;
+  const { text, icon, member } = content;
+  const memberData = props.members.find(m => Number(m.id) === Number(member))
+  return (
+      <div className="event-info flex-row">
+          <img className="event-img" alt="avatar" src={ memberData ? memberData.avatar : logo }></img>
+          {  
+            <div className="event-desc">{ text && text.split('#').map((str, index) => index % 2 === 1 ? <span className="bold under">{str}</span> : str) }</div>
+          }
+          <div className="event-summary flex-row">
+              <i className={ icon ? icon : "fas fa-birthday-cake" }></i>
+              <img className="event-img" alt="custom-img" src={ logo }></img>
+          </div>
+      </div>
+  );
 }
 
 class Event extends React.Component {
@@ -163,7 +163,7 @@ class Event extends React.Component {
             case "complete": return <CompleteEvent event={ event } games={ this.props.games } members={ this.props.members } rating={ this.props.rating } />
             case "tierChange": return <TierChangeEvent event={ event } games={ this.props.games } rating={ this.props.rating } />
             case "achievementNumberChange": return <AchievementNumberChangeEvent event={ event } games={ this.props.games } rating={ this.props.rating } />
-            case "custom": return <CustomEvent />
+            case "custom": return <CustomEvent event={ event } members={ this.props.members }/>
             default: return
         }
     }
