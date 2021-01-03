@@ -57,6 +57,22 @@ class SectionHistory extends React.Component {
                         }
                     </p>)
                     : null
+            case 'custom': {
+              const { content } = event;
+              if (!content) 
+                return null;
+              const { text, icon, memberId: member } = content;
+              if (!text) 
+                return null;
+              let player;
+              if (memberId)
+                player = this.props.members.find(m => Number(m.id) === Number(memberId))
+              return (
+                <p className='small-event' key={ `sidebar-event-${eventIndex}` }>
+                  <i className={icon ? icon : "fas fa-birthday-cake"}></i>{ text.replace('<b>', '<span className="bold">').replace('</b>', "</span>")}
+                </p>
+              )
+            }
             default: return null
         }
     }
