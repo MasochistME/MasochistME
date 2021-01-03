@@ -1,3 +1,3 @@
-import CryptoJS from 'crypto-js'
+import CryptoJS from 'crypto-js';
 
-export const sha256 = msg => CryptoJS.SHA256(msg).toString()
+export const sha256 = msg => CryptoJS.SHA256(msg).toString();

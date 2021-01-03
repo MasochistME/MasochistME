@@ -16,24 +16,31 @@ export const SectionSaleUl = styled.ul`
 `;
 
 export default function SectionSale() {
-  const games = useSelector((state: any) => orderBy(state.games, ['sale.discount'], ['desc']));
+  const games = useSelector((state: any) =>
+    orderBy(state.games, ['sale.discount'], ['desc']),
+  );
 
   return (
-  <Section>
-    <SectionTitle>Games on sale</SectionTitle>
-    <SectionSaleUl>
-      { 
-        games && games
-          .filter(game => game.sale.onSale)
-          .map((game, index) => (
-            <li key={ `sale-${index}` } className='sale-brick' style={{ backgroundImage: `url(${game.img})` }} >
-              <SaleLink href={ `https://store.steampowered.com/app/${game.id}` } target='_blank' rel='noopener noreferrer' >
-                <span className='link'>-{ game.sale.discount }%</span>
-              </SaleLink>
-            </li>
-            )
-          )
-      }
-    </SectionSaleUl>
-  </Section>)
+    <Section>
+      <SectionTitle>Games on sale</SectionTitle>
+      <SectionSaleUl>
+        {games &&
+          games
+            .filter(game => game.sale.onSale)
+            .map((game, index) => (
+              <li
+                key={`sale-${index}`}
+                className="sale-brick"
+                style={{ backgroundImage: `url(${game.img})` }}>
+                <SaleLink
+                  href={`https://store.steampowered.com/app/${game.id}`}
+                  target="_blank"
+                  rel="noopener noreferrer">
+                  <span className="link">-{game.sale.discount}%</span>
+                </SaleLink>
+              </li>
+            ))}
+      </SectionSaleUl>
+    </Section>
+  );
 }

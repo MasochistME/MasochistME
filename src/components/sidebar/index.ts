@@ -6,10 +6,15 @@ import SectionTop from './Sections/SectionTop';
 import SectionTrivia from './Sections/SectionTrivia';
 import SectionSale from './Sections/SectionSale';
 
-export { SectionUpdate, SectionHistory, SectionTop, SectionTrivia, SectionSale };
+export {
+  SectionUpdate,
+  SectionHistory,
+  SectionTop,
+  SectionTrivia,
+  SectionSale,
+};
 
 export type TSection = 'update' | 'trivia' | 'top' | 'history' | 'sales';
-
 
 export const Section = styled.div`
   padding-bottom: 10px;
@@ -18,10 +23,14 @@ export const Section = styled.div`
   box-sizing: border-box;
   box-shadow: 0 0 20px $newdark;
   background-color: rgba($superlightgrey, 0.7);
-  div, p, ol, ul {
+  div,
+  p,
+  ol,
+  ul {
     padding: 0 15px;
   }
-  p, ul {
+  p,
+  ul {
     margin: 2px 0;
   }
   &:first-child {
@@ -46,13 +55,13 @@ export const SectionTitle = styled.h3`
 `;
 
 export const UpdateProgressBar = styled.div`
-    position: absolute;
-    width: 0%;
-    height: 100%;
-    padding: 0 !important;
-    align-self: flex-start;  
-    background-color: $newmediumgrey;
-`
+  position: absolute;
+  width: 0%;
+  height: 100%;
+  padding: 0 !important;
+  align-self: flex-start;
+  background-color: $newmediumgrey;
+`;
 
 export const UpdateProgressBarBorder = styled.div`
   position: relative;
@@ -72,7 +81,7 @@ export const UpdateProgressBarPercentage = styled.div`
   justify-content: center;
   align-items: center;
   color: $superlightgrey;
-`
+`;
 
 export const SmallEvent = styled.p`
   width: 100%;
@@ -99,35 +108,35 @@ export const SaleBrick = styled.div`
   height: 92px;
   margin: 5px;
   &:hover {
-    box-shadow: 0 0 10px $superdarkgrey
-  };
+    box-shadow: 0 0 10px $superdarkgrey;
+  }
 `;
 
 export const SaleLink = styled.a`
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  width: 100%;
+  height: 100%;
+  &.link {
     display: flex;
-    justify-content: flex-end;
-    align-items: flex-start;
-    width: 100%;
-    height: 100%;
-    &.link {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 35%;
-      height: 40%;
-      text-decoration: none;
-      font-family: $font-dosis;
-      font-weight: bold;
-      color: $superlightgrey;
-      background-color: $darkblue;
-      box-shadow: -2px 2px 5px $superdarkgrey;
-      font-size: 1.2em;
-    }
-    &:hover {
-      text-decoration: none;
-    }
+    align-items: center;
+    justify-content: center;
+    width: 35%;
+    height: 40%;
+    text-decoration: none;
+    font-family: $font-dosis;
+    font-weight: bold;
+    color: $superlightgrey;
+    background-color: $darkblue;
+    box-shadow: -2px 2px 5px $superdarkgrey;
+    font-size: 1.2em;
+  }
+  &:hover {
+    text-decoration: none;
+  }
 `;
 
-export const UpdateButton  = styled.div`
+export const UpdateButton = styled.div`
   width: 50%;
 `;

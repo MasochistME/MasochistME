@@ -14,15 +14,22 @@ const Wrapper = styled.div`
   font-family: $font-raleway;
 
   @media (max-width: $netbooks) {
-    display: none
+    display: none;
   }
 `;
 
 export default function SidebarWrapper() {
-  const activeSections: TSection[] = ["update", "trivia", "top", "history", "sales"];
-  const sections = activeSections.map((section: TSection, sectionIndex: number) => 
-    <SidebarSection section={ section } key={ `section-${sectionIndex}` }/>);
-  return (
-    <Wrapper>{ sections }</Wrapper>
-  )
+  const activeSections: TSection[] = [
+    'update',
+    'trivia',
+    'top',
+    'history',
+    'sales',
+  ];
+  const sections = activeSections.map(
+    (section: TSection, sectionIndex: number) => (
+      <SidebarSection section={section} key={`section-${sectionIndex}`} />
+    ),
+  );
+  return <Wrapper>{sections}</Wrapper>;
 }
