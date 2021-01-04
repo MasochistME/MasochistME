@@ -3,20 +3,35 @@ import axios from 'axios';
 import { Section, SectionTitle } from '../../';
 
 export default function SectionUpdate(): JSX.Element {
-  const updateTimeout = 43200000;
+  // const updateTimeout = 43200000;
   const [lastUpdated, setLastUpdated] = useState(
     undefined as number | undefined,
   );
-  const updating = false; // TODO connect to websocket
-  const updateStatus = 50; // TODO connect to websocket
+  // const updating = false; // TODO connect to websocket
+  // const updateStatus = 50; // TODO connect to websocket
 
-  const sendUpdateRequest = (): void => {
-    const url = '/rest/update';
-    axios
-      .get(url)
-      .then(res => console.log(res.data.content))
-      .catch(err => console.log(err));
-  };
+  // const sendUpdateRequest = (): void => {
+  //   const url = '/rest/update';
+  //   axios
+  //     .get(url)
+  //     .then(res => console.log(res.data.content))
+  //     .catch(err => console.log(err));
+  // };
+
+  // const timeoutBeforeUpdate = (): number => {
+  //   const timeout = Math.ceil(
+  //     (updateTimeout - (Date.now() - Number(lastUpdated))) / 60000,
+  //   );
+  //   return timeout;
+  // };
+
+  // const blockUpdateIfTooSoon = (): boolean => timeoutBeforeUpdate() > 0;
+
+  // const timeToUpdate = `${Math.ceil(
+  //   (updateTimeout - (Date.now() - Number(lastUpdated))) / 3600000,
+  // )}:${Math.ceil(
+  //   ((updateTimeout - (Date.now() - Number(lastUpdated))) % 3600000) / 60000,
+  // )} hours till you can update again`;
 
   const getUpdateDate = (): void => {
     const url = '/rest/status';
@@ -29,37 +44,22 @@ export default function SectionUpdate(): JSX.Element {
       });
   };
 
-  const timeoutBeforeUpdate = (): number => {
-    const timeout = Math.ceil(
-      (updateTimeout - (Date.now() - Number(lastUpdated))) / 60000,
-    );
-    return timeout;
-  };
-
-  const blockUpdateIfTooSoon = (): boolean => timeoutBeforeUpdate() > 0;
+  const nextUpdate = lastUpdated
+    ? new Date(lastUpdated + 43200000).toLocaleString()
+    : 'unknown';
 
   useEffect(() => {
     getUpdateDate();
   }, []);
 
-  const nextUpdate = lastUpdated
-    ? new Date(lastUpdated + 43200000).toLocaleString()
-    : 'unknown';
-
-  const timeToUpdate = `${Math.ceil(
-    (updateTimeout - (Date.now() - Number(lastUpdated))) / 3600000,
-  )}:${Math.ceil(
-    ((updateTimeout - (Date.now() - Number(lastUpdated))) % 3600000) / 60000,
-  )} hours till you can update again`;
-
   return (
     <Section>
       <SectionTitle
         style={{ height: '100%' }}>{`Next update: ${nextUpdate}`}</SectionTitle>
-      <h3 className="section-title">
+      {/* <h3 className="section-title">
         Last updated: {new Date(Number(lastUpdated)).toLocaleString()}
-      </h3>
-      <div className="flex-column">
+      </h3> */}
+      {/* <div className="flex-column">
         {updating ? (
           <div
             className="update-progress-bar-border"
@@ -83,7 +83,7 @@ export default function SectionUpdate(): JSX.Element {
             Update
           </button>
         )}
-      </div>
+      </div> */}
     </Section>
   );
 }
