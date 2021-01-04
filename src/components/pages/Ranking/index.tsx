@@ -1,7 +1,8 @@
 import React from 'react';
 import { orderBy } from 'lodash';
 import { useSelector } from 'react-redux';
-import SearchBar from '../../../shared/components/SearchBar';
+import SearchBar from 'shared/components/SearchBar';
+import Spinner from 'shared/components/Spinner';
 import Member from './Member';
 
 export default function PageRanking(): JSX.Element {
@@ -13,16 +14,16 @@ export default function PageRanking(): JSX.Element {
   const badges = useSelector((state: any) => state.badges);
 
   const ranking = orderBy(
-    members.filter((member: any) => member.member),
-    [member => (member.points ? member.points : 0)],
+    members.filter((member: any) => member?.member),
+    [member => (member?.points ? member?.points : 0)],
     ['desc'],
   ); //change names here
 
   const createRankingList = () => {
-    if (ranking.length <= 0) {
+    if (ranking?.length <= 0) {
       return;
     }
-    return ranking.map((member: any, memberIndex: number) =>
+    return ranking?.map((member: any, memberIndex: number) =>
       member.name.toLowerCase().indexOf(searchMember.toLowerCase()) !== -1 ? (
         <Member
           member={member}
@@ -30,8 +31,8 @@ export default function PageRanking(): JSX.Element {
           rating={rating}
           games={games}
           badges={badges}
-          patron={patrons.find((tier: any) =>
-            tier.list.find((p: any) => p.steamid === member.id)
+          patron={patrons?.find((tier: any) =>
+            tier?.list?.find((p: any) => p.steamid === member.id)
               ? { tier: tier.tier, description: tier.description }
               : false,
           )}
@@ -48,14 +49,16 @@ export default function PageRanking(): JSX.Element {
           <p>
             Ranking system utilizes the games&lsquo; score system. Depending on
             the game&lsquo;s individual difficulty level, it is given one of{' '}
-            {rating.length} possible marks:
+            {rating?.length ?? ''} possible marks:
           </p>
           <ul>
-            {rating.map((r: any, rIndex: number) => (
-              <li key={`r-${rIndex}`}>
-                <i className={r.icon} /> - worth {r.score} pts - {r.description}{' '}
-              </li>
-            ))}
+            {rating &&
+              rating?.map((r: any, rIndex: number) => (
+                <li key={`r-${rIndex}`}>
+                  <i className={r?.icon} /> - worth {r?.score} pts -{' '}
+                  {r?.description}{' '}
+                </li>
+              ))}
           </ul>
           <p>
             Completing a game might mean earning its most demanding achievement,
@@ -68,19 +71,11 @@ export default function PageRanking(): JSX.Element {
           </p>
         </div>
         <SearchBar />
+        {!ranking?.length && <Spinner />}
       </div>
       <div className="wrapper-ranking">
         <ul className="ranking-list">
-          {ranking.length > 0 ? (
-            createRankingList()
-          ) : (
-            <div className="flex-column">
-              <i className="fas fa-spinner"></i>
-              <span style={{ fontSize: '0.9em', marginTop: '10px' }}>
-                If you see no ranking here, reload the website.
-              </span>
-            </div>
-          )}
+          {ranking?.length > 0 && createRankingList()}
         </ul>
       </div>
     </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { orderBy } from 'lodash';
 import SupportTier from './SupportTier/index';
+import Spinner from 'shared/components/Spinner';
 import patreon_button from '../../../shared/images/patreon.png';
 
 export default function PageSupport(): JSX.Element {
@@ -54,13 +55,7 @@ export default function PageSupport(): JSX.Element {
             <SupportTier key={`tier-${index}`} tier={tier} />
           ))
         ) : (
-          <div className="flex-column">
-            <i className="fas fa-spinner"></i>
-            <span style={{ fontSize: '0.9em', marginTop: '10px' }}>
-              If you see no list of Patrons here, reload the website or clear
-              cookies.
-            </span>
-          </div>
+          <Spinner />
         )}
       </div>
     </div>
