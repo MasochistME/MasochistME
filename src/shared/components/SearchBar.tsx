@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { searchGames, searchMembers } from '../../store/modules/Search';
+import { searchGames, searchMembers } from 'shared/store/modules/Search';
 
 export default function SearchBar(): JSX.Element {
   const dispatch = useDispatch();

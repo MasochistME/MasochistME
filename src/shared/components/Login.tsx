@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { showLoginModal, logOutUser } from '../../store/modules/Login';
-import { changeTab } from '../../store/modules/Tabs';
-import login_button from '../../../shared/images/steam_login.png';
+import { showLoginModal, logOutUser } from 'shared/store/modules/Login';
+import { changeTab } from 'shared/store/modules/Tabs';
+import login_button from 'shared/images/steam_login.png';
 
 export default function Login(): JSX.Element {
   const dispatch = useDispatch();

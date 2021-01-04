@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeTab } from '../../store/modules/Tabs';
+import { changeTab } from 'shared/store/modules/Tabs';
 
 export default function Nav(): JSX.Element {
   const tabs = useSelector((state: any) => state.tabs);

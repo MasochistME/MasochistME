@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { TSection } from '../';
+import { fonts, media } from 'shared/theme';
 import SidebarSection from '../SidebarSection';
 
 const Wrapper = styled.div`
@@ -11,14 +12,14 @@ const Wrapper = styled.div`
   width: 30%;
   height: 100%;
   box-sizing: border-box;
-  font-family: $font-raleway;
+  font-family: ${fonts.fontRaleway};
 
-  @media (max-width: $netbooks) {
+  @media (max-width: ${media.netbooks}) {
     display: none;
   }
 `;
 
-export default function SidebarWrapper() {
+export default function SidebarWrapper(): JSX.Element {
   const activeSections: TSection[] = [
     'update',
     'trivia',
