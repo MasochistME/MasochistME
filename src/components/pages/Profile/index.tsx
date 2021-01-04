@@ -7,8 +7,14 @@ import DoughnutChart from '../../Charts/DoughnutChart';
 import LineChart from '../../Charts/LineChart';
 import ChartWrapper from '../../Charts/ChartWrapper/index';
 
-const summarizeTotalTimes = (type, scope, rating, user, games) => {
-  const data = [
+const summarizeTotalTimes = (
+  type: any,
+  scope: any,
+  rating: any,
+  user: any,
+  games: any,
+) => {
+  const data: any = [
     // {
     //     sum: 0,
     //     label: 'Total',
@@ -17,7 +23,7 @@ const summarizeTotalTimes = (type, scope, rating, user, games) => {
   ];
   let userGames = user.games;
 
-  rating.map(r =>
+  rating.map((r: any) =>
     data.push({
       sum: 0,
       label: r.symbol,
@@ -26,27 +32,29 @@ const summarizeTotalTimes = (type, scope, rating, user, games) => {
   );
 
   if (scope === 'completed') {
-    userGames = userGames.filter(game => game.completionRate === 100);
+    userGames = userGames.filter((game: any) => game.completionRate === 100);
   }
 
   userGames
-    .filter(game => games.find(g => parseInt(g.id) === game.appid))
-    .map(game => {
+    .filter((game: any) =>
+      games.find((g: any) => parseInt(g.id) === game.appid),
+    )
+    .map((game: any) => {
       game = {
         ...game,
-        rating: games.find(g => parseInt(g.id) === game.appid).rating,
+        rating: games.find((g: any) => parseInt(g.id) === game.appid).rating,
       };
-      const index = data.findIndex(d => d.id === game.rating);
+      const index = data.findIndex((d: any) => d.id === game.rating);
       data[index].sum += parseInt(game.playtime_forever);
       return game;
     });
 
-  return data.map(d => d[type]);
+  return data.map((d: any) => d[type]);
 };
-const summarizeTotalGames = (type, rating, user, games) => {
-  const data = [];
+const summarizeTotalGames = (type: any, rating: any, user: any, games: any) => {
+  const data: any = [];
 
-  rating.map(r =>
+  rating.map((r: any) =>
     data.push({
       sum: 0,
       label: r.symbol,
@@ -56,59 +64,66 @@ const summarizeTotalGames = (type, rating, user, games) => {
 
   user.games
     .filter(
-      game =>
+      (game: any) =>
         game.completionRate === 100 &&
-        games.find(g => parseInt(g.id) === game.appid),
+        games.find((g: any) => parseInt(g.id) === game.appid),
     )
-    .map(game => {
+    .map((game: any) => {
       game = {
         ...game,
-        rating: games.find(g => parseInt(g.id) === game.appid).rating,
+        rating: games.find((g: any) => parseInt(g.id) === game.appid).rating,
       };
-      const index = data.findIndex(d => d.id === game.rating);
+      const index = data.findIndex((d: any) => d.id === game.rating);
       data[index].sum += 1;
       return game;
     });
-  return data.map(d => d[type]);
+  return data.map((d: any) => d[type]);
 };
-const getTimelines = (type, rating, user, games) => {
+const getTimelines = (type: any, rating: any, user: any, games: any) => {
   let data = [];
   let gamesTotal = 0;
   let pointsTotal = 0;
   let startDate = 0;
   let endDate = 0;
 
-  let timelines = user.games.filter(game => game.completionRate === 100);
+  let timelines = user.games.filter((game: any) => game.completionRate === 100);
   timelines = orderBy(timelines, ['lastUnlocked'], ['asc']);
 
+  // @ts-ignore
   startDate = moment(new Date(timelines[0].lastUnlocked * 1000));
+  // @ts-ignore
   endDate = moment(
     new Date(timelines[timelines.length - 1].lastUnlocked * 1000),
   );
 
+  // @ts-ignore
   while (startDate.isBefore(endDate)) {
     data.push({
+      // @ts-ignore: any
       label: startDate.format('YYYY-MM'),
       games: 0,
       points: 0,
     });
+    // @ts-ignore: any
     startDate.add(1, 'month');
   }
 
-  data = data.map(date => {
+  data = data.map((date: any) => {
     const gamesCompletedInMonth = timelines
-      .filter(game => {
+      .filter((game: any) => {
         const month = new Date(game.lastUnlocked * 1000).getMonth() + 1;
         const year = new Date(game.lastUnlocked * 1000).getFullYear();
         return (
           date.label === `${year}-${month < 10 ? `0${month}` : month}` &&
-          games.find(g => parseInt(g.id) === game.appid)
+          games.find((g: any) => parseInt(g.id) === game.appid)
         );
       })
-      .map(game => {
+      .map((game: any) => {
         try {
           date.points += rating.find(
-            r => r.id === games.find(g => parseInt(g.id) === game.appid).rating,
+            (r: any) =>
+              r.id ===
+              games.find((g: any) => parseInt(g.id) === game.appid).rating,
           ).score;
         } catch (err) {
           console.log(err);
@@ -125,7 +140,7 @@ const getTimelines = (type, rating, user, games) => {
     return date;
   });
 
-  return data.map(d => d[type]);
+  return data.map((d: any) => d[type]);
 };
 
 export default function Profile(): JSX.Element {

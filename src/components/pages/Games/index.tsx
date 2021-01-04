@@ -1,87 +1,73 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import _ from 'lodash';
+import { useSelector } from 'react-redux';
+import { orderBy } from 'lodash';
 import CheckBoxGameChoice from './CheckBoxGameChoice';
-import SearchBar from '../../../shared/components/SearchBar';
-import { swapRatingToIcon } from '../../../shared/helpers/helper';
+import SearchBar from 'shared/components/SearchBar';
+
 import Game from './Game';
 
-class PageGames extends React.Component {
-  render() {
-    const { props } = this;
-    const rating = this.props.rating;
-    const games = this.props.games
-      ? _.orderBy(
-          this.props.games,
-          ['rating', game => game.title.toLowerCase()],
-          ['desc', 'asc'],
-        )
-      : null;
+export default function PageGames(): JSX.Element {
+  const searchGame = useSelector((state: any) => state.searchGame);
+  const showGamesRated = useSelector((state: any) => state.showGamesRated);
+  const rating = useSelector((state: any) => state.rating);
+  const games = useSelector((state: any) =>
+    orderBy(
+      state.games,
+      ['rating', game => game.title.toLowerCase()],
+      ['desc', 'asc'],
+    ),
+  );
 
-    return (
-      <div className="flex-column">
-        <div className="wrapper-description">
-          <div className="page-description">
-            <p>
-              Here's the list of games that 0.1% curates, as well as the
-              percentage completion comparision between our members.
-            </p>
-            <p>
-              In the 0.1% community, we grade the ranks of our members by how
-              many curated games they've completed, as well as the difficulty of
-              those games. Each game specifies their own difficulty in the
-              description.
-            </p>
-            <p>
-              The list also includes which three members completed the game
-              first (with a gold, silver and bronze medals, respectively), as
-              well as the member who has completed it the fastest based on Steam
-              timestamps (with a trophy).
-            </p>
-          </div>
-          {rating ? (
-            <div className="wrapper-filter">
-              <div className="wrapper-choicebar">
-                {rating.map(r => (
-                  <CheckBoxGameChoice
-                    key={`checkbox-game-${r.id}`}
-                    score={r.id}
-                    icon={swapRatingToIcon(r.id, rating)}
-                  />
-                ))}
-              </div>
-              <SearchBar />
+  return (
+    <div className="flex-column">
+      <div className="wrapper-description">
+        <div className="page-description">
+          <p>
+            Here&lsquo;s the list of games that 0.1% curates, as well as the
+            percentage completion comparision between our members.
+          </p>
+          <p>
+            In the 0.1% community, we grade the ranks of our members by how many
+            curated games they&lsquo;ve completed, as well as the difficulty of
+            those games. Each game specifies their own difficulty in the
+            description.
+          </p>
+          <p>
+            The list also includes which three members completed the game first
+            (with a gold, silver and bronze medals, respectively), as well as
+            the member who has completed it the fastest based on Steam
+            timestamps (with a trophy).
+          </p>
+        </div>
+        {rating ? (
+          <div className="wrapper-filter">
+            <div className="wrapper-choicebar">
+              {rating.map((r: any) => (
+                <CheckBoxGameChoice
+                  key={`checkbox-game-${r.id}`}
+                  score={r.id}
+                  rating={rating}
+                />
+              ))}
             </div>
-          ) : null}
-        </div>
-        <div className="wrapper-games">
-          {games
-            ? games.map(game =>
-                game.title
-                  .toLowerCase()
-                  .indexOf(props.searchGame.toLowerCase()) !== -1 &&
-                props.showGamesRated.find(
-                  score => parseInt(score, 10) === parseInt(game.rating, 10),
-                ) ? (
-                  <Game
-                    key={`id-game-${game.id}`}
-                    game={game}
-                    rating={rating}
-                  />
-                ) : null,
-              )
-            : null}
-        </div>
+            <SearchBar />
+          </div>
+        ) : null}
       </div>
-    );
-  }
+      <div className="wrapper-games">
+        {games
+          ? games.map((game: any) =>
+              game.title.toLowerCase().indexOf(searchGame.toLowerCase()) !==
+                -1 &&
+              showGamesRated.find(
+                (score: any) =>
+                  parseInt(score, 10) === parseInt(game.rating, 10),
+              ) ? (
+                <Game key={`id-game-${game.id}`} game={game} rating={rating} />
+              ) : null,
+            )
+          : null}
+      </div>
+    </div>
+  );
 }
-
-const mapStateToProps = state => ({
-  searchGame: state.searchGame,
-  showGamesRated: state.showGamesRated,
-  games: state.games,
-  rating: state.rating,
-});
-
-export default connect(mapStateToProps)(PageGames);

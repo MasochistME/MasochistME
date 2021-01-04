@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import PageHome from '../Home';
 import PageGames from '../Games';
 import PageRanking from '../Ranking';
@@ -8,7 +8,7 @@ import PageSupport from '../Support';
 import PageBadges from '../Badges';
 import PageProfile from '../Profile';
 
-const assignPageType = tab => {
+const assignPageType = (tab: any) => {
   switch (tab) {
     case 'home':
       return <PageHome />;
@@ -29,17 +29,7 @@ const assignPageType = tab => {
   }
 };
 
-class Page extends React.Component {
-  render() {
-    const { props } = this;
-    return (
-      <div className="wrapper-page">
-        {assignPageType(props.state.activeTab)}
-      </div>
-    );
-  }
+export default function Page(): JSX.Element {
+  const activeTab = useSelector((state: any) => state.activeTab);
+  return <div className="wrapper-page">{assignPageType(activeTab)}</div>;
 }
-
-const mapStateToProps = state => ({ state });
-
-export default connect(mapStateToProps)(Page);

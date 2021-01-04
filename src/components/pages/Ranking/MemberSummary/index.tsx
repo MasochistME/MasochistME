@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { changeTab } from '../../../../shared/store/modules/Tabs';
-import { showProfile } from '../../../../shared/store/modules/Profiles';
+import { changeTab } from 'shared/store/modules/Tabs';
+import { showProfile } from 'shared/store/modules/Profiles';
 
 type TMemberSummary = {
   index: number;
@@ -24,7 +24,7 @@ export default function MemberSummary(props: TMemberSummary): JSX.Element {
   const summarizeBadgePoints = (member: any, badges: any): number => {
     let sum = 0;
     member.badges.map((badge: any) => {
-      const membersBadge = badges.find((b: any) => badge.id == b['_id']);
+      const membersBadge = badges.find((b: any) => badge.id === b['_id']); // TODO equality
       if (membersBadge) {
         if (typeof membersBadge.points !== 'number') {
           membersBadge.points = parseInt(membersBadge.points);
@@ -45,7 +45,7 @@ export default function MemberSummary(props: TMemberSummary): JSX.Element {
   };
 
   const onShowProfile = () => {
-    dispatch(showProfile(member));
+    dispatch(showProfile(memberId));
     dispatch(changeTab('profile'));
   };
 

@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Chart from 'chart.js';
 
-export default class BarChart extends React.Component {
-  chartRef = React.createRef();
+type Props = {
+  labels: any;
+  datasets: any;
+};
 
-  componentDidMount = () => {
-    const barChartRef = this.chartRef.current.getContext('2d');
+export default function BarChart(props: Props): JSX.Element {
+  const { labels, datasets } = props;
+  const chartRef: React.RefObject<any> = React.createRef();
+
+  useEffect(() => {
+    const barChartRef = chartRef.current.getContext('2d');
     const colors = [
       'rgba(190, 201, 224, 1)',
       'rgba(158, 157, 181, 1)',
@@ -22,8 +28,8 @@ export default class BarChart extends React.Component {
           beginAtZero: true,
           barThickness: 10,
           fontColor: '#BEC9E0',
-          fontFamily: "'Dosis', 'Verdana', sans-serif",
-          fontSize: '16',
+          fontFamily: '"Dosis", "Verdana", sans-serif',
+          fontSize: 16,
         },
       },
     ];
@@ -31,8 +37,8 @@ export default class BarChart extends React.Component {
     new Chart(barChartRef, {
       type: 'bar',
       data: {
-        labels: this.props.labels,
-        datasets: this.props.datasets.map((dataset, index) => {
+        labels,
+        datasets: datasets.map((dataset: any, index: number) => {
           return {
             backgroundColor: colors[index],
             ...dataset,
@@ -40,15 +46,16 @@ export default class BarChart extends React.Component {
         }),
       },
       options: {
-        defaultFontColor: '#BEC9E0',
-        defaultFontFamily: "'Raleway', 'Verdana', sans-serif",
+        // @ts-ignore
+        defaultFontColor: '#BEC9E0', // TODO
+        defaultFontFamily: '"Raleway", "Verdana", sans-serif',
         defaultFontSize: '14',
         defaultFontStyle: 'normal',
         legend: {
           labels: {
             fontColor: 'white',
             fontFamily: 'Georgia',
-            textTransform: 'uppercase',
+            // textTransform: 'uppercase', // TODO
           },
         },
         scales: {
@@ -57,15 +64,13 @@ export default class BarChart extends React.Component {
         },
       },
     });
-  };
+  }, []);
 
-  render() {
-    return (
-      <canvas
-        style={{ width: '100%', height: '200px' }}
-        id="myChart"
-        ref={this.chartRef}
-      />
-    );
-  }
+  return (
+    <canvas
+      style={{ width: '100%', height: '200px' }}
+      id="myChart"
+      ref={chartRef}
+    />
+  );
 }

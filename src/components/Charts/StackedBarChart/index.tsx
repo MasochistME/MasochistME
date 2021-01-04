@@ -1,20 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Chart from 'chart.js';
 
-export default class BarChart extends React.Component {
-  chartRef = React.createRef();
+type Props = {
+  labels: any;
+  datasets: any;
+};
 
-  componentDidMount = () => {
-    const { labels, datasets } = this.props;
-    const barChartRef = this.chartRef.current.getContext('2d');
-    const colors = type => [
+export default function StackedBarChart(props: Props): JSX.Element {
+  const { labels, datasets } = props;
+  const chartRef: React.RefObject<any> = React.createRef();
+
+  useEffect(() => {
+    const barChartRef = chartRef.current.getContext('2d');
+    const colors = (type: string) => [
       `#141620${type === 'transparent' ? '66' : 'ff'}`,
       `#242630${type === 'transparent' ? '66' : 'ff'}`,
       `#7b7a8d${type === 'transparent' ? '66' : 'ff'}`,
       `#9e9db5${type === 'transparent' ? '66' : 'ff'}`,
       `#BEC9E0${type === 'transparent' ? '66' : 'ff'}`,
     ];
-    const axisOptions = {
+    const axisOptions: any = {
       gridLines: {
         color: '#242630',
       },
@@ -22,7 +27,7 @@ export default class BarChart extends React.Component {
         beginAtZero: true,
         barThickness: 5,
         fontColor: '#BEC9E0',
-        fontFamily: "'Dosis', 'Verdana', sans-serif",
+        fontFamily: '"Dosis", "Verdana", sans-serif',
         fontSize: '16',
       },
     };
@@ -31,7 +36,7 @@ export default class BarChart extends React.Component {
       type: 'horizontalBar',
       data: {
         labels: labels,
-        datasets: datasets.map((dataset, index) => {
+        datasets: datasets.map((dataset: any, index: number) => {
           return {
             backgroundColor: dataset.colorTransparent
               ? dataset.colorTransparent
@@ -47,15 +52,16 @@ export default class BarChart extends React.Component {
         }),
       },
       options: {
-        defaultFontColor: '#BEC9E0',
-        defaultFontFamily: "'Raleway', 'Verdana', sans-serif",
+        // @ts-ignore
+        defaultFontColor: '#BEC9E0', // TODO
+        defaultFontFamily: '"Raleway", "Verdana", sans-serif',
         defaultFontSize: '14',
         defaultFontStyle: 'normal',
         legend: {
           labels: {
             fontColor: 'white',
             fontFamily: 'Georgia',
-            textTransform: 'uppercase',
+            // textTransform: 'uppercase', // TODO
           },
         },
         scales: {
@@ -74,15 +80,13 @@ export default class BarChart extends React.Component {
         },
       },
     });
-  };
+  }, []);
 
-  render() {
-    return (
-      <canvas
-        style={{ width: '100%', height: '150px' }}
-        id="myChart"
-        ref={this.chartRef}
-      />
-    );
-  }
+  return (
+    <canvas
+      style={{ width: '100%', height: '150px' }}
+      id="myChart"
+      ref={chartRef}
+    />
+  );
 }

@@ -1,110 +1,103 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { showLoginModal, logInUser } from '../../store/modules/Login';
-import { sha256 } from '../../helpers/hash';
-import logins from '../../mock/credentials.json';
+// @ts-nocheck
+// TODO this entire file is wrong
 
-const loginModalVisible = show =>
-  show
-    ? 'login-modal-wrapper display-flex'
-    : 'login-modal-wrapper display-none';
+export {};
 
-class LoginModal extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      username: null,
-      password: null,
-      privilege: null,
-      repeatedPassword: null,
-      registration: false,
-    };
-  }
+// import React, { useState } from 'react';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { showLoginModal, logInUser } from '../../store/modules/Login';
+// import { sha256 } from '../../helpers/hash';
+// import logins from '../../mock/credentials.json';
 
-  handleUsernameChange = event =>
-    this.setState({ username: event.target.value });
-  handlePasswordChange = event =>
-    this.setState({ password: sha256(event.target.value) });
-  handleRepeatedPasswordChange = event =>
-    this.setState({ repeatedPassword: sha256(event.target.value) });
+// const loginModalVisible = (show: boolean) =>
+//   show
+//     ? 'login-modal-wrapper display-flex'
+//     : 'login-modal-wrapper display-none';
 
-  showLogin = () => this.props.dispatch(showLoginModal());
-  showRegistration = () =>
-    this.setState({ registration: !this.state.registration });
+// export default function LoginModal(): JSX.Element {
+//   const dispatch = useDispatch();
 
-  logInOrRegister = () => {
-    this.state.registration ? this.register() : this.logIn();
-  };
-  logIn = () => {
-    if (
-      logins.hasOwnProperty(this.state.username) &&
-      logins[this.state.username].password === this.state.password
-    ) {
-      this.showLogin();
-      return this.props.dispatch(
-        logInUser(
-          this.state.username,
-          logins[this.state.username].privilege,
-          logins[this.state.username].banned,
-        ),
-      );
-    }
-    alert('Incorrect password or username.');
-  };
-  register = () => {
-    if (this.state.password !== this.state.repeatedPassword) {
-      return alert('Passwords differ.');
-    }
-    logins[this.state.username] = this.state.password;
-    alert('User created! Now you can log in.');
-  };
+//   const showLoginModal = useSelector((state: any) => state.showLoginModal);
+//   const [username, setUsername] = useState(null);
+//   const [password, setPassword] = useState(null);
+//   const [privilege, setPrivilege] = useState(null);
+//   const [repeatedPassword, setRepeatedPassword] = useState(null);
+//   const [registration, setRegistration] = useState(false);
 
-  render() {
-    const { props } = this;
-    return (
-      <div className={loginModalVisible(props.showLoginModal)}>
-        <div className="login-modal">
-          <div className="login-modal-form">
-            <input
-              className="login-modal-input"
-              placeholder="Username"
-              onChange={this.handleUsernameChange}></input>
-            <input
-              className="login-modal-input"
-              placeholder="Email"
-              hidden={true}></input>
-            <input
-              className="login-modal-input"
-              placeholder="Password"
-              type="password"
-              onChange={this.handlePasswordChange}></input>
-            <input
-              className="login-modal-input"
-              placeholder="Repeat password"
-              type="password"
-              onChange={this.handleRepeatedPasswordChange}
-              hidden={!this.state.registration}></input>
-            <button
-              className="custom-button login-modal-button"
-              onClick={() => this.logInOrRegister()}>
-              {!this.state.registration ? 'Log in' : 'Register'}
-            </button>
-            <div onClick={() => this.showRegistration()}>
-              {this.state.registration ? 'Log in' : 'Register'}
-            </div>
-          </div>
-          <button className="custom-button" onClick={() => this.showLogin()}>
-            Close
-          </button>
-        </div>
-      </div>
-    );
-  }
-}
+//   const handleUsernameChange = (event: any) => setUsername(event.target.value);
+//   const handlePasswordChange = (event: any) =>
+//     setPassword(sha256(event.target.value));
+//   const handleRepeatedPasswordChange = (event: any) =>
+//     setRepeatedPassword(sha256(event.target.value));
 
-const mapStateToProps = state => ({
-  showLoginModal: state.showLoginModal,
-});
-const mapDispatchToProps = dispatch => ({ dispatch });
+//   const showLogin = () => dispatch(showLoginModal());
+//   const showRegistration = () => setRegistration(!registration);
+//   const logInOrRegister = () => (registration ? register() : logIn());
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginModal);
+//   const logIn = () => {
+//     if (
+//       username &&
+//       logins.hasOwnProperty(username) &&
+//       logins[username].password === password
+//     ) {
+//       showLogin();
+//       dispatch(
+//         logInUser(
+//           username,
+//           logins[username].privilege,
+//           logins[username].banned,
+//         ),
+//       );
+//       return;
+//     }
+//     alert('Incorrect password or username.');
+//   };
+
+//   const register = () => {
+//     if (password !== repeatedPassword) {
+//       alert('Passwords differ.');
+//       return;
+//     }
+//     logins[username] = password;
+//     alert('User created! Now you can log in.');
+//   };
+
+//   return (
+//     <div className={loginModalVisible(showLoginModal)}>
+//       <div className="login-modal">
+//         <div className="login-modal-form">
+//           <input
+//             className="login-modal-input"
+//             placeholder="Username"
+//             onChange={handleUsernameChange}></input>
+//           <input
+//             className="login-modal-input"
+//             placeholder="Email"
+//             hidden={true}></input>
+//           <input
+//             className="login-modal-input"
+//             placeholder="Password"
+//             type="password"
+//             onChange={handlePasswordChange}></input>
+//           <input
+//             className="login-modal-input"
+//             placeholder="Repeat password"
+//             type="password"
+//             onChange={handleRepeatedPasswordChange}
+//             hidden={!registration}></input>
+//           <button
+//             className="custom-button login-modal-button"
+//             onClick={logInOrRegister}>
+//             {!registration ? 'Log in' : 'Register'}
+//           </button>
+//           <div onClick={showRegistration}>
+//             {registration ? 'Log in' : 'Register'}
+//           </div>
+//         </div>
+//         <button className="custom-button" onClick={showLogin}>
+//           Close
+//         </button>
+//       </div>
+//     </div>
+//   );
+// }

@@ -6,9 +6,9 @@ import '../styles/css/App.css';
 import Wrapper from '../shared/components/layout/Wrapper';
 import Header from '../shared/components/Header';
 import Nav from '../shared/components/Nav';
-import ContentWrapper from '../shared/components/layout/ContentWrapper';
+import ContentWrapper from 'shared/components/layout/ContentWrapper';
 import SidebarWrapper from './sidebar/SidebarWrapper';
-import LoginModal from '../shared/components/LoginModal/index';
+// import LoginModal from '../shared/components/LoginModal';
 import {
   cacheGames,
   cacheMembers,
@@ -18,7 +18,7 @@ import {
   cachePatrons,
   cacheBadges,
 } from '../shared/store/modules/Cache';
-import { showGamesRated } from '../shared/store/modules/CheckBoxes';
+import { showGamesRated } from 'shared/store/modules/CheckBoxes';
 
 export default function App(): JSX.Element {
   const dispatch = useDispatch();
@@ -63,14 +63,14 @@ export default function App(): JSX.Element {
           members.map((member: any) => {
             let summary = 0;
             rating.map(
-              r =>
+              (r: any) =>
                 (summary += member.ranking[r.id]
                   ? r.score * member.ranking[r.id]
                   : 0),
             );
             member.badges.map((badge: any) => {
               const membersBadge = badges.find(
-                (b: any) => badge.id == b['_id'],
+                (b: any) => badge.id === b['_id'], // TODO equality
               );
               if (membersBadge) {
                 if (typeof membersBadge.points !== 'number') {
@@ -150,7 +150,7 @@ export default function App(): JSX.Element {
 
   return loaded ? (
     <Wrapper type="main">
-      <LoginModal />
+      {/* <LoginModal /> */}
       <Header />
       <Wrapper type="nav">
         <Nav />

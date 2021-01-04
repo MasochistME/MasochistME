@@ -1,19 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Chart from 'chart.js';
 
-export default class PieChart extends React.Component {
-  chartRef = React.createRef();
+type Props = {
+  labels: any;
+  dataset: any;
+};
+export default function PieChart(props: Props): JSX.Element {
+  const { labels, dataset } = props;
+  const chartRef: React.RefObject<any> = React.createRef();
 
-  componentDidMount = () => {
-    const barChartRef = this.chartRef.current.getContext('2d');
+  useEffect(() => {
+    const barChartRef = chartRef.current.getContext('2d');
 
     new Chart(barChartRef, {
       type: 'pie',
       data: {
-        labels: this.props.labels,
+        labels,
         datasets: [
           {
-            data: this.props.dataset,
+            data: dataset,
             backgroundColor: [
               '#BEC9E0',
               '#9e9db5',
@@ -31,21 +36,19 @@ export default class PieChart extends React.Component {
           labels: {
             fontColor: 'white',
             fontFamily: 'Georgia',
-            textTransform: 'uppercase',
+            // textTransform: 'uppercase', // TODO
             usePointStyle: true,
           },
         },
       },
     });
-  };
+  }, []);
 
-  render() {
-    return (
-      <canvas
-        style={{ width: '400px', height: '300px' }}
-        id="myChart"
-        ref={this.chartRef}
-      />
-    );
-  }
+  return (
+    <canvas
+      style={{ width: '400px', height: '300px' }}
+      id="myChart"
+      ref={chartRef}
+    />
+  );
 }
