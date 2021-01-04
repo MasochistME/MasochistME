@@ -1,8 +1,9 @@
 import React from 'react';
 import { orderBy } from 'lodash';
 import { useSelector } from 'react-redux';
-import { swapRatingToIcon } from '../../../../shared/helpers/helper';
+import { swapRatingToIcon } from 'shared/helpers/helper';
 import { SmallEvent, Section, SectionTitle } from '../../';
+import Spinner from 'shared/components/Spinner';
 
 export default function SectionHistory(): JSX.Element {
   const events = useSelector((state: any) =>
@@ -99,7 +100,11 @@ export default function SectionHistory(): JSX.Element {
   return (
     <Section>
       <SectionTitle>Last events</SectionTitle>
-      {events.map((event, eventIndex) => sortEvents(event, eventIndex))}
+      {events.length ? (
+        events.map((event, eventIndex) => sortEvents(event, eventIndex))
+      ) : (
+        <Spinner />
+      )}
     </Section>
   );
 }

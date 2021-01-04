@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { orderBy } from 'lodash';
 import { useSelector } from 'react-redux';
 import { SmallMember, Section, SectionTitle } from '../../';
+import Spinner from 'shared/components/Spinner';
 
 const FlexColumn = styled.div`
   display: flex;
@@ -34,7 +35,11 @@ export default function SectionTop(): JSX.Element {
     <Section>
       <SectionTitle>Top 10 members</SectionTitle>
       <FlexColumn>
-        {members.map((member, memberIndex) => memberRow(member, memberIndex))}
+        {members.length ? (
+          members.map((member, memberIndex) => memberRow(member, memberIndex))
+        ) : (
+          <Spinner />
+        )}
       </FlexColumn>
     </Section>
   );

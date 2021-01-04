@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { orderBy } from 'lodash';
 import CheckBoxGameChoice from './CheckBoxGameChoice';
 import SearchBar from 'shared/components/SearchBar';
+import Spinner from 'shared/components/Spinner';
 
 import Game from './Game';
 
@@ -55,18 +56,18 @@ export default function PageGames(): JSX.Element {
         ) : null}
       </div>
       <div className="wrapper-games">
-        {games
-          ? games.map((game: any) =>
-              game.title.toLowerCase().indexOf(searchGame.toLowerCase()) !==
-                -1 &&
-              showGamesRated.find(
-                (score: any) =>
-                  parseInt(score, 10) === parseInt(game.rating, 10),
-              ) ? (
-                <Game key={`id-game-${game.id}`} game={game} rating={rating} />
-              ) : null,
-            )
-          : null}
+        {games && games.length ? (
+          games.map((game: any) =>
+            game.title.toLowerCase().indexOf(searchGame.toLowerCase()) !== -1 &&
+            showGamesRated.find(
+              (score: any) => parseInt(score, 10) === parseInt(game.rating, 10),
+            ) ? (
+              <Game key={`id-game-${game.id}`} game={game} rating={rating} />
+            ) : null,
+          )
+        ) : (
+          <Spinner />
+        )}
       </div>
     </div>
   );

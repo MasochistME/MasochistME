@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { orderBy } from 'lodash';
 import { Section, SectionTitle, SaleLink } from '../../';
+import Spinner from 'shared/components/Spinner';
 
 export const SectionSaleUl = styled.ul`
   width: 100%;
@@ -20,26 +21,27 @@ export default function SectionSale(): JSX.Element {
     orderBy(state.games, ['sale.discount'], ['desc']),
   );
 
+  const gamesOnSale = games
+    .filter(game => game.sale.onSale)
+    .map((game, index) => (
+      <li
+        key={`sale-${index}`}
+        className="sale-brick"
+        style={{ backgroundImage: `url(${game.img})` }}>
+        <SaleLink
+          href={`https://store.steampowered.com/app/${game.id}`}
+          target="_blank"
+          rel="noopener noreferrer">
+          <span className="link">-{game.sale.discount}%</span>
+        </SaleLink>
+      </li>
+    ));
+
   return (
     <Section>
       <SectionTitle>Games on sale</SectionTitle>
       <SectionSaleUl>
-        {games &&
-          games
-            .filter(game => game.sale.onSale)
-            .map((game, index) => (
-              <li
-                key={`sale-${index}`}
-                className="sale-brick"
-                style={{ backgroundImage: `url(${game.img})` }}>
-                <SaleLink
-                  href={`https://store.steampowered.com/app/${game.id}`}
-                  target="_blank"
-                  rel="noopener noreferrer">
-                  <span className="link">-{game.sale.discount}%</span>
-                </SaleLink>
-              </li>
-            ))}
+        {gamesOnSale.length ? gamesOnSale : <Spinner />}
       </SectionSaleUl>
     </Section>
   );

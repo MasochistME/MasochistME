@@ -1,6 +1,7 @@
 import React from 'react';
 import { orderBy } from 'lodash';
 import { useSelector } from 'react-redux';
+import Spinner from 'shared/components/Spinner';
 import Event from './Event';
 
 export default function PageEvents(): JSX.Element {
@@ -52,9 +53,13 @@ export default function PageEvents(): JSX.Element {
       </div>
       <div className="wrapper-events">
         <ul className="events-list">
-          {events.map((event, eventIndex) => (
-            <Event event={event} key={`event-${eventIndex}`} />
-          ))}
+          {events && events.length ? (
+            events.map((event, eventIndex) => (
+              <Event event={event} key={`event-${eventIndex}`} />
+            ))
+          ) : (
+            <Spinner />
+          )}
         </ul>
       </div>
     </div>
