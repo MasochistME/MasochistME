@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { colors, fonts } from 'shared/theme';
+
 import SectionUpdate from './Sections/SectionUpdate';
 import SectionHistory from './Sections/SectionHistory';
 import SectionTop from './Sections/SectionTop';
@@ -21,8 +23,8 @@ export const Section = styled.div`
   width: 100%;
   margin-bottom: 30px;
   box-sizing: border-box;
-  box-shadow: 0 0 20px $newdark;
-  background-color: rgba($superlightgrey, 0.7);
+  box-shadow: 0 0 20px ${colors.newDark};
+  background-color: ${colors.superLightGrey}bb;
   div,
   p,
   ol,
@@ -34,7 +36,7 @@ export const Section = styled.div`
     margin: 2px 0;
   }
   &:first-child {
-    background-color: $black;
+    background-color: ${colors.black};
     height: 100px;
   }
 `;
@@ -48,10 +50,10 @@ export const SectionTitle = styled.h3`
   padding: 0;
   margin: 0 0 10px 0;
   font-size: 1.3em;
-  font-family: $font-dosis;
+  font-family: ${fonts.fontDosis};
   text-transform: uppercase;
-  background-color: rgba($newdark, 0.8);
-  color: $superlightgrey;
+  background-color: ${colors.newDark}cc;
+  color: ${colors.superLightGrey};
 `;
 
 export const UpdateProgressBar = styled.div`
@@ -60,7 +62,7 @@ export const UpdateProgressBar = styled.div`
   height: 100%;
   padding: 0 !important;
   align-self: flex-start;
-  background-color: $newmediumgrey;
+  background-color: ${colors.newMediumGrey};
 `;
 
 export const UpdateProgressBarBorder = styled.div`
@@ -71,7 +73,7 @@ export const UpdateProgressBarBorder = styled.div`
   width: 50%;
   height: 40px;
   padding: 0 !important;
-  background-color: $superdarkgrey;
+  background-color: ${colors.superDarkGrey};
 `;
 
 export const UpdateProgressBarPercentage = styled.div`
@@ -80,7 +82,7 @@ export const UpdateProgressBarPercentage = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: $superlightgrey;
+  color: ${colors.superLightGrey};
 `;
 
 export const SmallEvent = styled.p`
@@ -108,7 +110,7 @@ export const SaleBrick = styled.div`
   height: 92px;
   margin: 5px;
   &:hover {
-    box-shadow: 0 0 10px $superdarkgrey;
+    box-shadow: 0 0 10px ${colors.superDarkGrey};
   }
 `;
 
@@ -125,11 +127,11 @@ export const SaleLink = styled.a`
     width: 35%;
     height: 40%;
     text-decoration: none;
-    font-family: $font-dosis;
+    font-family: ${fonts.fontDosis};
     font-weight: bold;
-    color: $superlightgrey;
-    background-color: $darkblue;
-    box-shadow: -2px 2px 5px $superdarkgrey;
+    color: ${colors.superLightGrey};
+    background-color: ${colors.darkBlue};
+    box-shadow: -2px 2px 5px ${colors.superDarkGrey};
     font-size: 1.2em;
   }
   &:hover {

@@ -80,9 +80,5 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "proxy": "http://localhost:3000",
-  "_moduleAliases": {
-    "@components": "build/src/components",
-    "@shared": "build/src/shared"
-  }
+  "proxy": "http://localhost:3000"
 }
