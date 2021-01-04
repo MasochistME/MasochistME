@@ -8,7 +8,7 @@ type TLineChart = {
 
 export default function LineChart(props: TLineChart): JSX.Element {
   const { datasets, labels } = props;
-  const chartRef = React.createRef();
+  const chartRef: React.RefObject<any> = React.createRef();
 
   useEffect(() => {
     const barChartRef = chartRef.current.getContext('2d');
@@ -38,8 +38,8 @@ export default function LineChart(props: TLineChart): JSX.Element {
         },
         ticks: {
           fontColor: '#BEC9E0',
-          fontFamily: "'Dosis', 'Verdana', sans-serif",
-          fontSize: '16',
+          fontFamily: '"Dosis", "Verdana", sans-serif',
+          fontSize: 16,
         },
       },
     ];
@@ -51,15 +51,16 @@ export default function LineChart(props: TLineChart): JSX.Element {
         datasets: ds,
       },
       options: {
+        // @ts-ignore
         defaultFontColor: '#BEC9E0',
-        defaultFontFamily: '\'Raleway\', \'Verdana\', sans-serif',
+        defaultFontFamily: '"Raleway", "Verdana", sans-serif',
         defaultFontSize: '14',
         defaultFontStyle: 'normal',
         legend: {
           labels: {
             fontColor: 'white',
             fontFamily: 'Georgia',
-            textTransform: 'uppercase',
+            // textTransform: 'uppercase',
           },
         },
         scales: {

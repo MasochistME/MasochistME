@@ -38,11 +38,11 @@ const defaultState = {
   profileID: null,
 };
 
-const enhancers = [];
+const enhancers: any = [];
 const middleWare = [thunk];
 const composedEnhancers = compose(applyMiddleware(...middleWare), ...enhancers);
 
-const reducer = (state = defaultState, action) => {
+const reducer = (state = defaultState, action: any) => {
   switch (action.type) {
     case CHANGE_TAB:
       return {

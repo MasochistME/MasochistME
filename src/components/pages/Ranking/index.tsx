@@ -62,8 +62,8 @@ export default function PageRanking(): JSX.Element {
             or getting the in-game 100%; but for the sake of simplicity the
             ranking system present here assumes that completing a game means
             earning 100% of its Steam achievements. You are awarded points
-            depending on the completed game's difficulty level, which are later
-            summarized and used to determine your placement on the ranking
+            depending on the completed game&lsquo;s difficulty level, which are
+            later summarized and used to determine your placement on the ranking
             ladder.
           </p>
         </div>

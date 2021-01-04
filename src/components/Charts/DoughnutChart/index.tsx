@@ -8,7 +8,7 @@ type TDoughnutChart = {
 
 export default function DoughnutChart(props: TDoughnutChart): JSX.Element {
   const { labels, dataset } = props;
-  const chartRef = React.createRef();
+  const chartRef: React.RefObject<any> = React.createRef();
 
   useEffect(() => {
     const barChartRef = chartRef.current.getContext('2d');
@@ -36,7 +36,7 @@ export default function DoughnutChart(props: TDoughnutChart): JSX.Element {
           labels: {
             fontColor: 'white',
             fontFamily: 'Georgia',
-            textTransform: 'uppercase',
+            // textTransform: 'uppercase', // TODO
             usePointStyle: true,
           },
         },

@@ -16,7 +16,7 @@ export default function MemberDetails(props: TMemberDetails): JSX.Element {
   const summarizeBadgePoints = (member: any, badges: any) => {
     let sum = 0;
     member.badges.map((badge: any) => {
-      const membersBadge = badges.find((b: any) => badge.id == b['_id']);
+      const membersBadge = badges.find((b: any) => badge.id === b['_id']); // TODO equality
       if (membersBadge) {
         if (typeof membersBadge.points !== 'number') {
           membersBadge.points = parseInt(membersBadge.points);
@@ -44,7 +44,9 @@ export default function MemberDetails(props: TMemberDetails): JSX.Element {
       ['desc', 'desc'],
     );
     return memberGames.map(game => {
-      let gameDetails = games.find(g => Number(g.id) === Number(game.appid));
+      let gameDetails = games.find(
+        (g: any) => Number(g.id) === Number(game.appid),
+      );
       if (!gameDetails) {
         gameDetails = {
           title: 'unknown',

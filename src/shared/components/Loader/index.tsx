@@ -1,14 +1,13 @@
 import React from 'react';
 
-export default class Loader extends React.Component {
-  render() {
-    if (this.props.isActive) {
-      return (
-        <div>
-          <i className="fas fa-hourglass"></i>
-        </div>
-      );
-    }
-    return null;
-  }
+export default function Loader({
+  isActive,
+}: {
+  isActive: boolean;
+}): JSX.Element | null {
+  return isActive ? (
+    <div>
+      <i className="fas fa-hourglass"></i>
+    </div>
+  ) : null;
 }
