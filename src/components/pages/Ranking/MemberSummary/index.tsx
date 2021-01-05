@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { changeTab } from 'shared/store/modules/Tabs';
-import { showProfile } from 'shared/store/modules/Profiles';
+import { useHistory } from 'react-router-dom';
 
 type TMemberSummary = {
   index: number;
@@ -13,7 +11,7 @@ type TMemberSummary = {
 };
 
 export default function MemberSummary(props: TMemberSummary): JSX.Element {
-  const dispatch = useDispatch();
+  const history = useHistory();
   const { member, index, rating, patron, badges, onShowDetails } = props;
   const [detailsVisible, setDetailsVisible] = useState(false);
   const [memberId, setMemberId] = useState(0);
@@ -45,8 +43,7 @@ export default function MemberSummary(props: TMemberSummary): JSX.Element {
   };
 
   const onShowProfile = () => {
-    dispatch(showProfile(memberId));
-    dispatch(changeTab('profile'));
+    history.push(`/profile/${memberId}`);
   };
 
   useEffect(() => {

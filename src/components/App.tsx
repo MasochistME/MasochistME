@@ -135,7 +135,6 @@ export default function App(): JSX.Element {
   const load = () => {
     loadBadges();
     loadRating();
-    loadMembers();
     loadGames();
     loadEvents();
     loadBlog();
@@ -146,6 +145,12 @@ export default function App(): JSX.Element {
   useEffect(() => {
     load();
   }, []);
+
+  useEffect(() => {
+    if (rating) {
+      loadMembers();
+    }
+  }, [rating]);
 
   return loaded ? (
     <Router>
@@ -171,8 +176,11 @@ export default function App(): JSX.Element {
         <Route exact path="/badges">
           <Page page="badges" />
         </Route>
-        <Route exact path="/profile">
+        <Route exact path="/profile/:id">
           <Page page="profile" />
+        </Route>
+        <Route>
+          <Page page="notfound" />
         </Route>
       </Switch>
     </Router>

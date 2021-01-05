@@ -38,7 +38,8 @@ type TPage =
   | 'events'
   | 'support'
   | 'profile'
-  | 'badges';
+  | 'badges'
+  | 'notfound';
 type Props = {
   page: TPage;
 };
@@ -62,6 +63,8 @@ export default function Page(props: Props): JSX.Element {
         return <PageProfile />;
       case 'badges':
         return <PageBadges />;
+      case 'notfound':
+        return <div>404</div>;
       default:
         return <PageHome />;
     }
