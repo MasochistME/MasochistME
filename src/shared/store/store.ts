@@ -1,4 +1,5 @@
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import tabs from '../config/tabs.json';
 import { CHANGE_TAB } from './modules/Tabs';
@@ -37,10 +38,6 @@ const defaultState = {
   rating: null,
   profileID: null,
 };
-
-const enhancers: any = [];
-const middleWare = [thunk];
-const composedEnhancers = compose(applyMiddleware(...middleWare), ...enhancers);
 
 const reducer = (state = defaultState, action: any) => {
   switch (action.type) {
@@ -133,6 +130,8 @@ const reducer = (state = defaultState, action: any) => {
   }
 };
 
-const store = createStore(reducer, defaultState, composedEnhancers);
+const middleWare = [thunk];
+const composeEnhancers = composeWithDevTools(applyMiddleware(...middleWare));
+const store = createStore(reducer, defaultState, composeEnhancers);
 
 export default store;
