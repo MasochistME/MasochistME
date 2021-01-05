@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { orderBy } from 'lodash';
 import moment from 'moment';
-import { useSelector } from 'react-redux';
 import axios from 'axios';
 import DoughnutChart from '../Charts/DoughnutChart';
 import LineChart from '../Charts/LineChart';
 import ChartWrapper from '../Charts/ChartWrapper/index';
+import { showProfile } from 'shared/store/modules/Profiles';
+import { changeTab } from 'shared/store/modules/Tabs';
+import Spinner from 'shared/components/Spinner';
 
 const summarizeTotalTimes = (
   type: any,
@@ -21,7 +25,7 @@ const summarizeTotalTimes = (
     //     id: 'total'
     // }
   ];
-  let userGames = user.games;
+  let userGames = user?.games;
 
   rating.map((r: any) =>
     data.push({
@@ -62,7 +66,7 @@ const summarizeTotalGames = (type: any, rating: any, user: any, games: any) => {
     }),
   );
 
-  user.games
+  user?.games
     .filter(
       (game: any) =>
         game.completionRate === 100 &&
@@ -86,7 +90,9 @@ const getTimelines = (type: any, rating: any, user: any, games: any) => {
   let startDate = 0;
   let endDate = 0;
 
-  let timelines = user.games.filter((game: any) => game.completionRate === 100);
+  let timelines = user?.games.filter(
+    (game: any) => game.completionRate === 100,
+  );
   timelines = orderBy(timelines, ['lastUnlocked'], ['asc']);
 
   // @ts-ignore
@@ -144,16 +150,27 @@ const getTimelines = (type: any, rating: any, user: any, games: any) => {
 };
 
 export default function Profile(): JSX.Element {
+  const dispatch = useDispatch();
+  const { id } = useParams<{ id: string }>();
   const [updating, setUpdating] = useState(false);
   const [message, setMessage] = useState('');
+  const [user, setUser] = useState(undefined as any);
 
+  const games = useSelector((state: any) => state.games);
+  const rating = useSelector((state: any) => state.rating);
   const members = useSelector((state: any) => state.members);
   const patrons = useSelector((state: any) => state.patrons);
+  const patron = patrons.find((tier: any) =>
+    tier.list.find((p: any) => user && user?.id === p.steamid)
+      ? { tier: tier.tier, description: tier.description }
+      : false,
+  );
   const badges = useSelector((state: any) =>
     orderBy(
       state.badges
-        .filter((badge: any) =>
-          user.badges.find((b: any) => b.id === badge._id),
+        .filter(
+          (badge: any) =>
+            user?.badges && user.badges.find((b: any) => b.id === badge._id),
         )
         .map(
           (badge: any) =>
@@ -170,12 +187,18 @@ export default function Profile(): JSX.Element {
       ['desc'],
     ),
   );
-  const games = useSelector((state: any) => state.games);
-  const rating = useSelector((state: any) => state.rating);
-  const id = useSelector((state: any) => state.profileID);
+
+  useEffect(() => {
+    const member = members.find((member: any) => member.id === id);
+    if (member) {
+      setUser(member);
+    }
+  }, [members]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    dispatch(showProfile(id));
+    dispatch(changeTab('profile'));
   }, []);
 
   const sendUpdateRequest = (id: any) => {
@@ -193,177 +216,185 @@ export default function Profile(): JSX.Element {
       .catch(err => console.log(err));
   };
 
-  const user = members.find((member: any) => member.id === id);
-  const patron = patrons.find((tier: any) =>
-    tier.list.find((p: any) => p.steamid === user.id)
-      ? { tier: tier.tier, description: tier.description }
-      : false,
-  );
-
   return (
     <div className="flex-column">
-      <div className="wrapper-description">
-        <div
-          className="page-description"
-          style={{ paddingBottom: '0', marginBottom: '0' }}>
-          <div className="flex-row">
-            <h1 style={{ margin: '0' }}>
-              <a
-                href={`https://steamcommunity.com/profiles/${user.id}`}
-                target="_blank"
-                rel="noopener noreferrer">
-                <i className="fab fa-steam" style={{ marginRight: '10px' }} />
-                {user.name}
-              </a>
-            </h1>
-            {patron ? (
-              <div
-                className="profile-patron"
-                title={`This user is a tier ${patron.description.toUpperCase()} supporter`}>
-                <i className="fas fa-medal" />{' '}
-                {patron.description.toUpperCase()}{' '}
+      {user ? (
+        <>
+          <div className="wrapper-description">
+            <div
+              className="page-description"
+              style={{ paddingBottom: '0', marginBottom: '0' }}>
+              <div className="flex-row">
+                <h1 style={{ margin: '0' }}>
+                  <a
+                    href={`https://steamcommunity.com/profiles/${user?.id}`}
+                    target="_blank"
+                    rel="noopener noreferrer">
+                    <i
+                      className="fab fa-steam"
+                      style={{ marginRight: '10px' }}
+                    />
+                    {user?.name}
+                  </a>
+                </h1>
+                {patron ? (
+                  <div
+                    className="profile-patron"
+                    title={`This user is a tier ${patron.description.toUpperCase()} supporter`}>
+                    <i className="fas fa-medal" />{' '}
+                    {patron.description.toUpperCase()}{' '}
+                  </div>
+                ) : (
+                  ''
+                )}
               </div>
-            ) : (
-              ''
-            )}
-          </div>
-          <div
-            className="profile-date flex-row"
-            style={{ marginBottom: '5px' }}>
-            {
-              <span>{`Last updated: ${
-                user.updated === 0
-                  ? 'never'
-                  : new Date(user.updated).toLocaleString()
-              }`}</span>
-            }
-            {Date.now() - user.updated > 3600000 ? (
-              updating ? (
-                <span
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    height: '40px',
-                  }}>
-                  {message}
-                </span>
-              ) : (
-                <button
-                  className="custom-button"
-                  onClick={() => sendUpdateRequest(user.id)}>
-                  Update
-                </button>
-              )
-            ) : (
-              <button
-                className="custom-button button-blocked"
-                title={`${Number(
-                  (3600000 - (Date.now() - user.updated)) / 60000,
-                )} minutes till you can update again`}>
-                Update
-              </button>
-            )}
-          </div>
-          <div className="profile-basic flex-row">
-            <img
-              src={user.avatar}
-              className={`profile-avatar ${patron ? `tier${patron.tier}` : ''}`}
-              alt="avatar"
-            />
-            <div>Currently there&lsquo;s no info provided about this user.</div>
-          </div>
-        </div>
-      </div>
-      <div className="wrapper-profile flex-column">
-        {badges.length !== 0 ? (
-          <div className="profile-badges">
-            <div className="profile-section" style={{ width: '100%' }}>
-              <h3 className="profile-section-title">Badges</h3>
               <div
-                style={{
-                  width: '100%',
-                  display: 'flex',
-                  flexFlow: 'row wrap',
-                  justifyContent: 'center',
-                }}>
-                {badges.map((badge, index) => (
-                  <img
-                    className="profile-badge"
-                    src={badge.img}
-                    alt="badge"
-                    title={`${badge.game.toUpperCase()} - ${badge.name} (${
-                      badge.points
-                    } pts)\n"${badge.description}"`}
-                    key={`badge-${index}`}
-                  />
-                ))}
+                className="profile-date flex-row"
+                style={{ marginBottom: '5px' }}>
+                {
+                  <span>{`Last updated: ${
+                    user?.updated === 0
+                      ? 'never'
+                      : new Date(user?.updated).toLocaleString()
+                  }`}</span>
+                }
+                {Date.now() - user?.updated > 3600000 ? (
+                  updating ? (
+                    <span
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        height: '40px',
+                      }}>
+                      {message}
+                    </span>
+                  ) : (
+                    <button
+                      className="custom-button"
+                      onClick={() => sendUpdateRequest(user?.id)}>
+                      Update
+                    </button>
+                  )
+                ) : (
+                  <button
+                    className="custom-button button-blocked"
+                    title={`${Number(
+                      (3600000 - (Date.now() - user?.updated)) / 60000,
+                    )} minutes till you can update again`}>
+                    Update
+                  </button>
+                )}
+              </div>
+              <div className="profile-basic flex-row">
+                <img
+                  src={user?.avatar}
+                  className={`profile-avatar ${
+                    patron ? `tier${patron.tier}` : ''
+                  }`}
+                  alt="avatar"
+                />
+                <div>
+                  Currently there&lsquo;s no info provided about this user?.
+                </div>
               </div>
             </div>
           </div>
-        ) : null}
-        {!isNaN(user.points) && user.points !== 0 ? (
-          <div className="profile-graphs">
-            <ChartWrapper title="HOURS PLAYED (TOTAL)">
-              <DoughnutChart
-                labels={summarizeTotalTimes(
-                  'label',
-                  'total',
-                  rating,
-                  user,
-                  games,
-                )}
-                dataset={summarizeTotalTimes(
-                  'sum',
-                  'total',
-                  rating,
-                  user,
-                  games,
-                )}
-              />
-            </ChartWrapper>
-            <ChartWrapper title="HOURS PLAYED (COMPLETED)">
-              <DoughnutChart
-                labels={summarizeTotalTimes(
-                  'label',
-                  'completed',
-                  rating,
-                  user,
-                  games,
-                )}
-                dataset={summarizeTotalTimes(
-                  'sum',
-                  'completed',
-                  rating,
-                  user,
-                  games,
-                )}
-              />
-            </ChartWrapper>
-            <ChartWrapper title="GAMES COMPLETED">
-              <DoughnutChart
-                labels={summarizeTotalGames('label', rating, user, games)}
-                dataset={summarizeTotalGames('sum', rating, user, games)}
-              />
-            </ChartWrapper>
-            <ChartWrapper title="COMPLETION TIMELINE" width={100}>
-              <LineChart
-                labels={getTimelines('label', rating, user, games)}
-                datasets={[
-                  {
-                    label: 'games',
-                    data: getTimelines('games', rating, user, games),
-                  },
-                  {
-                    label: 'points',
-                    data: getTimelines('points', rating, user, games),
-                  },
-                ]}
-              />
-            </ChartWrapper>
+          <div className="wrapper-profile flex-column">
+            {badges.length !== 0 ? (
+              <div className="profile-badges">
+                <div className="profile-section" style={{ width: '100%' }}>
+                  <h3 className="profile-section-title">Badges</h3>
+                  <div
+                    style={{
+                      width: '100%',
+                      display: 'flex',
+                      flexFlow: 'row wrap',
+                      justifyContent: 'center',
+                    }}>
+                    {badges.map((badge, index) => (
+                      <img
+                        className="profile-badge"
+                        src={badge.img}
+                        alt="badge"
+                        title={`${badge.game.toUpperCase()} - ${badge.name} (${
+                          badge.points
+                        } pts)\n"${badge.description}"`}
+                        key={`badge-${index}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : null}
+            {!isNaN(user?.points) && user?.points !== 0 ? (
+              <div className="profile-graphs">
+                <ChartWrapper title="HOURS PLAYED (TOTAL)">
+                  <DoughnutChart
+                    labels={summarizeTotalTimes(
+                      'label',
+                      'total',
+                      rating,
+                      user,
+                      games,
+                    )}
+                    dataset={summarizeTotalTimes(
+                      'sum',
+                      'total',
+                      rating,
+                      user,
+                      games,
+                    )}
+                  />
+                </ChartWrapper>
+                <ChartWrapper title="HOURS PLAYED (COMPLETED)">
+                  <DoughnutChart
+                    labels={summarizeTotalTimes(
+                      'label',
+                      'completed',
+                      rating,
+                      user,
+                      games,
+                    )}
+                    dataset={summarizeTotalTimes(
+                      'sum',
+                      'completed',
+                      rating,
+                      user,
+                      games,
+                    )}
+                  />
+                </ChartWrapper>
+                <ChartWrapper title="GAMES COMPLETED">
+                  <DoughnutChart
+                    labels={summarizeTotalGames('label', rating, user, games)}
+                    dataset={summarizeTotalGames('sum', rating, user, games)}
+                  />
+                </ChartWrapper>
+                <ChartWrapper title="COMPLETION TIMELINE" width={100}>
+                  <LineChart
+                    labels={getTimelines('label', rating, user, games)}
+                    datasets={[
+                      {
+                        label: 'games',
+                        data: getTimelines('games', rating, user, games),
+                      },
+                      {
+                        label: 'points',
+                        data: getTimelines('points', rating, user, games),
+                      },
+                    ]}
+                  />
+                </ChartWrapper>
+              </div>
+            ) : null}
           </div>
-        ) : null}
-      </div>
+        </>
+      ) : (
+        <div className="wrapper-description">
+          <Spinner />
+        </div>
+      )}
     </div>
   );
 }
