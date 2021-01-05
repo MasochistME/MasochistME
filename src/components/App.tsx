@@ -17,6 +17,8 @@ import {
 } from 'shared/store/modules/Cache';
 import { showGamesRated } from 'shared/store/modules/CheckBoxes';
 
+const path = 'http://localhost:3002';
+
 export default function App(): JSX.Element {
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
@@ -26,7 +28,7 @@ export default function App(): JSX.Element {
 
   const loadRating = () => {
     axios
-      .get('/rest/api/rating')
+      .get(`${path}/api/rating`)
       .then(response => {
         if (response?.status === 200) {
           dispatch(showGamesRated(response.data.map((r: any) => r.id)));
@@ -38,7 +40,7 @@ export default function App(): JSX.Element {
 
   const loadGames = () => {
     axios
-      .get('/rest/api/games')
+      .get(`${path}/api/curator/games`)
       .then(response => {
         if (response?.status === 200) {
           return dispatch(
@@ -53,7 +55,7 @@ export default function App(): JSX.Element {
 
   const loadMembers = () => {
     axios
-      .get('/rest/api/members')
+      .get(`${path}/api/members`)
       .then(response => {
         if (response?.status === 200) {
           let members = response.data;
@@ -88,7 +90,7 @@ export default function App(): JSX.Element {
 
   const loadEvents = () => {
     axios
-      .get('/rest/api/events')
+      .get(`${path}/api/events`)
       .then(response => {
         if (response?.status === 200) {
           return dispatch(cacheEvents(response.data));
@@ -99,7 +101,7 @@ export default function App(): JSX.Element {
 
   const loadPatrons = () => {
     axios
-      .get('/rest/api/patrons')
+      .get(`${path}/api/patrons`)
       .then(response => {
         if (response?.status === 200) {
           return dispatch(cachePatrons(response.data));
@@ -110,7 +112,7 @@ export default function App(): JSX.Element {
 
   const loadBlog = () => {
     axios
-      .get('/rest/api/blog')
+      .get(`${path}/api/blog`)
       .then(response => {
         if (response?.status === 200) {
           return dispatch(cacheBlog(response.data));
@@ -121,7 +123,7 @@ export default function App(): JSX.Element {
 
   const loadBadges = () => {
     axios
-      .get('/rest/api/badges')
+      .get(`${path}/api/badges`)
       .then(response => {
         if (response?.status === 200) {
           return dispatch(cacheBadges(response.data));
