@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import '../styles/css/App.css';
 import axios from 'axios';
 import { orderBy } from 'lodash';
-import '../styles/css/App.css';
-import Wrapper from '../shared/components/layout/Wrapper';
-import Header from '../shared/components/Header';
-import Nav from '../shared/components/Nav';
-import ContentWrapper from 'shared/components/layout/ContentWrapper';
-import SidebarWrapper from './sidebar/SidebarWrapper';
+import Page from 'components/pages';
 // import LoginModal from '../shared/components/LoginModal';
 import {
   cacheGames,
@@ -149,18 +146,34 @@ export default function App(): JSX.Element {
   }, []);
 
   return loaded ? (
-    <Wrapper type="main">
-      {/* <LoginModal /> */}
-      <Header />
-      <Wrapper type="nav">
-        <Nav />
-      </Wrapper>
-      <Wrapper type="middle">
-        <ContentWrapper />
-        <SidebarWrapper />
-      </Wrapper>
-      <Wrapper type="footer" />
-    </Wrapper>
+    <Router>
+      <Switch>
+        <Route exact path="/">
+          <Page page="home" />
+        </Route>
+        <Route exact path="/home">
+          <Page page="home" />
+        </Route>
+        <Route exact path="/games">
+          <Page page="games" />
+        </Route>
+        <Route exact path="/ranking">
+          <Page page="ranking" />
+        </Route>
+        <Route exact path="/events">
+          <Page page="events" />
+        </Route>
+        <Route exact path="/support">
+          <Page page="support" />
+        </Route>
+        <Route exact path="/badges">
+          <Page page="badges" />
+        </Route>
+        <Route exact path="/profile">
+          <Page page="profile" />
+        </Route>
+      </Switch>
+    </Router>
   ) : (
     <div>Loading...</div>
   );

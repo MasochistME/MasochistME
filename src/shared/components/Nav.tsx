@@ -1,6 +1,6 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { changeTab } from 'shared/store/modules/Tabs';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 export default function Nav(): JSX.Element {
   const tabs = useSelector((state: any) => state.tabs);
@@ -20,11 +20,16 @@ type Props = {
 
 function NavItem(props: Props): JSX.Element {
   const { item } = props;
-  const dispatch = useDispatch();
+  const history = useHistory();
   const activeTab = useSelector((state: any) => state.activeTab);
 
-  const onTabOpen = () =>
-    item.external ? window.open(item.link) : dispatch(changeTab(item.link));
+  const onTabOpen = (): void => {
+    if (item.external) {
+      window.open(item.link);
+      return;
+    }
+    history.push(`/${item.link}`);
+  };
 
   return (
     <li
