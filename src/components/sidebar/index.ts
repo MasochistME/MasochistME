@@ -50,7 +50,7 @@ export const SectionTitle = styled.h3`
   padding: 0;
   margin: 0 0 10px 0;
   font-size: 1.3em;
-  font-family: ${fonts.fontDosis};
+  font-family: ${fonts.Dosis};
   text-transform: uppercase;
   background-color: ${colors.newDark}cc;
   color: ${colors.superLightGrey};
@@ -127,7 +127,7 @@ export const SaleLink = styled.a`
     width: 35%;
     height: 40%;
     text-decoration: none;
-    font-family: ${fonts.fontDosis};
+    font-family: ${fonts.Dosis};
     font-weight: bold;
     color: ${colors.superLightGrey};
     background-color: ${colors.darkBlue};

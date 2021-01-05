@@ -11,7 +11,7 @@ const StyledMiniHeader = styled.div`
   padding: 0 20px;
   box-sizing: border-box;
   color: ${colors.superLightGrey};
-  font-family: ${fonts.fontCinzel};
+  font-family: ${fonts.Cinzel};
   text-transform: uppercase;
   letter-spacing: 0.3em;
   font-size: 2em;
@@ -41,10 +41,7 @@ export default function MiniHeader(): JSX.Element {
 
   return (
     <StyledMiniHeader>
-      <Flex
-        row
-        align
-        style={{ justifyContent: 'space-between', height: '100%' }}>
+      <Flex row align style={{ height: '100%' }}>
         <i className={findTab().icon} />
         <p>{findTab().text}</p>
       </Flex>

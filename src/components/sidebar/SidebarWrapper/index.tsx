@@ -12,7 +12,7 @@ const Wrapper = styled.div`
   width: 30%;
   height: 100%;
   box-sizing: border-box;
-  font-family: ${fonts.fontRaleway};
+  font-family: ${fonts.Raleway};
 
   @media (max-width: ${media.netbooks}) {
     display: none;

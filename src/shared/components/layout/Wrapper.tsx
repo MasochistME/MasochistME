@@ -21,7 +21,7 @@ const WrapperMain = styled.div`
   width: 100%;
   height: auto;
   min-height: 100vh;
-  font-family: ${fonts.fontRaleway};
+  font-family: ${fonts.Raleway};
   text-align: justify;
 `;
 
@@ -31,7 +31,7 @@ const WrapperNav = styled.div`
   background-color: ${colors.superDarkGrey};
   box-shadow: 0 0 30px ${colors.newDark};
   color: ${colors.superLightGrey};
-  font-family: ${fonts.fontRaleway};
+  font-family: ${fonts.Raleway};
   font-size: 0.8em;
   text-transform: uppercase;
   letter-spacing: 2px;
