@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { orderBy } from 'lodash';
 import SupportTier from './SupportTier/index';
 import Spinner from 'shared/components/Spinner';
-import patreon_button from '../../../shared/images/patreon.png';
+import patreon_button from 'shared/images/patreon.png';
 
 export default function PageSupport(): JSX.Element {
   const patrons = useSelector((state: any) =>
