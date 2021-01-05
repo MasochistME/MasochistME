@@ -3,9 +3,9 @@ import { orderBy } from 'lodash';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-import DoughnutChart from '../../Charts/DoughnutChart';
-import LineChart from '../../Charts/LineChart';
-import ChartWrapper from '../../Charts/ChartWrapper/index';
+import DoughnutChart from '../Charts/DoughnutChart';
+import LineChart from '../Charts/LineChart';
+import ChartWrapper from '../Charts/ChartWrapper/index';
 
 const summarizeTotalTimes = (
   type: any,

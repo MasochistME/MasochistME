@@ -2,7 +2,7 @@ import React from 'react';
 import { orderBy } from 'lodash';
 import { useSelector } from 'react-redux';
 
-export default function PageBadges() {
+export default function PageBadges(): JSX.Element {
   const games = useSelector((state: any) => state.games);
   const badges = useSelector((state: any) =>
     orderBy(

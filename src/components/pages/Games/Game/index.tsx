@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { swapRatingToIcon } from '../../../../shared/helpers/helper';
+import { swapRatingToIcon } from 'shared/helpers/helper';
 import Leaderboards from '../Leaderboards/index';
 
 type TGame = {

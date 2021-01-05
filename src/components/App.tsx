@@ -5,7 +5,7 @@ import '../styles/css/App.css';
 import axios from 'axios';
 import { orderBy } from 'lodash';
 import Page from 'components/pages';
-// import LoginModal from '../shared/components/LoginModal';
+// import LoginModal from 'shared/components/LoginModal';
 import {
   cacheGames,
   cacheMembers,
@@ -14,7 +14,7 @@ import {
   cacheBlog,
   cachePatrons,
   cacheBadges,
-} from '../shared/store/modules/Cache';
+} from 'shared/store/modules/Cache';
 import { showGamesRated } from 'shared/store/modules/CheckBoxes';
 
 export default function App(): JSX.Element {
