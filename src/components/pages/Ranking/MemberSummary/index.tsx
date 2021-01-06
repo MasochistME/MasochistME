@@ -13,6 +13,8 @@ export default function MemberSummary(props: TMemberSummary): JSX.Element {
   const { id, position, onShowDetails } = props;
   const [detailsVisible, setDetailsVisible] = useState(false);
   const [userId, setMemberId] = useState(0);
+
+  const rating = useSelector((state: any) => state.rating);
   const user = useSelector((state: any) => {
     const userRank = state.ranking.find((u: any) => u.id === id);
     const userDetails = state.users.find((u: any) => u.id === id);
@@ -22,11 +24,30 @@ export default function MemberSummary(props: TMemberSummary): JSX.Element {
       avatar: userDetails.avatar,
     };
   });
-  const badgePoints = user.points.badges;
-  const tier = user.patreon.tier;
-  const shekelmaster = Number(tier) === 4;
+  const badges = user.points.badges;
+  const patreonTier = user.patreon.tier;
+  const shekelmaster = Number(patreonTier) === 4;
 
   const disabled = user.points.sum - user.points.badges <= 0 ? true : false;
+
+  const gameTierPoints = () => {
+    return rating.map((score: any, scoreIndex: number) => {
+      const scoreId =
+        typeof score.id !== 'number' ? Number(score.id) : score.id;
+      const tierPoints = user.points.list.find(
+        (gameTier: any) => gameTier.tier === scoreId,
+      );
+      return (
+        <div
+          className="member-rating-score"
+          key={`member-rating-score-${scoreIndex}`}
+          title={`Sum of all games completed in tier ${scoreId}.\nPoints total: ${tierPoints?.points}`}>
+          {tierPoints?.total}
+          <i className={score.icon} style={{ paddingRight: '5px' }} />
+        </div>
+      );
+    });
+  };
 
   const onShowDetailsClick = (event: any): void => {
     setDetailsVisible(!detailsVisible);
@@ -58,9 +79,9 @@ export default function MemberSummary(props: TMemberSummary): JSX.Element {
           justifyContent: 'spaceBetween',
           alignItems: 'center',
         }}>
-        {tier ? (
+        {patreonTier ? (
           <i
-            className={`fas fa-donate member-patron tier${tier}`}
+            className={`fas fa-donate member-patron tier${patreonTier}`}
             // title={patron.description.toUpperCase()}
             title={'dupa'}
           />
@@ -104,7 +125,10 @@ export default function MemberSummary(props: TMemberSummary): JSX.Element {
           ) : (
             <div></div>
           )}
-          <div className={`member-name ${shekelmaster ? `tier${tier}` : ''}`}>
+          <div
+            className={`member-name ${
+              shekelmaster ? `tier${patreonTier}` : ''
+            }`}>
             {user.name}
           </div>
         </div>
@@ -114,9 +138,11 @@ export default function MemberSummary(props: TMemberSummary): JSX.Element {
             {user.points.sum ? user.points.sum : 0}
             <span className="bold"> Σ</span>
           </div>
-          {user.points.sum}
-          <div className="member-rating-score" title="Sum of points for badges">
-            {badgePoints}
+          {gameTierPoints()}
+          <div
+            className="member-rating-score"
+            title={`Sum of all badges earned.\nPoints total: ${badges.points}`}>
+            {badges.total}
             <i className="fas fa-medal" style={{ paddingRight: '5px' }} />
           </div>
         </div>
