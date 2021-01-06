@@ -1,7 +1,38 @@
 import React from 'react';
+import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { TBlog } from 'shared/types/blog';
 import Spinner from 'shared/components/Spinner';
+
+const Blog = styled.div`
+  div {
+    margin-bottom: 10px;
+  }
+`;
+
+const Entry = styled.div`
+  box-sizing: border-box;
+  padding: 10px;
+  background-color: $darkbluetransparent;
+  box-shadow: 0 0 20px $newdark;
+  h1 {
+    margin: 0;
+    font-size: 1.8em;
+    font-family: $font-cinzel;
+  }
+  h2 {
+    margin: 0;
+    font-size: 1.2em;
+    text-align: right;
+    font-family: $font-cinzel;
+    border-bottom: 1px solid $newmediumgrey;
+    margin-bottom: 10px;
+  }
+  p {
+    font-size: 1em;
+    padding: 0 1em;
+  }
+`;
 
 export default function PageHome(): JSX.Element {
   const blog = useSelector((state: any) => state.blog || []);
@@ -21,21 +52,21 @@ export default function PageHome(): JSX.Element {
         </div>
       </div>
 
-      <div className="page-blog">
+      <Blog>
         {blog?.length ? (
           blog.map((entry: TBlog, entryIndex: number) => (
-            <div className="blog-entry" key={`entry-${entryIndex}`}>
+            <Entry key={`entry-${entryIndex}`}>
               <h1>{entry.title}</h1>
               <h2>
                 ~{entry.author}, {new Date(entry.date).toLocaleDateString()}
               </h2>
               <div dangerouslySetInnerHTML={{ __html: entry.content }}></div>
-            </div>
+            </Entry>
           ))
         ) : (
           <Spinner />
         )}
-      </div>
+      </Blog>
     </div>
   );
 }
