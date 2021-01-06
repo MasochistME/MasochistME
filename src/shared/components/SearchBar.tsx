@@ -1,6 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
+import { media, fonts } from 'shared/theme';
 import { searchGames, searchMembers } from 'shared/store/modules/Search';
+
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  @media (max-width: ${media.tablets}) {
+    justify-content: center;
+    align-items: center;
+    margin: 15px 0;
+  }
+`;
+const SearchBarInput = styled.input`
+  width: 200px;
+  font-family: ${fonts.Raleway};
+  margin-bottom: 20px;
+  @media (max-width: ${media.tablets}) {
+    margin-bottom: 0;
+  }
+`;
+const SearchBarLabel = styled.label`
+  padding: 2px;
+  margin-right: 10px;
+`;
 
 export default function SearchBar(): JSX.Element {
   const dispatch = useDispatch();
@@ -44,16 +68,13 @@ export default function SearchBar(): JSX.Element {
   }, []);
 
   return (
-    <div className="wrapper-searchbar">
-      <label htmlFor="searchbar" className="searchbar-label">
-        Search:
-      </label>
-      <input
-        className="searchbar"
+    <Wrapper>
+      <SearchBarLabel htmlFor="searchbar">Search:</SearchBarLabel>
+      <SearchBarInput
         type="text"
         placeholder={'for ' + searchFor}
         onChange={update}
       />
-    </div>
+    </Wrapper>
   );
 }

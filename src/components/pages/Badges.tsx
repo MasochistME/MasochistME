@@ -1,6 +1,7 @@
 import React from 'react';
 import { orderBy } from 'lodash';
 import { useSelector } from 'react-redux';
+import { Wrapper } from 'shared/components';
 
 export default function PageBadges(): JSX.Element {
   const games = useSelector((state: any) => state.games);
@@ -22,12 +23,12 @@ export default function PageBadges(): JSX.Element {
 
   return (
     <div className="flex-column">
-      <div className="wrapper-description">
+      <Wrapper type="description">
         <div className="page-description">
           <p>This is the list showcasing the last 100 events.</p>
           <p>There are six different types of events:</p>
         </div>
-      </div>
+      </Wrapper>
       <div className="wrapper-events">
         {badges.map((badge, index) => (
           <img

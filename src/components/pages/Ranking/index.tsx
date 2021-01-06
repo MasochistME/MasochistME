@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import SearchBar from 'shared/components/SearchBar';
-import Spinner from 'shared/components/Spinner';
+import { Wrapper, Spinner } from 'shared/components';
 import Member from './Member';
 
 export default function PageRanking(): JSX.Element {
@@ -28,7 +28,7 @@ export default function PageRanking(): JSX.Element {
 
   return (
     <div className="flex-column">
-      <div className="wrapper-description">
+      <Wrapper type="description">
         <div className="page-description">
           <p>
             Ranking system utilizes the games&lsquo; score system. Depending on
@@ -56,7 +56,7 @@ export default function PageRanking(): JSX.Element {
         </div>
         <SearchBar />
         {!ranking?.length && <Spinner />}
-      </div>
+      </Wrapper>
       <div className="wrapper-ranking">
         <ul className="ranking-list">
           {ranking?.length && createRankingList()}
