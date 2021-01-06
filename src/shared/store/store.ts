@@ -3,13 +3,13 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import tabs from '../config/tabs.json';
 import { CHANGE_TAB } from './modules/Tabs';
-import { SEARCH_GAMES_VALUE, SEARCH_MEMBERS_VALUE } from './modules/Search';
+import { SEARCH_GAME, SEARCH_USER } from './modules/Search';
 import { SHOW_GAMES_RATED } from './modules/CheckBoxes';
 import { SHOW_PROFILE } from './modules/Profiles';
 import { SHOW_LOGIN_MODAL, LOG_IN_USER, LOG_OUT_USER } from './modules/Login';
 import {
   CACHE_GAMES,
-  CACHE_MEMBERS,
+  CACHE_USERS,
   CACHE_RATING,
   CACHE_EVENTS,
   CACHE_BLOG,
@@ -18,25 +18,58 @@ import {
 } from './modules/Cache';
 
 // STORES
-const defaultState = {
-  activeTab: 'home',
-  tabs: tabs,
-  searchGame: '',
-  searchMember: '',
-  showLoginModal: false,
-  showGamesRated: [],
-  username: null,
-  privilege: null,
-  banned: false,
-  logged: false,
+type TStore = {
+  games: any[];
+  users: any[];
+  events: any[];
+  blog: any[];
+  patrons: any[];
+  badges: any[];
+  rating: null;
+  tabs: {
+    active: 'home';
+    list: any[];
+    profile: any;
+  };
+  search: {
+    game: string;
+    user: string;
+  };
+  profile: {
+    username: string | undefined;
+    privilege: string | undefined;
+    banned: boolean;
+    logged: boolean;
+  };
+  showLoginModal: boolean;
+  showGamesRated: any[];
+};
+
+const defaultState: TStore = {
   games: [],
-  members: [],
+  users: [],
   events: [],
   blog: [],
   patrons: [],
   badges: [],
   rating: null,
-  profileID: null,
+  tabs: {
+    active: 'home',
+    list: tabs,
+    profile: null,
+  },
+  search: {
+    game: '',
+    user: '',
+  },
+  profile: {
+    username: undefined,
+    privilege: undefined,
+    banned: false,
+    logged: false,
+  },
+  showLoginModal: false,
+  showGamesRated: [],
 };
 
 const reducer = (state = defaultState, action: any) => {
@@ -44,19 +77,24 @@ const reducer = (state = defaultState, action: any) => {
     case CHANGE_TAB:
       return {
         ...state,
-        activeTab: action.tab,
-        searchGame: '',
-        searchMember: '',
+        search: {
+          game: '',
+          user: '',
+        },
+        tabs: {
+          ...state.tabs,
+          active: action.tab,
+        },
       };
-    case SEARCH_GAMES_VALUE:
+    case SEARCH_GAME:
       return {
         ...state,
-        searchGame: action.game,
+        search: { ...state.search, game: action.game },
       };
-    case SEARCH_MEMBERS_VALUE:
+    case SEARCH_USER:
       return {
         ...state,
-        searchMember: action.member,
+        search: { ...state.search, user: action.user },
       };
     case SHOW_GAMES_RATED:
       return {
@@ -71,34 +109,44 @@ const reducer = (state = defaultState, action: any) => {
     case SHOW_PROFILE:
       return {
         ...state,
-        profileID: action.id,
+        tabs: {
+          ...state.tabs,
+          profile: action.id,
+        },
       };
     case LOG_IN_USER:
       return {
         ...state,
-        username: action.username,
-        privilege: action.privilege,
-        logged: true,
-        banned: action.banned,
+        profile: {
+          username: action.username,
+          privilege: action.privilege,
+          logged: true,
+          banned: action.banned,
+        },
       };
     case LOG_OUT_USER:
       return {
         ...state,
-        username: null,
-        privilege: null,
-        logged: false,
-        banned: false,
-        activeTab: 'home',
+        profile: {
+          username: undefined,
+          privilege: undefined,
+          logged: false,
+          banned: false,
+        },
+        tabs: {
+          ...state.tabs,
+          active: 'home',
+        },
       };
     case CACHE_GAMES:
       return {
         ...state,
         games: action.data,
       };
-    case CACHE_MEMBERS:
+    case CACHE_USERS:
       return {
         ...state,
-        members: action.data,
+        users: action.data,
       };
     case CACHE_RATING:
       return {

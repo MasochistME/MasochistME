@@ -1,17 +1,17 @@
 // CONSTANTS
-export const SEARCH_GAMES_VALUE = 'SEARCH_GAMES_VALUE';
-export const SEARCH_MEMBERS_VALUE = 'SEARCH_MEMBERS_VALUE';
+export const SEARCH_GAME = 'SEARCH_GAME';
+export const SEARCH_USER = 'SEARCH_USER';
 
 // ACTION CREATORS
 export function searchGames(game: any): any {
   return {
-    type: SEARCH_GAMES_VALUE,
+    type: SEARCH_GAME,
     game: game,
   };
 }
 export function searchMembers(member: any): any {
   return {
-    type: SEARCH_MEMBERS_VALUE,
+    type: SEARCH_USER,
     member: member,
   };
 }

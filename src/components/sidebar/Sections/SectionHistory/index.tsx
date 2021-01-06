@@ -10,24 +10,24 @@ export default function SectionHistory(): JSX.Element {
     orderBy(state.events, ['date'], ['desc']).slice(0, 10),
   );
   const games = useSelector((state: any) => state.games);
-  const members = useSelector((state: any) => state.members);
+  const users = useSelector((state: any) => state.users);
   const rating = useSelector((state: any) => state.rating);
 
   const sortEvents = (event: any, eventIndex: number) => {
-    const player = members.find(
-      (m: any) => Number(m.id) === Number(event.member),
+    const player = users.find(
+      (m: any) => Number(m.id) === Number(event.user),
     );
     const game = games.find((g: any) => Number(g.id) === Number(event.game));
 
     switch (event.type) {
-      case 'memberJoined':
+      case 'userJoined':
         return player ? (
           <SmallEvent key={`sidebar-event-${eventIndex}`}>
             <i className="fas fa-user-plus"></i>
             <span className="bold"> {player.name}</span> has joined the group!
           </SmallEvent>
         ) : null;
-      case 'memberLeft':
+      case 'userLeft':
         return player ? (
           <SmallEvent key={`sidebar-event-${eventIndex}`}>
             <i className="fas fa-user-minus"></i>

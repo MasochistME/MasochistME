@@ -9,28 +9,26 @@ type Props = {
 
 export default function MemberEvent(props: Props): JSX.Element | null {
   const { event, action } = props;
-  const members = useSelector((state: any) => state.members);
-  const member = members.find(
-    (m: any) => Number(m.id) === Number(event.member),
-  );
+  const users = useSelector((state: any) => state.users);
+  const user = users.find((m: any) => Number(m.id) === Number(event.user));
 
   return (
     <div className="event-info flex-row">
       <img
         className="event-img"
         alt="avatar"
-        src={member ? member.avatar : logo}></img>
-      {member ? (
+        src={user ? user.avatar : logo}></img>
+      {user ? (
         <div className="event-desc">
           <span className="bold under">
-            {member ? member.name : `User ${event.member}`}
+            {user ? user.name : `User ${event.user}`}
           </span>{' '}
           has {action === 'join' ? 'joined' : 'left'} the group!
         </div>
       ) : (
         <div className="event-desc">
           <span className="bold under">
-            {member ? member.name : `User ${event.member}`}
+            {user ? user.name : `User ${event.user}`}
           </span>{' '}
           has {action === 'join' ? 'joined' : 'left'} the group!
         </div>
@@ -38,7 +36,7 @@ export default function MemberEvent(props: Props): JSX.Element | null {
       <div className="event-summary flex-row">
         <i
           className={
-            member
+            user
               ? action === 'join'
                 ? 'fas fa-user-plus'
                 : 'fas fa-user-minus'

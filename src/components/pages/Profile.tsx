@@ -158,7 +158,7 @@ export default function Profile(): JSX.Element {
 
   const games = useSelector((state: any) => state.games);
   const rating = useSelector((state: any) => state.rating);
-  const members = useSelector((state: any) => state.members);
+  const users = useSelector((state: any) => state.users);
   const patrons = useSelector((state: any) => state.patrons);
   const patron = patrons.find((tier: any) =>
     tier.list.find((p: any) => user && user?.id === p.steamid)
@@ -189,11 +189,11 @@ export default function Profile(): JSX.Element {
   );
 
   useEffect(() => {
-    const member = members.find((member: any) => member.id === id);
-    if (member) {
-      setUser(member);
+    const user = users.find((user: any) => user.id === id);
+    if (user) {
+      setUser(user);
     }
-  }, [members]);
+  }, [users]);
 
   useEffect(() => {
     window.scrollTo(0, 0);

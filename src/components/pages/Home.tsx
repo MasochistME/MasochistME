@@ -1,12 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { orderBy } from 'lodash';
+import { TBlog } from 'shared/types/blog';
 import Spinner from 'shared/components/Spinner';
 
 export default function PageHome(): JSX.Element {
-  const blog = useSelector((state: any) =>
-    orderBy(state.blog, ['date'], ['desc']),
-  );
+  const blog = useSelector((state: any) => state.blog || []);
 
   return (
     <div>
@@ -25,7 +23,7 @@ export default function PageHome(): JSX.Element {
 
       <div className="page-blog">
         {blog?.length ? (
-          blog.map((entry, entryIndex) => (
+          blog.map((entry: TBlog, entryIndex: number) => (
             <div className="blog-entry" key={`entry-${entryIndex}`}>
               <h1>{entry.title}</h1>
               <h2>

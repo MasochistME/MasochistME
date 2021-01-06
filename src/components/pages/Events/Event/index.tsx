@@ -18,9 +18,9 @@ export default function Event(props: TEvent): JSX.Element | null {
     switch (event.type) {
       case 'newGame':
         return <GameEvent event={event} />;
-      case 'memberJoined':
+      case 'userJoined':
         return <MemberEvent event={event} action="join" />;
-      case 'memberLeft':
+      case 'userLeft':
         return <MemberEvent event={event} action="leave" />;
       case 'complete':
         return <CompleteEvent event={event} />;

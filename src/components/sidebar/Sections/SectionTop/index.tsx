@@ -13,30 +13,30 @@ const FlexColumn = styled.div`
 `;
 
 export default function SectionTop(): JSX.Element {
-  const members = useSelector((state: any) =>
+  const users = useSelector((state: any) =>
     orderBy(
-      state.members,
-      [member => (member.points ? member.points : 0)],
+      state.users,
+      [user => (user.points ? user.points : 0)],
       ['desc'],
     ).slice(0, 10),
   );
 
-  const memberRow = (member: any, index: number) => (
-    <SmallMember key={`sidebar-member-${index}`}>
+  const userRow = (user: any, index: number) => (
+    <SmallMember key={`sidebar-user-${index}`}>
       <div>{index + 1}.</div>
       <div>
-        <span className="bold">{member.name}</span>
+        <span className="bold">{user.name}</span>
       </div>
-      <div>{member.points} pts</div>
+      <div>{user.points} pts</div>
     </SmallMember>
   );
 
   return (
     <Section>
-      <SectionTitle>Top 10 members</SectionTitle>
+      <SectionTitle>Top 10 users</SectionTitle>
       <FlexColumn>
-        {members.length ? (
-          members.map((member, memberIndex) => memberRow(member, memberIndex))
+        {users.length ? (
+          users.map((user, userIndex) => userRow(user, userIndex))
         ) : (
           <Spinner />
         )}

@@ -9,27 +9,27 @@ type TCustomEvent = {
 // {
 //   text: String;
 //   icon: String;
-//   member?: String;
+//   user?: String;
 // }
 
 export default function CustomEvent(props: TCustomEvent): JSX.Element | null {
   const { event } = props;
   const content = event.content;
 
-  const members = useSelector((state: any) => state.members);
+  const users = useSelector((state: any) => state.users);
 
   if (!content) {
     return null;
   }
-  const { text, icon, member } = content;
-  const memberData = members.find((m: any) => Number(m.id) === Number(member));
+  const { text, icon, user } = content;
+  const userData = users.find((m: any) => Number(m.id) === Number(user));
 
   return (
     <div className="event-info flex-row">
       <img
         className="event-img"
         alt="avatar"
-        src={memberData ? memberData.avatar : logo}></img>
+        src={userData ? userData.avatar : logo}></img>
       {
         <div className="event-desc">
           {text &&

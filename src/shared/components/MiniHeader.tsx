@@ -35,9 +35,8 @@ const StyledMiniHeader = styled.div`
 
 export default function MiniHeader(): JSX.Element {
   const tabs = useSelector((state: any) => state.tabs);
-  const activeTab = useSelector((state: any) => state.activeTab);
 
-  const findTab = () => tabs.find((tab: any) => tab.link === activeTab);
+  const findTab = () => tabs.list.find((tab: any) => tab.link === tabs.active);
 
   return (
     <StyledMiniHeader>

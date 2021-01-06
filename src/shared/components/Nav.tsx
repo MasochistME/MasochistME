@@ -7,7 +7,7 @@ export default function Nav(): JSX.Element {
 
   return (
     <ul className="flex-row">
-      {tabs.map((item: any, index: number) =>
+      {tabs.list.map((item: any, index: number) =>
         item.visible ? <NavItem key={`nav-${index} `} item={item} /> : null,
       )}
     </ul>

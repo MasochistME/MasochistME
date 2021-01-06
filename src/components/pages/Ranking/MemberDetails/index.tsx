@@ -3,7 +3,7 @@ import _ from 'lodash';
 import MemberGame from '../MemberGame';
 
 type TMemberDetails = {
-  member: any;
+  user: any;
   show: any;
   rating: any;
   badges: any;
@@ -11,39 +11,39 @@ type TMemberDetails = {
 };
 
 export default function MemberDetails(props: TMemberDetails): JSX.Element {
-  const { member, show, rating, badges, games } = props;
+  const { user, show, rating, badges, games } = props;
 
-  const summarizeBadgePoints = (member: any, badges: any) => {
+  const summarizeBadgePoints = (user: any, badges: any) => {
     let sum = 0;
-    member.badges.map((badge: any) => {
-      const membersBadge = badges.find((b: any) => badge.id === b['_id']); // TODO equality
-      if (membersBadge) {
-        if (typeof membersBadge.points !== 'number') {
-          membersBadge.points = parseInt(membersBadge.points);
+    user.badges.map((badge: any) => {
+      const usersBadge = badges.find((b: any) => badge.id === b['_id']); // TODO equality
+      if (usersBadge) {
+        if (typeof usersBadge.points !== 'number') {
+          usersBadge.points = parseInt(usersBadge.points);
         }
-        sum += membersBadge.points;
+        sum += usersBadge.points;
       }
     });
     return sum;
   };
 
   const classDisplay = show
-    ? 'member-details flex-column member-details-visible'
-    : 'member-details flex-column member-details-hidden';
+    ? 'user-details flex-column user-details-visible'
+    : 'user-details flex-column user-details-hidden';
 
   const composeGameList = () => {
-    member.games = member.games.map((game: any) => {
+    user.games = user.games.map((game: any) => {
       game.completionRate = isNaN(game.completionRate)
         ? 0
         : game.completionRate;
       return game;
     });
-    const memberGames = _.orderBy(
-      member.games,
+    const userGames = _.orderBy(
+      user.games,
       ['completionRate', 'lastUnlocked'],
       ['desc', 'desc'],
     );
-    return memberGames.map(game => {
+    return userGames.map(game => {
       let gameDetails = games.find(
         (g: any) => Number(g.id) === Number(game.appid),
       );
@@ -72,25 +72,25 @@ export default function MemberDetails(props: TMemberDetails): JSX.Element {
 
   return (
     <div className={classDisplay}>
-      <div className="flex-row member-details-summary">
-        <div className="member-rating-score" title="Sum of all points">
-          {member.points ? member.points : 0}
+      <div className="flex-row user-details-summary">
+        <div className="user-rating-score" title="Sum of all points">
+          {user.points ? user.points : 0}
           <span className="bold"> Σ</span>
         </div>
         {rating.map((score: any, scoreIndex: number) => {
           return (
             <div
-              className="member-rating-score"
-              key={`member-rating-score-${scoreIndex}`}>
-              {member.ranking[score.id] !== undefined
-                ? member.ranking[score.id]
+              className="user-rating-score"
+              key={`user-rating-score-${scoreIndex}`}>
+              {user.ranking[score.id] !== undefined
+                ? user.ranking[score.id]
                 : 0}
               <i className={score.icon} style={{ paddingRight: '5px' }} />
             </div>
           );
         })}
-        <div className="member-rating-score" title="Sum of points for badges">
-          {summarizeBadgePoints(member, badges)}
+        <div className="user-rating-score" title="Sum of points for badges">
+          {summarizeBadgePoints(user, badges)}
           <i className="fas fa-medal" style={{ paddingRight: '5px' }} />
         </div>
       </div>

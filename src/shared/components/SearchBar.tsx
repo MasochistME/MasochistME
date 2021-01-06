@@ -15,7 +15,7 @@ export default function SearchBar(): JSX.Element {
         return;
       }
       case 'ranking': {
-        setSearchFor('members');
+        setSearchFor('users');
         return;
       }
       default:
@@ -30,7 +30,7 @@ export default function SearchBar(): JSX.Element {
         dispatch(searchGames(searchString));
         return;
       }
-      case 'members': {
+      case 'users': {
         dispatch(searchMembers(searchString));
         return;
       }

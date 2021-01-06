@@ -4,8 +4,8 @@ import axios from 'axios';
 import { Section, SectionTitle } from '../../';
 
 export default function SectionTrivia(): JSX.Element {
-  const members = useSelector((state: any) =>
-    state.members.filter((member: any) => member.member),
+  const users = useSelector((state: any) =>
+    state.users.filter((user: any) => user.user),
   );
   const rating = useSelector((state: any) => state.rating);
   const [games, setGames] = useState({
@@ -45,7 +45,7 @@ export default function SectionTrivia(): JSX.Element {
     <Section>
       <SectionTitle>Trivia</SectionTitle>
       <p>
-        Members total: <span className="bold">{members.length}</span>
+        Members total: <span className="bold">{users.length}</span>
       </p>
       <p>Curated games:</p>
       <ul>
