@@ -1,6 +1,6 @@
 // CONSTANTS
 export const CACHE_GAMES = 'CACHE_GAMES';
-export const CACHE_MEMBERS = 'CACHE_MEMBERS';
+export const CACHE_USERS = 'CACHE_USERS';
 export const CACHE_RATING = 'CACHE_RATING';
 export const CACHE_EVENTS = 'CACHE_EVENTS';
 export const CACHE_BLOG = 'CACHE_BLOG';
@@ -11,42 +11,42 @@ export const CACHE_BADGES = 'CACHE_BADGES';
 export function cacheGames(data: any): any {
   return {
     type: CACHE_GAMES,
-    data: data,
+    data,
   };
 }
 export function cacheRating(data: any): any {
   return {
     type: CACHE_RATING,
-    data: data,
+    data,
   };
 }
-export function cacheMembers(data: any): any {
+export function cacheUsers(data: any): any {
   return {
-    type: CACHE_MEMBERS,
-    data: data,
+    type: CACHE_USERS,
+    data,
   };
 }
 export function cacheEvents(data: any): any {
   return {
     type: CACHE_EVENTS,
-    data: data,
+    data,
   };
 }
 export function cacheBlog(data: any): any {
   return {
     type: CACHE_BLOG,
-    data: data,
+    data,
   };
 }
 export function cachePatrons(data: any): any {
   return {
     type: CACHE_PATRONS,
-    data: data,
+    data,
   };
 }
 export function cacheBadges(data: any): any {
   return {
     type: CACHE_BADGES,
-    data: data,
+    data,
   };
 }

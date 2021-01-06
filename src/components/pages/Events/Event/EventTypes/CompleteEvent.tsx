@@ -9,12 +9,12 @@ type Props = {
 export default function CompleteEvent(props: Props): JSX.Element | null {
   const { event } = props;
   const games = useSelector((state: any) => state.games);
-  const members = useSelector((state: any) => state.members);
+  const users = useSelector((state: any) => state.users);
   const rating = useSelector((state: any) => state.rating);
 
   const game = games.find((g: any) => Number(g.id) === Number(event.game));
-  const member = members.find(
-    (m: any) => Number(m.id) === Number(event.member),
+  const user = users.find(
+    (m: any) => Number(m.id) === Number(event.user),
   );
   const gameRating = rating.find((r: any) =>
     game ? Number(r.id) === Number(game.rating) : null,
@@ -24,13 +24,13 @@ export default function CompleteEvent(props: Props): JSX.Element | null {
     <div className="event-info flex-row">
       <img
         className="event-img"
-        src={member ? member.avatar : logo}
+        src={user ? user.avatar : logo}
         alt="game-img"></img>
-      {member ? (
-        game ? ( //member yes
+      {user ? (
+        game ? ( //user yes
           <div className="event-desc">
             <span className="bold under">
-              {member ? member.name : `User ${event.member}`}
+              {user ? user.name : `User ${event.user}`}
             </span>{' '}
             completed{' '}
             <span className="bold under">
@@ -41,7 +41,7 @@ export default function CompleteEvent(props: Props): JSX.Element | null {
         ) : (
           <div className="event-desc">
             <span className="bold under">
-              {member ? member.name : `User ${event.member}`}
+              {user ? user.name : `User ${event.user}`}
             </span>{' '}
             completed{' '}
             <span className="bold under">
@@ -50,12 +50,12 @@ export default function CompleteEvent(props: Props): JSX.Element | null {
             (no longer curated)!
           </div>
         )
-      ) : game ? ( //member no
+      ) : game ? ( //user no
         <div className="event-desc">
           <span className="bold under">
-            {member ? member.name : `User ${event.member}`}
+            {user ? user.name : `User ${event.user}`}
           </span>{' '}
-          (no longer member of the group) completed{' '}
+          (no longer user of the group) completed{' '}
           <span className="bold under">
             {game ? game.title : `game ${event.game}`}
           </span>
@@ -64,9 +64,9 @@ export default function CompleteEvent(props: Props): JSX.Element | null {
       ) : (
         <div className="event-desc">
           <span className="bold under">
-            {member ? member.name : `User ${event.member}`}
+            {user ? user.name : `User ${event.user}`}
           </span>{' '}
-          (no longer member of the group) completed{' '}
+          (no longer user of the group) completed{' '}
           <span className="bold under">
             {game ? game.title : `game ${event.game}`}
           </span>{' '}
@@ -77,7 +77,7 @@ export default function CompleteEvent(props: Props): JSX.Element | null {
       <div className="event-summary flex-row">
         <i
           className={
-            member ? 'fas fa-check-square' : 'fas fa-exclamation-triangle'
+            user ? 'fas fa-check-square' : 'fas fa-exclamation-triangle'
           }></i>
         <i
           className={

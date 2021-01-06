@@ -7,15 +7,15 @@ import Member from './Member';
 
 export default function PageRanking(): JSX.Element {
   const searchMember = useSelector((state: any) => state.searchMember);
-  const members = useSelector((state: any) => state.members);
+  const users = useSelector((state: any) => state.users);
   const rating = useSelector((state: any) => state.rating);
   const games = useSelector((state: any) => state.games);
   const patrons = useSelector((state: any) => state.patrons);
   const badges = useSelector((state: any) => state.badges);
 
   const ranking = orderBy(
-    members.filter((member: any) => member?.member),
-    [member => (member?.points ? member?.points : 0)],
+    users.filter((user: any) => user?.user),
+    [user => (user?.points ? user?.points : 0)],
     ['desc'],
   ); //change names here
 
@@ -23,20 +23,20 @@ export default function PageRanking(): JSX.Element {
     if (ranking?.length <= 0) {
       return;
     }
-    return ranking?.map((member: any, memberIndex: number) =>
-      member.name.toLowerCase().indexOf(searchMember.toLowerCase()) !== -1 ? (
+    return ranking?.map((user: any, userIndex: number) =>
+      user.name.toLowerCase().indexOf(searchMember.toLowerCase()) !== -1 ? (
         <Member
-          member={member}
-          index={memberIndex}
+          user={user}
+          index={userIndex}
           rating={rating}
           games={games}
           badges={badges}
           patron={patrons?.find((tier: any) =>
-            tier?.list?.find((p: any) => p.steamid === member.id)
+            tier?.list?.find((p: any) => p.steamid === user.id)
               ? { tier: tier.tier, description: tier.description }
               : false,
           )}
-          key={`member-${member.id}`}
+          key={`user-${user.id}`}
         />
       ) : null,
     );

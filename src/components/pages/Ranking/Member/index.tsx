@@ -6,23 +6,23 @@ import MemberDetails from '../MemberDetails';
 import 'react-slidedown/lib/slidedown.css';
 
 type TMember = {
-  member: any;
+  user: any;
   rating: any;
   games: any;
   patron: any;
   badges: any;
   index: number;
 };
-export default function Member(props: TMember): JSX.Element {
-  const { member, index, rating, games, patron, badges } = props;
+export default function user(props: TMember): JSX.Element {
+  const { user, index, rating, games, patron, badges } = props;
   const [show, setShow] = useState(false);
 
   const changeDetailsVisibility = (): any => setShow(!show);
 
   const details = show ? (
     <MemberDetails
-      key={`details-${member.id}`}
-      member={member}
+      key={`details-${user.id}`}
+      user={user}
       show={show}
       rating={rating}
       badges={badges}
@@ -31,9 +31,9 @@ export default function Member(props: TMember): JSX.Element {
   ) : null;
 
   return (
-    <li className="member flex-column">
+    <li className="user flex-column">
       <MemberSummary
-        member={member}
+        user={user}
         index={index}
         rating={rating}
         patron={patron}

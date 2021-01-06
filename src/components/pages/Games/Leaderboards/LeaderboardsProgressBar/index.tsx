@@ -7,11 +7,11 @@ type Props = {
 export default function LeaderboardsProgressBar(props: Props): JSX.Element {
   const { percentage } = props;
   return (
-    <div className="leaderboards-member-completion">
+    <div className="leaderboards-user-completion">
       <div
-        className="leaderboards-member-completion-progress"
+        className="leaderboards-user-completion-progress"
         style={{ width: `${percentage * 2}px` }}></div>
-      <div className="leaderboards-member-completion-percentage">{`${percentage}%`}</div>
+      <div className="leaderboards-user-completion-percentage">{`${percentage}%`}</div>
     </div>
   );
 }

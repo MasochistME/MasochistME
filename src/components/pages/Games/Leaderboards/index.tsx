@@ -13,7 +13,7 @@ type Props = {
 
 export default function Leaderboards(props: Props): JSX.Element | null {
   const { show: visible, game, rating } = props;
-  const members = useSelector((state: any) => state.members);
+  const users = useSelector((state: any) => state.users);
   const games = useSelector((state: any) => state.games);
   const badges = useSelector((state: any) =>
     orderBy(
@@ -34,26 +34,26 @@ export default function Leaderboards(props: Props): JSX.Element | null {
   );
 
   const leaderboards = orderBy(
-    members
-      .filter((member: any) => member.member)
-      .filter((member: any) =>
-        member.games.find((g: any) => Number(g.appid) === Number(game.id)),
+    users
+      .filter((user: any) => user.user)
+      .filter((user: any) =>
+        user.games.find((g: any) => Number(g.appid) === Number(game.id)),
       )
-      .map((member: any) => {
-        const memberGameStats = member.games.find(
+      .map((user: any) => {
+        const userGameStats = user.games.find(
           (g: any) => Number(g.appid) === Number(game.id),
         );
-        return memberGameStats
+        return userGameStats
           ? {
-              id: member.id,
-              name: member.name,
-              avatar: member.avatar,
+              id: user.id,
+              name: user.name,
+              avatar: user.avatar,
               gameId: game.id,
-              completionRate: memberGameStats.completionRate
-                ? memberGameStats.completionRate
+              completionRate: userGameStats.completionRate
+                ? userGameStats.completionRate
                 : 0,
-              lastUnlocked: memberGameStats.lastUnlocked,
-              playtime: memberGameStats.playtime_forever,
+              lastUnlocked: userGameStats.lastUnlocked,
+              playtime: userGameStats.playtime_forever,
             }
           : null;
       }),
@@ -84,14 +84,14 @@ export default function Leaderboards(props: Props): JSX.Element | null {
   };
 
   const summarizeCompletions = (leaderboard: any): number => {
-    return leaderboard.filter((member: any) => member.completionRate === 100)
+    return leaderboard.filter((user: any) => user.completionRate === 100)
       .length;
   };
 
   const summarizeCompletionTime = (leaderboard: any): number => {
     let sum = 0;
     const completed = leaderboard
-      .filter((member: any) => member.completionRate === 100)
+      .filter((user: any) => user.completionRate === 100)
       .map((entry: any) => {
         entry.playtime
           ? typeof entry.playtime === 'number'
@@ -111,8 +111,8 @@ export default function Leaderboards(props: Props): JSX.Element | null {
     const gameIDs = games
       .filter((game: any) => game.rating === rating)
       .map((game: any) => game.id);
-    members.map((member: any) => {
-      member.games.map((game: any) => {
+    users.map((user: any) => {
+      user.games.map((game: any) => {
         if (gameIDs.find((g: any) => g === game.appid)) {
           // TODO equality
           sum = sum + parseInt(game.playtime_forever);
@@ -120,7 +120,7 @@ export default function Leaderboards(props: Props): JSX.Element | null {
         }
         return game;
       });
-      return member;
+      return user;
     });
     if (sum !== 0 && number !== 0) {
       return sum / number;
@@ -206,24 +206,24 @@ export default function Leaderboards(props: Props): JSX.Element | null {
         </div>
       ) : null}
       <ul className="game-leaderboards">
-        {leaderboards.map((member: any, memberIndex: number) => (
+        {leaderboards.map((user: any, userIndex: number) => (
           <li
-            className="leaderboards-member flex-row"
-            key={`leaderboards-member-${memberIndex}`}>
+            className="leaderboards-user flex-row"
+            key={`leaderboards-user-${userIndex}`}>
             <img
-              className="leaderboards-member-image"
+              className="leaderboards-user-image"
               alt="avatar"
-              src={member.avatar}></img>
-            <div className="leaderboards-member-info flex-row">
-              <div className="leaderboards-member-name">
-                {assignTrophyIfDeserved(member, memberIndex) + member.name}
+              src={user.avatar}></img>
+            <div className="leaderboards-user-info flex-row">
+              <div className="leaderboards-user-name">
+                {assignTrophyIfDeserved(user, userIndex) + user.name}
               </div>
-              <div className="leaderboards-member-times">
-                {assignDateIfFinished(member)}
+              <div className="leaderboards-user-times">
+                {assignDateIfFinished(user)}
               </div>
             </div>
             <LeaderboardsProgressBar
-              percentage={Math.floor(member.completionRate)}
+              percentage={Math.floor(user.completionRate)}
             />
           </li>
         ))}

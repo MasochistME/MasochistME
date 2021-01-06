@@ -1,13 +1,10 @@
 import React from 'react';
-import { orderBy } from 'lodash';
 import { useSelector } from 'react-redux';
 import Spinner from 'shared/components/Spinner';
 import Event from './Event';
 
 export default function PageEvents(): JSX.Element {
-  const events = useSelector((state: any) =>
-    orderBy(state.events, ['date'], ['desc']).slice(0, 100),
-  );
+  const events = useSelector((state: any) => state.events);
 
   return (
     <div className="flex-column">
@@ -17,18 +14,18 @@ export default function PageEvents(): JSX.Element {
           <p>There are six different types of events:</p>
           <ul className="event-types">
             <li>
-              <i className="fas fa-user-plus"></i> - new member joining the
+              <i className="fas fa-user-plus"></i> - new user joining the
               community,
             </li>
             <li>
-              <i className="fas fa-user-minus"></i> - member leaving the
+              <i className="fas fa-user-minus"></i> - user leaving the
               community,
             </li>
             <li>
               <i className="fas fa-plus-square"></i> - new game being curated,
             </li>
             <li>
-              <i className="fas fa-check-square"></i> - member of the community
+              <i className="fas fa-check-square"></i> - user of the community
               finishing 100% of the game,
             </li>
             <li>
@@ -54,7 +51,7 @@ export default function PageEvents(): JSX.Element {
       <div className="wrapper-events">
         <ul className="events-list">
           {events && events.length ? (
-            events.map((event, eventIndex) => (
+            events.map((event: any, eventIndex: number) => (
               <Event event={event} key={`event-${eventIndex}`} />
             ))
           ) : (
