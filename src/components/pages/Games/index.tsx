@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { orderBy } from 'lodash';
 import CheckBoxGameChoice from './CheckBoxGameChoice';
 import SearchBar from 'shared/components/SearchBar';
-import Spinner from 'shared/components/Spinner';
+import { Wrapper, Spinner } from 'shared/components';
 
 import Game from './Game';
 
@@ -21,7 +21,7 @@ export default function PageGames(): JSX.Element {
 
   return (
     <div className="flex-column">
-      <div className="wrapper-description">
+      <Wrapper type="description">
         <div className="page-description">
           <p>
             Here&lsquo;s the list of games that 0.1% curates, as well as the
@@ -54,7 +54,7 @@ export default function PageGames(): JSX.Element {
             <SearchBar />
           </div>
         ) : null}
-      </div>
+      </Wrapper>
       <div className="wrapper-games">
         {games && games.length ? (
           games.map((game: any) =>

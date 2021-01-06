@@ -9,7 +9,7 @@ import LineChart from '../Charts/LineChart';
 import ChartWrapper from '../Charts/ChartWrapper/index';
 import { showProfile } from 'shared/store/modules/Profiles';
 import { changeTab } from 'shared/store/modules/Tabs';
-import Spinner from 'shared/components/Spinner';
+import { Wrapper, Spinner } from 'shared/components';
 
 const summarizeTotalTimes = (
   type: any,
@@ -220,7 +220,7 @@ export default function Profile(): JSX.Element {
     <div className="flex-column">
       {user ? (
         <>
-          <div className="wrapper-description">
+          <Wrapper type="description">
             <div
               className="page-description"
               style={{ paddingBottom: '0', marginBottom: '0' }}>
@@ -299,7 +299,7 @@ export default function Profile(): JSX.Element {
                 </div>
               </div>
             </div>
-          </div>
+          </Wrapper>
           <div className="wrapper-profile flex-column">
             {badges.length !== 0 ? (
               <div className="profile-badges">
@@ -391,9 +391,9 @@ export default function Profile(): JSX.Element {
           </div>
         </>
       ) : (
-        <div className="wrapper-description">
+        <Wrapper type="description">
           <Spinner />
-        </div>
+        </Wrapper>
       )}
     </div>
   );

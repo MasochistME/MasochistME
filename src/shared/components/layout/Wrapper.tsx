@@ -79,6 +79,40 @@ const WrapperMiddle = styled.div`
   height: auto;
 `;
 
+const WrapperDescription = styled.div`
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: ${colors.darkBlueTransparent};
+  width: 100%;
+
+  p {
+    margin: 0 0 10px 0;
+  }
+
+  .fancy {
+    margin-bottom: 10px;
+    padding: 0;
+    box-sizing: border-box;
+    color: ${colors.superDarkGrey};
+    box-shadow: 0 0 20px ${colors.superDarkGrey};
+    background-color: ${colors.superLightGrey}aa;
+    h3 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 30px;
+      padding: 0;
+      margin: 0 0 10px 0;
+      font-size: 1.3em;
+      font-family: ${fonts.Dosis};
+      text-transform: uppercase;
+      background-color: ${colors.newDark}dd;
+      color: ${colors.superLightGrey};
+    }
+  }
+`;
+
 export default function Wrapper(props: WrapperProps): JSX.Element {
   const { type, children } = props;
   if (type === 'nav') {
@@ -89,6 +123,9 @@ export default function Wrapper(props: WrapperProps): JSX.Element {
   }
   if (type === 'main') {
     return <WrapperMain>{children}</WrapperMain>;
+  }
+  if (type === 'description') {
+    return <WrapperDescription>{children}</WrapperDescription>;
   }
   return <div className={`wrapper-${type}`}>{children}</div>;
 }

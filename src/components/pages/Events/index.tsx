@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import Spinner from 'shared/components/Spinner';
+import { Wrapper, Spinner } from 'shared/components';
 import Event from './Event';
 
 export default function PageEvents(): JSX.Element {
@@ -8,7 +8,7 @@ export default function PageEvents(): JSX.Element {
 
   return (
     <div className="flex-column">
-      <div className="wrapper-description">
+      <Wrapper type="description">
         <div className="page-description">
           <p>This is the list showcasing the last 100 events.</p>
           <p>There are six different types of events:</p>
@@ -47,7 +47,7 @@ export default function PageEvents(): JSX.Element {
             <i className="fas fa-exclamation-triangle"></i> icon is used.
           </p>
         </div>
-      </div>
+      </Wrapper>
       <div className="wrapper-events">
         <ul className="events-list">
           {events && events.length ? (
