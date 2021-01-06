@@ -1,43 +1,37 @@
 import React, { useState } from 'react';
 import { SlideDown } from 'react-slidedown';
 import MemberSummary from '../MemberSummary';
-import MemberDetails from '../MemberDetails';
+// import MemberDetails from '../MemberDetails';
 
 import 'react-slidedown/lib/slidedown.css';
 
 type TMember = {
-  user: any;
-  rating: any;
-  games: any;
-  patron: any;
-  badges: any;
-  index: number;
+  id: any;
+  position: number;
 };
 export default function user(props: TMember): JSX.Element {
-  const { user, index, rating, games, patron, badges } = props;
+  const { id, position } = props;
   const [show, setShow] = useState(false);
 
   const changeDetailsVisibility = (): any => setShow(!show);
 
-  const details = show ? (
-    <MemberDetails
-      key={`details-${user.id}`}
-      user={user}
-      show={show}
-      rating={rating}
-      badges={badges}
-      games={games}
-    />
-  ) : null;
+  const details = show
+    ? 'dupa'
+    : // <MemberDetails
+      //   key={`details-${id}`}
+      //   id={id}
+      //   show={show}
+      //   // rating={rating}
+      //   // badges={badges}
+      //   // games={games}
+      // />
+      null;
 
   return (
     <li className="user flex-column">
       <MemberSummary
-        user={user}
-        index={index}
-        rating={rating}
-        patron={patron}
-        badges={badges}
+        id={id}
+        position={position}
         onShowDetails={changeDetailsVisibility}
       />
       <SlideDown className={'my-dropdown-slidedown'} style={{ width: '100%' }}>

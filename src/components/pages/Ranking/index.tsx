@@ -1,45 +1,29 @@
 import React from 'react';
-import { orderBy } from 'lodash';
 import { useSelector } from 'react-redux';
 import SearchBar from 'shared/components/SearchBar';
 import Spinner from 'shared/components/Spinner';
 import Member from './Member';
 
 export default function PageRanking(): JSX.Element {
-  const searchMember = useSelector((state: any) => state.searchMember);
-  const users = useSelector((state: any) => state.users);
+  const searchUser = useSelector((state: any) => state.search.user);
   const rating = useSelector((state: any) => state.rating);
-  const games = useSelector((state: any) => state.games);
-  const patrons = useSelector((state: any) => state.patrons);
-  const badges = useSelector((state: any) => state.badges);
-
-  const ranking = orderBy(
-    users.filter((user: any) => user?.user),
-    [user => (user?.points ? user?.points : 0)],
-    ['desc'],
-  ); //change names here
+  const ranking = useSelector((state: any) => state.ranking);
+  const users = useSelector((state: any) => state.users);
 
   const createRankingList = () => {
     if (ranking?.length <= 0) {
       return;
     }
-    return ranking?.map((user: any, userIndex: number) =>
-      user.name.toLowerCase().indexOf(searchMember.toLowerCase()) !== -1 ? (
-        <Member
-          user={user}
-          index={userIndex}
-          rating={rating}
-          games={games}
-          badges={badges}
-          patron={patrons?.find((tier: any) =>
-            tier?.list?.find((p: any) => p.steamid === user.id)
-              ? { tier: tier.tier, description: tier.description }
-              : false,
-          )}
-          key={`user-${user.id}`}
-        />
-      ) : null,
-    );
+    return ranking?.map((user: any, position: number) => {
+      const userName: any = users.find((u: any) => u.id === user.id)?.name;
+      if (userName) {
+        const isUserSearch =
+          userName.toLowerCase().indexOf(searchUser.toLowerCase()) !== -1;
+        return isUserSearch ? (
+          <Member id={user.id} position={position} key={`user-${user.id}`} />
+        ) : null;
+      }
+    });
   };
 
   return (
@@ -75,7 +59,7 @@ export default function PageRanking(): JSX.Element {
       </div>
       <div className="wrapper-ranking">
         <ul className="ranking-list">
-          {ranking?.length > 0 && createRankingList()}
+          {ranking?.length && createRankingList()}
         </ul>
       </div>
     </div>

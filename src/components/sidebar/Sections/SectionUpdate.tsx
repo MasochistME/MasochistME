@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Section, SectionTitle } from '../../';
+import { Section, SectionTitle } from '../';
 
 export default function SectionUpdate(): JSX.Element {
   // const updateTimeout = 43200000;

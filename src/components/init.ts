@@ -10,6 +10,7 @@ import {
   cacheBlog,
   cachePatrons,
   cacheBadges,
+  cacheRanking,
 } from 'shared/store/modules/Cache';
 import { showGamesRated } from 'shared/store/modules/CheckBoxes';
 
@@ -101,6 +102,17 @@ export default function useInit(): boolean {
       .catch(err => console.trace(err));
   };
 
+  const loadRanking = () => {
+    axios
+      .get(`${path}/api/ranking`)
+      .then(response => {
+        if (response?.status === 200) {
+          return dispatch(cacheRanking(response.data));
+        }
+      })
+      .catch(err => console.trace(err));
+  };
+
   const init = () => {
     loadBadges();
     loadRating();
@@ -109,6 +121,7 @@ export default function useInit(): boolean {
     loadBlog();
     loadPatrons();
     loadUsers();
+    loadRanking();
     setLoaded(true);
   };
 
