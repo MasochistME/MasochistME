@@ -29,8 +29,8 @@ type TGame = {
 };
 
 const fillGameData = (id, desc, score) => ({
-  id: id,
-  desc: desc,
+  id,
+  desc,
   rating: score,
 });
 

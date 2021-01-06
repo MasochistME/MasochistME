@@ -1,6 +1,25 @@
 import express from 'express';
 export const router = express.Router();
 
+// -----------------------------------------------------------------
+// ------------------------------- NEW -----------------------------
+// -----------------------------------------------------------------
+
+import { getUsers } from './users';
+import { getRanking, getUserRanking } from './ranking';
+import { getBlog } from './blog';
+import { getEvents } from './events';
+
+router.get('/ranking', getRanking);
+router.get('/ranking/user/:id', getUserRanking);
+router.get('/users', getUsers);
+router.get('/blog', getBlog);
+router.post('/events', getEvents);
+
+// -----------------------------------------------------------------
+// ------------------------------- OLD -----------------------------
+// -----------------------------------------------------------------
+
 import { initiateMainUpdate, getStatus } from './old/update';
 import { getSteamID, getRating } from './old/special';
 import {
@@ -27,20 +46,7 @@ import {
   getCuratorMembers,
 } from './old/curator';
 import { getAllUsers, getUser, updateUser } from './old/users';
-import { getAllBlogEntries } from './old/blog';
-import { getEvents } from './old/events';
 
-// DONE
-
-router.get('/blog', getAllBlogEntries);
-
-// DOING
-
-router.get('/users', getStatus);
-router.get('/ranking', getStatus);
-router.get('/ranking/user/:id', getStatus);
-
-// NOT DONE
 router.get('/special/vanityid/:vanityid', getSteamID);
 router.get('/rating', getRating);
 
@@ -67,9 +73,6 @@ router.get('/curator/members', getCuratorMembers);
 router.get('/members', getAllUsers);
 router.get('/member/member/:steamid', getUser);
 router.put('/member/member/:steamid', updateUser);
-
-router.get('/events', getEvents);
-// TODO add events
 
 router.get('/update', initiateMainUpdate);
 router.get('/status', getStatus);
