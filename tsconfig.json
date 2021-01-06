@@ -11,6 +11,7 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "baseUrl": "./src",
+    "noEmit": false,
   },
   "include": [
     "src"
