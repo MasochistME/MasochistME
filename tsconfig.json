@@ -9,10 +9,11 @@
     "strictNullChecks": true,
     "module": "commonJS",
     "resolveJsonModule": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "baseUrl": "./src",
   },
   "include": [
-    "./*", "helpers/log.ts"
+    "src"
   ],
   "exclude": [
     "node_modules",
