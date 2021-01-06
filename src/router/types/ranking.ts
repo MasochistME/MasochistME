@@ -1,6 +1,7 @@
 export type TPoints = {
-  tier: number | 'badges';
-  sum: number;
+  tier?: number;
+  total: number;
+  points: number;
 };
 
 export type TUser = {
@@ -11,7 +12,7 @@ export type TUser = {
   points: {
     sum: number;
     tiers: TPoints[];
-    badges: number;
+    badges: TPoints;
   };
 };
 

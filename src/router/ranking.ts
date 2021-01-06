@@ -35,16 +35,17 @@ export const getRanking = async (
               const tierId = typeof t.id !== 'number' ? Number(t.id) : t.id;
               return tierId === tier;
             })?.score;
-            const sum =
-              Number(score) *
-              (typeof entry[1] !== 'number' ? Number(entry[1]) : entry[1]);
+            const total =
+              typeof entry[1] !== 'number' ? Number(entry[1]) : entry[1];
+            const points = Number(score) * total;
             return {
               tier,
-              sum,
+              total,
+              points,
             };
           },
         );
-        const badgesSum: number = user.badges
+        const badgesPoints: number = user.badges
           .map((userBadge: any) => {
             const userBadgeId = ObjectId(userBadge.id);
             const badgeObject = badges.find((badge: TBadge) =>
@@ -54,13 +55,17 @@ export const getRanking = async (
             return badgeValue ? badgeValue : 0;
           })
           .reduce((a: number, b: number) => a + b, 0);
+        const badgesTotal = user.badges.length;
         const sum = pointsList
-          .map(tier => tier.sum)
+          .map(tier => tier.points)
           .reduce((a: number, b: number) => a + b, 0);
         const points = {
-          sum: badgesSum + sum,
+          sum: badgesPoints + sum,
           list: pointsList,
-          badges: badgesSum,
+          badges: {
+            points: badgesPoints,
+            total: badgesTotal,
+          },
         };
         const isPatron = patrons.find(patron => patron.steamid === id);
         const patreon = { tier: isPatron && Number(isPatron.tier) };
