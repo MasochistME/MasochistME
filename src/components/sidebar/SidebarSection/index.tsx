@@ -12,7 +12,9 @@ export type SidebarSectionProps = {
   section: TSection;
 };
 
-export default function SidebarSection(props: SidebarSectionProps) {
+export default function SidebarSection(
+  props: SidebarSectionProps,
+): JSX.Element | null {
   const { section } = props;
   const getSection = (section: TSection) => {
     switch (section) {

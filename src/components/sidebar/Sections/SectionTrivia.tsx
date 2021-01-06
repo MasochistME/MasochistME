@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-import { Section, SectionTitle } from '../../';
+import { Section, SectionTitle } from '../';
 
 export default function SectionTrivia(): JSX.Element {
   const users = useSelector((state: any) =>

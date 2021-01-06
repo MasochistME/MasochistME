@@ -1,40 +1,32 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 type TMemberSummary = {
-  index: number;
-  user: any;
-  rating: any;
-  patron: any;
-  badges: any;
+  id: any;
+  position: number;
   onShowDetails: () => any;
 };
 
 export default function MemberSummary(props: TMemberSummary): JSX.Element {
   const history = useHistory();
-  const { user, index, rating, patron, badges, onShowDetails } = props;
+  const { id, position, onShowDetails } = props;
   const [detailsVisible, setDetailsVisible] = useState(false);
   const [userId, setMemberId] = useState(0);
-
-  const tier = patron ? patron.tier : null;
+  const user = useSelector((state: any) => {
+    const userRank = state.ranking.find((u: any) => u.id === id);
+    const userDetails = state.users.find((u: any) => u.id === id);
+    return {
+      ...userRank,
+      name: userDetails.name,
+      avatar: userDetails.avatar,
+    };
+  });
+  const badgePoints = user.points.badges;
+  const tier = user.patreon.tier;
   const shekelmaster = Number(tier) === 4;
 
-  const summarizeBadgePoints = (user: any, badges: any): number => {
-    let sum = 0;
-    user.badges.map((badge: any) => {
-      const usersBadge = badges.find((b: any) => badge.id === b['_id']); // TODO equality
-      if (usersBadge) {
-        if (typeof usersBadge.points !== 'number') {
-          usersBadge.points = parseInt(usersBadge.points);
-        }
-        sum += usersBadge.points;
-      }
-    });
-    return sum;
-  };
-
-  const badgePoints = summarizeBadgePoints(user, badges);
-  const disabled = user.points - badgePoints <= 0 ? true : false;
+  const disabled = user.points.sum - user.points.badges <= 0 ? true : false;
 
   const onShowDetailsClick = (event: any): void => {
     setDetailsVisible(!detailsVisible);
@@ -52,14 +44,14 @@ export default function MemberSummary(props: TMemberSummary): JSX.Element {
 
   return (
     <div
-      className={`user-summary flex-row ${
-        disabled ? 'user-disabled' : ''
-      } ${shekelmaster ? 'user-shekelmaster' : ''}`}
+      className={`member-summary flex-row ${
+        disabled ? 'member-disabled' : ''
+      } ${shekelmaster ? 'member-shekelmaster' : ''}`}
       onClick={onShowProfile}>
-      <div className="user-position">{index + 1}</div>
-      <img className="user-avatar" src={user.avatar} alt="avatar" />
+      <div className="member-position">{position + 1}</div>
+      <img className="member-avatar" src={user.avatar} alt="avatar" />
       <div
-        className="user-icons"
+        className="member-icons"
         style={{
           display: 'flex',
           flexDirection: 'row',
@@ -68,12 +60,13 @@ export default function MemberSummary(props: TMemberSummary): JSX.Element {
         }}>
         {tier ? (
           <i
-            className={`fas fa-donate user-patron tier${tier}`}
-            title={patron.description.toUpperCase()}
+            className={`fas fa-donate member-patron tier${tier}`}
+            // title={patron.description.toUpperCase()}
+            title={'dupa'}
           />
         ) : (
           <i
-            className="fas fa-donate user-patron"
+            className="fas fa-donate member-patron"
             style={{ color: 'transparent' }}
           />
         )}
@@ -95,7 +88,7 @@ export default function MemberSummary(props: TMemberSummary): JSX.Element {
           />
         )}
       </div>
-      <div className="user-info flex-row">
+      <div className="member-info flex-row">
         <i
           className={`fas fa-chevron-down icon-hover ${
             detailsVisible ? 'icon-active' : ''
@@ -111,29 +104,18 @@ export default function MemberSummary(props: TMemberSummary): JSX.Element {
           ) : (
             <div></div>
           )}
-          <div className={`user-name ${shekelmaster ? `tier${tier}` : ''}`}>
+          <div className={`member-name ${shekelmaster ? `tier${tier}` : ''}`}>
             {user.name}
           </div>
         </div>
         <div className="dummy"></div>
-        <div className="user-ranking flex-row">
-          <div className="user-rating-score" title="Sum of all points">
-            {user.points ? user.points : 0}
+        <div className="member-ranking flex-row">
+          <div className="member-rating-score" title="Sum of all points">
+            {user.points.sum ? user.points.sum : 0}
             <span className="bold"> Σ</span>
           </div>
-          {rating.map((score: any, scoreIndex: number) => {
-            return (
-              <div
-                className="user-rating-score"
-                key={`user-rating-score-${scoreIndex}`}>
-                {user.ranking[score.id] !== undefined
-                  ? user.ranking[score.id]
-                  : 0}
-                <i className={score.icon} style={{ paddingRight: '5px' }} />
-              </div>
-            );
-          })}
-          <div className="user-rating-score" title="Sum of points for badges">
+          {user.points.sum}
+          <div className="member-rating-score" title="Sum of points for badges">
             {badgePoints}
             <i className="fas fa-medal" style={{ paddingRight: '5px' }} />
           </div>

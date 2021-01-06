@@ -2,7 +2,7 @@ import React from 'react';
 import { orderBy } from 'lodash';
 import { useSelector } from 'react-redux';
 import { swapRatingToIcon } from 'shared/helpers/helper';
-import { SmallEvent, Section, SectionTitle } from '../../';
+import { SmallEvent, Section, SectionTitle } from '../';
 import Spinner from 'shared/components/Spinner';
 
 export default function SectionHistory(): JSX.Element {
@@ -14,9 +14,7 @@ export default function SectionHistory(): JSX.Element {
   const rating = useSelector((state: any) => state.rating);
 
   const sortEvents = (event: any, eventIndex: number) => {
-    const player = users.find(
-      (m: any) => Number(m.id) === Number(event.user),
-    );
+    const player = users.find((m: any) => Number(m.id) === Number(event.user));
     const game = games.find((g: any) => Number(g.id) === Number(event.game));
 
     switch (event.type) {

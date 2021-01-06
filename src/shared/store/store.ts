@@ -15,6 +15,7 @@ import {
   CACHE_BLOG,
   CACHE_PATRONS,
   CACHE_BADGES,
+  CACHE_RANKING,
 } from './modules/Cache';
 
 // STORES
@@ -25,6 +26,7 @@ type TStore = {
   blog: any[];
   patrons: any[];
   badges: any[];
+  ranking: any[];
   rating: null;
   tabs: {
     active: 'home';
@@ -52,6 +54,7 @@ const defaultState: TStore = {
   blog: [],
   patrons: [],
   badges: [],
+  ranking: [],
   rating: null,
   tabs: {
     active: 'home',
@@ -172,6 +175,11 @@ const reducer = (state = defaultState, action: any) => {
       return {
         ...state,
         badges: action.data,
+      };
+    case CACHE_RANKING:
+      return {
+        ...state,
+        ranking: action.data,
       };
     default:
       return state;
