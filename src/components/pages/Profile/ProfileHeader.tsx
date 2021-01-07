@@ -12,6 +12,8 @@ const Patron = styled.div`
 const UpdateDate = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   font-size: 0.8em;
@@ -42,13 +44,15 @@ const Avatar = styled.img.attrs(({ tier }: { tier: number }) => {
   margin: 15px;
   border-radius: 10px;
   box-sizing: border-box;
-  box-shadow: 0 0 10px $black;
+  box-shadow: 0 0 10px ${colors.black};
   padding: 2px;
 `;
 const Basic = styled.div`
   display: flex;
   flex-direction: row;
-  background-color: rgba($superdarkgrey, 0.3);
+  align-items: center;
+  justify-content: space-between;
+  background-color: ${colors.superDarkGrey}48;
   margin-bottom: 10px;
   padding-right: 10px;
   box-sizing: border-box;
@@ -108,7 +112,7 @@ export default function ProfileHeader(props: Props): JSX.Element {
       <div
         className="page-description"
         style={{ paddingBottom: '0', marginBottom: '0' }}>
-        <Flex row>
+        <Flex row align style={{ justifyContent: 'space-between' }}>
           <h1 style={{ margin: '0' }}>
             <a
               href={`https://steamcommunity.com/profiles/${user?.id}`}
@@ -158,10 +162,10 @@ export default function ProfileHeader(props: Props): JSX.Element {
         <ProfileHeader.Basic>
           <ProfileHeader.Avatar
             src={user?.avatar}
-            tier={patron?.tier}
+            tier={Number(patron?.tier)}
             alt="avatar"
           />
-          <div>Currently there&lsquo;s no info provided about this user?.</div>
+          <div>Currently there&lsquo;s no info provided about this user.</div>
         </ProfileHeader.Basic>
       </div>
     </Wrapper>

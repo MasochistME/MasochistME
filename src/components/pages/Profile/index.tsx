@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -83,10 +83,17 @@ Profile.Section = Section;
 export default function Profile(): JSX.Element {
   const dispatch = useDispatch();
   const { id } = useParams<{ id: string }>();
-  const [user, setUser] = useState(undefined as any);
 
   const games = useSelector((state: any) => state.games);
-  const users = useSelector((state: any) => state.users);
+  const user = useSelector((state: any) => {
+    const userBasic = state.users.find((user: any) => user.id === id);
+    const userRanking = state.ranking.find((user: any) => user.id === id)
+      ?.points;
+    return {
+      ...userBasic,
+      points: userRanking,
+    };
+  });
 
   const badges = useSelector((state: any) =>
     orderBy(
@@ -112,13 +119,6 @@ export default function Profile(): JSX.Element {
   );
 
   useEffect(() => {
-    const user = users.find((user: any) => user.id === id);
-    if (user) {
-      setUser(user);
-    }
-  }, [users]);
-
-  useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(showProfile(id));
     dispatch(changeTab('profile'));
@@ -130,7 +130,7 @@ export default function Profile(): JSX.Element {
         <>
           <ProfileHeader user={user} />
           <WrapperProfile>
-            {badges.length !== 0 ? (
+            {badges?.length ? (
               <Profile.Badges>
                 <Profile.Section>
                   <h3>Badges</h3>
@@ -155,7 +155,7 @@ export default function Profile(): JSX.Element {
                 </Profile.Section>
               </Profile.Badges>
             ) : null}
-            {!isNaN(user?.points) && user?.points !== 0 ? (
+            {!isNaN(user?.points?.sum) && user?.points?.sum !== 0 ? (
               <ProfileGraphs user={user} />
             ) : null}
           </WrapperProfile>
