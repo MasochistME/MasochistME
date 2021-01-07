@@ -83,7 +83,10 @@ export default function UserSummary(props: TUserSummary): JSX.Element {
   }, []);
 
   return (
-    <UserSummary.Summary onClick={onShowProfile}>
+    <UserSummary.Summary
+      shekelmaster={shekelmaster}
+      disabled={disabled}
+      onClick={onShowProfile}>
       <UserSummary.Position>{position + 1}</UserSummary.Position>
       <UserSummary.Avatar src={user.avatar} alt="avatar" />
       <UserSummary.Icons>
