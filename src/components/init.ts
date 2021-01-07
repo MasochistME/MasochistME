@@ -135,8 +135,7 @@ export default function useInit(): boolean {
 
 export function useUserDetails(id: string): boolean {
   const dispatch = useDispatch();
-  const [loaded, setLoaded] = useState(false);
-  const userAlreadyLoaded = useSelector(
+  const loaded = useSelector(
     (state: any) => !!state.users.details.find((user: any) => user.id === id),
   );
 
@@ -146,17 +145,16 @@ export function useUserDetails(id: string): boolean {
       .then(response => {
         if (response?.status === 200) {
           dispatch(cacheUserDetails(response.data));
-          setLoaded(true);
         }
       })
       .catch(err => console.trace(err));
   };
 
   useEffect(() => {
-    if (!userAlreadyLoaded) {
+    if (!loaded) {
       loadUserDetails();
     }
-  }, [userAlreadyLoaded]);
+  }, [loaded]);
 
   return loaded;
 }

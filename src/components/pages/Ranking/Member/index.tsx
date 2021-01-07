@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { SlideDown } from 'react-slidedown';
 import MemberSummary from '../MemberSummary';
-// import MemberDetails from '../MemberDetails';
+import MemberDetails from '../MemberDetails';
 
 import 'react-slidedown/lib/slidedown.css';
 
@@ -15,17 +15,9 @@ export default function user(props: TMember): JSX.Element {
 
   const changeDetailsVisibility = (): any => setShow(!show);
 
-  const details = show
-    ? 'dupa'
-    : // <MemberDetails
-      //   key={`details-${id}`}
-      //   id={id}
-      //   show={show}
-      //   // rating={rating}
-      //   // badges={badges}
-      //   // games={games}
-      // />
-      null;
+  const details = show ? (
+    <MemberDetails key={`details-${id}`} id={id} show={show} />
+  ) : null;
 
   return (
     <li className="user flex-column">

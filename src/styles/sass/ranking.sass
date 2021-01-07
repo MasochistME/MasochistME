@@ -11,7 +11,7 @@
     padding: 0
     overflow: hidden
     width: 100%
-.member
+.user
     margin: 0
     padding: 0
     width: 100%
@@ -19,18 +19,18 @@
     cursor: pointer
     justify-content: space-between
 
-.member-ranking
+.user-ranking
     @media (max-width: $tablets)
         display: none !important
-.member-summary
+.user-summary
     width: 100%
     min-height: 32px
     background-color: $darkbluetransparent
     border-bottom: 1px solid $newdark
     border-top: 1px solid $newmediumgrey
-.member-disabled
+.user-disabled
     background-color: $darkredtransparent
-.member-details
+.user-details
     width: 100%
     padding: 0 55px
     box-sizing: border-box
@@ -38,14 +38,14 @@
         border-top: none
     @media (max-width: $small-netbooks)
         padding: 0
-.member-details-hidden
+.user-details-hidden
     display: none !important
     height: 0
-.member-details-visible
+.user-details-visible
     display: flex !important
     transition: height 1s
     height: auto
-.member-details-summary
+.user-details-summary
     display: flex
     flex-wrap: wrap
     width: 100%
@@ -56,11 +56,11 @@
     background-color: $darkbluetransparent
     @media (min-width: $tablets)
         display: none !important
-.member-shekelmaster
+.user-shekelmaster
     background-color: $tier4-transparent
     border: 1px solid $tier4-muted
 
-.member-position
+.user-position
     display: flex
     justify-content: center
     align-items: center
@@ -72,7 +72,7 @@
     border-right: 1px solid $newdark
     @media (max-width: $tablets)
         display: none
-.member-avatar
+.user-avatar
     min-width: 64px
     min-height: 64px 
     max-width: 64px 
@@ -82,7 +82,7 @@
     border-left: 1px solid $newmediumgrey
     @media (max-width: $tablets)
         display: none
-.member-patron
+.user-patron
     margin-left: 10px
     cursor: help
     color: $superdarkgrey
@@ -95,7 +95,7 @@
         text-shadow: 0 0 5px $tier3
     &.tier4
         text-shadow: 0 0 5px $tier4
-.member-info
+.user-info
     align-items: center
     justify-content: space-between
     padding: 0 10px
@@ -104,7 +104,7 @@
     @media (max-width: $tablets)
         max-width: 100%
         padding: 0 5px
-.member-name
+.user-name
     text-transform: uppercase
     &.tier1
         color: $tier1
@@ -114,7 +114,7 @@
         color: $tier3
     &.tier4
         color: $tier4
-.member-rating-score
+.user-rating-score
     display: flex
     padding: 5px    
     width: 50px
