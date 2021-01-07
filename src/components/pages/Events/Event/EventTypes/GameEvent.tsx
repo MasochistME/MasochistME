@@ -1,5 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import {
+  EventDescription,
+  EventSummary,
+  EventInfo,
+  EventImg,
+} from 'components/pages/Events/styles';
 import logo from 'shared/images/logo.png';
 
 type Props = {
@@ -19,25 +25,25 @@ export default function GameEvent(props: Props): JSX.Element | null {
   );
 
   return (
-    <div className="event-info flex-row">
-      <img className="event-img" alt="game-img" src={logo}></img>
+    <EventInfo>
+      <EventImg alt="game-img" src={logo} />
       {game ? (
-        <div className="event-desc">
+        <EventDescription>
           <span className="bold under">
             {game ? game.title : `Game ${event.game}`}
           </span>{' '}
           has been curated!
-        </div>
+        </EventDescription>
       ) : (
-        <div className="event-desc">
+        <EventDescription>
           <span className="bold under">
             {game ? game.title : `Game ${event.game}`}
           </span>{' '}
           (no longer curated) has been curated!
-        </div>
+        </EventDescription>
       )}
 
-      <div className="event-summary flex-row">
+      <EventSummary>
         <i
           className={
             game ? 'fas fa-plus-square' : 'fas fa-exclamation-triangle'
@@ -46,11 +52,8 @@ export default function GameEvent(props: Props): JSX.Element | null {
           className={
             gameRating ? gameRating.icon : 'far fa-question-circle'
           }></i>
-        <img
-          className="event-img"
-          alt="game-img"
-          src={game ? game.img : logo}></img>
-      </div>
-    </div>
+        <EventImg alt="game-img" src={game ? game.img : logo} />
+      </EventSummary>
+    </EventInfo>
   );
 }

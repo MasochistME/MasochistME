@@ -1,5 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import {
+  EventDescription,
+  EventSummary,
+  EventInfo,
+  EventImg,
+} from 'components/pages/Events/styles';
 import logo from 'shared/images/logo.png';
 
 type TCustomEvent = {
@@ -25,13 +31,10 @@ export default function CustomEvent(props: TCustomEvent): JSX.Element | null {
   const userData = users.find((m: any) => Number(m.id) === Number(user));
 
   return (
-    <div className="event-info flex-row">
-      <img
-        className="event-img"
-        alt="avatar"
-        src={userData ? userData.avatar : logo}></img>
+    <EventInfo>
+      <EventImg alt="avatar" src={userData ? userData.avatar : logo} />
       {
-        <div className="event-desc">
+        <EventDescription>
           {text &&
             text
               .split('#')
@@ -42,12 +45,12 @@ export default function CustomEvent(props: TCustomEvent): JSX.Element | null {
                   str
                 ),
               )}
-        </div>
+        </EventDescription>
       }
-      <div className="event-summary flex-row">
+      <EventSummary>
         <i className={icon ? icon : 'fas fa-birthday-cake'}></i>
-        <img className="event-img" alt="custom-img" src={logo}></img>
-      </div>
-    </div>
+        <EventImg alt="custom-img" src={logo} />
+      </EventSummary>
+    </EventInfo>
   );
 }
