@@ -18,7 +18,7 @@ export default function CompleteEvent(props: Props): JSX.Element | null {
     state.games.find((g: any) => Number(g.id) === Number(event.game)),
   );
   const user = useSelector((state: any) =>
-    state.users.find((u: any) => u.id === event.member),
+    state.users.list.find((u: any) => u.id === event.member),
   );
   const rating = useSelector((state: any) => state.rating);
   const gameRating = rating.find((r: any) =>

@@ -5,7 +5,7 @@ import { Section, SectionTitle } from '../';
 
 export default function SectionTrivia(): JSX.Element {
   const users = useSelector((state: any) =>
-    state.users.filter((user: any) => user.user),
+    state.users.list.filter((user: any) => user.user),
   );
   const rating = useSelector((state: any) => state.rating);
   const [games, setGames] = useState({

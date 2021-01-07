@@ -8,6 +8,7 @@ import { colors, fonts } from 'shared/theme';
 import { showProfile } from 'shared/store/modules/Profiles';
 import { changeTab } from 'shared/store/modules/Tabs';
 import { Flex, Wrapper, Spinner } from 'shared/components';
+import { useUserDetails } from 'components/init';
 import ProfileGraphs from './ProfileGraphs';
 import ProfileHeader from './ProfileHeader';
 
@@ -84,15 +85,25 @@ export default function Profile(): JSX.Element {
   const dispatch = useDispatch();
   const { id } = useParams<{ id: string }>();
 
+  const userLoaded = useUserDetails(id);
+
   const games = useSelector((state: any) => state.games);
+  const userBasic = useSelector((state: any) =>
+    state.users.list.find((user: any) => user.id === id),
+  );
   const user = useSelector((state: any) => {
-    const userBasic = state.users.find((user: any) => user.id === id);
-    const userRanking = state.ranking.find((user: any) => user.id === id)
-      ?.points;
-    return {
-      ...userBasic,
-      points: userRanking,
-    };
+    if (userLoaded) {
+      const userDetails = state.users.details.find(
+        (user: any) => user.id === id,
+      );
+      const userRanking = state.ranking.find((user: any) => user.id === id)
+        ?.points;
+      return {
+        ...userBasic,
+        ...userDetails,
+        points: userRanking,
+      };
+    }
   });
 
   const badges = useSelector((state: any) =>
@@ -126,9 +137,9 @@ export default function Profile(): JSX.Element {
 
   return (
     <Flex column>
+      <ProfileHeader user={userBasic} />
       {user ? (
         <>
-          <ProfileHeader user={user} />
           <WrapperProfile>
             {badges?.length ? (
               <Profile.Badges>

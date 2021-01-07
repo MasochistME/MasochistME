@@ -8,7 +8,7 @@ export default function PageRanking(): JSX.Element {
   const searchUser = useSelector((state: any) => state.search.user);
   const rating = useSelector((state: any) => state.rating);
   const ranking = useSelector((state: any) => state.ranking);
-  const users = useSelector((state: any) => state.users);
+  const users = useSelector((state: any) => state.users.list);
 
   const createRankingList = () => {
     if (ranking?.length <= 0) {

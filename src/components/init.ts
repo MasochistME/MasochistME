@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { orderBy } from 'lodash';
 import axios from 'axios';
 import {
@@ -11,14 +11,15 @@ import {
   cachePatrons,
   cacheBadges,
   cacheRanking,
+  cacheUserDetails,
 } from 'shared/store/modules/Cache';
 import { showGamesRated } from 'shared/store/modules/CheckBoxes';
+
+const path = 'http://localhost:3002';
 
 export default function useInit(): boolean {
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
-
-  const path = 'http://localhost:3002';
 
   const loadRating = () => {
     axios
@@ -128,6 +129,34 @@ export default function useInit(): boolean {
   useEffect(() => {
     init();
   }, []);
+
+  return loaded;
+}
+
+export function useUserDetails(id: string): boolean {
+  const dispatch = useDispatch();
+  const [loaded, setLoaded] = useState(false);
+  const userAlreadyLoaded = useSelector(
+    (state: any) => !!state.users.details.find((user: any) => user.id === id),
+  );
+
+  const loadUserDetails = () => {
+    axios
+      .get(`${path}/api/users/user/${id}`)
+      .then(response => {
+        if (response?.status === 200) {
+          dispatch(cacheUserDetails(response.data));
+          setLoaded(true);
+        }
+      })
+      .catch(err => console.trace(err));
+  };
+
+  useEffect(() => {
+    if (!userAlreadyLoaded) {
+      loadUserDetails();
+    }
+  }, [userAlreadyLoaded]);
 
   return loaded;
 }

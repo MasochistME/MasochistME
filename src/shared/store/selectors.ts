@@ -6,7 +6,7 @@ export function useCuratorData(): any {
   const events = useSelector((state: any) => state.events);
   const games = useSelector((state: any) => state.games);
   const points = useSelector((state: any) => state.points);
-  const users = useSelector((state: any) => state.users);
+  const users = useSelector((state: any) => state.users.list);
 
   return {
     badges,

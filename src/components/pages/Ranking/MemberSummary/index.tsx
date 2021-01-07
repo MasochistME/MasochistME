@@ -17,7 +17,7 @@ export default function MemberSummary(props: TMemberSummary): JSX.Element {
   const rating = useSelector((state: any) => state.rating);
   const user = useSelector((state: any) => {
     const userRank = state.ranking.find((u: any) => u.id === id);
-    const userDetails = state.users.find((u: any) => u.id === id);
+    const userDetails = state.users.list.find((u: any) => u.id === id);
     return {
       ...userRank,
       name: userDetails.name,

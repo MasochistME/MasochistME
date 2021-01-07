@@ -14,7 +14,7 @@ const FlexColumn = styled.div`
 export default function SectionTop(): JSX.Element {
   const users = useSelector((state: any) => {
     const usersRating = state.ranking.slice(0, 10);
-    const usersBasic = state.users;
+    const usersBasic = state.users.list;
     const usersFull = usersRating.map((user: any) => ({
       ...user,
       name: usersBasic.find((u: any) => u.id === user.id)?.name,
