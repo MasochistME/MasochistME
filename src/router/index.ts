@@ -5,7 +5,7 @@ export const router = express.Router();
 // ------------------------------- NEW -----------------------------
 // -----------------------------------------------------------------
 
-import { getUsers } from './users';
+import { getUsers, getUserDetails } from './users';
 import { getRanking, getUserRanking } from './ranking';
 import { getBlog } from './blog';
 import { getEvents } from './events';
@@ -13,6 +13,7 @@ import { getEvents } from './events';
 router.get('/ranking', getRanking);
 router.get('/ranking/user/:id', getUserRanking);
 router.get('/users', getUsers);
+router.get('/users/user/:id', getUserDetails);
 router.get('/blog', getBlog);
 router.post('/events', getEvents);
 
