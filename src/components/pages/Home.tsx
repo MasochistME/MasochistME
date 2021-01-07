@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
+import { colors, fonts } from 'shared/theme';
 import { TBlog } from 'shared/types/blog';
 import Spinner from 'shared/components/Spinner';
 
@@ -13,19 +14,19 @@ const Blog = styled.div`
 const Entry = styled.div`
   box-sizing: border-box;
   padding: 10px;
-  background-color: $darkbluetransparent;
-  box-shadow: 0 0 20px $newdark;
+  background-color: ${colors.darkBlueTransparent};
+  box-shadow: 0 0 20px ${colors.newDark};
   h1 {
     margin: 0;
     font-size: 1.8em;
-    font-family: $font-cinzel;
+    font-family: ${fonts.Cinzel};
   }
   h2 {
     margin: 0;
     font-size: 1.2em;
     text-align: right;
-    font-family: $font-cinzel;
-    border-bottom: 1px solid $newmediumgrey;
+    font-family: ${fonts.Cinzel};
+    border-bottom: 1px solid ${colors.newMediumGrey};
     margin-bottom: 10px;
   }
   p {
