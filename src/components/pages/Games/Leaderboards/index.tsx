@@ -13,7 +13,7 @@ type Props = {
 
 export default function Leaderboards(props: Props): JSX.Element | null {
   const { show: visible, game, rating } = props;
-  const users = useSelector((state: any) => state.users);
+  const users = useSelector((state: any) => state.users.list);
   const games = useSelector((state: any) => state.games);
   const badges = useSelector((state: any) =>
     orderBy(

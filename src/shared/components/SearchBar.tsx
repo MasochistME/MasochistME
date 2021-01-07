@@ -28,7 +28,7 @@ const SearchBarLabel = styled.label`
 
 export default function SearchBar(): JSX.Element {
   const dispatch = useDispatch();
-  const activeTab = useSelector((state: any) => state.activeTab);
+  const activeTab = useSelector((state: any) => state.tabs.active);
 
   const [searchFor, setSearchFor] = useState(undefined as string | undefined);
 

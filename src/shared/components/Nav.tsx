@@ -21,7 +21,7 @@ type Props = {
 function NavItem(props: Props): JSX.Element {
   const { item } = props;
   const history = useHistory();
-  const activeTab = useSelector((state: any) => state.activeTab);
+  const activeTab = useSelector((state: any) => state.tabs.active);
 
   const onTabOpen = (): void => {
     if (item.external) {

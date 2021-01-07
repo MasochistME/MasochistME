@@ -16,7 +16,7 @@ type Props = {
 export default function MemberEvent(props: Props): JSX.Element | null {
   const { event, action } = props;
   const user = useSelector((state: any) =>
-    state.users.find((u: any) => u.id === event.member),
+    state.users.list.find((u: any) => u.id === event.member),
   );
 
   console.log(user);

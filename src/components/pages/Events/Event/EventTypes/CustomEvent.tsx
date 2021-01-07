@@ -22,7 +22,7 @@ export default function CustomEvent(props: TCustomEvent): JSX.Element | null {
   const { event } = props;
   const content = event.content;
 
-  const users = useSelector((state: any) => state.users);
+  const users = useSelector((state: any) => state.users.list);
 
   if (!content) {
     return null;
