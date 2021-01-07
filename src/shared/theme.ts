@@ -14,8 +14,8 @@ export const colors = {
   darkBlue: '#293251',
   darkRed: '#1e1012',
 
-  darkBlueTransparent: '#293251cc',
-  darkRedTransparent: '#1e1012"cc',
+  darkBlueTransparent: '#293251bb',
+  darkRedTransparent: '#1e1012bb',
 
   tier4: '#fdc000',
   tier3: '#f5f5f5',
