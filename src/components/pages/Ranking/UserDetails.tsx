@@ -3,14 +3,14 @@ import { useSelector } from 'react-redux';
 import _ from 'lodash';
 import { useUserDetails } from 'components/init';
 import { Spinner } from 'shared/components';
-import MemberGame from '../MemberGame';
+import UserGame from './UserGame';
 
-type TMemberDetails = {
+type TUserDetails = {
   id: any;
   show: any;
 };
 
-export default function MemberDetails(props: TMemberDetails): JSX.Element {
+export default function UserDetails(props: TUserDetails): JSX.Element {
   const { id, show } = props;
   const userLoaded = useUserDetails(id);
   const rating = useSelector((state: any) => state.rating);
@@ -72,7 +72,7 @@ export default function MemberDetails(props: TMemberDetails): JSX.Element {
       }
       const ratingIcon = rating.find((r: any) => r.id === gameDetails.rating);
       return (
-        <MemberGame
+        <UserGame
           key={`game-${game.appid}`}
           game={{
             ...game,

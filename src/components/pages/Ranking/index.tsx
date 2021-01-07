@@ -1,8 +1,20 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import styled from 'styled-components';
 import SearchBar from 'shared/components/SearchBar';
-import { Wrapper, Spinner } from 'shared/components';
-import Member from './Member';
+import { Flex, Wrapper, Spinner } from 'shared/components';
+import User from './User';
+
+const WrapperRanking = styled.div`
+  width: 100%;
+`;
+const RankingList = styled.ul`
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  width: 100%;
+`;
 
 export default function PageRanking(): JSX.Element {
   const searchUser = useSelector((state: any) => state.search.user);
@@ -20,14 +32,14 @@ export default function PageRanking(): JSX.Element {
         const isUserSearch =
           userName.toLowerCase().indexOf(searchUser.toLowerCase()) !== -1;
         return isUserSearch ? (
-          <Member id={user.id} position={position} key={`user-${user.id}`} />
+          <User id={user.id} position={position} key={`user-${user.id}`} />
         ) : null;
       }
     });
   };
 
   return (
-    <div className="flex-column">
+    <Flex column>
       <Wrapper type="description">
         <div className="page-description">
           <p>
@@ -57,11 +69,9 @@ export default function PageRanking(): JSX.Element {
         <SearchBar />
         {!ranking?.length && <Spinner />}
       </Wrapper>
-      <div className="wrapper-ranking">
-        <ul className="ranking-list">
-          {ranking?.length && createRankingList()}
-        </ul>
-      </div>
-    </div>
+      <WrapperRanking>
+        <RankingList>{ranking?.length && createRankingList()}</RankingList>
+      </WrapperRanking>
+    </Flex>
   );
 }

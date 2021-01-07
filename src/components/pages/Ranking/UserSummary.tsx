@@ -2,17 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-type TMemberSummary = {
+type TUserSummary = {
   id: any;
   position: number;
   onShowDetails: () => any;
 };
 
-export default function MemberSummary(props: TMemberSummary): JSX.Element {
+export default function UserSummary(props: TUserSummary): JSX.Element {
   const history = useHistory();
   const { id, position, onShowDetails } = props;
   const [detailsVisible, setDetailsVisible] = useState(false);
-  const [userId, setMemberId] = useState(0);
+  const [userId, setUserId] = useState(0);
 
   const rating = useSelector((state: any) => state.rating);
   const user = useSelector((state: any) => {
@@ -60,7 +60,7 @@ export default function MemberSummary(props: TMemberSummary): JSX.Element {
   };
 
   useEffect(() => {
-    setMemberId(user.id);
+    setUserId(user.id);
   }, []);
 
   return (
