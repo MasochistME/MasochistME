@@ -4,10 +4,45 @@
 export {};
 
 // import React, { useState } from 'react';
+// import styled from 'styled-components';
 // import { useSelector, useDispatch } from 'react-redux';
 // import { showLoginModal, logInUser } from '../../store/modules/Login';
 // import { sha256 } from '../../helpers/hash';
 // import logins from '../../mock/credentials.json';
+
+// .login-modal-wrapper
+//     position: fixed
+//     display: flex
+//     align-items: center
+//     justify-content: center
+//     width: 100%
+//     height: 100%
+//     z-index: 100000
+//     background-color: rgba(0,0,0,0.8)
+// .login-modal
+//     padding: 10px
+//     border: 1px solid #fff
+//     background-color: $lightgrey
+//     font-family: $font-raleway
+//     display: flex
+//     flex-direction: column
+//     align-items: center
+//     justify-content: space-evenly
+// .login-modal-form
+//     padding: 10px
+//     margin: 10px
+//     border: 1px solid $lightgrey
+//     display: flex
+//     flex-direction: column
+//     align-items: center
+//     justify-content: space-evenly
+// .login-modal-input
+//     margin: 5px 0
+//     width: 250px
+//     height: 40px
+//     text-align: center
+// .login-modal-button
+// width: 250px
 
 // const loginModalVisible = (show: boolean) =>
 //   show

@@ -1,6 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { swapRatingToIcon } from 'shared/helpers/helper';
+import {
+  EventDescription,
+  EventSummary,
+  EventInfo,
+  EventImg,
+} from 'components/pages/Events/styles';
 import logo from 'shared/images/logo.png';
 
 type Props = { event: any };
@@ -19,16 +25,15 @@ export default function TierChangeEvent(props: Props): JSX.Element | null {
   const demoted = Number(props.event.oldTier) > Number(props.event.newTier);
 
   return game && gameRating ? (
-    <div className="event-info flex-row">
-      <img className="event-img" alt="game-img" src={logo}></img>
-      <div className="event-desc">
+    <EventInfo>
+      <EventImg alt="game-img" src={logo} />
+      <EventDescription>
         <span className="bold under">{game ? game.title : '-'}</span>
         {demoted ? ' demoted ' : ' promoted '}
-        from <i
-          className={swapRatingToIcon(event.oldTier, gameRating)}></i> to{' '}
-        <i className={swapRatingToIcon(event.newTier, gameRating)}></i>!
-      </div>
-      <div className="event-summary flex-row">
+        from <i className={swapRatingToIcon(event.oldTier, rating)}></i> to{' '}
+        <i className={swapRatingToIcon(event.newTier, rating)}></i>!
+      </EventDescription>
+      <EventSummary>
         {demoted ? (
           <i
             className={
@@ -44,11 +49,8 @@ export default function TierChangeEvent(props: Props): JSX.Element | null {
           className={
             gameRating ? gameRating.icon : 'far fa-question-circle'
           }></i>
-        <img
-          className="event-img"
-          alt="game-img"
-          src={game ? game.img : logo}></img>
-      </div>
-    </div>
+        <EventImg alt="game-img" src={game ? game.img : logo} />
+      </EventSummary>
+    </EventInfo>
   ) : null;
 }

@@ -14,22 +14,22 @@ export default function SectionHistory(): JSX.Element {
   const rating = useSelector((state: any) => state.rating);
 
   const sortEvents = (event: any, eventIndex: number) => {
-    const player = users.find((m: any) => Number(m.id) === Number(event.user));
+    const user = users.find((m: any) => m.id === event.member);
     const game = games.find((g: any) => Number(g.id) === Number(event.game));
 
     switch (event.type) {
-      case 'userJoined':
-        return player ? (
+      case 'memberJoined':
+        return user ? (
           <SmallEvent key={`sidebar-event-${eventIndex}`}>
             <i className="fas fa-user-plus"></i>
-            <span className="bold"> {player.name}</span> has joined the group!
+            <span className="bold"> {user.name}</span> has joined the group!
           </SmallEvent>
         ) : null;
-      case 'userLeft':
-        return player ? (
+      case 'memberLeft':
+        return user ? (
           <SmallEvent key={`sidebar-event-${eventIndex}`}>
             <i className="fas fa-user-minus"></i>
-            <span className="bold"> {player.name}</span> has left the group!
+            <span className="bold"> {user.name}</span> has left the group!
           </SmallEvent>
         ) : null;
       case 'newGame':
@@ -40,10 +40,10 @@ export default function SectionHistory(): JSX.Element {
           </SmallEvent>
         ) : null;
       case 'complete':
-        return player && game ? (
+        return user && game ? (
           <SmallEvent key={`sidebar-event-${eventIndex}`}>
             <i className="fas fa-check-square"></i>
-            <span className="bold"> {player.name}</span> completed{' '}
+            <span className="bold"> {user.name}</span> completed{' '}
             <span className="bold">{game.title}</span>!
           </SmallEvent>
         ) : null;

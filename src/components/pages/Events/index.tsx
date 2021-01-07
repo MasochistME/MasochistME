@@ -1,46 +1,83 @@
 import React from 'react';
+import styled from 'styled-components';
 import { useSelector } from 'react-redux';
-import { Wrapper, Spinner } from 'shared/components';
+import { colors } from 'shared/theme';
+import { Flex, Wrapper, Spinner } from 'shared/components';
 import Event from './Event';
+
+const Events = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  margin: 0;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: ${colors.darkBlueTransparent};
+`;
+const EventTypes = styled.ul`
+  li {
+    i {
+      width: 20px;
+    }
+  }
+`;
+const EventsList = styled.ul`
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  list-style-type: none;
+`;
+
+const eventTypes = [
+  {
+    icon: 'fas fa-user-plus',
+    description: 'new user joining the community',
+  },
+  {
+    icon: 'fas fa-user-minus',
+    description: 'user leaving the community',
+  },
+  {
+    icon: 'fas fa-plus-square',
+    description: 'new game being curated',
+  },
+  {
+    icon: 'fas fa-check-square',
+    description: 'user of the community finishing 100% of the game',
+  },
+  {
+    icon: 'fas fa-caret-square-up',
+    description: 'game promoting a tier',
+  },
+  {
+    icon: 'fas fa-caret-square-down',
+    description: 'game demoting a tier',
+  },
+  {
+    icon: 'fas fa-tasks',
+    description: 'game having achievements added or removed.',
+  },
+];
 
 export default function PageEvents(): JSX.Element {
   const events = useSelector((state: any) => state.events);
+  const eventsDescriptions = eventTypes.map((event: any, index: number) => (
+    <li key={`event-desc-${index}`}>
+      <i className={event.icon}></i> - {event.description}
+    </li>
+  ));
 
   return (
-    <div className="flex-column">
+    <Flex column>
       <Wrapper type="description">
         <div className="page-description">
           <p>This is the list showcasing the last 100 events.</p>
           <p>There are six different types of events:</p>
-          <ul className="event-types">
-            <li>
-              <i className="fas fa-user-plus"></i> - new user joining the
-              community,
-            </li>
-            <li>
-              <i className="fas fa-user-minus"></i> - user leaving the
-              community,
-            </li>
-            <li>
-              <i className="fas fa-plus-square"></i> - new game being curated,
-            </li>
-            <li>
-              <i className="fas fa-check-square"></i> - user of the community
-              finishing 100% of the game,
-            </li>
-            <li>
-              <i className="fas fa-caret-square-up"></i> - game promoting a
-              tier,
-            </li>
-            <li>
-              <i className="fas fa-caret-square-down"></i> - game demoting a
-              tier,
-            </li>
-            <li>
-              <i className="fas fa-tasks"></i> - game having achievements added
-              or removed.
-            </li>
-          </ul>
+          <EventTypes>{eventsDescriptions}</EventTypes>
           <p>
             In case of event relating to a no longer curated game or user no
             longer being part of the group, the{' '}
@@ -48,17 +85,17 @@ export default function PageEvents(): JSX.Element {
           </p>
         </div>
       </Wrapper>
-      <div className="wrapper-events">
-        <ul className="events-list">
-          {events && events.length ? (
+      <Events>
+        <EventsList>
+          {events?.length ? (
             events.map((event: any, eventIndex: number) => (
               <Event event={event} key={`event-${eventIndex}`} />
             ))
           ) : (
             <Spinner />
           )}
-        </ul>
-      </div>
-    </div>
+        </EventsList>
+      </Events>
+    </Flex>
   );
 }
