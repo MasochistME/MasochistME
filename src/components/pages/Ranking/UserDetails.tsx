@@ -3,12 +3,17 @@ import { useSelector } from 'react-redux';
 import _ from 'lodash';
 import { useUserDetails } from 'components/init';
 import { Spinner } from 'shared/components';
+import { Display, DetailsSummary, RatingScore } from './styles';
 import UserGame from './UserGame';
 
 type TUserDetails = {
   id: any;
   show: any;
 };
+
+UserDetails.Display = Display;
+UserDetails.DetailsSummary = DetailsSummary;
+UserDetails.RatingScore = RatingScore;
 
 export default function UserDetails(props: TUserDetails): JSX.Element {
   const { id, show } = props;
@@ -41,10 +46,6 @@ export default function UserDetails(props: TUserDetails): JSX.Element {
   //   });
   //   return sum;
   // };
-
-  const classDisplay = show
-    ? 'user-details flex-column user-details-visible'
-    : 'user-details flex-column user-details-hidden';
 
   const composeGameList = () => {
     user.games = user.games.map((game: any) => {
@@ -86,31 +87,29 @@ export default function UserDetails(props: TUserDetails): JSX.Element {
   };
 
   return userLoaded ? (
-    <div className={classDisplay}>
-      {/* <div className="flex-row user-details-summary">
-        <div className="user-rating-score" title="Sum of all points">
+    <UserDetails.Display show={show}>
+      {/* <UserDetails.Summary>
+        <UserDetails.RatingScore title="Sum of all points">
           {user.points ? user.points : 0}
           <span className="bold"> Σ</span>
-        </div>
+        </UserDetails.RatingScore>
         {rating.map((score: any, scoreIndex: number) => {
           return (
-            <div
-              className="user-rating-score"
-              key={`user-rating-score-${scoreIndex}`}>
+            <UserDetails.RatingScore key={`user-rating-score-${scoreIndex}`}>
               {user.ranking[score.id] !== undefined
                 ? user.ranking[score.id]
                 : 0}
               <i className={score.icon} style={{ paddingRight: '5px' }} />
-            </div>
+            </UserDetails.RatingScore>
           );
         })}
-        <div className="user-rating-score" title="Sum of points for badges">
+        <UserDetails.RatingScore title="Sum of points for badges">
           {summarizeBadgePoints(user, badges)}
           <i className="fas fa-medal" style={{ paddingRight: '5px' }} />
-        </div>
-      </div> */}
+        </UserDetails.RatingScore>
+      </UserDetails.Summary> */}
       {composeGameList()}
-    </div>
+    </UserDetails.Display>
   ) : (
     <Spinner />
   );
