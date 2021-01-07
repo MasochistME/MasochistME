@@ -11,7 +11,8 @@ export const Summary = styled.div.attrs(
     const style: any = {};
     if (shekelmaster) {
       style.backgroundColor = colors.tier4Transparent;
-      style.border = `1px solid ${colors.tier4Muted}`;
+      style.borderTop = `1px solid ${colors.tier4Muted}`;
+      style.borderBottom = `1px solid ${colors.tier4Muted}`;
     }
     if (disabled) {
       style.backgroundColor = colors.darkRedTransparent;
@@ -19,6 +20,8 @@ export const Summary = styled.div.attrs(
     return { style };
   },
 )<TSummary>`
+  display: flex;
+  flex-direction: row;
   width: 100%;
   min-height: 32px;
   background-color: ${colors.darkBlueTransparent};
@@ -32,7 +35,6 @@ export const Position = styled.div`
   align-items: center;
   width: 64px;
   max-width: 64px;
-  height: 100%;
   text-align: center;
   font-size: 1.2em;
   border-right: 1px solid ${colors.newDark};
