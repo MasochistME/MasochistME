@@ -1,31 +1,46 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import _ from 'lodash';
+import { useUserDetails } from 'components/init';
+import { Spinner } from 'shared/components';
 import MemberGame from '../MemberGame';
 
 type TMemberDetails = {
-  user: any;
+  id: any;
   show: any;
-  rating: any;
-  badges: any;
-  games: any;
 };
 
 export default function MemberDetails(props: TMemberDetails): JSX.Element {
-  const { user, show, rating, badges, games } = props;
+  const { id, show } = props;
+  const userLoaded = useUserDetails(id);
+  const rating = useSelector((state: any) => state.rating);
+  // const badges = useSelector((state: any) => state.badges);
+  const games = useSelector((state: any) => state.games);
+  const user = useSelector((state: any) => {
+    const userBasic = state.users.list.find((user: any) => user.id === id);
+    const userGames = state.users.details.find((user: any) => user.id === id)
+      ?.games;
+    const userRanking = state.ranking.find((user: any) => user.id === id);
+    return {
+      ...userBasic,
+      games: userGames,
+      ranking: userRanking,
+    };
+  });
 
-  const summarizeBadgePoints = (user: any, badges: any) => {
-    let sum = 0;
-    user.badges.map((badge: any) => {
-      const usersBadge = badges.find((b: any) => badge.id === b['_id']); // TODO equality
-      if (usersBadge) {
-        if (typeof usersBadge.points !== 'number') {
-          usersBadge.points = parseInt(usersBadge.points);
-        }
-        sum += usersBadge.points;
-      }
-    });
-    return sum;
-  };
+  // const summarizeBadgePoints = (user: any, badges: any) => {
+  //   let sum = 0;
+  //   user.badges.map((badge: any) => {
+  //     const usersBadge = badges.find((b: any) => badge.id === b['_id']); // TODO equality
+  //     if (usersBadge) {
+  //       if (typeof usersBadge.points !== 'number') {
+  //         usersBadge.points = parseInt(usersBadge.points);
+  //       }
+  //       sum += usersBadge.points;
+  //     }
+  //   });
+  //   return sum;
+  // };
 
   const classDisplay = show
     ? 'user-details flex-column user-details-visible'
@@ -70,9 +85,9 @@ export default function MemberDetails(props: TMemberDetails): JSX.Element {
     });
   };
 
-  return (
+  return userLoaded ? (
     <div className={classDisplay}>
-      <div className="flex-row user-details-summary">
+      {/* <div className="flex-row user-details-summary">
         <div className="user-rating-score" title="Sum of all points">
           {user.points ? user.points : 0}
           <span className="bold"> Σ</span>
@@ -93,8 +108,10 @@ export default function MemberDetails(props: TMemberDetails): JSX.Element {
           {summarizeBadgePoints(user, badges)}
           <i className="fas fa-medal" style={{ paddingRight: '5px' }} />
         </div>
-      </div>
+      </div> */}
       {composeGameList()}
     </div>
+  ) : (
+    <Spinner />
   );
 }
