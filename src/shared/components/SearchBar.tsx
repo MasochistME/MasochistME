@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { media, fonts } from 'shared/theme';
-import { searchGames, searchMembers } from 'shared/store/modules/Search';
+import { searchGames, searchUsers } from 'shared/store/modules/Search';
 
 const Wrapper = styled.div`
   display: flex;
@@ -35,11 +35,11 @@ export default function SearchBar(): JSX.Element {
   const adjustToTab = (): void => {
     switch (activeTab) {
       case 'games': {
-        setSearchFor('games');
+        setSearchFor('game');
         return;
       }
       case 'ranking': {
-        setSearchFor('users');
+        setSearchFor('user');
         return;
       }
       default:
@@ -47,15 +47,15 @@ export default function SearchBar(): JSX.Element {
     }
   };
 
-  const update = (event: any): void => {
+  const onSearch = (event: any): void => {
     const searchString = event.target.value;
     switch (searchFor) {
-      case 'games': {
+      case 'game': {
         dispatch(searchGames(searchString));
         return;
       }
-      case 'users': {
-        dispatch(searchMembers(searchString));
+      case 'user': {
+        dispatch(searchUsers(searchString));
         return;
       }
       default:
@@ -64,16 +64,18 @@ export default function SearchBar(): JSX.Element {
   };
 
   useEffect(() => {
-    adjustToTab();
-  }, []);
+    if (activeTab) {
+      adjustToTab();
+    }
+  }, [activeTab]);
 
   return (
     <Wrapper>
       <SearchBarLabel htmlFor="searchbar">Search:</SearchBarLabel>
       <SearchBarInput
         type="text"
-        placeholder={'for ' + searchFor}
-        onChange={update}
+        placeholder={`for ${searchFor}`}
+        onChange={onSearch}
       />
     </Wrapper>
   );

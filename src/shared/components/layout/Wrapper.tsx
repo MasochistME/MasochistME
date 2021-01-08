@@ -46,28 +46,6 @@ const WrapperNav = styled.div`
     padding: 0;
     height: 100%;
     list-style-type: none;
-    li {
-      border-right: 3px solid ${colors.newDark};
-      height: 100%;
-      width: 20%;
-      box-sizing: border-box;
-      &:hover {
-        background-color: ${colors.newDark};
-        cursor: pointer;
-      }
-      &.tab-active {
-        background-color: ${colors.newDark};
-      }
-      p {
-        margin: 10px 0 0 0;
-        @media (max-width: ${media.tablets}) {
-          display: none;
-        }
-      }
-      i {
-        font-size: 1.4em;
-      }
-    }
   }
 `;
 

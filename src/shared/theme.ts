@@ -27,11 +27,11 @@ export const colors = {
 };
 
 export const media = {
-  netbooks: 1100,
-  smallNetbooks: 850,
-  tablets: 650,
-  smallTablets: 500,
-  bigPhones: 400,
+  netbooks: '1100px',
+  smallNetbooks: '850px',
+  tablets: '650px',
+  smallTablets: '500px',
+  bigPhones: '400px',
 };
 
 export const fonts = {

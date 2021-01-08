@@ -6,12 +6,12 @@ export const SEARCH_USER = 'SEARCH_USER';
 export function searchGames(game: any): any {
   return {
     type: SEARCH_GAME,
-    game: game,
+    game,
   };
 }
-export function searchMembers(member: any): any {
+export function searchUsers(user: any): any {
   return {
     type: SEARCH_USER,
-    member: member,
+    user,
   };
 }

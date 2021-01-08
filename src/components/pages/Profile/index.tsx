@@ -106,28 +106,34 @@ export default function Profile(): JSX.Element {
     }
   });
 
-  const badges = useSelector((state: any) =>
-    orderBy(
-      state.badges
-        .filter(
-          (badge: any) =>
-            user?.badges && user.badges.find((b: any) => b.id === badge._id),
-        )
-        .map(
-          (badge: any) =>
-            (badge = {
-              ...badge,
-              game: badge.isNonSteamGame
-                ? badge.game
-                : games.find((game: any) => game.id === badge.gameId)
-                ? games.find((game: any) => game.id === badge.gameId).title
-                : 'unknown',
-            }),
-        ),
-      ['points'],
+  const badges = useSelector((state: any) => {
+    const userBadges = state.badges
+      .filter(
+        (badge: any) =>
+          user?.badges && user.badges.find((b: any) => b.id === badge._id),
+      )
+      .map(
+        (badge: any) =>
+          (badge = {
+            ...badge,
+            points:
+              typeof badge.points !== 'number'
+                ? Number(badge.points)
+                : badge.points,
+            game: badge.isNonSteamGame
+              ? badge.game
+              : games.find((game: any) => game.id === badge.gameId)
+              ? games.find((game: any) => game.id === badge.gameId).title
+              : 'unknown',
+          }),
+      );
+    const orderedUserBadges = orderBy(
+      userBadges,
+      [badge => badge.points],
       ['desc'],
-    ),
-  );
+    );
+    return orderedUserBadges;
+  });
 
   useEffect(() => {
     window.scrollTo(0, 0);

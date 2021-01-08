@@ -1,14 +1,28 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import styled from 'styled-components';
 import { orderBy } from 'lodash';
 import CheckBoxGameChoice from './CheckBoxGameChoice';
 import SearchBar from 'shared/components/SearchBar';
-import { Wrapper, Spinner } from 'shared/components';
-
+import { Wrapper, Spinner, Flex } from 'shared/components';
 import Game from './Game';
 
+const WrapperGames = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  margin: 0;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: $darkbluetransparent;
+`;
+
 export default function PageGames(): JSX.Element {
-  const searchGame = useSelector((state: any) => state.searchGame);
+  const searchGame = useSelector((state: any) => state.search.game);
   const showGamesRated = useSelector((state: any) => state.showGamesRated);
   const rating = useSelector((state: any) => state.rating);
   const games = useSelector((state: any) =>
@@ -20,7 +34,7 @@ export default function PageGames(): JSX.Element {
   );
 
   return (
-    <div className="flex-column">
+    <Flex column>
       <Wrapper type="description">
         <div className="page-description">
           <p>
@@ -55,20 +69,23 @@ export default function PageGames(): JSX.Element {
           </div>
         ) : null}
       </Wrapper>
-      <div className="wrapper-games">
+      <WrapperGames>
         {games && games.length ? (
-          games.map((game: any) =>
-            game.title.toLowerCase().indexOf(searchGame.toLowerCase()) !== -1 &&
-            showGamesRated.find(
-              (score: any) => parseInt(score, 10) === parseInt(game.rating, 10),
-            ) ? (
+          games.map((game: any) => {
+            return game?.title
+              .toLowerCase()
+              .indexOf(searchGame.toLowerCase()) !== -1 &&
+              showGamesRated.find(
+                (score: any) =>
+                  parseInt(score, 10) === parseInt(game.rating, 10),
+              ) ? (
               <Game key={`id-game-${game.id}`} game={game} rating={rating} />
-            ) : null,
-          )
+            ) : null;
+          })
         ) : (
           <Spinner />
         )}
-      </div>
-    </div>
+      </WrapperGames>
+    </Flex>
   );
 }
