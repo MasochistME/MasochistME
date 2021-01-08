@@ -4,6 +4,7 @@ import { orderBy } from 'lodash';
 import LeaderboardsProgressBar from './LeaderboardsProgressBar';
 import StackedBarChart from '../../../Charts/StackedBarChart';
 import ChartWrapper from '../../../Charts/ChartWrapper';
+import { Flex } from 'shared/components';
 
 type Props = {
   show: boolean;
@@ -13,7 +14,15 @@ type Props = {
 
 export default function Leaderboards(props: Props): JSX.Element | null {
   const { show: visible, game, rating } = props;
-  const users = useSelector((state: any) => state.users.list);
+  const users = useSelector((state: any) => {
+    const usersRating = state.ranking.slice(0, 10);
+    const usersBasic = state.users.list;
+    const usersFull = usersRating.map((user: any) => ({
+      ...user,
+      name: usersBasic.find((u: any) => u.id === user.id)?.name,
+    }));
+    return usersFull;
+  });
   const games = useSelector((state: any) => state.games);
   const badges = useSelector((state: any) =>
     orderBy(
@@ -35,7 +44,7 @@ export default function Leaderboards(props: Props): JSX.Element | null {
 
   const leaderboards = orderBy(
     users
-      .filter((user: any) => user.user)
+      .filter((user: any) => user.protected || user.member)
       .filter((user: any) =>
         user.games.find((g: any) => Number(g.appid) === Number(game.id)),
       )
@@ -168,8 +177,8 @@ export default function Leaderboards(props: Props): JSX.Element | null {
         <div className="game-badges">
           <div className="profile-section flex-column">
             <h3 className="profile-section-title">Badges</h3>
-            <div
-              className="flex-column"
+            <Flex
+              column
               style={{
                 width: '100%',
                 height: '100%',
@@ -183,7 +192,7 @@ export default function Leaderboards(props: Props): JSX.Element | null {
                   <p style={{ margin: 0, fontWeight: 'bold' }}>
                     {badge.name.toUpperCase()}
                   </p>
-                  <div className="flex-row" style={{ width: '100%' }}>
+                  <Flex row style={{ width: '100%' }}>
                     <img
                       className="profile-badge"
                       style={{ margin: '5px 10px 5px 5px' }}
@@ -191,17 +200,17 @@ export default function Leaderboards(props: Props): JSX.Element | null {
                       alt="badge"
                       key={`badge-${index}`}
                     />
-                    <div className="flex-column" style={{ width: '100%' }}>
+                    <Flex column style={{ width: '100%' }}>
                       <p className="badge-field">Points: {badge.points} pts</p>
                       <p className="badge-field">Proof: {badge.requirements}</p>
                       <p className="badge-field">
                         Description: {badge.description}
                       </p>
-                    </div>
-                  </div>
+                    </Flex>
+                  </Flex>
                 </div>
               ))}
-            </div>
+            </Flex>
           </div>
         </div>
       ) : null}

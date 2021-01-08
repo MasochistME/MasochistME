@@ -115,13 +115,13 @@ export default function useInit(): boolean {
   };
 
   const init = () => {
-    loadBadges();
-    loadRating();
     loadGames();
+    loadUsers();
+    loadRating();
     loadEvents();
     loadBlog();
+    loadBadges();
     loadPatrons();
-    loadUsers();
     loadRanking();
     setLoaded(true);
   };

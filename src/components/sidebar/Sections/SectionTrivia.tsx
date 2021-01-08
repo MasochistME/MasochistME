@@ -1,59 +1,51 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
-import axios from 'axios';
+import { Spinner } from 'shared/components';
 import { Section, SectionTitle } from '../';
 
 export default function SectionTrivia(): JSX.Element {
   const users = useSelector((state: any) =>
-    state.users.list.filter((user: any) => user.user),
+    state.users.list.filter((user: any) => user.protected || user.member),
   );
   const rating = useSelector((state: any) => state.rating);
-  const [games, setGames] = useState({
-    total: 0,
-    all: [],
-  });
-
-  const loadGames = async (): Promise<void> => {
-    const response = await axios.get('/rest/api/games');
-    if (!response?.data) {
-      return;
-    }
-    setGames({
-      total: response?.data?.length,
-      all: response?.data,
-    });
-  };
+  const games = useSelector((state: any) => state.games);
 
   const mapCurated = () => {
-    if (rating) {
-      return rating.map((tier: any, index: number) => (
-        <li style={{ marginLeft: '30px' }} key={`${tier.score}-${index}`}>
-          <i className={tier.icon} />
-          <span className="bold">{` : ${
-            games.all.filter((game: any) => game.rating === tier.id).length
-          }`}</span>
-        </li>
-      ));
+    if (games && rating) {
+      return rating.map((tier: any, index: number) => {
+        return (
+          <li style={{ marginLeft: '30px' }} key={`${tier.score}-${index}`}>
+            <i className={tier.icon} />
+            <span className="bold">{` : ${
+              games.filter(
+                (game: any) => Number(game.rating) === Number(tier.id),
+              ).length
+            }`}</span>
+          </li>
+        );
+      });
     }
   };
-
-  useEffect(() => {
-    loadGames();
-  }, []);
 
   return (
     <Section>
       <SectionTitle>Trivia</SectionTitle>
-      <p>
-        Members total: <span className="bold">{users.length}</span>
-      </p>
-      <p>Curated games:</p>
-      <ul>
-        <li style={{ marginLeft: '30px' }}>
-          total: <span className="bold">{games.total}</span>
-        </li>
-        <ul>{mapCurated()}</ul>
-      </ul>
+      {users.length && rating ? (
+        <>
+          <p>
+            Users total: <span className="bold">{users.length}</span>
+          </p>
+          <p>Curated games:</p>
+          <ul>
+            <li style={{ marginLeft: '30px' }}>
+              total: <span className="bold">{games.length}</span>
+            </li>
+            <ul>{mapCurated()}</ul>
+          </ul>
+        </>
+      ) : (
+        <Spinner />
+      )}
     </Section>
   );
 }

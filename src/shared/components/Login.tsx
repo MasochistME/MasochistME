@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { showLoginModal, logOutUser } from 'shared/store/modules/Login';
 import { changeTab } from 'shared/store/modules/Tabs';
+import { Flex } from 'shared/components';
 import login_button from 'shared/images/steam_login.png';
 
 export default function Login(): JSX.Element {
@@ -26,7 +27,7 @@ export default function Login(): JSX.Element {
           alt="Login via Steam"
           onClick={showLogin}></img>
       ) : (
-        <div className="flex-row">
+        <Flex row>
           <div
             className="button flex-row"
             style={{ borderLeft: 'none' }}
@@ -37,7 +38,7 @@ export default function Login(): JSX.Element {
             <p>Log out</p>
             <i className="fas fa-sign-out-alt"></i>
           </div>
-        </div>
+        </Flex>
       )}
     </div>
   );
