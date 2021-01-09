@@ -333,7 +333,7 @@ const clearBadge = (): void => {
 
 const expireBadge = (footer?: string): void => {
   const badgeRoom = cache["addbadge"].channelId;
-  const channel = cache["bot"].channels.get(badgeRoom);
+  const channel = cache["bot"].channels.cache.get(badgeRoom);
   channel.fetchMessage(cache["addbadge"].msgId).then(message => {
     message.edit(badgeScreenEmbed(footer));
     message
