@@ -13,7 +13,7 @@ type Props = { event: any };
 
 export default function TierChangeEvent(props: Props): JSX.Element | null {
   const { event } = props;
-  const games = useSelector((state: any) => state.games);
+  const games = useSelector((state: any) => state.games.list);
   const rating = useSelector((state: any) => state.rating);
 
   const game = games.find(

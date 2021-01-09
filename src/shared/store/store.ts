@@ -17,11 +17,15 @@ import {
   CACHE_BADGES,
   CACHE_RANKING,
   CACHE_USER_DETAILS,
+  CACHE_GAME_DETAILS,
 } from './modules/Cache';
 
 // STORES
 type TStore = {
-  games: any[];
+  games: {
+    list: any[];
+    details: any[];
+  };
   users: {
     list: any[];
     details: any[];
@@ -52,7 +56,10 @@ type TStore = {
 };
 
 const defaultState: TStore = {
-  games: [],
+  games: {
+    list: [],
+    details: [],
+  },
   users: {
     list: [],
     details: [],
@@ -151,7 +158,10 @@ const reducer = (state = defaultState, action: any) => {
     case CACHE_GAMES:
       return {
         ...state,
-        games: action.data,
+        games: {
+          ...state.games,
+          list: action.data,
+        },
       };
     case CACHE_USERS:
       return {
@@ -197,6 +207,16 @@ const reducer = (state = defaultState, action: any) => {
         ...state,
         users: {
           ...state.users,
+          details,
+        },
+      };
+    }
+    case CACHE_GAME_DETAILS: {
+      const details: any[] = [...state.games.details, action.data];
+      return {
+        ...state,
+        games: {
+          ...state.games,
           details,
         },
       };

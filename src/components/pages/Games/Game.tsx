@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { swapRatingToIcon } from 'shared/helpers/helper';
 import { colors } from 'shared/theme';
-import Leaderboards from '../Leaderboards/index';
+import Leaderboards from './Leaderboards';
 
 const StyledGame = styled.div.attrs(({ extended }: { extended?: boolean }) => {
   const style = extended
@@ -75,13 +76,17 @@ Game.Img = styled.div.attrs(
 `;
 
 type TGame = {
-  game: any;
+  id: any;
   rating: any;
 };
 
 export default function Game(props: TGame): JSX.Element {
-  const { game, rating } = props;
+  const { id, rating } = props;
   const [extended, setExtended] = useState(false);
+
+  const game = useSelector((state: any) =>
+    state.games.list.find((g: any) => g.id === id),
+  );
 
   const onExtend = (event: any) => {
     event.cancelBubble = true;
@@ -105,7 +110,7 @@ export default function Game(props: TGame): JSX.Element {
           <Game.Desc>{game.desc}</Game.Desc>
         </Game.Info>
       </Game.Img>
-      <Leaderboards show={extended} game={game} rating={game.rating} />
+      {extended && <Leaderboards id={game.id} rating={game.rating} />}
     </StyledGame>
   );
 }

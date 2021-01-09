@@ -8,7 +8,7 @@ export default function SectionTrivia(): JSX.Element {
     state.users.list.filter((user: any) => user.protected || user.member),
   );
   const rating = useSelector((state: any) => state.rating);
-  const games = useSelector((state: any) => state.games);
+  const games = useSelector((state: any) => state.games.list);
 
   const mapCurated = () => {
     if (games && rating) {

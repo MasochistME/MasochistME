@@ -18,7 +18,7 @@ export const SectionSaleUl = styled.ul`
 
 export default function SectionSale(): JSX.Element {
   const games = useSelector((state: any) =>
-    orderBy(state.games, ['sale.discount'], ['desc']),
+    orderBy(state.games.list, ['sale.discount'], ['desc']),
   );
 
   const gamesOnSale = games

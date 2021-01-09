@@ -66,9 +66,9 @@ type TUserProps = {
 
 export default function UserGame(props: TUserProps): JSX.Element {
   const { game } = props;
-  const percentage = isNaN(Math.floor(game.completionRate))
+  const percentage = isNaN(Math.floor(game.percentage))
     ? 0
-    : Math.floor(game.completionRate);
+    : Math.floor(game.percentage);
 
   return (
     <UserGame.Game>
@@ -79,18 +79,16 @@ export default function UserGame(props: TUserProps): JSX.Element {
           <UserGame.Title> {game.title}</UserGame.Title>
         </Flex>
         <UserGame.Times>
-          {game.completionRate === 100 ? (
+          {game.percentage === 100 ? (
             <UserGame.CompletionTimer>
               {new Date(game.lastUnlocked * 1000).toLocaleString()}
             </UserGame.CompletionTimer>
           ) : null}
           <div style={{ display: 'none' }}>
-            {game.playtime_forever
-              ? typeof game.playtime_forever === 'number'
-                ? Math.round(game.playtime_forever)
-                : Math.round(
-                    parseInt(game.playtime_forever.replace(',', ''), 10),
-                  )
+            {game.playtime
+              ? typeof game.playtime === 'number'
+                ? Math.round(game.playtime)
+                : Math.round(Number(game.playtime))
               : 0}{' '}
             h
           </div>
