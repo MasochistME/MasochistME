@@ -46,7 +46,10 @@ export const deletebadge = (msg: Discord.Message): void => {
     return;
   }
 
-  const badge = cache["badges"].find(b => b["_id"] === badgeId);
+  const badge = cache["badges"].find(b => {
+    const badgeIdObj = ObjectId(badgeId);
+    return badgeIdObj.equals(b["_id"]);
+  });
 
   if (!badge) {
     msg.channel.send(
@@ -74,7 +77,10 @@ export const givebadge = (msg: Discord.Message): void => {
     return;
   }
 
-  const badge = cache["badges"].find(b => b["_id"] === badgeId);
+  const badge = cache["badges"].find(b => {
+    const badgeIdObj = ObjectId(badgeId);
+    return badgeIdObj.equals(b["_id"]);
+  });
   const user = cache["users"].find(u => u.id === userId);
   const url = `http://localhost:3002/rest/badges/badge/${badgeId}/user/${userId}`;
 
@@ -105,7 +111,10 @@ export const takebadge = (msg: Discord.Message): void => {
     return;
   }
 
-  const badge = cache["badges"].find(b => b["_id"] === badgeId);
+  const badge = cache["badges"].find(b => {
+    const badgeIdObj = ObjectId(badgeId);
+    return badgeIdObj.equals(b["_id"]);
+  });
   const user = cache["users"].find(u => u.id === userId);
   const url = `http://localhost:3002/rest/badges/badge/${badgeId}/user/${userId}`;
 
