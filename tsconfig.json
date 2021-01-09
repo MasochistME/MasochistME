@@ -9,10 +9,12 @@
     "strictNullChecks": true,
     "module": "commonJS",
     "esModuleInterop": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "baseUrl": "./src",
+    "noEmit": false,
   },
   "include": [
-    "./lib/**/*"
+    "src"
   ],
   "exclude": [
     "node_modules",
