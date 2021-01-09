@@ -12,6 +12,7 @@ import {
   cacheBadges,
   cacheRanking,
   cacheUserDetails,
+  cacheGameDetails,
 } from 'shared/store/modules/Cache';
 import { showGamesRated } from 'shared/store/modules/CheckBoxes';
 
@@ -133,6 +134,10 @@ export default function useInit(): boolean {
   return loaded;
 }
 
+/**
+ * Retrieves particular user's data for the ranking page.
+ * @param id: string - user id
+ */
 export function useUserDetails(id: string): boolean {
   const dispatch = useDispatch();
   const loaded = useSelector(
@@ -141,7 +146,7 @@ export function useUserDetails(id: string): boolean {
 
   const loadUserDetails = () => {
     axios
-      .get(`${path}/api/users/user/${id}`)
+      .get(`${path}/api/ranking/user/${id}`)
       .then(response => {
         if (response?.status === 200) {
           dispatch(cacheUserDetails(response.data));
@@ -153,6 +158,36 @@ export function useUserDetails(id: string): boolean {
   useEffect(() => {
     if (!loaded) {
       loadUserDetails();
+    }
+  }, [loaded]);
+
+  return loaded;
+}
+
+/**
+ * Retrieves leaderboards data for a particular game.
+ * @param id - game id
+ */
+export function useGameDetails(id: string): boolean {
+  const dispatch = useDispatch();
+  const loaded = useSelector(
+    (state: any) => !!state.games.details.find((game: any) => game.id === id),
+  );
+
+  const loadGameDetails = () => {
+    axios
+      .get(`${path}/api/ranking/game/${id}`)
+      .then(response => {
+        if (response?.status === 200) {
+          dispatch(cacheGameDetails(response.data));
+        }
+      })
+      .catch(err => console.trace(err));
+  };
+
+  useEffect(() => {
+    if (!loaded) {
+      loadGameDetails();
     }
   }, [loaded]);
 

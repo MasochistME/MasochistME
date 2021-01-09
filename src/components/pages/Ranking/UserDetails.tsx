@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import _ from 'lodash';
+import { orderBy } from 'lodash';
 import { useUserDetails } from 'components/init';
 import { Spinner } from 'shared/components';
 import { Display, DetailsSummary, RatingScore } from './styles';
@@ -20,7 +20,7 @@ export default function UserDetails(props: TUserDetails): JSX.Element {
   const userLoaded = useUserDetails(id);
   const rating = useSelector((state: any) => state.rating);
   // const badges = useSelector((state: any) => state.badges);
-  const games = useSelector((state: any) => state.games);
+  const games = useSelector((state: any) => state.games.list);
   const user = useSelector((state: any) => {
     const userBasic = state.users.list.find((user: any) => user.id === id);
     const userGames = state.users.details.find((user: any) => user.id === id)
@@ -48,33 +48,28 @@ export default function UserDetails(props: TUserDetails): JSX.Element {
   // };
 
   const composeGameList = () => {
-    user.games = user.games.map((game: any) => {
-      game.completionRate = isNaN(game.completionRate)
-        ? 0
-        : game.completionRate;
-      return game;
-    });
-    const userGames = _.orderBy(
-      user.games,
-      ['completionRate', 'lastUnlocked'],
+    const userGames = orderBy(
+      user.games.map((game: any) => ({
+        ...game,
+        percentage: typeof game.percentage !== 'number' ? 0 : game.percentage,
+      })),
+      ['percentage', 'lastUnlocked'],
       ['desc', 'desc'],
     );
+
+    console.log(userGames);
     return userGames.map(game => {
-      let gameDetails = games.find(
-        (g: any) => Number(g.id) === Number(game.appid),
+      const gameDetails = games.find(
+        (g: any) => Number(g.id) === Number(game.id),
       );
       if (!gameDetails) {
-        gameDetails = {
-          title: 'unknown',
-          rating: 'unknown',
-          img: 'unknown',
-          playtime_forever: 0,
-        };
+        // most likely non-steam game, or deleted one
+        return;
       }
       const ratingIcon = rating.find((r: any) => r.id === gameDetails.rating);
       return (
         <UserGame
-          key={`game-${game.appid}`}
+          key={`game-${game.id}`}
           game={{
             ...game,
             title: gameDetails.title,

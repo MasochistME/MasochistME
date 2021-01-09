@@ -1,126 +1,126 @@
 [
-    {
-        "id": "76561198033628890",
-        "name": "mattBLiTZ",
-        "avatar": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/f4/f44e4686ed0157f0bfd622b117f2c0d95fadbb58_medium.jpg",
-        "games": [ ],
-        "ranking": {
-            "1": 0,
-            "2": 0,
-            "3": 0,
-            "5": 0
-        }
-    },
-    {
-        "id": "76561198052656057",
-        "name": "Megarider VACation",
-        "avatar": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/c3/c35eabe55cdbda152870fd56efba89df11158007_medium.jpg",
-        "games": [
-            {
-                "id": "40800",
-                "playtime": 6443,
-                "completionRate": 100,
-                "lastUnlocked": 1518918128
-            }
-        ],
-        "ranking": {
-            "1": 0,
-            "2": 0,
-            "3": 0,
-            "5": 1
-        }
-    },
-    {
-        "id": "76561198049600266",
-        "name": "Nick",
-        "avatar": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/65/65d35f4d51e83a5866140a7509e44468aa8250c4_medium.jpg",
-        "games": [
-            {
-                "id": "40800",
-                "playtime": 2583,
-                "completionRate": 75,
-                "lastUnlocked": 1506446668
-            },
-            {
-                "id": "63710",
-                "playtime": 70,
-                "completionRate": 27.27272727272727,
-                "lastUnlocked": 1507306698
-            },
-            {
-                "id": "65300",
-                "playtime": 582,
-                "completionRate": 24.528301886792452,
-                "lastUnlocked": 1531610364
-            },
-            {
-                "id": "70300",
-                "playtime": 11789,
-                "completionRate": 100,
-                "lastUnlocked": 1509713758
-            }
-        ],
-        "ranking": {
-            "1": 0,
-            "2": 0,
-            "3": 0,
-            "5": 1
-        }
-    },
-    {
-        "id": "76561198145763542",
-        "name": "nowo",
-        "avatar": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/9e/9e0ccef324c77a01cad4ab932f9bd16da3dc91e4_medium.jpg",
-        "games": [
-            {
-                "id": "40800",
-                "playtime": 5052,
-                "completionRate": 100,
-                "lastUnlocked": 1518038560
-            },
-            {
-                "id": "65300",
-                "playtime": 1452,
-                "completionRate": 100,
-                "lastUnlocked": 1531131519
-            },
-            {
-                "id": "63710",
-                "playtime": 828,
-                "completionRate": 94.73684210526315,
-                "lastUnlocked": 1532180486
-            }
-        ],
-        "ranking": {
-            "1": 0,
-            "2": 1,
-            "3": 0,
-            "5": 1
-        }
-    },
-    {
-        "id": "76561198109103623",
-        "name": "omeghamatt",
-        "avatar": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/49/49348096c77975be48ad52c1c4661db0fec1fc35_medium.jpg",
-        "games": [
-            {
-                "id": "40800",
-                "playtime": 4726,
-                "completionRate": 100,
-                "lastUnlocked": 1501514381
-            },
-            {
-                "id": "94200",
-                "playtime": 176,
-                "completionRate": 100,
-                "lastUnlocked": 1531062007
-            }
-        ],
-        "ranking": {
-            "1": 0,
-            "2": 0,
-            "3": 0,
-            "5": 2
-        }
+  {
+    "id": "76561198033628890",
+    "name": "mattBLiTZ",
+    "avatar": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/f4/f44e4686ed0157f0bfd622b117f2c0d95fadbb58_medium.jpg",
+    "games": [],
+    "ranking": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "5": 0
     }
+  },
+  {
+    "id": "76561198052656057",
+    "name": "Megarider VACation",
+    "avatar": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/c3/c35eabe55cdbda152870fd56efba89df11158007_medium.jpg",
+    "games": [
+      {
+        "id": "40800",
+        "playtime": 6443,
+        "percentage": 100,
+        "lastUnlocked": 1518918128
+      }
+    ],
+    "ranking": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "5": 1
+    }
+  },
+  {
+    "id": "76561198049600266",
+    "name": "Nick",
+    "avatar": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/65/65d35f4d51e83a5866140a7509e44468aa8250c4_medium.jpg",
+    "games": [
+      {
+        "id": "40800",
+        "playtime": 2583,
+        "percentage": 75,
+        "lastUnlocked": 1506446668
+      },
+      {
+        "id": "63710",
+        "playtime": 70,
+        "percentage": 27.27272727272727,
+        "lastUnlocked": 1507306698
+      },
+      {
+        "id": "65300",
+        "playtime": 582,
+        "percentage": 24.528301886792452,
+        "lastUnlocked": 1531610364
+      },
+      {
+        "id": "70300",
+        "playtime": 11789,
+        "percentage": 100,
+        "lastUnlocked": 1509713758
+      }
+    ],
+    "ranking": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "5": 1
+    }
+  },
+  {
+    "id": "76561198145763542",
+    "name": "nowo",
+    "avatar": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/9e/9e0ccef324c77a01cad4ab932f9bd16da3dc91e4_medium.jpg",
+    "games": [
+      {
+        "id": "40800",
+        "playtime": 5052,
+        "percentage": 100,
+        "lastUnlocked": 1518038560
+      },
+      {
+        "id": "65300",
+        "playtime": 1452,
+        "percentage": 100,
+        "lastUnlocked": 1531131519
+      },
+      {
+        "id": "63710",
+        "playtime": 828,
+        "percentage": 94.73684210526315,
+        "lastUnlocked": 1532180486
+      }
+    ],
+    "ranking": {
+      "1": 0,
+      "2": 1,
+      "3": 0,
+      "5": 1
+    }
+  },
+  {
+    "id": "76561198109103623",
+    "name": "omeghamatt",
+    "avatar": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/49/49348096c77975be48ad52c1c4661db0fec1fc35_medium.jpg",
+    "games": [
+      {
+        "id": "40800",
+        "playtime": 4726,
+        "percentage": 100,
+        "lastUnlocked": 1501514381
+      },
+      {
+        "id": "94200",
+        "playtime": 176,
+        "percentage": 100,
+        "lastUnlocked": 1531062007
+      }
+    ],
+    "ranking": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "5": 2
+    }
+  }
 ]

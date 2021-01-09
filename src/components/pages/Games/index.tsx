@@ -27,7 +27,7 @@ export default function PageGames(): JSX.Element {
   const rating = useSelector((state: any) => state.rating);
   const games = useSelector((state: any) =>
     orderBy(
-      state.games,
+      state.games.list,
       ['rating', game => game.title.toLowerCase()],
       ['desc', 'asc'],
     ),
@@ -79,7 +79,7 @@ export default function PageGames(): JSX.Element {
                 (score: any) =>
                   parseInt(score, 10) === parseInt(game.rating, 10),
               ) ? (
-              <Game key={`id-game-${game.id}`} game={game} rating={rating} />
+              <Game key={`id-game-${game.id}`} id={game.id} rating={rating} />
             ) : null;
           })
         ) : (

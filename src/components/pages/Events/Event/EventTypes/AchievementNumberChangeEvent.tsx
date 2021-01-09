@@ -21,7 +21,7 @@ export default function AchievementNumberChangeEvent(
       game ? Number(r.id) === Number(game.rating) : null,
     ),
   );
-  const games = useSelector((state: any) => state.games);
+  const games = useSelector((state: any) => state.games.list);
   const game = games.find((g: any) => Number(g.id) === Number(event.game));
 
   return game && rating ? (

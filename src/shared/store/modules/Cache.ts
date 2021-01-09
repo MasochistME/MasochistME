@@ -8,6 +8,7 @@ export const CACHE_PATRONS = 'CACHE_PATRONS';
 export const CACHE_BADGES = 'CACHE_BADGES';
 export const CACHE_RANKING = 'CACHE_RANKING';
 export const CACHE_USER_DETAILS = 'CACHE_USER_DETAILS';
+export const CACHE_GAME_DETAILS = 'CACHE_GAME_DETAILS';
 
 // ACTION CREATORS
 export function cacheGames(data: any): any {
@@ -61,6 +62,12 @@ export function cacheRanking(data: any): any {
 export function cacheUserDetails(data: any): any {
   return {
     type: CACHE_USER_DETAILS,
+    data,
+  };
+}
+export function cacheGameDetails(data: any): any {
+  return {
+    type: CACHE_GAME_DETAILS,
     data,
   };
 }

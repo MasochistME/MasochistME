@@ -15,7 +15,7 @@ type Props = {
 export default function CompleteEvent(props: Props): JSX.Element | null {
   const { event } = props;
   const game = useSelector((state: any) =>
-    state.games.find((g: any) => Number(g.id) === Number(event.game)),
+    state.games.list.find((g: any) => Number(g.id) === Number(event.game)),
   );
   const user = useSelector((state: any) =>
     state.users.list.find((u: any) => u.id === event.member),

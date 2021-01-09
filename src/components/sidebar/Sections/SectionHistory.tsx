@@ -9,7 +9,7 @@ export default function SectionHistory(): JSX.Element {
   const events = useSelector((state: any) =>
     orderBy(state.events, ['date'], ['desc']).slice(0, 10),
   );
-  const games = useSelector((state: any) => state.games);
+  const games = useSelector((state: any) => state.games.list);
   const users = useSelector((state: any) => state.users.list);
   const rating = useSelector((state: any) => state.rating);
 

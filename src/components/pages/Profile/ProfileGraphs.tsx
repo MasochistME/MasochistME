@@ -28,7 +28,7 @@ type Props = {
 
 export default function ProfileGraphs(props: Props): JSX.Element {
   const { user } = props;
-  const games = useSelector((state: any) => state.games);
+  const games = useSelector((state: any) => state.games.list);
   const rating = useSelector((state: any) => state.rating);
 
   const summarizeTotalTimes = (
@@ -51,20 +51,18 @@ export default function ProfileGraphs(props: Props): JSX.Element {
     );
 
     if (scope === 'completed') {
-      userGames = userGames.filter((game: any) => game.completionRate === 100);
+      userGames = userGames.filter((game: any) => game.percentage === 100);
     }
 
     userGames
-      .filter((game: any) =>
-        games.find((g: any) => parseInt(g.id) === game.appid),
-      )
+      .filter((game: any) => games.find((g: any) => parseInt(g.id) === game.id))
       .map((game: any) => {
         game = {
           ...game,
-          rating: games.find((g: any) => parseInt(g.id) === game.appid).rating,
+          rating: games.find((g: any) => parseInt(g.id) === game.id).rating,
         };
         const index = data.findIndex((d: any) => d.id === game.rating);
-        data[index].sum += parseInt(game.playtime_forever);
+        data[index].sum += game.playtime;
         return game;
       });
 
@@ -90,13 +88,13 @@ export default function ProfileGraphs(props: Props): JSX.Element {
     user?.games
       .filter(
         (game: any) =>
-          game.completionRate === 100 &&
-          games.find((g: any) => parseInt(g.id) === game.appid),
+          game.percentage === 100 &&
+          games.find((g: any) => parseInt(g.id) === game.id),
       )
       .map((game: any) => {
         game = {
           ...game,
-          rating: games.find((g: any) => parseInt(g.id) === game.appid).rating,
+          rating: games.find((g: any) => parseInt(g.id) === game.id).rating,
         };
         const index = data.findIndex((d: any) => d.id === game.rating);
         data[index].sum += 1;
@@ -112,9 +110,7 @@ export default function ProfileGraphs(props: Props): JSX.Element {
     let startDate = 0;
     let endDate = 0;
 
-    let timelines = user?.games.filter(
-      (game: any) => game.completionRate === 100,
-    );
+    let timelines = user?.games.filter((game: any) => game.percentage === 100);
     timelines = orderBy(timelines, ['lastUnlocked'], ['asc']);
 
     // @ts-ignore
@@ -143,7 +139,7 @@ export default function ProfileGraphs(props: Props): JSX.Element {
           const year = new Date(game.lastUnlocked * 1000).getFullYear();
           return (
             date.label === `${year}-${month < 10 ? `0${month}` : month}` &&
-            games.find((g: any) => parseInt(g.id) === game.appid)
+            games.find((g: any) => parseInt(g.id) === game.id)
           );
         })
         .map((game: any) => {
@@ -151,7 +147,7 @@ export default function ProfileGraphs(props: Props): JSX.Element {
             date.points += rating.find(
               (r: any) =>
                 r.id ===
-                games.find((g: any) => parseInt(g.id) === game.appid).rating,
+                games.find((g: any) => parseInt(g.id) === game.id).rating,
             ).score;
           } catch (err) {
             console.log(err);

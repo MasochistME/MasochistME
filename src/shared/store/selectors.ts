@@ -1,12 +1,12 @@
 import { useSelector } from 'react-redux';
 
 export function useCuratorData(): any {
+  const games = useSelector((state: any) => state.games.list);
+  const users = useSelector((state: any) => state.users.list);
   const badges = useSelector((state: any) => state.badges);
   const blog = useSelector((state: any) => state.blog);
   const events = useSelector((state: any) => state.events);
-  const games = useSelector((state: any) => state.games);
   const points = useSelector((state: any) => state.points);
-  const users = useSelector((state: any) => state.users.list);
 
   return {
     badges,

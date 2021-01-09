@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { Wrapper, Flex } from 'shared/components';
 
 export default function PageBadges(): JSX.Element {
-  const games = useSelector((state: any) => state.games);
+  const games = useSelector((state: any) => state.games.list);
   const badges = useSelector((state: any) =>
     orderBy(
       state.badges.map(
