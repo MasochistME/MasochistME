@@ -6,16 +6,20 @@ export const router = express.Router();
 // -----------------------------------------------------------------
 
 import { getUsers, getUserDetails } from './users';
-import { getRanking, getUserRanking } from './ranking';
+import { getRanking, getUserRanking, getGameLeaderboards } from './ranking';
+import { getCuratorGames } from './curator';
 import { getBlog } from './blog';
 import { getEvents } from './events';
 
 router.get('/ranking', getRanking);
 router.get('/ranking/user/:id', getUserRanking);
+router.get('/ranking/game/:id', getGameLeaderboards);
+router.get('/curator/games', getCuratorGames);
 router.get('/users', getUsers);
-router.get('/users/user/:id', getUserDetails);
 router.get('/blog', getBlog);
 router.post('/events', getEvents);
+
+router.get('/users/user/:id', getUserDetails);
 
 // -----------------------------------------------------------------
 // ------------------------------- OLD -----------------------------
@@ -41,7 +45,7 @@ import {
   deletePatron,
 } from './old/patrons';
 import {
-  getCuratorGames,
+  // getCuratorGames,
   getCuratedGamesFromTier,
   updateCuratorGames,
   getCuratorMembers,
@@ -66,7 +70,7 @@ router.get('/patrons/patron/:steamid', getPatron);
 router.put('/patrons/patron/:steamid/tier/:tier', updatePatron);
 router.delete('/patrons/patron/:steamid', deletePatron);
 
-router.get('/curator/games', getCuratorGames);
+// router.get('/curator/games', getCuratorGames);
 router.get('/curator/games/tier/:tier', getCuratedGamesFromTier);
 router.put('/curator/games', updateCuratorGames);
 router.get('/curator/members', getCuratorMembers);

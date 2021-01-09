@@ -107,7 +107,9 @@ export const getUserRanking = async (
           typeof game.lastUnlocked !== 'number'
             ? Number(game.lastUnlocked)
             : game.lastUnlocked;
-        return { id: game.id, playtime, percentage, lastUnlocked };
+        const gameId =
+          typeof game.appid !== 'number' ? Number(game.appid) : game.appid;
+        return { id: gameId, playtime, percentage, lastUnlocked };
       }),
     };
 
@@ -116,3 +118,77 @@ export const getUserRanking = async (
     res.status(500).send(err);
   }
 };
+
+/**
+ * Returns info about one singular leaderboards data.
+ */
+export const getGameLeaderboards = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  try {
+    const id = req.params.id; // game id
+    const game = await getDataFromDB('games', { id });
+    const users = await getDataFromDB('users');
+    if (!game) {
+      res.sendStatus(404);
+      return;
+    }
+    const filteredUsers = users
+      .filter((user: any) => findGame(user, id))
+      .map((user: any) => {
+        const gameDetails = findGame(user, id);
+        return {
+          userId: user.id,
+          playtime:
+            typeof gameDetails?.playtime_forever !== 'number'
+              ? Number(gameDetails?.playtime_forever)
+              : gameDetails?.playtime_forever,
+          percentage:
+            typeof gameDetails?.completionRate !== 'number'
+              ? Number(gameDetails?.completionRate)
+              : gameDetails?.completionRate,
+          lastUnlocked:
+            typeof gameDetails?.lastUnlocked !== 'number'
+              ? Number(gameDetails?.lastUnlocked)
+              : gameDetails?.lastUnlocked,
+        };
+      });
+    const orderedUsers = orderBy(
+      filteredUsers,
+      ['percentage', 'lastUnlocked'],
+      ['desc', 'asc'],
+    );
+    const usersWithTrophies = assignTrophies(orderedUsers);
+    res.status(200).send(usersWithTrophies);
+  } catch (err) {
+    res.sendStatus(500);
+  }
+};
+
+const findGame = (user: any, gameId: any) =>
+  user.games.find((userGame: any) => {
+    const gameIdUser =
+      typeof userGame.appid !== 'number'
+        ? Number(userGame.appid)
+        : userGame.appid;
+    const gameIdNumber = typeof gameId !== 'number' ? Number(gameId) : gameId;
+    return gameIdUser === gameIdNumber;
+  });
+
+const assignTrophies = (users: any): string | undefined =>
+  users.map((user: any, index: number) => {
+    if (user.percentage !== 100) {
+      return user;
+    }
+    switch (index) {
+      case 0:
+        return { ...user, trophy: '🥇' };
+      case 1:
+        return { ...user, trophy: '🥈' };
+      case 2:
+        return { ...user, trophy: '🥉' };
+      default:
+        return user;
+    }
+  });

@@ -7,33 +7,30 @@ import { getDataFromDB } from 'helpers/db';
 export const getUsers = async (req: Request, res: Response): Promise<void> => {
   try {
     const users = await getDataFromDB('users');
-    const filteredUsers = users.map(user => {
-      const {
-        id,
-        name,
-        url,
-        avatar,
-        badges,
-        updated,
-        private: isPrivate,
-        member,
-        protected: isProtected,
-      } = user;
-      // const userGames = user.games;
-      // delete userGames.achievements;
-      return {
-        id,
-        name,
-        url,
-        avatar,
-        badges,
-        // games: userGames,
-        updated,
-        private: isPrivate,
-        member,
-        protected: isProtected,
-      };
-    });
+    const filteredUsers = users
+      .filter((user: any) => user.protected || user.member)
+      .map((user: any) => {
+        const {
+          id,
+          name,
+          url,
+          avatar,
+          updated,
+          private: isPrivate,
+          member,
+          protected: isProtected,
+        } = user;
+        return {
+          id,
+          name,
+          url,
+          avatar,
+          updated,
+          private: isPrivate,
+          member,
+          protected: isProtected,
+        };
+      });
     res.status(200).send(filteredUsers);
   } catch (err) {
     res.status(err.code).send(err);
@@ -53,8 +50,13 @@ export const getUserDetails = async (
       return;
     }
     const { badges, games } = rawUser;
-    delete games.achievements;
-    res.status(200).send({ id, badges, games });
+    const fixedGames = games.map(game => ({
+      appid: game.appid,
+      playtime_forever: game.playtime_forever,
+      completionRate: game.completionRate,
+      lastUnlocked: game.lastUnlocked,
+    }));
+    res.status(200).send({ id, badges, games: fixedGames });
   } catch (err) {
     console.log(err);
     res.status(500).send(err);
