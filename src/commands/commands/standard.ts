@@ -16,9 +16,9 @@ export const help = (msg: Discord.Message): void => {
     .filter(cmd => !cmd.isModOnly && cmd.description)
     .map(
       cmd =>
-        (content += `- \`\`${getCommandSymbol()}${cmd.keyword}\`\` - ${
-          cmd.description
-        }\n`),
+        (content += `- ${
+          cmd.isDisabled ? "🚧 - " : ""
+        }\`\`${getCommandSymbol()}${cmd.keyword}\`\` - ${cmd.description}\n`),
     );
   const embed = createEmbed("📜 Standard commands", [
     { title: "List:", content: content || "There's no commands." },
@@ -32,9 +32,9 @@ export const hmod = (msg: Discord.Message): void => {
     .filter(cmd => cmd.isModOnly && cmd.description)
     .map(
       cmd =>
-        (content += `- \`\`${getCommandSymbol()}${cmd.keyword}\`\` - ${
-          cmd.description
-        }\n`),
+        (content += `- ${
+          cmd.isDisabled ? "🚧 - " : ""
+        }\`\`${getCommandSymbol()}${cmd.keyword}\`\` - ${cmd.description}\n`),
     );
   const embed = createEmbed("📜 Moderation commands", [
     { title: "List:", content: content || "There's no moderation commands." },
