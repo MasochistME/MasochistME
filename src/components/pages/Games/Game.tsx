@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import Modal from 'react-modal';
 import styled from 'styled-components';
 import { swapRatingToIcon } from 'shared/helpers/helper';
 import { colors } from 'shared/theme';
+import { Img, Desc, Info, Title, Rating } from './styles';
 import Leaderboards from './Leaderboards';
+
+Modal.setAppElement('#root');
 
 const StyledGame = styled.div.attrs(({ extended }: { extended?: boolean }) => {
   const style = extended
@@ -24,65 +28,20 @@ const StyledGame = styled.div.attrs(({ extended }: { extended?: boolean }) => {
   return { style };
 })<{ extended?: boolean }>``;
 
-Game.Info = styled.div`
-  width: 100%;
-  height: 100%;
-  padding: 5px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  overflow: hidden;
-  opacity: 0;
-  background-color: rgba(0, 0, 0, 0);
-  color: ${colors.superLightGrey};
-  transition: background-color linear 0.5s, opacity 0.5s;
-  &:hover {
-    opacity: 1;
-    background-color: ${colors.superDarkGrey}dd;
-  }
-`;
-Game.Desc = styled.div`
-  font-size: 0.85em;
-`;
-Game.Title = styled.div``;
-Game.Rating = styled.div``;
-Game.Img = styled.div.attrs(
-  ({ extended, src }: { extended?: boolean; src: string }) => {
-    const style: any = {
-      backgroundImage: `url(${src})`,
-    };
-    if (extended) {
-      style.display = 'none';
-    }
-    return { style };
-  },
-)<{ extended?: boolean; src: string }>`
-  display: block;
-  width: 300px;
-  height: 145px;
-  margin: 5px;
-  background-size: 300px;
-  background-position: center;
-  background-repeat: no-repeat;
-  text-align: center;
-  border: 3px solid ${colors.superLightGrey};
-  box-sizing: border-box;
-  cursor: pointer;
-  transition: background-size ease-out 0.5s;
-  &:hover {
-    background-size: 400px;
-  }
-`;
-
 type TGame = {
   id: any;
   rating: any;
 };
 
+Game.Img = Img;
+Game.Desc = Desc;
+Game.Info = Info;
+Game.Title = Title;
+Game.Rating = Rating;
+
 export default function Game(props: TGame): JSX.Element {
   const { id, rating } = props;
-  const [extended, setExtended] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const game = useSelector((state: any) =>
     state.games.list.find((g: any) => g.id === id),
@@ -90,14 +49,40 @@ export default function Game(props: TGame): JSX.Element {
 
   const onExtend = (event: any) => {
     event.cancelBubble = true;
-    setExtended(!extended);
+    setModalIsOpen(!modalIsOpen);
+  };
+
+  const modalStyle = {
+    overlay: {
+      zIndex: '9999',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: `${colors.newDark}cc`,
+      width: '100vw',
+      height: '100vh',
+    },
+    content: {
+      backgroundColor: '#00000000',
+      border: 'none',
+      inset: 0,
+      padding: 0,
+      borderRadius: 0,
+      width: '100%',
+      height: '100%',
+      boxSizing: 'border-box',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
   };
 
   return (
     <StyledGame onClick={onExtend}>
       <Game.Img
         className={`rated-${game.rating}`}
-        extended={extended}
+        extended={modalIsOpen}
         src={game?.img}>
         <Game.Info>
           <Game.Rating>
@@ -110,7 +95,12 @@ export default function Game(props: TGame): JSX.Element {
           <Game.Desc>{game.desc}</Game.Desc>
         </Game.Info>
       </Game.Img>
-      {extended && <Leaderboards id={game.id} rating={game.rating} />}
+      {
+        // @ts-ignore
+        <Modal isOpen={modalIsOpen} style={{ ...modalStyle }}>
+          <Leaderboards id={game.id} rating={game.rating} />
+        </Modal>
+      }
     </StyledGame>
   );
 }

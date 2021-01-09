@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { colors, fonts, media } from 'shared/theme';
 import { Flex } from 'shared/components';
-import UserGameProgressBar from './UserGameProgressBar';
+import { ProgressBar } from 'shared/components';
 
 const Game = styled.div`
   display: flex;
@@ -58,7 +58,7 @@ UserGame.Info = Info;
 UserGame.Times = Times;
 UserGame.Title = Title;
 UserGame.CompletionTimer = CompletionTimer;
-UserGame.ProgressBar = UserGameProgressBar;
+UserGame.ProgressBar = ProgressBar;
 
 type TUserProps = {
   game: any;

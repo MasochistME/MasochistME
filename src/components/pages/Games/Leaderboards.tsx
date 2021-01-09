@@ -1,20 +1,33 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import LeaderboardsProgressBar from './LeaderboardsProgressBar';
-import StackedBarChart from 'components/Charts/StackedBarChart';
-import ChartWrapper from 'components/Charts/ChartWrapper';
-import { Flex, Spinner } from 'shared/components';
+import { ChartWrapper, StackedBarChart } from 'components/Charts';
+import { Flex, Spinner, ProgressBar, Section } from 'shared/components';
 import { useGameDetails } from 'components/init';
+import {
+  Description,
+  Field,
+  BadgeImg,
+  User,
+  UserInfo,
+  UserName,
+  UserTimes,
+  WrapperLeaderboards,
+} from './styles';
 
 type Props = {
   id: any;
   rating: any;
 };
 
+// ---------------------------------------------
+// ---------------------------------------------
+// ---------------------------------------------
+
+Leaderboards.List = List;
+
 export default function Leaderboards(props: Props): JSX.Element | null {
   const { id } = props;
   const loaded = useGameDetails(id);
-  const users = useSelector((state: any) => state.users.list);
   const game = useSelector((state: any) => {
     const gameBasic = state.games.list.find((g: any) => g.id === id);
     const gameDetails = state.games.details.find((g: any) => g.id === id);
@@ -24,6 +37,77 @@ export default function Leaderboards(props: Props): JSX.Element | null {
     };
   });
 
+  return (
+    <WrapperLeaderboards>
+      <h2>
+        <a
+          href={`https://store.steampowered.com/app/${game?.id ?? ''}`}
+          target="_blank"
+          rel="noopener noreferrer">
+          {game?.title ?? 'Loading...'}{' '}
+          <i className="fas fa-external-link-alt"></i>
+        </a>
+      </h2>
+      {loaded && game ? (
+        <div className="game-statistics">
+          <ChartWrapper
+            title={[
+              `Completions: ${game?.completions ?? 'unknown'}`,
+              'Average completion time',
+            ]}>
+            <StackedBarChart
+              labels={['hours']}
+              datasets={[
+                {
+                  label: 'this game',
+                  data: [game.avgPlaytime],
+                  colorNormal: '#e30000ff',
+                  colorTransparent: '#e3000033',
+                },
+                {
+                  label: 'games from this tier',
+                  data: [game?.avgPlaytime ?? 0], // TODO
+                  colorNormal: '#141620ff',
+                  colorTransparent: '#14162066',
+                },
+              ]}
+            />
+          </ChartWrapper>
+        </div>
+      ) : (
+        <Spinner />
+      )}
+      {loaded && game ? (
+        game.badges?.length ? (
+          <Badges game={game} />
+        ) : null
+      ) : (
+        <Spinner />
+      )}
+      {loaded && game ? <Leaderboards.List game={game} /> : <Spinner />}
+    </WrapperLeaderboards>
+  );
+}
+
+// ---------------------------------------------
+// ---------------------------------------------
+// ---------------------------------------------
+
+List.User = User;
+List.UserInfo = UserInfo;
+List.UserName = UserName;
+List.UserTimes = UserTimes;
+List.ProgressBar = ProgressBar;
+
+function List(props: { game: any }) {
+  const { game } = props;
+  const users = useSelector((state: any) => state.users.list);
+
+  const assignDateIfFinished = (leaderboards: any): string | null =>
+    leaderboards?.percentage === 100
+      ? new Date(leaderboards?.lastUnlocked * 1000).toLocaleString()
+      : null;
+
   const leaderboards = game?.players
     ? game.players.map((player: any) => {
         const user = users.find((u: any) => u.id === player.id);
@@ -32,6 +116,7 @@ export default function Leaderboards(props: Props): JSX.Element | null {
           name: user.name,
           avatar: user.avatar,
           gameId: game.id,
+          trophy: player.trophy,
           percentage: player.percentage,
           lastUnlocked: player.lastUnlocked,
           playtime: player.playtime,
@@ -39,111 +124,72 @@ export default function Leaderboards(props: Props): JSX.Element | null {
       })
     : [];
 
-  const assignDateIfFinished = (leaderboards: any): string | null => {
-    return leaderboards?.percentage === 100
-      ? new Date(leaderboards?.lastUnlocked * 1000).toLocaleString()
-      : null;
-  };
+  return (
+    <ul className="game-leaderboards">
+      {leaderboards.map((user: any, userIndex: number) => (
+        <List.User key={`leaderboards-user-${userIndex}`}>
+          <img
+            className="leaderboards-user-image"
+            alt="avatar"
+            src={user.avatar}></img>
+          <List.UserInfo>
+            <List.UserName>{`${user.trophy ? user.trophy : ''} ${
+              user.name
+            }`}</List.UserName>
+            <List.UserTimes>{assignDateIfFinished(user)}</List.UserTimes>
+          </List.UserInfo>
+          <List.ProgressBar percentage={Math.floor(user.percentage)} />
+        </List.User>
+      ))}
+    </ul>
+  );
+}
 
-  return loaded && game ? (
-    <div className="leaderboards">
-      <h2>
-        <a
-          href={`https://store.steampowered.com/app/${game.id}`}
-          target="_blank"
-          rel="noopener noreferrer">
-          {game.title} <i className="fas fa-external-link-alt"></i>
-        </a>
-      </h2>
-      <div className="game-statistics">
-        <ChartWrapper
-          title={[
-            `Completions: ${game.completions}`,
-            'Average completion time',
-          ]}>
-          <StackedBarChart
-            labels={['hours']}
-            datasets={[
-              {
-                label: 'this game',
-                data: [game.avgPlaytime],
-                colorNormal: '#e30000ff',
-                colorTransparent: '#e3000033',
-              },
-              {
-                label: 'games from this tier',
-                data: [game.avgPlaytime], // TODO
-                colorNormal: '#141620ff',
-                colorTransparent: '#14162066',
-              },
-            ]}
-          />
-        </ChartWrapper>
-      </div>
-      {game.badges.length > 0 ? (
-        <div className="game-badges">
-          <div className="profile-section flex-column">
-            <h3 className="profile-section-title">Badges</h3>
-            <Flex
-              column
-              style={{
-                width: '100%',
-                height: '100%',
-                padding: '0 10px 10px 10px',
-                boxSizing: 'border-box',
-              }}>
-              {game.badges.map((badge: any, index: number) => (
-                <div
-                  className="badge-description flex-column"
-                  key={`badge-${index}`}>
-                  <p style={{ margin: 0, fontWeight: 'bold' }}>
-                    {badge.name.toUpperCase()}
-                  </p>
-                  <Flex row style={{ width: '100%' }}>
-                    <img
-                      className="profile-badge"
-                      style={{ margin: '5px 10px 5px 5px' }}
-                      src={badge.img}
-                      alt="badge"
-                      key={`badge-${index}`}
-                    />
-                    <Flex column style={{ width: '100%' }}>
-                      <p className="badge-field">Points: {badge.points} pts</p>
-                      <p className="badge-field">Proof: {badge.requirements}</p>
-                      <p className="badge-field">
-                        Description: {badge.description}
-                      </p>
-                    </Flex>
-                  </Flex>
-                </div>
-              ))}
-            </Flex>
-          </div>
-        </div>
-      ) : null}
-      <ul className="game-leaderboards">
-        {leaderboards.map((user: any, userIndex: number) => (
-          <li
-            className="leaderboards-user flex-row"
-            key={`leaderboards-user-${userIndex}`}>
-            <img
-              className="leaderboards-user-image"
-              alt="avatar"
-              src={user.avatar}></img>
-            <div className="leaderboards-user-info flex-row">
-              <div className="leaderboards-user-name">
-                {game.trophy + user.name}
-              </div>
-              <div className="leaderboards-user-times">
-                {assignDateIfFinished(user)}
-              </div>
-            </div>
-            <LeaderboardsProgressBar percentage={Math.floor(user.percentage)} />
-          </li>
-        ))}
-      </ul>
+// ---------------------------------------------
+// ---------------------------------------------
+// ---------------------------------------------
+
+Badges.Img = BadgeImg;
+Badges.Field = Field;
+Badges.Section = Section;
+Badges.Description = Description;
+
+function Badges(props: { game: any }) {
+  const { game } = props;
+  return (
+    <div className="game-badges">
+      <Badges.Section>
+        <h3>Badges</h3>
+        <Flex
+          column
+          style={{
+            width: '100%',
+            height: '100%',
+            padding: '0 10px 10px 10px',
+            boxSizing: 'border-box',
+          }}>
+          {game.badges.map((badge: any, index: number) => (
+            <Badges.Description key={`badge-${index}`}>
+              <p style={{ margin: 0, fontWeight: 'bold' }}>
+                {badge.name?.toUpperCase()}
+              </p>
+              <Flex row style={{ width: '100%' }}>
+                <Badges.Img
+                  style={{ margin: '5px 10px 5px 5px' }}
+                  src={badge.img}
+                  alt="badge"
+                  key={`badge-${index}`}
+                />
+                <Flex column style={{ width: '100%' }}>
+                  <Badges.Field>Points: {badge.points} pts</Badges.Field>
+                  <Badges.Field>Proof: {badge.requirements}</Badges.Field>
+                  <Badges.Field>Description: {badge.description}</Badges.Field>
+                </Flex>
+              </Flex>
+            </Badges.Description>
+          ))}
+        </Flex>
+      </Badges.Section>
     </div>
-  ) : (
-    <Spinner />
   );
 }

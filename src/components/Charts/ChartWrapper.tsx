@@ -1,4 +1,5 @@
 import React from 'react';
+import { Section } from 'shared/components';
 
 type TChartWrapper = {
   children: React.ReactNode;
@@ -9,15 +10,13 @@ export default function ChartWrapper(props: TChartWrapper): JSX.Element {
   const { children, title, width } = props;
 
   return (
-    <div
-      className="profile-section flex-column"
-      style={width ? { width: `${width}%` } : {}}>
-      <h3 className="profile-section-title">
+    <Section style={width ? { width: `${width}%` } : {}}>
+      <h3>
         {typeof title === 'object'
           ? title.map((t: any) => <p key={t}>{t}</p>)
           : title}
       </h3>
       {children}
-    </div>
+    </Section>
   );
 }
