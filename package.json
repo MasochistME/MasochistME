@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/PointOnePercent/DrFetus#readme",
   "dependencies": {
-    "axios": ">=0.18.1",
+    "axios": ">=0.21.1",
     "compromise": "^12.2.1",
     "discord.js": "^12.5.1",
     "mongodb": "^3.2.3",
