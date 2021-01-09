@@ -1,4 +1,3 @@
-import Flex from './layout/Flex';
 import Loader from './Loader';
 import Login from './Login';
 // import LoginModal from './LoginModal';
@@ -7,7 +6,11 @@ import Nav from './Nav';
 import SearchBar from './SearchBar';
 import Spinner from './Spinner';
 import Update from './Update';
+import ProgressBar from './ProgressBar';
+
+import Flex from './layout/Flex';
 import Wrapper from './layout/Wrapper';
+import Section from './layout/Section';
 
 export {
   Flex,
@@ -19,5 +22,7 @@ export {
   SearchBar,
   Spinner,
   Update,
+  ProgressBar,
   Wrapper,
+  Section,
 };
