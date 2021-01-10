@@ -4,7 +4,7 @@ import _ from "lodash";
 import { createEmbed } from "utils/helpers";
 
 export const showmembers = (msg: Discord.Message): void => {
-  const url = "http://localhost:3002/rest/users";
+  const url = "http://localhost:3002/api/users";
   axios
     .get(url)
     .then(response => {
