@@ -102,6 +102,13 @@ export const SmallMember = styled.div`
   margin-bottom: 1px;
 `;
 
+export const MemberLink = styled.span`
+  cursor: pointer;
+  &:hover {
+    color: ${colors.newMediumGrey};
+  }
+`;
+
 export const SaleBrick = styled.li`
   cursor: pointer;
   background-size: contain;

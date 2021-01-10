@@ -1,11 +1,13 @@
 import React from 'react';
-import { orderBy } from 'lodash';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { orderBy } from 'lodash';
 import { swapRatingToIcon } from 'shared/helpers/helper';
-import { SmallEvent, Section, SectionTitle } from '../';
+import { SmallEvent, Section, SectionTitle, MemberLink } from '../';
 import Spinner from 'shared/components/Spinner';
 
 export default function SectionHistory(): JSX.Element {
+  const history = useHistory();
   const events = useSelector((state: any) =>
     orderBy(state.events, ['date'], ['desc']).slice(0, 10),
   );
@@ -21,19 +23,29 @@ export default function SectionHistory(): JSX.Element {
 
     // console.log(badge);
 
+    const onUserClick = () => user?.id && history.push(`/profile/${user.id}`);
+
     switch (event.type) {
       case 'memberJoined':
         return user ? (
           <SmallEvent key={`sidebar-event-${eventIndex}`}>
             <i className="fas fa-user-plus"></i>
-            <span className="bold"> {user.name}</span> has joined the group!
+            <MemberLink className="bold" onClick={onUserClick}>
+              {' '}
+              {user.name}
+            </MemberLink>{' '}
+            has joined the group!
           </SmallEvent>
         ) : null;
       case 'memberLeft':
         return user ? (
           <SmallEvent key={`sidebar-event-${eventIndex}`}>
             <i className="fas fa-user-minus"></i>
-            <span className="bold"> {user.name}</span> has left the group!
+            <MemberLink className="bold" onClick={onUserClick}>
+              {' '}
+              {user.name}
+            </MemberLink>{' '}
+            has left the group!
           </SmallEvent>
         ) : null;
       case 'newGame':
@@ -47,8 +59,11 @@ export default function SectionHistory(): JSX.Element {
         return user && game ? (
           <SmallEvent key={`sidebar-event-${eventIndex}`}>
             <i className="fas fa-check-square"></i>
-            <span className="bold"> {user.name}</span> completed{' '}
-            <span className="bold">{game.title}</span>!
+            <MemberLink className="bold" onClick={onUserClick}>
+              {' '}
+              {user.name}
+            </MemberLink>{' '}
+            completed <span className="bold">{game.title}</span>!
           </SmallEvent>
         ) : null;
       case 'tierChange':
@@ -71,8 +86,11 @@ export default function SectionHistory(): JSX.Element {
         return user && badge ? (
           <SmallEvent key={`sidebar-event-${eventIndex}`}>
             <i className="fas fa-medal"></i>
-            <span className="bold"> {user.name} </span> got a new badge -{' '}
-            <span className="bold">{badge.name}</span>!
+            <MemberLink className="bold" onClick={onUserClick}>
+              {' '}
+              {user.name}{' '}
+            </MemberLink>{' '}
+            got a new badge - <span className="bold">{badge.name}</span>!
           </SmallEvent>
         ) : null;
       case 'achievementNumberChange':

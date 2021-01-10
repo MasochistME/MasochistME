@@ -1,7 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
 import { useSelector } from 'react-redux';
-import { SmallMember, Section, SectionTitle } from '../';
+import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
+import { SmallMember, MemberLink, Section, SectionTitle } from '../';
 import Spinner from 'shared/components/Spinner';
 
 const FlexColumn = styled.div`
@@ -12,6 +13,7 @@ const FlexColumn = styled.div`
 `;
 
 export default function SectionTop(): JSX.Element {
+  const history = useHistory();
   const users = useSelector((state: any) => {
     const usersRating = state.ranking.slice(0, 10);
     const usersBasic = state.users.list;
@@ -22,15 +24,18 @@ export default function SectionTop(): JSX.Element {
     return usersFull;
   });
 
-  const userRow = (user: any, index: number) => (
-    <SmallMember key={`sidebar-user-${index}`}>
-      <div>{index + 1}.</div>
-      <div>
-        <span className="bold">{user.name}</span>
-      </div>
-      <div>{user.points.sum} pts</div>
-    </SmallMember>
-  );
+  const userRow = (user: any, index: number) => {
+    const onUserClick = () => history.push(`/profile/${user.id}`);
+    return (
+      <SmallMember key={`sidebar-user-${index}`}>
+        <div>{index + 1}.</div>
+        <MemberLink onClick={onUserClick}>
+          <span className="bold">{user.name}</span>
+        </MemberLink>
+        <div>{user.points.sum} pts</div>
+      </SmallMember>
+    );
+  };
 
   return (
     <Section>
