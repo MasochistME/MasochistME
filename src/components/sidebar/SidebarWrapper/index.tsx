@@ -26,6 +26,7 @@ export default function SidebarWrapper(): JSX.Element {
     'top',
     'history',
     'sales',
+    'discord',
   ];
   const sections = activeSections.map(
     (section: TSection, sectionIndex: number) => (
