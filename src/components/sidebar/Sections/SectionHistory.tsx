@@ -12,10 +12,14 @@ export default function SectionHistory(): JSX.Element {
   const games = useSelector((state: any) => state.games.list);
   const users = useSelector((state: any) => state.users.list);
   const rating = useSelector((state: any) => state.rating);
+  const badges = useSelector((state: any) => state.badges);
 
   const sortEvents = (event: any, eventIndex: number) => {
     const user = users.find((m: any) => m.id === event.member);
     const game = games.find((g: any) => Number(g.id) === Number(event.game));
+    const badge = badges.find((b: any) => b['_id'] === event.badge);
+
+    // console.log(badge);
 
     switch (event.type) {
       case 'memberJoined':
@@ -53,6 +57,22 @@ export default function SectionHistory(): JSX.Element {
             <i className="fas fa-undo-alt"></i>
             <span className="bold"> {game.title}</span> changed its tier to{' '}
             <i className={swapRatingToIcon(game.rating, rating)} />!
+          </SmallEvent>
+        ) : null;
+      case 'badgeAdded': {
+        return badge && game ? (
+          <SmallEvent key={`sidebar-event-${eventIndex}`}>
+            <i className="fas fa-award"></i>
+            <span className="bold"> {game.title}</span> got a new badge!
+          </SmallEvent>
+        ) : null;
+      }
+      case 'badgeGiven':
+        return user && badge ? (
+          <SmallEvent key={`sidebar-event-${eventIndex}`}>
+            <i className="fas fa-medal"></i>
+            <span className="bold"> {user.name} </span> got a new badge -{' '}
+            <span className="bold">{badge.name}</span>!
           </SmallEvent>
         ) : null;
       case 'achievementNumberChange':

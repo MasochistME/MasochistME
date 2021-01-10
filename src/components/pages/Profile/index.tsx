@@ -83,7 +83,7 @@ export default function Profile(): JSX.Element {
           <WrapperProfile>
             {badges?.length ? (
               <Profile.Badges>
-                <Profile.Section>
+                <Profile.Section style={{ width: '100%' }}>
                   <h3>Badges</h3>
                   <Flex
                     justify

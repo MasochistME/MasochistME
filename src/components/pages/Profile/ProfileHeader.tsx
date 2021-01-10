@@ -96,7 +96,7 @@ export default function ProfileHeader(props: Props): JSX.Element {
     setUpdating(true);
     setMessage('Updating... refresh in a few minutes');
 
-    const url = `/rest/users/user/${id}`;
+    const url = `http://localhost:3002/api/users/user/${id}`;
     axios
       .put(url)
       .then((res: any) => {
