@@ -2,6 +2,7 @@ import Discord from "discord.js";
 import { log } from "utils/log";
 import { TextCommand } from "commands/logic";
 import { Reaction } from "commands/reactions";
+import { userHasRoleName } from "commands/roles";
 import { cache } from "utils/cache";
 import { getKeyword, getCommandSymbol } from "utils/helpers";
 import { chooseRandom, happensWithAChanceOf } from "utils/rng";
@@ -14,8 +15,18 @@ import { IReactionDetails } from "./types/reaction";
 
 const isChannelDM = (msg: Discord.Message): boolean =>
   msg.author.id === msg.channel.id;
-const isUserAdmin = (msg: Discord.Message): boolean =>
-  !!msg.member?.hasPermission("ADMINISTRATOR");
+const isUserAdmin = (msg: Discord.Message): boolean => {
+  const modRole = cache["options"].find(option => option.option === "modRole")
+    ? cache["options"].find(option => option.option === "modRole").value
+    : undefined;
+  if (!modRole) {
+    return false;
+  }
+  if (msg?.member) {
+    return userHasRoleName(msg.member, modRole);
+  }
+  return false;
+};
 const isUserBot = (msg: Discord.Message) => msg.author.bot;
 const isUserArcy = (msg: Discord.Message) =>
   msg.author.id === "165962236009906176";
