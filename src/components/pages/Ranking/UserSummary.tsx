@@ -44,6 +44,7 @@ export default function UserSummary(props: TUserSummary): JSX.Element {
       ...userRank,
       name: userDetails.name,
       avatar: userDetails.avatar,
+      updated: userDetails.updated,
     };
   });
   const badges = user.points.badges;
@@ -102,15 +103,15 @@ export default function UserSummary(props: TUserSummary): JSX.Element {
             style={{ color: 'transparent' }}
           />
         )}
-        {user.updated < 1585080000000 ? (
+        {Date.now() - user?.updated > 2592000000 ? (
           <i
             className="fas fa-exclamation-circle"
-            title="This user wasn't updated after the game tier rework. Their info might be outdated."
+            title="This user wasn't updated in over a month - their data might be outdated."
             style={{
-              color: 'pink',
+              color: '#fdc000',
               marginLeft: '10px',
               cursor: 'help',
-              opacity: '0.3',
+              opacity: '0.5',
             }}
           />
         ) : (

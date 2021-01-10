@@ -92,16 +92,25 @@ export default function Profile(): JSX.Element {
                       display: 'flex',
                       flexFlow: 'row wrap',
                     }}>
-                    {badges.map((badge, index) => (
-                      <Badge
-                        src={badge.img}
-                        alt="badge"
-                        title={`${badge.game.toUpperCase()} - ${badge.name} (${
-                          badge.points
-                        } pts)\n"${badge.description}"`}
-                        key={`badge-${index}`}
-                      />
-                    ))}
+                    {badges.map((badge, index) => {
+                      const game = games.find(
+                        (g: any) => Number(g.id) === Number(badge.gameId),
+                      );
+                      return (
+                        <Badge
+                          src={badge.img}
+                          alt="badge"
+                          title={`${
+                            badge?.game !== 'unknown'
+                              ? badge?.game.toUpperCase()
+                              : game?.title.toUpperCase()
+                          } - ${badge.name} (${badge.points} pts)\n"${
+                            badge.description
+                          }"`}
+                          key={`badge-${index}`}
+                        />
+                      );
+                    })}
                   </Flex>
                 </Profile.Section>
               </Profile.Badges>
