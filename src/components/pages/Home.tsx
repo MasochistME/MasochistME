@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { colors, fonts } from 'shared/theme';
 import { TBlog } from 'shared/types/blog';
-import Spinner from 'shared/components/Spinner';
+import { Section, Spinner } from 'shared/components';
 
 const Blog = styled.div`
   div {
@@ -40,10 +40,15 @@ export default function PageHome(): JSX.Element {
 
   return (
     <div>
-      <div className="wrapper-description">
-        <h3>A dedicated group for dedicated gamers</h3>
-        <div className="page-description">
-          <p>
+      <Section style={{ margin: '0 0 20px 0' }}>
+        <div
+          className="page-description"
+          style={{
+            backgroundColor: `${colors.superLightGrey}bb`,
+            color: colors.superDarkGrey,
+          }}>
+          <h3>A dedicated group for dedicated gamers</h3>
+          <p style={{ padding: '0 20px' }}>
             Is being top 1% too casual for you? Then this is your home. This
             group&lsquo;s aim is to band together the most determined gamers out
             there that aim to do the impossible! The ones that forget to sleep,
@@ -51,7 +56,7 @@ export default function PageHome(): JSX.Element {
             will only eat to survive.... OK, exaggerated, but you get the point.
           </p>
         </div>
-      </div>
+      </Section>
 
       <Blog>
         {blog?.length ? (
