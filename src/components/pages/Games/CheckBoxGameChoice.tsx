@@ -24,11 +24,14 @@ export default function CheckBoxGameChoice(props: Props): JSX.Element {
     dispatch(showGamesRated(visibleGamesRatedArray));
   };
 
+  const checked = gamesRated.includes(score);
+
   return (
     <div>
       <input
         name="game"
         value={score}
+        checked={checked}
         id={`game-choice-${score}`}
         className="game-choice-checkbox"
         type="checkbox"

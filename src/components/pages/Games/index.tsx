@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { orderBy } from 'lodash';
 import CheckBoxGameChoice from './CheckBoxGameChoice';
-import SearchBar from 'shared/components/SearchBar';
-import { Wrapper, Spinner, Flex } from 'shared/components';
+import { colors } from 'shared/theme';
+import { Wrapper, Spinner, Flex, SearchBar } from 'shared/components';
 import Game from './Game';
 
 const WrapperGames = styled.div`
@@ -18,7 +18,7 @@ const WrapperGames = styled.div`
   padding: 10px;
   width: 100%;
   box-sizing: border-box;
-  background-color: $darkbluetransparent;
+  background-color: ${colors.darkBlueTransparent};
 `;
 
 export default function PageGames(): JSX.Element {

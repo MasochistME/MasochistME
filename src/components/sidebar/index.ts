@@ -102,7 +102,7 @@ export const SmallMember = styled.div`
   margin-bottom: 1px;
 `;
 
-export const SaleBrick = styled.div`
+export const SaleBrick = styled.li`
   cursor: pointer;
   background-size: contain;
   box-sizing: border-box;
@@ -120,23 +120,24 @@ export const SaleLink = styled.a`
   align-items: flex-start;
   width: 100%;
   height: 100%;
-  &.link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 35%;
-    height: 40%;
-    text-decoration: none;
-    font-family: ${fonts.Dosis};
-    font-weight: bold;
-    color: ${colors.superLightGrey};
-    background-color: ${colors.darkBlue};
-    box-shadow: -2px 2px 5px ${colors.superDarkGrey};
-    font-size: 1.2em;
-  }
   &:hover {
     text-decoration: none;
   }
+`;
+
+export const SalePercentage = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35%;
+  height: 40%;
+  text-decoration: none;
+  font-family: ${fonts.Dosis};
+  font-weight: bold;
+  color: ${colors.superLightGrey};
+  background-color: ${colors.darkBlue};
+  box-shadow: -2px 2px 5px ${colors.superDarkGrey};
+  font-size: 1.2em;
 `;
 
 export const UpdateButton = styled.div`

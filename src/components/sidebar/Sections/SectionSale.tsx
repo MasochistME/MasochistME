@@ -2,8 +2,13 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { orderBy } from 'lodash';
-import { Section, SectionTitle, SaleLink } from '../';
-import { colors } from 'shared/theme';
+import {
+  Section,
+  SectionTitle,
+  SaleBrick,
+  SaleLink,
+  SalePercentage,
+} from '../';
 import Spinner from 'shared/components/Spinner';
 
 export const SectionSaleUl = styled.ul`
@@ -15,18 +20,6 @@ export const SectionSaleUl = styled.ul`
   align-items: center;
   justify-content: center;
   list-style-type: none;
-`;
-
-const SaleBrick = styled.li`
-  cursor: pointer;
-  background-size: contain;
-  box-sizing: border-box;
-  width: 192px;
-  height: 92px;
-  margin: 5px;
-  &:hover {
-    box-shadow: 0 0 10px ${colors.superDarkGrey};
-  }
 `;
 
 export default function SectionSale(): JSX.Element {
@@ -44,7 +37,7 @@ export default function SectionSale(): JSX.Element {
           href={`https://store.steampowered.com/app/${game.id}`}
           target="_blank"
           rel="noopener noreferrer">
-          <span className="link">-{game.sale.discount}%</span>
+          <SalePercentage>-{game.sale.discount}%</SalePercentage>
         </SaleLink>
       </SaleBrick>
     ));
