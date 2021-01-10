@@ -34,16 +34,20 @@ const Tab = styled.li.attrs(({ active }: { active?: boolean }) => {
     font-size: 1.4em;
   }
 `;
+const Row = styled.ul`
+  display: flex;
+  flex-direction: row;
+`;
 
 export default function Nav(): JSX.Element {
   const tabs = useSelector((state: any) => state.tabs);
 
   return (
-    <ul className="flex-row">
+    <Row>
       {tabs.list.map((item: any, index: number) =>
         item.visible ? <NavItem key={`nav-${index} `} item={item} /> : null,
       )}
-    </ul>
+    </Row>
   );
 }
 

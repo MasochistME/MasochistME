@@ -40,9 +40,9 @@ export default function PageHome(): JSX.Element {
 
   return (
     <div>
-      <div className="wrapper-description fancy">
+      <div className="wrapper-description">
         <h3>A dedicated group for dedicated gamers</h3>
-        <div className="page-description fancy">
+        <div className="page-description">
           <p>
             Is being top 1% too casual for you? Then this is your home. This
             group&lsquo;s aim is to band together the most determined gamers out

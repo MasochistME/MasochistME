@@ -156,6 +156,9 @@ Badges.Description = Description;
 
 function Badges(props: { game: any }) {
   const { game } = props;
+  const badges = useSelector((state: any) =>
+    state.badges.filter((badge: any) => game.badges.includes(badge['_id'])),
+  );
   return (
     <div className="game-badges">
       <Badges.Section>
@@ -168,7 +171,7 @@ function Badges(props: { game: any }) {
             padding: '0 10px 10px 10px',
             boxSizing: 'border-box',
           }}>
-          {game.badges.map((badge: any, index: number) => (
+          {badges.map((badge: any, index: number) => (
             <Badges.Description key={`badge-${index}`}>
               <p style={{ margin: 0, fontWeight: 'bold' }}>
                 {badge.name?.toUpperCase()}

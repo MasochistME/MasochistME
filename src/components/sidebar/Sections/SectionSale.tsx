@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { orderBy } from 'lodash';
 import { Section, SectionTitle, SaleLink } from '../';
+import { colors } from 'shared/theme';
 import Spinner from 'shared/components/Spinner';
 
 export const SectionSaleUl = styled.ul`
@@ -16,6 +17,18 @@ export const SectionSaleUl = styled.ul`
   list-style-type: none;
 `;
 
+const SaleBrick = styled.li`
+  cursor: pointer;
+  background-size: contain;
+  box-sizing: border-box;
+  width: 192px;
+  height: 92px;
+  margin: 5px;
+  &:hover {
+    box-shadow: 0 0 10px ${colors.superDarkGrey};
+  }
+`;
+
 export default function SectionSale(): JSX.Element {
   const games = useSelector((state: any) =>
     orderBy(state.games.list, ['sale.discount'], ['desc']),
@@ -24,9 +37,8 @@ export default function SectionSale(): JSX.Element {
   const gamesOnSale = games
     .filter(game => game.sale.onSale)
     .map((game, index) => (
-      <li
+      <SaleBrick
         key={`sale-${index}`}
-        className="sale-brick"
         style={{ backgroundImage: `url(${game.img})` }}>
         <SaleLink
           href={`https://store.steampowered.com/app/${game.id}`}
@@ -34,7 +46,7 @@ export default function SectionSale(): JSX.Element {
           rel="noopener noreferrer">
           <span className="link">-{game.sale.discount}%</span>
         </SaleLink>
-      </li>
+      </SaleBrick>
     ));
 
   return (
