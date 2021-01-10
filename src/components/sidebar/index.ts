@@ -7,6 +7,7 @@ import SectionHistory from './Sections/SectionHistory';
 import SectionTop from './Sections/SectionTop';
 import SectionTrivia from './Sections/SectionTrivia';
 import SectionSale from './Sections/SectionSale';
+import SectionDiscord from './Sections/SectionDiscord';
 
 export {
   SectionUpdate,
@@ -14,9 +15,16 @@ export {
   SectionTop,
   SectionTrivia,
   SectionSale,
+  SectionDiscord,
 };
 
-export type TSection = 'update' | 'trivia' | 'top' | 'history' | 'sales';
+export type TSection =
+  | 'update'
+  | 'trivia'
+  | 'top'
+  | 'history'
+  | 'sales'
+  | 'discord';
 
 export const Section = styled.div`
   padding-bottom: 10px;

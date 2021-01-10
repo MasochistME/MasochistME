@@ -5,6 +5,7 @@ import {
   SectionTop,
   SectionTrivia,
   SectionSale,
+  SectionDiscord,
   TSection,
 } from '../';
 
@@ -26,6 +27,8 @@ export default function SidebarSection(
         return <SectionTop />;
       case 'history':
         return <SectionHistory />;
+      case 'discord':
+        return <SectionDiscord />;
       case 'sales':
         return <SectionSale />;
       default:
