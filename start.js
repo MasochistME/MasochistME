@@ -17,4 +17,6 @@ server.use((req, res, next) => {
   });
   next();
 });
-server.use('/', express.static(path.join(path.dirname(''), '/..', 'build')));
+
+const newpath = path.join(path.dirname(''), './build');
+server.use('/', express.static(newpath));
