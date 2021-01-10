@@ -1,11 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import {
   EventDescription,
   EventSummary,
   EventInfo,
   EventImg,
 } from 'components/pages/Events/styles';
+import { MemberLink } from './styles';
 import logo from 'shared/images/logo.png';
 
 type Props = {
@@ -41,13 +43,11 @@ function BadgeAdded({ event }: { event: any }) {
       <EventImg src={badge ? badge.img : logo} alt="game-img" />
       {badge && game ? (
         <EventDescription>
-          <span className="bold under">
+          <span className="bold">
             {game?.title ? game.title : `Game ${event.game}`}
           </span>{' '}
           has gotten a new badge -{' '}
-          <span className="bold under">
-            {badge?.name ? badge.name : event.badge}
-          </span>
+          <span className="bold">{badge?.name ? badge.name : event.badge}</span>
           !
         </EventDescription>
       ) : null}
@@ -64,6 +64,7 @@ function BadgeAdded({ event }: { event: any }) {
 // ----------------------------------------------
 
 function BadgeGiven({ event }: { event: any }) {
+  const history = useHistory();
   const user = useSelector((state: any) =>
     state.users.list.find((u: any) => u.id === event.member),
   );
@@ -71,19 +72,18 @@ function BadgeGiven({ event }: { event: any }) {
     state.badges.find((b: any) => b['_id'] === event.badge),
   );
 
+  const onUserClick = () => user?.id && history.push(`/profile/${user.id}`);
+
   return (
     <EventInfo>
-      <EventImg src={user ? user.avatar : logo} alt="game-img" />
+      <EventImg src={user?.avatar ?? logo} alt="game-img" />
       {badge && user ? (
         <EventDescription>
-          <span className="bold under">
-            {user?.name ? user.name : `User ${event.member}`}
-          </span>{' '}
+          <MemberLink className="bold" onClick={onUserClick}>
+            {user?.name ?? `User ${event.member}`}
+          </MemberLink>{' '}
           has earned a new badge -{' '}
-          <span className="bold under">
-            {badge?.name ? badge.name : event.badge}
-          </span>
-          !
+          <span className="bold">{badge?.name ?? event.badge}</span>!
         </EventDescription>
       ) : null}
       <EventSummary>

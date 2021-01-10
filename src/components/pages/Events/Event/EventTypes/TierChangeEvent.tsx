@@ -28,7 +28,7 @@ export default function TierChangeEvent(props: Props): JSX.Element | null {
     <EventInfo>
       <EventImg alt="game-img" src={logo} />
       <EventDescription>
-        <span className="bold under">{game ? game.title : '-'}</span>
+        <span className="bold">{game ? game.title : '-'}</span>
         {demoted ? ' demoted ' : ' promoted '}
         from <i className={swapRatingToIcon(event.oldTier, rating)}></i> to{' '}
         <i className={swapRatingToIcon(event.newTier, rating)}></i>!

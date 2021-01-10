@@ -28,7 +28,7 @@ export default function AchievementNumberChangeEvent(
     <EventInfo>
       <EventImg alt="game-img" src={logo} />
       <EventDescription>
-        <span className="bold under">{game ? game.title : '-'} </span>
+        <span className="bold">{game ? game.title : '-'} </span>
         {event.oldNumber < event.newNumber
           ? `got ${event.newNumber - event.oldNumber} new achievements!`
           : `had ${event.oldNumber - event.newNumber} achievements removed!`}

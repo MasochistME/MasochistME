@@ -29,14 +29,14 @@ export default function GameEvent(props: Props): JSX.Element | null {
       <EventImg alt="game-img" src={logo} />
       {game ? (
         <EventDescription>
-          <span className="bold under">
+          <span className="bold">
             {game ? game.title : `Game ${event.game}`}
           </span>{' '}
           has been curated!
         </EventDescription>
       ) : (
         <EventDescription>
-          <span className="bold under">
+          <span className="bold">
             {game ? game.title : `Game ${event.game}`}
           </span>{' '}
           (no longer curated) has been curated!

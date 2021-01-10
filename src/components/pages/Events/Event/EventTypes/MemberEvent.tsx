@@ -1,11 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import {
   EventDescription,
   EventSummary,
   EventInfo,
   EventImg,
 } from 'components/pages/Events/styles';
+import { MemberLink } from './styles';
 import logo from 'shared/images/logo.png';
 
 type Props = {
@@ -15,25 +17,28 @@ type Props = {
 
 export default function MemberEvent(props: Props): JSX.Element | null {
   const { event, action } = props;
+  const history = useHistory();
   const user = useSelector((state: any) =>
     state.users.list.find((u: any) => u.id === event.member),
   );
 
+  const onUserClick = () => user?.id && history.push(`/profile/${user.id}`);
+
   return (
     <EventInfo>
-      <EventImg alt="avatar" src={user?.avatar ? user.avatar : logo} />
+      <EventImg alt="avatar" src={user?.avatar ?? logo} />
       {user ? (
         <EventDescription>
-          <span className="bold under">
-            {user?.name ? user.name : `User ${event.member}`}
-          </span>{' '}
+          <MemberLink className="bold" onClick={onUserClick}>
+            {user?.name ?? `User ${event.member}`}
+          </MemberLink>{' '}
           has {action === 'join' ? 'joined' : 'left'} the group!
         </EventDescription>
       ) : (
         <EventDescription>
-          <span className="bold under">
-            {user?.name ? user.name : `User ${event.member}`}
-          </span>{' '}
+          <MemberLink className="bold" onClick={onUserClick}>
+            {user?.name ?? `User ${event.member}`}
+          </MemberLink>{' '}
           has {action === 'join' ? 'joined' : 'left'} the group!
         </EventDescription>
       )}

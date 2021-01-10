@@ -1,11 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import {
   EventDescription,
   EventSummary,
   EventInfo,
   EventImg,
 } from 'components/pages/Events/styles';
+import { MemberLink } from './styles';
 import logo from 'shared/images/logo.png';
 
 type Props = {
@@ -14,6 +16,7 @@ type Props = {
 
 export default function CompleteEvent(props: Props): JSX.Element | null {
   const { event } = props;
+  const history = useHistory();
   const game = useSelector((state: any) =>
     state.games.list.find((g: any) => Number(g.id) === Number(event.game)),
   );
@@ -25,18 +28,18 @@ export default function CompleteEvent(props: Props): JSX.Element | null {
     game ? Number(r.id) === Number(game.rating) : null,
   );
 
+  const onUserClick = () => user?.id && history.push(`/profile/${user.id}`);
+
   return (
     <EventInfo>
-      <EventImg src={user ? user.avatar : logo} alt="game-img" />
+      <EventImg src={user?.avatar ?? logo} alt="game-img" />
       <EventDescription>
-        <span className="bold under">
-          {user?.name
-            ? user.name
-            : `User ${event.member} (no longer member of the group)`}
-        </span>{' '}
+        <MemberLink className="bold" onClick={onUserClick}>
+          {user?.name ?? `User ${event.member} (no longer member of the group)`}
+        </MemberLink>{' '}
         completed{' '}
-        <span className="bold under">
-          {game?.title ? game.title : `game ${event.game} (no longer curated)`}
+        <span className="bold">
+          {game?.title ?? `game ${event.game} (no longer curated)`}
         </span>{' '}
         !
       </EventDescription>
@@ -45,11 +48,8 @@ export default function CompleteEvent(props: Props): JSX.Element | null {
           className={
             user ? 'fas fa-check-square' : 'fas fa-exclamation-triangle'
           }></i>
-        <i
-          className={
-            gameRating ? gameRating.icon : 'far fa-question-circle'
-          }></i>
-        <EventImg src={game ? game.img : logo} alt="game-img" />
+        <i className={gameRating?.icon ?? 'far fa-question-circle'}></i>
+        <EventImg src={game?.img ?? logo} alt="game-img" />
       </EventSummary>
     </EventInfo>
   );

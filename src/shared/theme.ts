@@ -9,6 +9,7 @@ export const colors = {
   superDarkGrey: '#141620',
 
   black: '#000000',
+  white: '#ffffff',
   newDark: '#040404',
   newMediumGrey: '#545281',
   darkBlue: '#293251',
