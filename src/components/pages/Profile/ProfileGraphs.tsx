@@ -66,7 +66,9 @@ export default function ProfileGraphs(props: Props): JSX.Element {
         return game;
       });
 
-    return data.map((d: any) => d[type]);
+    return data.map((d: any) =>
+      typeof d[type] === 'number' ? Math.floor(d[type]) : d[type],
+    );
   };
 
   const summarizeTotalGames = (
