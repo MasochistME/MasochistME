@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import '../styles/css/App.css';
 import Page from 'components/pages';
 // import LoginModal from 'shared/components/LoginModal';
 import useInit from './init';
