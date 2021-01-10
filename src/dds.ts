@@ -1,4 +1,3 @@
-import '@babel/polyfill';
 import express from 'express';
 import cors from 'cors';
 import { getDataFromDB } from 'helpers/db';

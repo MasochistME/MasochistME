@@ -6,7 +6,12 @@ export const router = express.Router();
 // -----------------------------------------------------------------
 
 import { getUsers, getUserDetails } from './users';
-import { getRanking, getUserRanking, getGameLeaderboards } from './ranking';
+import {
+  getRanking,
+  getUserRanking,
+  getGameLeaderboards,
+  getTierDetails,
+} from './ranking';
 import { getCuratorGames } from './curator';
 import { getBlog } from './blog';
 import { getEvents } from './events';
@@ -14,6 +19,7 @@ import { getEvents } from './events';
 router.get('/ranking', getRanking);
 router.get('/ranking/user/:id', getUserRanking);
 router.get('/ranking/game/:id', getGameLeaderboards);
+router.get('/ranking/tier/:id', getTierDetails);
 router.get('/curator/games', getCuratorGames);
 router.get('/users', getUsers);
 router.get('/blog', getBlog);

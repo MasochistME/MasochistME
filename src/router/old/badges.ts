@@ -1,4 +1,5 @@
 import { ObjectId } from 'mongodb';
+import { orderBy } from 'lodash';
 import { log } from 'helpers/log';
 import { connectToDb, getDataFromDB } from 'helpers/db';
 import { hash } from 'helpers/hash';
@@ -16,7 +17,17 @@ export const getAllBadges = async (req, res) => {
       log.WARN(err);
       res.status(err.code).send(err);
     } else {
-      res.status(200).send(badges);
+      const orderedBadges = orderBy(
+        badges,
+        [
+          badge =>
+            typeof badge.points !== 'number'
+              ? Number(badge.points)
+              : badge.points,
+        ],
+        ['desc'],
+      );
+      res.status(200).send(orderedBadges);
     }
     client.close();
   });

@@ -127,19 +127,32 @@ export const getGameLeaderboards = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const id = req.params.id; // game id
+    const id =
+      typeof req.params.id !== 'number' ? Number(req.params.id) : req.params.id; // game id
     const game = await getDataFromDB('games', { id });
     const users = await getDataFromDB('users');
+    const badges = await getDataFromDB('badges');
     if (!game) {
       res.sendStatus(404);
       return;
     }
+    const filteredBadges = badges
+      .filter((badge: any) => {
+        const badgeGameId =
+          typeof badge.gameId !== 'number'
+            ? Number(badge.gameId)
+            : badge.gameId;
+        return badgeGameId === id;
+      })
+      .map((badge: any) => badge._id);
     const filteredUsers = users
-      .filter((user: any) => findGame(user, id))
+      .filter(
+        (user: any) => (user.protected || user.member) && findGame(user, id),
+      )
       .map((user: any) => {
         const gameDetails = findGame(user, id);
         return {
-          userId: user.id,
+          id: user.id,
           playtime:
             typeof gameDetails?.playtime_forever !== 'number'
               ? Number(gameDetails?.playtime_forever)
@@ -159,8 +172,21 @@ export const getGameLeaderboards = async (
       ['percentage', 'lastUnlocked'],
       ['desc', 'asc'],
     );
+
     const usersWithTrophies = assignTrophies(orderedUsers);
-    res.status(200).send(usersWithTrophies);
+    const completions = orderedUsers.filter(
+      (user: any) => user.percentage === 100,
+    ).length;
+    const avgPlaytime = orderedUsers
+      .filter((user: any) => user.percentage === 100)
+      .reduce((a, b) => a + b.playtime, 0);
+    res.status(200).send({
+      id,
+      completions,
+      avgPlaytime: Math.floor(avgPlaytime / completions),
+      badges: filteredBadges,
+      players: usersWithTrophies,
+    });
   } catch (err) {
     res.sendStatus(500);
   }
@@ -192,3 +218,19 @@ const assignTrophies = (users: any): string | undefined =>
         return user;
     }
   });
+
+/**
+ * Returns some info about game tiers - average playtime etc.
+ * @param req
+ * @param res
+ */
+export const getTierDetails = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  try {
+    console.log('dupa');
+  } catch (err) {
+    res.sendStatus(500);
+  }
+};
