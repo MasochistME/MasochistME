@@ -8,6 +8,7 @@ import {
   GameEvent,
   MemberEvent,
   TierChangeEvent,
+  BadgeEvent,
 } from './EventTypes';
 
 const StyledEvent = styled.li`
@@ -56,6 +57,10 @@ export default function Event(props: Props): JSX.Element | null {
         return <CompleteEvent event={event} />;
       case 'tierChange':
         return <TierChangeEvent event={event} />;
+      case 'badgeAdded':
+        return <BadgeEvent event={event} action="added" />;
+      case 'badgeGiven':
+        return <BadgeEvent event={event} action="given" />;
       case 'achievementNumberChange':
         return <AchievementNumberChangeEvent event={event} />;
       case 'custom':

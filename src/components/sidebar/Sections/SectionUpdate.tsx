@@ -11,7 +11,7 @@ export default function SectionUpdate(): JSX.Element {
   // const updateStatus = 50; // TODO connect to websocket
 
   // const sendUpdateRequest = (): void => {
-  //   const url = '/rest/update';
+  //   const url = '/api/update';
   //   axios
   //     .get(url)
   //     .then(res => console.log(res.data.content))
@@ -34,7 +34,7 @@ export default function SectionUpdate(): JSX.Element {
   // )} hours till you can update again`;
 
   const getUpdateDate = (): void => {
-    const url = '/rest/status';
+    const url = 'http://localhost:3002/api/status';
     axios
       .get(url)
       .then(res => setLastUpdated(res.data.lastUpdated))

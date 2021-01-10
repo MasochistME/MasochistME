@@ -4,6 +4,7 @@ import CustomEvent from './CustomEvent';
 import GameEvent from './GameEvent';
 import MemberEvent from './MemberEvent';
 import TierChangeEvent from './TierChangeEvent';
+import BadgeEvent from './BadgeEvent';
 
 export {
   AchievementNumberChangeEvent,
@@ -12,4 +13,5 @@ export {
   GameEvent,
   MemberEvent,
   TierChangeEvent,
+  BadgeEvent,
 };

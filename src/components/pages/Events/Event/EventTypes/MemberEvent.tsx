@@ -19,8 +19,6 @@ export default function MemberEvent(props: Props): JSX.Element | null {
     state.users.list.find((u: any) => u.id === event.member),
   );
 
-  console.log(user);
-
   return (
     <EventInfo>
       <EventImg alt="avatar" src={user?.avatar ? user.avatar : logo} />
