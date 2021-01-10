@@ -78,7 +78,6 @@
   "bugs": {
     "url": "https://github.com/Arcyvilk/PointOnePercent/issues"
   },
-  "homepage": ".",
   "browserslist": [
     ">0.2%",
     "not dead",
