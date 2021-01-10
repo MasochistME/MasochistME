@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import axios from 'axios';
 import { colors } from 'shared/theme';
-import { Wrapper, Flex } from 'shared/components';
+import { Wrapper, Flex, Spinner } from 'shared/components';
 
 const Patron = styled.div`
   cursor: help;
@@ -47,6 +47,18 @@ const Avatar = styled.img.attrs(({ tier }: { tier: number }) => {
   box-shadow: 0 0 10px ${colors.black};
   padding: 2px;
 `;
+const EmptyAvatar = styled.div`
+  width: 128px;
+  min-width: 128px;
+  height: 128px;
+  min-height: 128px;
+  margin: 15px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  box-shadow: 0 0 10px ${colors.black};
+  background-color: ${colors.black};
+  padding: 2px;
+`;
 const Basic = styled.div`
   display: flex;
   flex-direction: row;
@@ -70,6 +82,7 @@ const UpdateMsg = styled.span`
 `;
 
 ProfileHeader.Avatar = Avatar;
+ProfileHeader.EmptyAvatar = EmptyAvatar;
 ProfileHeader.Basic = Basic;
 ProfileHeader.Patron = Patron;
 ProfileHeader.UpdateDate = UpdateDate;
@@ -119,13 +132,16 @@ export default function ProfileHeader(props: Props): JSX.Element {
               target="_blank"
               rel="noopener noreferrer">
               <i className="fab fa-steam" style={{ marginRight: '10px' }} />
-              {user?.name}
+              {user?.name ?? 'Loading...'}
             </a>
           </h1>
           {patron ? (
             <ProfileHeader.Patron
-              title={`This user is a tier ${patron.description.toUpperCase()} supporter`}>
-              <i className="fas fa-medal" /> {patron.description.toUpperCase()}{' '}
+              title={`This user is a tier ${
+                patron?.description?.toUpperCase() ?? 'Loading...'
+              } supporter`}>
+              <i className="fas fa-medal" />{' '}
+              {patron?.description?.toUpperCase() ?? 'Loading...'}{' '}
             </ProfileHeader.Patron>
           ) : (
             ''
@@ -134,9 +150,9 @@ export default function ProfileHeader(props: Props): JSX.Element {
         <ProfileHeader.UpdateDate>
           {
             <span>{`Last updated: ${
-              user?.updated === 0
-                ? 'never'
-                : new Date(user?.updated).toLocaleString()
+              user?.updated
+                ? new Date(user?.updated).toLocaleString()
+                : 'Loading...'
             }`}</span>
           }
           {Date.now() - user?.updated > 3600000 ? (
@@ -160,11 +176,17 @@ export default function ProfileHeader(props: Props): JSX.Element {
           )}
         </ProfileHeader.UpdateDate>
         <ProfileHeader.Basic>
-          <ProfileHeader.Avatar
-            src={user?.avatar}
-            tier={Number(patron?.tier)}
-            alt="avatar"
-          />
+          {user?.avatar ? (
+            <ProfileHeader.Avatar
+              src={user?.avatar}
+              tier={Number(patron?.tier)}
+              alt="avatar"
+            />
+          ) : (
+            <ProfileHeader.EmptyAvatar>
+              <Spinner />
+            </ProfileHeader.EmptyAvatar>
+          )}
           <div>Currently there&lsquo;s no info provided about this user.</div>
         </ProfileHeader.Basic>
       </div>
