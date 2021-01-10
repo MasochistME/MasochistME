@@ -2,6 +2,7 @@
   "name": "pointonepercent",
   "version": "3.0.0",
   "private": true,
+  "type": "module",
   "dependencies": {
     "@types/chart.js": "^2.9.29",
     "@types/jest": "^26.0.19",
@@ -57,7 +58,7 @@
     "prettier": "^2.2.1"
   },
   "scripts": {
-    "server": "node ./lib/start.js",
+    "server": "node ./start.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",

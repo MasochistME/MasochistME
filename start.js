@@ -1,7 +1,11 @@
-const express = require('express'),
-  path = require('path'),
+import express from 'express';
+import path from 'path';
+
+const PORT = 3000;
 
 const server = express();
+
+server.listen(PORT, () => console.log(`Server listens at port ${PORT}!`));
 
 // MIDDLEWARE
 server.use((req, res, next) => {
@@ -13,6 +17,4 @@ server.use((req, res, next) => {
   });
   next();
 });
-server.use('/', express.static(path.join(__dirname, '/..', 'build')));
-
-module.exports = server;
+server.use('/', express.static(path.join(path.dirname(''), '/..', 'build')));
