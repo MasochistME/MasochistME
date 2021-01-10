@@ -41,8 +41,8 @@ export default function MiniHeader(): JSX.Element {
   return (
     <StyledMiniHeader>
       <Flex row align style={{ height: '100%' }}>
-        <i className={findTab().icon} />
-        <p>{findTab().text}</p>
+        <i className={findTab()?.icon ?? 'fas fa-question-circle'} />
+        <p>{findTab()?.text ?? '404'}</p>
       </Flex>
     </StyledMiniHeader>
   );

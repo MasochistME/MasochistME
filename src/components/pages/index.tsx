@@ -3,10 +3,7 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { media, colors } from 'shared/theme';
 import { changeTab } from 'shared/store/modules/Tabs';
-import MiniHeader from 'shared/components/MiniHeader';
-import Wrapper from 'shared/components/layout/Wrapper';
-import Header from 'shared/components/Header';
-import Nav from 'shared/components/Nav';
+import { Flex, MiniHeader, Wrapper, Header, Nav } from 'shared/components';
 import SidebarWrapper from 'components/sidebar/SidebarWrapper';
 import PageHome from './Home';
 import PageGames from './Games';
@@ -64,7 +61,7 @@ export default function Page(props: Props): JSX.Element {
       case 'badges':
         return <PageBadges />;
       case 'notfound':
-        return <div>404</div>;
+        return <PageNotFound />;
       default:
         return <PageHome />;
     }
@@ -90,5 +87,23 @@ export default function Page(props: Props): JSX.Element {
       </Wrapper>
       <Wrapper type="footer" />
     </Wrapper>
+  );
+}
+
+function PageNotFound() {
+  return (
+    <Flex column>
+      <Wrapper type="description">
+        <div
+          className="page-description"
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <img src="https://http.cat/404" alt="404" />
+        </div>
+      </Wrapper>
+    </Flex>
   );
 }
