@@ -45,7 +45,18 @@ export const getRanking = async (
             };
           },
         );
-        const badgesPoints: number = user.badges
+        const filteredBadges = user.badges.filter((userBadge: any) => {
+          const userBadgeId = ObjectId(userBadge.id);
+          const badgeExists = badges.find((badge: TBadge) =>
+            userBadgeId.equals(badge._id),
+          );
+          if (badgeExists) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+        const badgesPoints: number = filteredBadges
           .map((userBadge: any) => {
             const userBadgeId = ObjectId(userBadge.id);
             const badgeObject = badges.find((badge: TBadge) =>
@@ -55,7 +66,7 @@ export const getRanking = async (
             return badgeValue ? badgeValue : 0;
           })
           .reduce((a: number, b: number) => a + b, 0);
-        const badgesTotal = user.badges.length;
+        const badgesTotal = filteredBadges.length;
         const sum = pointsList
           .map(tier => tier.points)
           .reduce((a: number, b: number) => a + b, 0);

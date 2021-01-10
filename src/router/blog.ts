@@ -10,7 +10,7 @@ export const getBlog = async (_req: Request, res: Response): Promise<void> => {
   const blog: Blog = await getDataFromDB('blog');
 
   if (blog) {
-    const sortedBlog = orderBy(blog, [blog.date], ['desc']);
+    const sortedBlog = orderBy(blog, [(post: any) => post.date], ['desc']);
     res.status(200).send(sortedBlog);
   } else {
     res.sendStatus(404);
