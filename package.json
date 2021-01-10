@@ -58,7 +58,7 @@
     "prettier": "^2.2.1"
   },
   "scripts": {
-    "prod-pop": "yarn run build && serve -l 3000 -s build",
+    "prod-pop": "yarn run build && serve -l 3000 -s",
     "server": "node ./start.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
