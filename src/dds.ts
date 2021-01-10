@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { getDataFromDB } from 'helpers/db';
 import { router } from 'router';
+import { legacy } from 'router/legacyRouter';
 import { initiateMainUpdate } from 'router/old/update';
 import config from '../config.json';
 
@@ -11,6 +12,7 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/api', router);
+app.use('/rest', legacy);
 
 app.listen(config.PORT, () =>
   console.log(`Server listening at port ${config.PORT}!`),

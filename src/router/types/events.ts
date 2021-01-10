@@ -20,3 +20,15 @@ export type TGameEvent = {
   type: 'newGame';
   game: string;
 };
+export type TBadgeAddedEvent = {
+  date: number;
+  type: 'badgeAdded';
+  badge: string;
+  game: string;
+};
+export type TBadgeGivenEvent = {
+  date: number;
+  type: 'badgeGiven';
+  badge: string;
+  member: string;
+};
