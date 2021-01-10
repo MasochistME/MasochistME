@@ -39,11 +39,7 @@ export default function CustomEvent(props: TCustomEvent): JSX.Element | null {
             text
               .split('#')
               .map((str: string, index: number) =>
-                index % 2 === 1 ? (
-                  <span className="bold">{str}</span>
-                ) : (
-                  str
-                ),
+                index % 2 === 1 ? <span className="bold">{str}</span> : str,
               )}
         </EventDescription>
       }
