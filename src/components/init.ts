@@ -16,7 +16,7 @@ import {
 } from 'shared/store/modules/Cache';
 import { showGamesRated } from 'shared/store/modules/CheckBoxes';
 
-const path = 'http://localhost:3002';
+const path = 'http://89.47.165.141:3002';
 
 export default function useInit(): boolean {
   const dispatch = useDispatch();

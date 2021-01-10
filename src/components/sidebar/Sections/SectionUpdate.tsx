@@ -34,7 +34,7 @@ export default function SectionUpdate(): JSX.Element {
   // )} hours till you can update again`;
 
   const getUpdateDate = (): void => {
-    const url = 'http://localhost:3002/api/status';
+    const url = 'http://89.47.165.141:3002/api/status';
     axios
       .get(url)
       .then(res => setLastUpdated(res.data.lastUpdated))
