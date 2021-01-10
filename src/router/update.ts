@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { log } from 'helpers/log';
 import { connectToDb, getDataFromDB } from 'helpers/db';
-import { getCuratorMembers, updateCuratorGames } from 'router/old/curator';
-import { TMemberJoinedEvent, TMemberLeftEvent } from '../types/events';
-import config from '../../../config.json';
+import { getCuratorMembers, updateCuratorGames } from 'router/curator';
+import { TMemberJoinedEvent, TMemberLeftEvent } from 'router/types/events';
+import config from '../../config.json';
 
 const updateDelay = config.BIG_DELAY;
 

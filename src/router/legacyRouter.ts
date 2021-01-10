@@ -57,7 +57,7 @@ legacy.get('/curator/members', getCuratorMembers);
 
 legacy.get('/members', getAllUsers);
 legacy.get('/member/member/:steamid', getUser);
-legacy.put('/member/member/:steamid', updateUser);
+legacy.put('/users/user/:steamid', updateUser); // TODO change back to member
 
 legacy.get('/update', initiateMainUpdate);
 legacy.get('/status', getStatus);

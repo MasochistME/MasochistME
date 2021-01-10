@@ -94,6 +94,7 @@ export const getUserRanking = async (
     const rawUser = await getDataFromDB('users', { id });
     const filteredUser = {
       id: req.params.id,
+      badges: rawUser[0].badges,
       games: rawUser[0].games.map(game => {
         const playtime =
           typeof game.playtime_forever !== 'number'
