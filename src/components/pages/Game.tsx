@@ -3,6 +3,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { ChartWrapper, StackedBarChart } from 'components/Charts';
 import { Flex, Spinner } from 'shared/components';
 import Leaderboards from './Leaderboards';
 
@@ -22,12 +23,43 @@ export default function PageGame(): JSX.Element {
 
   return (
     <Flex column>
-      {/* <Wrapper type="description">
-        <div className="page-description"></div>
-      </Wrapper> */}
+      <GameHeader />
       <WrapperGame>
+        {game ? (
+          <div className="game-statistics">
+            <ChartWrapper
+              title={[
+                `Completions: ${game?.completions ?? 'unknown'}`,
+                'Average completion time',
+              ]}>
+              <StackedBarChart
+                labels={['hours']}
+                datasets={[
+                  {
+                    label: 'this game',
+                    data: [game.avgPlaytime],
+                    colorNormal: '#e30000ff',
+                    colorTransparent: '#e3000033',
+                  },
+                  {
+                    label: 'games from this tier',
+                    data: [game?.avgPlaytime ?? 0], // TODO
+                    colorNormal: '#141620ff',
+                    colorTransparent: '#14162066',
+                  },
+                ]}
+              />
+            </ChartWrapper>
+          </div>
+        ) : (
+          <Spinner />
+        )}
         {game ? <Leaderboards id={id} rating={game.rating} /> : <Spinner />}
       </WrapperGame>
     </Flex>
   );
+}
+
+function GameHeader() {
+  return <div></div>;
 }

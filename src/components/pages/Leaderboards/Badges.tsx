@@ -8,13 +8,33 @@ Badges.Field = Field;
 Badges.Section = Section;
 Badges.Description = Description;
 
-export default function Badges(props: { game: any }): JSX.Element {
-  const { game } = props;
+export default function Badges(props: {
+  game: any;
+  mini?: boolean;
+}): JSX.Element {
+  const { game, mini } = props;
   const badges = useSelector((state: any) =>
     state.badges.filter((badge: any) => game.badges.includes(badge['_id'])),
   );
 
-  return (
+  return mini ? (
+    <div className="game-badges">
+      <Badges.Section>
+        <h3>Badges</h3>
+        <Flex row style={{ margin: '8px' }}>
+          {badges.map((badge: any, index: number) => (
+            <Badges.Img
+              style={{ margin: '5px 10px 5px 5px' }}
+              src={badge.img}
+              alt="badge"
+              key={`badge-${index}`}
+              title={`${badge.points} pts - ${badge.name}\n"${badge.description}"`}
+            />
+          ))}
+        </Flex>
+      </Badges.Section>
+    </div>
+  ) : (
     <div className="game-badges">
       <Badges.Section>
         <h3>Badges</h3>
@@ -47,6 +67,7 @@ export default function Badges(props: { game: any }): JSX.Element {
             </Badges.Description>
           ))}
         </Flex>
+        )
       </Badges.Section>
     </div>
   );

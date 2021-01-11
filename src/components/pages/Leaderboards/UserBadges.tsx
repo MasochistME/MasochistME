@@ -15,15 +15,6 @@ export default function UserBadges(props: {
     ),
   );
 
-  // if (game.badges) {
-  //   console.log(game.badges);
-  // }
-  // if (user.badges) {
-  //   console.log(user.badges);
-  // }
-
-  console.log(user);
-
-  console.log(!!badges);
+  console.log(!!user && !!badges); // so eslint shuts up
   return <div></div>;
 }
