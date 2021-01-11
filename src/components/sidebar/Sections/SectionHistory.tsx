@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { orderBy } from 'lodash';
 import { swapRatingToIcon } from 'shared/helpers/helper';
+import { TEventTypes } from 'shared/types/events';
 import { SmallEvent, Section, SectionTitle, EventLink } from '../';
 import Spinner from 'shared/components/Spinner';
 
@@ -21,12 +22,12 @@ export default function SectionHistory(): JSX.Element {
     const game = games.find((g: any) => Number(g.id) === Number(event.game));
     const badge = badges.find((b: any) => b['_id'] === event.badge);
 
-    // console.log(badge);
+    const type: TEventTypes = event.type;
 
     const onUserClick = () => user?.id && history.push(`/profile/${user.id}`);
     const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
 
-    switch (event.type) {
+    switch (type) {
       case 'memberJoined':
         return user ? (
           <SmallEvent key={`sidebar-event-${eventIndex}`}>
@@ -58,6 +59,14 @@ export default function SectionHistory(): JSX.Element {
               {game.title}
             </EventLink>{' '}
             has been curated!
+          </SmallEvent>
+        ) : null;
+      case 'gameRemoved':
+        return game ? (
+          <SmallEvent key={`sidebar-event-${eventIndex}`}>
+            <i className="fas fa-minus-square"></i>
+            <EventLink className="bold"> {game.title}</EventLink> has been
+            removed from curator!
           </SmallEvent>
         ) : null;
       case 'complete':

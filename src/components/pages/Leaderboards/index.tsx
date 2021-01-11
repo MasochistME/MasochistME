@@ -1,20 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import { ChartWrapper, StackedBarChart } from 'components/Charts';
-import { Flex, Spinner, ProgressBar, Section } from 'shared/components';
+import { Spinner } from 'shared/components';
 import { useGameDetails } from 'components/init';
-import {
-  Description,
-  Field,
-  BadgeImg,
-  User,
-  Link,
-  UserInfo,
-  UserName,
-  UserTimes,
-  WrapperLeaderboards,
-} from './styles';
+import { WrapperLeaderboards } from './styles';
+import List from './List';
+import Badges from './Badges';
 
 type Props = {
   id: any;
@@ -92,120 +83,5 @@ export default function Leaderboards(props: Props): JSX.Element | null {
       )}
       {loaded && game ? <Leaderboards.List game={game} /> : <Spinner />}
     </WrapperLeaderboards>
-  );
-}
-
-// ---------------------------------------------
-// ---------------------------------------------
-// ---------------------------------------------
-
-List.User = User;
-List.Link = Link;
-List.UserInfo = UserInfo;
-List.UserName = UserName;
-List.UserTimes = UserTimes;
-List.ProgressBar = ProgressBar;
-
-function List(props: { game: any }) {
-  const { game } = props;
-  const history = useHistory();
-  const users = useSelector((state: any) => state.users.list);
-
-  const assignDateIfFinished = (leaderboards: any): string | null =>
-    leaderboards?.percentage === 100
-      ? new Date(leaderboards?.lastUnlocked * 1000).toLocaleString()
-      : null;
-
-  const leaderboards = game?.players
-    ? game.players.map((player: any) => {
-        const user = users.find((u: any) => u.id === player.id);
-        return {
-          id: player.id,
-          name: user.name,
-          avatar: user.avatar,
-          gameId: game.id,
-          trophy: player.trophy,
-          percentage: player.percentage,
-          lastUnlocked: player.lastUnlocked,
-          playtime: player.playtime,
-        };
-      })
-    : [];
-
-  const onUserClick = (id?: string) => id && history.push(`/profile/${id}`);
-
-  return (
-    <ul className="game-leaderboards">
-      {leaderboards.map((user: any, userIndex: number) => (
-        <List.User key={`leaderboards-user-${userIndex}`}>
-          <img
-            className="leaderboards-user-image"
-            alt="avatar"
-            src={user.avatar}></img>
-          <List.UserInfo>
-            <List.UserName>
-              {`${user.trophy ? user.trophy : ''}`}
-              <List.Link onClick={() => onUserClick(user?.id)}>
-                {user.name}
-              </List.Link>
-            </List.UserName>
-            <List.UserTimes>{assignDateIfFinished(user)}</List.UserTimes>
-          </List.UserInfo>
-          <List.ProgressBar percentage={Math.floor(user.percentage)} />
-        </List.User>
-      ))}
-    </ul>
-  );
-}
-
-// ---------------------------------------------
-// ---------------------------------------------
-// ---------------------------------------------
-
-Badges.Img = BadgeImg;
-Badges.Field = Field;
-Badges.Section = Section;
-Badges.Description = Description;
-
-function Badges(props: { game: any }) {
-  const { game } = props;
-  const badges = useSelector((state: any) =>
-    state.badges.filter((badge: any) => game.badges.includes(badge['_id'])),
-  );
-  return (
-    <div className="game-badges">
-      <Badges.Section>
-        <h3>Badges</h3>
-        <Flex
-          column
-          style={{
-            width: '100%',
-            height: '100%',
-            padding: '0 10px 10px 10px',
-            boxSizing: 'border-box',
-          }}>
-          {badges.map((badge: any, index: number) => (
-            <Badges.Description key={`badge-${index}`}>
-              <p style={{ margin: 0, fontWeight: 'bold' }}>
-                {badge.name?.toUpperCase()}
-              </p>
-              <Flex row style={{ width: '100%' }}>
-                <Badges.Img
-                  style={{ margin: '5px 10px 5px 5px' }}
-                  src={badge.img}
-                  alt="badge"
-                  key={`badge-${index}`}
-                />
-                <Flex column style={{ width: '100%' }}>
-                  <Badges.Field>Points: {badge.points} pts</Badges.Field>
-                  <Badges.Field>Proof: {badge.requirements}</Badges.Field>
-                  <Badges.Field>Description: {badge.description}</Badges.Field>
-                </Flex>
-              </Flex>
-            </Badges.Description>
-          ))}
-        </Flex>
-      </Badges.Section>
-    </div>
   );
 }

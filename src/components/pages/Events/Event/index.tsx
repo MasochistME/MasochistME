@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { colors, fonts } from 'shared/theme';
+import { TEventTypes } from 'shared/types/events';
 import {
   AchievementNumberChangeEvent,
   CompleteEvent,
@@ -46,9 +47,13 @@ export default function Event(props: Props): JSX.Element | null {
   const { event } = props;
 
   const identifyEvent = (event: any): JSX.Element | null => {
-    switch (event.type) {
+    const type: TEventTypes = event.type;
+
+    switch (type) {
       case 'newGame':
-        return <GameEvent event={event} />;
+        return <GameEvent event={event} action="added" />;
+      case 'gameRemoved':
+        return <GameEvent event={event} action="removed" />;
       case 'memberJoined':
         return <MemberEvent event={event} action="join" />;
       case 'memberLeft':

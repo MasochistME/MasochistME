@@ -1,3 +1,15 @@
+export type TEventTypes =
+  | 'newGame'
+  | 'gameRemoved'
+  | 'memberJoined'
+  | 'memberLeft'
+  | 'complete'
+  | 'tierChange'
+  | 'badgeAdded'
+  | 'badgeGiven'
+  | 'achievementNumberChange'
+  | 'custom';
+
 export type TMemberJoinedEvent = {
   date: number;
   type: 'memberJoined';
@@ -17,6 +29,6 @@ export type TTierChangeEvent = {
 };
 export type TGameEvent = {
   date: number;
-  type: 'newGame';
+  type: 'newGame' | 'gameRemoved';
   game: string;
 };

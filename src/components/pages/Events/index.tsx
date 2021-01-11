@@ -50,6 +50,10 @@ const eventTypes = [
     description: 'new game being curated',
   },
   {
+    icon: 'fas fa-minus-square',
+    description: 'game being removed from curator',
+  },
+  {
     icon: 'fas fa-caret-square-up',
     description: 'game promoting a tier',
   },
