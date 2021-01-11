@@ -49,7 +49,7 @@ export const getCuratorGames = async (
     const games = await getDataFromDB('games');
     if (res) {
       const filteredGames = games.map((game: any) => {
-        const { id, desc, rating, title, sale, img, url } = game;
+        const { id, desc, rating, title, sale, img, url, curated } = game;
         return {
           id: typeof id !== 'number' ? Number(id) : id,
           desc,
@@ -58,6 +58,8 @@ export const getCuratorGames = async (
           img,
           url,
           sale,
+          curated,
+          protected: game.protected,
         };
       });
       res.status(200).send(filteredGames);
