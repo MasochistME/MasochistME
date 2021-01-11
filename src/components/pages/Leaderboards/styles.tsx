@@ -100,6 +100,13 @@ export const UserTimes = styled.div`
   }
 `;
 
+export const Link = styled.span`
+  cursor: pointer;
+  &:hover {
+    color: ${colors.white};
+  }
+`;
+
 export const Info = styled.div`
   width: 100%;
   height: 100%;
