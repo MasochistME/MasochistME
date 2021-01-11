@@ -10,3 +10,5 @@ Website for the 0.1% Steam community.
 - `forever start -c 'yarn run prod-pop' build`
 
 The last command allows us to run the `serve` command which requires path while still providing `forever` with required flag `path`.
+
+When the repository is already served, it's enough to run the `yarn run build` command to update to new version.
