@@ -17,7 +17,7 @@ export type TTierChangeEvent = {
 };
 export type TGameEvent = {
   date: number;
-  type: 'newGame';
+  type: 'newGame' | 'gameRemoved';
   game: string;
 };
 export type TBadgeAddedEvent = {

@@ -27,12 +27,15 @@ type TGame = {
     onSale: boolean;
     discount: number;
   };
+  curated: boolean;
+  protected?: boolean;
 };
 
 const fillGameData = (id, desc, score) => ({
   id,
   desc,
   rating: score,
+  curated: true,
 });
 
 /**
@@ -133,16 +136,19 @@ export const updateCuratorGames = async (req?, res?) => {
         Compares it with the games' list saved in database.
         Games which are not in database are updated now.
         All games get force updated in presence of force_update header.
+        IMPORTANT!!! When force_update the flag protected is probably ignored!!!!!
     */
-  if (req && req.headers && !req.headers.force_update) {
-    games = games.filter(
-      (game: TGame) => !gamesDB.find(gameDB => gameDB.id === game.id),
-    );
+  if (req?.headers && !req.headers.force_update) {
+    games = games.filter((game: TGame) => {
+      const gameIsNotInDb = !gamesDB.find(gameDB => gameDB.id === game.id);
+      return gameIsNotInDb;
+    });
   }
   if (games.length === 0) {
     log.INFO('--> [UPDATE] curated games list [DONE]');
     return;
   }
+
   const getGameDetails = async (index: number) => {
     const gameId = games[index].id;
     const urlGamesDetails = `http://store.steampowered.com/api/appdetails?appids=${gameId}`;
@@ -182,6 +188,8 @@ export const updateCuratorGames = async (req?, res?) => {
         onSale: price ? (price.discount_percent ? true : false) : false,
         discount: price ? price.discount_percent : 0,
       },
+      curated: true,
+      protected: false,
     };
 
     const oldGame = gamesDB.find(gameDB => gameDB.id === gameId);
@@ -200,8 +208,13 @@ export const updateCuratorGames = async (req?, res?) => {
         }
       });
     }
+    const gameNewlyCurated = !oldGame;
+    const gameDecurated = games.find(
+      (curatedGame: TGame) =>
+        curatedGame.id === oldGame?.id && !oldGame?.protected,
+    );
 
-    if (!oldGame) {
+    if (gameNewlyCurated) {
       const eventDetails: TGameEvent = {
         date: Date.now(),
         type: 'newGame',
@@ -213,6 +226,21 @@ export const updateCuratorGames = async (req?, res?) => {
         }
       });
       log.INFO(`--> [UPDATE] events - game ${gameId} curated`);
+    }
+
+    if (gameDecurated) {
+      gameDetails.curated = false;
+      const eventDetails: TGameEvent = {
+        date: Date.now(),
+        type: 'gameRemoved',
+        game: gameId,
+      };
+      db.collection('events').insertOne(eventDetails, err => {
+        if (err) {
+          log.WARN(err);
+        }
+      });
+      log.INFO(`--> [UPDATE] events - game ${gameId} decurated`);
     }
 
     db.collection('games').updateOne(
