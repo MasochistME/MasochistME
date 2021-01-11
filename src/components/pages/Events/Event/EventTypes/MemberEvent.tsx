@@ -6,8 +6,8 @@ import {
   EventSummary,
   EventInfo,
   EventImg,
+  EventLink,
 } from 'components/pages/Events/styles';
-import { MemberLink } from './styles';
 import logo from 'shared/images/logo.png';
 
 type Props = {
@@ -29,16 +29,16 @@ export default function MemberEvent(props: Props): JSX.Element | null {
       <EventImg alt="avatar" src={user?.avatar ?? logo} />
       {user ? (
         <EventDescription>
-          <MemberLink className="bold" onClick={onUserClick}>
+          <EventLink className="bold" onClick={onUserClick}>
             {user?.name ?? `User ${event.member}`}
-          </MemberLink>{' '}
+          </EventLink>{' '}
           has {action === 'join' ? 'joined' : 'left'} the group!
         </EventDescription>
       ) : (
         <EventDescription>
-          <MemberLink className="bold" onClick={onUserClick}>
+          <EventLink className="bold" onClick={onUserClick}>
             {user?.name ?? `User ${event.member}`}
-          </MemberLink>{' '}
+          </EventLink>{' '}
           has {action === 'join' ? 'joined' : 'left'} the group!
         </EventDescription>
       )}

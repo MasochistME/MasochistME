@@ -6,8 +6,8 @@ import {
   EventSummary,
   EventInfo,
   EventImg,
+  EventLink,
 } from 'components/pages/Events/styles';
-import { MemberLink } from './styles';
 import logo from 'shared/images/logo.png';
 
 type Props = {
@@ -79,9 +79,9 @@ function BadgeGiven({ event }: { event: any }) {
       <EventImg src={user?.avatar ?? logo} alt="game-img" />
       {badge && user ? (
         <EventDescription>
-          <MemberLink className="bold" onClick={onUserClick}>
+          <EventLink className="bold" onClick={onUserClick}>
             {user?.name ?? `User ${event.member}`}
-          </MemberLink>{' '}
+          </EventLink>{' '}
           has earned a new badge -{' '}
           <span className="bold">{badge?.name ?? event.badge}</span>!
         </EventDescription>

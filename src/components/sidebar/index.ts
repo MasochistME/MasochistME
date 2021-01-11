@@ -110,7 +110,7 @@ export const SmallMember = styled.div`
   margin-bottom: 1px;
 `;
 
-export const MemberLink = styled.span`
+export const EventLink = styled.span`
   cursor: pointer;
   &:hover {
     color: ${colors.newMediumGrey};

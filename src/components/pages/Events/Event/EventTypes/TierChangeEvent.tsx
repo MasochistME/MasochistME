@@ -1,11 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { swapRatingToIcon } from 'shared/helpers/helper';
 import {
   EventDescription,
   EventSummary,
   EventInfo,
   EventImg,
+  EventLink,
 } from 'components/pages/Events/styles';
 import logo from 'shared/images/logo.png';
 
@@ -13,6 +15,7 @@ type Props = { event: any };
 
 export default function TierChangeEvent(props: Props): JSX.Element | null {
   const { event } = props;
+  const history = useHistory();
   const games = useSelector((state: any) => state.games.list);
   const rating = useSelector((state: any) => state.rating);
 
@@ -24,11 +27,15 @@ export default function TierChangeEvent(props: Props): JSX.Element | null {
   );
   const demoted = Number(props.event.oldTier) > Number(props.event.newTier);
 
+  const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
+
   return game && gameRating ? (
     <EventInfo>
       <EventImg alt="game-img" src={logo} />
       <EventDescription>
-        <span className="bold">{game ? game.title : '-'}</span>
+        <EventLink className="bold" onClick={onGameClick}>
+          {game ? game.title : '-'}
+        </EventLink>
         {demoted ? ' demoted ' : ' promoted '}
         from <i className={swapRatingToIcon(event.oldTier, rating)}></i> to{' '}
         <i className={swapRatingToIcon(event.newTier, rating)}></i>!

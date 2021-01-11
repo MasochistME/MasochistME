@@ -1,10 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import {
   EventDescription,
   EventSummary,
   EventInfo,
   EventImg,
+  EventLink,
 } from 'components/pages/Events/styles';
 import logo from 'shared/images/logo.png';
 
@@ -14,31 +16,32 @@ type Props = {
 
 export default function GameEvent(props: Props): JSX.Element | null {
   const { event } = props;
+  const history = useHistory();
   const games = useSelector((state: any) => state.games.list);
   const rating = useSelector((state: any) => state.rating);
 
-  const game = games.find(
-    (g: any) => Number(g.id) === Number(props.event.game),
-  );
+  const game = games.find((g: any) => Number(g.id) === Number(event.game));
   const gameRating = rating.find((r: any) =>
     game ? Number(r.id) === Number(game.rating) : null,
   );
+
+  const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
 
   return (
     <EventInfo>
       <EventImg alt="game-img" src={logo} />
       {game ? (
         <EventDescription>
-          <span className="bold">
+          <EventLink className="bold" onClick={onGameClick}>
             {game ? game.title : `Game ${event.game}`}
-          </span>{' '}
+          </EventLink>{' '}
           has been curated!
         </EventDescription>
       ) : (
         <EventDescription>
-          <span className="bold">
+          <EventLink className="bold" onClick={onGameClick}>
             {game ? game.title : `Game ${event.game}`}
-          </span>{' '}
+          </EventLink>{' '}
           (no longer curated) has been curated!
         </EventDescription>
       )}
