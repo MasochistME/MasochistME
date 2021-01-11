@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { orderBy } from 'lodash';
 import { showProfile } from 'shared/store/modules/Profiles';
 import { changeTab } from 'shared/store/modules/Tabs';
@@ -17,6 +17,7 @@ Profile.Section = Section;
 
 export default function Profile(): JSX.Element {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { id } = useParams<{ id: string }>();
 
   const userLoaded = useUserDetails(id);
@@ -69,6 +70,8 @@ export default function Profile(): JSX.Element {
     return orderedUserBadges;
   });
 
+  const onBadgeClick = (id?: string) => id && history.push(`/game/${id}`);
+
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(showProfile(id));
@@ -108,6 +111,7 @@ export default function Profile(): JSX.Element {
                             badge.description
                           }"`}
                           key={`badge-${index}`}
+                          onClick={() => onBadgeClick(game?.id)}
                         />
                       );
                     })}
