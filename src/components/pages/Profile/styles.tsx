@@ -32,7 +32,7 @@ export const Badge = styled.img`
   height: 64px;
   min-width: 64px;
   min-height: 64px;
-  cursor: help;
+  cursor: pointer;
   box-shadow: 0 0 5px ${colors.superDarkGrey};
   margin: 10px;
 `;
