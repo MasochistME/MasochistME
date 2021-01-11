@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { ChartWrapper, StackedBarChart } from 'components/Charts';
 import { Flex, Spinner, ProgressBar, Section } from 'shared/components';
 import { useGameDetails } from 'components/init';
@@ -8,6 +9,7 @@ import {
   Field,
   BadgeImg,
   User,
+  Link,
   UserInfo,
   UserName,
   UserTimes,
@@ -98,6 +100,7 @@ export default function Leaderboards(props: Props): JSX.Element | null {
 // ---------------------------------------------
 
 List.User = User;
+List.Link = Link;
 List.UserInfo = UserInfo;
 List.UserName = UserName;
 List.UserTimes = UserTimes;
@@ -105,6 +108,7 @@ List.ProgressBar = ProgressBar;
 
 function List(props: { game: any }) {
   const { game } = props;
+  const history = useHistory();
   const users = useSelector((state: any) => state.users.list);
 
   const assignDateIfFinished = (leaderboards: any): string | null =>
@@ -128,6 +132,8 @@ function List(props: { game: any }) {
       })
     : [];
 
+  const onUserClick = (id?: string) => id && history.push(`/profile/${id}`);
+
   return (
     <ul className="game-leaderboards">
       {leaderboards.map((user: any, userIndex: number) => (
@@ -137,9 +143,12 @@ function List(props: { game: any }) {
             alt="avatar"
             src={user.avatar}></img>
           <List.UserInfo>
-            <List.UserName>{`${user.trophy ? user.trophy : ''} ${
-              user.name
-            }`}</List.UserName>
+            <List.UserName>
+              {`${user.trophy ? user.trophy : ''}`}
+              <List.Link onClick={() => onUserClick(user?.id)}>
+                {user.name}
+              </List.Link>
+            </List.UserName>
             <List.UserTimes>{assignDateIfFinished(user)}</List.UserTimes>
           </List.UserInfo>
           <List.ProgressBar percentage={Math.floor(user.percentage)} />
