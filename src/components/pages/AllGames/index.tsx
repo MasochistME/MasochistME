@@ -25,13 +25,16 @@ export default function PageAllGames(): JSX.Element {
   const searchGame = useSelector((state: any) => state.search.game);
   const showGamesRated = useSelector((state: any) => state.showGamesRated);
   const rating = useSelector((state: any) => state.rating);
-  const games = useSelector((state: any) =>
-    orderBy(
-      state.games.list,
+  const games = useSelector((state: any) => {
+    const filteredGames = state.games.list.filter(
+      (game: any) => game.curated || game.protected,
+    );
+    return orderBy(
+      filteredGames,
       ['rating', game => game.title.toLowerCase()],
       ['desc', 'asc'],
-    ),
-  );
+    );
+  });
 
   return (
     <Flex column>
