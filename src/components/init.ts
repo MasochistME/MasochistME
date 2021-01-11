@@ -171,7 +171,8 @@ export function useUserDetails(id: string): boolean {
 export function useGameDetails(id: string): boolean {
   const dispatch = useDispatch();
   const loaded = useSelector(
-    (state: any) => !!state.games.details.find((game: any) => game.id === id),
+    (state: any) =>
+      !!state.games.details.find((game: any) => Number(game.id) === Number(id)),
   );
 
   const loadGameDetails = () => {

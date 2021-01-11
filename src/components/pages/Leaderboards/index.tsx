@@ -29,8 +29,12 @@ export default function Leaderboards(props: Props): JSX.Element | null {
   const { id } = props;
   const loaded = useGameDetails(id);
   const game = useSelector((state: any) => {
-    const gameBasic = state.games.list.find((g: any) => g.id === id);
-    const gameDetails = state.games.details.find((g: any) => g.id === id);
+    const gameBasic = state.games.list.find(
+      (g: any) => Number(g.id) === Number(id),
+    );
+    const gameDetails = state.games.details.find(
+      (g: any) => Number(g.id) === Number(id),
+    );
     return {
       ...gameBasic,
       ...gameDetails,

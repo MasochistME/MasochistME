@@ -35,6 +35,13 @@
     "external": false
   },
   {
+    "text": "game",
+    "icon": "fas fa-puzzle-piece",
+    "link": "game",
+    "visible": false,
+    "external": false
+  },
+  {
     "text": "badges",
     "icon": "fas fa-ribbon",
     "link": "badges",
