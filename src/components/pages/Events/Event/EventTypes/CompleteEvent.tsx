@@ -6,8 +6,8 @@ import {
   EventSummary,
   EventInfo,
   EventImg,
+  EventLink,
 } from 'components/pages/Events/styles';
-import { MemberLink } from './styles';
 import logo from 'shared/images/logo.png';
 
 type Props = {
@@ -29,18 +29,19 @@ export default function CompleteEvent(props: Props): JSX.Element | null {
   );
 
   const onUserClick = () => user?.id && history.push(`/profile/${user.id}`);
+  const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
 
   return (
     <EventInfo>
       <EventImg src={user?.avatar ?? logo} alt="game-img" />
       <EventDescription>
-        <MemberLink className="bold" onClick={onUserClick}>
+        <EventLink className="bold" onClick={onUserClick}>
           {user?.name ?? `User ${event.member} (no longer member of the group)`}
-        </MemberLink>{' '}
+        </EventLink>{' '}
         completed{' '}
-        <span className="bold">
+        <EventLink className="bold" onClick={onGameClick}>
           {game?.title ?? `game ${event.game} (no longer curated)`}
-        </span>{' '}
+        </EventLink>
         !
       </EventDescription>
       <EventSummary>

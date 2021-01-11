@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import { SmallMember, MemberLink, Section, SectionTitle } from '../';
+import { SmallMember, EventLink, Section, SectionTitle } from '../';
 import Spinner from 'shared/components/Spinner';
 
 const FlexColumn = styled.div`
@@ -29,9 +29,9 @@ export default function SectionTop(): JSX.Element {
     return (
       <SmallMember key={`sidebar-user-${index}`}>
         <div>{index + 1}.</div>
-        <MemberLink onClick={onUserClick}>
+        <EventLink onClick={onUserClick}>
           <span className="bold">{user.name}</span>
-        </MemberLink>
+        </EventLink>
         <div>{user.points.sum} pts</div>
       </SmallMember>
     );

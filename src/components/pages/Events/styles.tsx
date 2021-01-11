@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { media } from 'shared/theme';
+import { media, colors } from 'shared/theme';
 
 export const EventInfo = styled.div`
   display: flex;
@@ -19,6 +19,13 @@ export const EventDescription = styled.div`
   width: 100%;
   @media (max-width: ${media.tablets}) {
     display: none;
+  }
+`;
+
+export const EventLink = styled.span`
+  cursor: pointer;
+  &:hover {
+    color: ${colors.white};
   }
 `;
 
