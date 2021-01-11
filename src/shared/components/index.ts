@@ -8,6 +8,7 @@ import SearchBar from './SearchBar';
 import Spinner from './Spinner';
 import Update from './Update';
 import ProgressBar from './ProgressBar';
+import CustomButton from './CustomButton';
 
 import Flex from './layout/Flex';
 import Wrapper from './layout/Wrapper';
@@ -24,6 +25,7 @@ export {
   SearchBar,
   Spinner,
   Update,
+  CustomButton,
   ProgressBar,
   Wrapper,
   Section,

@@ -1,6 +1,6 @@
-import React /* useState */ from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+
 import Modal from 'react-modal';
 import styled from 'styled-components';
 import { swapRatingToIcon } from 'shared/helpers/helper';
@@ -41,22 +41,16 @@ Game.Title = Title;
 Game.Rating = Rating;
 
 export default function Game(props: TGame): JSX.Element {
-  const history = useHistory();
   const { id, rating } = props;
-  // const [modalIsOpen, setModalIsOpen] = useState(false);
-  const modalIsOpen = false;
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const game = useSelector((state: any) =>
     state.games.list.find((g: any) => g.id === id),
   );
 
-  // const onExtend = (event: any) => {
-  //   event.cancelBubble = true;
-  //   setModalIsOpen(!modalIsOpen);
-  // };
-
-  const onShowGame = () => {
-    history.push(`/game/${id}`);
+  const onExtend = (event: any) => {
+    event.cancelBubble = true;
+    setModalIsOpen(!modalIsOpen);
   };
 
   const modalStyle = {
@@ -86,7 +80,7 @@ export default function Game(props: TGame): JSX.Element {
   };
 
   return (
-    <StyledGame onClick={onShowGame}>
+    <StyledGame onClick={onExtend}>
       <Game.Img
         className={`rated-${game.rating}`}
         extended={modalIsOpen}
