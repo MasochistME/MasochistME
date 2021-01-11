@@ -21,7 +21,7 @@ const WrapperGames = styled.div`
   background-color: ${colors.darkBlueTransparent};
 `;
 
-export default function PageGames(): JSX.Element {
+export default function PageAllGames(): JSX.Element {
   const searchGame = useSelector((state: any) => state.search.game);
   const showGamesRated = useSelector((state: any) => state.showGamesRated);
   const rating = useSelector((state: any) => state.rating);

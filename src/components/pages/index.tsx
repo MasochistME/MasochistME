@@ -6,12 +6,13 @@ import { changeTab } from 'shared/store/modules/Tabs';
 import { Flex, MiniHeader, Wrapper, Header, Nav } from 'shared/components';
 import SidebarWrapper from 'components/sidebar/SidebarWrapper';
 import PageHome from './Home';
-import PageGames from './Games';
+import PageAllGames from './AllGames';
 import PageRanking from './Ranking';
 import PageEvents from './Events';
 import PageSupport from './Support';
 import PageBadges from './Badges';
 import PageProfile from './Profile';
+import PageGame from './Game';
 
 const WrapperContent = styled.div`
   position: relative;
@@ -35,6 +36,7 @@ type TPage =
   | 'events'
   | 'support'
   | 'profile'
+  | 'game'
   | 'badges'
   | 'notfound';
 type Props = {
@@ -49,7 +51,7 @@ export default function Page(props: Props): JSX.Element {
       case 'home':
         return <PageHome />;
       case 'games':
-        return <PageGames />;
+        return <PageAllGames />;
       case 'ranking':
         return <PageRanking />;
       case 'events':
@@ -58,6 +60,8 @@ export default function Page(props: Props): JSX.Element {
         return <PageSupport />;
       case 'profile':
         return <PageProfile />;
+      case 'game':
+        return <PageGame />;
       case 'badges':
         return <PageBadges />;
       case 'notfound':

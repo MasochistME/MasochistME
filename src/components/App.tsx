@@ -34,6 +34,9 @@ export default function App(): JSX.Element {
         <Route exact path="/profile/:id">
           <Page page="profile" />
         </Route>
+        <Route exact path="/game/:id">
+          <Page page="game" />
+        </Route>
         <Route>
           <Page page="notfound" />
         </Route>

@@ -6,10 +6,11 @@ export const WrapperLeaderboards = styled.div`
   box-sizing: border-box;
   text-align: center;
   padding: 10px;
-  width: 700px;
+  width: 100%;
+  /* width: 700px;
   max-width: 90%;
   height: auto;
-  max-height: 90%;
+  max-height: 90%; */
   overflow-y: auto;
   background-color: ${colors.darkBlueTransparent};
   color: ${colors.superLightGrey};
