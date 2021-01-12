@@ -91,7 +91,7 @@ export const getCuratedGamesFromTier = async (req, res) => {
  * Updates the list of curated games
  * @param req.headers.force_update - to force update all games
  */
-export const updateCuratorGames = (req?, res?) =>
+export const updateCuratorGames = (req?, res?): Promise<void> =>
   // eslint-disable-next-line no-async-promise-executor
   new Promise(async resolve => {
     const { db } = await connectToDb();
