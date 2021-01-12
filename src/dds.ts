@@ -3,7 +3,7 @@ import cors from 'cors';
 import { getDataFromDB } from 'helpers/db';
 import { router } from 'router';
 import { legacy } from 'router/legacyRouter';
-import { initiateMainUpdate } from 'router/old/update';
+import { initiateMainUpdate } from 'router/update';
 import config from '../config.json';
 
 const app = express();
