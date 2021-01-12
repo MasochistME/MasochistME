@@ -7,7 +7,7 @@ import config from '../../config.json';
 
 const updateDelay = config.BIG_DELAY;
 
-export const updateStatus = (client, db, percent: number) => {
+export const updateStatus = (db, percent: number) => {
   db.collection('update').updateOne(
     { id: 'lastUpdated' },
     {
@@ -22,7 +22,6 @@ export const updateStatus = (client, db, percent: number) => {
       if (err) {
         log.WARN(err);
       }
-      client.close();
     },
   );
 };
@@ -36,7 +35,10 @@ export const getStatus = async (req, res) => {
     res.status(500).send(err);
     return;
   }
-  res.status(200).send({ lastUpdated: lastUpdated[0].timestamp });
+  res.status(200).send({
+    lastUpdated: lastUpdated[0].timestamp,
+    status: lastUpdated[0].status,
+  });
   return;
 };
 
@@ -74,7 +76,7 @@ export const initiateMainUpdate = async (req?, res?) => {
   }
 
   try {
-    updateStatus(client, db, 0);
+    updateStatus(db, 0);
     members = await getCuratorMembers();
   } catch (err) {
     log.WARN('--> [UPDATE] main update [ERR]');
@@ -82,7 +84,7 @@ export const initiateMainUpdate = async (req?, res?) => {
     return;
   }
   try {
-    updateStatus(client, db, 20);
+    updateStatus(db, 20);
     await updateCuratorGames();
   } catch (err) {
     log.WARN('--> [UPDATE] main update [ERR]');
@@ -120,14 +122,17 @@ export const initiateMainUpdate = async (req?, res?) => {
   });
 
   const finalize = () => {
-    updateStatus(client, db, 100);
+    updateStatus(db, 100);
     client.close();
   };
 
   const iterateMembers = async (index: number) => {
+    const percentage = 80 + (20 / members.length) * (index + 1);
     if (!usersFromDB.find(userFromDB => userFromDB.id === members[index].id)) {
       const userUrl = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${config.STEAM_KEY}&steamids=${members[index].id}`;
       let userData;
+
+      updateStatus(db, percentage);
 
       log.INFO(`--> [UPDATE] member ${members[index].id}`);
 
