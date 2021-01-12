@@ -48,20 +48,22 @@ export const getCuratorGames = async (
   try {
     const games = await getDataFromDB('games');
     if (res) {
-      const filteredGames = games.map((game: any) => {
-        const { id, desc, rating, title, sale, img, url, curated } = game;
-        return {
-          id: typeof id !== 'number' ? Number(id) : id,
-          desc,
-          rating,
-          title,
-          img,
-          url,
-          sale,
-          curated,
-          protected: game.protected,
-        };
-      });
+      const filteredGames = games
+        .filter((game: any) => game.curated || game.protected)
+        .map((game: any) => {
+          const { id, desc, rating, title, sale, img, url, curated } = game;
+          return {
+            id: typeof id !== 'number' ? Number(id) : id,
+            desc,
+            rating,
+            title,
+            img,
+            url,
+            sale,
+            curated,
+            protected: game.protected,
+          };
+        });
       res.status(200).send(filteredGames);
     }
   } catch (err) {
@@ -94,7 +96,7 @@ export const updateCuratorGames = async (req?, res?) => {
   const points: Array<TRating> = await getDataFromDB('points');
   const gamesDB: Array<TGame> = await getDataFromDB('games');
   const response = await axios.get(urlCuratedGames);
-  let games: Array<TGame> = [];
+  const games: Array<TGame> = [];
 
   if (!response || !response.data || !response.data.results_html) {
     if (res) {
@@ -135,17 +137,20 @@ export const updateCuratorGames = async (req?, res?) => {
       }
     });
   /*  
-        Compares it with the games' list saved in database.
-        Games which are not in database are updated now.
-        All games get force updated in presence of force_update header.
-        IMPORTANT!!! When force_update the flag protected is probably ignored!!!!!
-    */
-  if (req?.headers && !req.headers.force_update) {
-    games = games.filter((game: TGame) => {
-      const gameIsNotInDb = !gamesDB.find(gameDB => gameDB.id === game.id);
-      return gameIsNotInDb;
-    });
-  }
+    Compares it with the games' list saved in database.
+    Games which are not in database are updated now.
+    All games get force updated in presence of force_update header.
+    IMPORTANT!!! When force_update the flag protected is probably ignored!!!!!
+  */
+  // if (!req.headers || (req?.headers && !req.headers.force_update)) {
+  //   games = games.filter((game: TGame) => {
+  //     const gameIsNotInDb = !gamesDB.find(
+  //       gameDB => Number(gameDB.id) === Number(game.id),
+  //     );
+  //     return gameIsNotInDb;
+  //   });
+  // }
+
   if (games.length === 0) {
     log.INFO('--> [UPDATE] curated games list [DONE]');
     return;
@@ -194,7 +199,9 @@ export const updateCuratorGames = async (req?, res?) => {
       protected: false,
     };
 
-    const oldGame = gamesDB.find(gameDB => gameDB.id === gameId);
+    const oldGame = gamesDB.find(
+      gameDB => Number(gameDB.id) === Number(gameId),
+    );
     if (oldGame && oldGame.rating !== games[index].rating) {
       log.INFO(`--> [UPDATE] events - game ${gameId} changed tier`);
       const eventDetails: TTierChangeEvent = {
@@ -213,7 +220,7 @@ export const updateCuratorGames = async (req?, res?) => {
     const gameNewlyCurated = !oldGame;
     const gameDecurated = games.find(
       (curatedGame: TGame) =>
-        curatedGame.id === oldGame?.id && !oldGame?.protected,
+        Number(curatedGame.id) === Number(oldGame?.id) && !oldGame?.protected,
     );
 
     if (gameNewlyCurated) {
