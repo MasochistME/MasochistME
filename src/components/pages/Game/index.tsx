@@ -12,6 +12,7 @@ import GameHeader from './GameHeader';
 
 const FlexibleFlex = styled(Flex)`
   width: 100%;
+  margin-bottom: 16px;
   @media (max-width: ${media.smallNetbooks}) {
     flex-direction: column;
   }
@@ -50,7 +51,7 @@ export default function PageGame(): JSX.Element {
                 height: '250px',
                 justifyContent: 'space-between',
               }}>
-              <h3>
+              <h3 style={{ textAlign: 'center' }}>
                 Completions: {game?.completions ?? 'unknown'}
                 <br />
                 Average completion time

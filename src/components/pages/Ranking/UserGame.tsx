@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { colors, fonts, media } from 'shared/theme';
 import { Flex } from 'shared/components';
@@ -50,6 +51,9 @@ const CompletionTimer = styled.div`
 `;
 const Title = styled.div`
   margin-left: 5px;
+  &:hover {
+    color: ${colors.white};
+  }
 `;
 
 UserGame.Game = Game;
@@ -66,9 +70,12 @@ type TUserProps = {
 
 export default function UserGame(props: TUserProps): JSX.Element {
   const { game } = props;
+  const history = useHistory();
   const percentage = isNaN(Math.floor(game.percentage))
     ? 0
     : Math.floor(game.percentage);
+
+  const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
 
   return (
     <UserGame.Game>
@@ -76,7 +83,7 @@ export default function UserGame(props: TUserProps): JSX.Element {
       <UserGame.Info>
         <Flex row>
           <i className={game.rating} />
-          <UserGame.Title> {game.title}</UserGame.Title>
+          <UserGame.Title onClick={onGameClick}> {game.title}</UserGame.Title>
         </Flex>
         <UserGame.Times>
           {game.percentage === 100 ? (

@@ -36,7 +36,11 @@ export default function GameHeader(props: { game: any }): JSX.Element {
             </a>
           </h1>
           <div>
-            <i className={gameRating?.icon ?? 'far fa-question-circle'}></i>
+            <i
+              className={gameRating?.icon ?? 'far fa-question-circle'}
+              title={`This game is worth ${
+                gameRating?.score ?? '<unknown>'
+              } pts.`}></i>
           </div>
         </Flex>
         <GameHeader.Basic>
