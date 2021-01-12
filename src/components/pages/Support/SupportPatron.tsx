@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { colors } from 'shared/theme';
 
@@ -39,6 +40,7 @@ const Avatar = styled.img.attrs(({ tier }: { tier: number }) => {
   padding: 2px;
   box-sizing: border-box;
   box-shadow: 0 0 10px #000;
+  cursor: pointer;
   &:hover {
     padding: 0px;
   }
@@ -57,10 +59,18 @@ type TSupportPatron = {
 
 export default function Patron(props: TSupportPatron): JSX.Element {
   const { patron, tier } = props;
+  const history = useHistory();
+
+  const onUserClick = () =>
+    patron?.steamid && history.push(`/profile/${patron.steamid}`);
 
   return (
     <WrapperPatron>
-      <Patron.Avatar tier={Number(tier)} src={patron.avatar} />
+      <Patron.Avatar
+        tier={Number(tier)}
+        src={patron.avatar}
+        onClick={onUserClick}
+      />
       <Patron.Nickname>{patron.name}</Patron.Nickname>
     </WrapperPatron>
   );

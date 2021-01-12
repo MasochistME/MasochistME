@@ -64,10 +64,10 @@ export default function Leaderboards(props: Props): JSX.Element | null {
         <CustomButton onClick={onShowGame}>Details</CustomButton>
       </Flex>
       {loaded && game ? (
-        <>
+        <Flex column>
           {game.badges?.length ? <Badges game={game} mini /> : null}
           <Leaderboards.List game={game} />
-        </>
+        </Flex>
       ) : (
         <Spinner />
       )}
