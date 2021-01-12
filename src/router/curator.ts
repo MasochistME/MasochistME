@@ -92,6 +92,7 @@ export const getCuratedGamesFromTier = async (req, res) => {
  * @param req.headers.force_update - to force update all games
  */
 export const updateCuratorGames = async (req?, res?) => {
+  const { client, db } = await connectToDb();
   const urlCuratedGames =
     'http://store.steampowered.com/curator/7119343-0.1%25/ajaxgetfilteredrecommendations/render?query=&start=0&count=1000&tagids=&sort=recent&types=0';
   const points: Array<TRating> = await getDataFromDB('points');
@@ -157,11 +158,53 @@ export const updateCuratorGames = async (req?, res?) => {
     return;
   }
 
+  gamesDB
+    .filter(
+      (gameFromDb: TGame) =>
+        !games.find(
+          (newGameData: any) =>
+            Number(newGameData.id) === Number(gameFromDb.id) &&
+            !gameFromDb.protected,
+        ),
+    )
+    .map((decuratedGame: TGame) => {
+      const eventDetails: TGameEvent = {
+        date: Date.now(),
+        type: 'gameRemoved',
+        game: decuratedGame.id,
+      };
+      db.collection.games('games').updateOne(
+        { id: decuratedGame.id },
+        {
+          $set: {
+            ...decuratedGame,
+            curated: false,
+          },
+        },
+        { upsert: true },
+        err => {
+          if (err) {
+            log.WARN(err);
+          } else {
+            log.INFO(`--> [UPDATE] games - game ${decuratedGame.id} decurated`);
+          }
+        },
+      );
+      db.collection('events').insertOne(eventDetails, err => {
+        if (err) {
+          log.WARN(err);
+        } else {
+          log.INFO(`--> [UPDATE] events - game ${decuratedGame.id} decurated`);
+        }
+      });
+      client.close();
+    });
+
   const getGameDetails = async (index: number) => {
+    const { client, db } = await connectToDb();
     const gameId = games[index].id;
     const urlGamesDetails = `http://store.steampowered.com/api/appdetails?appids=${gameId}`;
-    const { client, db } = await connectToDb();
-    const percentage = (80 / games.length) * index;
+    const percentage = 20 + (80 / games.length) * index;
     let game;
 
     try {
@@ -220,10 +263,6 @@ export const updateCuratorGames = async (req?, res?) => {
       });
     }
     const gameNewlyCurated = !oldGame;
-    const gameDecurated = !games.find(
-      (curatedGame: TGame) =>
-        Number(curatedGame.id) === Number(oldGame?.id) && !oldGame?.protected,
-    );
 
     if (gameNewlyCurated) {
       const eventDetails: TGameEvent = {
@@ -237,21 +276,6 @@ export const updateCuratorGames = async (req?, res?) => {
         }
       });
       log.INFO(`--> [UPDATE] events - game ${gameId} curated`);
-    }
-
-    if (gameDecurated) {
-      gameDetails.curated = false;
-      const eventDetails: TGameEvent = {
-        date: Date.now(),
-        type: 'gameRemoved',
-        game: gameId,
-      };
-      db.collection('events').insertOne(eventDetails, err => {
-        if (err) {
-          log.WARN(err);
-        }
-      });
-      log.INFO(`--> [UPDATE] events - game ${gameId} decurated`);
     }
 
     updateStatus(client, db, percentage);
