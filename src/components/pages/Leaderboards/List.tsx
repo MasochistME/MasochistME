@@ -1,13 +1,18 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
 import { ProgressBar } from 'shared/components';
 import { User, Link, UserInfo, UserName, UserTimes } from './styles';
 import UserBadges from './UserBadges';
 
-// ---------------------------------------------
-// ---------------------------------------------
-// ---------------------------------------------
+const LeaderboardsList = styled.ul`
+  width: 100%;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+`;
 
 List.User = User;
 List.Link = Link;
@@ -46,7 +51,7 @@ export default function List(props: { game: any }): JSX.Element {
   const onUserClick = (id?: string) => id && history.push(`/profile/${id}`);
 
   return (
-    <ul className="game-leaderboards">
+    <LeaderboardsList>
       {leaderboards.map((user: any, userIndex: number) => (
         <List.User key={`leaderboards-user-${userIndex}`}>
           <img
@@ -66,6 +71,6 @@ export default function List(props: { game: any }): JSX.Element {
           <List.ProgressBar percentage={Math.floor(user.percentage)} />
         </List.User>
       ))}
-    </ul>
+    </LeaderboardsList>
   );
 }

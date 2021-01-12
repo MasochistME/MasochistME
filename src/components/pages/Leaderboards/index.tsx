@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { ChartWrapper, StackedBarChart } from 'components/Charts';
-import { Spinner } from 'shared/components';
+import { useHistory } from 'react-router-dom';
 import { useGameDetails } from 'components/init';
+import { Flex, Spinner, CustomButton } from 'shared/components';
 import { WrapperLeaderboards } from './styles';
 import List from './List';
 import Badges from './Badges';
@@ -20,6 +20,7 @@ Leaderboards.List = List;
 
 export default function Leaderboards(props: Props): JSX.Element | null {
   const { id } = props;
+  const history = useHistory();
   const loaded = useGameDetails(id);
   const game = useSelector((state: any) => {
     const gameBasic = state.games.list.find(
@@ -34,54 +35,42 @@ export default function Leaderboards(props: Props): JSX.Element | null {
     };
   });
 
+  const onShowGame = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    history.push(`/game/${id}`);
+    event.stopPropagation();
+  };
+
   return (
     <WrapperLeaderboards>
-      <h2>
-        <a
-          href={`https://store.steampowered.com/app/${game?.id ?? ''}`}
-          target="_blank"
-          rel="noopener noreferrer">
-          {game?.title ?? 'Loading...'}{' '}
-          <i className="fas fa-external-link-alt"></i>
-        </a>
-      </h2>
+      <Flex
+        row
+        align
+        style={{
+          justifyContent: 'space-between',
+          borderBottom: '1px solid #444',
+          marginBottom: '12px',
+        }}>
+        <h2 style={{ borderBottom: 0 }}>
+          <a
+            href={`https://store.steampowered.com/app/${game?.id ?? ''}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={event => event.stopPropagation()}>
+            <i className="fab fa-steam" /> {game?.title ?? 'Loading...'}
+          </a>
+        </h2>
+        <CustomButton onClick={onShowGame}>Details</CustomButton>
+      </Flex>
       {loaded && game ? (
-        <div className="game-statistics">
-          <ChartWrapper
-            title={[
-              `Completions: ${game?.completions ?? 'unknown'}`,
-              'Average completion time',
-            ]}>
-            <StackedBarChart
-              labels={['hours']}
-              datasets={[
-                {
-                  label: 'this game',
-                  data: [game.avgPlaytime],
-                  colorNormal: '#e30000ff',
-                  colorTransparent: '#e3000033',
-                },
-                {
-                  label: 'games from this tier',
-                  data: [game?.avgPlaytime ?? 0], // TODO
-                  colorNormal: '#141620ff',
-                  colorTransparent: '#14162066',
-                },
-              ]}
-            />
-          </ChartWrapper>
-        </div>
+        <Flex column>
+          {game.badges?.length ? <Badges game={game} mini /> : null}
+          <Leaderboards.List game={game} />
+        </Flex>
       ) : (
         <Spinner />
       )}
-      {loaded && game ? (
-        game.badges?.length ? (
-          <Badges game={game} />
-        ) : null
-      ) : (
-        <Spinner />
-      )}
-      {loaded && game ? <Leaderboards.List game={game} /> : <Spinner />}
     </WrapperLeaderboards>
   );
 }

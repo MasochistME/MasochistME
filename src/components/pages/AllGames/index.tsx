@@ -1,25 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import styled from 'styled-components';
 import { orderBy } from 'lodash';
 import CheckBoxGameChoice from './CheckBoxGameChoice';
-import { colors } from 'shared/theme';
 import { Wrapper, Spinner, Flex, SearchBar } from 'shared/components';
 import Game from './Game';
-
-const WrapperGames = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  margin: 0;
-  padding: 10px;
-  width: 100%;
-  box-sizing: border-box;
-  background-color: ${colors.darkBlueTransparent};
-`;
 
 export default function PageAllGames(): JSX.Element {
   const searchGame = useSelector((state: any) => state.search.game);
@@ -72,7 +56,7 @@ export default function PageAllGames(): JSX.Element {
           </div>
         ) : null}
       </Wrapper>
-      <WrapperGames>
+      <Wrapper type="page">
         {games && games.length ? (
           games.map((game: any) => {
             return game?.title
@@ -88,7 +72,7 @@ export default function PageAllGames(): JSX.Element {
         ) : (
           <Spinner />
         )}
-      </WrapperGames>
+      </Wrapper>
     </Flex>
   );
 }

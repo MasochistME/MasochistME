@@ -1,21 +1,46 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import styled from 'styled-components';
 import { Flex, Section } from 'shared/components';
 import { Description, Field, BadgeImg } from './styles';
+
+const StyledBadges = styled.div`
+  min-width: 400px;
+`;
 
 Badges.Img = BadgeImg;
 Badges.Field = Field;
 Badges.Section = Section;
 Badges.Description = Description;
 
-export default function Badges(props: { game: any }): JSX.Element {
-  const { game } = props;
+export default function Badges(props: {
+  game: any;
+  mini?: boolean;
+}): JSX.Element {
+  const { game, mini } = props;
   const badges = useSelector((state: any) =>
     state.badges.filter((badge: any) => game.badges.includes(badge['_id'])),
   );
 
-  return (
-    <div className="game-badges">
+  return mini ? (
+    <StyledBadges>
+      <Badges.Section>
+        <h3>Badges</h3>
+        <Flex row style={{ margin: '8px' }}>
+          {badges.map((badge: any, index: number) => (
+            <Badges.Img
+              style={{ margin: '5px 10px 5px 5px' }}
+              src={badge.img}
+              alt="badge"
+              key={`badge-${index}`}
+              title={`${badge.points} pts - ${badge.name}\n"${badge.description}"`}
+            />
+          ))}
+        </Flex>
+      </Badges.Section>
+    </StyledBadges>
+  ) : (
+    <StyledBadges>
       <Badges.Section>
         <h3>Badges</h3>
         <Flex
@@ -28,9 +53,9 @@ export default function Badges(props: { game: any }): JSX.Element {
           }}>
           {badges.map((badge: any, index: number) => (
             <Badges.Description key={`badge-${index}`}>
-              <p style={{ margin: 0, fontWeight: 'bold' }}>
+              <h4 style={{ margin: 0, textAlign: 'center' }}>
                 {badge.name?.toUpperCase()}
-              </p>
+              </h4>
               <Flex row style={{ width: '100%' }}>
                 <Badges.Img
                   style={{ margin: '5px 10px 5px 5px' }}
@@ -48,6 +73,6 @@ export default function Badges(props: { game: any }): JSX.Element {
           ))}
         </Flex>
       </Badges.Section>
-    </div>
+    </StyledBadges>
   );
 }

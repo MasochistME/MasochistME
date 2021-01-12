@@ -25,6 +25,20 @@ const WrapperMain = styled.div`
   text-align: justify;
 `;
 
+const WrapperPage = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  margin: 0;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: ${colors.darkBlueTransparent};
+`;
+
 const WrapperNav = styled.div`
   width: 100%;
   height: 100px;
@@ -104,6 +118,9 @@ export default function Wrapper(props: WrapperProps): JSX.Element {
   }
   if (type === 'description') {
     return <WrapperDescription>{children}</WrapperDescription>;
+  }
+  if (type === 'page') {
+    return <WrapperPage>{children}</WrapperPage>;
   }
   return <div className={`wrapper-${type}`}>{children}</div>;
 }

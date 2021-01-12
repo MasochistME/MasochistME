@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import axios from 'axios';
 import { colors } from 'shared/theme';
-import { Wrapper, Flex, Spinner } from 'shared/components';
+import { Wrapper, Flex, Spinner, CustomButton } from 'shared/components';
 
 const Patron = styled.div`
   cursor: help;
@@ -159,11 +159,9 @@ export default function ProfileHeader(props: Props): JSX.Element {
             updating ? (
               <ProfileHeader.UpdateMsg>{message}</ProfileHeader.UpdateMsg>
             ) : (
-              <button
-                className="custom-button"
-                onClick={() => sendUpdateRequest(user?.id)}>
+              <CustomButton onClick={() => sendUpdateRequest(user?.id)}>
                 Update
-              </button>
+              </CustomButton>
             )
           ) : (
             <button

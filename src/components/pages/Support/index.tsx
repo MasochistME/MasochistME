@@ -2,24 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { orderBy } from 'lodash';
-import { colors } from 'shared/theme';
 import { Flex, Spinner, Wrapper } from 'shared/components';
 import SupportTier from './SupportTier';
 import patreon_button from 'shared/images/patreon.png';
-
-const WrapperSupport = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  margin: 0;
-  padding: 10px;
-  width: 100%;
-  box-sizing: border-box;
-  background-color: ${colors.darkBlueTransparent};
-`;
 
 const PatreonButton = styled.img`
   cursor: pointer;
@@ -65,7 +50,7 @@ export default function PageSupport(): JSX.Element {
           </Flex>
         </div>
       </Wrapper>
-      <WrapperSupport>
+      <Wrapper type="page">
         {patrons.length !== 0 ? (
           patrons.map((tier, index) => (
             <SupportTier key={`tier-${index}`} tier={tier} />
@@ -73,7 +58,7 @@ export default function PageSupport(): JSX.Element {
         ) : (
           <Spinner />
         )}
-      </WrapperSupport>
+      </Wrapper>
     </Flex>
   );
 }

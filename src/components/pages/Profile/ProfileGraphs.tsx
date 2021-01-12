@@ -195,7 +195,7 @@ export default function ProfileGraphs(props: Props): JSX.Element {
           dataset={summarizeTotalGames('sum', rating, user, games)}
         />
       </ChartWrapper>
-      <ChartWrapper title="COMPLETION TIMELINE" width={100}>
+      <ChartWrapper title="COMPLETION TIMELINE" width="100%">
         <LineChart
           labels={getTimelines('label', rating, user, games)}
           datasets={[
