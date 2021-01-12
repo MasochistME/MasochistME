@@ -28,4 +28,4 @@ const update = async () => {
   }
 };
 
-setInterval(update, 600000);
+setInterval(update, 60000); // TODO change to 600000

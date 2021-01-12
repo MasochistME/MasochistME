@@ -3,6 +3,7 @@ import axios from 'axios';
 import { log } from 'helpers/log';
 import { connectToDb, getDataFromDB } from 'helpers/db';
 import { TGameEvent, TTierChangeEvent } from './types/events';
+import { updateStatus } from './update';
 import config from '../../config.json';
 
 type TRating = {
@@ -160,6 +161,7 @@ export const updateCuratorGames = async (req?, res?) => {
     const gameId = games[index].id;
     const urlGamesDetails = `http://store.steampowered.com/api/appdetails?appids=${gameId}`;
     const { client, db } = await connectToDb();
+    const percentage = (80 / games.length) * index;
     let game;
 
     try {
@@ -218,7 +220,7 @@ export const updateCuratorGames = async (req?, res?) => {
       });
     }
     const gameNewlyCurated = !oldGame;
-    const gameDecurated = games.find(
+    const gameDecurated = !games.find(
       (curatedGame: TGame) =>
         Number(curatedGame.id) === Number(oldGame?.id) && !oldGame?.protected,
     );
@@ -252,6 +254,7 @@ export const updateCuratorGames = async (req?, res?) => {
       log.INFO(`--> [UPDATE] events - game ${gameId} decurated`);
     }
 
+    updateStatus(client, db, percentage);
     db.collection('games').updateOne(
       { id: gameId },
       { $set: gameDetails },
