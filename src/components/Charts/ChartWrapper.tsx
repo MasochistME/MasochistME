@@ -4,13 +4,26 @@ import { Section } from 'shared/components';
 type TChartWrapper = {
   children: React.ReactNode;
   title: any;
-  width?: number;
+  width?: string;
+  height?: string;
 };
 export default function ChartWrapper(props: TChartWrapper): JSX.Element {
-  const { children, title, width } = props;
+  const { children, title, width, height } = props;
+
+  const customStyle: any = {};
+
+  const applyCustomStyle = () => {
+    if (width) {
+      customStyle.width = width;
+    }
+    if (height) {
+      customStyle.height = height;
+    }
+    return customStyle;
+  };
 
   return (
-    <Section style={width ? { width: `${width}%` } : {}}>
+    <Section style={applyCustomStyle()}>
       <h3>
         {typeof title === 'object'
           ? title.map((t: any) => <p key={t}>{t}</p>)

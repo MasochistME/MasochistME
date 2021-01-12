@@ -6,7 +6,7 @@ import { orderBy } from 'lodash';
 import { showProfile } from 'shared/store/modules/Profiles';
 import { changeTab } from 'shared/store/modules/Tabs';
 import { Flex, Wrapper, Spinner, Section } from 'shared/components';
-import { Badges, Badge, WrapperProfile } from './styles';
+import { Badges, Badge } from './styles';
 import { useUserDetails } from 'components/init';
 import ProfileGraphs from './ProfileGraphs';
 import ProfileHeader from './ProfileHeader';
@@ -83,7 +83,7 @@ export default function Profile(): JSX.Element {
       <ProfileHeader user={userBasic} />
       {user ? (
         <>
-          <WrapperProfile>
+          <Wrapper type="page">
             {badges?.length ? (
               <Profile.Badges>
                 <Profile.Section style={{ width: '100%' }}>
@@ -122,7 +122,7 @@ export default function Profile(): JSX.Element {
             {!isNaN(user?.points?.sum) && user?.points?.sum !== 0 ? (
               <ProfileGraphs user={user} />
             ) : null}
-          </WrapperProfile>
+          </Wrapper>
         </>
       ) : (
         <Wrapper type="description">

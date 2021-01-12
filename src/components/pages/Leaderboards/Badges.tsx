@@ -1,7 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import styled from 'styled-components';
 import { Flex, Section } from 'shared/components';
 import { Description, Field, BadgeImg } from './styles';
+
+const StyledBadges = styled.div`
+  min-width: 400px;
+`;
 
 Badges.Img = BadgeImg;
 Badges.Field = Field;
@@ -18,7 +23,7 @@ export default function Badges(props: {
   );
 
   return mini ? (
-    <div className="game-badges">
+    <StyledBadges>
       <Badges.Section>
         <h3>Badges</h3>
         <Flex row style={{ margin: '8px' }}>
@@ -33,9 +38,9 @@ export default function Badges(props: {
           ))}
         </Flex>
       </Badges.Section>
-    </div>
+    </StyledBadges>
   ) : (
-    <div className="game-badges">
+    <StyledBadges>
       <Badges.Section>
         <h3>Badges</h3>
         <Flex
@@ -48,9 +53,9 @@ export default function Badges(props: {
           }}>
           {badges.map((badge: any, index: number) => (
             <Badges.Description key={`badge-${index}`}>
-              <p style={{ margin: 0, fontWeight: 'bold' }}>
+              <h4 style={{ margin: 0, textAlign: 'center' }}>
                 {badge.name?.toUpperCase()}
-              </p>
+              </h4>
               <Flex row style={{ width: '100%' }}>
                 <Badges.Img
                   style={{ margin: '5px 10px 5px 5px' }}
@@ -67,8 +72,7 @@ export default function Badges(props: {
             </Badges.Description>
           ))}
         </Flex>
-        )
       </Badges.Section>
-    </div>
+    </StyledBadges>
   );
 }

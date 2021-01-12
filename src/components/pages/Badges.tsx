@@ -29,7 +29,7 @@ export default function PageBadges(): JSX.Element {
           <p>There are six different types of events:</p>
         </div>
       </Wrapper>
-      <div className="wrapper-events">
+      <Wrapper type="page">
         {badges.map((badge, index) => (
           <img
             className="profile-badge"
@@ -41,7 +41,7 @@ export default function PageBadges(): JSX.Element {
             key={`badge-${index}`}
           />
         ))}
-      </div>
+      </Wrapper>
     </Flex>
   );
 }

@@ -1,23 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
-import { colors } from 'shared/theme';
 import { Flex, Wrapper, Spinner } from 'shared/components';
 import Event from './Event';
 
-const Events = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  margin: 0;
-  padding: 10px;
-  width: 100%;
-  box-sizing: border-box;
-  background-color: ${colors.darkBlueTransparent};
-`;
 const EventTypes = styled.ul`
   li {
     i {
@@ -97,7 +83,7 @@ export default function PageEvents(): JSX.Element {
           </p>
         </div>
       </Wrapper>
-      <Events>
+      <Wrapper type="page">
         <EventsList>
           {events?.length ? (
             events.map((event: any, eventIndex: number) => (
@@ -107,7 +93,7 @@ export default function PageEvents(): JSX.Element {
             <Spinner />
           )}
         </EventsList>
-      </Events>
+      </Wrapper>
     </Flex>
   );
 }
