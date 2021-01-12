@@ -92,7 +92,7 @@ export const getCuratedGamesFromTier = async (req, res) => {
  * @param req.headers.force_update - to force update all games
  */
 export const updateCuratorGames = async (req?, res?) => {
-  const { client, db } = await connectToDb();
+  const { db } = await connectToDb();
   const urlCuratedGames =
     'http://store.steampowered.com/curator/7119343-0.1%25/ajaxgetfilteredrecommendations/render?query=&start=0&count=1000&tagids=&sort=recent&types=0';
   const points: Array<TRating> = await getDataFromDB('points');
@@ -173,7 +173,7 @@ export const updateCuratorGames = async (req?, res?) => {
         type: 'gameRemoved',
         game: decuratedGame.id,
       };
-      db.collection.games('games').updateOne(
+      db.collection('games').updateOne(
         { id: decuratedGame.id },
         {
           $set: {
@@ -197,7 +197,6 @@ export const updateCuratorGames = async (req?, res?) => {
           log.INFO(`--> [UPDATE] events - game ${decuratedGame.id} decurated`);
         }
       });
-      client.close();
     });
 
   const getGameDetails = async (index: number) => {
