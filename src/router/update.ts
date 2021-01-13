@@ -92,7 +92,7 @@ export const initiateMainUpdate = async (req?, res?) => {
     return;
   }
 
-  log.INFO('--> [UPDATE] updating users...');
+  log.INFO('--> [UPDATE] checking if any members left...');
 
   usersFromDB.map(userFromDB => {
     if (
@@ -122,6 +122,10 @@ export const initiateMainUpdate = async (req?, res?) => {
       });
     }
   });
+
+  log.INFO('--> [UPDATE] checking if any members joined...');
+
+  // TODO this should be first filtered before going thru all users again
 
   const iterateMembers = async (index: number) => {
     const percentage = 80 + (20 / members.length) * (index + 1);
