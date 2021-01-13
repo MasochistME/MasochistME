@@ -7,6 +7,7 @@ export const CACHE_BLOG = 'CACHE_BLOG';
 export const CACHE_PATRONS = 'CACHE_PATRONS';
 export const CACHE_BADGES = 'CACHE_BADGES';
 export const CACHE_RANKING = 'CACHE_RANKING';
+export const CACHE_STATUS = 'CACHE_STATUS';
 export const CACHE_USER_DETAILS = 'CACHE_USER_DETAILS';
 export const CACHE_GAME_DETAILS = 'CACHE_GAME_DETAILS';
 
@@ -56,6 +57,12 @@ export function cacheBadges(data: any): any {
 export function cacheRanking(data: any): any {
   return {
     type: CACHE_RANKING,
+    data,
+  };
+}
+export function cacheStatus(data: any): any {
+  return {
+    type: CACHE_STATUS,
     data,
   };
 }

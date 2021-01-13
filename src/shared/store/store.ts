@@ -16,6 +16,7 @@ import {
   CACHE_PATRONS,
   CACHE_BADGES,
   CACHE_RANKING,
+  CACHE_STATUS,
   CACHE_USER_DETAILS,
   CACHE_GAME_DETAILS,
 } from './modules/Cache';
@@ -51,6 +52,10 @@ type TStore = {
     banned: boolean;
     logged: boolean;
   };
+  status: {
+    lastUpdated: number | undefined;
+    percentage: number;
+  };
   showLoginModal: boolean;
   showGamesRated: any[];
 };
@@ -84,6 +89,10 @@ const defaultState: TStore = {
     privilege: undefined,
     banned: false,
     logged: false,
+  },
+  status: {
+    lastUpdated: undefined,
+    percentage: 0,
   },
   showLoginModal: false,
   showGamesRated: [],
@@ -200,6 +209,14 @@ const reducer = (state = defaultState, action: any) => {
       return {
         ...state,
         ranking: action.data,
+      };
+    case CACHE_STATUS:
+      return {
+        ...state,
+        status: {
+          lastUpdated: action.data.lastUpdated,
+          percentage: action.data.status,
+        },
       };
     case CACHE_USER_DETAILS: {
       const details: any[] = [...state.users.details, action.data];

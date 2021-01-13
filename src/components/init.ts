@@ -11,6 +11,7 @@ import {
   cachePatrons,
   cacheBadges,
   cacheRanking,
+  cacheStatus,
   cacheUserDetails,
   cacheGameDetails,
 } from 'shared/store/modules/Cache';
@@ -115,6 +116,17 @@ export default function useInit(): boolean {
       .catch(err => console.trace(err));
   };
 
+  const loadStatus = () => {
+    axios
+      .get(`${path}/api/status`)
+      .then(response => {
+        if (response?.status === 200) {
+          return dispatch(cacheStatus(response.data));
+        }
+      })
+      .catch(err => console.trace(err));
+  };
+
   const init = () => {
     loadGames();
     loadUsers();
@@ -124,6 +136,9 @@ export default function useInit(): boolean {
     loadBadges();
     loadPatrons();
     loadRanking();
+    setInterval(() => {
+      loadStatus();
+    }, 1000);
     setLoaded(true);
   };
 

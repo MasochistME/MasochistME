@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { TSection } from '../';
+import { TSection } from './';
 import { fonts, media } from 'shared/theme';
-import SidebarSection from '../SidebarSection';
+import SidebarSection from './SidebarSection';
 
 const Wrapper = styled.div`
   position: relative;

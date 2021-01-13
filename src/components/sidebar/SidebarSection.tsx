@@ -7,7 +7,7 @@ import {
   SectionSale,
   SectionDiscord,
   TSection,
-} from '../';
+} from './';
 
 export type SidebarSectionProps = {
   section: TSection;

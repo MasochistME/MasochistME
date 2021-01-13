@@ -2,39 +2,64 @@ import React from 'react';
 import styled from 'styled-components';
 import { colors, fonts, media } from 'shared/theme';
 
-const Completion = styled.div`
+type TCompletion = {
+  invert?: boolean;
+  style?: any;
+};
+const Completion = styled.div.attrs((props: TCompletion) => {
+  const style: any = {
+    backgroundColor: `${colors.newDark}`,
+    border: `1px solid ${colors.newDark}`,
+    ...props.style,
+  };
+  if (props.invert) {
+    style.backgroundColor = `${colors.newMediumGrey}`;
+    style.border = `1px solid ${colors.newMediumGrey}`;
+  }
+  return { style };
+})<{ invert?: boolean; style?: any }>`
   position: relative;
   min-width: 200px;
   height: 15px;
   margin-right: 7px;
-  border: 1px solid ${colors.newDark};
-  background-color: ${colors.newDark}77;
+  padding: 0 !important;
+  box-sizing: border-box;
   @media (max-width: ${media.smallTablets}) {
     border: none;
     min-width: 100px;
   }
 `;
-const Progress = styled.div.attrs(({ percentage }: { percentage: number }) => {
-  return {
-    style: {
-      width: `${percentage * 2}px`,
-    },
-  };
-})<{ percentage: number }>`
+const Progress = styled.div.attrs(
+  ({ percentage, invert }: { percentage: number; invert?: boolean }) => {
+    const style: any = {
+      width: `${percentage}%`,
+      backgroundColor: `${colors.newMediumGrey}`,
+    };
+    if (invert) {
+      style.backgroundColor = `${colors.newDark}`;
+    }
+    return { style };
+  },
+)<{ percentage: number; invert?: boolean }>`
   position: absolute;
   height: 100%;
-  background-color: ${colors.newMediumGrey};
+  padding: 0 !important;
+
   @media (max-width: ${media.smallTablets}) {
     display: none;
   }
 `;
 const Percentage = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   width: 100%;
+  height: 100%;
   font-size: 0.77em;
   font-family: ${fonts.Verdana};
   letter-spacing: 0.1em;
-  text-align: center;
+  color: ${colors.superLightGrey};
 `;
 
 UserGameProgressBar.Completion = Completion;
@@ -43,15 +68,17 @@ UserGameProgressBar.Percentage = Percentage;
 
 type Props = {
   percentage: number;
+  invert?: boolean;
+  style?: any;
 };
 
 export default function UserGameProgressBar(props: Props): JSX.Element {
-  const { percentage } = props;
+  const { percentage, invert, style } = props;
   return (
-    <UserGameProgressBar.Completion>
-      <UserGameProgressBar.Progress percentage={percentage} />
+    <UserGameProgressBar.Completion invert={invert} style={style}>
+      <UserGameProgressBar.Progress percentage={percentage} invert={invert} />
       <UserGameProgressBar.Percentage>
-        {percentage}%
+        {Math.round(percentage)}%
       </UserGameProgressBar.Percentage>
     </UserGameProgressBar.Completion>
   );
