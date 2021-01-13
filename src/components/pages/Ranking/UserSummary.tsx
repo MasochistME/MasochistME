@@ -30,7 +30,7 @@ type TUserSummary = {
   onShowDetails: () => any;
 };
 
-export default function UserSummary(props: TUserSummary): JSX.Element {
+function UserSummary(props: TUserSummary): JSX.Element {
   const history = useHistory();
   const { id, position, onShowDetails } = props;
   const [detailsVisible, setDetailsVisible] = useState(false);
@@ -42,6 +42,7 @@ export default function UserSummary(props: TUserSummary): JSX.Element {
     const userDetails = state.users.list.find((u: any) => u.id === id);
     return {
       ...userRank,
+      private: userDetails.private,
       name: userDetails.name,
       avatar: userDetails.avatar,
       updated: userDetails.updated,
@@ -68,6 +69,43 @@ export default function UserSummary(props: TUserSummary): JSX.Element {
         </UserSummary.RatingScore>
       );
     });
+  };
+
+  const infoIcon = () => {
+    if (user?.private) {
+      return (
+        <i
+          className="fas fa-exclamation-triangle"
+          title="This user has their profile set to private."
+          style={{
+            color: '#ff0000',
+            marginLeft: '10px',
+            cursor: 'help',
+            opacity: '0.5',
+          }}
+        />
+      );
+    }
+    if (Date.now() - user?.updated > 2592000000) {
+      return (
+        <i
+          className="fas fa-exclamation-circle"
+          title="This user wasn't updated in over a month - their data might be outdated."
+          style={{
+            color: '#fdc000',
+            marginLeft: '10px',
+            cursor: 'help',
+            opacity: '0.5',
+          }}
+        />
+      );
+    }
+    return (
+      <i
+        className="fas fa-exclamation-circle"
+        style={{ color: 'transparent', marginLeft: '10px' }}
+      />
+    );
   };
 
   const onShowDetailsClick = (event: any): void => {
@@ -103,23 +141,7 @@ export default function UserSummary(props: TUserSummary): JSX.Element {
             style={{ color: 'transparent' }}
           />
         )}
-        {Date.now() - user?.updated > 2592000000 ? (
-          <i
-            className="fas fa-exclamation-circle"
-            title="This user wasn't updated in over a month - their data might be outdated."
-            style={{
-              color: '#fdc000',
-              marginLeft: '10px',
-              cursor: 'help',
-              opacity: '0.5',
-            }}
-          />
-        ) : (
-          <i
-            className="fas fa-exclamation-circle"
-            style={{ color: 'transparent', marginLeft: '10px' }}
-          />
-        )}
+        {infoIcon()}
       </UserSummary.Icons>
       <UserSummary.Info>
         <i
@@ -158,3 +180,5 @@ export default function UserSummary(props: TUserSummary): JSX.Element {
     </UserSummary.Summary>
   );
 }
+
+export default React.memo(UserSummary);

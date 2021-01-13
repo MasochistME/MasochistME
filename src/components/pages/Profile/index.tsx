@@ -81,7 +81,7 @@ export default function Profile(): JSX.Element {
   return (
     <Flex column>
       <ProfileHeader user={userBasic} />
-      {user ? (
+      {user && !user.private ? (
         <>
           <Wrapper type="page">
             {badges?.length ? (
@@ -126,7 +126,14 @@ export default function Profile(): JSX.Element {
         </>
       ) : (
         <Wrapper type="description">
-          <Spinner />
+          {user?.private ? (
+            <p>
+              This user has their profile set to{' '}
+              <span className="bold">private</span>.
+            </p>
+          ) : (
+            <Spinner />
+          )}
         </Wrapper>
       )}
     </Flex>
