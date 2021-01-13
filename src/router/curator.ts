@@ -210,7 +210,7 @@ export const updateCuratorGames = (req?, res?): Promise<void> =>
             Number(newGameData.id) === Number(gameFromDb.id),
         ) && gameFromDb.protected,
     );
-    console.log(gamesThatShouldNotGetDecurated);
+
     games.push(...gamesThatShouldNotGetDecurated); // TODO this might be wrong
 
     const getGameDetails = async (index: number) => {

@@ -92,6 +92,8 @@ export const initiateMainUpdate = async (req?, res?) => {
     return;
   }
 
+  log.WARN('--> [UPDATE] updating users...');
+
   usersFromDB.map(userFromDB => {
     if (
       userFromDB.member &&
@@ -121,14 +123,11 @@ export const initiateMainUpdate = async (req?, res?) => {
     }
   });
 
-  const finalize = () => {
-    updateStatus(db, 100);
-    client.close();
-  };
-
   const iterateMembers = async (index: number) => {
     const percentage = 80 + (20 / members.length) * (index + 1);
-    if (!usersFromDB.find(userFromDB => userFromDB.id === members[index].id)) {
+    if (
+      !usersFromDB.find(userFromDB => userFromDB?.id === members[index]?.id)
+    ) {
       const userUrl = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${config.STEAM_KEY}&steamids=${members[index].id}`;
       let userData;
 
@@ -176,5 +175,12 @@ export const initiateMainUpdate = async (req?, res?) => {
       }
     }
   };
+
   iterateMembers(0);
+
+  const finalize = () => {
+    log.INFO('--> [UPDATE] Update successfully finished!');
+    updateStatus(db, 100);
+    client.close();
+  };
 };
