@@ -92,7 +92,7 @@ export const initiateMainUpdate = async (req?, res?) => {
     return;
   }
 
-  log.WARN('--> [UPDATE] updating users...');
+  log.INFO('--> [UPDATE] updating users...');
 
   usersFromDB.map(userFromDB => {
     if (
@@ -125,6 +125,8 @@ export const initiateMainUpdate = async (req?, res?) => {
 
   const iterateMembers = async (index: number) => {
     const percentage = 80 + (20 / members.length) * (index + 1);
+    log.INFO(`--> [UPDATE] member ${members[index].id}`);
+
     if (
       !usersFromDB.find(userFromDB => userFromDB?.id === members[index]?.id)
     ) {
@@ -132,8 +134,6 @@ export const initiateMainUpdate = async (req?, res?) => {
       let userData;
 
       updateStatus(db, percentage);
-
-      log.INFO(`--> [UPDATE] member ${members[index].id}`);
 
       try {
         userData = await axios.get(userUrl);

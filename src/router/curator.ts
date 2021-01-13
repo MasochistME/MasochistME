@@ -166,7 +166,7 @@ export const updateCuratorGames = (req?, res?): Promise<void> =>
           ),
       )
       .map((decuratedGame: TGame) => {
-        if (decuratedGame.protected) {
+        if (decuratedGame.protected || !decuratedGame.curated) {
           return;
         }
         const eventDetails: TGameEvent = {
@@ -188,7 +188,9 @@ export const updateCuratorGames = (req?, res?): Promise<void> =>
               log.WARN(err);
             } else {
               log.INFO(
-                `--> [UPDATE] games - game ${decuratedGame.id} decurated`,
+                `--> [UPDATE] games - game ${
+                  decuratedGame?.title ?? decuratedGame.id
+                } decurated`,
               );
             }
           },
@@ -203,6 +205,7 @@ export const updateCuratorGames = (req?, res?): Promise<void> =>
           }
         });
       });
+
     const gamesThatShouldNotGetDecurated = gamesDB.filter(
       (gameFromDb: TGame) =>
         !games.find(
