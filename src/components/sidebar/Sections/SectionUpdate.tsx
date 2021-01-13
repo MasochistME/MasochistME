@@ -14,11 +14,11 @@ export default function SectionUpdate(): JSX.Element {
   const status = useSelector((state: any) => state.status);
   const nextUpdate = status?.lastUpdated
     ? new Date(status.lastUpdated + 43200000).toLocaleString()
-    : 'unknown';
+    : 'loading...';
 
   return (
     <StyledSection>
-      {status.percentage === 100 ? (
+      {!status.percentage || status.percentage === 100 ? (
         <SectionTitle
           style={{
             height: '100%',
