@@ -128,16 +128,19 @@ export const initiateMainUpdate = async (req?, res?) => {
   // TODO this should be first filtered before going thru all users again
 
   const iterateMembers = async (index: number) => {
+    log.INFO(
+      `--> [${index + 1}/${members.length}] member ${members[index].id} (${
+        members[index].name ?? '?'
+      })`,
+    );
     const percentage = 80 + (20 / members.length) * (index + 1);
-    log.INFO(`--> [UPDATE] member ${members[index].id}`);
+    updateStatus(db, percentage);
 
     if (
       !usersFromDB.find(userFromDB => userFromDB?.id === members[index]?.id)
     ) {
       const userUrl = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${config.STEAM_KEY}&steamids=${members[index].id}`;
       let userData;
-
-      updateStatus(db, percentage);
 
       try {
         userData = await axios.get(userUrl);
