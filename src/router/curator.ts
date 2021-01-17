@@ -264,6 +264,9 @@ export const updateCuratorGames = (req?, res?): Promise<void> =>
       const oldGame = gamesDB.find(
         gameDB => Number(gameDB.id) === Number(gameId),
       );
+      if (oldGame) {
+        gameDetails.protected = !!oldGame.protected;
+      }
       if (oldGame && oldGame.rating !== games[index].rating) {
         log.INFO(`--> [UPDATE] events - game ${gameId} changed tier`);
         const eventDetails: TTierChangeEvent = {
