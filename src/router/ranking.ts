@@ -140,10 +140,11 @@ export const getGameLeaderboards = async (
 ): Promise<void> => {
   try {
     const id =
-      typeof req.params.id !== 'number' ? Number(req.params.id) : req.params.id; // game id
-    const game = await getDataFromDB('games', { id });
+      typeof req.params.id !== 'number' ? Number(req.params.id) : req.params.id;
+    const games = await getDataFromDB('games');
     const users = await getDataFromDB('users');
     const badges = await getDataFromDB('badges');
+    const game = games.find((g: any) => Number(g.id) === id);
     if (!game) {
       res.sendStatus(404);
       return;
@@ -192,10 +193,47 @@ export const getGameLeaderboards = async (
     const avgPlaytime = orderedUsers
       .filter((user: any) => user.percentage === 100)
       .reduce((a, b) => a + b.playtime, 0);
+
+    // avg playtime for this tier
+    const gameTier = game.rating;
+    const gamesFromThisTier = games
+      .filter((g: any) => (g.curated || g.protected) && g.rating === gameTier)
+      .map((g: any) => g.id);
+
+    const playtimesOfFinishedGames = users
+      .filter((user: any) => user.member || user.protected)
+      .map((user: any) =>
+        user.games
+          .filter(
+            (g: any) =>
+              g.completionRate === 100 &&
+              gamesFromThisTier.find(
+                (gFTT: any) => Number(gFTT) === Number(g.appid),
+              ),
+          )
+          .map((g: any) => g.playtime_forever),
+      );
+    // console.log(playtimesOfFinishedGames);
+    // console.log(playtimesOfFinishedGames.length);
+    const flattenedPlaytimes = playtimesOfFinishedGames
+      .flat()
+      .map((playtime: any) => Number(playtime))
+      .filter((playtime: number) => playtime > 0);
+    const singlePlaytime = flattenedPlaytimes.reduce(
+      (a: number, b: number) => a + b,
+      0,
+    );
+    const avgPlaytimeForTier = Math.floor(
+      singlePlaytime / flattenedPlaytimes.length,
+    );
+
+    console.log(avgPlaytimeForTier);
+
     res.status(200).send({
       id,
       completions,
       avgPlaytime: Math.floor(avgPlaytime / completions),
+      avgPlaytimeForTier,
       badges: filteredBadges,
       players: usersWithTrophies,
     });
