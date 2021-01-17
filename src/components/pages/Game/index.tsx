@@ -67,7 +67,7 @@ export default function PageGame(): JSX.Element {
                   },
                   {
                     label: 'games from this tier',
-                    data: [game?.avgPlaytime ?? 0], // TODO
+                    data: [game?.avgPlaytimeForTier ?? 0],
                     colorNormal: '#141620ff',
                     colorTransparent: '#14162066',
                   },
