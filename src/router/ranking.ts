@@ -213,8 +213,6 @@ export const getGameLeaderboards = async (
           )
           .map((g: any) => g.playtime_forever),
       );
-    // console.log(playtimesOfFinishedGames);
-    // console.log(playtimesOfFinishedGames.length);
     const flattenedPlaytimes = playtimesOfFinishedGames
       .flat()
       .map((playtime: any) => Number(playtime))
@@ -226,8 +224,6 @@ export const getGameLeaderboards = async (
     const avgPlaytimeForTier = Math.floor(
       singlePlaytime / flattenedPlaytimes.length,
     );
-
-    console.log(avgPlaytimeForTier);
 
     res.status(200).send({
       id,
