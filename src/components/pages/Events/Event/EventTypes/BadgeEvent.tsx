@@ -31,6 +31,7 @@ export default function BadgeEvent(props: Props): JSX.Element | null {
 // ----------------------------------------------
 
 function BadgeAdded({ event }: { event: any }) {
+  const history = useHistory();
   const badge = useSelector((state: any) =>
     state.badges.find((b: any) => b['_id'] === event.badge),
   );
@@ -38,14 +39,16 @@ function BadgeAdded({ event }: { event: any }) {
     state.games.list.find((g: any) => Number(g.id) === Number(event.game)),
   );
 
+  const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
+
   return (
     <EventInfo>
       <EventImg src={badge ? badge.img : logo} alt="game-img" />
       {badge && game ? (
         <EventDescription>
-          <span className="bold">
+          <EventLink className="bold" onClick={onGameClick}>
             {game?.title ? game.title : `Game ${event.game}`}
-          </span>{' '}
+          </EventLink>{' '}
           has gotten a new badge -{' '}
           <span className="bold">{badge?.name ? badge.name : event.badge}</span>
           !
