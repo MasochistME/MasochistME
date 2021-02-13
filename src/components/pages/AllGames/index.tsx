@@ -1,24 +1,30 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { orderBy } from 'lodash';
 import CheckBoxGameChoice from './CheckBoxGameChoice';
-import { Wrapper, Spinner, Flex, SearchBar } from 'shared/components';
+import {
+  Wrapper,
+  Spinner,
+  Flex,
+  SearchBar,
+  HoverIcon,
+} from 'shared/components';
+import { changeGamesView } from 'shared/store/modules/Tabs';
 import Game from './Game';
 
 export default function PageAllGames(): JSX.Element {
-  const searchGame = useSelector((state: any) => state.search.game);
-  const showGamesRated = useSelector((state: any) => state.showGamesRated);
+  const dispatch = useDispatch();
   const rating = useSelector((state: any) => state.rating);
-  const games = useSelector((state: any) => {
-    const filteredGames = state.games.list.filter(
-      (game: any) => game.curated || game.protected,
-    );
-    return orderBy(
-      filteredGames,
-      ['rating', game => game.title.toLowerCase()],
-      ['desc', 'asc'],
-    );
-  });
+  const gamesView = useSelector((state: any) => state.games.view);
+
+  const onGameViewClick = () => {
+    if (gamesView === 'tiles') {
+      dispatch(changeGamesView('list'));
+    }
+    if (gamesView === 'list') {
+      dispatch(changeGamesView('tiles'));
+    }
+  };
 
   return (
     <Flex column>
@@ -41,38 +47,101 @@ export default function PageAllGames(): JSX.Element {
             (with a trophy).
           </p>
         </div>
-        {rating ? (
-          <div className="wrapper-filter">
-            <div className="wrapper-choicebar">
-              {rating.map((r: any) => (
-                <CheckBoxGameChoice
-                  key={`checkbox-game-${r.id}`}
-                  score={r.id}
-                  rating={rating}
-                />
-              ))}
-            </div>
-            <SearchBar />
-          </div>
-        ) : null}
+        <Flex row align style={{ justifyContent: 'space-around' }}>
+          {rating && gamesView === 'tiles' ? (
+            <>
+              <div className="wrapper-choicebar">
+                {rating.map((r: any) => (
+                  <CheckBoxGameChoice
+                    key={`checkbox-game-${r.id}`}
+                    score={r.id}
+                    rating={rating}
+                  />
+                ))}
+              </div>
+              <SearchBar />
+            </>
+          ) : null}
+          <HoverIcon
+            type="fas fa-th-list"
+            isActive={gamesView === 'list'}
+            onClick={onGameViewClick}
+            style={{ marginLeft: 'auto' }}
+          />
+        </Flex>
       </Wrapper>
       <Wrapper type="page">
-        {games && games.length ? (
-          games.map((game: any) => {
-            return game?.title
-              .toLowerCase()
-              .indexOf(searchGame.toLowerCase()) !== -1 &&
-              showGamesRated.find(
-                (score: any) =>
-                  parseInt(score, 10) === parseInt(game.rating, 10),
-              ) ? (
-              <Game key={`id-game-${game.id}`} id={game.id} rating={rating} />
-            ) : null;
-          })
-        ) : (
-          <Spinner />
-        )}
+        {gamesView === 'tiles' && <ViewGamesTiles />}
+        {gamesView === 'list' && <ViewGamesList />}
       </Wrapper>
     </Flex>
+  );
+}
+
+function ViewGamesTiles(): JSX.Element {
+  const rating = useSelector((state: any) => state.rating);
+  const searchGame = useSelector((state: any) => state.search.game);
+  const showGamesRated = useSelector((state: any) => state.showGamesRated);
+  const games = useSelector((state: any) => {
+    const filteredGames = state.games.list.filter(
+      (game: any) => game.curated || game.protected,
+    );
+    return orderBy(
+      filteredGames,
+      ['rating', game => game.title.toLowerCase()],
+      ['desc', 'asc'],
+    );
+  });
+
+  return (
+    <>
+      {games && games.length ? (
+        games.map((game: any) => {
+          return game?.title.toLowerCase().indexOf(searchGame.toLowerCase()) !==
+            -1 &&
+            showGamesRated.find(
+              (score: any) => parseInt(score, 10) === parseInt(game.rating, 10),
+            ) ? (
+            <Game key={`id-game-${game.id}`} id={game.id} rating={rating} />
+          ) : null;
+        })
+      ) : (
+        <Spinner />
+      )}
+    </>
+  );
+}
+
+function ViewGamesList(): JSX.Element {
+  const rating = useSelector((state: any) => state.rating);
+  const searchGame = useSelector((state: any) => state.search.game);
+  const showGamesRated = useSelector((state: any) => state.showGamesRated);
+  const games = useSelector((state: any) => {
+    const filteredGames = state.games.list.filter(
+      (game: any) => game.curated || game.protected,
+    );
+    return orderBy(
+      filteredGames,
+      ['rating', game => game.title.toLowerCase()],
+      ['desc', 'asc'],
+    );
+  });
+
+  return (
+    <>
+      {games && games.length ? (
+        games.map((game: any) => {
+          return game?.title.toLowerCase().indexOf(searchGame.toLowerCase()) !==
+            -1 &&
+            showGamesRated.find(
+              (score: any) => parseInt(score, 10) === parseInt(game.rating, 10),
+            ) ? (
+            <Game key={`id-game-${game.id}`} id={game.id} rating={rating} />
+          ) : null;
+        })
+      ) : (
+        <Spinner />
+      )}
+    </>
   );
 }

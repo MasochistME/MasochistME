@@ -16,7 +16,6 @@ const Wrapper = styled.div`
 const SearchBarInput = styled.input`
   width: 200px;
   font-family: ${fonts.Raleway};
-  margin-bottom: 20px;
   @media (max-width: ${media.tablets}) {
     margin-bottom: 0;
   }

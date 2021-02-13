@@ -9,16 +9,15 @@ import Spinner from './Spinner';
 import Update from './Update';
 import ProgressBar from './ProgressBar';
 import CustomButton from './CustomButton';
+import HoverIcon from './HoverIcon';
 
 import Flex from './layout/Flex';
 import Wrapper from './layout/Wrapper';
 import Section from './layout/Section';
 
 export {
-  Flex,
   Loader,
   Login,
-  // LoginModal,
   Header,
   MiniHeader,
   Nav,
@@ -27,6 +26,9 @@ export {
   Update,
   CustomButton,
   ProgressBar,
+  HoverIcon,
+  // LoginModal,
+  Flex,
   Wrapper,
   Section,
 };
