@@ -1,23 +1,30 @@
+/* eslint-disable react/display-name */
 import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { orderBy } from 'lodash';
-import MUIDataTable from 'mui-datatables';
-// import {
-//   createMuiTheme,
-//   MuiThemeProvider,
-//   withStyles,
-// } from '@material-ui/core/styles';
-import { Spinner, Wrapper } from 'shared/components';
+import { Spinner, Wrapper, Table } from 'shared/components';
+import { defaultSort } from 'shared/components/layout/Table';
 
 const GameImg = styled.img.attrs(({ src }: { src: string }) => {
   return {
     src,
   };
 })<{ src: string }>`
-  height: 32px;
+  height: 48px;
   width: auto;
 `;
+
+type GameData = {
+  image: string;
+  title: string;
+  points: string;
+  completions: number;
+  avgplaytime: number;
+  badgesnr: number;
+  achievementsnr: number;
+  sale: 'yes' | 'no';
+};
 
 export default function ViewGamesList(): JSX.Element {
   const inView = useSelector((state: any) => state.games.view === 'list');
@@ -33,71 +40,50 @@ export default function ViewGamesList(): JSX.Element {
   });
   const gamesColumns = [
     {
-      name: 'image',
-      label: '-',
-      options: {
-        // eslint-disable-next-line react/display-name
-        customBodyRender: (src: string) => <GameImg src={src} />,
-      },
+      render: (game: GameData) => <GameImg src={game.image} />,
     },
     {
-      name: 'title',
-      label: 'Title',
-      options: {
-        filter: true,
-        sort: true,
-      },
+      title: 'Title',
+      width: '30%',
+      render: (game: GameData) => <div>{game.title}</div>,
+      sorter: (a: GameData, b: GameData) => defaultSort(a.title, b.title),
     },
     {
-      name: 'points',
-      label: 'Points',
-      options: {
-        filter: true,
-        sort: true,
-      },
+      title: 'Points',
+      render: (game: GameData) => <div>{game.points}</div>,
+      sorter: (a: GameData, b: GameData) => defaultSort(a.points, b.points),
     },
     {
-      name: 'completions',
-      label: 'Completions',
-      options: {
-        filter: true,
-        sort: true,
-      },
+      title: 'Completions',
+      render: (game: GameData) => <div>{game.completions}</div>,
+      sorter: (a: GameData, b: GameData) =>
+        defaultSort(a.completions, b.completions),
     },
     {
-      name: 'avgplaytime',
-      label: 'Average playtime (h)',
-      options: {
-        filter: true,
-        sort: true,
-      },
+      title: 'Avg playtime',
+      render: (game: GameData) => <div>{`${game.avgplaytime} h`}</div>,
+      sorter: (a: GameData, b: GameData) =>
+        defaultSort(a.avgplaytime, b.avgplaytime),
     },
     {
-      name: 'badgesnr',
-      label: 'Nr of badges',
-      options: {
-        filter: true,
-        sort: true,
-      },
+      title: 'Badges',
+      render: (game: GameData) => <div>{game.badgesnr}</div>,
+      sorter: (a: GameData, b: GameData) => defaultSort(a.badgesnr, b.badgesnr),
     },
     {
-      name: 'achievementsnr',
-      label: 'Nr of achievements',
-      options: {
-        filter: true,
-        sort: true,
-      },
+      title: 'Achievements',
+      render: (game: GameData) => <div>{game.achievementsnr}</div>,
+      sorter: (a: GameData, b: GameData) =>
+        defaultSort(a.achievementsnr, b.achievementsnr),
     },
     {
-      name: 'sale',
-      label: 'Sale',
-      options: {
-        filter: true,
-        sort: true,
-      },
+      title: 'Sale',
+      render: (game: GameData) => <div>{game.sale}</div>,
+      sorter: (a: GameData, b: GameData) => defaultSort(a.sale, b.sale),
     },
   ];
-  const gamesData = games.map((game: any) => ({
+
+  const gamesData: GameData[] = games.map((game: any) => ({
     image: game.img,
     title: game.title,
     points: game.rating,
@@ -107,23 +93,19 @@ export default function ViewGamesList(): JSX.Element {
     achievementsnr: game.stats.achievementsNr,
     sale: game.sale.onSale ? 'yes' : 'no',
   }));
-  const gamesOptions = {
-    // pagination: false,
-    filter: false,
-    search: false,
-    print: false,
-    download: false,
-    viewColumns: false,
-  };
 
   return (
     <Wrapper type="page" style={{ display: inView ? 'flex' : 'none' }}>
       {games && games.length ? (
-        <MUIDataTable
-          title="Games"
-          data={gamesData}
+        <Table
+          dataSource={gamesData}
+          // @ts-ignore
           columns={gamesColumns}
-          options={gamesOptions}
+          pagination={{
+            pageSize: 20,
+            defaultPageSize: 20,
+            hideOnSinglePage: true,
+          }}
         />
       ) : (
         <Spinner />

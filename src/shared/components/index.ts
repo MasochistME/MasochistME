@@ -14,6 +14,7 @@ import HoverIcon from './HoverIcon';
 import Flex from './layout/Flex';
 import Wrapper from './layout/Wrapper';
 import Section from './layout/Section';
+import Table from './layout/Table';
 
 export {
   Loader,
@@ -31,4 +32,5 @@ export {
   Flex,
   Wrapper,
   Section,
+  Table,
 };
