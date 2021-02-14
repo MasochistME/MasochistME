@@ -146,7 +146,7 @@ export const updateUser = async (req, res) => {
 
   db.collection('users').updateOne(
     { id },
-    { $set: isUserPrivate ? { 'user.private': true } : user },
+    { $set: isUserPrivate ? { private: true } : user },
     { upsert: true },
     err => {
       if (err) {
