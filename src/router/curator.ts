@@ -3,6 +3,7 @@ import axios from 'axios';
 import { log } from 'helpers/log';
 import { connectToDb, getDataFromDB } from 'helpers/db';
 import { TGameEvent, TTierChangeEvent } from './types/events';
+import { findGame } from './ranking';
 import { updateStatus } from './update';
 import config from '../../config.json';
 
@@ -47,12 +48,37 @@ export const getCuratorGames = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const games = await getDataFromDB('games');
     if (res) {
+      const games = await getDataFromDB('games');
+      const users = await getDataFromDB('users');
+      const badges = await getDataFromDB('badges');
       const filteredGames = games
         .filter((game: any) => game.curated || game.protected)
         .map((game: any) => {
           const { id, desc, rating, title, sale, img, url, curated } = game;
+          const filteredUsers = users
+            .filter(
+              (user: any) =>
+                (user.protected || user.member) && findGame(user, id),
+            )
+            .map((user: any) => {
+              const gameDetails = findGame(user, id);
+              return {
+                id: user.id,
+                playtime: Number(gameDetails?.playtime_forever),
+                percentage: Number(gameDetails?.completionRate),
+              };
+            });
+          const completions = filteredUsers.filter(
+            (user: any) => user.percentage === 100,
+          ).length;
+          const avgPlaytime = filteredUsers
+            .filter((user: any) => user.percentage === 100)
+            .reduce((a, b) => a + b.playtime, 0);
+          const badgesNr = badges.filter(
+            (badge: any) => Number(badge.gameId) === Number(id),
+          ).length;
+          const achievementsNr = game.achievements.total;
           return {
             id: typeof id !== 'number' ? Number(id) : id,
             desc,
@@ -63,6 +89,12 @@ export const getCuratorGames = async (
             sale,
             curated,
             protected: game.protected,
+            stats: {
+              completions,
+              avgPlaytime,
+              badgesNr,
+              achievementsNr,
+            },
           };
         });
       res.status(200).send(filteredGames);

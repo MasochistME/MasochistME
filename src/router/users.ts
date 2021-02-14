@@ -199,7 +199,9 @@ const getUserGames = async (
     .filter(
       game =>
         !!curatedGames.find(
-          cachedgame => Number(cachedgame.id) === Number(game.appid),
+          cachedgame =>
+            Number(cachedgame.id) === Number(game.appid) &&
+            (cachedgame.curated || cachedgame.protected),
         ),
     )
     .map(game => {

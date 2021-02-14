@@ -238,7 +238,7 @@ export const getGameLeaderboards = async (
   }
 };
 
-const findGame = (user: any, gameId: any) =>
+export const findGame = (user: any, gameId: any) =>
   user.games.find((userGame: any) => {
     const gameIdUser =
       typeof userGame.appid !== 'number'
