@@ -82,7 +82,6 @@ export const updateUser = async (req, res) => {
   const curatedGames = await getDataFromDB('games');
   const userToUpdate = await getDataFromDB('users', { id });
   const userUrl = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${config.STEAM_KEY}&steamids=${id}`;
-  console.log(userUrl);
   const { client, db } = await connectToDb();
   let userData;
 
@@ -131,6 +130,7 @@ export const updateUser = async (req, res) => {
   const rankingAsync = await getUserRanking(curatedGames, gamesAsync);
 
   userData = userData.data.response.players[0];
+  const isUserPrivate = gamesAsync.length === 0 ? true : false;
   const user = {
     id,
     name: userData.personaname,
@@ -139,15 +139,14 @@ export const updateUser = async (req, res) => {
     games: gamesAsync,
     ranking: rankingAsync,
     badges: userToUpdate[0] ? userToUpdate[0].badges : [],
-    // @ts-ignore:next-line
-    private: gamesAsync.length === 0 ? true : false,
+    private: isUserPrivate,
     updated: Date.now(),
     // member: false // TODO check if Steam user is member!!!
   };
 
   db.collection('users').updateOne(
     { id },
-    { $set: user },
+    { $set: isUserPrivate ? { 'user.private': true } : user },
     { upsert: true },
     err => {
       if (err) {
@@ -168,7 +167,7 @@ const getUserGames = async (
   userID: number,
   curatedGames: any,
   userToUpdate: any,
-) => {
+): Promise<any> => {
   log.INFO(`--> [UPDATE] games of user ${userID}`);
 
   const userGamesUrl = `https://steamcommunity.com/profiles/${userID}/games/?tab=all`;
