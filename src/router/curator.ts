@@ -91,7 +91,7 @@ export const getCuratorGames = async (
             protected: game.protected,
             stats: {
               completions,
-              avgPlaytime,
+              avgPlaytime: completions !== 0 ? avgPlaytime / completions : 0,
               badgesNr,
               achievementsNr,
             },
