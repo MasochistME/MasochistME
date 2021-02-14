@@ -2,6 +2,13 @@ import styled from 'styled-components';
 import { Table as AntdTable } from 'antd';
 import { colors } from 'shared/theme';
 
+export const TableLink = styled.span`
+  cursor: pointer;
+  &:hover {
+    color: ${colors.white};
+  }
+`;
+
 export const defaultSort = (a: number | string, b: number | string): number => {
   if (a < b) {
     return -1;

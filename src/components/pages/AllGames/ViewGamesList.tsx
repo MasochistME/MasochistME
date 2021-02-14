@@ -1,10 +1,11 @@
 /* eslint-disable react/display-name */
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { orderBy } from 'lodash';
 import { Spinner, Wrapper, Table } from 'shared/components';
-import { defaultSort } from 'shared/components/layout/Table';
+import { TableLink, defaultSort } from 'shared/components/layout/Table';
 
 const GameImg = styled.img.attrs(({ src }: { src: string }) => {
   return {
@@ -16,6 +17,7 @@ const GameImg = styled.img.attrs(({ src }: { src: string }) => {
 `;
 
 type GameData = {
+  id: any;
   image: string;
   title: string;
   points: string;
@@ -27,6 +29,7 @@ type GameData = {
 };
 
 export default function ViewGamesList(): JSX.Element {
+  const history = useHistory();
   const inView = useSelector((state: any) => state.games.view === 'list');
   const games = useSelector((state: any) => {
     const filteredGames = state.games.list.filter(
@@ -38,6 +41,9 @@ export default function ViewGamesList(): JSX.Element {
       ['desc', 'asc'],
     );
   });
+  const onGameClick = (game: GameData) =>
+    game?.id && history.push(`/game/${game.id}`);
+
   const gamesColumns = [
     {
       render: (game: GameData) => <GameImg src={game.image} />,
@@ -45,7 +51,11 @@ export default function ViewGamesList(): JSX.Element {
     {
       title: 'Title',
       width: '30%',
-      render: (game: GameData) => <div>{game.title}</div>,
+      render: (game: GameData) => (
+        <TableLink className="bold" onClick={() => onGameClick(game)}>
+          {game.title}
+        </TableLink>
+      ),
       sorter: (a: GameData, b: GameData) => defaultSort(a.title, b.title),
     },
     {
@@ -84,6 +94,7 @@ export default function ViewGamesList(): JSX.Element {
   ];
 
   const gamesData: GameData[] = games.map((game: any) => ({
+    id: game.id,
     image: game.img,
     title: game.title,
     points: game.rating,
