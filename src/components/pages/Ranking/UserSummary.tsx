@@ -144,12 +144,18 @@ function UserSummary(props: TUserSummary): JSX.Element {
         {infoIcon()}
       </UserSummary.Icons>
       <UserSummary.Info>
-        <i
-          className={`fas fa-chevron-down icon-hover ${
-            detailsVisible ? 'icon-active' : ''
-          }`}
-          onClick={onShowDetailsClick}
-        />
+        <Flex
+          row
+          justify
+          align
+          style={{ width: '64px', height: '64px' }}
+          onClick={onShowDetailsClick}>
+          <i
+            className={`fas fa-chevron-down icon-hover ${
+              detailsVisible ? 'icon-active' : ''
+            }`}
+          />
+        </Flex>
         <Flex row>
           {disabled ? (
             <i

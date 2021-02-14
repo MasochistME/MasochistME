@@ -1,24 +1,24 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { orderBy } from 'lodash';
+import { useSelector, useDispatch } from 'react-redux';
 import CheckBoxGameChoice from './CheckBoxGameChoice';
-import { Wrapper, Spinner, Flex, SearchBar } from 'shared/components';
-import Game from './Game';
+import { Wrapper, Flex, SearchBar, HoverIcon } from 'shared/components';
+import { changeGamesView } from 'shared/store/modules/Tabs';
+import ViewGamesTiles from './ViewGamesTiles';
+import ViewGamesList from './ViewGamesList';
 
 export default function PageAllGames(): JSX.Element {
-  const searchGame = useSelector((state: any) => state.search.game);
-  const showGamesRated = useSelector((state: any) => state.showGamesRated);
+  const dispatch = useDispatch();
   const rating = useSelector((state: any) => state.rating);
-  const games = useSelector((state: any) => {
-    const filteredGames = state.games.list.filter(
-      (game: any) => game.curated || game.protected,
-    );
-    return orderBy(
-      filteredGames,
-      ['rating', game => game.title.toLowerCase()],
-      ['desc', 'asc'],
-    );
-  });
+  const gamesView = useSelector((state: any) => state.games.view);
+
+  const onGameViewClick = () => {
+    if (gamesView === 'tiles') {
+      dispatch(changeGamesView('list'));
+    }
+    if (gamesView === 'list') {
+      dispatch(changeGamesView('tiles'));
+    }
+  };
 
   return (
     <Flex column>
@@ -41,8 +41,9 @@ export default function PageAllGames(): JSX.Element {
             (with a trophy).
           </p>
         </div>
+
         {rating ? (
-          <div className="wrapper-filter">
+          <Flex row align style={{ justifyContent: 'space-between' }}>
             <div className="wrapper-choicebar">
               {rating.map((r: any) => (
                 <CheckBoxGameChoice
@@ -53,26 +54,16 @@ export default function PageAllGames(): JSX.Element {
               ))}
             </div>
             <SearchBar />
-          </div>
+            <HoverIcon
+              type="fas fa-th-list"
+              isActive={gamesView === 'list'}
+              onClick={onGameViewClick}
+            />
+          </Flex>
         ) : null}
       </Wrapper>
-      <Wrapper type="page">
-        {games && games.length ? (
-          games.map((game: any) => {
-            return game?.title
-              .toLowerCase()
-              .indexOf(searchGame.toLowerCase()) !== -1 &&
-              showGamesRated.find(
-                (score: any) =>
-                  parseInt(score, 10) === parseInt(game.rating, 10),
-              ) ? (
-              <Game key={`id-game-${game.id}`} id={game.id} rating={rating} />
-            ) : null;
-          })
-        ) : (
-          <Spinner />
-        )}
-      </Wrapper>
+      <ViewGamesTiles />
+      <ViewGamesList />
     </Flex>
   );
 }

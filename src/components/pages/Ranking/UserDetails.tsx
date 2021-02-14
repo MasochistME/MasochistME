@@ -57,7 +57,6 @@ export default function UserDetails(props: TUserDetails): JSX.Element {
       ['desc', 'desc'],
     );
 
-    console.log(userGames);
     return userGames.map(game => {
       const gameDetails = games.find(
         (g: any) => Number(g.id) === Number(game.id),

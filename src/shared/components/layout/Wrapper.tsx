@@ -6,9 +6,14 @@ import backgroundImg from 'shared/images/bg.jpg';
 type WrapperProps = {
   type: string;
   children?: React.ReactNode;
+  style?: any;
 };
 
-const WrapperMain = styled.div`
+const WrapperMain = styled.div.attrs(({ style }: { style?: any }) => {
+  if (style) {
+    return { style };
+  }
+})<{ style?: any }>`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -25,7 +30,11 @@ const WrapperMain = styled.div`
   text-align: justify;
 `;
 
-const WrapperPage = styled.div`
+const WrapperPage = styled.div.attrs(({ style }: { style?: any }) => {
+  if (style) {
+    return { style };
+  }
+})<{ style?: any }>`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -39,7 +48,11 @@ const WrapperPage = styled.div`
   background-color: ${colors.darkBlueTransparent};
 `;
 
-const WrapperNav = styled.div`
+const WrapperNav = styled.div.attrs(({ style }: { style?: any }) => {
+  if (style) {
+    return { style };
+  }
+})<{ style?: any }>`
   width: 100%;
   height: 100px;
   background-color: ${colors.superDarkGrey};
@@ -63,7 +76,11 @@ const WrapperNav = styled.div`
   }
 `;
 
-const WrapperMiddle = styled.div`
+const WrapperMiddle = styled.div.attrs(({ style }: { style?: any }) => {
+  if (style) {
+    return { style };
+  }
+})<{ style?: any }>`
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -71,7 +88,11 @@ const WrapperMiddle = styled.div`
   height: auto;
 `;
 
-const WrapperDescription = styled.div`
+const WrapperDescription = styled.div.attrs(({ style }: { style?: any }) => {
+  if (style) {
+    return { style };
+  }
+})<{ style?: any }>`
   padding: 10px;
   box-sizing: border-box;
   background-color: ${colors.darkBlueTransparent};
@@ -106,21 +127,21 @@ const WrapperDescription = styled.div`
 `;
 
 export default function Wrapper(props: WrapperProps): JSX.Element {
-  const { type, children } = props;
+  const { type, children, style } = props;
   if (type === 'nav') {
-    return <WrapperNav>{children}</WrapperNav>;
+    return <WrapperNav style={style}>{children}</WrapperNav>;
   }
   if (type === 'middle') {
-    return <WrapperMiddle>{children}</WrapperMiddle>;
+    return <WrapperMiddle style={style}>{children}</WrapperMiddle>;
   }
   if (type === 'main') {
-    return <WrapperMain>{children}</WrapperMain>;
+    return <WrapperMain style={style}>{children}</WrapperMain>;
   }
   if (type === 'description') {
-    return <WrapperDescription>{children}</WrapperDescription>;
+    return <WrapperDescription style={style}>{children}</WrapperDescription>;
   }
   if (type === 'page') {
-    return <WrapperPage>{children}</WrapperPage>;
+    return <WrapperPage style={style}>{children}</WrapperPage>;
   }
   return <div className={`wrapper-${type}`}>{children}</div>;
 }
