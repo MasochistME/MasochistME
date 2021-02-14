@@ -57,6 +57,38 @@ export default function ViewGamesList(): JSX.Element {
       },
     },
     {
+      name: 'completions',
+      label: 'Completions',
+      options: {
+        filter: true,
+        sort: true,
+      },
+    },
+    {
+      name: 'avgplaytime',
+      label: 'Average playtime (h)',
+      options: {
+        filter: true,
+        sort: true,
+      },
+    },
+    {
+      name: 'badgesnr',
+      label: 'Nr of badges',
+      options: {
+        filter: true,
+        sort: true,
+      },
+    },
+    {
+      name: 'achievementsnr',
+      label: 'Nr of achievements',
+      options: {
+        filter: true,
+        sort: true,
+      },
+    },
+    {
       name: 'sale',
       label: 'Sale',
       options: {
@@ -69,6 +101,10 @@ export default function ViewGamesList(): JSX.Element {
     image: game.img,
     title: game.title,
     points: game.rating,
+    completions: game.stats.completions,
+    avgplaytime: Math.round(game.stats.avgPlaytime),
+    badgesnr: game.stats.badgesNr,
+    achievementsnr: game.stats.achievementsNr,
     sale: game.sale.onSale ? 'yes' : 'no',
   }));
   const gamesOptions = {
