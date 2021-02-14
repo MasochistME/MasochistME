@@ -42,7 +42,7 @@ export default function PageAllGames(): JSX.Element {
           </p>
         </div>
         <Flex row align style={{ justifyContent: 'space-around' }}>
-          {rating && gamesView === 'tiles' ? (
+          {rating ? (
             <>
               <div className="wrapper-choicebar">
                 {rating.map((r: any) => (
@@ -54,14 +54,14 @@ export default function PageAllGames(): JSX.Element {
                 ))}
               </div>
               <SearchBar />
+              <HoverIcon
+                type="fas fa-th-list"
+                isActive={gamesView === 'list'}
+                onClick={onGameViewClick}
+                style={{ marginLeft: 'auto' }}
+              />
             </>
           ) : null}
-          <HoverIcon
-            type="fas fa-th-list"
-            isActive={gamesView === 'list'}
-            onClick={onGameViewClick}
-            style={{ marginLeft: 'auto' }}
-          />
         </Flex>
       </Wrapper>
       <ViewGamesTiles />
