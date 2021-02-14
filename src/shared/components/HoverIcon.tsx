@@ -6,19 +6,18 @@ const HoverWrapper = styled.div.attrs(
   ({ active, style }: { active: boolean; style?: any }) => {
     const newStyle: any = {
       ...style,
-      backgroundColor: `${colors.newDark}22`,
+      color: `${colors.newMediumGrey}`,
     };
     if (active) {
-      newStyle.backgroundColor = `${colors.lightGrey}44`;
+      newStyle.color = `${colors.superLightGrey}`;
     }
     return { style: newStyle };
   },
 )<{ active: boolean; style?: any }>`
   padding: 12px;
-  border-radius: 4px;
   cursor: pointer;
   &:hover {
-    background-color: ${colors.newDark}66;
+    color: ${colors.superLightGrey} !important;
   }
 `;
 

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Table as AntdTable } from 'antd';
-import { colors } from 'shared/theme';
+import { colors, fonts } from 'shared/theme';
 
 export const TableLink = styled.span`
   cursor: pointer;
@@ -20,6 +20,7 @@ export const defaultSort = (a: number | string, b: number | string): number => {
 };
 
 const Table = styled(AntdTable)`
+  width: 100%;
   table {
     border-spacing: 0;
     border-color: #000;
@@ -57,6 +58,7 @@ const Table = styled(AntdTable)`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    cursor: pointer;
   }
 
   .ant-table-column-sorter-inner {
@@ -90,10 +92,39 @@ const Table = styled(AntdTable)`
       height: 32px;
       justify-content: center;
       align-items: center;
+      margin: 0 4px;
+      border-radius: 4px;
+      cursor: pointer;
+      color: ${colors.superLightGrey};
+      font-family: ${fonts.Dosis};
       button {
         width: 100%;
         height: 100%;
+        border: none;
+        border-radius: 4px;
+        background-color: ${colors.superLightGrey}99;
+        cursor: pointer;
       }
+      a {
+        text-decoration: none;
+      }
+      &:hover {
+        background-color: ${colors.superDarkGrey}99;
+      }
+    }
+  }
+
+  .ant-pagination-item-active {
+    background-color: ${colors.superDarkGrey}66;
+  }
+
+  .ant-pagination-item-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    .ant-pagination-item-ellipsis {
+      display: none;
     }
   }
 `;

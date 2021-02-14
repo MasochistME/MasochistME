@@ -31,9 +31,16 @@ type GameData = {
 export default function ViewGamesList(): JSX.Element {
   const history = useHistory();
   const inView = useSelector((state: any) => state.games.view === 'list');
+  const searchGame = useSelector((state: any) => state.search.game);
+  const showGamesRated = useSelector((state: any) => state.showGamesRated);
   const games = useSelector((state: any) => {
     const filteredGames = state.games.list.filter(
-      (game: any) => game.curated || game.protected,
+      (game: any) =>
+        (game.curated || game.protected) &&
+        game?.title.toLowerCase().includes(searchGame.toLowerCase()) &&
+        showGamesRated.find(
+          (score: any) => Number(score) === Number(game.rating),
+        ),
     );
     return orderBy(
       filteredGames,
@@ -112,10 +119,14 @@ export default function ViewGamesList(): JSX.Element {
           dataSource={gamesData}
           // @ts-ignore
           columns={gamesColumns}
+          showSorterTooltip={false}
           pagination={{
             pageSize: 20,
             defaultPageSize: 20,
             hideOnSinglePage: true,
+            showQuickJumper: false,
+            showLessItems: true,
+            showSizeChanger: false,
           }}
         />
       ) : (

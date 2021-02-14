@@ -41,28 +41,26 @@ export default function PageAllGames(): JSX.Element {
             (with a trophy).
           </p>
         </div>
-        <Flex row align style={{ justifyContent: 'space-around' }}>
-          {rating ? (
-            <>
-              <div className="wrapper-choicebar">
-                {rating.map((r: any) => (
-                  <CheckBoxGameChoice
-                    key={`checkbox-game-${r.id}`}
-                    score={r.id}
-                    rating={rating}
-                  />
-                ))}
-              </div>
-              <SearchBar />
-              <HoverIcon
-                type="fas fa-th-list"
-                isActive={gamesView === 'list'}
-                onClick={onGameViewClick}
-                style={{ marginLeft: 'auto' }}
-              />
-            </>
-          ) : null}
-        </Flex>
+
+        {rating ? (
+          <Flex row align style={{ justifyContent: 'space-between' }}>
+            <div className="wrapper-choicebar">
+              {rating.map((r: any) => (
+                <CheckBoxGameChoice
+                  key={`checkbox-game-${r.id}`}
+                  score={r.id}
+                  rating={rating}
+                />
+              ))}
+            </div>
+            <SearchBar />
+            <HoverIcon
+              type="fas fa-th-list"
+              isActive={gamesView === 'list'}
+              onClick={onGameViewClick}
+            />
+          </Flex>
+        ) : null}
       </Wrapper>
       <ViewGamesTiles />
       <ViewGamesList />
