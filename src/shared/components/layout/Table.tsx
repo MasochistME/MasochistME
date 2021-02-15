@@ -56,12 +56,13 @@ const Table = styled(AntdTable)`
   .ant-table-column-sorters {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     cursor: pointer;
   }
 
   .ant-table-column-sorter-inner {
+    align-self: flex-end;
     span {
       display: flex;
       flex-direction: column;

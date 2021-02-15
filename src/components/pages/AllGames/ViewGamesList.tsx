@@ -4,7 +4,8 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { orderBy } from 'lodash';
-import { Spinner, Wrapper, Table } from 'shared/components';
+import { swapRatingToIcon } from 'shared/helpers/helper';
+import { Flex, Spinner, Wrapper, Table } from 'shared/components';
 import { TableLink, defaultSort } from 'shared/components/layout/Table';
 
 const GameImg = styled.img.attrs(({ src }: { src: string }) => {
@@ -20,17 +21,19 @@ type GameData = {
   id: any;
   image: string;
   title: string;
-  points: string;
+  rating: string;
   completions: number;
-  avgplaytime: number;
-  badgesnr: number;
-  achievementsnr: number;
-  sale: 'yes' | 'no';
+  avgPlaytime: number;
+  achievementsNr: number;
+  badgesNr: number;
+  badgesPts: number;
+  sale: { onSale: boolean; discount: number };
 };
 
 export default function ViewGamesList(): JSX.Element {
   const history = useHistory();
   const inView = useSelector((state: any) => state.games.view === 'list');
+  const rating = useSelector((state: any) => state.rating);
   const searchGame = useSelector((state: any) => state.search.game);
   const showGamesRated = useSelector((state: any) => state.showGamesRated);
   const games = useSelector((state: any) => {
@@ -53,6 +56,17 @@ export default function ViewGamesList(): JSX.Element {
 
   const gamesColumns = [
     {
+      render: (game: GameData) => {
+        const icon = swapRatingToIcon(game.rating, rating);
+        return (
+          <Flex style={{ margin: '0 8px 0 12px' }}>
+            <i className={icon} />
+          </Flex>
+        );
+      },
+      sorter: (a: GameData, b: GameData) => defaultSort(a.rating, b.rating),
+    },
+    {
       render: (game: GameData) => <GameImg src={game.image} />,
     },
     {
@@ -66,9 +80,30 @@ export default function ViewGamesList(): JSX.Element {
       sorter: (a: GameData, b: GameData) => defaultSort(a.title, b.title),
     },
     {
-      title: 'Points',
-      render: (game: GameData) => <div>{game.points}</div>,
-      sorter: (a: GameData, b: GameData) => defaultSort(a.points, b.points),
+      title: () => (
+        <Flex
+          row
+          align
+          justify
+          title="The total sum of base points and all the game badges (excluding negative ones)">
+          Points{' '}
+          <i
+            className="fas fa-question-circle"
+            style={{ fontSize: '12px', marginLeft: '6px' }}></i>
+        </Flex>
+      ),
+      render: (game: GameData) => {
+        const points =
+          game.badgesPts +
+            rating.find((r: any) => r.id === game.rating)?.score ?? 0;
+        return <div>{points}</div>;
+      },
+      sorter: (a: GameData, b: GameData) => {
+        const points = (game: GameData) =>
+          game.badgesPts +
+            rating.find((r: any) => r.id === game.rating)?.score ?? 0;
+        return defaultSort(points(a), points(b));
+      },
     },
     {
       title: 'Completions',
@@ -77,26 +112,41 @@ export default function ViewGamesList(): JSX.Element {
         defaultSort(a.completions, b.completions),
     },
     {
-      title: 'Avg playtime',
-      render: (game: GameData) => <div>{`${game.avgplaytime} h`}</div>,
+      title: () => (
+        <Flex
+          row
+          align
+          justify
+          title="Average time needed to complete 100% of the Steam achievements">
+          Avg playtime{' '}
+          <i
+            className="fas fa-question-circle"
+            style={{ fontSize: '12px', marginLeft: '6px' }}></i>
+        </Flex>
+      ),
+      render: (game: GameData) => <div>{`${game.avgPlaytime} h`}</div>,
       sorter: (a: GameData, b: GameData) =>
-        defaultSort(a.avgplaytime, b.avgplaytime),
+        defaultSort(a.avgPlaytime, b.avgPlaytime),
     },
     {
       title: 'Badges',
-      render: (game: GameData) => <div>{game.badgesnr}</div>,
-      sorter: (a: GameData, b: GameData) => defaultSort(a.badgesnr, b.badgesnr),
+      render: (game: GameData) => <div>{game.badgesNr}</div>,
+      sorter: (a: GameData, b: GameData) => defaultSort(a.badgesNr, b.badgesNr),
     },
     {
       title: 'Achievements',
-      render: (game: GameData) => <div>{game.achievementsnr}</div>,
+      render: (game: GameData) => <div>{game.achievementsNr}</div>,
       sorter: (a: GameData, b: GameData) =>
-        defaultSort(a.achievementsnr, b.achievementsnr),
+        defaultSort(a.achievementsNr, b.achievementsNr),
     },
     {
       title: 'Sale',
-      render: (game: GameData) => <div>{game.sale}</div>,
-      sorter: (a: GameData, b: GameData) => defaultSort(a.sale, b.sale),
+      render: (game: GameData) => {
+        const sale = game.sale.onSale ? `${game.sale.discount}%` : '—';
+        return <div>{sale}</div>;
+      },
+      sorter: (a: GameData, b: GameData) =>
+        defaultSort(a.sale.discount ?? 0, b.sale.discount ?? 0),
     },
   ];
 
@@ -104,12 +154,13 @@ export default function ViewGamesList(): JSX.Element {
     id: game.id,
     image: game.img,
     title: game.title,
-    points: game.rating,
+    rating: game.rating,
     completions: game.stats.completions,
-    avgplaytime: Math.round(game.stats.avgPlaytime),
-    badgesnr: game.stats.badgesNr,
-    achievementsnr: game.stats.achievementsNr,
-    sale: game.sale.onSale ? 'yes' : 'no',
+    avgPlaytime: Math.round(game.stats.avgPlaytime),
+    achievementsNr: game.stats.achievementsNr,
+    badgesNr: game.stats.badgesNr,
+    badgesPts: game.stats.badgesPts,
+    sale: game.sale,
   }));
 
   return (
