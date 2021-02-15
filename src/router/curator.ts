@@ -75,14 +75,19 @@ export const getCuratorGames = async (
           const avgPlaytime = filteredUsers
             .filter((user: any) => user.percentage === 100)
             .reduce((a, b) => a + b.playtime, 0);
-          const badgesNr = badges.filter(
+          const gameBadges = badges.filter(
             (badge: any) => Number(badge.gameId) === Number(id),
-          ).length;
+          );
+          const points = gameBadges.reduce(
+            (a, b) => Number(a?.points ?? 0) + Number(b?.points ?? 0),
+            0,
+          );
           const achievementsNr = game.achievements.total;
           return {
             id: typeof id !== 'number' ? Number(id) : id,
             desc,
             rating,
+            points,
             title,
             img,
             url,
@@ -92,7 +97,7 @@ export const getCuratorGames = async (
             stats: {
               completions,
               avgPlaytime: completions !== 0 ? avgPlaytime / completions : 0,
-              badgesNr,
+              badgesNr: gameBadges?.length ?? 0,
               achievementsNr,
             },
           };
