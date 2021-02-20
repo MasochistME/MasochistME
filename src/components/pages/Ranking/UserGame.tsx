@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { colors, fonts, media } from 'shared/theme';
 import { Flex } from 'shared/components';
 import { ProgressBar } from 'shared/components';
+import UserBadges from '../Leaderboards/UserBadges';
 
 const Game = styled.div`
   display: flex;
@@ -43,6 +44,9 @@ const Times = styled.div`
   font-size: 0.7em;
   font-family: ${fonts.Verdana};
   color: ${colors.superLightGrey};
+  width: 80px;
+  min-width: 80px;
+  margin: 0 0 0 6px;
 `;
 const CompletionTimer = styled.div`
   @media (max-width: ${media.tablets}) {
@@ -63,13 +67,15 @@ UserGame.Times = Times;
 UserGame.Title = Title;
 UserGame.CompletionTimer = CompletionTimer;
 UserGame.ProgressBar = ProgressBar;
+UserGame.UserBadges = UserBadges;
 
 type TUserProps = {
   game: any;
+  user: any;
 };
 
 export default function UserGame(props: TUserProps): JSX.Element {
-  const { game } = props;
+  const { game, user } = props;
   const history = useHistory();
   const percentage = isNaN(Math.floor(game.percentage))
     ? 0
@@ -79,28 +85,29 @@ export default function UserGame(props: TUserProps): JSX.Element {
 
   return (
     <UserGame.Game>
+      <UserGame.Times>
+        {game.percentage === 100 ? (
+          <UserGame.CompletionTimer>
+            {new Date(game.lastUnlocked * 1000).toLocaleString()}
+          </UserGame.CompletionTimer>
+        ) : null}
+        <div style={{ display: 'none' }}>
+          {game.playtime
+            ? typeof game.playtime === 'number'
+              ? Math.round(game.playtime)
+              : Math.round(Number(game.playtime))
+            : 0}{' '}
+          h
+        </div>
+      </UserGame.Times>
       <UserGame.Logo src={game.img} alt="logo" />
       <UserGame.Info>
         <Flex row>
           <i className={game.rating} />
           <UserGame.Title onClick={onGameClick}> {game.title}</UserGame.Title>
         </Flex>
-        <UserGame.Times>
-          {game.percentage === 100 ? (
-            <UserGame.CompletionTimer>
-              {new Date(game.lastUnlocked * 1000).toLocaleString()}
-            </UserGame.CompletionTimer>
-          ) : null}
-          <div style={{ display: 'none' }}>
-            {game.playtime
-              ? typeof game.playtime === 'number'
-                ? Math.round(game.playtime)
-                : Math.round(Number(game.playtime))
-              : 0}{' '}
-            h
-          </div>
-        </UserGame.Times>
       </UserGame.Info>
+      <UserGame.UserBadges game={game} user={user} />
       <UserGame.ProgressBar percentage={percentage} />
     </UserGame.Game>
   );

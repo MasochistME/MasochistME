@@ -3,12 +3,19 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Flex } from 'shared/components';
 
+const StyledFlex = styled(Flex)`
+  & > * {
+    margin-right: 4px;
+  }
+  &:first-child {
+    margin-left: 4px;
+  }
+`;
 const Badge = styled.img`
   max-width: 24px;
   max-height: 24px;
   border: 3px solid black;
   border-radius: 3px;
-  margin-left: 4px;
   opacity: 0.7;
   &:hover {
     opacity: 1;
@@ -41,5 +48,5 @@ export default function UserBadges(props: {
     );
   });
 
-  return <Flex>{mappedBadges}</Flex>;
+  return <StyledFlex>{mappedBadges}</StyledFlex>;
 }

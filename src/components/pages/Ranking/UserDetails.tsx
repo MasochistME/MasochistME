@@ -19,7 +19,6 @@ export default function UserDetails(props: TUserDetails): JSX.Element {
   const { id, show } = props;
   const userLoaded = useUserDetails(id);
   const rating = useSelector((state: any) => state.rating);
-  // const badges = useSelector((state: any) => state.badges);
   const games = useSelector((state: any) => state.games.list);
   const user = useSelector((state: any) => {
     const userBasic = state.users.list.find((user: any) => user.id === id);
@@ -32,20 +31,6 @@ export default function UserDetails(props: TUserDetails): JSX.Element {
       ranking: userRanking,
     };
   });
-
-  // const summarizeBadgePoints = (user: any, badges: any) => {
-  //   let sum = 0;
-  //   user.badges.map((badge: any) => {
-  //     const usersBadge = badges.find((b: any) => badge.id === b['_id']); // TODO equality
-  //     if (usersBadge) {
-  //       if (typeof usersBadge.points !== 'number') {
-  //         usersBadge.points = parseInt(usersBadge.points);
-  //       }
-  //       sum += usersBadge.points;
-  //     }
-  //   });
-  //   return sum;
-  // };
 
   const composeGameList = () => {
     const userGames = orderBy(
@@ -69,8 +54,10 @@ export default function UserDetails(props: TUserDetails): JSX.Element {
       return (
         <UserGame
           key={`game-${game.id}`}
+          user={user}
           game={{
             ...game,
+            badges: gameDetails.badges,
             title: gameDetails.title,
             rating: ratingIcon ? ratingIcon.icon : 'fas fa-spinner',
             img: gameDetails.img,
@@ -81,29 +68,7 @@ export default function UserDetails(props: TUserDetails): JSX.Element {
   };
 
   return userLoaded ? (
-    <UserDetails.Display show={show}>
-      {/* <UserDetails.Summary>
-        <UserDetails.RatingScore title="Sum of all points">
-          {user.points ? user.points : 0}
-          <span className="bold"> Σ</span>
-        </UserDetails.RatingScore>
-        {rating.map((score: any, scoreIndex: number) => {
-          return (
-            <UserDetails.RatingScore key={`user-rating-score-${scoreIndex}`}>
-              {user.ranking[score.id] !== undefined
-                ? user.ranking[score.id]
-                : 0}
-              <i className={score.icon} style={{ paddingRight: '5px' }} />
-            </UserDetails.RatingScore>
-          );
-        })}
-        <UserDetails.RatingScore title="Sum of points for badges">
-          {summarizeBadgePoints(user, badges)}
-          <i className="fas fa-medal" style={{ paddingRight: '5px' }} />
-        </UserDetails.RatingScore>
-      </UserDetails.Summary> */}
-      {composeGameList()}
-    </UserDetails.Display>
+    <UserDetails.Display show={show}>{composeGameList()}</UserDetails.Display>
   ) : (
     <Spinner />
   );

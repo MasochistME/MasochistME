@@ -19,7 +19,7 @@ const Completion = styled.div.attrs((props: TCompletion) => {
   return { style };
 })<{ invert?: boolean; style?: any }>`
   position: relative;
-  min-width: 200px;
+  min-width: 150px;
   height: 15px;
   margin-right: 7px;
   padding: 0 !important;

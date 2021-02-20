@@ -10,7 +10,7 @@ export default function LeaderboardsProgressBar(props: Props): JSX.Element {
     <div className="leaderboards-user-completion">
       <div
         className="leaderboards-user-completion-progress"
-        style={{ width: `${percentage * 2}px` }}></div>
+        style={{ width: `${percentage * 1}px` }}></div>
       <div className="leaderboards-user-completion-percentage">{`${percentage}%`}</div>
     </div>
   );
