@@ -87,6 +87,9 @@ export const getCuratorGames = async (
             })
             .reduce((a, b) => a + b, 0);
           const achievementsNr = game.achievements.total;
+          const filteredBadges = badges
+            .filter(badge => Number(badge.gameId) === Number(id))
+            .map(badge => badge._id);
           return {
             id: typeof id !== 'number' ? Number(id) : id,
             desc,
@@ -97,6 +100,7 @@ export const getCuratorGames = async (
             sale,
             curated,
             protected: game.protected,
+            badges: filteredBadges,
             stats: {
               completions,
               avgPlaytime: completions !== 0 ? avgPlaytime / completions : 0,
