@@ -22,8 +22,10 @@ export const getUsers = async (req: Request, res: Response): Promise<void> => {
           updated,
           private: isPrivate,
           member,
+          badges,
           protected: isProtected,
         } = user;
+        const filteredBadges = badges.map(badge => badge.id);
         return {
           id,
           name,
@@ -32,6 +34,7 @@ export const getUsers = async (req: Request, res: Response): Promise<void> => {
           updated,
           private: isPrivate,
           member,
+          badges: filteredBadges,
           protected: isProtected,
         };
       });
