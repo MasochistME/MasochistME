@@ -67,12 +67,13 @@ export const User = styled.li`
   align-items: center;
   border-bottom: 1px solid ${colors.newDark};
   border-top: 1px solid ${colors.newMediumGrey};
-  img {
-    margin: 2px;
-    padding: 0;
-    max-height: 35px;
-    min-height: 35px;
-  }
+`;
+
+export const UserAvatar = styled.img`
+  margin: 2px;
+  padding: 0;
+  max-height: 35px;
+  min-height: 35px;
 `;
 
 export const UserInfo = styled.div`
@@ -81,6 +82,7 @@ export const UserInfo = styled.div`
   width: 100%;
   padding: 0 10px;
   justify-content: space-between;
+  align-items: center;
 `;
 
 export const UserName = styled.div`
