@@ -10,6 +10,7 @@ import Badges from './Badges';
 type Props = {
   id: any;
   rating: any;
+  compact?: boolean;
 };
 
 // ---------------------------------------------
@@ -19,7 +20,7 @@ type Props = {
 Leaderboards.List = List;
 
 export default function Leaderboards(props: Props): JSX.Element | null {
-  const { id } = props;
+  const { id, compact } = props;
   const history = useHistory();
   const loaded = useGameDetails(id);
   const game = useSelector((state: any) => {
@@ -66,7 +67,7 @@ export default function Leaderboards(props: Props): JSX.Element | null {
       {loaded && game ? (
         <Flex column>
           {game.badges?.length ? <Badges game={game} mini /> : null}
-          <Leaderboards.List game={game} />
+          <Leaderboards.List game={game} compact={compact} />
         </Flex>
       ) : (
         <Spinner />

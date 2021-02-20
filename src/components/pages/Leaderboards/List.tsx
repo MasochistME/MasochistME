@@ -30,15 +30,22 @@ List.UserAvatar = UserAvatar;
 List.UserBadges = UserBadges;
 List.ProgressBar = ProgressBar;
 
-export default function List(props: { game: any }): JSX.Element {
-  const { game } = props;
+export default function List(props: {
+  game: any;
+  compact?: boolean;
+}): JSX.Element {
+  const { game, compact } = props;
   const history = useHistory();
   const users = useSelector((state: any) => state.users.list);
 
-  const assignDateIfFinished = (leaderboards: any): string | null =>
-    leaderboards?.percentage === 100
-      ? new Date(leaderboards?.lastUnlocked * 1000).toLocaleString()
-      : null;
+  const assignDateIfFinished = (leaderboards: any): string | JSX.Element =>
+    leaderboards?.percentage === 100 ? (
+      new Date(leaderboards?.lastUnlocked * 1000).toLocaleString()
+    ) : (
+      <Flex justify align style={{ width: '100%' }}>
+        —
+      </Flex>
+    );
 
   const leaderboards = game?.players
     ? game.players.map((player: any) => {
@@ -63,6 +70,9 @@ export default function List(props: { game: any }): JSX.Element {
     <LeaderboardsList>
       {leaderboards.map((user: any, userIndex: number) => (
         <List.User key={`leaderboards-user-${userIndex}`}>
+          {!compact && (
+            <List.UserTimes>{assignDateIfFinished(user)}</List.UserTimes>
+          )}
           <UserAvatar
             className="leaderboards-user-image"
             alt="avatar"
@@ -76,8 +86,7 @@ export default function List(props: { game: any }): JSX.Element {
               </List.Link>
             </List.UserName>
             <Flex>
-              <List.UserTimes>{assignDateIfFinished(user)}</List.UserTimes>
-              <List.UserBadges user={user} game={game} />
+              {!compact && <List.UserBadges user={user} game={game} />}
             </Flex>
           </List.UserInfo>
           <List.ProgressBar percentage={Math.floor(user.percentage)} />

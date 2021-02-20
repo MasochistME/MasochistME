@@ -98,7 +98,7 @@ export default function Game(props: TGame): JSX.Element {
       {
         // @ts-ignore
         <Modal isOpen={modalIsOpen} style={{ ...modalStyle }}>
-          <Leaderboards id={game.id} rating={game.rating} />
+          <Leaderboards id={game.id} rating={game.rating} compact />
         </Modal>
       }
     </StyledGame>

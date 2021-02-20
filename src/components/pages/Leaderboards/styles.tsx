@@ -97,6 +97,7 @@ export const UserTimes = styled.div`
   font-size: 0.7em;
   font-family: ${fonts.Verdana};
   color: ${colors.superLightGrey};
+  width: 128px;
   @media (max-width: ${media.tablets}) {
     display: none;
   }
