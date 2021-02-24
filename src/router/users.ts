@@ -12,7 +12,7 @@ export const getUsers = async (req: Request, res: Response): Promise<void> => {
   try {
     const users = await getDataFromDB('users');
     const filteredUsers = users
-      .filter((user: any) => user.protected || user.member)
+      .filter((user: any) => (user.protected || user.member) && !user.removed)
       .map((user: any) => {
         const {
           id,

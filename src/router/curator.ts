@@ -59,7 +59,9 @@ export const getCuratorGames = async (
           const filteredUsers = users
             .filter(
               (user: any) =>
-                (user.protected || user.member) && findGame(user, id),
+                (user.protected || user.member) &&
+                !user.removed &&
+                findGame(user, id),
             )
             .map((user: any) => {
               const gameDetails = findGame(user, id);

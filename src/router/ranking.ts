@@ -24,7 +24,7 @@ export const getRanking = async (
     const badges = await getDataFromDB('badges');
     const rating = await getDataFromDB('points');
     const filteredUsers: TUser[] = users
-      .filter(user => user.member || user.protected)
+      .filter(user => (user.member || user.protected) && !user.removed)
       .map(user => {
         const id = user.id;
         const pointsList: TPoints[] = Object.entries(user.ranking).map(
@@ -160,7 +160,10 @@ export const getGameLeaderboards = async (
       .map((badge: any) => badge._id);
     const filteredUsers = users
       .filter(
-        (user: any) => (user.protected || user.member) && findGame(user, id),
+        (user: any) =>
+          (user.protected || user.member) &&
+          !user.removed &&
+          findGame(user, id),
       )
       .map((user: any) => {
         const gameDetails = findGame(user, id);
@@ -201,7 +204,7 @@ export const getGameLeaderboards = async (
       .map((g: any) => g.id);
 
     const playtimesOfFinishedGames = users
-      .filter((user: any) => user.member || user.protected)
+      .filter((user: any) => (user.member || user.protected) && !user.removed)
       .map((user: any) =>
         user.games
           .filter(
