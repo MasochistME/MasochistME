@@ -24,6 +24,7 @@ export const getUsers = async (req: Request, res: Response): Promise<void> => {
           member,
           badges,
           protected: isProtected,
+          removed: isRemoved,
         } = user;
         const filteredBadges = badges.map(badge => badge.id);
         return {
@@ -36,6 +37,7 @@ export const getUsers = async (req: Request, res: Response): Promise<void> => {
           member,
           badges: filteredBadges,
           protected: isProtected,
+          removed: isRemoved,
         };
       });
     res.status(200).send(filteredUsers);
