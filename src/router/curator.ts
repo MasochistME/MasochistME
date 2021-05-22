@@ -286,17 +286,18 @@ export const updateCuratorGames = (req?, res?): Promise<void> =>
         }
       }
 
-      const price = game.data[gameId].data.price_overview;
+      const price = game.data[gameId]?.data?.price_overview;
       const gameDetails: TGame = {
         id: gameId,
         desc: games[index].desc,
         rating: games[index].rating,
-        title: game.data[gameId].data.name || 'unknown',
-        img: game.data[gameId].data.header_image || 'http://',
+        title: game.data[gameId].data?.name ?? games[index].title ?? 'unknown',
+        img:
+          game.data[gameId].data?.header_image ??
+          games[index].img ??
+          'https://cdn.iconscout.com/icon/premium/png-256-thumb/error-404-2824167-2343929.png',
         achievements: {
-          total: game.data[gameId].data.achievements
-            ? game.data[gameId].data.achievements.total
-            : 0,
+          total: game.data[gameId].data?.achievements?.total ?? 0,
           list: [],
         },
         url: urlGamesDetails,

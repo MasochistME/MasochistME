@@ -26,7 +26,7 @@ export const updateStatus = (db, percent: number) => {
   );
 };
 
-export const getStatus = async (req, res) => {
+export const getStatus = async (req?, res?): Promise<void> => {
   let lastUpdated;
   try {
     lastUpdated = await getDataFromDB('update', { id: 'lastUpdated' });
@@ -42,7 +42,7 @@ export const getStatus = async (req, res) => {
   return;
 };
 
-export const initiateMainUpdate = async (req?, res?) => {
+export const initiateMainUpdate = async (req?, res?): Promise<void> => {
   const { client, db } = await connectToDb();
   const usersFromDB = await getDataFromDB('users');
   let members;
@@ -52,7 +52,7 @@ export const initiateMainUpdate = async (req?, res?) => {
   try {
     const lastUpdated = await getDataFromDB('update', { id: 'lastUpdated' }); // don't update too fast
     if (Date.now() - lastUpdated[0].timestamp < updateDelay) {
-      if (res && !req.params.forceupdate) {
+      if (res && !req.query.forceupdate) {
         res
           .status(202)
           .send(
@@ -60,8 +60,8 @@ export const initiateMainUpdate = async (req?, res?) => {
               (updateDelay - (Date.now() - lastUpdated[0].timestamp)) / 60000
             } min before updating`,
           );
+        return;
       }
-      return;
     }
   } catch (err) {
     log.WARN('--> [UPDATE] main update [ERR]');
