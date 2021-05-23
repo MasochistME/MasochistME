@@ -1,10 +1,9 @@
-/* eslint-disable react/display-name */
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { orderBy } from 'lodash';
-import { swapRatingToIcon } from 'shared/helpers/helper';
+import { swapRatingToIcon } from 'shared/helpers';
 import { Flex, Spinner, Wrapper, Table } from 'shared/components';
 import { TableLink, defaultSort } from 'shared/components/layout/Table';
 

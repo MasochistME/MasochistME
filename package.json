@@ -43,6 +43,7 @@
   },
   "devDependencies": {
     "@types/chart.js": "^2.9.29",
+    "@types/crypto-js": "^4.0.1",
     "@types/jest": "^26.0.19",
     "@types/lodash": "^4.14.167",
     "@types/node": "^14.14.19",

@@ -13,9 +13,15 @@ const AppContextProvider = ({
 }: {
   children: React.ReactNode;
 }): JSX.Element => {
-  const path = 'http://89.47.165.141:3002';
+  const isDev = window.location.hostname === 'localhost';
+  const path = isDev ? 'http://localhost:3002' : 'http://89.47.165.141:3002';
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [username, setUsername] = useState<string>('UNKNOWN ENTITY');
+
+  const search = window.location.search;
+  const params = new URLSearchParams(search);
+
+  console.log(params);
 
   const value = {
     loggedIn,

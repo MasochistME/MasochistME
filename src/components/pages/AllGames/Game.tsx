@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Modal from 'react-modal';
 import styled from 'styled-components';
-import { swapRatingToIcon } from 'shared/helpers/helper';
+import { swapRatingToIcon } from 'shared/helpers';
 import { colors } from 'shared/theme';
 import { Img, Desc, Info, Title, Rating } from './styles';
 import Leaderboards from '../Leaderboards';

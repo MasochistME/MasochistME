@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { orderBy } from 'lodash';
 import styled from 'styled-components';
 import moment from 'moment';
+import { log } from 'shared/helpers';
 import DoughnutChart from 'components/Charts/DoughnutChart';
 import LineChart from 'components/Charts/LineChart';
 import ChartWrapper from 'components/Charts/ChartWrapper';
@@ -152,7 +153,7 @@ export default function ProfileGraphs(props: Props): JSX.Element {
                 games.find((g: any) => parseInt(g.id) === game.id).rating,
             ).score;
           } catch (err) {
-            console.log(err);
+            log.WARN(err);
             date.points = 0;
           }
           return game;
