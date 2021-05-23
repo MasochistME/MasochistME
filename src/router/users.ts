@@ -262,7 +262,7 @@ const getUserAchievements = (userID: number, games: any, userToUpdate: any) =>
           const numberOfAllAchievements =
             response.data.playerstats.achievements.length;
           const numberOfUnlockedAchievements = response.data.playerstats.achievements.filter(
-            achievement => achievement.achieved == 1,
+            achievement => Number(achievement.achieved) === 1,
           ).length;
           let lastUnlocked = 0;
           response.data.playerstats.achievements.map(achievement =>
@@ -301,11 +301,8 @@ const getUserAchievements = (userID: number, games: any, userToUpdate: any) =>
                 member: userID,
                 game: gameID,
               };
-              const { client, db } = await connectToDb();
-              db.collection('events').insertOne(
-                eventDetails,
-                (err, data) => {},
-              );
+              const { db } = await connectToDb();
+              db.collection('events').insertOne(eventDetails);
             }
           }
         } catch (err) {

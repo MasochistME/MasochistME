@@ -1,17 +1,50 @@
 import express from 'express';
 import cors from 'cors';
+import passport from 'passport';
 import { getDataFromDB } from 'helpers/db';
+// import { log } from 'helpers/log';
 import { router } from 'router';
 import { legacy } from 'router/legacyRouter';
+import { routerAuth } from 'router/auth';
 import { initiateMainUpdate } from 'router/update';
 import config from '../config.json';
 
+const SteamStrategy = require('passport-steam').Strategy;
+
 const app = express();
 
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+
+passport.deserializeUser((obj, done) => {
+  done(null, obj);
+});
+
+passport.use(
+  new SteamStrategy(
+    {
+      returnURL: 'http://localhost:3002/auth/steam/success',
+      realm: 'http://localhost:3002/',
+      apiKey: config.STEAM_KEY,
+    },
+    (identifier, profile, done) => {
+      process.nextTick(() => {
+        profile.identifier = identifier;
+        return done(null, profile);
+      });
+    },
+  ),
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.json({ limit: '5mb' }));
 app.use(express.urlencoded({ limit: '5mb', extended: false }));
 app.use(cors());
+
 app.use('/api', router);
+app.use('/auth', routerAuth);
 app.use('/rest', legacy);
 
 app.listen(config.PORT, () =>

@@ -38,7 +38,6 @@ import {
 } from './curator';
 import { getBlog } from './blog';
 import { getEvents } from './events';
-
 import { getSteamID, getRating } from './special';
 
 router.get('/special/vanityid/:vanityid', getSteamID);
