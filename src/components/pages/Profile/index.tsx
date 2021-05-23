@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import { orderBy } from 'lodash';
 import { showProfile } from 'shared/store/modules/Profiles';
 import { changeTab } from 'shared/store/modules/Tabs';
+import { AppContext } from 'shared/store/context';
 import { Flex, Wrapper, Spinner, Section } from 'shared/components';
 import { Badges, Badge } from './styles';
 import { useUserDetails } from 'components/init';
@@ -18,7 +19,9 @@ Profile.Section = Section;
 export default function Profile(): JSX.Element {
   const dispatch = useDispatch();
   const history = useHistory();
+  const { loggedIn, userId } = useContext(AppContext);
   const { id } = useParams<{ id: string }>();
+  const canEdit = loggedIn && userId === id;
 
   const userLoaded = useUserDetails(id);
 
@@ -75,8 +78,12 @@ export default function Profile(): JSX.Element {
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(showProfile(id));
-    dispatch(changeTab('profile'));
-  }, []);
+    if (canEdit) {
+      dispatch(changeTab('me'));
+    } else {
+      dispatch(changeTab('profile'));
+    }
+  }, [id]);
 
   return (
     <Flex column>

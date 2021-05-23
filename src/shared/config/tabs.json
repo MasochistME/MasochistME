@@ -61,5 +61,12 @@
     "link": "https://store.steampowered.com/curator/7119343",
     "visible": true,
     "external": true
+  },
+  {
+    "text": "my profile",
+    "icon": "fas fa-smile",
+    "link": "me",
+    "visible": false,
+    "external": false
   }
 ]

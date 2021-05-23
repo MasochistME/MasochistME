@@ -6,6 +6,8 @@ type ContextType = {
   setLoggedIn: (loggedIn: boolean) => void;
   username: string;
   setUsername: (username: string) => void;
+  userId: string | number;
+  setUserId: (userId: string | number) => void;
 };
 
 const AppContextProvider = ({
@@ -17,17 +19,15 @@ const AppContextProvider = ({
   const path = isDev ? 'http://localhost:3002' : 'http://89.47.165.141:3002';
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [username, setUsername] = useState<string>('UNKNOWN ENTITY');
-
-  const search = window.location.search;
-  const params = new URLSearchParams(search);
-
-  console.log(params);
+  const [userId, setUserId] = useState<string | number>(-1);
 
   const value = {
     loggedIn,
     setLoggedIn,
     username,
     setUsername,
+    userId,
+    setUserId,
     path,
   };
 

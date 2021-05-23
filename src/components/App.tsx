@@ -1,11 +1,36 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Page from 'components/pages';
-// import LoginModal from 'shared/components/LoginModal';
+import { log } from 'shared/helpers';
+import { AppContext } from 'shared/store/context';
 import useInit from './init';
 
 export default function App(): JSX.Element {
   const loaded = useInit();
+  const { path, loggedIn, setUsername, setUserId, setLoggedIn } = useContext(
+    AppContext,
+  );
+
+  useEffect(() => {
+    if (!loggedIn) {
+      fetch(`${path}/auth/steam/success`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: { 'Access-Control-Allow-Credentials': '*' },
+      })
+        .then(async (response: any) => {
+          if (response?.status === 200) {
+            const userData = await response?.json();
+            setUsername(userData.user.name);
+            setUserId(userData.user.id);
+            setLoggedIn(true);
+          } else {
+            setLoggedIn(false);
+          }
+        })
+        .catch(log.WARN);
+    }
+  });
 
   return loaded ? (
     <Router>
