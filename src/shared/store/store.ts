@@ -6,7 +6,6 @@ import { CHANGE_TAB, CHANGE_GAMES_VIEW } from './modules/Tabs';
 import { SEARCH_GAME, SEARCH_USER } from './modules/Search';
 import { SHOW_GAMES_RATED } from './modules/CheckBoxes';
 import { SHOW_PROFILE } from './modules/Profiles';
-import { SHOW_LOGIN_MODAL, LOG_IN_USER, LOG_OUT_USER } from './modules/Login';
 import {
   CACHE_GAMES,
   CACHE_USERS,
@@ -137,41 +136,12 @@ const reducer = (state = defaultState, action: any) => {
         ...state,
         showGamesRated: action.showGamesRated,
       };
-    case SHOW_LOGIN_MODAL:
-      return {
-        ...state,
-        showLoginModal: !state.showLoginModal,
-      };
     case SHOW_PROFILE:
       return {
         ...state,
         tabs: {
           ...state.tabs,
           profile: action.id,
-        },
-      };
-    case LOG_IN_USER:
-      return {
-        ...state,
-        profile: {
-          username: action.username,
-          privilege: action.privilege,
-          logged: true,
-          banned: action.banned,
-        },
-      };
-    case LOG_OUT_USER:
-      return {
-        ...state,
-        profile: {
-          username: undefined,
-          privilege: undefined,
-          logged: false,
-          banned: false,
-        },
-        tabs: {
-          ...state.tabs,
-          active: 'home',
         },
       };
     case CACHE_GAMES:
