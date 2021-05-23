@@ -5,6 +5,7 @@ import './index.css';
 import './fonts/FontAwesome/css/all.css';
 import App from 'components/App';
 import GlobalStyle from 'shared/globalStyles';
+import AppContextProvider from 'shared/store/context';
 import store from 'shared/store/store';
 
 class Root extends React.Component {
@@ -12,7 +13,9 @@ class Root extends React.Component {
     return (
       <Provider store={store}>
         <GlobalStyle />
-        <App />
+        <AppContextProvider>
+          <App />
+        </AppContextProvider>
       </Provider>
     );
   }
