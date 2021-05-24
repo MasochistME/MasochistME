@@ -6,14 +6,14 @@ import { orderBy } from 'lodash';
 import { showProfile } from 'shared/store/modules/Profiles';
 import { changeTab } from 'shared/store/modules/Tabs';
 import { AppContext } from 'shared/store/context';
-import { Flex, Wrapper, Spinner, Section } from 'shared/components';
-import { Badges, Badge } from './styles';
+import { Flex, Wrapper, Spinner, Section, BigBadge } from 'shared/components';
+import { Badges } from './styles';
 import { useUserDetails } from 'components/init';
 import ProfileGraphs from './ProfileGraphs';
 import ProfileHeader from './ProfileHeader';
 
 Profile.Badges = Badges;
-Profile.Badge = Badge;
+Profile.Badge = BigBadge;
 Profile.Section = Section;
 
 export default function Profile(): JSX.Element {
@@ -107,7 +107,7 @@ export default function Profile(): JSX.Element {
                         (g: any) => Number(g.id) === Number(badge.gameId),
                       );
                       return (
-                        <Badge
+                        <Profile.Badge
                           src={badge.img}
                           alt="badge"
                           title={`${

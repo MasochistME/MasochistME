@@ -13,7 +13,8 @@ export default function PageBadges(): JSX.Element {
             ...badge,
             game: badge.isNonSteamGame
               ? badge.game
-              : games.find((game: any) => game.id === badge.gameId).title,
+              : games.find((game: any) => game.id === badge.gameId)?.title ??
+                'unknown',
           }),
       ),
       ['gameId'],
