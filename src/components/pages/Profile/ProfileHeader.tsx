@@ -28,13 +28,13 @@ type Props = {
 
 export default function ProfileHeader(props: Props): JSX.Element {
   const { user } = props;
-  const { loggedIn, userId, path } = useContext(AppContext);
+  const { isLoggedIn, userId, path } = useContext(AppContext);
   const [updating, setUpdating] = useState(false);
   const [message, setMessage] = useState('');
   const [description, setDescription] = useState(
     'Currently there is no info provided about this user.',
   );
-  const canEdit = loggedIn && userId === user?.id;
+  const canEdit = isLoggedIn && userId === user?.id;
 
   const patron = useSelector((state: any) =>
     state.patrons.find((tier: any) =>

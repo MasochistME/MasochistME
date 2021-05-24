@@ -19,9 +19,9 @@ Profile.Section = Section;
 export default function Profile(): JSX.Element {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { loggedIn, userId } = useContext(AppContext);
+  const { isLoggedIn, userId } = useContext(AppContext);
   const { id } = useParams<{ id: string }>();
-  const canEdit = loggedIn && userId === id;
+  const canEdit = isLoggedIn && userId === id;
 
   const userLoaded = useUserDetails(id);
 

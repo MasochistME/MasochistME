@@ -2,17 +2,24 @@ import React, { useContext, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Page from 'components/pages';
 import { log } from 'shared/helpers';
+import { useUserPermissions } from 'shared/hooks';
 import { AppContext } from 'shared/store/context';
 import useInit from './init';
 
 export default function App(): JSX.Element {
   const loaded = useInit();
-  const { path, loggedIn, setUsername, setUserId, setLoggedIn } = useContext(
-    AppContext,
-  );
+  const {
+    path,
+    isLoggedIn,
+    setIsLoggedIn,
+    setUsername,
+    setUserId,
+  } = useContext(AppContext);
+
+  useUserPermissions();
 
   useEffect(() => {
-    if (!loggedIn) {
+    if (!isLoggedIn) {
       fetch(`${path}/auth/steam/success`, {
         method: 'GET',
         credentials: 'include',
@@ -23,9 +30,9 @@ export default function App(): JSX.Element {
             const userData = await response?.json();
             setUsername(userData.user.name);
             setUserId(userData.user.id);
-            setLoggedIn(true);
+            setIsLoggedIn(true);
           } else {
-            setLoggedIn(false);
+            setIsLoggedIn(false);
           }
         })
         .catch(log.WARN);
