@@ -68,5 +68,12 @@
     "link": "me",
     "visible": false,
     "external": false
+  },
+  {
+    "text": "admin",
+    "icon": "fas fa-tools",
+    "link": "admin",
+    "visible": false,
+    "external": false
   }
 ]

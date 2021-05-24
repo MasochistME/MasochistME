@@ -3,9 +3,10 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { media, colors } from 'shared/theme';
 import { changeTab } from 'shared/store/modules/Tabs';
-import { Flex, MiniHeader, Wrapper, Header, Nav } from 'shared/components';
+import { MiniHeader, Wrapper, Header, Nav } from 'shared/components';
 import SidebarWrapper from 'components/sidebar/SidebarWrapper';
 import PageHome from './Home';
+import PageNotFound from './NotFound';
 import PageAllGames from './AllGames';
 import PageRanking from './Ranking';
 import PageEvents from './Events';
@@ -13,6 +14,7 @@ import PageSupport from './Support';
 import PageBadges from './Badges';
 import PageProfile from './Profile';
 import PageGame from './Game';
+import PageAdmin from './Admin';
 
 const WrapperContent = styled.div`
   position: relative;
@@ -38,13 +40,16 @@ type TPage =
   | 'profile'
   | 'game'
   | 'badges'
+  | 'admin'
   | 'notfound';
+type TSubPage = 'badges' | 'users' | 'games' | undefined;
 type Props = {
   page: TPage;
+  subpage?: TSubPage;
 };
 
 export default function Page(props: Props): JSX.Element {
-  const { page } = props;
+  const { page, subpage = undefined } = props;
   const dispatch = useDispatch();
   const selectPage = () => {
     switch (page) {
@@ -64,6 +69,8 @@ export default function Page(props: Props): JSX.Element {
         return <PageGame />;
       case 'badges':
         return <PageBadges />;
+      case 'admin':
+        return <PageAdmin page={subpage} />;
       case 'notfound':
         return <PageNotFound />;
       default:
@@ -91,23 +98,5 @@ export default function Page(props: Props): JSX.Element {
       </Wrapper>
       <Wrapper type="footer" />
     </Wrapper>
-  );
-}
-
-function PageNotFound() {
-  return (
-    <Flex column>
-      <Wrapper type="description">
-        <div
-          className="page-description"
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <img src="https://http.cat/404" alt="404" />
-        </div>
-      </Wrapper>
-    </Flex>
   );
 }

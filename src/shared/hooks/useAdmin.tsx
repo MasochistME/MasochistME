@@ -15,6 +15,8 @@ export const useUserPermissions = async (): Promise<void> => {
       if (userPermissions.data.includes('admin')) {
         setIsAdmin(true);
       }
+    } else {
+      setPermissions([]);
     }
   };
 
@@ -33,7 +35,7 @@ export const useBackIfNotAdmin = (): void => {
 
   useEffect(() => {
     if (!isAdmin) {
-      history.push('/home');
+      history.push('/404');
     }
   }, [isAdmin]);
 };

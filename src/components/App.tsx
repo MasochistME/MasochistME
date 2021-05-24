@@ -69,6 +69,17 @@ export default function App(): JSX.Element {
         <Route exact path="/game/:id">
           <Page page="game" />
         </Route>
+        {/** admin pages */}
+        <Route exact path="/admin/badges">
+          <Page page="admin" subpage="badges" />
+        </Route>
+        <Route exact path="/admin/games">
+          <Page page="admin" subpage="games" />
+        </Route>
+        <Route exact path="/admin/users">
+          <Page page="admin" subpage="users" />
+        </Route>
+        {/** other */}
         <Route>
           <Page page="notfound" />
         </Route>

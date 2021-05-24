@@ -58,13 +58,13 @@ const LoggedUserMenu = () => {
           key="sub1"
           icon={<i className="fas fa-tools" />}
           title=" Administration">
-          <Menu.Item onClick={onManageUsersClick} disabled>
+          <Menu.Item onClick={onManageUsersClick}>
             <i className="fas fa-users-cog" /> Manage users
           </Menu.Item>
           <Menu.Item onClick={onManageBadgesClick}>
             <i className="fas fa-award" /> Manage badges
           </Menu.Item>
-          <Menu.Item onClick={onManageGamesClick} disabled>
+          <Menu.Item onClick={onManageGamesClick}>
             <i className="fas fa-gamepad" /> Manage games
           </Menu.Item>
         </Menu.SubMenu>
