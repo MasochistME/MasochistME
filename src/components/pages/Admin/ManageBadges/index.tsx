@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Wrapper, Flex, BigBadge, Table } from 'shared/components';
 import { stringCompare, booleanCompare } from 'shared/helpers';
+import BadgeEditSection from './BadgeEditSection';
 
 export default function PageManageBadges(): JSX.Element {
   const games = useSelector((state: any) => state.games);
   const badges = useSelector((state: any) => state.badges);
+  const [selectedBadge, setSelectedBadge] = useState();
 
   const getGameTitle = (badge: any): string => {
     if (badge.game) {
@@ -83,9 +85,8 @@ export default function PageManageBadges(): JSX.Element {
     },
   ];
 
-  const onBadgeSelect = (event: any, record: any) => {
-    console.log(record);
-    console.log(event);
+  const onBadgeSelect = (badge: any) => {
+    setSelectedBadge(badge);
   };
 
   return (
@@ -99,12 +100,13 @@ export default function PageManageBadges(): JSX.Element {
           columns={columns}
           dataSource={badges}
           pagination={{ pageSize: 5 }}
-          onRow={(record: any) => {
+          onRow={(badge: any) => {
             return {
-              onClick: (event: any) => onBadgeSelect(event, record),
+              onClick: () => onBadgeSelect(badge),
             };
           }}
         />
+        <BadgeEditSection selectedBadge={selectedBadge} />
       </Wrapper>
     </Flex>
   );
