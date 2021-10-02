@@ -33,6 +33,11 @@ export const getRating = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+/**
+ * Get all settings.
+ * @param req
+ * @param res
+ */
 export const getAllSettings = async (
   req: Request,
   res: Response,
@@ -46,6 +51,10 @@ export const getAllSettings = async (
   }
 };
 
+/**
+ * Get one specific setting.
+ * @param :setting - desired setting's name
+ */
 export const getSetting = async (
   req: Request,
   res: Response,
@@ -58,6 +67,20 @@ export const getSetting = async (
   const setting = await findOption(settingName);
   if (setting) {
     res.status(200).send({ [setting]: setting });
+  } else {
+    res.sendStatus(404);
+  }
+};
+
+/**
+ * Get front end tabs.
+ * @param req
+ */
+export const getTabs = async (req: Request, res: Response): Promise<void> => {
+  const tabs = await getDataFromDB('tabs');
+
+  if (tabs) {
+    res.status(200).send(tabs);
   } else {
     res.sendStatus(404);
   }
