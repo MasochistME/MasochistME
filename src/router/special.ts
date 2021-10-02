@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getDataFromDB } from 'helpers/db';
+import { getDataFromDB, findOption, Options } from 'helpers/db';
 
 /**
  * Get user's steam ID.
@@ -28,6 +28,36 @@ export const getRating = async (req: Request, res: Response): Promise<void> => {
 
   if (points) {
     res.status(200).send(points);
+  } else {
+    res.sendStatus(404);
+  }
+};
+
+export const getAllSettings = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  const settings = await getDataFromDB('settings');
+
+  if (settings) {
+    res.status(200).send(settings);
+  } else {
+    res.sendStatus(404);
+  }
+};
+
+export const getSetting = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  const settingName = req.params.setting as keyof Options;
+  if (!settingName) {
+    res.sendStatus(404);
+    return;
+  }
+  const setting = await findOption(settingName);
+  if (setting) {
+    res.status(200).send({ [setting]: setting });
   } else {
     res.sendStatus(404);
   }
