@@ -24,8 +24,16 @@ passport.deserializeUser((obj, done) => {
 passport.use(
   new SteamStrategy(
     {
-      returnURL: 'http://localhost:3002/auth/steam/redirect',
-      realm: 'http://localhost:3002/',
+      returnURL: `${
+        process.env.NODE_ENV === 'development'
+          ? 'http://localhost:3002'
+          : 'http://89.47.165.141:3002'
+      }/auth/steam/redirect`,
+      realm: `${
+        process.env.NODE_ENV === 'development'
+          ? 'http://localhost:3002'
+          : 'http://89.47.165.141:3002'
+      }/`,
       apiKey: config.STEAM_KEY,
     },
     (identifier, profile, done) => {
