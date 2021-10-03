@@ -1,8 +1,15 @@
 import passport from 'passport';
-import { rootPath } from '../../dds';
 
-const CLIENT_HOME_PAGE_URL = `${rootPath}/home`;
-const CLIENT_ERROR_PAGE_URL = `${rootPath}/error`;
+const CLIENT_HOME_PAGE_URL = `${
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:3000'
+    : 'http://masochist.me'
+}/home`;
+const CLIENT_ERROR_PAGE_URL = `${
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:3000'
+    : 'http://masochist.me'
+}/error`;
 
 export const authSteam = passport.authenticate('steam');
 

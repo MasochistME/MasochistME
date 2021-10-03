@@ -10,19 +10,6 @@ import { routerAuth } from 'router/auth';
 import { initiateMainUpdate } from 'router/update';
 import config from '../config.json';
 
-const getRootPath = () => {
-  const isDev = process.env.NODE_ENV === 'development';
-  const isProd = process.env.NODE_ENV === 'production';
-  if (isDev) {
-    return 'http://localhost:3002';
-  }
-  if (isProd) {
-    return 'http://masochist.me';
-  }
-  return 'http://masochist.me';
-};
-export const rootPath = getRootPath();
-
 const SteamStrategy = require('passport-steam').Strategy;
 const app = express();
 
@@ -37,8 +24,8 @@ passport.deserializeUser((obj, done) => {
 passport.use(
   new SteamStrategy(
     {
-      returnURL: `${rootPath}/auth/steam/redirect`,
-      realm: `${rootPath}/`,
+      returnURL: 'http://localhost:3002/auth/steam/redirect',
+      realm: 'http://localhost:3002/',
       apiKey: config.STEAM_KEY,
     },
     (identifier, profile, done) => {
@@ -58,7 +45,10 @@ app.use(
   cors({
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    origin: rootPath,
+    origin:
+      process.env.NODE_ENV === 'development'
+        ? 'http://localhost:3000'
+        : 'http://masochist.me',
   }),
 );
 app.use(
