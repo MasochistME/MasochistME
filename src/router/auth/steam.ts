@@ -11,6 +11,8 @@ const CLIENT_ERROR_PAGE_URL = `${
     : 'http://masochist.me'
 }/error`;
 
+console.log(CLIENT_HOME_PAGE_URL);
+
 export const authSteam = passport.authenticate('steam');
 
 export const authSteamSuccess = (req: any, res: any): void => {
