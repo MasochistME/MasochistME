@@ -109,13 +109,13 @@ routerAuth.get('/steam', passport.authenticate('steam'));
 routerAuth.get('/steam/success', (req: any, res: any): void => {
   // Successful authentication, redirect home.
   if (req.user) {
-    const userData = {
+    const user = {
       success: true,
       message: 'User has successfully authenticated!',
       user: req.user,
       cookies: req.cookies,
     };
-    res.json(userData);
+    res.json(user);
   } else {
     res.status(401).json({ error: 'User is not authenticated.' });
   }
@@ -130,10 +130,17 @@ routerAuth.get('/steam/error', (req: any, res: any): void => {
 
 routerAuth.get(
   '/steam/redirect',
+  (req: any, _res: any, next): void => {
+    req.url = req.originalUrl;
+    next();
+  },
   passport.authenticate('steam', {
-    successRedirect: CLIENT_HOME_PAGE_URL,
     failureRedirect: CLIENT_ERROR_PAGE_URL,
   }),
+  (_req: any, res: any) => {
+    console.log(_req.user);
+    res.redirect(CLIENT_HOME_PAGE_URL);
+  },
 );
 
 routerAuth.get('/steam/logout', (req: any, res: any): void => {
