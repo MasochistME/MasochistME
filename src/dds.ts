@@ -13,6 +13,11 @@ import config from '../config.json';
 const SteamStrategy = require('passport-steam').Strategy;
 const app = express();
 
+const rootPath =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost'
+    : 'http://89.47.165.141';
+
 passport.serializeUser((user, done) => {
   done(null, user);
 });
@@ -24,16 +29,8 @@ passport.deserializeUser((obj, done) => {
 passport.use(
   new SteamStrategy(
     {
-      returnURL: `${
-        process.env.NODE_ENV === 'development'
-          ? 'http://localhost:3002'
-          : 'http://89.47.165.141:3002'
-      }/auth/steam/redirect`,
-      realm: `${
-        process.env.NODE_ENV === 'development'
-          ? 'http://localhost:3002'
-          : 'http://89.47.165.141:3002'
-      }/`,
+      returnURL: `${rootPath}:3002/auth/steam/redirect`,
+      realm: `${rootPath}:3002/`,
       apiKey: config.STEAM_KEY,
     },
     (identifier, profile, done) => {

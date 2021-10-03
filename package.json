@@ -5,9 +5,8 @@
   "main": "dds.js",
   "scripts": {
     "dev": "env NODE_PATH=./src NODE_ENV=development ts-node src/dds.ts",
-    "start": "yarn run build && env NODE_PATH=./src ts-node dist/src/dds.js",
     "build": "env NODE_PATH=./src tsc -p .",
-    "dds": "env NODE_ENV=production yarn run start",
+    "dds": "env NODE_ENV=production yarn run build && env NODE_PATH=./src ts-node dist/src/dds.js",
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint src --ext .jsx,.js,.tsx,.ts --fix --quiet"
   },
