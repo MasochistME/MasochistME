@@ -7,20 +7,17 @@ import { AppContext } from 'shared/store/context';
 import login_button from 'shared/images/steam_login.png';
 
 export default function Login(): JSX.Element {
-  const { path, isLoggedIn } = useContext(AppContext);
+  const { path, isLoggedIn, isAdmin } = useContext(AppContext);
 
   const onLogIn = () => window.open(`${path}/auth/steam`, '_self');
 
-  if (isLoggedIn) {
-    return <LoggedUserMenu />;
-  }
   return (
-    <img
-      className="button"
-      src={login_button}
-      alt="Login via Steam"
-      onClick={onLogIn}
-    />
+    <div style={{ opacity: isAdmin ? 1 : 0, cursor: 'default' }}>
+      {isLoggedIn && isAdmin && <LoggedUserMenu />}
+      {!isLoggedIn && (
+        <img src={login_button} alt="Login via Steam" onClick={onLogIn} />
+      )}
+    </div>
   );
 }
 
