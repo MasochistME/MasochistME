@@ -1,10 +1,20 @@
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router';
+import styled from 'styled-components';
 import { Dropdown, Menu } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
+import { media } from 'shared/theme';
 import { Flex } from 'shared/components';
 import { AppContext } from 'shared/store/context';
 import login_button from 'shared/images/steam_login.png';
+
+const LoginWrapper = styled.div<{ isAdmin: boolean }>`
+  opacity: ${props => (props.isAdmin ? 1 : 0)};
+  cursor: default;
+  @media (max-width: ${media.netbooks}) {
+    display: none;
+  }
+`;
 
 export default function Login(): JSX.Element {
   const { path, isLoggedIn, isAdmin } = useContext(AppContext);
@@ -12,12 +22,12 @@ export default function Login(): JSX.Element {
   const onLogIn = () => window.open(`${path}/auth/steam`, '_self');
 
   return (
-    <div style={{ opacity: isAdmin ? 1 : 0, cursor: 'default' }}>
+    <LoginWrapper isAdmin={isAdmin}>
       {isLoggedIn && isAdmin && <LoggedUserMenu />}
       {!isLoggedIn && (
         <img src={login_button} alt="Login via Steam" onClick={onLogIn} />
       )}
-    </div>
+    </LoginWrapper>
   );
 }
 

@@ -23,7 +23,10 @@ export default function App(): JSX.Element {
       fetch(`${path}/auth/steam/success`, {
         method: 'GET',
         credentials: 'include',
-        headers: { 'Access-Control-Allow-Credentials': '*' },
+        headers: {
+          'Access-Control-Allow-Credentials': 'true',
+          'Access-Control-Allow-Origin': 'masochist.me',
+        },
       })
         .then(async (response: any) => {
           if (response?.status === 200) {
