@@ -33,3 +33,21 @@ export const getDataFromDB: any = (dataType: string, field?: object) =>
       }
     });
   });
+
+export interface Options {
+  numberOfEvents: number;
+  numberOfTopMembers: number;
+  curatorId: number;
+}
+interface Option<T> {
+  value: T;
+}
+export async function findOption<K extends keyof Options>(
+  name: K,
+): Promise<Options[K] | undefined> {
+  const { db } = await connectToDb();
+  type T = Option<Options[K]>;
+  // @ts-ignore
+  const opt = await db.collection('settings').findOne<T>({ option: name });
+  return opt?.value;
+}

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import axios from 'axios';
 import { log } from 'helpers/log';
-import { connectToDb, getDataFromDB } from 'helpers/db';
+import { connectToDb, getDataFromDB, findOption } from 'helpers/db';
 import { TGameEvent, TTierChangeEvent } from './types/events';
 import { findGame } from './ranking';
 import { updateStatus } from './update';
@@ -142,8 +142,12 @@ export const updateCuratorGames = (req?, res?): Promise<void> =>
   // eslint-disable-next-line no-async-promise-executor
   new Promise(async resolve => {
     const { db } = await connectToDb();
-    const urlCuratedGames =
-      'http://store.steampowered.com/curator/7119343-0.1%25/ajaxgetfilteredrecommendations/render?query=&start=0&count=1000&tagids=&sort=recent&types=0';
+    const curatorId = await findOption('curatorId');
+    if (!curatorId) {
+      res.sendStatus(500);
+      return;
+    }
+    const urlCuratedGames = `http://store.steampowered.com/curator/${curatorId}-0.1%25/ajaxgetfilteredrecommendations/render?query=&start=0&count=1000&tagids=&sort=recent&types=0`;
     const points: Array<TRating> = await getDataFromDB('points');
     const gamesDB: Array<TGame> = await getDataFromDB('games');
     const response = await axios.get(urlCuratedGames);
@@ -409,9 +413,15 @@ const extractMemberIDs = raw => {
     .filter(m => m.id.length > 0);
 };
 
-export const getCuratorMembers = (req?, res?) =>
-  new Promise((resolve, reject) => {
-    const url = 'http://steamcommunity.com/gid/7119343/memberslistxml/?xml=1';
+export const getCuratorMembers = (req?, res?): Promise<void> =>
+  // eslint-disable-next-line no-async-promise-executor
+  new Promise(async (resolve, reject) => {
+    const curatorId = await findOption('curatorId');
+    if (!curatorId) {
+      res.sendStatus(500);
+      return;
+    }
+    const url = `http://steamcommunity.com/gid/${curatorId}/memberslistxml/?xml=1`;
     log.INFO('--> [UPDATE] curator members list [START]');
     axios
       .get(url)

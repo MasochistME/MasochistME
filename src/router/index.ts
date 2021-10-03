@@ -38,7 +38,13 @@ import {
 } from './curator';
 import { getBlog } from './blog';
 import { getEvents } from './events';
-import { getSteamID, getRating } from './special';
+import {
+  getSteamID,
+  getRating,
+  getAllSettings,
+  getSetting,
+  getTabs,
+} from './special';
 
 router.get('/special/vanityid/:vanityid', getSteamID);
 router.get('/rating', getRating);
@@ -77,3 +83,8 @@ router.get('/ranking', getRanking);
 router.get('/ranking/user/:id', getUserRanking);
 router.get('/ranking/game/:id', getGameLeaderboards);
 router.get('/ranking/tier/:id', getTierDetails);
+
+router.get('/settings', getAllSettings);
+router.get('/settings/:setting', getSetting);
+
+router.get('/tabs', getTabs);
