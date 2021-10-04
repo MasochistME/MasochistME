@@ -67,6 +67,12 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+// this is for prod env where req.user does not exist
+app.use((req: any, res: any, next) => {
+  res.locals.user = req.user;
+  next();
+});
+
 app.use('/api', router);
 app.use('/auth', routerAuth);
 app.use('/rest', legacy);
