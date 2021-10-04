@@ -34,12 +34,17 @@ passport.use(
       realm: `${rootPath}:3002/`,
       apiKey: config.STEAM_KEY,
     },
-    (identifier, profile, done) => {
+    async (identifier, profile, done) => {
+      const member = getDataFromDB('members', {
+        id: profile?._json?.steamid ?? -1,
+      });
       const userData = {
         name: profile?._json?.personaname ?? 'UNKNOWN ENTITY',
         id: profile?._json?.steamid ?? -1,
         identifier,
+        permissions: member?.groups ?? [],
       };
+      console.log(userData);
       return done(null, userData);
     },
   ),

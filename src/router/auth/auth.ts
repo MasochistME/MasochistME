@@ -12,12 +12,12 @@ export const CLIENT_ERROR_PAGE_URL = `${
 
 export const authSuccess = (req: any, res: any): void => {
   // Successful authentication, redirect home.
-  console.log(req.session);
-  if (req.session?.passport?.user) {
+  console.log(req.user);
+  if (req.user) {
     const user = {
       success: true,
       message: 'User has successfully authenticated!',
-      user: req.session.passport.user,
+      user: req.user,
       cookies: req.cookies,
     };
     res.json(user);
