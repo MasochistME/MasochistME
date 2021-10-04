@@ -12,7 +12,10 @@ import {
 
 export const routerAuth = express.Router();
 
-routerAuth.get('/steam', passport.authenticate('steam'));
+routerAuth.get(
+  '/steam',
+  passport.authenticate('steam', { failureRedirect: CLIENT_ERROR_PAGE_URL }),
+);
 routerAuth.get('/steam/success', authSuccess);
 routerAuth.get('/steam/error', authError);
 
