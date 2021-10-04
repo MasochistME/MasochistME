@@ -20,7 +20,7 @@ export default function App(): JSX.Element {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      fetch(`${path}/auth/steam/success`, {
+      fetch(`${path}/auth`, {
         method: 'GET',
         credentials: 'include',
         headers: {
