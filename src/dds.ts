@@ -35,27 +35,22 @@ passport.use(
       apiKey: config.STEAM_KEY,
     },
     async (identifier, profile, done) => {
-      const member = getDataFromDB('members', {
-        id: profile?._json?.steamid ?? -1,
+      process.nextTick(() => {
+        const member = getDataFromDB('members', {
+          id: profile?._json?.steamid ?? -1,
+        });
+        const userData = {
+          name: profile?._json?.personaname ?? 'UNKNOWN ENTITY',
+          id: Number(profile?._json?.steamid ?? -1),
+          identifier,
+          permissions: member?.groups ?? [],
+        };
+        return done(null, userData);
       });
-      const userData = {
-        name: profile?._json?.personaname ?? 'UNKNOWN ENTITY',
-        id: Number(profile?._json?.steamid ?? -1),
-        identifier,
-        permissions: member?.groups ?? [],
-      };
-      return done(null, userData);
     },
   ),
 );
 
-app.use(cookieParser());
-app.use(
-  session({
-    secret: config.STEAM_KEY,
-    cookie: { name: 'steam-session', maxAge: 360000 },
-  }),
-);
 app.use(express.json({ limit: '5mb' }));
 app.use(express.urlencoded({ limit: '5mb', extended: false }));
 app.use(
@@ -66,6 +61,14 @@ app.use(
       process.env.NODE_ENV === 'development'
         ? 'http://localhost:3000'
         : 'http://masochist.me',
+  }),
+);
+app.use(cookieParser());
+app.set('trust proxy', 1);
+app.use(
+  session({
+    secret: config.AUTH,
+    cookie: { name: 'steam-session', maxAge: 360000, secure: false },
   }),
 );
 app.use(passport.initialize());

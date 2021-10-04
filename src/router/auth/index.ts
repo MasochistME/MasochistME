@@ -4,7 +4,6 @@ import { getUserPermissions } from './admin';
 import {
   ensureAuth,
   authRedirectMiddleware,
-  authRedirect,
   CLIENT_HOME_PAGE_URL,
   CLIENT_ERROR_PAGE_URL,
 } from './auth';
@@ -18,7 +17,10 @@ routerAuth.get('/', ensureAuth, (req: any, res: any) => {
 
 routerAuth.get(
   '/steam',
-  passport.authenticate('steam', { failureRedirect: CLIENT_ERROR_PAGE_URL }),
+  passport.authenticate('steam', {
+    failureRedirect: CLIENT_ERROR_PAGE_URL,
+    successRedirect: CLIENT_HOME_PAGE_URL,
+  }),
 );
 
 routerAuth.get(
@@ -26,8 +28,8 @@ routerAuth.get(
   authRedirectMiddleware,
   passport.authenticate('steam', {
     failureRedirect: CLIENT_ERROR_PAGE_URL,
+    successRedirect: CLIENT_HOME_PAGE_URL,
   }),
-  authRedirect,
 );
 
 routerAuth.get('/steam/logout', (req: any, res: any): void => {
