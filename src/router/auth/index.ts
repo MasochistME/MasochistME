@@ -2,8 +2,7 @@ import express from 'express';
 import passport from 'passport';
 import { getUserPermissions } from './admin';
 import {
-  authSuccess,
-  authError,
+  ensureAuth,
   authRedirectMiddleware,
   authRedirect,
   CLIENT_HOME_PAGE_URL,
@@ -12,12 +11,15 @@ import {
 
 export const routerAuth = express.Router();
 
+routerAuth.get('/', ensureAuth, (req: any, res: any) => {
+  console.log(req.user);
+  return res.status(200).send({ user: req.user });
+});
+
 routerAuth.get(
   '/steam',
   passport.authenticate('steam', { failureRedirect: CLIENT_ERROR_PAGE_URL }),
 );
-routerAuth.get('/steam/success', authSuccess);
-routerAuth.get('/steam/error', authError);
 
 routerAuth.get(
   '/steam/redirect',

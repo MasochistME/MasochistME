@@ -40,11 +40,10 @@ passport.use(
       });
       const userData = {
         name: profile?._json?.personaname ?? 'UNKNOWN ENTITY',
-        id: profile?._json?.steamid ?? -1,
+        id: Number(profile?._json?.steamid ?? -1),
         identifier,
         permissions: member?.groups ?? [],
       };
-      console.log(userData);
       return done(null, userData);
     },
   ),
