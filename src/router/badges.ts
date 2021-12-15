@@ -60,19 +60,8 @@ export const getBadge = async (req, res) => {
  * Adds a badge
  */
 export const addBadge = async (req, res) => {
-  // if (!req.headers.auth) {
-  //   res.sendStatus(401);
-  //   return;
-  // }
-  // if (hash('sha256', req.headers.auth) !== process.env.AUTH) {
-  //   log.WARN(
-  //     `An unauthorized attempt to add badge noted with ${req.headers.auth} credentials.`,
-  //   );
-  //   res.sendStatus(403);
-  //   return;
-  // }
   if (!req.body) {
-    // validation!!!
+    // TODO validation!!!
     res.sendStatus(400);
     return;
   }
@@ -110,19 +99,8 @@ export const addBadge = async (req, res) => {
  * @param req.params.id
  */
 export const updateBadge = async (req, res) => {
-  if (!req.headers.auth) {
-    res.sendStatus(401);
-    return;
-  }
-  if (hash('sha256', req.headers.auth) !== process.env.AUTH) {
-    log.WARN(
-      `An unauthorized attempt to add badge noted with ${req.headers.auth} credentials.`,
-    );
-    res.sendStatus(403);
-    return;
-  }
   if (!req.body) {
-    // validation!!!
+    // TODO validation!!!
     res.sendStatus(400);
     return;
   }
@@ -154,19 +132,6 @@ export const updateBadge = async (req, res) => {
  * @param req.params.id
  */
 export const deleteBadge = async (req, res) => {
-  // TODO handle badges assigned to people after being deleted
-  if (!req.headers.auth) {
-    res.sendStatus(401);
-    return;
-  }
-  if (hash('sha256', req.headers.auth) !== process.env.AUTH) {
-    log.WARN(
-      `An unauthorized attempt to add badge noted with ${req.headers.auth} credentials.`,
-    );
-    res.sendStatus(403);
-    return;
-  }
-
   const { client, db } = await connectToDb();
   const data = db.collection('badges');
 

@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 import express from 'express';
 import cors from 'cors';
 import passport from 'passport';
@@ -6,7 +8,7 @@ import session from 'express-session';
 
 import { tokenValidation } from 'helpers/validate';
 import { getDataFromDB } from 'helpers/db';
-// import { log } from 'helpers/log';
+import { log } from 'helpers/log';
 
 import { router } from 'router';
 import { routerAuth } from 'router/auth';
@@ -84,14 +86,16 @@ app.use((req: any, res: any, next) => {
 });
 
 // this is temp fix for token check
-app.use(tokenValidation);
+app.put('*', tokenValidation);
+app.post('*', tokenValidation);
+app.delete('*', tokenValidation);
 
 app.use('/api', router);
 app.use('/auth', routerAuth);
 
-app.listen(config.PORT, () =>
-  console.log(`Server listening at port ${config.PORT}!`),
-);
+app.listen(config.PORT, () => {
+  log.INFO(`Server listening at port ${config.PORT}!`);
+});
 
 // ------------
 

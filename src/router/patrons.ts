@@ -1,8 +1,7 @@
 import axios from 'axios';
+
 import { log } from 'helpers/log';
 import { connectToDb } from 'helpers/db';
-import { hash } from 'helpers/hash';
-import config from '../../config.json';
 
 /**
  * Returns all patrons no matter the tier.
@@ -96,26 +95,13 @@ export const getPatron = async (req, res) => {
  * Adds a patron.
  * @param req.params.tier
  * @param req.params.vanityid
- * @param req.auth
  */
 export const addPatron = async (req, res) => {
-  if (!req.headers.auth) {
-    res.sendStatus(401);
-    return;
-  }
-  if (hash('sha256', req.headers.auth) !== process.env.AUTH) {
-    log.WARN(
-      `An unauthorized attempt to add badge noted with ${req.headers.auth} credentials.`,
-    );
-    res.sendStatus(403);
-    return;
-  }
-
   const { client, db } = await connectToDb();
   const urlVanity =
     'http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001';
   const paramsVanity = {
-    key: config.STEAM_KEY,
+    key: process.env.STEAM_KEY,
     vanityurl: req.params.vanityid,
   };
   const userVanity = await axios.get(urlVanity, { params: paramsVanity }); // TODO add trycatch
@@ -123,7 +109,7 @@ export const addPatron = async (req, res) => {
   const urlSummary =
     'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002';
   const paramsSummary = {
-    key: config.STEAM_KEY,
+    key: process.env.STEAM_KEY,
     steamids: userVanity.data.response.steamid,
   };
   const userSummary = await axios.get(urlSummary, { params: paramsSummary }); // TODO add trycatch
@@ -156,21 +142,8 @@ export const addPatron = async (req, res) => {
  * Updates a patron.
  * @param req.params.steamid
  * @param req.params.tier
- * @param req.auth
  */
 export const updatePatron = async (req, res) => {
-  if (!req.headers.auth) {
-    res.sendStatus(401);
-    return;
-  }
-  if (hash('sha256', req.headers.auth) !== process.env.AUTH) {
-    log.WARN(
-      `An unauthorized attempt to add badge noted with ${req.headers.auth} credentials.`,
-    );
-    res.sendStatus(403);
-    return;
-  }
-
   const { client, db } = await connectToDb();
   const urlSummary = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${process.env.STEAM_KEY}&steamids=${req.params.steamid}`;
   let userSummary;
@@ -217,22 +190,9 @@ export const updatePatron = async (req, res) => {
 /**
  * Deletes a patron.
  * @param req.params.steamid
- * @param req.auth
  */
 export const deletePatron = async (req, res) => {
   const { client, db } = await connectToDb();
-
-  if (!req.headers.auth) {
-    res.sendStatus(401);
-    return;
-  }
-  if (hash('sha256', req.headers.auth) !== process.env.AUTH) {
-    log.WARN(
-      `An unauthorized attempt to add badge noted with ${req.headers.auth} credentials.`,
-    );
-    res.sendStatus(403);
-    return;
-  }
 
   db.collection('patrons').deleteOne(
     { steamid: req.params.steamid },
