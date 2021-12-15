@@ -103,7 +103,7 @@ export const addPatron = async (req, res) => {
     res.sendStatus(401);
     return;
   }
-  if (hash('sha256', req.headers.auth) !== config.AUTH) {
+  if (hash('sha256', req.headers.auth) !== process.env.AUTH) {
     log.WARN(
       `An unauthorized attempt to add badge noted with ${req.headers.auth} credentials.`,
     );
@@ -163,7 +163,7 @@ export const updatePatron = async (req, res) => {
     res.sendStatus(401);
     return;
   }
-  if (hash('sha256', req.headers.auth) !== config.AUTH) {
+  if (hash('sha256', req.headers.auth) !== process.env.AUTH) {
     log.WARN(
       `An unauthorized attempt to add badge noted with ${req.headers.auth} credentials.`,
     );
@@ -172,7 +172,7 @@ export const updatePatron = async (req, res) => {
   }
 
   const { client, db } = await connectToDb();
-  const urlSummary = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${config.STEAM_KEY}&steamids=${req.params.steamid}`;
+  const urlSummary = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${process.env.STEAM_KEY}&steamids=${req.params.steamid}`;
   let userSummary;
   try {
     userSummary = await axios.get(urlSummary);
@@ -226,7 +226,7 @@ export const deletePatron = async (req, res) => {
     res.sendStatus(401);
     return;
   }
-  if (hash('sha256', req.headers.auth) !== config.AUTH) {
+  if (hash('sha256', req.headers.auth) !== process.env.AUTH) {
     log.WARN(
       `An unauthorized attempt to add badge noted with ${req.headers.auth} credentials.`,
     );

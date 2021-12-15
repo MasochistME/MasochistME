@@ -3,12 +3,15 @@ import cors from 'cors';
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
+
+import { tokenValidation } from 'helpers/validate';
 import { getDataFromDB } from 'helpers/db';
 // import { log } from 'helpers/log';
+
 import { router } from 'router';
 import { routerAuth } from 'router/auth';
-import { legacy } from 'router/legacyRouter';
 import { initiateMainUpdate } from 'router/update';
+
 import config from '../config.json';
 
 const SteamStrategy = require('passport-steam').Strategy;
@@ -32,7 +35,7 @@ passport.use(
     {
       returnURL: `${rootPath}:3002/auth/steam/redirect`,
       realm: `${rootPath}:3002/`,
-      apiKey: config.STEAM_KEY,
+      apiKey: process.env.STEAM_KEY,
     },
     async (identifier, profile, done) => {
       process.nextTick(() => {
@@ -67,7 +70,7 @@ app.use(cookieParser());
 app.set('trust proxy', 1);
 app.use(
   session({
-    secret: config.AUTH,
+    secret: process.env.AUTH,
     cookie: { name: 'steam-session', maxAge: 360000, secure: false },
   }),
 );
@@ -80,9 +83,11 @@ app.use((req: any, res: any, next) => {
   next();
 });
 
+// this is temp fix for token check
+app.use(tokenValidation);
+
 app.use('/api', router);
 app.use('/auth', routerAuth);
-app.use('/rest', legacy);
 
 app.listen(config.PORT, () =>
   console.log(`Server listening at port ${config.PORT}!`),

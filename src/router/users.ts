@@ -86,7 +86,7 @@ export const updateUser = async (req, res) => {
   const id = req.params.steamid;
   const curatedGames = await getDataFromDB('games');
   const userToUpdate = await getDataFromDB('users', { id });
-  const userUrl = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${config.STEAM_KEY}&steamids=${id}`;
+  const userUrl = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${process.env.STEAM_KEY}&steamids=${id}`;
   const { client, db } = await connectToDb();
   let userData;
 
@@ -176,7 +176,7 @@ const getUserGames = async (
   log.INFO(`--> [UPDATE] games of user ${userID}`);
 
   const userGamesUrl = `https://steamcommunity.com/profiles/${userID}/games/?tab=all`;
-  const userGamesFallbackUrl = `http://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=${config.STEAM_KEY}&steamid=${userID}`;
+  const userGamesFallbackUrl = `http://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=${process.env.STEAM_KEY}&steamid=${userID}`;
 
   const userGames = await axios.get(userGamesUrl);
   const userGamesFallback = await axios.get(userGamesFallbackUrl);
@@ -239,7 +239,7 @@ const getUserAchievements = (userID: number, games: any, userToUpdate: any) =>
     const getAchievementsDetails = async (index: number) => {
       if (games[index]) {
         const gameID = games[index].appid;
-        const url = `http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v1/?appid=${gameID}&steamid=${userID}&key=${config.STEAM_KEY}&format=json`;
+        const url = `http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v1/?appid=${gameID}&steamid=${userID}&key=${process.env.STEAM_KEY}&format=json`;
         let response;
 
         log.INFO(

@@ -1,10 +1,11 @@
 import { ObjectId } from 'mongodb';
 import { orderBy } from 'lodash';
+
 import { log } from 'helpers/log';
 import { connectToDb, getDataFromDB } from 'helpers/db';
 import { hash } from 'helpers/hash';
+
 import { TBadgeAddedEvent, TBadgeGivenEvent } from './types/events';
-import config from '../../config.json';
 
 /**
  * Returns all badges
@@ -63,7 +64,7 @@ export const addBadge = async (req, res) => {
   //   res.sendStatus(401);
   //   return;
   // }
-  // if (hash('sha256', req.headers.auth) !== config.AUTH) {
+  // if (hash('sha256', req.headers.auth) !== process.env.AUTH) {
   //   log.WARN(
   //     `An unauthorized attempt to add badge noted with ${req.headers.auth} credentials.`,
   //   );
@@ -113,7 +114,7 @@ export const updateBadge = async (req, res) => {
     res.sendStatus(401);
     return;
   }
-  if (hash('sha256', req.headers.auth) !== config.AUTH) {
+  if (hash('sha256', req.headers.auth) !== process.env.AUTH) {
     log.WARN(
       `An unauthorized attempt to add badge noted with ${req.headers.auth} credentials.`,
     );
@@ -158,7 +159,7 @@ export const deleteBadge = async (req, res) => {
     res.sendStatus(401);
     return;
   }
-  if (hash('sha256', req.headers.auth) !== config.AUTH) {
+  if (hash('sha256', req.headers.auth) !== process.env.AUTH) {
     log.WARN(
       `An unauthorized attempt to add badge noted with ${req.headers.auth} credentials.`,
     );
