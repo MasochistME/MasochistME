@@ -48,9 +48,9 @@ export default function ProfileHeader(props: Props): JSX.Element {
     setMessage('Updating... refresh in a few minutes');
     setUpdating(true);
 
-    const url = `${path}/api/users/user/${id}`;
+    const url = `${path}/api/users/user/${id}/update`;
     axios
-      .put(url)
+      .get(url)
       .then((res: any) => {
         if (res.data) {
           setMessage(res.data);

@@ -64,7 +64,7 @@ export default function useInit(): boolean {
 
   const loadEvents = () => {
     axios
-      .post(`${path}/api/events`, { limit: 100 })
+      .get(`${path}/api/events?limit=100`)
       .then(response => {
         if (response?.status === 200) {
           return dispatch(cacheEvents(response.data));
