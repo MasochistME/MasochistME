@@ -66,18 +66,18 @@ router.delete('/patrons/patron/:steamid', deletePatron);
 
 router.get('/curator/games', getCuratorGames);
 router.get('/curator/games/tier/:tier', getCuratedGamesFromTier);
-router.put('/curator/games', updateCuratorGames);
+router.get('/curator/games/update', updateCuratorGames);
 router.get('/curator/members', getCuratorMembers);
 
 router.get('/users', getUsers);
 router.get('/users/user/:steamid', getUserDetails);
-router.put('/users/user/:steamid', updateUser);
+router.get('/users/user/:steamid/update', updateUser);
 
 router.get('/update', initiateMainUpdate);
 router.get('/status', getStatus);
 
 router.get('/blog', getBlog);
-router.post('/events', getEvents);
+router.get('/events', getEvents);
 
 router.get('/ranking', getRanking);
 router.get('/ranking/user/:id', getUserRanking);
