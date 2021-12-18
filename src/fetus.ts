@@ -1,6 +1,11 @@
+require("dotenv").config();
+
 import Discord from "discord.js";
+import axios from "axios";
+
 import { log } from "utils/log";
 import { classifyMessage } from "message";
+
 import { handleStream } from "utils/stream";
 import { msgEdit, msgDelete, userJoin, userLeave } from "utils/events";
 import { connectToDb } from "utils/db";
@@ -29,5 +34,7 @@ const init = bot => {
   );
 };
 
-bot.login(config.DISCORD_TOKEN);
+bot.login(process.env.DISCORD_TOKEN);
 bot.on("ready", ready);
+
+axios.defaults.headers.common["Authorization"] = process.env.ACCESS_TOKEN;

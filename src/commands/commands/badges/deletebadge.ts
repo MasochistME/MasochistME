@@ -1,9 +1,9 @@
 import Discord from "discord.js";
 import { ObjectId } from "mongodb";
-import { deleteOne } from "utils/db";
+import axios from "axios";
+
 import { createEmbed, removeKeyword } from "utils/helpers";
 import { cache } from "utils/cache";
-// import { log } from "utils/log";
 
 export const deletebadge = (msg: Discord.Message): void => {
   const badgeId = removeKeyword(msg);
@@ -21,6 +21,7 @@ export const deletebadge = (msg: Discord.Message): void => {
     const badgeIdObj = ObjectId(badgeId);
     return badgeIdObj.equals(b["_id"]);
   });
+  const url = `http://localhost:3002/rest/badges/badge/${badgeId}`;
 
   if (!badge) {
     msg.channel.send(
@@ -29,9 +30,13 @@ export const deletebadge = (msg: Discord.Message): void => {
       ]),
     );
     return;
-  } else {
-    deleteOne("masochist", "badges", { _id: ObjectId(badgeId) }, err =>
-      err ? msg.react("❌") : msg.react("✅"),
-    );
   }
+  axios
+    .delete(url)
+    .then(() =>
+      msg.channel.send(
+        `Badge ${(badge?.name ?? badgeId ?? "<?>").toUpperCase()} removed! :3`,
+      ),
+    )
+    .catch(error => msg.channel.send(`Error: ${error}`));
 };

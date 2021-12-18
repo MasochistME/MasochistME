@@ -6,8 +6,8 @@ import { log } from "utils/log";
 
 export const badgelist = async (msg: Discord.Message): Promise<void> => {
   let content = "";
-  const urlBadges = "http://89.47.165.141:3002/api/badges";
-  const urlGames = "http://89.47.165.141:3002/api/curator/games";
+  const urlBadges = "http://localhost:3002/api/badges";
+  const urlGames = "http://localhost:3002/api/curator/games";
   try {
     const badges = await axios.get(urlBadges);
     const games = await axios.get(urlGames);

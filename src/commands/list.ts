@@ -35,6 +35,11 @@ export const Command: {
     new CustomCommand(command, msg).execute(help, msg),
   hmod: (command: ICommand, msg: Discord.Message) =>
     new CustomCommand(command, msg).execute(hmod, msg),
+  options: (command: ICommand, msg: Discord.Message) =>
+    new CustomCommand(command, msg).execute(options, msg),
+  updatecache: (command: ICommand, msg: Discord.Message) =>
+    new CustomCommand(command, msg).execute(updatecache),
+
   meme: (command: ICommand, msg: Discord.Message) =>
     new CustomCommand(command, msg).execute(meme, msg),
   memelist: (command: ICommand, msg: Discord.Message) =>
@@ -43,6 +48,7 @@ export const Command: {
     new CustomCommand(command, msg).execute(addmeme, msg),
   deletememe: (command: ICommand, msg: Discord.Message) =>
     new CustomCommand(command, msg).execute(deletememe, msg),
+
   status: (command: ICommand, msg: Discord.Message) =>
     new CustomCommand(command, msg).execute(status, msg),
   impersonate: (command: ICommand, msg: Discord.Message) =>
@@ -51,6 +57,7 @@ export const Command: {
     new CustomCommand(command, msg).execute(vid, msg),
   rec: (command: ICommand, msg: Discord.Message) =>
     new CustomCommand(command, msg).execute(rec, msg),
+
   follow: (command: ICommand, msg: Discord.Message) =>
     new CustomCommand(command, msg).execute(follow, msg),
   unfollow: (command: ICommand, msg: Discord.Message) =>
@@ -59,12 +66,9 @@ export const Command: {
     new CustomCommand(command, msg).execute(followers, msg),
   following: (command: ICommand, msg: Discord.Message) =>
     new CustomCommand(command, msg).execute(following, msg),
-  options: (command: ICommand, msg: Discord.Message) =>
-    new CustomCommand(command, msg).execute(options, msg),
   live: (command: ICommand, msg: Discord.Message) =>
     new CustomCommand(command, msg).execute(live, msg),
-  updatecache: (command: ICommand, msg: Discord.Message) =>
-    new CustomCommand(command, msg).execute(updatecache),
+
   addbadge: (command: ICommand, msg: Discord.Message) =>
     new CustomCommand(command, msg).execute(addbadge, msg),
   editbadge: (command: ICommand, msg: Discord.Message) =>
@@ -77,6 +81,7 @@ export const Command: {
     new CustomCommand(command, msg).execute(givebadge, msg),
   takebadge: (command: ICommand, msg: Discord.Message) =>
     new CustomCommand(command, msg).execute(takebadge, msg),
+
   showmembers: (command: ICommand, msg: Discord.Message) =>
     new CustomCommand(command, msg).execute(showmembers, msg),
 };
