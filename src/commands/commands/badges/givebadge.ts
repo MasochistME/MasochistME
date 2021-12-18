@@ -28,7 +28,11 @@ export const givebadge = async (msg: Discord.Message): Promise<void> => {
   if (!badge || !user) {
     msg.channel.send(
       createEmbed("Invalid ID", [
-        { title: "___", content: "Badge or user doesn't exist." },
+        {
+          title: "___",
+          content:
+            "Badge or user doesn't exist. Did you /updatecache beforehand?",
+        },
       ]),
     );
     return;
@@ -37,12 +41,31 @@ export const givebadge = async (msg: Discord.Message): Promise<void> => {
   try {
     const badgeGiven = await axios.put(url);
     if (badgeGiven.status === 200) {
-      msg.channel.send("Given! :3");
+      msg.channel.send(
+        createEmbed("✅ Badge given to user!", [
+          {
+            title: "___",
+            content: `Badge ${(
+              badge?.name ??
+              badgeId ??
+              "<UNKNOWN>"
+            ).toUpperCase()} given to the user ${(
+              user?.name ??
+              userId ??
+              "<UNKNOWN>"
+            ).toUpperCase()}!`,
+          },
+        ]),
+      );
     } else {
       throw badgeGiven.data;
     }
   } catch (err) {
     log.WARN(err);
-    msg.channel.send(`Error: ${err}.`);
+    msg.channel.send(
+      createEmbed("❌ Error giving badge to the user", [
+        { title: "___", content: err },
+      ]),
+    );
   }
 };

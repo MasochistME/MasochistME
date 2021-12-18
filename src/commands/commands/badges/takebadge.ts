@@ -11,7 +11,10 @@ export const takebadge = (msg: Discord.Message): void => {
   if (!badgeId || !userId) {
     msg.channel.send(
       createEmbed("Invalid syntax", [
-        { title: "___", content: "Badge or user is invalid." },
+        {
+          title: "___",
+          content: "You need to specify both badgeID and userID.",
+        },
       ]),
     );
     return;
@@ -22,12 +25,16 @@ export const takebadge = (msg: Discord.Message): void => {
     return badgeIdObj.equals(b["_id"]);
   });
   const user = cache["users"].find(u => u.id === userId);
-  const url = `http://localhost:3002/rest/badges/badge/${badgeId}/user/${userId}`;
+  const url = `http://localhost:3002/api/badges/badge/${badgeId}/user/${userId}`;
 
-  if (!badge || !user) {
+  if (!user) {
     msg.channel.send(
-      createEmbed("Invalid ID", [
-        { title: "___", content: "Badge or user doesn't exist." },
+      createEmbed("Invalid user", [
+        {
+          title: "___",
+          content:
+            "Specified user does not exist. Did you /updatecache beforehand?",
+        },
       ]),
     );
     return;
@@ -37,16 +44,27 @@ export const takebadge = (msg: Discord.Message): void => {
     .delete(url)
     .then(() =>
       msg.channel.send(
-        `Badge ${(
-          badge?.name ??
-          badgeId ??
-          "<?>"
-        ).toUpperCase()} removed from the user ${(
-          user?.name ??
-          userId ??
-          "<?>"
-        ).toUpperCase()}! :3`,
+        createEmbed("✅ Badge removed from user!", [
+          {
+            title: "___",
+            content: `Badge ${(
+              badge?.name ??
+              badgeId ??
+              "<UNKNOWN>"
+            ).toUpperCase()} removed from the user ${(
+              user?.name ??
+              userId ??
+              "<UNKNOWN>"
+            ).toUpperCase()}.`,
+          },
+        ]),
       ),
     )
-    .catch(error => msg.channel.send(`Error: ${error}`));
+    .catch(error =>
+      msg.channel.send(
+        createEmbed("❌ Error removing badge from user", [
+          { title: "___", content: error },
+        ]),
+      ),
+    );
 };

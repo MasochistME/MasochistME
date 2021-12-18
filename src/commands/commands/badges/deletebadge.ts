@@ -11,7 +11,10 @@ export const deletebadge = (msg: Discord.Message): void => {
   if (!badgeId) {
     msg.channel.send(
       createEmbed("Invalid badge ID", [
-        { title: "___", content: "Cannot delete badge that doesn't exist." },
+        {
+          title: "___",
+          content: "You need to specify badgeID.",
+        },
       ]),
     );
     return;
@@ -21,12 +24,16 @@ export const deletebadge = (msg: Discord.Message): void => {
     const badgeIdObj = ObjectId(badgeId);
     return badgeIdObj.equals(b["_id"]);
   });
-  const url = `http://localhost:3002/rest/badges/badge/${badgeId}`;
+  const url = `http://localhost:3002/api/badges/${badgeId}`;
 
   if (!badge) {
     msg.channel.send(
       createEmbed("Invalid badge ID", [
-        { title: "___", content: "Cannot delete badge that doesn't exist." },
+        {
+          title: "___",
+          content:
+            "Cannot delete badge that doesn't exist. Did you /updatecache beforehand?",
+        },
       ]),
     );
     return;
@@ -35,8 +42,23 @@ export const deletebadge = (msg: Discord.Message): void => {
     .delete(url)
     .then(() =>
       msg.channel.send(
-        `Badge ${(badge?.name ?? badgeId ?? "<?>").toUpperCase()} removed! :3`,
+        createEmbed("✅ Badge deleted", [
+          {
+            title: "___",
+            content: `Done, fucker.\nBadge ${(
+              badge?.name ??
+              badgeId ??
+              "<UNKNOWN>"
+            ).toUpperCase()} permanently deleted.\n**Important**: If any user had this badge assigned, they will still have it, but it won't display on their profile anymore. `,
+          },
+        ]),
       ),
     )
-    .catch(error => msg.channel.send(`Error: ${error}`));
+    .catch(error =>
+      msg.channel.send(
+        createEmbed("❌ Error deleting badge", [
+          { title: "___", content: error },
+        ]),
+      ),
+    );
 };
