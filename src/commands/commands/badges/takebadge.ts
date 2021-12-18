@@ -1,9 +1,9 @@
 import Discord from "discord.js";
 import { ObjectId } from "mongodb";
 import axios from "axios";
+
 import { createEmbed, extractArguments } from "utils/helpers";
 import { cache } from "utils/cache";
-// import { log } from "utils/log";
 
 export const takebadge = (msg: Discord.Message): void => {
   const [badgeId, userId] = extractArguments(msg);
@@ -35,6 +35,18 @@ export const takebadge = (msg: Discord.Message): void => {
 
   axios
     .delete(url)
-    .then(() => msg.channel.send("Taken! :3"))
+    .then(() =>
+      msg.channel.send(
+        `Badge ${(
+          badge?.name ??
+          badgeId ??
+          "<?>"
+        ).toUpperCase()} removed from the user ${(
+          user?.name ??
+          userId ??
+          "<?>"
+        ).toUpperCase()}! :3`,
+      ),
+    )
     .catch(error => msg.channel.send(`Error: ${error}`));
 };
