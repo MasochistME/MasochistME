@@ -4,12 +4,12 @@ A custom bot created for the 0.1% Discord community.
 
 ## Configuration
 
-For the bot to work, there needs to be a `config.json` file in the main directory.
-An example configuration looks like this:
+For the bot to work, there needs to be a `config.json` file and `.env` file in the main directory.
+
+### Example of `config.json`
 
 ```
 {
-    "DISCORD_TOKEN": "iAMaSUPERsecretTOKENdoNOTgiveMEtoANYONE666",
     "DATABASE_URL": [
         {
             "symbol": database_name,
@@ -18,6 +18,12 @@ An example configuration looks like this:
     ]
 }
 ```
+### Example of `.env`
+```
+ACCESS_TOKEN=SUPERsecretACCESStoken
+DISCORD_TOKEN=iAMaSUPERsecretTOKENdoNOTgiveMEtoANYONE666
+```
+
 ## Starting the bot
 
 To work, bot requires a running mongoDB database.
