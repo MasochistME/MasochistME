@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { Flex } from 'shared/components';
+import { Flex, Badge } from 'shared/components';
 
 const StyledFlex = styled(Flex)`
   & > * {
@@ -9,16 +9,6 @@ const StyledFlex = styled(Flex)`
   }
   &:first-child {
     margin-left: 4px;
-  }
-`;
-const Badge = styled.img`
-  max-width: 24px;
-  max-height: 24px;
-  border: 3px solid black;
-  border-radius: 3px;
-  opacity: 0.7;
-  &:hover {
-    opacity: 1;
   }
 `;
 

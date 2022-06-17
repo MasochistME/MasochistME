@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { orderBy } from 'lodash';
 import axios from 'axios';
@@ -15,12 +15,13 @@ import {
   cacheUserDetails,
   cacheGameDetails,
 } from 'shared/store/modules/Cache';
+import { AppContext } from 'shared/store/context';
 import { showGamesRated } from 'shared/store/modules/CheckBoxes';
-
-const path = 'http://89.47.165.141:3002';
+import { log } from 'shared/helpers';
 
 export default function useInit(): boolean {
   const dispatch = useDispatch();
+  const { path } = useContext(AppContext);
   const [loaded, setLoaded] = useState(false);
 
   const loadRating = () => {
@@ -32,7 +33,7 @@ export default function useInit(): boolean {
           dispatch(cacheRating(response.data));
         }
       })
-      .catch(err => console.trace(err));
+      .catch(log.WARN);
   };
 
   const loadGames = () => {
@@ -47,7 +48,7 @@ export default function useInit(): boolean {
           );
         }
       })
-      .catch(err => console.log(err.message));
+      .catch(log.WARN);
   };
 
   const loadUsers = () => {
@@ -58,7 +59,7 @@ export default function useInit(): boolean {
           return dispatch(cacheUsers(response.data));
         }
       })
-      .catch(err => console.trace(err));
+      .catch(log.WARN);
   };
 
   const loadEvents = () => {
@@ -69,7 +70,7 @@ export default function useInit(): boolean {
           return dispatch(cacheEvents(response.data));
         }
       })
-      .catch(err => console.trace(err));
+      .catch(log.WARN);
   };
 
   const loadPatrons = () => {
@@ -80,7 +81,7 @@ export default function useInit(): boolean {
           return dispatch(cachePatrons(response.data));
         }
       })
-      .catch(err => console.trace(err));
+      .catch(log.WARN);
   };
 
   const loadBlog = () => {
@@ -91,7 +92,7 @@ export default function useInit(): boolean {
           return dispatch(cacheBlog(response.data));
         }
       })
-      .catch(err => console.trace(err));
+      .catch(log.WARN);
   };
 
   const loadBadges = () => {
@@ -102,7 +103,7 @@ export default function useInit(): boolean {
           return dispatch(cacheBadges(response.data));
         }
       })
-      .catch(err => console.trace(err));
+      .catch(log.WARN);
   };
 
   const loadRanking = () => {
@@ -113,7 +114,7 @@ export default function useInit(): boolean {
           return dispatch(cacheRanking(response.data));
         }
       })
-      .catch(err => console.trace(err));
+      .catch(log.WARN);
   };
 
   const loadStatus = () => {
@@ -124,7 +125,7 @@ export default function useInit(): boolean {
           return dispatch(cacheStatus(response.data));
         }
       })
-      .catch(err => console.trace(err));
+      .catch(log.WARN);
   };
 
   const init = () => {
@@ -155,6 +156,7 @@ export default function useInit(): boolean {
  */
 export function useUserDetails(id: string): boolean {
   const dispatch = useDispatch();
+  const { path } = useContext(AppContext);
   const loaded = useSelector(
     (state: any) => !!state.users.details.find((user: any) => user.id === id),
   );
@@ -167,7 +169,7 @@ export function useUserDetails(id: string): boolean {
           dispatch(cacheUserDetails(response.data));
         }
       })
-      .catch(err => console.trace(err));
+      .catch(log.WARN);
   };
 
   useEffect(() => {
@@ -184,6 +186,7 @@ export function useUserDetails(id: string): boolean {
  * @param id - game id
  */
 export function useGameDetails(id: string): boolean {
+  const { path } = useContext(AppContext);
   const dispatch = useDispatch();
   const loaded = useSelector(
     (state: any) =>
@@ -198,7 +201,7 @@ export function useGameDetails(id: string): boolean {
           dispatch(cacheGameDetails(response.data));
         }
       })
-      .catch(err => console.trace(err));
+      .catch(log.WARN);
   };
 
   useEffect(() => {

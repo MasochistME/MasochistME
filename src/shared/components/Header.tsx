@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { fonts, colors, media } from 'shared/theme';
-// import Login from '../Login'
+import Login from './Login';
 
 const WrapperHeader = styled.div`
   display: flex;
@@ -31,9 +31,9 @@ const HeaderMotto = styled.p`
 export default function Header(): JSX.Element {
   return (
     <WrapperHeader>
-      {/* <i className='fab fa-steam' /> */}
+      <span />
       <HeaderMotto>0.1% - games that masochists love</HeaderMotto>
-      {/* <Login /> */}
+      <Login />
     </WrapperHeader>
   );
 }

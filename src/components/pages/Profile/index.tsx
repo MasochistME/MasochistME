@@ -1,24 +1,27 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import { orderBy } from 'lodash';
 import { showProfile } from 'shared/store/modules/Profiles';
 import { changeTab } from 'shared/store/modules/Tabs';
-import { Flex, Wrapper, Spinner, Section } from 'shared/components';
-import { Badges, Badge } from './styles';
+import { AppContext } from 'shared/store/context';
+import { Flex, Wrapper, Spinner, Section, BigBadge } from 'shared/components';
+import { Badges } from './styles';
 import { useUserDetails } from 'components/init';
 import ProfileGraphs from './ProfileGraphs';
 import ProfileHeader from './ProfileHeader';
 
 Profile.Badges = Badges;
-Profile.Badge = Badge;
+Profile.Badge = BigBadge;
 Profile.Section = Section;
 
 export default function Profile(): JSX.Element {
   const dispatch = useDispatch();
   const history = useHistory();
+  const { isLoggedIn, userId } = useContext(AppContext);
   const { id } = useParams<{ id: string }>();
+  const canEdit = isLoggedIn && userId === id;
 
   const userLoaded = useUserDetails(id);
 
@@ -75,8 +78,12 @@ export default function Profile(): JSX.Element {
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(showProfile(id));
-    dispatch(changeTab('profile'));
-  }, []);
+    if (canEdit) {
+      dispatch(changeTab('me'));
+    } else {
+      dispatch(changeTab('profile'));
+    }
+  }, [id]);
 
   return (
     <Flex column>
@@ -100,7 +107,7 @@ export default function Profile(): JSX.Element {
                         (g: any) => Number(g.id) === Number(badge.gameId),
                       );
                       return (
-                        <Badge
+                        <Profile.Badge
                           src={badge.img}
                           alt="badge"
                           title={`${

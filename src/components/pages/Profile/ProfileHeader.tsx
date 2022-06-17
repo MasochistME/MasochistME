@@ -1,85 +1,18 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useSelector } from 'react-redux';
-import styled from 'styled-components';
 import axios from 'axios';
-import { colors } from 'shared/theme';
+import { log } from 'shared/helpers';
+import { AppContext } from 'shared/store/context';
 import { Wrapper, Flex, Spinner, CustomButton } from 'shared/components';
-
-const Patron = styled.div`
-  cursor: help;
-`;
-const UpdateDate = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 0.8em;
-  margin-bottom: 5px;
-`;
-const Avatar = styled.img.attrs(({ tier }: { tier: number }) => {
-  const style: any = {
-    backgroundColor: colors.black,
-  };
-  if (tier === 1) {
-    style.border = `5px solid ${colors.tier1}`;
-  }
-  if (tier === 2) {
-    style.border = `5px solid ${colors.tier2}`;
-  }
-  if (tier === 3) {
-    style.border = `5px solid ${colors.tier3}`;
-  }
-  if (tier === 4) {
-    style.border = `5px solid ${colors.tier4}`;
-  }
-  return { style };
-})<{ tier: number }>`
-  width: 128px;
-  min-width: 128px;
-  height: 128px;
-  min-height: 128px;
-  margin: 15px;
-  border-radius: 10px;
-  box-sizing: border-box;
-  box-shadow: 0 0 10px ${colors.black};
-  padding: 2px;
-`;
-const EmptyAvatar = styled.div`
-  width: 128px;
-  min-width: 128px;
-  height: 128px;
-  min-height: 128px;
-  margin: 15px;
-  border-radius: 10px;
-  box-sizing: border-box;
-  box-shadow: 0 0 10px ${colors.black};
-  background-color: ${colors.black};
-  padding: 2px;
-`;
-const Basic = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  background-color: ${colors.superDarkGrey}48;
-  margin-bottom: 10px;
-  padding-right: 10px;
-  box-sizing: border-box;
-  box-shadow: 0 0 5px ${colors.superDarkGrey};
-  border-bottom: 1px solid ${colors.mediumGrey};
-  border-right: 1px solid ${colors.mediumGrey};
-  border-left: 1px solid ${colors.superDarkGrey};
-  border-top: 1px solid ${colors.superDarkGrey};
-`;
-const UpdateMsg = styled.span`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 40px;
-`;
+import {
+  Avatar,
+  EmptyAvatar,
+  Basic,
+  Patron,
+  UpdateDate,
+  UpdateMsg,
+  InputDescription,
+} from './components';
 
 ProfileHeader.Avatar = Avatar;
 ProfileHeader.EmptyAvatar = EmptyAvatar;
@@ -87,6 +20,7 @@ ProfileHeader.Basic = Basic;
 ProfileHeader.Patron = Patron;
 ProfileHeader.UpdateDate = UpdateDate;
 ProfileHeader.UpdateMsg = UpdateMsg;
+ProfileHeader.InputDescription = InputDescription;
 
 type Props = {
   user: any;
@@ -94,22 +28,27 @@ type Props = {
 
 export default function ProfileHeader(props: Props): JSX.Element {
   const { user } = props;
+  const { isLoggedIn, userId, path } = useContext(AppContext);
   const [updating, setUpdating] = useState(false);
   const [message, setMessage] = useState('');
+  const [description, setDescription] = useState(
+    'Currently there is no info provided about this user.',
+  );
+  const canEdit = isLoggedIn && userId === user?.id;
 
   const patron = useSelector((state: any) =>
     state.patrons.find((tier: any) =>
-      tier.list.find((p: any) => user && user?.id === p.steamid)
+      tier.list.find((p: any) => user?.id === p.steamid)
         ? { tier: tier.tier, description: tier.description }
         : false,
     ),
   );
 
   const sendUpdateRequest = (id: any) => {
-    setUpdating(true);
     setMessage('Updating... refresh in a few minutes');
+    setUpdating(true);
 
-    const url = `http://89.47.165.141:3002/api/users/user/${id}`;
+    const url = `${path}/api/users/user/${id}`;
     axios
       .put(url)
       .then((res: any) => {
@@ -117,7 +56,37 @@ export default function ProfileHeader(props: Props): JSX.Element {
           setMessage(res.data);
         }
       })
-      .catch((err: any) => console.log(err));
+      .catch(log.WARN);
+  };
+
+  const profileDescription = () => {
+    if (canEdit) {
+      return (
+        <Flex
+          row
+          style={{
+            width: '100%',
+            height: '100%',
+            alignContent: 'space-between',
+          }}>
+          <Flex row style={{ width: '100%' }}>
+            <ProfileHeader.InputDescription
+              value={description}
+              onChange={onDescriptionChange}
+            />
+          </Flex>
+          <Flex row>
+            <i className="fas fa-edit" />
+          </Flex>
+        </Flex>
+      );
+    } else {
+      return <div>{description}</div>;
+    }
+  };
+
+  const onDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setDescription(event.target.value);
   };
 
   return (
@@ -185,7 +154,7 @@ export default function ProfileHeader(props: Props): JSX.Element {
               <Spinner />
             </ProfileHeader.EmptyAvatar>
           )}
-          <div>Currently there&lsquo;s no info provided about this user.</div>
+          {profileDescription()}
         </ProfileHeader.Basic>
       </div>
     </Wrapper>

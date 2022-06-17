@@ -1,11 +1,46 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Page from 'components/pages';
-// import LoginModal from 'shared/components/LoginModal';
+import { log } from 'shared/helpers';
+import { useUserPermissions } from 'shared/hooks';
+import { AppContext } from 'shared/store/context';
 import useInit from './init';
 
 export default function App(): JSX.Element {
   const loaded = useInit();
+  const {
+    path,
+    isLoggedIn,
+    setIsLoggedIn,
+    setUsername,
+    setUserId,
+  } = useContext(AppContext);
+
+  useUserPermissions();
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      fetch(`${path}/auth`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'Access-Control-Allow-Credentials': 'true',
+          'Access-Control-Allow-Origin': 'masochist.me',
+        },
+      })
+        .then(async (response: any) => {
+          if (response?.status === 200) {
+            const userData = await response?.json();
+            setUsername(userData.user.name);
+            setUserId(userData.user.id);
+            setIsLoggedIn(true);
+          } else {
+            setIsLoggedIn(false);
+          }
+        })
+        .catch(log.WARN);
+    }
+  });
 
   return loaded ? (
     <Router>
@@ -37,6 +72,17 @@ export default function App(): JSX.Element {
         <Route exact path="/game/:id">
           <Page page="game" />
         </Route>
+        {/** admin pages */}
+        <Route exact path="/admin/badges">
+          <Page page="admin" subpage="badges" />
+        </Route>
+        <Route exact path="/admin/games">
+          <Page page="admin" subpage="games" />
+        </Route>
+        <Route exact path="/admin/users">
+          <Page page="admin" subpage="users" />
+        </Route>
+        {/** other */}
         <Route>
           <Page page="notfound" />
         </Route>

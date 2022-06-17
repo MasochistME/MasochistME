@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { swapRatingToIcon } from 'shared/helpers/helper';
+import { swapRatingToIcon } from 'shared/helpers';
 import {
   EventDescription,
   EventSummary,

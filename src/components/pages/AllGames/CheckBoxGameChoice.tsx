@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { showGamesRated } from 'shared/store/modules/CheckBoxes';
-import { swapRatingToIcon } from 'shared/helpers/helper';
+import { swapRatingToIcon } from 'shared/helpers';
 
 type Props = {
   score: any;

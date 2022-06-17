@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import { Table as AntdTable } from 'antd';
+import styled from 'styled-components';
 import { colors, fonts } from 'shared/theme';
 
 export const TableLink = styled.span`
@@ -20,13 +20,13 @@ export const defaultSort = (a: number | string, b: number | string): number => {
 };
 
 const Table = styled(AntdTable)`
-  width: 100%;
   table {
+    width: 100%;
     border-spacing: 0;
     border-color: #000;
   }
   .ant-table-thead {
-    background-color: ${colors.superDarkGrey};
+    background: ${colors.superDarkGrey};
     tr {
       .ant-table-cell {
         border-top: none;
@@ -34,12 +34,20 @@ const Table = styled(AntdTable)`
     }
   }
   .ant-table-row {
-    background-color: ${colors.superLightGrey}22;
+    background: ${colors.superLightGrey}22;
     padding: 4px 8px;
+    cursor: ${({ clickable }: { clickable?: boolean }) =>
+      clickable ? 'pointer' : 'default'};
     &:last-child {
       .ant-table-cell {
         border-bottom: none;
       }
+    }
+    &:hover {
+      background-color: ${({ clickable }: { clickable?: boolean }) =>
+        clickable
+          ? `${colors.superLightGrey}44`
+          : `${colors.superLightGrey}22`};
     }
   }
   .ant-table-cell {
@@ -103,14 +111,14 @@ const Table = styled(AntdTable)`
         height: 100%;
         border: none;
         border-radius: 4px;
-        background-color: ${colors.superLightGrey}99;
+        background: ${colors.superLightGrey}99;
         cursor: pointer;
       }
       a {
         text-decoration: none;
       }
       &:hover {
-        background-color: ${colors.superDarkGrey}99;
+        background: ${colors.superDarkGrey}99;
       }
     }
   }
