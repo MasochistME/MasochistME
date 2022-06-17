@@ -6,4 +6,6 @@ export const log = {
     console.trace(`${new Date().toLocaleString()} - [WARN] - ${content}`),
   DEBUG: (content: string): void =>
     console.log(`${new Date().toLocaleString()} - [DEBUG] - ${content}`),
+  CRITICAL: (content: string): void =>
+    console.log(`${new Date().toLocaleString()} - [CRITICAL] - ${content}`),
 };
