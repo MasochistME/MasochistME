@@ -1,7 +1,8 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+
+import { useUsers } from 'shared/hooks';
 import { ProgressBar, Flex } from 'shared/components';
 import {
   User,
@@ -36,7 +37,7 @@ export default function List(props: {
 }): JSX.Element {
   const { game, compact } = props;
   const history = useHistory();
-  const users = useSelector((state: any) => state.users.list);
+  const users = useUsers(true);
 
   const assignDateIfFinished = (leaderboards: any): string | JSX.Element =>
     leaderboards?.percentage === 100 ? (

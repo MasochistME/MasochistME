@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+
 import {
   EventDescription,
   EventSummary,
@@ -8,6 +9,7 @@ import {
   EventImg,
   EventLink,
 } from 'components/pages/Events/styles';
+import { useUsers } from 'shared/hooks';
 import logo from 'shared/images/logo.png';
 
 type Props = {
@@ -68,12 +70,12 @@ function BadgeAdded({ event }: { event: any }) {
 
 function BadgeGiven({ event }: { event: any }) {
   const history = useHistory();
-  const user = useSelector((state: any) =>
-    state.users.list.find((u: any) => u.id === event.member),
-  );
+  const users = useUsers(false);
   const badge = useSelector((state: any) =>
     state.badges.find((b: any) => b['_id'] === event.badge),
   );
+
+  const user = users.find((u: any) => u.id === event.member);
 
   const onUserClick = () => user?.id && history.push(`/profile/${user.id}`);
 

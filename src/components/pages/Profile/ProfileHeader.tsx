@@ -24,6 +24,7 @@ ProfileHeader.InputDescription = InputDescription;
 
 type Props = {
   user: any;
+  error: boolean;
 };
 
 export default function ProfileHeader(props: Props): JSX.Element {
@@ -35,6 +36,7 @@ export default function ProfileHeader(props: Props): JSX.Element {
     'Currently there is no info provided about this user.',
   );
   const canEdit = isLoggedIn && userId === user?.id;
+  const isUserAMember = user && (user.member || user.protected);
 
   const patron = useSelector((state: any) =>
     state.patrons.find((tier: any) =>
@@ -128,9 +130,11 @@ export default function ProfileHeader(props: Props): JSX.Element {
             updating ? (
               <ProfileHeader.UpdateMsg>{message}</ProfileHeader.UpdateMsg>
             ) : (
-              <CustomButton onClick={() => sendUpdateRequest(user?.id)}>
-                Update
-              </CustomButton>
+              isUserAMember && (
+                <CustomButton onClick={() => sendUpdateRequest(user?.id)}>
+                  Update
+                </CustomButton>
+              )
             )
           ) : (
             <button

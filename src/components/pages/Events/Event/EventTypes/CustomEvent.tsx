@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useUsers } from 'shared/hooks';
 import {
   EventDescription,
   EventSummary,
@@ -22,7 +22,7 @@ export default function CustomEvent(props: TCustomEvent): JSX.Element | null {
   const { event } = props;
   const content = event.content;
 
-  const users = useSelector((state: any) => state.users.list);
+  const users = useUsers(false);
 
   if (!content) {
     return null;
