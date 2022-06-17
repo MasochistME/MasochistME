@@ -7,7 +7,7 @@ import { getDataFromDB } from 'helpers/db';
  */
 export const getEvents = async (req: Request, res: Response): Promise<void> => {
   const events = await getDataFromDB('events');
-  const limit = req?.body?.limit;
+  const limit = Number(req.params?.limit ?? 100);
 
   if (events) {
     const sortedEvents = orderBy(events, ['date'], ['desc']);

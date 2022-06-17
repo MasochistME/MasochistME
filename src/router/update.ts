@@ -139,7 +139,7 @@ export const initiateMainUpdate = async (req?, res?): Promise<void> => {
     if (
       !usersFromDB.find(userFromDB => userFromDB?.id === members[index]?.id)
     ) {
-      const userUrl = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${config.STEAM_KEY}&steamids=${members[index].id}`;
+      const userUrl = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${process.env.STEAM_KEY}&steamids=${members[index].id}`;
       let userData;
 
       try {

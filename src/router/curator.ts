@@ -1,10 +1,14 @@
 import { Request, Response } from 'express';
 import axios from 'axios';
+
 import { log } from 'helpers/log';
 import { connectToDb, getDataFromDB, findOption } from 'helpers/db';
+import { sanitizeString } from 'helpers';
+
 import { TGameEvent, TTierChangeEvent } from './types/events';
 import { findGame } from './ranking';
 import { updateStatus } from './update';
+
 import config from '../../config.json';
 
 type TRating = {
@@ -166,32 +170,30 @@ export const updateCuratorGames = (req?, res?): Promise<void> =>
     /*
         Downloads current curated games' list.
     */
-    response.data.results_html
-      .replace(/\r|\n|\t|&quot;/g, '')
-      // eslint-disable-next-line no-useless-escape
-      .replace(/\'/g, '"')
-      .split('<div class="recommendation" >')
-      .map(rec => {
-        if (rec.indexOf('data-ds-appid') !== -1) {
-          let id = rec
-            .substring(
-              rec.indexOf('data-ds-appid="') + 'data-ds-appid="'.length,
-            )
-            .trim();
-          id = id.substring(0, id.indexOf('"')).trim();
-          let desc = rec
-            .substring(
-              rec.indexOf('<div class="recommendation_desc">') +
-                '<div class="recommendation_desc">'.length,
-            )
-            .trim();
-          desc = desc.substring(0, desc.indexOf('</div>'));
-          const scoreIsDefined = points.find(r =>
-            desc.trim().startsWith(r.symbol),
-          );
-          const score = scoreIsDefined ? scoreIsDefined.id : '1';
-          games.push(fillGameData(id, desc, score));
-        }
+
+    const DESC_QUOTE = 'recommendation_desc';
+
+    const rawGameData = response.data.results_html.split('data-ds-appid=');
+    rawGameData
+      .filter((r: string) => r.includes(DESC_QUOTE))
+      .map(r => {
+        const gameId = r
+          .match(/(["'])(?:(?=(\\?))\2.)*?\1/g, '')[0]
+          .replace(/"/g, '');
+        const gameDesc = sanitizeString(
+          r
+            .match(/recommendation_desc([\s\S]*?)div/gs, '')[0]
+            .replace(DESC_QUOTE, '')
+            .replace('div', ''),
+        );
+        return { id: gameId, desc: gameDesc };
+      })
+      .map((game: { id: string; desc: string }) => {
+        const scoreIsDefined = points.find(r =>
+          game.desc.trim().startsWith(r.symbol),
+        );
+        const score = scoreIsDefined ? scoreIsDefined.id : '1';
+        games.push(fillGameData(game.id, game.desc, score));
       });
     /*  
     Compares it with the games' list saved in database.
