@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { orderBy } from 'lodash';
 import axios from 'axios';
@@ -154,31 +154,39 @@ export default function useInit(): boolean {
  * Retrieves particular user's data for the ranking page.
  * @param id: string - user id
  */
-export function useUserDetails(id: string): boolean {
+export function useUserDetails(
+  id: string,
+): { isUserLoaded?: boolean; isUserError?: boolean } {
   const dispatch = useDispatch();
   const { path } = useContext(AppContext);
-  const loaded = useSelector(
+
+  const isUserLoaded = useSelector(
     (state: any) => !!state.users.details.find((user: any) => user.id === id),
   );
+  const isUserError = useSelector(
+    (state: any) => !!state.users.details.find((user: any) => user.error),
+  );
 
-  const loadUserDetails = () => {
-    axios
-      .get(`${path}/api/ranking/user/${id}`)
-      .then(response => {
-        if (response?.status === 200) {
-          dispatch(cacheUserDetails(response.data));
-        }
-      })
-      .catch(log.WARN);
-  };
+  const getUserDetails = useCallback(async () => {
+    const response = await fetch(`${path}/api/ranking/user/${id}`);
+    if (response.status === 200) {
+      const userDetails = await response?.json();
+      dispatch(cacheUserDetails(userDetails));
+    }
+    if (response.status === 404) {
+      dispatch(cacheUserDetails({ id, error: 404 }));
+      return;
+    }
+    dispatch(cacheUserDetails({ id, error: true }));
+  }, [id]);
 
   useEffect(() => {
-    if (!loaded) {
-      loadUserDetails();
+    if (!isUserLoaded) {
+      getUserDetails();
     }
-  }, [loaded]);
+  }, [isUserLoaded]);
 
-  return loaded;
+  return { isUserLoaded, isUserError };
 }
 
 /**
