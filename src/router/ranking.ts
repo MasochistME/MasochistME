@@ -103,8 +103,16 @@ export const getUserRanking = async (
   try {
     const id = req.params.id;
     const rawUser = await getDataFromDB('users', { id });
+
+    if (rawUser.length === 0) {
+      res.sendStatus(404);
+      return;
+    }
+
     const filteredUser = {
       id: req.params.id,
+      private: rawUser[0].private,
+      member: rawUser[0].member,
       badges: rawUser[0].badges,
       games: rawUser[0].games.map(game => {
         const playtime =
