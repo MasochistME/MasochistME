@@ -1,3 +1,9 @@
-import { meme, memelist, addmeme, deletememe } from "./meme";
+import { CommandFn } from "arcybot/dist/CommandList";
 
-export const commandsFunctions = [meme, memelist, addmeme, deletememe];
+import { meme, memelist, addmeme, deletememe } from "./meme";
+import { givebadge, revokebadge } from "./badges";
+
+const memeFn: CommandFn[] = [meme, memelist, addmeme, deletememe];
+const badgeFn: CommandFn[] = [givebadge, revokebadge];
+
+export const commandsFunctions = [...badgeFn, ...memeFn];
