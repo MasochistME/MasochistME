@@ -1,40 +1,54 @@
-require("dotenv").config();
-
-import Discord from "discord.js";
+import * as dotenv from "dotenv";
 import axios from "axios";
+import { Arcybot } from "arcybot";
 
-import { log } from "utils/log";
-import { classifyMessage } from "message";
+import { Database } from "utils/db";
 
-import { handleStream } from "utils/stream";
-import { msgEdit, msgDelete, userJoin, userLeave } from "utils/events";
-import { connectToDb } from "utils/db";
-import { cache } from "utils/cache";
+dotenv.config();
 
-import config from "../config.json";
+/***********************
+ *      DB CONFIG      *
+ ***********************/
 
-const bot = new Discord.Client();
+const dbConfig = [
+  { symbol: "fetus", url: process.env["DB_FETUS"] },
+  { symbol: "masochist", url: process.env["DB_MASOCHIST"] },
+];
 
-const ready = () => {
-  config.DATABASES.map(db => connectToDb(db));
-  init(bot);
+export const mongo = new Database(dbConfig);
+
+/************************
+ *      BOT CONFIG      *
+ ************************/
+
+const config = {
+  discordToken: process.env.DISCORD_TOKEN,
+  botId: process.env.BOT_ID,
+};
+const commandsFunctions: any[] = [];
+
+const init = async () => {
+  await mongo.init();
+
+  const commandList = await mongo.getCommands();
+  const bot = new Arcybot(config, commandList, commandsFunctions);
+
+  bot.start("Dr. Fetus reporting for destruction!");
 };
 
-const init = bot => {
-  bot.on("message", classifyMessage);
-  bot.on("presenceUpdate", handleStream);
-  bot.on("messageUpdate", msgEdit);
-  bot.on("messageDelete", msgDelete);
-  bot.on("guildMemberAdd", userJoin);
-  bot.on("guildMemberRemove", userLeave);
+init();
 
-  cache.bot = bot;
-  log.INFO(
-    `${new Date().toLocaleString()} - Dr. Fetus reporting for destruction!`,
-  );
-};
+// const init = bot => {
+//   bot.on("message", classifyMessage);
+//   bot.on("messageUpdate", msgEdit);
+//   bot.on("messageDelete", msgDelete);
+//   bot.on("guildMemberAdd", userJoin);
+//   bot.on("guildMemberRemove", userLeave);
 
-bot.login(process.env.DISCORD_TOKEN);
-bot.on("ready", ready);
+//   cache.bot = bot;
+//   log.INFO(
+//     `${new Date().toLocaleString()} - Dr. Fetus reporting for destruction!`,
+//   );
+// };
 
 axios.defaults.headers.common["Authorization"] = process.env.ACCESS_TOKEN;
