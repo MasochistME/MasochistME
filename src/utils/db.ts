@@ -1,5 +1,5 @@
 import { MongoClient, Db } from "mongodb";
-import { log, CommandObject } from "arcybot";
+import { log } from "arcybot";
 
 type DB = {
   symbol: string;
@@ -24,15 +24,6 @@ export class Database {
     } catch (err) {
       log.WARN(`Error while connecting to database: ${err}`);
     }
-  };
-
-  getCommands = async () => {
-    const cursor = this.dbs.fetus.collection("commands").find();
-    const commands: CommandObject[] = [];
-    await cursor.forEach(el => {
-      commands.push(el as unknown as CommandObject);
-    });
-    return commands;
   };
 }
 

@@ -3,6 +3,8 @@ import axios from "axios";
 import { Arcybot } from "arcybot";
 
 import { Database } from "utils/db";
+import { getCommandsFromAPI } from "api";
+import { commandsFunctions, customCommands } from "commands";
 
 dotenv.config();
 
@@ -25,13 +27,18 @@ const config = {
   discordToken: process.env.DISCORD_TOKEN,
   botId: process.env.BOT_ID,
 };
-const commandsFunctions: any[] = [];
 
 const init = async () => {
   await mongo.init();
 
-  const commandList = await mongo.getCommands();
-  const bot = new Arcybot(config, commandList, commandsFunctions);
+  const commandList = await getCommandsFromAPI();
+  const bot = new Arcybot(
+    config,
+    commandList,
+    commandsFunctions,
+    // @ts-ignore
+    customCommands,
+  );
 
   bot.start("Dr. Fetus reporting for destruction!");
 };

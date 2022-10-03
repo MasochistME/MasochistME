@@ -1,0 +1,1 @@
+export const DISCORD_MAX_MSG_LENGTH = 2000;
