@@ -4,13 +4,18 @@ import { Arcybot } from "arcybot";
 
 import { Database } from "utils/db";
 import { getCommandsFromAPI } from "api";
-import { commandsFunctions, customCommands } from "commands";
+import {
+  commandsFunctions,
+  customCommands,
+  handleAutocomplete,
+} from "commands";
+import { Cache } from "cache";
 
 dotenv.config();
 
-/***********************
- *      DB CONFIG      *
- ***********************/
+/************************
+ *       DB CONFIG      *
+ ************************/
 
 const dbConfig = [
   { symbol: "fetus", url: process.env["DB_FETUS"] },
@@ -18,6 +23,12 @@ const dbConfig = [
 ];
 
 export const mongo = new Database(dbConfig);
+
+/************************
+ *         CACHE        *
+ ************************/
+
+export const cache = new Cache();
 
 /************************
  *      BOT CONFIG      *
@@ -30,6 +41,7 @@ const config = {
 
 const init = async () => {
   await mongo.init();
+  await cache.init();
 
   const commandList = await getCommandsFromAPI();
   const bot = new Arcybot(
@@ -41,6 +53,12 @@ const init = async () => {
   );
 
   bot.start("Dr. Fetus reporting for destruction!");
+
+  bot.botClient.on("interactionCreate", async interaction => {
+    if (interaction.isAutocomplete()) {
+      handleAutocomplete(interaction);
+    }
+  });
 };
 
 init();
