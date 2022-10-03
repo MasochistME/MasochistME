@@ -42,10 +42,6 @@
 //   deletememe: (command: ICommand, msg: Discord.Message) =>
 //     new CustomCommand(command, msg).execute(deletememe, msg),
 
-//   status: (command: ICommand, msg: Discord.Message) =>
-//     new CustomCommand(command, msg).execute(status, msg),
-//   impersonate: (command: ICommand, msg: Discord.Message) =>
-//     new CustomCommand(command, msg).execute(impersonate, msg),
 //   vid: (command: ICommand, msg: Discord.Message) =>
 //     new CustomCommand(command, msg).execute(vid, msg),
 
