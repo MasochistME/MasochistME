@@ -4,24 +4,17 @@ A custom bot created for the 0.1% Discord community.
 
 ## Configuration
 
-For the bot to work, there needs to be a `config.json` file and `.env` file in the main directory.
+For the bot to work, there needs to be a an `.env` file in the main directory.
 
-### Example of `config.json`
-
-```
-{
-    "DATABASE_URL": [
-        {
-            "symbol": database_name,
-            "url": "mongodb://username:password@host_ip:host_port/database_name?authSource=auth_database_name"
-        }
-    ]
-}
-```
 ### Example of `.env`
+
 ```
-ACCESS_TOKEN=SUPERsecretACCESStoken
-DISCORD_TOKEN=iAMaSUPERsecretTOKENdoNOTgiveMEtoANYONE666
+ACCESS_TOKEN=X
+DISCORD_TOKEN=X
+BOT_ID=X
+
+DB_FETUS=mongodb://LOGIN:PASSWORD@HOST:PORT/DB_NAME?authSource=AUTH_SOURCE
+DB_MASOCHIST=mongodb://LOGIN:PASSWORD@HOST:PORT/DB_NAME?authSource=AUTH_SOURCE
 ```
 
 ## Starting the bot
