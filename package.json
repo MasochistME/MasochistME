@@ -1,46 +1,55 @@
 {
   "name": "drfetus",
-  "version": "3.0.0",
-  "description": "A custom Dr. Fetus Bot for the 0.1% community!",
-  "main": "fetus.js",
+  "version": "4.0.0",
+  "description": "A custom Dr. Fetus Bot for the Masochist.ME community!",
+  "author": "Arcyvilk <arcyvilk@gmail.com>",
+  "license": "MIT",
+  "type": "module",
   "scripts": {
-    "build": "env NODE_PATH=./src tsc -p .",
-    "start": "env NODE_PATH=./src ts-node dist/src/fetus.js",
-    "start-dev": "env NODE_PATH=./src ts-node src/fetus.ts",
-    "fetus": "npm run build && npm run start",
-    "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
-    "lint:fix": "eslint src --ext .jsx,.js,.tsx,.ts --fix --quiet"
+    "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
+    "dev": "nodemon --exec npx tsx src/fetus.ts",
+    "start": "yarn build && node dist/fetus.js",
+    "lint": "eslint . --ext .ts",
+    "test": "echo TODO"
   },
+  "main": "dist/fetus.js",
+  "types": "dist/fetus.d.ts",
+  "homepage": "https://github.com/PointOnePercent/DrFetus#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/PointOnePercent/DrFetus.git"
   },
-  "author": "Arcyvilk",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/PointOnePercent/DrFetus/issues"
   },
-  "homepage": "https://github.com/PointOnePercent/DrFetus#readme",
+  "engines": {
+    "node": ">=16"
+  },
+  "files": [
+    "dist/**/*"
+  ],
   "dependencies": {
+    "arcybot": "^1.3.0",
     "axios": ">=0.21.1",
     "compromise": "^12.2.1",
-    "discord.js": "^12.5.1",
-    "dotenv": "^10.0.0",
-    "mongodb": "^3.2.3",
-    "rimraf": "^2.6.3",
-    "tsc": "^1.20150623.0"
+    "discord.js": "^14.5.0",
+    "dotenv": "^16.0.3",
+    "mongodb": "^4.10.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.9",
-    "@types/node": "^11.15.43",
-    "@typescript-eslint/eslint-plugin": "^4.12.0",
-    "@typescript-eslint/parser": "^4.12.0",
-    "eslint": "^7.17.0",
-    "eslint-config-prettier": "^7.1.0",
-    "eslint-plugin-prettier": "^3.3.1",
+    "@types/mongodb": "^4.0.7",
+    "@types/node": "^18.8.0",
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1",
+    "eslint": "^8.24.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "lodash": "^4.17.19",
-    "prettier": "^2.2.1",
+    "nodemon": "^2.0.20",
+    "prettier": "^2.7.1",
     "ts-node": "^9.1.1",
-    "typescript": "^4.1.3"
+    "tsc-alias": "^1.7.0",
+    "typescript": "^4.8.4"
   }
 }
