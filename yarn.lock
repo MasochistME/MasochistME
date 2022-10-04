@@ -338,13 +338,12 @@ anymatch@~3.1.2:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
-arcybot@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/arcybot/-/arcybot-1.3.0.tgz#0269754781aea4624f7364de89cff30fa85c07b4"
-  integrity sha512-RLi7wmYzSlgAdjcFI1ugTEjYG/CMPZafP83RilZ9y4J5Mh61VVRLenikAD3NfN5KWTs/uWHKR+bd/4iz7mvaeg==
+arcybot@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/arcybot/-/arcybot-1.4.1.tgz#d83714b2513fc6cf3dcdfb69e9c07a17027ae730"
+  integrity sha512-+YdgDpKBbaLiFwogHZBqQsrQRvORDm7mBn+4u7Wy4Tu6MF0p/tvO0JFof5O+RrwyIkTZPiba8ZW6er+iAk1Cuw==
   dependencies:
     discord.js "^14.3.0"
-    dotenv "^16.0.2"
     mongodb "^4.9.1"
 
 arg@^4.1.0:
@@ -587,7 +586,7 @@ doctrine@^3.0.0:
   dependencies:
     esutils "^2.0.2"
 
-dotenv@^16.0.2, dotenv@^16.0.3:
+dotenv@^16.0.3:
   version "16.0.3"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.0.3.tgz#115aec42bac5053db3c456db30cc243a5a836a07"
   integrity sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==
