@@ -23,11 +23,11 @@ export const createbadgeAutocomplete = async (
 };
 
 /**
- * Handles autocompletion for the createbadge command
+ * Handles autocompletion for the badge edit commands
  * @param interaction
  * @returns void
  */
-export const deletebadgeAutocomplete = async (
+export const editbadgeAutocomplete = async (
   interaction: AutocompleteInteraction,
 ): Promise<void> => {
   if (!interaction.isAutocomplete()) return;

@@ -1,5 +1,6 @@
 import {
   createbadgeBuilder,
+  editbadgeBuilder,
   deletebadgeBuilder,
   givebadgeBuilder,
   revokebadgeBuilder,
@@ -9,6 +10,7 @@ import { vidBuilder } from "./userBuilder";
 
 const badgeBuilders = [
   deletebadgeBuilder,
+  editbadgeBuilder,
   createbadgeBuilder,
   givebadgeBuilder,
   revokebadgeBuilder,
