@@ -1,8 +1,10 @@
 import {
+  getCommandsFromAPI,
   getAllBadgesFromAPI,
   getAllMembesFromAPI,
   getAllGamesFromAPI,
 } from "api";
+import { CommandObject } from "arcybot";
 
 export type CacheItem = {
   name: string;
@@ -22,8 +24,10 @@ export class Cache {
   public badges: CacheBadge[] = [];
   public members: CacheMember[] = [];
   public games: CacheGame[] = [];
+  public commandList: CommandObject[] = [];
 
-  async init() {
+  async update() {
+    this.commandList = await getCommandsFromAPI();
     this.badges = (await getAllBadgesFromAPI())
       .map(b => ({
         name: b.name,

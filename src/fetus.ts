@@ -3,7 +3,6 @@ import axios from "axios";
 import { Arcybot } from "arcybot";
 
 import { Database } from "utils/db";
-import { getCommandsFromAPI } from "api";
 import {
   commandsFunctions,
   customCommands,
@@ -41,12 +40,11 @@ const config = {
 
 const init = async () => {
   await mongo.init();
-  await cache.init();
+  await cache.update();
 
-  const commandList = await getCommandsFromAPI();
   const bot = new Arcybot(
     config,
-    commandList,
+    cache.commandList,
     commandsFunctions,
     // @ts-ignore
     customCommands,
