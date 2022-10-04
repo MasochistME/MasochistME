@@ -1,7 +1,11 @@
-import { DiscordInteraction } from "arcybot";
+import {
+  DiscordInteraction,
+  getErrorEmbed,
+  getAwaitEmbed,
+  getSuccessEmbed,
+} from "arcybot";
 
-import { cache } from "fetus";
-import { getErrorEmbed, getSuccessEmbed } from "utils";
+import { bot, cache } from "fetus";
 
 /**
  * Sends a meme to the channel.
@@ -11,11 +15,26 @@ import { getErrorEmbed, getSuccessEmbed } from "utils";
 export const update = async (
   interaction: DiscordInteraction,
 ): Promise<void> => {
-  interaction.deferReply({ ephemeral: true });
+  interaction.reply(
+    getAwaitEmbed(
+      "Updating...",
+      "⏳ Updating cache...\n⏳ Updating command list...",
+    ),
+  );
   try {
     await cache.update();
     interaction.editReply(
-      getSuccessEmbed("Success", "Cache updated successfully!"),
+      getAwaitEmbed(
+        "Updating...",
+        "✅ Updating cache...\n⏳ Updating command list...",
+      ),
+    );
+    await bot.commands.register();
+    interaction.editReply(
+      getSuccessEmbed(
+        "Done!",
+        "✅ Updating cache...\n✅ Updating command list...\n\nUpdate successfully completed!",
+      ),
     );
   } catch (err: any) {
     interaction.editReply(getErrorEmbed("Could not update cache", err));
