@@ -9,11 +9,21 @@ import {
   deleteMemeFromAPI,
 } from "api";
 
+/**
+ * Sends a meme to the channel.
+ * @param interaction DiscordInteraction
+ * @returns void
+ */
 export const meme = async (interaction: DiscordInteraction): Promise<void> => {
   const randomMeme = await getRandomMemeFromAPI();
   interaction.reply(`_ ${randomMeme} _`);
 };
 
+/**
+ * Shows a full list of all the memes.
+ * @param interaction DiscordInteraction
+ * @returns void
+ */
 export const memelist = async (
   interaction: DiscordInteraction,
 ): Promise<void> => {
@@ -32,6 +42,11 @@ export const memelist = async (
   memes.forEach(chunk => channel?.send({ content: chunk }));
 };
 
+/**
+ * Adds a new meme to the database.
+ * @param interaction DiscordInteraction
+ * @returns void
+ */
 export const addmeme = async (
   interaction: DiscordInteraction,
 ): Promise<void> => {
@@ -48,6 +63,11 @@ export const addmeme = async (
   }
 };
 
+/**
+ * Deletes a meme permanently from the database.
+ * @param interaction DiscordInteraction
+ * @returns void
+ */
 export const deletememe = async (
   interaction: DiscordInteraction,
 ): Promise<void> => {
