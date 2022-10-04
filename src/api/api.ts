@@ -7,7 +7,7 @@ export const getCommandsFromAPI = async () => {
   const cursor = mongo.dbs.fetus.collection<CommandObject>("commands").find();
   const commands: CommandObject[] = [];
   await cursor.forEach(el => {
-    commands.push(el);
+    if (!el.legacy) commands.push(el);
   });
   return commands;
 };
