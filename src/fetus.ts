@@ -33,16 +33,20 @@ export const cache = new Cache();
  *      BOT CONFIG      *
  ************************/
 
-const config = {
-  discordToken: process.env.DISCORD_TOKEN,
-  botId: process.env.BOT_ID,
-};
+export let bot: Arcybot;
 
 const init = async () => {
   await mongo.init();
   await cache.update();
 
-  const bot = new Arcybot(
+  const config = {
+    discordToken: process.env.DISCORD_TOKEN,
+    botId: process.env.BOT_ID,
+    modRole: cache.options.find(o => o.option === "modRole")?.value,
+    guildId: cache.options.find(o => o.option === "guildId")?.value,
+  };
+
+  bot = new Arcybot(
     config,
     cache.commandList,
     commandsFunctions,

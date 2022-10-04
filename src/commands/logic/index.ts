@@ -1,4 +1,4 @@
-import { CommandFn } from "arcybot/dist/CommandList";
+import { CommandFn } from "arcybot";
 
 import { update } from "./admin";
 import { vid } from "./user";
