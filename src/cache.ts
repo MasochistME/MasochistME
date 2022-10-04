@@ -1,33 +1,24 @@
+import { CommandObject } from "arcybot";
+
+import { CacheMember, CacheBadge, CacheGame, CacheOption } from "types";
 import {
   getCommandsFromAPI,
+  getAllOptionsFromAPI,
   getAllBadgesFromAPI,
   getAllMembesFromAPI,
   getAllGamesFromAPI,
 } from "api";
-import { CommandObject } from "arcybot";
-
-export type CacheItem = {
-  name: string;
-  id: string | number;
-};
-
-type CacheMember = CacheItem;
-interface CacheBadge extends CacheItem {
-  gameId: string;
-  description: string;
-}
-interface CacheGame extends CacheItem {
-  description: string;
-}
 
 export class Cache {
   public badges: CacheBadge[] = [];
   public members: CacheMember[] = [];
   public games: CacheGame[] = [];
+  public options: CacheOption[] = [];
   public commandList: CommandObject[] = [];
 
   async update() {
     this.commandList = await getCommandsFromAPI();
+    this.options = await getAllOptionsFromAPI();
     this.badges = (await getAllBadgesFromAPI())
       .map(b => ({
         name: b.name,

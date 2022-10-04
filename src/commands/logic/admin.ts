@@ -11,12 +11,13 @@ import { getErrorEmbed, getSuccessEmbed } from "utils";
 export const update = async (
   interaction: DiscordInteraction,
 ): Promise<void> => {
+  interaction.deferReply({ ephemeral: true });
   try {
     await cache.update();
-    interaction.reply(
+    interaction.editReply(
       getSuccessEmbed("Success", "Cache updated successfully!"),
     );
   } catch (err: any) {
-    interaction.reply(getErrorEmbed("Could not update cache", err));
+    interaction.editReply(getErrorEmbed("Could not update cache", err));
   }
 };
