@@ -1,20 +1,42 @@
-import { getAllBadgesFromAPI, getAllMembesFromAPI } from "api";
+import {
+  getAllBadgesFromAPI,
+  getAllMembesFromAPI,
+  getAllGamesFromAPI,
+} from "api";
 
 export type CacheItem = {
   name: string;
   id: string | number;
 };
 
+type CacheMember = CacheItem;
+interface CacheBadge extends CacheItem {
+  gameId: string;
+  description: string;
+}
+interface CacheGame extends CacheItem {
+  description: string;
+}
+
 export class Cache {
-  public badges: CacheItem[] = [];
-  public members: CacheItem[] = [];
+  public badges: CacheBadge[] = [];
+  public members: CacheMember[] = [];
+  public games: CacheGame[] = [];
 
   async init() {
     this.badges = (await getAllBadgesFromAPI())
-      .map(b => ({ name: b.name, id: b._id.toString() }))
+      .map(b => ({
+        name: b.name,
+        description: b.description,
+        gameId: b.gameId,
+        id: b._id.toString(),
+      }))
       .sort();
     this.members = (await getAllMembesFromAPI())
       .map(m => ({ name: m.name, id: m.id }))
+      .sort();
+    this.games = (await getAllGamesFromAPI())
+      .map(g => ({ name: g.title, description: g.desc, id: g.id }))
       .sort();
   }
 }
