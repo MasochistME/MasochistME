@@ -1,12 +1,12 @@
 import axios from "axios";
-import { log, DiscordInteraction } from "arcybot";
-
 import {
   getErrorEmbed,
   getSuccessEmbed,
-  getBadgeNameById,
-  getMemberNameById,
-} from "utils";
+  DiscordInteraction,
+  log,
+} from "arcybot";
+
+import { getBadgeNameById, getMemberNameById } from "utils";
 import { API_URL } from "consts";
 
 /**

@@ -1,7 +1,6 @@
-import { DiscordInteraction } from "arcybot";
+import { DiscordInteraction, getErrorEmbed, getSuccessEmbed } from "arcybot";
 
 import { DISCORD_MAX_MSG_LENGTH } from "consts";
-import { getErrorEmbed, getSuccessEmbed } from "utils";
 import {
   getMemesFromAPI,
   getRandomMemeFromAPI,
