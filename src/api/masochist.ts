@@ -12,7 +12,7 @@ export const getAllBadgesFromAPI = async () => {
 
 export const getAllMembesFromAPI = async () => {
   const cursor = mongo.dbs.masochist.collection<Member>("users").find();
-  const members: Member[] = [];
+  const members: Omit<Member, "games">[] = [];
   await cursor.forEach(el => {
     members.push(el);
   });
@@ -21,7 +21,7 @@ export const getAllMembesFromAPI = async () => {
 
 export const getAllGamesFromAPI = async () => {
   const cursor = mongo.dbs.masochist.collection<Game>("games").find();
-  const games: Game[] = [];
+  const games: Omit<Game, "achievements" | "sale">[] = [];
   await cursor.forEach(el => {
     games.push(el);
   });

@@ -3,6 +3,7 @@ import { MongoID } from "types/Mongo";
 export interface Member extends MongoID {
   name: string;
   id: number;
+  discordId?: number;
   avatar: string;
   url: string;
   updated: number;
