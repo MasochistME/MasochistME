@@ -9,9 +9,10 @@ import {
   getAllGamesFromAPI,
 } from "api";
 
-/**
- *
- */
+type CacheConfig = {
+  mainDb?: string;
+};
+
 export class Cache {
   public mainDb: string;
   public badges: CacheBadge[] = [];
@@ -20,8 +21,8 @@ export class Cache {
   public options: CacheOption[] = [];
   public commandList: CommandObject[] = [];
 
-  constructor(mainDb: string | undefined) {
-    this.mainDb = mainDb ?? "";
+  constructor(config: CacheConfig) {
+    this.mainDb = config.mainDb ?? "";
   }
 
   async update() {

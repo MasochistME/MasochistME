@@ -28,7 +28,8 @@ export const mongo = new Database(dbConfig);
  *         CACHE        *
  ************************/
 
-export const cache = new Cache(mainDb);
+const cacheConfig = { mainDb };
+export const cache = new Cache(cacheConfig);
 
 /************************
  *      BOT CONFIG      *
