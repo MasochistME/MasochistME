@@ -1,7 +1,12 @@
 import axios from "axios";
 import { log, DiscordInteraction } from "arcybot";
 
-import { getErrorEmbed, getSuccessEmbed } from "utils";
+import {
+  getErrorEmbed,
+  getSuccessEmbed,
+  getBadgeNameById,
+  getMemberNameById,
+} from "utils";
 import { API_URL } from "consts";
 
 /**
@@ -124,14 +129,24 @@ export const badgeedit = async (
           })),
         {
           name: "---",
-          value: `You have updated a ${badgeId} badge!`,
+          value: `You have updated a **${getBadgeNameById(
+            badgeId,
+          )?.toUpperCase()}** badge!`,
         },
       ],
     };
     interaction.editReply({ embeds: [embed] });
   } catch (err: any) {
     console.trace(err);
-    interaction.editReply(getErrorEmbed("Error updating the badge", err, true));
+    interaction.editReply(
+      getErrorEmbed(
+        `Error updating the badge **${getBadgeNameById(
+          badgeId,
+        ).toUpperCase()}**`,
+        err,
+        true,
+      ),
+    );
   }
 };
 
@@ -156,14 +171,20 @@ export const badgedelete = async (
     interaction.editReply(
       getSuccessEmbed(
         "Badge deleted",
-        `Done, fucker.\nBadge ${(
-          badgeId ?? "<UNKNOWN>"
-        ).toUpperCase()} permanently deleted.\n**Important**: If any user had this badge assigned, they will still have it, but it won't display on their profile anymore. `,
+        `Done, fucker.\nBadge **${getBadgeNameById(
+          badgeId,
+        ).toUpperCase()}** permanently deleted.\n**Important**: If any user had this badge assigned, they will still have it, but it won't display on their profile anymore. `,
       ),
     );
   } catch (err: any) {
     log.WARN(err);
-    interaction.editReply(getErrorEmbed("Error deleting badge", err, true));
+    interaction.editReply(
+      getErrorEmbed(
+        `Error deleting badge **${getBadgeNameById(badgeId).toUpperCase()}**`,
+        err,
+        true,
+      ),
+    );
   }
 };
 
@@ -189,13 +210,25 @@ export const badgegive = async (
       interaction.editReply(
         getSuccessEmbed(
           "Badge given!",
-          `Member ${memberId} now has badge ${badgeId}!`,
+          `Member **${getMemberNameById(
+            memberId,
+          ).toUpperCase()}** now has badge **${getBadgeNameById(
+            badgeId,
+          ).toUpperCase()}**!`,
         ),
       );
     else throw badgeRes.data;
   } catch (err: any) {
     interaction.editReply(
-      getErrorEmbed("Error giving badge to the user", err, true),
+      getErrorEmbed(
+        `Error giving badge **${getBadgeNameById(
+          badgeId,
+        ).toUpperCase()}** to the user **${getMemberNameById(
+          memberId,
+        ).toUpperCase()}**.`,
+        err,
+        true,
+      ),
     );
   }
 };
@@ -222,13 +255,25 @@ export const badgerevoke = async (
       interaction.editReply(
         getSuccessEmbed(
           "Badge removed!",
-          `Member ${memberId} no longer has badge ${badgeId}!`,
+          `Member **${getMemberNameById(
+            memberId,
+          ).toUpperCase()}** no longer has badge **${getBadgeNameById(
+            badgeId,
+          ).toUpperCase()}**!`,
         ),
       );
     else throw badgeRes.data;
   } catch (err: any) {
     interaction.editReply(
-      getErrorEmbed("Error removing badge from the user", err, true),
+      getErrorEmbed(
+        `Error removing badge **${getBadgeNameById(
+          badgeId,
+        ).toUpperCase()}** from the user **${getMemberNameById(
+          memberId,
+        ).toUpperCase()}**.`,
+        err,
+        true,
+      ),
     );
   }
 };
