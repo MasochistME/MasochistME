@@ -1,7 +1,9 @@
 import { CommandFn } from "arcybot";
 
+import { vid } from "./misc";
 import { update } from "./admin";
-import { vid } from "./user";
+import { profile } from "./user";
+import { register } from "./register";
 import { meme, memelist, memeadd, memedelete } from "./meme";
 import {
   badgecreate,
@@ -12,7 +14,7 @@ import {
 } from "./badges";
 
 const adminFn: CommandFn[] = [update];
-const userFn: CommandFn[] = [vid];
+const userFn: CommandFn[] = [register, profile];
 const memeFn: CommandFn[] = [meme, memelist, memeadd, memedelete];
 const badgeFn: CommandFn[] = [
   badgecreate,
@@ -21,5 +23,12 @@ const badgeFn: CommandFn[] = [
   badgegive,
   badgerevoke,
 ];
+const miscFn: CommandFn[] = [vid];
 
-export const commandsFunctions = [...userFn, ...adminFn, ...badgeFn, ...memeFn];
+export const commandsFunctions = [
+  ...userFn,
+  ...adminFn,
+  ...badgeFn,
+  ...memeFn,
+  ...miscFn,
+];

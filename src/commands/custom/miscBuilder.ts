@@ -1,10 +1,10 @@
 import { SlashCommandBuilder } from "discord.js";
 
-export const registerBuilder = new SlashCommandBuilder()
-  .setName("register")
+export const vidBuilder = new SlashCommandBuilder()
+  .setName("vid")
   .addStringOption(option =>
     option
       .setName("link")
-      .setDescription("Link to your Masochist.ME profile")
+      .setDescription("Link to the video")
       .setRequired(true),
   );

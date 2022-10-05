@@ -6,7 +6,8 @@ import {
   badgeRevokeBuilder,
 } from "./badgeBuilder";
 import { memeAddBuilder, memeDeleteBuilder } from "./memeBuilder";
-import { vidBuilder } from "./userBuilder";
+import { registerBuilder } from "./userBuilder";
+import { vidBuilder } from "./miscBuilder";
 
 const badgeBuilders = [
   badgeCreateBuilder,
@@ -16,10 +17,12 @@ const badgeBuilders = [
   badgeRevokeBuilder,
 ];
 const memeBuilders = [memeAddBuilder, memeDeleteBuilder];
-const userBuilders = [vidBuilder];
+const miscBuilders = [vidBuilder];
+const userBuilders = [registerBuilder];
 
 export const customCommands = [
   ...badgeBuilders,
   ...memeBuilders,
   ...userBuilders,
+  ...miscBuilders,
 ];
