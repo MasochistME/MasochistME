@@ -4,7 +4,7 @@ import { CacheOption } from "types";
 import { mongo, cache } from "fetus";
 
 export const getCommandsFromAPI = async () => {
-  const cursor = mongo.dbs[cache.mainDb]
+  const cursor = mongo.dbs[cache.botDb]
     .collection<CommandObject>("commands")
     .find();
   const commands: CommandObject[] = [];
@@ -15,7 +15,7 @@ export const getCommandsFromAPI = async () => {
 };
 
 export const getAllOptionsFromAPI = async () => {
-  const cursor = mongo.dbs[cache.mainDb]
+  const cursor = mongo.dbs[cache.botDb]
     .collection<CacheOption>("options")
     .find();
   const options: CacheOption[] = [];

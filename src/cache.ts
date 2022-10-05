@@ -10,11 +10,11 @@ import {
 } from "api";
 
 type CacheConfig = {
-  mainDb?: string;
+  botDb?: string;
 };
 
 export class Cache {
-  public mainDb: string;
+  public botDb: string;
   public badges: CacheBadge[] = [];
   public members: CacheMember[] = [];
   public games: CacheGame[] = [];
@@ -22,7 +22,7 @@ export class Cache {
   public commandList: CommandObject[] = [];
 
   constructor(config: CacheConfig) {
-    this.mainDb = config.mainDb ?? "";
+    this.botDb = config.botDb ?? "";
   }
 
   async update() {
