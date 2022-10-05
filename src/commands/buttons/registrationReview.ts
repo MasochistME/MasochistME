@@ -1,6 +1,8 @@
 import { getErrorEmbed } from "arcybot";
 import { ButtonInteraction, APIEmbed } from "discord.js";
 
+import { isMod } from "utils";
+
 export const REGISTRATION_REVIEW = "REGISTRATION_REVIEW";
 
 /**
@@ -12,6 +14,15 @@ export const registrationReview = async (
   interaction: ButtonInteraction,
 ): Promise<void> => {
   if (!interaction.isButton()) return;
+  if (!isMod(interaction)) {
+    interaction.channel?.send(
+      getErrorEmbed(
+        "Error",
+        `User <@${interaction.user.id}> doesn't have role allowing them to review registration application.`,
+      ),
+    );
+    return;
+  }
 
   const embedFields = interaction.message.embeds[0].data.fields;
   const steamId = embedFields?.find(field => field.name === "Steam ID")?.value;
