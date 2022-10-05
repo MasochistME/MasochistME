@@ -9,3 +9,4 @@ config.json
 .yalc
 yalc.lock
 
+.envprod
