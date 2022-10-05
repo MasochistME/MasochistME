@@ -18,7 +18,9 @@ export const connectUserWithDiscord = async (
     const { steamid, discordid: discordId } = req.params;
     const rawMember = members.find((user: Member) => user.id === steamid);
     if (!rawMember) {
-      res.sendStatus(404);
+      res
+        .status(404)
+        .send('Member with this steam ID does not exist in the database.');
       return;
     }
 
@@ -32,7 +34,7 @@ export const connectUserWithDiscord = async (
             `--> [UPDATE] Steam User ${steamid} connected to Discord User ${discordId} [ERROR]`,
           );
           log.WARN(err);
-          res.sendStatus(400);
+          res.status(400).send('Could not update member in the database.');
           return;
         }
         log.INFO(
