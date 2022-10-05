@@ -15,8 +15,6 @@ import { bot, cache } from "fetus";
 export const update = async (
   interaction: DiscordInteraction,
 ): Promise<void> => {
-  await bot.commands.removeGuildCommands();
-  await bot.commands.removeGlobalCommands();
   interaction.reply(
     getAwaitEmbed(
       "Updating...",
