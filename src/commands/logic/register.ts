@@ -5,6 +5,8 @@ import {
   ButtonStyle,
 } from "discord.js";
 import { DiscordInteraction, getSuccessEmbed, getErrorEmbed } from "arcybot";
+
+import { REGISTRATION_REVIEW } from "commands/buttons/registrationReview";
 import { getChannelById, getOption } from "utils";
 
 /**
@@ -54,17 +56,17 @@ export const register = async (
  * @returns ActionRowBuilder<ButtonBuilder>
  */
 const getModApprovalButtons = () => {
-  const buttonReject = new ButtonBuilder()
-    .setCustomId("reject")
-    .setLabel("Reject")
-    .setStyle(ButtonStyle.Danger);
   const buttonApprove = new ButtonBuilder()
-    .setCustomId("approve")
+    .setCustomId(`${REGISTRATION_REVIEW}_APPROVE`)
     .setLabel("Approve")
     .setStyle(ButtonStyle.Success);
+  const buttonReject = new ButtonBuilder()
+    .setCustomId(`${REGISTRATION_REVIEW}_REJECT`)
+    .setLabel("Reject")
+    .setStyle(ButtonStyle.Danger);
   const buttonBar = new ActionRowBuilder<ButtonBuilder>().addComponents(
-    buttonReject,
     buttonApprove,
+    buttonReject,
   );
 
   return buttonBar;
@@ -84,8 +86,14 @@ const getModApprovalEmbed = (
     title: "🔧 User registration request",
     fields: [
       {
-        name: "---",
-        value: `User <@${interaction.user.id}> requested registration.\nReview their application and approve or reject.`,
+        name: "User",
+        value: `<@${interaction.user.id}>`,
+        inline: true,
+      },
+      {
+        name: "Steam ID",
+        value: steamId,
+        inline: true,
       },
       {
         name: "Steam profile",

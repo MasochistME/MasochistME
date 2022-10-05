@@ -7,6 +7,7 @@ import {
   commandsFunctions,
   customCommands,
   handleAutocomplete,
+  handleButton,
 } from "commands";
 import { Cache } from "cache";
 
@@ -59,9 +60,8 @@ const init = async () => {
   bot.start("Dr. Fetus reporting for destruction!");
 
   bot.botClient.on("interactionCreate", async interaction => {
-    if (interaction.isAutocomplete()) {
-      handleAutocomplete(interaction);
-    }
+    if (interaction.isAutocomplete()) handleAutocomplete(interaction);
+    if (interaction.isButton()) handleButton(interaction);
   });
 };
 
