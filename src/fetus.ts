@@ -2,7 +2,7 @@ import * as dotenv from "dotenv";
 import axios from "axios";
 import { Arcybot } from "arcybot";
 
-import { Database } from "utils/db";
+import { getOption, Database } from "utils";
 import {
   commandsFunctions,
   customCommands,
@@ -44,8 +44,8 @@ const init = async () => {
   const config = {
     discordToken: process.env.DISCORD_TOKEN,
     botId: process.env.BOT_ID,
-    modRole: cache.options.find(o => o.option === "modRole")?.value,
-    guildId: cache.options.find(o => o.option === "guildId")?.value,
+    modRole: getOption("modRole"),
+    guildId: getOption("guildId"),
   };
 
   bot = new Arcybot(
