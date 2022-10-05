@@ -9,12 +9,20 @@ import {
   getAllGamesFromAPI,
 } from "api";
 
+/**
+ *
+ */
 export class Cache {
+  public mainDb: string;
   public badges: CacheBadge[] = [];
   public members: CacheMember[] = [];
   public games: CacheGame[] = [];
   public options: CacheOption[] = [];
   public commandList: CommandObject[] = [];
+
+  constructor(mainDb: string | undefined) {
+    this.mainDb = mainDb ?? "";
+  }
 
   async update() {
     this.commandList = await getCommandsFromAPI();

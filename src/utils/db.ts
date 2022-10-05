@@ -2,7 +2,7 @@ import { MongoClient, Db } from "mongodb";
 import { log } from "arcybot";
 
 type DB = {
-  symbol: string;
+  symbol?: string;
   url?: string;
 };
 
@@ -18,7 +18,8 @@ export class Database {
 
   connectToDbClient = async (db: DB): Promise<void> => {
     try {
-      if (!db.url) throw new Error(`Database: ${db.symbol} URL not provided`);
+      if (!db.url || !db.symbol)
+        throw new Error(`Database: SYMBOL or URL missing.`);
       const client = new MongoClient(db.url);
       this.dbs[db.symbol] = client.db(db.symbol);
     } catch (err) {

@@ -7,9 +7,11 @@
   "type": "module",
   "scripts": {
     "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
-    "dev": "npx tsx src/fetus.ts",
-    "dev:watch": "nodemon --exec npx tsx src/fetus.ts",
-    "start": "yarn build && node dist/fetus.js",
+    "dev": "env DB_FETUS_NAME=fetus-dev npx tsx src/fetus.ts",
+    "dev:watch": "env DB_FETUS_NAME=fetus-dev nodemon --exec npx tsx src/fetus.ts",
+    "prod": "env DB_FETUS_NAME=fetus npx tsx src/fetus.ts",
+    "prod:watch": "env DB_FETUS_NAME=fetus nodemon --exec npx tsx src/fetus.ts",
+    "start": "yarn build && DB_FETUS_NAME=fetus node dist/fetus.js",
     "lint": "eslint . --ext .ts",
     "test": "echo TODO"
   },

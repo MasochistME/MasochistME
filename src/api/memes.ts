@@ -2,10 +2,10 @@ import { ObjectId } from "mongodb";
 import { log } from "arcybot";
 
 import { Meme } from "types";
-import { mongo } from "fetus";
+import { mongo, cache } from "fetus";
 
 export const getMemesFromAPI = async () => {
-  const cursor = mongo.dbs.fetus.collection<Meme>("memes").find();
+  const cursor = mongo.dbs[cache.mainDb].collection<Meme>("memes").find();
   const memes: Meme[] = [];
   await cursor.forEach(el => {
     memes.push(el);
@@ -14,7 +14,7 @@ export const getMemesFromAPI = async () => {
 };
 
 export const getRandomMemeFromAPI = async () => {
-  const cursor = mongo.dbs.fetus
+  const cursor = mongo.dbs[cache.mainDb]
     .collection("memes")
     .aggregate([{ $sample: { size: 1 } }]);
   let meme = "";
@@ -26,11 +26,13 @@ export const getRandomMemeFromAPI = async () => {
 
 export const addMemeToAPI = async (meme: string | null) => {
   if (!meme) throw new Error("Meme has no body.");
-  await mongo.dbs.fetus.collection("memes").insertOne({ meme });
+  await mongo.dbs[cache.mainDb].collection("memes").insertOne({ meme });
   log.INFO(`Succesfully added a new meme!`);
 };
 
 export const deleteMemeFromAPI = async (memeToDeleteId: ObjectId) => {
-  await mongo.dbs.fetus.collection("memes").deleteOne({ _id: memeToDeleteId });
+  await mongo.dbs[cache.mainDb]
+    .collection("memes")
+    .deleteOne({ _id: memeToDeleteId });
   log.INFO(`Succesfully deleted a meme!`);
 };

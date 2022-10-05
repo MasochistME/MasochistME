@@ -12,6 +12,8 @@ import { API_URL } from "consts";
 export const badgecreate = async (
   interaction: DiscordInteraction,
 ): Promise<void> => {
+  await interaction.deferReply();
+
   const gameId = interaction.options.getString("game", true);
   const thumbnail = interaction.options.getAttachment("image", true);
   const isNonSteamGame = isNaN(parseInt(gameId));
@@ -59,10 +61,10 @@ export const badgecreate = async (
         },
       ],
     };
-    interaction.reply({ embeds: [embed] });
+    interaction.editReply({ embeds: [embed] });
   } catch (err: any) {
     log.WARN(err);
-    interaction.reply(getErrorEmbed("Error saving badge", err, true));
+    interaction.editReply(getErrorEmbed("Error saving badge", err, true));
   }
 };
 
@@ -74,6 +76,8 @@ export const badgecreate = async (
 export const badgeedit = async (
   interaction: DiscordInteraction,
 ): Promise<void> => {
+  await interaction.deferReply();
+
   const badgeId = interaction.options.getString("badge", true);
   const name = interaction.options.getString("name", false);
   const description = interaction.options.getString("description", false);
@@ -82,8 +86,6 @@ export const badgeedit = async (
   const image = interaction.options.getAttachment("image", false);
 
   const url = `${API_URL}/badges/${badgeId}`;
-
-  await interaction.deferReply({ ephemeral: true });
 
   try {
     const getBadge = await axios.get(url);
@@ -141,6 +143,8 @@ export const badgeedit = async (
 export const badgedelete = async (
   interaction: DiscordInteraction,
 ): Promise<void> => {
+  await interaction.deferReply();
+
   const badgeId = interaction.options.getString("badge", true);
 
   const url = `${API_URL}/badges/${badgeId}`;
@@ -149,7 +153,7 @@ export const badgedelete = async (
     if (deleteBadge.status !== 204) {
       throw deleteBadge.data;
     }
-    interaction.reply(
+    interaction.editReply(
       getSuccessEmbed(
         "Badge deleted",
         `Done, fucker.\nBadge ${(
@@ -159,7 +163,7 @@ export const badgedelete = async (
     );
   } catch (err: any) {
     log.WARN(err);
-    interaction.reply(getErrorEmbed("Error deleting badge", err, true));
+    interaction.editReply(getErrorEmbed("Error deleting badge", err, true));
   }
 };
 
@@ -172,7 +176,7 @@ export const badgegive = async (
   interaction: DiscordInteraction,
 ): Promise<void> => {
   if (interaction.isAutocomplete()) return;
-  await interaction.deferReply({ ephemeral: true });
+  await interaction.deferReply();
 
   const badgeId = interaction.options.getString("badge");
   const memberId = interaction.options.getString("member");
@@ -205,7 +209,7 @@ export const badgerevoke = async (
   interaction: DiscordInteraction,
 ): Promise<void> => {
   if (interaction.isAutocomplete()) return;
-  await interaction.deferReply({ ephemeral: true });
+  await interaction.deferReply();
 
   const badgeId = interaction.options.getString("badge");
   const memberId = interaction.options.getString("member");

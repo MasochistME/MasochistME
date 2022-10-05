@@ -16,8 +16,9 @@ dotenv.config();
  *       DB CONFIG      *
  ************************/
 
+const mainDb = process.env["DB_FETUS_NAME"];
 const dbConfig = [
-  { symbol: "fetus", url: process.env["DB_FETUS"] },
+  { symbol: mainDb, url: process.env["DB_FETUS"] },
   { symbol: "masochist", url: process.env["DB_MASOCHIST"] },
 ];
 
@@ -27,7 +28,7 @@ export const mongo = new Database(dbConfig);
  *         CACHE        *
  ************************/
 
-export const cache = new Cache();
+export const cache = new Cache(mainDb);
 
 /************************
  *      BOT CONFIG      *
