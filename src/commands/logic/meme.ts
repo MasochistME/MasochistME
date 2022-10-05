@@ -47,7 +47,7 @@ export const memelist = async (
  * @param interaction DiscordInteraction
  * @returns void
  */
-export const addmeme = async (
+export const memeadd = async (
   interaction: DiscordInteraction,
 ): Promise<void> => {
   try {
@@ -68,7 +68,7 @@ export const addmeme = async (
  * @param interaction DiscordInteraction
  * @returns void
  */
-export const deletememe = async (
+export const memedelete = async (
   interaction: DiscordInteraction,
 ): Promise<void> => {
   const memes = await getMemesFromAPI();

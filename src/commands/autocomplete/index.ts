@@ -1,7 +1,7 @@
 import { AutocompleteInteraction } from "discord.js";
 import {
-  createbadgeAutocomplete,
-  editbadgeAutocomplete,
+  badgeCreateAutocomplete,
+  badgeEditAutocomplete,
   badgeAutocomplete,
 } from "./badgeAutocomplete";
 
@@ -11,10 +11,10 @@ const BADGE_CREATION_CMDS = ["createbadge"];
 
 export const handleAutocomplete = (interaction: AutocompleteInteraction) => {
   if (BADGE_CREATION_CMDS.includes(interaction.commandName)) {
-    createbadgeAutocomplete(interaction);
+    badgeCreateAutocomplete(interaction);
   }
   if (BADGE_EDIT_CMDS.includes(interaction.commandName)) {
-    editbadgeAutocomplete(interaction);
+    badgeEditAutocomplete(interaction);
   }
   if (BADGE_MEMBER_CMDS.includes(interaction.commandName)) {
     badgeAutocomplete(interaction);

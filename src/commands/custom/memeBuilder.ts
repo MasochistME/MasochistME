@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from "discord.js";
 
-export const addmemeBuilder = new SlashCommandBuilder()
-  .setName("addmeme")
+export const memeAddBuilder = new SlashCommandBuilder()
+  .setName("memeadd")
   .addStringOption(option =>
     option
       .setName("meme")
@@ -9,8 +9,8 @@ export const addmemeBuilder = new SlashCommandBuilder()
       .setRequired(true),
   );
 
-export const deletememeBuilder = new SlashCommandBuilder()
-  .setName("deletememe")
+export const memeDeleteBuilder = new SlashCommandBuilder()
+  .setName("memedelete")
   .addStringOption(option =>
     option
       .setName("memeindex")

@@ -6,11 +6,11 @@ import {
 import { cache } from "fetus";
 
 /**
- * Handles autocompletion for the createbadge command
+ * Handles autocompletion for the create badge command
  * @param interaction
  * @returns void
  */
-export const createbadgeAutocomplete = async (
+export const badgeCreateAutocomplete = async (
   interaction: AutocompleteInteraction,
 ): Promise<void> => {
   if (!interaction.isAutocomplete()) return;
@@ -27,7 +27,7 @@ export const createbadgeAutocomplete = async (
  * @param interaction
  * @returns void
  */
-export const editbadgeAutocomplete = async (
+export const badgeEditAutocomplete = async (
   interaction: AutocompleteInteraction,
 ): Promise<void> => {
   if (!interaction.isAutocomplete()) return;

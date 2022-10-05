@@ -1,21 +1,21 @@
 import {
-  createbadgeBuilder,
-  editbadgeBuilder,
-  deletebadgeBuilder,
-  givebadgeBuilder,
-  revokebadgeBuilder,
+  badgeCreateBuilder,
+  badgeEditBuilder,
+  badgeDeleteBuilder,
+  badgeGiveBuilder,
+  badgeRevokeBuilder,
 } from "./badgeBuilder";
-import { addmemeBuilder, deletememeBuilder } from "./memeBuilder";
+import { memeAddBuilder, memeDeleteBuilder } from "./memeBuilder";
 import { vidBuilder } from "./userBuilder";
 
 const badgeBuilders = [
-  deletebadgeBuilder,
-  editbadgeBuilder,
-  createbadgeBuilder,
-  givebadgeBuilder,
-  revokebadgeBuilder,
+  badgeCreateBuilder,
+  badgeEditBuilder,
+  badgeDeleteBuilder,
+  badgeGiveBuilder,
+  badgeRevokeBuilder,
 ];
-const memeBuilders = [addmemeBuilder, deletememeBuilder];
+const memeBuilders = [memeAddBuilder, memeDeleteBuilder];
 const userBuilders = [vidBuilder];
 
 export const customCommands = [

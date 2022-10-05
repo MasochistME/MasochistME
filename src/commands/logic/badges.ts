@@ -9,7 +9,7 @@ import { API_URL } from "consts";
  * @param interaction DiscordInteraction
  * @returns void
  */
-export const createbadge = async (
+export const badgecreate = async (
   interaction: DiscordInteraction,
 ): Promise<void> => {
   const gameId = interaction.options.getString("game", true);
@@ -71,7 +71,7 @@ export const createbadge = async (
  * @param interaction DiscordInteraction
  * @returns void
  */
-export const editbadge = async (
+export const badgeedit = async (
   interaction: DiscordInteraction,
 ): Promise<void> => {
   const badgeId = interaction.options.getString("badge", true);
@@ -138,7 +138,7 @@ export const editbadge = async (
  * @param interaction DiscordInteraction
  * @returns void
  */
-export const deletebadge = async (
+export const badgedelete = async (
   interaction: DiscordInteraction,
 ): Promise<void> => {
   const badgeId = interaction.options.getString("badge", true);
@@ -168,7 +168,7 @@ export const deletebadge = async (
  * @param interaction DiscordInteraction
  * @returns void
  */
-export const givebadge = async (
+export const badgegive = async (
   interaction: DiscordInteraction,
 ): Promise<void> => {
   if (interaction.isAutocomplete()) return;
@@ -201,7 +201,7 @@ export const givebadge = async (
  * @param interaction DiscordInteraction
  * @returns void
  */
-export const revokebadge = async (
+export const badgerevoke = async (
   interaction: DiscordInteraction,
 ): Promise<void> => {
   if (interaction.isAutocomplete()) return;

@@ -3,8 +3,8 @@ import { SlashCommandBuilder } from "discord.js";
 /**
  * Builder for the custom createbadge command
  */
-export const createbadgeBuilder = new SlashCommandBuilder()
-  .setName("createbadge")
+export const badgeCreateBuilder = new SlashCommandBuilder()
+  .setName("badgecreate")
   .addStringOption(option =>
     option
       .setName("game")
@@ -46,8 +46,8 @@ export const createbadgeBuilder = new SlashCommandBuilder()
 /**
  * Builder for the custom editbadge command
  */
-export const editbadgeBuilder = new SlashCommandBuilder()
-  .setName("editbadge")
+export const badgeEditBuilder = new SlashCommandBuilder()
+  .setName("badgeedit")
   .addStringOption(option =>
     option
       .setName("badge")
@@ -74,8 +74,8 @@ export const editbadgeBuilder = new SlashCommandBuilder()
 /**
  * Builder for the custom deletebadge command
  */
-export const deletebadgeBuilder = new SlashCommandBuilder()
-  .setName("deletebadge")
+export const badgeDeleteBuilder = new SlashCommandBuilder()
+  .setName("badgedelete")
   .addStringOption(option =>
     option
       .setName("badge")
@@ -87,8 +87,8 @@ export const deletebadgeBuilder = new SlashCommandBuilder()
 /**
  * Builder for the custom givebadge command
  */
-export const givebadgeBuilder = new SlashCommandBuilder()
-  .setName("givebadge")
+export const badgeGiveBuilder = new SlashCommandBuilder()
+  .setName("badgegive")
   .addStringOption(option =>
     option
       .setName("badge")
@@ -107,8 +107,8 @@ export const givebadgeBuilder = new SlashCommandBuilder()
 /**
  * Builder for the custom revokebadge command
  */
-export const revokebadgeBuilder = new SlashCommandBuilder()
-  .setName("revokebadge")
+export const badgeRevokeBuilder = new SlashCommandBuilder()
+  .setName("badgerevoke")
   .addStringOption(option =>
     option
       .setName("badge")
