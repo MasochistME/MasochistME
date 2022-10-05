@@ -7,6 +7,7 @@ export const router = express.Router();
 
 import { initiateMainUpdate, getStatus } from './update';
 import { getUsers, getUserDetails, updateUser } from './users';
+import { connectUserWithDiscord } from './masochist';
 import {
   getAllBadges,
   addBadge,
@@ -72,6 +73,7 @@ router.get('/curator/members', getCuratorMembers);
 router.get('/users', getUsers);
 router.get('/users/user/:steamid', getUserDetails);
 router.get('/users/user/:steamid/update', updateUser);
+router.put('/users/user/:steamid/discord/:discordid', connectUserWithDiscord);
 
 router.get('/update', initiateMainUpdate);
 router.get('/status', getStatus);
