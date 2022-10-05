@@ -78,4 +78,5 @@ init();
 //   );
 // };
 
-axios.defaults.headers.common["Authorization"] = process.env.ACCESS_TOKEN;
+if (process.env.ACCESS_TOKEN)
+  axios.defaults.headers.common["Authorization"] = process.env.ACCESS_TOKEN;
