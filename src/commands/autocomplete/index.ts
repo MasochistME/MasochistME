@@ -5,9 +5,9 @@ import {
   badgeAutocomplete,
 } from "./badgeAutocomplete";
 
-const BADGE_MEMBER_CMDS = ["givebadge", "revokebadge"];
-const BADGE_EDIT_CMDS = ["deletebadge", "editbadge"];
-const BADGE_CREATION_CMDS = ["createbadge"];
+const BADGE_MEMBER_CMDS = ["badgegive", "badgerevoke"];
+const BADGE_EDIT_CMDS = ["badgedelete", "badgeedit"];
+const BADGE_CREATION_CMDS = ["badgecreate"];
 
 export const handleAutocomplete = (interaction: AutocompleteInteraction) => {
   if (BADGE_CREATION_CMDS.includes(interaction.commandName)) {
