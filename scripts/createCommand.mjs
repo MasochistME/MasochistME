@@ -79,13 +79,13 @@ const createCommand = name => {
     `\r\n
     // TODO don't forget to edit this!
     // 
-    // import { templateAutocomplete } from "commands/template/interactions";
+    // import { ${command}Autocomplete } from "commands/${command}/interactions";
     //
-    // const TEMPLATE_CMDS = ["template"];
+    // const ${command.toUpperCase()}_CMDS = ["${command}"];
     //
     // export const handleAutocomplete = (interaction: AutocompleteInteraction) => {
-    //  if (TEMPLATE_CMDS.includes(interaction.commandName)) {
-    //    templateAutocomplete(interaction);
+    //  if (${command.toUpperCase()}_CMDS.includes(interaction.commandName)) {
+    //    ${command}Autocomplete(interaction);
     //  }
     //};
     `,
