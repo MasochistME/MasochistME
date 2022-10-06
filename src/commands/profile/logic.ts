@@ -1,8 +1,8 @@
 import axios from "axios";
 import { APIEmbed } from "discord.js";
-import { DiscordInteraction, getErrorEmbed } from "arcybot";
+import { DiscordInteraction, getErrorEmbed, log } from "arcybot";
 
-import { API_URL, USER_NO_DESCRIPTION } from "consts";
+import { API_URL, UNKNOWN, USER_NO_DESCRIPTION } from "consts";
 import { getMemberFromAPI } from "api";
 import { Member } from "types";
 import { cache } from "fetus";
@@ -45,6 +45,7 @@ export const profile = async (
     const embed = getMemberEmbed(usefulMemberInfo);
     interaction.editReply({ embeds: [embed] });
   } catch (err: any) {
+    log.WARN(err);
     interaction.editReply(
       getErrorEmbed("Something went wrong :C", err ?? "Try again later.", true),
     );
@@ -59,7 +60,7 @@ export const profile = async (
  */
 const getMemberEmbed = (member: PartialMember) => {
   const embed: APIEmbed = {
-    title: member.name.toUpperCase(),
+    title: member.name?.toUpperCase() ?? UNKNOWN,
     thumbnail: { url: member.avatar },
     fields: [
       {
@@ -68,11 +69,11 @@ const getMemberEmbed = (member: PartialMember) => {
       },
       {
         name: "Steam profile",
-        value: `https://steamcommunity.com/profiles/${member.id}`,
+        value: `https://steamcommunity.com/profiles/${member.id ?? UNKNOWN}`,
       },
       {
         name: "Masochist.ME link",
-        value: `http://masochist.me/profile/${member.id}`,
+        value: `http://masochist.me/profile/${member.id ?? UNKNOWN}`,
       },
       {
         name: "Rank:",
@@ -101,10 +102,16 @@ const getMemberEmbed = (member: PartialMember) => {
  * @returns string
  */
 const getMemberRank = (member: Member, fullRanking: any) => {
-  const memberPosition =
-    fullRanking.data.findIndex((r: any) => r.id === member.id) ?? "?";
-  const memberRanking = fullRanking.data.find((r: any) => r.id === member.id);
-  return `\`\`#${memberPosition}\`\`\n\n**Total points:**\n\`\`${memberRanking.points.sum}\`\``;
+  const memberRanking =
+    fullRanking.data.find((r: any) => r.id === member.id)?.points?.sum ?? "0";
+  const memberPosition = fullRanking.data.findIndex(
+    (r: any) => r.id === member.id,
+  );
+  const fixedMemberPosition =
+    memberPosition === -1
+      ? "Not present in ranking"
+      : `\`\`#${memberPosition}\`\``;
+  return `${fixedMemberPosition}\n\n**Total points:**\n\`\`${memberRanking}\`\``;
 };
 
 /**
@@ -115,7 +122,7 @@ const getMemberRank = (member: Member, fullRanking: any) => {
 const getMemberTierCompletion = (member: Member) => {
   const memberTierCompletionSummary = cache.points
     .map(point => {
-      const memberTierCompletion = member.ranking[point.id];
+      const memberTierCompletion = member.ranking[point.id] ?? "0";
       return `\`\`Tier ${point.id} - ${memberTierCompletion}\`\``;
     })
     .join("\n");
@@ -128,8 +135,9 @@ const getMemberTierCompletion = (member: Member) => {
  * @returns string
  */
 const getMemberBadges = (member: Member, fullRanking: any) => {
-  const memberRanking = fullRanking.data.find((r: any) => r.id === member.id);
-  const { points, total } = memberRanking.points.badges;
+  const memberBadges =
+    fullRanking.data.find((r: any) => r.id === member.id)?.points?.badges ?? {};
+  const { points = "0", total = "0" } = memberBadges;
 
   return `\`\`${total}\`\`\n\n**Badges points:**\n\`\`${points}\`\``;
 };
