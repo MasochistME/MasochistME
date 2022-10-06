@@ -15,30 +15,10 @@ export const getUsers = async (req: Request, res: Response): Promise<void> => {
     const filteredUsers = users
       .filter((user: any) => !user.removed)
       .map((user: any) => {
-        const {
-          id,
-          name,
-          url,
-          avatar,
-          updated,
-          private: isPrivate,
-          member,
-          badges,
-          protected: isProtected,
-          removed: isRemoved,
-        } = user;
-        const filteredBadges = badges.map(badge => badge.id);
+        const filteredBadges = user.badges.map(badge => badge.id);
         return {
-          id,
-          name,
-          url,
-          avatar,
-          updated,
-          private: isPrivate,
-          member,
+          ...user,
           badges: filteredBadges,
-          protected: isProtected,
-          removed: isRemoved,
         };
       });
     res.status(200).send(filteredUsers);
