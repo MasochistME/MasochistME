@@ -6,14 +6,14 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "create-command": "node ./scripts/createCommand.mjs",
+    "create-command": "node ./scripts/createCommand.mjs && yarn lint",
     "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
     "dev": "env ENV=dev npx tsx src/fetus.ts",
     "dev:watch": "env ENV=dev nodemon --exec npx tsx src/fetus.ts",
     "prod": "env ENV=prod npx tsx src/fetus.ts",
     "prod:watch": "env ENV=prod nodemon --exec npx tsx src/fetus.ts",
     "start": "yarn build && env ENV=prod node dist/fetus.js",
-    "lint": "eslint . --ext .ts",
+    "lint": "eslint . --ext .ts --fix",
     "test": "echo TODO"
   },
   "main": "dist/fetus.js",
