@@ -1,12 +1,10 @@
-import { ObjectId } from "mongodb";
+import { WithId } from "mongodb";
 
-export type MongoID = { _id: ObjectId };
-
-export interface Meme extends MongoID {
+export type Meme = WithId<{
   meme: string;
-}
+}>;
 
-export interface Badge extends MongoID {
+export type Badge = WithId<{
   name: string;
   img: string;
   points: string;
@@ -15,4 +13,12 @@ export interface Badge extends MongoID {
   gameId: string;
   enabled: boolean;
   legacy: boolean;
-}
+}>;
+
+export type Points = WithId<{
+  symbol: string;
+  icon: string;
+  score: number;
+  description: string;
+  id: string;
+}>;

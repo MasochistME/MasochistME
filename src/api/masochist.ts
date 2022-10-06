@@ -1,5 +1,5 @@
 import { mongo } from "fetus";
-import { Badge, Member, Game } from "types";
+import { Badge, Game, Member, Points } from "types";
 
 export const getAllBadgesFromAPI = async () => {
   const cursor = mongo.dbs.masochist.collection<Badge>("badges").find();
@@ -26,4 +26,20 @@ export const getAllGamesFromAPI = async () => {
     games.push(el);
   });
   return games;
+};
+
+export const getMemberFromAPI = async (discordId: string) => {
+  const member: Member | null = await mongo.dbs.masochist
+    .collection<Member>("users")
+    .findOne({ discordId });
+  return member;
+};
+
+export const getPointsFromAPI = async () => {
+  const cursor = mongo.dbs.masochist.collection<Points>("points").find();
+  const points: Points[] = [];
+  await cursor.forEach(el => {
+    points.push(el);
+  });
+  return points;
 };
