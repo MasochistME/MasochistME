@@ -2,6 +2,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+
+import { useUsers } from 'shared/hooks';
 import { SmallMember, EventLink, Section, SectionTitle } from '../';
 import Spinner from 'shared/components/Spinner';
 
@@ -14,9 +16,9 @@ const FlexColumn = styled.div`
 
 export default function SectionTop(): JSX.Element {
   const history = useHistory();
+  const usersBasic = useUsers(true);
   const users = useSelector((state: any) => {
     const usersRating = state.ranking.slice(0, 10);
-    const usersBasic = state.users.list;
     const usersFull = usersRating.map((user: any) => ({
       ...user,
       name: usersBasic.find((u: any) => u.id === user.id)?.name,

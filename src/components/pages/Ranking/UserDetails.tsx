@@ -1,7 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { orderBy } from 'lodash';
+
 import { useUserDetails } from 'components/init';
+import { useUsers } from 'shared/hooks';
 import { Spinner } from 'shared/components';
 import { Display, DetailsSummary, RatingScore } from './styles';
 import UserGame from './UserGame';
@@ -18,10 +20,11 @@ UserDetails.RatingScore = RatingScore;
 export default function UserDetails(props: TUserDetails): JSX.Element {
   const { id, show } = props;
   const userLoaded = useUserDetails(id);
+  const users = useUsers(true);
   const rating = useSelector((state: any) => state.rating);
   const games = useSelector((state: any) => state.games.list);
   const user = useSelector((state: any) => {
-    const userBasic = state.users.list.find((user: any) => user.id === id);
+    const userBasic = users.find((user: any) => user.id === id);
     const userGames = state.users.details.find((user: any) => user.id === id)
       ?.games;
     const userRanking = state.ranking.find((user: any) => user.id === id);

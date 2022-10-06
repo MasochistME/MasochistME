@@ -1,15 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams, useHistory } from 'react-router-dom';
-import { orderBy } from 'lodash';
+import { useParams } from 'react-router-dom';
+
+import { useUsers } from 'shared/hooks';
 import { showProfile } from 'shared/store/modules/Profiles';
-import { changeTab } from 'shared/store/modules/Tabs';
-import { AppContext } from 'shared/store/context';
 import { Flex, Wrapper, Spinner, Section, BigBadge } from 'shared/components';
 import { Badges } from './styles';
 import { useUserDetails } from 'components/init';
-import ProfileGraphs from './ProfileGraphs';
+
+import FullProfile from './FullProfile';
 import ProfileHeader from './ProfileHeader';
 
 Profile.Badges = Badges;
@@ -18,131 +17,72 @@ Profile.Section = Section;
 
 export default function Profile(): JSX.Element {
   const dispatch = useDispatch();
-  const history = useHistory();
-  const { isLoggedIn, userId } = useContext(AppContext);
   const { id } = useParams<{ id: string }>();
-  const canEdit = isLoggedIn && userId === id;
+  const { isUserLoaded } = useUserDetails(id);
+  const users = useUsers(false);
 
-  const userLoaded = useUserDetails(id);
+  const userBasic = users.find((user: any) => user.id === id);
 
-  const games = useSelector((state: any) => state.games.list);
-  const userBasic = useSelector((state: any) =>
-    state.users.list.find((user: any) => user.id === id),
-  );
   const user = useSelector((state: any) => {
-    if (userLoaded) {
-      const userDetails = state.users.details.find(
-        (user: any) => user.id === id,
-      );
-      const userRanking = state.ranking.find((user: any) => user.id === id)
-        ?.points;
-      return {
-        ...userBasic,
-        ...userDetails,
-        points: userRanking,
-      };
+    if (!isUserLoaded) {
+      return;
     }
+    const userDetails = state.users.details.find((user: any) => user.id === id);
+    const userRanking = state.ranking.find((user: any) => user.id === id)
+      ?.points;
+    return {
+      ...userBasic,
+      ...userDetails,
+      points: userRanking,
+    };
   });
 
-  const badges = useSelector((state: any) => {
-    const userBadges = state.badges
-      .filter(
-        (badge: any) =>
-          user?.badges && user.badges.find((b: any) => b.id === badge._id),
-      )
-      .map(
-        (badge: any) =>
-          (badge = {
-            ...badge,
-            points:
-              typeof badge.points !== 'number'
-                ? Number(badge.points)
-                : badge.points,
-            game: badge.isNonSteamGame
-              ? badge.game
-              : games.find((game: any) => game.id === badge.gameId)
-              ? games.find((game: any) => game.id === badge.gameId).title
-              : 'unknown',
-          }),
-      );
-    const orderedUserBadges = orderBy(
-      userBadges,
-      [badge => badge.points],
-      ['desc'],
-    );
-    return orderedUserBadges;
-  });
-
-  const onBadgeClick = (id?: string) => id && history.push(`/game/${id}`);
+  const isUserLoading = !isUserLoaded;
+  const isUserPrivate = user?.private;
+  const isUserError = user?.error;
+  const isUserNotAMember =
+    !isUserPrivate && !isUserError && user && !user.member && !user.protected;
+  const showUserProfile =
+    !isUserLoading && !isUserPrivate && !isUserError && !isUserNotAMember;
 
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(showProfile(id));
-    if (canEdit) {
-      dispatch(changeTab('me'));
-    } else {
-      dispatch(changeTab('profile'));
-    }
   }, [id]);
 
   return (
     <Flex column>
-      <ProfileHeader user={userBasic} />
-      {user && !user.private ? (
-        <>
-          <Wrapper type="page">
-            {badges?.length ? (
-              <Profile.Badges>
-                <Profile.Section style={{ width: '100%' }}>
-                  <h3>Badges</h3>
-                  <Flex
-                    justify
-                    style={{
-                      width: '100%',
-                      display: 'flex',
-                      flexFlow: 'row wrap',
-                    }}>
-                    {badges.map((badge, index) => {
-                      const game = games.find(
-                        (g: any) => Number(g.id) === Number(badge.gameId),
-                      );
-                      return (
-                        <Profile.Badge
-                          src={badge.img}
-                          alt="badge"
-                          title={`${
-                            badge?.game !== 'unknown'
-                              ? badge?.game.toUpperCase()
-                              : game?.title.toUpperCase()
-                          } - ${badge.name} (${badge.points} pts)\n"${
-                            badge.description
-                          }"`}
-                          key={`badge-${index}`}
-                          onClick={() => onBadgeClick(game?.id)}
-                        />
-                      );
-                    })}
-                  </Flex>
-                </Profile.Section>
-              </Profile.Badges>
-            ) : null}
-            {!isNaN(user?.points?.sum) && user?.points?.sum !== 0 ? (
-              <ProfileGraphs user={user} />
-            ) : null}
-          </Wrapper>
-        </>
-      ) : (
-        <Wrapper type="description">
-          {user?.private ? (
-            <p>
-              This user has their profile set to{' '}
-              <span className="bold">private</span>.
-            </p>
-          ) : (
-            <Spinner />
-          )}
-        </Wrapper>
+      {!isUserError && <ProfileHeader user={userBasic} error={isUserError} />}
+      {isUserLoading && <Spinner />}
+      {isUserPrivate && (
+        <ProfileWarning description="This user has their profile set to private." />
       )}
+      {isUserNotAMember && (
+        <ProfileWarning description="This user is no longer a member of the curator." />
+      )}
+      {isUserError && (
+        <ProfileWarning
+          description={
+            user.error === 404
+              ? `User with id ${id} does not exist.`
+              : 'We could not contact the server. Please try again later.'
+          }
+        />
+      )}
+      {showUserProfile && <FullProfile user={user} />}
     </Flex>
   );
 }
+
+type ProfileWarningProps = {
+  description: string;
+};
+const ProfileWarning = (props: ProfileWarningProps): JSX.Element => {
+  const { description } = props;
+
+  return (
+    <Wrapper type="description">
+      <p style={{ fontWeight: 'bold', fontSize: '1.5em' }}>⚠️ {description}</p>
+    </Wrapper>
+  );
+};

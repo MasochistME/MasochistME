@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+
+import { useUsers } from 'shared/hooks';
 import { Flex } from 'shared/components';
 import {
   Info,
@@ -36,10 +38,11 @@ function UserSummary(props: TUserSummary): JSX.Element {
   const [detailsVisible, setDetailsVisible] = useState(false);
   const [userId, setUserId] = useState(0);
 
+  const users = useUsers(true);
   const rating = useSelector((state: any) => state.rating);
   const user = useSelector((state: any) => {
     const userRank = state.ranking.find((u: any) => u.id === id);
-    const userDetails = state.users.list.find((u: any) => u.id === id);
+    const userDetails = users.find((u: any) => u.id === id);
     return {
       ...userRank,
       private: userDetails.private,

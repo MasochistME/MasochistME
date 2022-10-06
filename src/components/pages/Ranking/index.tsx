@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import SearchBar from 'shared/components/SearchBar';
 import { Flex, Wrapper, Spinner } from 'shared/components';
+import { useUsers } from 'shared/hooks';
 import User from './User';
 
 const WrapperRanking = styled.div`
@@ -20,7 +21,7 @@ export default function PageRanking(): JSX.Element {
   const searchUser = useSelector((state: any) => state.search.user);
   const rating = useSelector((state: any) => state.rating);
   const ranking = useSelector((state: any) => state.ranking);
-  const users = useSelector((state: any) => state.users.list);
+  const users = useUsers(true);
 
   const createRankingList = () => {
     if (ranking?.length <= 0) {

@@ -1,12 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+
+import { useUsers } from 'shared/hooks';
 import { Spinner } from 'shared/components';
 import { Section, SectionTitle } from '../';
 
 export default function SectionTrivia(): JSX.Element {
-  const users = useSelector((state: any) =>
-    state.users.list.filter((user: any) => user.protected || user.member),
-  );
+  const users = useUsers(true);
   const rating = useSelector((state: any) => state.rating);
   const games = useSelector((state: any) => state.games.list);
 
