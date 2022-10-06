@@ -32,9 +32,8 @@ export default function ProfileHeader(props: Props): JSX.Element {
   const { isLoggedIn, userId, path } = useContext(AppContext);
   const [updating, setUpdating] = useState(false);
   const [message, setMessage] = useState('');
-  const [description, setDescription] = useState(
-    user.description ?? 'Currently there is no info provided about this user.',
-  );
+  const description: string =
+    user?.description ?? 'Currently there is no info provided about this user.';
   const canEdit = isLoggedIn && userId === user?.id;
   const isUserAMember = user && (user.member || user.protected);
 
@@ -87,8 +86,9 @@ export default function ProfileHeader(props: Props): JSX.Element {
     }
   };
 
-  const onDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDescription(event.target.value);
+  const onDescriptionChange = (/*event: React.ChangeEvent<HTMLInputElement>*/) => {
+    // TODO
+    // setDescription(event.target.value);
   };
 
   return (
