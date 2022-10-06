@@ -3,7 +3,6 @@ import { orderBy } from 'lodash';
 
 import { log } from 'helpers/log';
 import { connectToDb, getDataFromDB } from 'helpers/db';
-import { hash } from 'helpers/hash';
 
 import { TBadgeAddedEvent, TBadgeGivenEvent } from './types/events';
 
