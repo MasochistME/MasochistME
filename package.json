@@ -6,6 +6,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
+    "create-command": "node ./scripts/createCommand.mjs",
     "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
     "dev": "env ENV=dev npx tsx src/fetus.ts",
     "dev:watch": "env ENV=dev nodemon --exec npx tsx src/fetus.ts",
