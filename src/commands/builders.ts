@@ -11,6 +11,7 @@ import { memedeleteBuilder } from "./memedelete/builder";
 import { registerBuilder } from "./register/builder";
 // import { updateBuilder } from "./update/builder";
 import { vidBuilder } from "./vid/builder";
+import { setdescriptionBuilder } from "./setdescription/builder";
 
 export const customCommands = [
   badgecreateBuilder,
@@ -26,4 +27,5 @@ export const customCommands = [
   registerBuilder,
   // updateBuilder,
   vidBuilder,
+  setdescriptionBuilder,
 ];

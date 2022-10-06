@@ -11,6 +11,7 @@ import { memedelete } from "./memedelete/logic";
 import { memelist } from "./memelist/logic";
 import { profile } from "./profile/logic";
 import { register } from "./register/logic";
+import { setdescription } from "./setdescription/logic";
 import { update } from "./update/logic";
 import { vid } from "./vid/logic";
 
@@ -26,6 +27,7 @@ export const commandsFunctions: CommandFn[] = [
   memelist,
   profile,
   register,
+  setdescription,
   update,
   vid,
 ];
