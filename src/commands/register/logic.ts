@@ -7,7 +7,7 @@ import {
 import { DiscordInteraction, getSuccessEmbed, getErrorEmbed } from "arcybot";
 
 import { REGISTRATION_REVIEW } from "consts";
-import { getChannelById, getOption } from "utils";
+import { getChannelById, getMemberNameById, getOption } from "utils";
 
 /**
  * Allows user to sent their MasochistME link for the mod approval
@@ -23,6 +23,7 @@ export const register = async (
 
   const isMasochistLink = regex.test(link);
   const steamId = link.match(regex)?.[0];
+  const steamUsername = getMemberNameById(steamId);
 
   if (!isMasochistLink ?? !steamId) {
     interaction.reply(
@@ -39,7 +40,7 @@ export const register = async (
   const channel = getChannelById(interaction, modRoomId);
 
   await channel?.send({
-    embeds: [getModApprovalEmbed(interaction, steamId)],
+    embeds: [getModApprovalEmbed(interaction, steamId, steamUsername)],
     components: [getModApprovalButtons()],
   });
 
@@ -81,6 +82,7 @@ const getModApprovalButtons = () => {
 const getModApprovalEmbed = (
   interaction: DiscordInteraction,
   steamId: string,
+  steamUsername: string,
 ) => {
   const embed: APIEmbed = {
     title: "🔧 User registration request",
@@ -91,8 +93,8 @@ const getModApprovalEmbed = (
         inline: true,
       },
       {
-        name: "Steam ID",
-        value: steamId,
+        name: "Requested Steam username",
+        value: steamUsername,
         inline: true,
       },
       {
