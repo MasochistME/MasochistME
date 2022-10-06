@@ -1,7 +1,6 @@
-import { DiscordInteraction } from "arcybot";
+import { DiscordInteraction, getErrorEmbed, getSuccessEmbed } from "arcybot";
 
-import { cache } from "fetus";
-import { getErrorEmbed, getSuccessEmbed, isLink } from "utils";
+import { getChannelById, getOption, isLink } from "utils";
 
 /**
  * Sends a video to the designated channel.
@@ -10,9 +9,7 @@ import { getErrorEmbed, getSuccessEmbed, isLink } from "utils";
  */
 export const vid = async (interaction: DiscordInteraction): Promise<void> => {
   const link = interaction.options.getString("link", true);
-  const channelVid = cache.options.find(
-    option => option.option === "room_vid",
-  )?.value;
+  const channelVid = getOption("room_vid");
 
   if (!isLink(link)) {
     interaction.reply(
@@ -27,9 +24,7 @@ export const vid = async (interaction: DiscordInteraction): Promise<void> => {
     return;
   }
 
-  const channel = interaction.guild?.channels.cache.find(
-    ch => ch.id === channelVid,
-  );
+  const channel = getChannelById(interaction, channelVid);
 
   if (!channel) {
     interaction.reply(

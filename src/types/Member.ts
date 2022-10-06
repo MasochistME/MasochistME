@@ -1,20 +1,22 @@
-import { MongoID } from "types/Mongo";
+import { WithId } from "mongodb";
 
-export interface Member extends MongoID {
+export type Member = WithId<{
   name: string;
   id: number;
+  discordId?: string;
+  description?: string;
   avatar: string;
   url: string;
   updated: number;
 
   badges: MemberBadge[];
-  games: MemberGame;
+  games: MemberGame[];
   ranking: MemberRanking;
 
   member: boolean;
   protected: boolean;
   private: boolean;
-}
+}>;
 
 export type MemberGame = {
   appid: number;
@@ -29,7 +31,7 @@ export type MemberBadge = {
   unlocked: number;
 };
 
-export type MemberRanking = Record<1 | 2 | 3 | 4 | 5, number>;
+export type MemberRanking = Record<string, number>; // key = "1" | "2" | "3" | "4" | "5"
 
 export type Achievement = {
   apiname: string;

@@ -1,8 +1,9 @@
 import { CommandObject } from "arcybot";
 
-import { CacheMember, CacheBadge, CacheGame, CacheOption } from "types";
+import { CacheMember, CacheBadge, CacheGame, CacheOption, Points } from "types";
 import {
   getCommandsFromAPI,
+  getPointsFromAPI,
   getAllOptionsFromAPI,
   getAllBadgesFromAPI,
   getAllMembesFromAPI,
@@ -19,6 +20,7 @@ export class Cache {
   public members: CacheMember[] = [];
   public games: CacheGame[] = [];
   public options: CacheOption[] = [];
+  public points: Points[] = [];
   public commandList: CommandObject[] = [];
 
   constructor(config: CacheConfig) {
@@ -26,6 +28,7 @@ export class Cache {
   }
 
   async update() {
+    this.points = await getPointsFromAPI();
     this.commandList = await getCommandsFromAPI();
     this.options = await getAllOptionsFromAPI();
     this.badges = (await getAllBadgesFromAPI())

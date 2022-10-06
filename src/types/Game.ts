@@ -1,6 +1,6 @@
-import { MongoID } from "./Mongo";
+import { WithId } from "mongodb";
 
-export interface Game extends MongoID {
+export type Game = WithId<{
   id: string;
   desc: string;
   rating: string;
@@ -11,7 +11,7 @@ export interface Game extends MongoID {
   sale: GameSale;
   curated: boolean;
   protected: boolean;
-}
+}>;
 
 type GameSale = {
   onSale: boolean;
