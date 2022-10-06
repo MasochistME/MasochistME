@@ -3,9 +3,7 @@ import { getErrorEmbed } from "arcybot";
 import { ButtonInteraction, APIEmbed } from "discord.js";
 
 import { isMod } from "utils";
-import { API_URL } from "consts";
-
-export const REGISTRATION_REVIEW = "REGISTRATION_REVIEW";
+import { API_URL, REGISTRATION_REVIEW } from "consts";
 
 /**
  * Handles autocompletion for the create badge command

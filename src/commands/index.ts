@@ -1,5 +1,2 @@
-export { customCommands } from "./custom";
+export { customCommands } from "./builders";
 export { commandsFunctions } from "./logic";
-
-export * from "./autocomplete";
-export * from "./buttons";

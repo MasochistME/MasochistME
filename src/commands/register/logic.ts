@@ -6,7 +6,7 @@ import {
 } from "discord.js";
 import { DiscordInteraction, getSuccessEmbed, getErrorEmbed } from "arcybot";
 
-import { REGISTRATION_REVIEW } from "commands/buttons/registrationReview";
+import { REGISTRATION_REVIEW } from "consts";
 import { getChannelById, getOption } from "utils";
 
 /**

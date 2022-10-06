@@ -3,13 +3,10 @@ import axios from "axios";
 import { Arcybot } from "arcybot";
 
 import { getOption, Database } from "utils";
-import {
-  commandsFunctions,
-  customCommands,
-  handleAutocomplete,
-  handleButton,
-} from "commands";
 import { Cache } from "cache";
+
+import { commandsFunctions, customCommands } from "commands";
+import { handleAutocomplete, handleButtons } from "interactions";
 
 dotenv.config();
 
@@ -61,7 +58,7 @@ const init = async () => {
 
   bot.botClient.on("interactionCreate", async interaction => {
     if (interaction.isAutocomplete()) handleAutocomplete(interaction);
-    if (interaction.isButton()) handleButton(interaction);
+    if (interaction.isButton()) handleButtons(interaction);
   });
 };
 

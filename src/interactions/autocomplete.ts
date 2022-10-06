@@ -1,9 +1,7 @@
 import { AutocompleteInteraction } from "discord.js";
-import {
-  badgeCreateAutocomplete,
-  badgeEditAutocomplete,
-  badgeAutocomplete,
-} from "./badgeAutocomplete";
+import { badgeCreateAutocomplete } from "commands/badgecreate/interactions";
+import { badgeEditAutocomplete } from "commands/badgeedit/interactions";
+import { badgeAutocomplete } from "commands/_interactions/badge";
 
 const BADGE_MEMBER_CMDS = ["badgegive", "badgerevoke"];
 const BADGE_EDIT_CMDS = ["badgedelete", "badgeedit"];
