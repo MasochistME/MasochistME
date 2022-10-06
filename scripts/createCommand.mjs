@@ -51,7 +51,7 @@ const createCommand = name => {
   fs.mkdirSync(destination);
   log.INFO(`✓ Created command folder: "${chalk.white.bold(destination)}"`);
 
-  ["logic.ts", "builder.ts", "interaction.ts"].forEach(path => {
+  ["logic.ts", "builder.ts", "interactions.ts"].forEach(path => {
     replaceTemplateWithCmdKeyword(source, destination, path, path, command);
     console.log(`✓ Generated ${path} file...`);
   });
@@ -114,8 +114,8 @@ const log = {
 
 const errorCb = (dir, err) => {
   if (err) {
-    log.WARN(`\n\n⚠️  ${chalk.red("\n\nError: ")} ${err}`);
-    log.INFO(`\n\nUndoing changes...`);
+    log.WARN(`⚠️ ${chalk.red("\n\nError: ")} ${err}`);
+    log.INFO(`⚠️ Undoing changes...`);
 
     fs.rmdirSync(dir, { recursive: true });
     process.exit(1);
