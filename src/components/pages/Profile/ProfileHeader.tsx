@@ -33,7 +33,7 @@ export default function ProfileHeader(props: Props): JSX.Element {
   const [updating, setUpdating] = useState(false);
   const [message, setMessage] = useState('');
   const [description, setDescription] = useState(
-    'Currently there is no info provided about this user.',
+    user.description ?? 'Currently there is no info provided about this user.',
   );
   const canEdit = isLoggedIn && userId === user?.id;
   const isUserAMember = user && (user.member || user.protected);
