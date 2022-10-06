@@ -93,8 +93,13 @@ const getModApprovalEmbed = (
         inline: true,
       },
       {
-        name: "Requested Steam username",
+        name: "Requested Steam",
         value: steamUsername,
+        inline: true,
+      },
+      {
+        name: "Steam ID",
+        value: steamId,
         inline: true,
       },
       {

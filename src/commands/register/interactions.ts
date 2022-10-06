@@ -26,11 +26,14 @@ export const registrationReview = async (
 
   const embedFields = interaction.message.embeds[0].data.fields;
   const steamId = embedFields?.find(field => field.name === "Steam ID")?.value;
+  const steamUsername = embedFields?.find(
+    field => field.name === "Requested Steam",
+  )?.value;
   const user = embedFields?.find(field => field.name === "User")?.value;
   const regexUserId = new RegExp(/(?<=<@)([^>]*)/);
   const userDiscordId = user?.match(regexUserId)?.[0];
 
-  if (!steamId || !user || !userDiscordId) {
+  if (!steamId || !steamUsername || !user || !userDiscordId) {
     interaction.update({
       ...getErrorEmbed("Error", "Something went wrong."),
       components: [],
@@ -38,7 +41,12 @@ export const registrationReview = async (
     return;
   }
 
-  const embed = getApplicationReviewedEmbed(interaction, user, steamId);
+  const embed = getApplicationReviewedEmbed(
+    interaction,
+    user,
+    steamId,
+    steamUsername,
+  );
 
   if (interaction.customId === `${REGISTRATION_REVIEW}_APPROVE`) {
     try {
@@ -87,6 +95,7 @@ const getApplicationReviewedEmbed = (
   interaction: ButtonInteraction,
   user: string,
   steamId: string,
+  steamUsername: string,
 ): APIEmbed => {
   const getVerdict = (): "APPROVED" | "REJECTED" | "UNKNOWN" => {
     if (interaction.customId === `${REGISTRATION_REVIEW}_APPROVE`)
@@ -101,6 +110,17 @@ const getApplicationReviewedEmbed = (
       {
         name: "User",
         value: user,
+        inline: true,
+      },
+      {
+        name: "Requested Steam",
+        value: steamUsername,
+        inline: true,
+      },
+      {
+        name: "Steam ID",
+        value: steamId,
+        inline: true,
       },
       {
         name: "Steam profile",
