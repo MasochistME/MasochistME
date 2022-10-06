@@ -1,11 +1,11 @@
-import { ApplicationCommandOptionChoiceData } from "discord.js";
-
 import { cache } from "fetus";
+import { getFilteredChoices } from "commands/_utils";
 
-/***************************
- *          UTILS          *
- ***************************/
-
+/**
+ * Filter the badge choice list based on the user provided autocomplete value.
+ * @param focused string - user provided autocomplete value
+ * @returns ApplicationCommandOptionChoiceData[]
+ */
 export const getBadgeChoices = (focused: string) => {
   const choices = cache.badges.map(badge => {
     const game = cache.games.find(g => g.id === badge.gameId);
@@ -20,6 +20,11 @@ export const getBadgeChoices = (focused: string) => {
   return getFilteredChoices(choices, focused);
 };
 
+/**
+ * Filter the game choice list based on the user provided autocomplete value.
+ * @param focused string - user provided autocomplete value
+ * @returns ApplicationCommandOptionChoiceData[]
+ */
 export const getGameChoices = (focused: string) => {
   const choices = cache.games.map(game => ({
     name: game.name,
@@ -29,6 +34,11 @@ export const getGameChoices = (focused: string) => {
   return getFilteredChoices(choices, focused);
 };
 
+/**
+ * Filter the member choice list based on the user provided autocomplete value.
+ * @param focused string - user provided autocomplete value
+ * @returns ApplicationCommandOptionChoiceData[]
+ */
 export const getMemberChoices = (focused: string) => {
   const choices = cache.members.map(member => ({
     name: member.name,
@@ -36,17 +46,4 @@ export const getMemberChoices = (focused: string) => {
   }));
 
   return getFilteredChoices(choices, focused);
-};
-
-export const getFilteredChoices = (
-  choices: ApplicationCommandOptionChoiceData[],
-  focused: string,
-) => {
-  return choices
-    .filter(choice =>
-      focused.length
-        ? choice.name.toLowerCase().includes(focused.toLowerCase())
-        : true,
-    )
-    .slice(0, 24);
 };
