@@ -45,7 +45,6 @@ export const profile = async (
     const embed = getMemberEmbed(usefulMemberInfo);
     interaction.editReply({ embeds: [embed] });
   } catch (err: any) {
-    log.WARN(err);
     interaction.editReply(
       getErrorEmbed("Something went wrong :C", err ?? "Try again later.", true),
     );
@@ -110,7 +109,7 @@ const getMemberRank = (member: Member, fullRanking: any) => {
   const fixedMemberPosition =
     memberPosition === -1
       ? "Not present in ranking"
-      : `\`\`#${memberPosition}\`\``;
+      : `\`\`#${Number(memberPosition) + 1}\`\``;
   return `${fixedMemberPosition}\n\n**Total points:**\n\`\`${memberRanking}\`\``;
 };
 
