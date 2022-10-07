@@ -4,6 +4,8 @@ import { getErrorEmbed } from "arcybot";
 import { RACE_CONFIRMATION } from "consts";
 import { isMod } from "utils";
 
+import { sendRaceJoinForm } from "./racesetupJoin";
+
 /**
  * Handles buttons for the "racesetup" command.
  * @param interaction
@@ -23,11 +25,11 @@ export const racesetupConfirm = async (
     return;
   }
 
-  const originalEmbed = interaction.message.embeds[0];
+  const originalEmbed = interaction.message.embeds[0].data;
   const editedEmbed = {
     ...originalEmbed,
     fields: [
-      ...(originalEmbed.data.fields ?? []),
+      ...(originalEmbed.fields ?? []),
       {
         name: "Race organizer",
         value: `<@${interaction.user.id}>`,
@@ -37,23 +39,27 @@ export const racesetupConfirm = async (
 
   if (interaction.customId === `${RACE_CONFIRMATION}_CONFIRM`) {
     saveRaceDetails(interaction);
-    interaction.reply({
-      embeds: [{ title: `✅ Race confirmed`, ...editedEmbed }],
+    sendRaceJoinForm(interaction);
+    interaction.update({
+      embeds: [{ ...editedEmbed, title: `✅ Race confirmed` }],
       components: [],
     });
   }
   if (interaction.customId === `${RACE_CONFIRMATION}_REJECT`) {
     interaction.update({
-      embeds: [{ title: `❌ Race rejected`, ...editedEmbed }],
+      embeds: [{ ...editedEmbed, title: `❌ Race rejected` }],
       components: [],
     });
   }
 };
 
+/**
+ * Saves the new race details to database.
+ * @param interaction ButtonInteraction
+ */
 const saveRaceDetails = (interaction: ButtonInteraction) => {
   const embedFields = interaction.message.embeds[0].data.fields;
-  console.log(embedFields);
-
+  console.log(Boolean(embedFields));
   // TODO
   // create an endpoint which would save this race data to database for future use.
 };

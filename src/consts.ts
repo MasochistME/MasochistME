@@ -9,3 +9,4 @@ export const USER_NO_DESCRIPTION = "This user does not have description yet.";
 // Custom interaction IDs
 export const REGISTRATION_REVIEW = "REGISTRATION_REVIEW";
 export const RACE_CONFIRMATION = "RACE_CONFIRMATION";
+export const RACE_JOIN = "RACE_JOIN";
