@@ -17,7 +17,7 @@ export const registrationReview = async (
   if (!isMod(interaction)) {
     interaction.channel?.send(
       getErrorEmbed(
-        "Error",
+        "You can't do that",
         `User <@${interaction.user.id}> doesn't have role allowing them to review registration application.`,
       ),
     );
