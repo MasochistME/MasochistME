@@ -1,0 +1,48 @@
+{
+  "name": "@masochistme/sdk",
+  "version": "0.1.0",
+  "description": "Masochist.ME SDK",
+  "repository": "https://github.com/MasochistME/masochist-sdk",
+  "author": "Arcyvilk <arcyvilk@gmail.com>",
+  "license": "MIT",
+  "sideEffects": false,
+  "type": "module",
+  "engines": {
+    "node": ">=16"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
+    "dev": "nodemon --exec npx tsx __example/index.ts",
+    "lint": "eslint . --ext .ts",
+    "test": "echo TODO",
+    "semantic-release": "semantic-release"
+  },
+  "dependencies": {
+    "discord.js": "^14.3.0",
+    "mongodb": "^4.9.1"
+  },
+  "devDependencies": {
+    "@semantic-release/commit-analyzer": "^9.0.2",
+    "@semantic-release/github": "^8.0.6",
+    "@semantic-release/npm": "^9.0.1",
+    "@semantic-release/release-notes-generator": "^10.0.3",
+    "@types/mongodb": "^4.0.7",
+    "@types/node": "^18.7.15",
+    "@typescript-eslint/eslint-plugin": "^5.36.2",
+    "@typescript-eslint/parser": "^5.36.2",
+    "conventional-changelog-conventionalcommits": "^5.0.0",
+    "eslint": "^8.23.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "nodemon": "^2.0.19",
+    "prettier": "^2.7.1",
+    "semantic-release": "^19.0.5",
+    "tsc-alias": "^1.7.0",
+    "typescript": "^4.8.2"
+  }
+}

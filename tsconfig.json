@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    // Language and environment
+    "lib": ["es2021"],
+    "target": "es2021",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
+    
+    // Modules
+    "baseUrl": "./lib",
+    "module": "es2022",                                  /* Specify what module code is generated. */
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+
+    // Emit
+    "declaration": true,
+    "declarationDir": "dist",
+    "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility. */
+    "sourceMap": true,
+    "outDir": "dist",
+
+    // Type checking
+    "noUnusedParameters": true,
+    "checkJs": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,            /* Ensure that casing is correct in imports. */
+    "strict": true,                                      /* Enable all strict type-checking options. */
+    "skipLibCheck": true,                                /* Skip type checking all .d.ts files. */
+  },
+  "include": ["lib/**/*"],
+  "exclude": ["node_modules", "__assets", "__docs", "__example"],
+}
