@@ -11,35 +11,35 @@ jobs:
     steps:
       - name: TODO
         run: echo TODO
-      # - name: Checkout
-      #   uses: actions/checkout@v2
-      #   with:
-      #     persist-credentials: false
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
 
-      # - name: Setup Node
-      #   uses: actions/setup-node@v1
-      #   with:
-      #     node-version: '16.x'
-      #     registry-url: 'https://registry.npmjs.org'
-      #     always-auth: true
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
+          always-auth: true
 
-      # - name: Install dependencies
-      #   run: yarn
+      - name: Install dependencies
+        run: yarn
 
-      # - name: Test
-      #   run: yarn test
+      - name: Test
+        run: yarn test
 
-      # - name: Lint
-      #   run: yarn lint
+      - name: Lint
+        run: yarn lint
 
-      # - name: Build
-      #   run: yarn build
+      - name: Build
+        run: yarn build
 
-      # - name: remove .npmrc
-      #   run: rm /home/runner/work/_temp/.npmrc
+      - name: remove .npmrc
+        run: rm /home/runner/work/_temp/.npmrc
 
-      # - name: NPM release
-      #   env:
-      #     GH_TOKEN: ${{ secrets.GH_TOKEN }}
-      #     NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      #   run: npx semantic-release
+      - name: NPM release
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npx semantic-release
