@@ -15,7 +15,7 @@ export enum EventType {
  * Base event.
  */
 export type Event = WithId<{
-	date: number;
+	date: number; // A date in a timestamp format.
 	type: keyof typeof EventType;
 }>;
 
