@@ -1,38 +1,43 @@
-import { MongoClient } from 'mongodb';
+import { Db, MongoClient, WithId } from 'mongodb';
 
 import { log } from 'helpers/log';
 
-export const connectToDb: any = () =>
-  new Promise(async (resolve, reject) => {
-    await MongoClient.connect(process.env.DATABASE_URL, (err, client) => {
-      if (err) {
-        log.WARN(`Error while connecting to database: ${err}`);
-        reject(err);
-      }
-      resolve({
-        client,
-        db: client.db('masochist'),
-      });
-    });
-  });
+export const connectToDb = async (): Promise<{
+  client: MongoClient;
+  db: Db;
+}> => {
+  try {
+    const url = process.env.DATABASE_URL;
+    if (!url) {
+      throw new Error('No database URL provided');
+    }
+    const client = new MongoClient(url);
+    return {
+      client,
+      db: client.db('masochist'),
+    };
+  } catch (error) {
+    log.WARN(error);
+    throw error;
+  }
+};
 
-export const getDataFromDB: any = (dataType: string, field?: object) =>
-  new Promise(async (resolve, reject) => {
-    const { client, db } = await connectToDb();
-    const data = db.collection(dataType);
-    const fieldToFind = field ? field : {};
+export const getDataFromDB: any = async <T>(
+  dataType: string,
+  field?: Record<any, any>,
+) => {
+  const { client, db } = await connectToDb();
+  const data = db.collection(dataType);
+  const fieldToFind = field ? field : {};
 
-    data.find(fieldToFind).toArray((err, response) => {
-      if (err) {
-        log.WARN(err);
-        client.close();
-        reject(err);
-      } else {
-        client.close();
-        resolve(response);
-      }
-    });
+  const dataFromDb: WithId<T>[] = [];
+  const cursor = data.find(fieldToFind);
+  await cursor.forEach((el: WithId<T>) => {
+    dataFromDb.push(el);
   });
+  client.close();
+  return dataFromDb;
+};
 
 export interface Options {
   numberOfEvents: number;

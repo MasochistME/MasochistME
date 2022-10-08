@@ -53,7 +53,7 @@ export const getUserDetails = async (
     }));
     res.status(200).send({ id, badges, games: fixedGames });
   } catch (err) {
-    log.WARN(err);
+    log.WARN(err.message);
     res.status(500).send(err);
   }
 };
@@ -77,7 +77,7 @@ export const updateUser = async (req, res) => {
   } catch (err) {
     res.status(500).send(err);
     log.WARN(`--> [UPDATE] user ${id} [ERROR]`);
-    log.WARN(err);
+    log.WARN(err.message);
     return;
   }
   if (!userData?.data?.response?.players) {
@@ -137,7 +137,7 @@ export const updateUser = async (req, res) => {
     err => {
       if (err) {
         log.WARN(`--> [UPDATE] user ${id} [ERROR]`);
-        log.WARN(err);
+        log.WARN(err.message);
       } else {
         const index = cache.updating.findIndex(user => user.user === id);
         const newCache = cache.updating.splice(index, 1);
@@ -208,7 +208,7 @@ const getUserGames = async (
     );
     return withAchievements;
   } catch (err) {
-    log.WARN(err);
+    log.WARN(err.message);
     return [];
   }
 };
@@ -292,7 +292,7 @@ const getUserAchievements = (userID: number, games: any, userToUpdate: any) =>
               Object.keys(games).length
             }] game ${gameID} (user ${userID}) - [ERROR] - ${url}`,
           );
-          log.WARN(err);
+          log.WARN(err.message);
           if (games[index + 1]) {
             setTimeout(() => getAchievementsDetails(index + 1), config.DELAY);
             return;

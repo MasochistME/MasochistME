@@ -20,7 +20,7 @@ export const updateStatus = (db, percent: number) => {
     { upsert: true },
     err => {
       if (err) {
-        log.WARN(err);
+        log.WARN(err.message);
       }
     },
   );
@@ -31,7 +31,7 @@ export const getStatus = async (req?, res?): Promise<void> => {
   try {
     lastUpdated = await getDataFromDB('update', { id: 'lastUpdated' });
   } catch (err) {
-    log.WARN(err);
+    log.WARN(err.message);
     res.status(500).send(err);
     return;
   }
@@ -65,7 +65,7 @@ export const initiateMainUpdate = async (req?, res?): Promise<void> => {
     }
   } catch (err) {
     log.WARN('--> [UPDATE] main update [ERR]');
-    log.WARN(err);
+    log.WARN(err.message);
     if (res) {
       res.status(500).send(err);
     }
@@ -80,7 +80,7 @@ export const initiateMainUpdate = async (req?, res?): Promise<void> => {
     members = await getCuratorMembers();
   } catch (err) {
     log.WARN('--> [UPDATE] main update [ERR]');
-    log.WARN(err);
+    log.WARN(err.message);
     return;
   }
   try {
@@ -88,7 +88,7 @@ export const initiateMainUpdate = async (req?, res?): Promise<void> => {
     await updateCuratorGames();
   } catch (err) {
     log.WARN('--> [UPDATE] main update [ERR]');
-    log.WARN(err);
+    log.WARN(err.message);
     return;
   }
 
@@ -111,13 +111,13 @@ export const initiateMainUpdate = async (req?, res?): Promise<void> => {
         { $set: { member: false } },
         err => {
           if (err) {
-            log.WARN(err);
+            log.WARN(err.message);
           }
         },
       );
       db.collection('events').insertOne(eventDetails, err => {
         if (err) {
-          log.WARN(err);
+          log.WARN(err.message);
         }
       });
     }
@@ -149,7 +149,7 @@ export const initiateMainUpdate = async (req?, res?): Promise<void> => {
         members[index].avatar = user.avatarfull;
       } catch (err) {
         log.WARN(`--> [UPDATE] member ${members[index].id} [ERROR]`);
-        log.WARN(err);
+        log.WARN(err.message);
       }
       const eventDetails: TMemberJoinedEvent = {
         date: Date.now(),
@@ -158,12 +158,12 @@ export const initiateMainUpdate = async (req?, res?): Promise<void> => {
       };
       db.collection('events').insertOne(eventDetails, err => {
         if (err) {
-          log.WARN(err);
+          log.WARN(err.message);
         }
       });
       db.collection('users').insertOne(members[index], err => {
         if (err) {
-          log.WARN(err);
+          log.WARN(err.message);
         }
       });
 

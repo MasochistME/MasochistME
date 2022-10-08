@@ -46,7 +46,7 @@ export const getRanking = async (
           },
         );
         const filteredBadges = user.badges.filter((userBadge: any) => {
-          const userBadgeId = ObjectId(userBadge.id);
+          const userBadgeId = new ObjectId(userBadge.id);
           const badgeExists = badges.find((badge: TBadge) =>
             userBadgeId.equals(badge._id),
           );
@@ -58,7 +58,7 @@ export const getRanking = async (
         });
         const badgesPoints: number = filteredBadges
           .map((userBadge: any) => {
-            const userBadgeId = ObjectId(userBadge.id);
+            const userBadgeId = new ObjectId(userBadge.id);
             const badgeObject = badges.find((badge: TBadge) =>
               userBadgeId.equals(badge._id),
             );
@@ -89,7 +89,7 @@ export const getRanking = async (
     );
     res.status(200).send(orderedUsers);
   } catch (err) {
-    res.status(err.code).send(err);
+    res.status(500).send(err);
   }
 };
 

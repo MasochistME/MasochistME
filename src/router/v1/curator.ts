@@ -238,7 +238,7 @@ export const updateCuratorGames = (req?, res?): Promise<void> =>
           { upsert: true },
           err => {
             if (err) {
-              log.WARN(err);
+              log.WARN(err.message);
             } else {
               log.INFO(
                 `--> [UPDATE] games - game ${
@@ -250,7 +250,7 @@ export const updateCuratorGames = (req?, res?): Promise<void> =>
         );
         db.collection('events').insertOne(eventDetails, err => {
           if (err) {
-            log.WARN(err);
+            log.WARN(err.message);
           } else {
             log.INFO(
               `--> [UPDATE] events - game ${decuratedGame.id} decurated`,
@@ -281,7 +281,7 @@ export const updateCuratorGames = (req?, res?): Promise<void> =>
       } catch (err) {
         log.INFO(`- saving game ${gameId} failed`);
         log.INFO(`-- ${urlGamesDetails}`);
-        log.WARN(err);
+        log.WARN(err.message);
         if (games[index + 1]) {
           setTimeout(() => getGameDetails(index + 1), config.DELAY);
           return;
@@ -332,7 +332,7 @@ export const updateCuratorGames = (req?, res?): Promise<void> =>
         };
         db.collection('events').insertOne(eventDetails, err => {
           if (err) {
-            log.WARN(err);
+            log.WARN(err.message);
           }
         });
       }
@@ -346,7 +346,7 @@ export const updateCuratorGames = (req?, res?): Promise<void> =>
         };
         db.collection('events').insertOne(eventDetails, err => {
           if (err) {
-            log.WARN(err);
+            log.WARN(err.message);
           }
         });
         log.INFO(`--> [UPDATE] events - game ${gameId} curated`);
@@ -363,7 +363,7 @@ export const updateCuratorGames = (req?, res?): Promise<void> =>
             log.INFO(
               `- saving game ${gameId} (${gameDetails?.title?.toUpperCase()}) failed`,
             );
-            log.WARN(err);
+            log.WARN(err.message);
             client.close();
           } else {
             // @ts-ignore:next-line
@@ -441,6 +441,6 @@ export const getCuratorMembers = (req?, res?): Promise<void> =>
           res.status(500).send(err);
         }
         log.WARN('--> [UPDATE] curator members list [ERROR]');
-        log.WARN(err);
+        log.WARN(err.message);
       });
   });

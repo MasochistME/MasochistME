@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Patron, PatreonTier } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
 import { connectToDb } from 'helpers/db';
@@ -9,32 +10,35 @@ import { connectToDb } from 'helpers/db';
 export const getAllPatrons = async (req, res) => {
   const { client, db } = await connectToDb();
 
-  db.collection('patreonTiers')
+  db.collection<PatreonTier>('patreonTiers')
     .find({})
     .toArray((err, tiers) => {
       if (err) {
-        log.WARN(err);
-        res.status(err.code).send(err);
+        log.WARN(err.message);
+        res.status(500).send(err);
       } else {
-        db.collection('patrons')
+        db.collection<Patron>('patrons')
           .find({})
           .toArray((err, patrons) => {
             if (err) {
-              log.WARN(err);
-              res.status(err.code).send(err);
+              log.WARN(err.message);
+              res.status(500).send(err);
             } else {
-              tiers
+              (tiers ?? [])
                 .map(
-                  tier =>
-                    (tier.list = patrons.filter(
+                  (tier: PatreonTier & { list: any }) =>
+                    (tier.list = (patrons ?? []).filter(
                       patron => patron.tier === tier.tier,
                     )),
                 )
                 .map(
                   patron =>
                     (patron = {
+                      // @ts-ignore:next-line
                       steamid: patron.steamid,
+                      // @ts-ignore:next-line
                       name: patron.name,
+                      // @ts-ignore:next-line
                       avatar: patron.avatar,
                     }),
                 );
@@ -57,8 +61,8 @@ export const getPatronsByTier = async (req, res) => {
     .find({ tier: req.params.tier })
     .toArray((err, tier) => {
       if (err) {
-        log.WARN(err);
-        res.status(err.code).send(err);
+        log.WARN(err.message);
+        res.status(500).send(err);
       } else if (!tier) {
         res.sendStatus(404);
       } else {
@@ -79,8 +83,8 @@ export const getPatron = async (req, res) => {
     { steamid: req.params.steamid },
     (err, tier) => {
       if (err) {
-        log.WARN(err);
-        res.status(err.code).send(err);
+        log.WARN(err.message);
+        res.status(500).send(err);
       } else if (!tier) {
         res.sendStatus(404);
       } else {
@@ -124,8 +128,8 @@ export const addPatron = async (req, res) => {
 
   db.collection('patrons').insertOne(patron, err => {
     if (err) {
-      log.WARN(err);
-      res.status(err.code).send(err);
+      log.WARN(err.message);
+      res.status(500).send(err);
     } else {
       log.INFO(
         `Patron ${
@@ -151,7 +155,7 @@ export const updatePatron = async (req, res) => {
     userSummary = await axios.get(urlSummary);
   } catch (err) {
     log.WARN(urlSummary);
-    log.WARN(err);
+    log.WARN(err.message);
     return;
   }
 
@@ -172,8 +176,8 @@ export const updatePatron = async (req, res) => {
     { $set: patron },
     err => {
       if (err) {
-        log.WARN(err);
-        res.status(err.code).send(err);
+        log.WARN(err.message);
+        res.status(500).send(err);
       } else {
         log.INFO(
           `Patron ${
@@ -198,8 +202,8 @@ export const deletePatron = async (req, res) => {
     { steamid: req.params.steamid },
     (err, patron) => {
       if (err) {
-        log.WARN(err);
-        res.status(err.code).send(err);
+        log.WARN(err.message);
+        res.status(500).send(err);
       } else if (!patron) {
         res.sendStatus(404);
       } else {

@@ -33,7 +33,7 @@ export const connectUserWithDiscord = async (
           log.WARN(
             `--> [UPDATE] Steam User ${steamid} connected to Discord User ${discordId} [ERROR]`,
           );
-          log.WARN(err);
+          log.WARN(err.message);
           res.status(400).send('Could not update member in the database.');
           return;
         }
@@ -45,7 +45,7 @@ export const connectUserWithDiscord = async (
       },
     );
   } catch (err) {
-    log.WARN(err);
+    log.WARN(err.message);
     res.status(500).send(err);
   }
 };
@@ -80,8 +80,8 @@ export const updateUserFields = async (
       { upsert: true },
       (err, member) => {
         if (err) {
-          log.WARN(err);
-          res.status(err.code).send(err);
+          log.WARN(err.message);
+          res.status(500).send(err);
         } else if (!member) {
           res.sendStatus(404);
         } else {
@@ -92,7 +92,7 @@ export const updateUserFields = async (
       },
     );
   } catch (err) {
-    log.WARN(err);
+    log.WARN(err.message);
     res.status(500).send(err);
   }
 };

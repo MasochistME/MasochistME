@@ -15,8 +15,8 @@ export const getAllBadges = async (req, res) => {
 
   data.find({}).toArray((err, badges) => {
     if (err) {
-      log.WARN(err);
-      res.status(err.code).send(err);
+      log.WARN(err.message);
+      res.status(500).send(err);
     } else {
       const orderedBadges = orderBy(
         badges,
@@ -42,10 +42,10 @@ export const getBadge = async (req, res) => {
   const { client, db } = await connectToDb();
   const data = db.collection('badges');
 
-  data.findOne({ _id: ObjectId(req.params.id) }, (err, badge) => {
+  data.findOne({ _id: new ObjectId(req.params.id) }, (err, badge) => {
     if (err) {
-      log.WARN(err);
-      res.status(err.code).send(err);
+      log.WARN(err.message);
+      res.status(500).send(err);
     } else if (!badge) {
       res.sendStatus(404);
     } else {
@@ -70,8 +70,8 @@ export const addBadge = async (req, res) => {
 
   data.insertOne(req.body, (err, badge) => {
     if (err) {
-      log.WARN(err);
-      res.status(err.code).send(err);
+      log.WARN(err.message);
+      res.status(500).send(err);
     } else if (!badge) {
       res.sendStatus(404);
     } else {
@@ -79,12 +79,12 @@ export const addBadge = async (req, res) => {
       const eventDetails: TBadgeAddedEvent = {
         date: Date.now(),
         type: 'badgeAdded',
-        badge: badge.insertedId,
+        badge: badge.insertedId.toString(),
         game: req.body.gameId,
       };
       db.collection('events').insertOne(eventDetails, err => {
         if (err) {
-          log.WARN(err);
+          log.WARN(err.message);
         }
       });
       res.status(201).send(badge);
@@ -108,13 +108,13 @@ export const updateBadge = async (req, res) => {
   const data = db.collection('badges');
 
   data.updateOne(
-    { _id: ObjectId(req.params.id) },
+    { _id: new ObjectId(req.params.id) },
     { $set: req.body },
     { upsert: true },
     (err, badge) => {
       if (err) {
-        log.WARN(err);
-        res.status(err.code).send(err);
+        log.WARN(err.message);
+        res.status(500).send(err);
       } else if (!badge) {
         res.sendStatus(404);
       } else {
@@ -134,10 +134,10 @@ export const deleteBadge = async (req, res) => {
   const { client, db } = await connectToDb();
   const data = db.collection('badges');
 
-  data.deleteOne({ _id: ObjectId(req.params.id) }, (err, badge) => {
+  data.deleteOne({ _id: new ObjectId(req.params.id) }, (err, badge) => {
     if (err) {
-      log.WARN(err);
-      res.status(err.code).send(err);
+      log.WARN(err.message);
+      res.status(500).send(err);
     } else if (!badge) {
       res.sendStatus(404);
     } else {
@@ -165,7 +165,7 @@ export const giveBadge = async (req, res) => {
   try {
     user = await getDataFromDB('users', { id: req.params.steamid });
     badge = await getDataFromDB('badges', {
-      _id: ObjectId(req.params.badgeid),
+      _id: new ObjectId(req.params.badgeid),
     });
   } catch (err) {
     res.status(500).send(err);
@@ -201,7 +201,7 @@ export const giveBadge = async (req, res) => {
         log.WARN(
           `--> [ADD] badge ${req.params.badgeid} => user ${req.params.steamid} [ERROR]`,
         );
-        log.WARN(err);
+        log.WARN(err.message);
       } else {
         log.INFO(
           `--> [ADD] badge ${req.params.badgeid} => user ${req.params.steamid} [DONE]`,
@@ -214,7 +214,7 @@ export const giveBadge = async (req, res) => {
         };
         db.collection('events').insertOne(eventDetails, err => {
           if (err) {
-            log.WARN(err);
+            log.WARN(err.message);
           } else {
             log.INFO(
               `--> [ADD] event - badge ${req.params.badgeid} => user ${req.params.steamid} [DONE]`,
@@ -273,7 +273,7 @@ export const takeBadge = async (req, res): Promise<void> => {
         log.WARN(
           `--> [DELETE] badge ${req.params.badgeid} => user ${req.params.steamid} [ERROR]`,
         );
-        log.WARN(err);
+        log.WARN(err.message);
       } else {
         log.INFO(
           `--> [DELETE] badge ${req.params.badgeid} => user ${req.params.steamid} [DONE]`,
