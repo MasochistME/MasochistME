@@ -9,8 +9,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: TODO
-        run: echo TODO
       - name: Checkout
         uses: actions/checkout@v2
         with:

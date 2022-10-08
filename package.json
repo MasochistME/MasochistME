@@ -2,7 +2,7 @@
   "name": "@masochistme/sdk",
   "version": "0.1.0",
   "description": "Masochist.ME SDK",
-  "repository": "https://github.com/MasochistME/masochist-sdk",
+  "repository": "https://github.com/MasochistME/masochist-sdk.git",
   "author": "Arcyvilk <arcyvilk@gmail.com>",
   "license": "MIT",
   "sideEffects": false,
