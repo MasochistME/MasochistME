@@ -10,9 +10,9 @@ import { tokenValidation } from 'helpers/validate';
 import { getDataFromDB } from 'helpers/db';
 import { log } from 'helpers/log';
 
-import { router } from 'router';
-import { routerAuth } from 'router/auth';
-import { initiateMainUpdate } from 'router/update';
+import { router } from 'router/v1';
+import { routerAuth } from 'router/v1/auth';
+import { initiateMainUpdate } from 'router/v1/update';
 
 import config from '../config.json';
 

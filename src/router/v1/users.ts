@@ -4,7 +4,7 @@ import axios from 'axios';
 import cache from 'cache';
 import { connectToDb, getDataFromDB } from 'helpers/db';
 import { log } from 'helpers/log';
-import config from '../../config.json';
+import config from '../../../config.json';
 
 /**
  * Returns basic users' data.

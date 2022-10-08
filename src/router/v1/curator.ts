@@ -9,7 +9,7 @@ import { TGameEvent, TTierChangeEvent } from './types/events';
 import { findGame } from './ranking';
 import { updateStatus } from './update';
 
-import config from '../../config.json';
+import config from '../../../config.json';
 
 type TRating = {
   symbol: string;
