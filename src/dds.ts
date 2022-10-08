@@ -11,6 +11,7 @@ import { getDataFromDB } from 'helpers/db';
 import { log } from 'helpers/log';
 
 import { router } from 'router/v1';
+import { routerV2 } from 'router/v2';
 import { routerAuth } from 'router/v1/auth';
 import { initiateMainUpdate } from 'router/v1/update';
 
@@ -91,6 +92,7 @@ app.post('*', tokenValidation);
 app.delete('*', tokenValidation);
 
 app.use('/api', router);
+app.use('/api/v2', routerV2);
 app.use('/auth', routerAuth);
 
 app.listen(config.PORT, () => {
