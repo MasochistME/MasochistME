@@ -9,7 +9,7 @@ export enum RaceType {
  * This is a type of a single object within the collection "race".
  * A single object describes a single race.
  */
-export type Race = WithId<{
+export type BaseRace = WithId<{
 	name: string;
 	instructions: string;
 	type: keyof typeof RaceType;
@@ -21,8 +21,13 @@ export type Race = WithId<{
 	icon?: string; // URL of the race's icon
 }>;
 
-export interface RaceScoreBased extends Race {
+export interface RaceScoreBased extends Omit<BaseRace, 'type'> {
+	type: RaceType.SCORE_BASED;
 	playLimit: number; // Time limit for the user to achieve the highest score [minutes].
 }
 
-export type RaceTimeBased = Race;
+export interface RaceTimeBased extends Omit<BaseRace, 'type'> {
+	type: RaceType.TIME_BASED;
+}
+
+export type Race = RaceScoreBased | RaceTimeBased;
