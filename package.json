@@ -6,6 +6,7 @@
   "author": "Arcyvilk <arcyvilk@gmail.com>",
   "license": "MIT",
   "sideEffects": false,
+  "private": true,
   "type": "module",
   "engines": {
     "node": ">=16"
