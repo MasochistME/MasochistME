@@ -3,23 +3,21 @@ import axios, { AxiosResponse } from 'axios';
 import { Race, ResponseError } from 'v2/types';
 
 /**
- *
- * @param race Omit<Race, '_id'>
- * @returns Race
+ * Returns a list of all the races that were ever registered.
+ * @returns Race[] | ResponseError
  */
 export const getRaceList =
-	(race: Omit<Race, '_id'>) =>
-	async (BASE_URL: string): Promise<Race | Error> => {
-		const url = `${BASE_URL}/race`;
+	async () =>
+	async (BASE_URL: string): Promise<Race[] | ResponseError> => {
+		const url = `${BASE_URL}/race/list`;
 
-		const raceResponse = await axios.post<
-			Race | ResponseError,
-			AxiosResponse<Race | ResponseError>,
-			Omit<Race, '_id'>
-		>(url, race);
+		const raceResponse = await axios.get<
+			Race[] | ResponseError,
+			AxiosResponse<Race[] | ResponseError>
+		>(url);
 
 		const { status, data } = raceResponse;
 
-		if (status !== 201) throw data as ResponseError;
-		return data as Race;
+		if (status !== 200) throw data as ResponseError;
+		return data as Race[];
 	};

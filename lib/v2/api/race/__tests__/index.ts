@@ -11,14 +11,16 @@ const sdk = new SDK({
 });
 
 const race = await sdk.createRace({
-	name: '',
-	instructions: '',
-	type: RaceType.SCORE_BASED,
-	startTime: 1234,
-	endTime: 1234,
-	downloadLink: 'http://http.cat',
-	downloadGrace: 120,
-	uploadGrace: 120,
+	race: {
+		name: '',
+		instructions: '',
+		type: RaceType.SCORE_BASED,
+		startTime: 1234,
+		endTime: 1234,
+		downloadLink: 'http://http.cat',
+		downloadGrace: 120,
+		uploadGrace: 120,
+	},
 });
 
 console.log(race);
