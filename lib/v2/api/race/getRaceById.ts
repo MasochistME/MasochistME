@@ -7,18 +7,19 @@ import { Race, ResponseError } from 'v2/types';
  * @param id string
  * @returns Race | ResponseError
  */
-export const getRaceById =
-	async ({ id }: { id: string }) =>
-	async (BASE_URL: string): Promise<Race | ResponseError> => {
-		const url = `${BASE_URL}/race/id/${id}`;
+export const getRaceById = async (
+	{ id }: { id: string },
+	BASE_URL: string,
+): Promise<Race | ResponseError> => {
+	const url = `${BASE_URL}/race/id/${id}`;
 
-		const raceResponse = await axios.get<
-			Race | ResponseError,
-			AxiosResponse<Race | ResponseError>
-		>(url, { validateStatus: () => true });
+	const raceResponse = await axios.get<
+		Race | ResponseError,
+		AxiosResponse<Race | ResponseError>
+	>(url, { validateStatus: () => true });
 
-		const { status, data } = raceResponse;
+	const { status, data } = raceResponse;
 
-		if (status !== 200) throw new Error((data as ResponseError).error);
-		return data as Race;
-	};
+	if (status !== 200) throw new Error((data as ResponseError).error);
+	return data as Race;
+};

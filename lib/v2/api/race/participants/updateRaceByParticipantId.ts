@@ -15,8 +15,8 @@ type Update = {
  * @param update string
  * @returns UpdateResult | ResponseError
  */
-export const updateRaceByParticipantId =
-	async ({
+export const updateRaceByParticipantId = async (
+	{
 		raceId,
 		discordId,
 		update,
@@ -24,18 +24,19 @@ export const updateRaceByParticipantId =
 		raceId: string;
 		discordId: string;
 		update: Update;
-	}) =>
-	async (BASE_URL: string): Promise<UpdateResult | ResponseError> => {
-		const url = `${BASE_URL}/race/${raceId}/participant/${discordId}`;
+	},
+	BASE_URL: string,
+): Promise<UpdateResult | ResponseError> => {
+	const url = `${BASE_URL}/race/${raceId}/participant/${discordId}`;
 
-		const racePlayerResponse = await axios.put<
-			UpdateResult | ResponseError,
-			AxiosResponse<UpdateResult | ResponseError>,
-			Update
-		>(url, update, { validateStatus: () => true });
+	const racePlayerResponse = await axios.put<
+		UpdateResult | ResponseError,
+		AxiosResponse<UpdateResult | ResponseError>,
+		Update
+	>(url, update, { validateStatus: () => true });
 
-		const { status, data } = racePlayerResponse;
+	const { status, data } = racePlayerResponse;
 
-		if (status !== 200) throw new Error((data as ResponseError).error);
-		return data as UpdateResult;
-	};
+	if (status !== 200) throw new Error((data as ResponseError).error);
+	return data as UpdateResult;
+};

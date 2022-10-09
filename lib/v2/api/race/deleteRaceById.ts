@@ -8,18 +8,19 @@ import { ResponseError } from 'v2/types';
  * @param id string
  * @returns DeleteResult | ResponseError
  */
-export const deleteRaceById =
-	async ({ id }: { id: string }) =>
-	async (BASE_URL: string): Promise<DeleteResult | ResponseError> => {
-		const url = `${BASE_URL}/race/id/${id}`;
+export const deleteRaceById = async (
+	{ id }: { id: string },
+	BASE_URL: string,
+): Promise<DeleteResult | ResponseError> => {
+	const url = `${BASE_URL}/race/id/${id}`;
 
-		const raceResponse = await axios.delete<
-			DeleteResult | ResponseError,
-			AxiosResponse<DeleteResult | ResponseError>
-		>(url, { validateStatus: () => true });
+	const raceResponse = await axios.delete<
+		DeleteResult | ResponseError,
+		AxiosResponse<DeleteResult | ResponseError>
+	>(url, { validateStatus: () => true });
 
-		const { status, data } = raceResponse;
+	const { status, data } = raceResponse;
 
-		if (status !== 200) throw new Error((data as ResponseError).error);
-		return data as DeleteResult;
-	};
+	if (status !== 200) throw new Error((data as ResponseError).error);
+	return data as DeleteResult;
+};

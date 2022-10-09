@@ -8,18 +8,19 @@ import { RacePlayer, ResponseError } from 'v2/types';
  * @param discordId string
  * @returns RacePlayer | ResponseError
  */
-export const getRaceParticipantById =
-	async ({ raceId, discordId }: { raceId: string; discordId: string }) =>
-	async (BASE_URL: string): Promise<RacePlayer | ResponseError> => {
-		const url = `${BASE_URL}/race/${raceId}/participant/${discordId}`;
+export const getRaceParticipantById = async (
+	{ raceId, discordId }: { raceId: string; discordId: string },
+	BASE_URL: string,
+): Promise<RacePlayer | ResponseError> => {
+	const url = `${BASE_URL}/race/${raceId}/participant/${discordId}`;
 
-		const racePlayerResponse = await axios.get<
-			RacePlayer | ResponseError,
-			AxiosResponse<RacePlayer | ResponseError>
-		>(url, { validateStatus: () => true });
+	const racePlayerResponse = await axios.get<
+		RacePlayer | ResponseError,
+		AxiosResponse<RacePlayer | ResponseError>
+	>(url, { validateStatus: () => true });
 
-		const { status, data } = racePlayerResponse;
+	const { status, data } = racePlayerResponse;
 
-		if (status !== 200) throw new Error((data as ResponseError).error);
-		return data as RacePlayer;
-	};
+	if (status !== 200) throw new Error((data as ResponseError).error);
+	return data as RacePlayer;
+};

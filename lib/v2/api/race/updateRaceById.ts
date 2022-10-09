@@ -9,19 +9,20 @@ import { Race, ResponseError } from 'v2/types';
  * @param race Partial<Omit<Race, '_id'>>
  * @returns UpdateResult | ResponseError
  */
-export const updateRaceById =
-	async ({ id, race }: { id: string; race: Partial<Omit<Race, '_id'>> }) =>
-	async (BASE_URL: string): Promise<UpdateResult | ResponseError> => {
-		const url = `${BASE_URL}/race/id/${id}`;
+export const updateRaceById = async (
+	{ id, race }: { id: string; race: Partial<Omit<Race, '_id'>> },
+	BASE_URL: string,
+): Promise<UpdateResult | ResponseError> => {
+	const url = `${BASE_URL}/race/id/${id}`;
 
-		const raceResponse = await axios.put<
-			UpdateResult | ResponseError,
-			AxiosResponse<UpdateResult | ResponseError>,
-			Partial<Omit<Race, '_id'>>
-		>(url, race, { validateStatus: () => true });
+	const raceResponse = await axios.put<
+		UpdateResult | ResponseError,
+		AxiosResponse<UpdateResult | ResponseError>,
+		Partial<Omit<Race, '_id'>>
+	>(url, race, { validateStatus: () => true });
 
-		const { status, data } = raceResponse;
+	const { status, data } = raceResponse;
 
-		if (status !== 200) throw new Error((data as ResponseError).error);
-		return data as UpdateResult;
-	};
+	if (status !== 200) throw new Error((data as ResponseError).error);
+	return data as UpdateResult;
+};

@@ -18,13 +18,15 @@ export type Config = {
 	authToken?: string;
 };
 
+type Head<T> = T extends (
+	first: infer FirstArgument,
+	...args: any[] | never
+) => any
+	? FirstArgument
+	: never;
+
 export class SDK {
 	private BASE_URL: string;
-	private setUrl =
-		<T>(fn: (args: T) => any) =>
-		async (...args: Parameters<typeof fn>) =>
-			(await fn(...args))(this.BASE_URL);
-
 	constructor(config: Config) {
 		this.BASE_URL = `${config.host}/api/v2`;
 		if (config.authToken) {
@@ -38,27 +40,33 @@ export class SDK {
 	 *       RACES       *
 	 *********************/
 
-	public createRace = <typeof createRace>this.setUrl(createRace);
-	public deleteRaceById = <typeof deleteRaceById>this.setUrl(deleteRaceById);
-	public updateRaceById = <typeof updateRaceById>this.setUrl(updateRaceById);
-	public getRaceById = <typeof getRaceById>this.setUrl(getRaceById);
-	public getRaceList = <typeof getRaceList>this.setUrl(getRaceList);
-	public getActiveRace = <typeof getActiveRace>this.setUrl(getActiveRace);
+	public createRace = <T extends typeof createRace>(args: Head<T>) =>
+		createRace(args, this.BASE_URL);
+	public deleteRaceById = <T extends typeof deleteRaceById>(args: Head<T>) =>
+		deleteRaceById(args, this.BASE_URL);
+	public updateRaceById = <T extends typeof updateRaceById>(args: Head<T>) =>
+		updateRaceById(args, this.BASE_URL);
+	public getRaceById = <T extends typeof getRaceById>(args: Head<T>) =>
+		getRaceById(args, this.BASE_URL);
+	public getRaceList = () => getRaceList(this.BASE_URL);
+	public getActiveRace = () => getActiveRace(this.BASE_URL);
 
 	/*********************************
 	 *       RACE PARTICIPANTS       *
 	 *********************************/
 
-	public getRaceParticipantById = <typeof getRaceParticipantById>(
-		this.setUrl(getRaceParticipantById)
-	);
-	public getRaceParticipantsList = <typeof getRaceParticipantsList>(
-		this.setUrl(getRaceParticipantsList)
-	);
-	public joinRaceByParticipantId = <typeof joinRaceByParticipantId>(
-		this.setUrl(joinRaceByParticipantId)
-	);
-	public updateRaceByParticipantId = <typeof updateRaceByParticipantId>(
-		this.setUrl(updateRaceByParticipantId)
-	);
+	public getRaceParticipantById = <T extends typeof getRaceParticipantById>(
+		args: Head<T>,
+	) => getRaceParticipantById(args, this.BASE_URL);
+	public getRaceParticipantsList = <T extends typeof getRaceParticipantsList>(
+		args: Head<T>,
+	) => getRaceParticipantsList(args, this.BASE_URL);
+	public joinRaceByParticipantId = <T extends typeof joinRaceByParticipantId>(
+		args: Head<T>,
+	) => joinRaceByParticipantId(args, this.BASE_URL);
+	public updateRaceByParticipantId = <
+		T extends typeof updateRaceByParticipantId,
+	>(
+		args: Head<T>,
+	) => updateRaceByParticipantId(args, this.BASE_URL);
 }

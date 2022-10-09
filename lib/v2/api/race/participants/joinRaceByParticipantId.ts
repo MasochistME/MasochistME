@@ -9,20 +9,19 @@ import { RacePlayer, ResponseError } from 'v2/types';
  * @param discordId string
  * @returns InsertOneResult<Race> | ResponseError
  */
-export const joinRaceByParticipantId =
-	async ({ raceId, discordId }: { raceId: string; discordId: string }) =>
-	async (
-		BASE_URL: string,
-	): Promise<InsertOneResult<RacePlayer> | ResponseError> => {
-		const url = `${BASE_URL}/race/${raceId}/participant/${discordId}`;
+export const joinRaceByParticipantId = async (
+	{ raceId, discordId }: { raceId: string; discordId: string },
+	BASE_URL: string,
+): Promise<InsertOneResult<RacePlayer> | ResponseError> => {
+	const url = `${BASE_URL}/race/${raceId}/participant/${discordId}`;
 
-		const racePlayerResponse = await axios.post<
-			InsertOneResult<RacePlayer> | ResponseError,
-			AxiosResponse<InsertOneResult<RacePlayer> | ResponseError>
-		>(url, {}, { validateStatus: () => true });
+	const racePlayerResponse = await axios.post<
+		InsertOneResult<RacePlayer> | ResponseError,
+		AxiosResponse<InsertOneResult<RacePlayer> | ResponseError>
+	>(url, {}, { validateStatus: () => true });
 
-		const { status, data } = racePlayerResponse;
+	const { status, data } = racePlayerResponse;
 
-		if (status !== 201) throw new Error((data as ResponseError).error);
-		return data as InsertOneResult<RacePlayer>;
-	};
+	if (status !== 201) throw new Error((data as ResponseError).error);
+	return data as InsertOneResult<RacePlayer>;
+};
