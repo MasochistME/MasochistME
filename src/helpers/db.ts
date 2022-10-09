@@ -14,9 +14,7 @@ export const connectToDb = async (): Promise<{
     const client = new MongoClient(url);
     return {
       client,
-      db: client.db(
-        process.env.NODE_ENV === 'development' ? 'masochist-dev' : 'masochist',
-      ),
+      db: client.db(process.env.ENV === 'dev' ? 'masochist-dev' : 'masochist'),
     };
   } catch (error) {
     log.WARN(error);

@@ -1,13 +1,9 @@
 export const CLIENT_HOME_PAGE_URL = `${
-  process.env.NODE_ENV === 'development'
-    ? 'http://localhost:3000'
-    : 'http://masochist.me'
+  process.env.ENV === 'dev' ? 'http://localhost:3000' : 'http://masochist.me'
 }/home`;
 
 export const CLIENT_ERROR_PAGE_URL = `${
-  process.env.NODE_ENV === 'development'
-    ? 'http://localhost:3000'
-    : 'http://masochist.me'
+  process.env.ENV === 'dev' ? 'http://localhost:3000' : 'http://masochist.me'
 }/error`;
 
 export const authRedirectMiddleware = (req: any, _res: any, next): void => {
