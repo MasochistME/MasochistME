@@ -7,6 +7,10 @@ import {
 	getRaceById,
 	getRaceList,
 	getActiveRace,
+	getRaceParticipantById,
+	getRaceParticipantsList,
+	joinRaceByParticipantId,
+	updateRaceByParticipantId,
 } from 'v2/api/race';
 
 export type Config = {
@@ -33,10 +37,28 @@ export class SDK {
 	/*********************
 	 *       RACES       *
 	 *********************/
+
 	public createRace = <typeof createRace>this.setUrl(createRace);
 	public deleteRaceById = <typeof deleteRaceById>this.setUrl(deleteRaceById);
 	public updateRaceById = <typeof updateRaceById>this.setUrl(updateRaceById);
 	public getRaceById = <typeof getRaceById>this.setUrl(getRaceById);
 	public getRaceList = <typeof getRaceList>this.setUrl(getRaceList);
 	public getActiveRace = <typeof getActiveRace>this.setUrl(getActiveRace);
+
+	/*********************************
+	 *       RACE PARTICIPANTS       *
+	 *********************************/
+
+	public getRaceParticipantById = <typeof getRaceParticipantById>(
+		this.setUrl(getRaceParticipantById)
+	);
+	public getRaceParticipantsList = <typeof getRaceParticipantsList>(
+		this.setUrl(getRaceParticipantsList)
+	);
+	public joinRaceByParticipantId = <typeof joinRaceByParticipantId>(
+		this.setUrl(joinRaceByParticipantId)
+	);
+	public updateRaceByParticipantId = <typeof updateRaceByParticipantId>(
+		this.setUrl(updateRaceByParticipantId)
+	);
 }
