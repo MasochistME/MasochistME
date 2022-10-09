@@ -75,10 +75,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@masochistme/sdk@^1.3.1":
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/@masochistme/sdk/-/sdk-1.3.1.tgz#a9dc155f69576660aca07945c70ff8b74b169b41"
-  integrity sha512-Rwcar+mKTMWI+juDdwi6QiTWFQO8kHgKHcXMbwjOCkrdMQON6wclNR1dV1R/DmELQ3Taa1syLjnX3t+5jTclaw==
+"@masochistme/sdk@^1.3.3":
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/@masochistme/sdk/-/sdk-1.3.3.tgz#4518d8d42327af110ffe5e4490aa363311ea0de2"
+  integrity sha512-S8XToqD57b6L5A0oqW0JWR8HwA953mg8XjjjUPCDXarw3rjQWjU5wnVnm7hIgjHPuXutTHoIErlfs3qYJxf9ew==
   dependencies:
     axios "1.1.2"
     discord.js "^14.3.0"
