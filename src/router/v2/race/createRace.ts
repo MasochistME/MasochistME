@@ -13,7 +13,13 @@ export const createRace = async (
     const collection = db.collection<Race>('races');
     const race = req.body; // TODO add validation
 
-    const response = await collection.insertOne(race);
+    const fixedRace = {
+      ...race,
+      startTime: new Date(race.startTime),
+      endTime: new Date(race.endTime),
+    };
+
+    const response = await collection.insertOne(fixedRace);
 
     client.close();
 
