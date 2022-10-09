@@ -3,11 +3,15 @@ import {
   ButtonBuilder,
   ButtonStyle,
   ActionRowBuilder,
+  APIEmbed,
+  APIEmbedField,
 } from "discord.js";
 import { getInfoEmbed } from "arcybot";
+import { Race, RaceType, RaceScoreBased } from "@masochistme/sdk/dist/v2/types";
 
+import { sdk } from "fetus";
 import { RACE_JOIN } from "consts";
-import { getChannelById, getOption } from "utils";
+import { getChannelById, getOption, getUTCDate, cenzor } from "utils";
 
 export const racesetupJoin = async (
   interaction: ButtonInteraction,
@@ -70,28 +74,20 @@ const getRaceJoinButton = () => {
  * Sends a race join form to users facing channel.
  * @param interaction ButtonInteraction
  */
-export const sendRaceJoinForm = async (interaction: ButtonInteraction) => {
+export const sendRaceJoinForm = async (
+  interaction: ButtonInteraction,
+  newRaceId: string,
+) => {
   const raceRoomId = getOption("room_race");
   const channel = getChannelById(interaction, raceRoomId);
-  const originalEmbed = interaction.message.embeds[0].data;
-  const raceName =
-    originalEmbed.fields?.find(field => field.name === "Name")?.value ??
-    "New race";
 
-  const editedEmbed = {
-    ...originalEmbed,
-    title: `📌 ${raceName.toUpperCase()} - race sign-up form`,
-    fields: [
-      ...(originalEmbed.fields ?? []),
-      {
-        name: "---",
-        value: `Clicking the **JOIN** button below will sign you up for the race!\n\nYou will get a ping from the bot when the race opens - then you can click **START** button whenever you feel ready to go.\n\n---`,
-      },
-    ],
-  };
+  const newRace = await sdk.getRaceById({ id: newRaceId });
+
+  //@ts-ignore // TODO fix types in SDK
+  const embed = getNewRaceCensoredEmbed(newRace);
 
   await channel?.send({
-    embeds: [editedEmbed],
+    embeds: [embed],
     components: [getRaceJoinButton()],
   });
 };
@@ -105,4 +101,69 @@ const saveRaceJoin = (interaction: ButtonInteraction) => {
   console.log(Boolean(embedFields));
   // TODO
   // create an endpoint which would save the info of user joining race to the database.
+};
+
+/**
+ * Creates an embed for the newly created race, censored
+ * @param race Race
+ * @returns APIEmbed
+ */
+const getNewRaceCensoredEmbed = (race: Race): APIEmbed => {
+  const fields: APIEmbedField[] = [
+    {
+      name: "Name",
+      value: race.name,
+    },
+    {
+      name: "Instructions",
+      value: cenzor(race.instructions),
+    },
+    {
+      name: "Start time",
+      value: getUTCDate(race.startTime),
+      inline: true,
+    },
+    {
+      name: "Finish time",
+      value: getUTCDate(race.endTime),
+      inline: true,
+    },
+    {
+      name: "Download link",
+      value: cenzor(race.downloadLink),
+    },
+    {
+      name: "Download grace period",
+      value: `${race.downloadGrace} seconds`,
+      inline: true,
+    },
+    {
+      name: "Screenshot upload grace period",
+      value: `${race.uploadGrace} seconds`,
+      inline: true,
+    },
+    {
+      name: "Race organizer",
+      value: `<@${race.organizer}>`,
+    },
+    {
+      name: "---",
+      value: `Clicking the **JOIN** button below will sign you up for the race!\n\nYou will get a ping from the bot when the race opens - then you can click **START** button whenever you feel ready to go.\n\n---`,
+    },
+  ];
+
+  if (race.type === RaceType.SCORE_BASED)
+    // optional field
+    fields.push({
+      name: "Play time limit",
+      value: `${(race as RaceScoreBased).playLimit} minutes`,
+      inline: true,
+    });
+
+  const embed: APIEmbed = {
+    title: `📌 ${race.name.toUpperCase()} - new race sign-up form!`,
+    fields,
+  };
+
+  return embed;
 };

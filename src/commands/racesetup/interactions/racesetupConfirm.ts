@@ -44,7 +44,14 @@ export const racesetupConfirm = async (
 
   if (interaction.customId === `${RACE_CONFIRMATION}_CONFIRM`) {
     try {
-      await saveRaceDetails();
+      const newRaceId = await saveRaceDetails();
+      sendRaceJoinForm(interaction, newRaceId);
+      interaction.update({
+        embeds: [
+          { ...editedEmbed, title: `✅ Race draft confirmed and created!` },
+        ],
+        components: [],
+      });
     } catch (err: any) {
       interaction.reply(
         getErrorEmbed(
@@ -54,15 +61,10 @@ export const racesetupConfirm = async (
       );
       return;
     }
-    sendRaceJoinForm(interaction);
-    interaction.update({
-      embeds: [{ ...editedEmbed, title: `✅ Race confirmed` }],
-      components: [],
-    });
   }
   if (interaction.customId === `${RACE_CONFIRMATION}_REJECT`) {
     interaction.update({
-      embeds: [{ ...editedEmbed, title: `❌ Race rejected` }],
+      embeds: [{ ...editedEmbed, title: `❌ Race draft rejected!` }],
       components: [],
     });
   }
@@ -72,14 +74,15 @@ export const racesetupConfirm = async (
  * Saves the new race details to database.
  * @param interaction ButtonInteraction
  */
-const saveRaceDetails = async () => {
+const saveRaceDetails = async (): Promise<string> => {
   const race = getDraftRace();
   if (!race) throw new Error("No draft race data found.");
 
   const response = await sdk.createRace({ race });
-  // @ts-ignore
+  // @ts-ignore // TODO fix those types in SDK!!!
   if (!response.acknowledged)
-    // TODO fix those types in SDK!!!
     throw new Error("Database refused to save draft race data.");
   setDraftRace();
+  // @ts-ignore // TODO fix those types in SDK!!!
+  return response.insertedId as string;
 };

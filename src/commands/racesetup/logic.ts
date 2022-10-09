@@ -9,7 +9,7 @@ import { getErrorEmbed, DiscordInteraction, log } from "arcybot";
 import { Race, RaceScoreBased, RaceType } from "@masochistme/sdk/dist/v2/types";
 
 import { RACE_CONFIRMATION } from "consts";
-import { isLink } from "utils";
+import { isLink, getUTCDate } from "utils";
 import { getRace, setDraftRace } from "commands/_utils/race";
 
 import { Options } from "./builder";
@@ -116,12 +116,12 @@ const getRaceConfirmationEmbed = (race: Omit<Race, "_id">) => {
     },
     {
       name: "Start time",
-      value: race.startTime.toLocaleString(),
+      value: getUTCDate(race.startTime),
       inline: true,
     },
     {
       name: "Finish time",
-      value: race.endTime.toLocaleString(),
+      value: getUTCDate(race.endTime),
       inline: true,
     },
     {
