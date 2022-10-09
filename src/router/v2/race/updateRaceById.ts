@@ -5,7 +5,7 @@ import { Race } from '@masochistme/sdk/dist/v2/types';
 import { log } from 'helpers/log';
 import { connectToDb } from 'helpers/db';
 
-export const editRaceById = async (
+export const updateRaceById = async (
   req: Request<any, Partial<Omit<Race, '_id'>>>,
   res: Response,
 ): Promise<void> => {
