@@ -7,6 +7,7 @@ import {
   updateRaceById,
   deleteRaceById,
   getRaceList,
+  getActiveRace,
 } from './race';
 
 /**
@@ -22,3 +23,4 @@ routerV2.get('/race/id/:id', getRaceById);
 routerV2.put('/race/id/:id', updateRaceById);
 routerV2.delete('/race/id/:id', deleteRaceById);
 routerV2.get('/race/list', getRaceList);
+routerV2.get('/race/active', getActiveRace);
