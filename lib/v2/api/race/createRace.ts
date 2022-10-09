@@ -6,7 +6,7 @@ import { Race, ResponseError } from 'v2/types';
 /**
  * Creates a new race.
  * @param race Omit<Race, '_id'>
- * @returns Race | ResponseError
+ * @returns InsertOneResult<Race> | ResponseError
  */
 export const createRace =
 	async ({ race }: { race: Omit<Race, '_id'> }) =>
