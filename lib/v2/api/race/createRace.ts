@@ -1,3 +1,4 @@
+import { InsertOneResult } from 'mongodb';
 import axios, { AxiosResponse } from 'axios';
 
 import { Race, ResponseError } from 'v2/types';
@@ -9,17 +10,17 @@ import { Race, ResponseError } from 'v2/types';
  */
 export const createRace =
 	async ({ race }: { race: Omit<Race, '_id'> }) =>
-	async (BASE_URL: string): Promise<Race | ResponseError> => {
+	async (BASE_URL: string): Promise<InsertOneResult<Race> | ResponseError> => {
 		const url = `${BASE_URL}/race`;
 
 		const raceResponse = await axios.post<
-			Race | ResponseError,
-			AxiosResponse<Race | ResponseError>,
+			InsertOneResult<Race> | ResponseError,
+			AxiosResponse<InsertOneResult<Race> | ResponseError>,
 			Omit<Race, '_id'>
-		>(url, race);
+		>(url, race, { validateStatus: () => true });
 
 		const { status, data } = raceResponse;
 
-		if (status !== 201) throw data as ResponseError;
-		return data as Race;
+		if (status !== 201) throw new Error((data as ResponseError).error);
+		return data as InsertOneResult<Race>;
 	};

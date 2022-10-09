@@ -14,10 +14,10 @@ export const getRaceList =
 		const raceResponse = await axios.get<
 			Race[] | ResponseError,
 			AxiosResponse<Race[] | ResponseError>
-		>(url);
+		>(url, { validateStatus: () => true });
 
 		const { status, data } = raceResponse;
 
-		if (status !== 200) throw data as ResponseError;
+		if (status !== 200) throw new Error((data as ResponseError).error);
 		return data as Race[];
 	};
