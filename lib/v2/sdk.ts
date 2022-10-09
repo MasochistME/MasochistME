@@ -3,7 +3,7 @@ import axios from 'axios';
 import {
 	createRace,
 	deleteRaceById,
-	editRaceById,
+	updateRaceById,
 	getRaceById,
 	getRaceList,
 } from 'v2/api/race';
@@ -34,7 +34,7 @@ export class SDK {
 	 *********************/
 	public createRace = <typeof createRace>this.setUrl(createRace);
 	public deleteRaceById = <typeof deleteRaceById>this.setUrl(deleteRaceById);
-	public editRaceById = <typeof editRaceById>this.setUrl(editRaceById);
+	public updateRaceById = <typeof updateRaceById>this.setUrl(updateRaceById);
 	public getRaceById = <typeof getRaceById>this.setUrl(getRaceById);
 	public getRaceList = <typeof getRaceList>this.setUrl(getRaceList);
 }
