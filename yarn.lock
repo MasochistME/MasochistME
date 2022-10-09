@@ -70,10 +70,10 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@masochistme/sdk@^1.3.3":
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/@masochistme/sdk/-/sdk-1.3.3.tgz#4518d8d42327af110ffe5e4490aa363311ea0de2"
-  integrity sha512-S8XToqD57b6L5A0oqW0JWR8HwA953mg8XjjjUPCDXarw3rjQWjU5wnVnm7hIgjHPuXutTHoIErlfs3qYJxf9ew==
+"@masochistme/sdk@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@masochistme/sdk/-/sdk-1.4.0.tgz#bdf69d8d4430604d6bbd778e7a98a5b345989731"
+  integrity sha512-zdDDYhGar1V5OmMF3E/2hFUh+Bc9qOra3WMKx7p8OqJ3YSu4kQ2lvDd4O/qH+FJ1X+bJE01qQGTmGuGeEyJ0nA==
   dependencies:
     axios "1.1.2"
     discord.js "^14.3.0"
@@ -815,6 +815,11 @@ cross-spawn@^7.0.2:
     path-key "^3.1.0"
     shebang-command "^2.0.0"
     which "^2.0.1"
+
+dayjs@^1.11.5:
+  version "1.11.5"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.5.tgz#00e8cc627f231f9499c19b38af49f56dc0ac5e93"
+  integrity sha512-CAdX5Q3YW3Gclyo5Vpqkgpj8fSdLQcRuzfX6mC6Phy0nfJ0eGYOeS7m4mt2plDWLAtA4TqTakvbboHvUxfe4iA==
 
 debug@^2.6.6, debug@^2.6.8:
   version "2.6.9"
