@@ -17,6 +17,15 @@ export const joinRaceByParticipantId = async (
     );
     const { raceid: raceId, participantid: discordId } = req.params;
 
+    try {
+      new ObjectId(raceId);
+    } catch (err) {
+      res
+        .status(400)
+        .send({ error: 'The race ID your provided is incorrect.' });
+      return;
+    }
+
     const _id = new ObjectId(raceId);
     const race: Race | null = await raceCollection.findOne({ _id });
 
