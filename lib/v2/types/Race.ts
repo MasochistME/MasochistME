@@ -13,8 +13,8 @@ export type BaseRace = WithId<{
 	name: string;
 	instructions: string;
 	type: keyof typeof RaceType;
-	startTime: number; // A date in a timestamp format.
-	endTime: number; // A date in a timestamp format.
+	startTime: Date; // A date in a timestamp format.
+	endTime: Date; // A date in a timestamp format.
 	downloadLink: string; // URL to the game's website.
 	downloadGrace: number; // Time to download the game [seconds].
 	uploadGrace: number; // Time to upload a proof of finishing the game [seconds].
