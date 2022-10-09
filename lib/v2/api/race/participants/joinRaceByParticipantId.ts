@@ -19,7 +19,7 @@ export const joinRaceByParticipantId =
 		const racePlayerResponse = await axios.post<
 			InsertOneResult<RacePlayer> | ResponseError,
 			AxiosResponse<InsertOneResult<RacePlayer> | ResponseError>
-		>(url, null, { validateStatus: () => true });
+		>(url, {}, { validateStatus: () => true });
 
 		const { status, data } = racePlayerResponse;
 
