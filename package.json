@@ -14,7 +14,7 @@
   "author": "Arcyvilk",
   "license": "ISC",
   "dependencies": {
-    "@masochistme/sdk": "^1.4.0",
+    "@masochistme/sdk": "^1.6.0",
     "@sentry/node": "^5.29.2",
     "@sentry/tracing": "^5.29.2",
     "@types/cors": "^2.8.9",
