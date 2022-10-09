@@ -4,12 +4,12 @@ import { UpdateResult } from 'mongodb';
 import { Race, ResponseError } from 'v2/types';
 
 /**
- * Edits a race by updating the fields that the user had passed.
+ * Updates a race by updating the fields that the user had passed.
  * @param id string
  * @param race Partial<Omit<Race, '_id'>>
  * @returns UpdateResult | ResponseError
  */
-export const editRaceById =
+export const updateRaceById =
 	async ({ id, race }: { id: string; race: Partial<Omit<Race, '_id'>> }) =>
 	async (BASE_URL: string): Promise<UpdateResult | ResponseError> => {
 		const url = `${BASE_URL}/race/id/${id}`;
