@@ -1,4 +1,3 @@
-import { ObjectId } from 'mongodb';
 import axios, { AxiosResponse } from 'axios';
 
 import { Race, ResponseError } from 'v2/types';
