@@ -6,9 +6,11 @@ import {
   APIEmbedField,
 } from "discord.js";
 import { getErrorEmbed, DiscordInteraction, log } from "arcybot";
+import { Race, RaceScoreBased, RaceType } from "@masochistme/sdk/dist/v2/types";
 
 import { RACE_CONFIRMATION } from "consts";
 import { isLink } from "utils";
+import { getRace, setDraftRace } from "commands/_utils/race";
 
 import { Options } from "./builder";
 import {
@@ -62,9 +64,12 @@ export const racesetup = async (
   )
     return errorNegativeTimers(interaction, raceData);
 
+  const race = getRace(interaction, raceData);
+
   try {
+    setDraftRace(race);
     interaction.reply({
-      embeds: [getRaceConfirmationEmbed(raceData)],
+      embeds: [getRaceConfirmationEmbed(race)],
       components: [getRaceConfirmationButtons()],
     });
   } catch (err: any) {
@@ -99,61 +104,54 @@ const getRaceConfirmationButtons = () => {
  * @param interaction DiscordInteraction
  * @returns APIEmbed
  */
-const getRaceConfirmationEmbed = (raceData: RaceData) => {
-  const getDate = (delay: number) => {
-    const time = Date.now();
-    const delayInMs = delay * 60 * 60 * 1000;
-    const date = new Date(time + delayInMs).toLocaleString();
-    return date;
-  };
-
+const getRaceConfirmationEmbed = (race: Omit<Race, "_id">) => {
   const fields: APIEmbedField[] = [
     {
       name: "Name",
-      value: raceData.name,
+      value: race.name,
     },
     {
       name: "Instructions",
-      value: raceData.instructions,
+      value: race.instructions,
     },
     {
       name: "Start time",
-      value: getDate(raceData.startsIn),
+      value: race.startTime.toLocaleString(),
       inline: true,
     },
     {
       name: "Finish time",
-      value: getDate(raceData.startsIn + raceData.endsAfter),
+      value: race.endTime.toLocaleString(),
       inline: true,
     },
     {
       name: "Download link",
-      value: raceData.downloadLink,
+      value: race.downloadLink,
     },
     {
       name: "Download grace period",
-      value: `${raceData.downloadGrace} seconds`,
+      value: `${race.downloadGrace} seconds`,
       inline: true,
     },
     {
       name: "Screenshot upload grace period",
-      value: `${raceData.uploadGrace} seconds`,
+      value: `${race.uploadGrace} seconds`,
       inline: true,
     },
   ];
 
-  if (raceData.playLimit)
+  if (race.type === RaceType.SCORE_BASED)
     // optional field
     fields.push({
       name: "Play time limit",
-      value: `${raceData.playLimit} minutes`,
+      value: `${(race as RaceScoreBased).playLimit} minutes`,
       inline: true,
     });
 
   const embed: APIEmbed = {
-    title: `⏳ New race - **${raceData.name}** - awaiting confirmation...`,
+    title: `⏳ New race - **${race.name}** - awaiting confirmation...`,
     fields: fields,
-    ...(raceData.icon && { thumbnail: { url: raceData.icon } }),
+    ...(race.icon && { thumbnail: { url: race.icon } }),
   };
 
   return embed;
