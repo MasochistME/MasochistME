@@ -6,7 +6,7 @@ import {
   APIEmbed,
   APIEmbedField,
 } from "discord.js";
-import { getInfoEmbed } from "arcybot";
+import { getErrorEmbed, getInfoEmbed } from "arcybot";
 import { Race, RaceType, RaceScoreBased } from "@masochistme/sdk/dist/v2/types";
 
 import { sdk } from "fetus";
@@ -18,6 +18,29 @@ export const racesetupJoin = async (
 ): Promise<void> => {
   if (!interaction.isButton()) return;
 
+  const raceId = interaction.customId.replace(`${RACE_JOIN}-`, "");
+  try {
+    const response = await sdk.getRaceParticipantById({
+      raceId,
+      discordId: interaction.user.id,
+    });
+    // @ts-ignore // TODO fix SDK types
+    if (response) {
+      interaction.reply(
+        getInfoEmbed(
+          "You already joined",
+          "You are already listed as a participant in this race.",
+          true,
+        ),
+      );
+      return;
+    }
+  } catch (error) {
+    interaction.reply(
+      getErrorEmbed("Something went wrong", "Please try again later.", true),
+    );
+  }
+
   const originalEmbed = interaction.message.embeds[0].data;
   const participants = originalEmbed.fields?.find(
     field => field.name === "Participants:",
@@ -25,17 +48,6 @@ export const racesetupJoin = async (
     name: "Participants:",
     value: "",
   };
-
-  if (participants.value.includes(interaction.user.id)) {
-    interaction.reply(
-      getInfoEmbed(
-        "You already joined",
-        "You are already listed as a participant in this race.",
-        true,
-      ),
-    );
-    return;
-  }
 
   const updatedParticipants = {
     ...participants,
@@ -52,18 +64,49 @@ export const racesetupJoin = async (
     fields: updatedFields,
   };
 
-  saveRaceJoin(interaction);
-  interaction.update({ embeds: [updatedEmbed] });
+  const registerUser = await saveJoinRace(interaction);
+  if (registerUser) {
+    interaction.update({ embeds: [updatedEmbed] });
+  }
 };
 
 /**
- * Creates a "join" buttil
+ * Saves the information about user joining the race.
+ * @param interaction ButtonInteraction
+ */
+const saveJoinRace = async (
+  interaction: ButtonInteraction,
+): Promise<boolean> => {
+  const raceId = interaction.customId.replace(`${RACE_JOIN}-`, "");
+  try {
+    const response = await sdk.joinRaceByParticipantId({
+      raceId,
+      discordId: interaction.user.id,
+    });
+    // @ts-ignore // TODO fix SDK types
+    if (!response.acknowledged)
+      throw new Error("Could not join the race, please try again later.");
+    return true;
+  } catch (error: any) {
+    interaction.reply(
+      getErrorEmbed(
+        "Error",
+        error.message ?? error ?? "Something went wrong.",
+        true,
+      ),
+    );
+    return false;
+  }
+};
+
+/**
+ * Creates a "join" button
  * @returns ActionRowBuilder<ButtonBuilder>
  */
-const getRaceJoinButton = () => {
+const getRaceJoinButton = (newRaceId: string) => {
   const buttonBar = new ActionRowBuilder<ButtonBuilder>().addComponents(
     new ButtonBuilder()
-      .setCustomId(RACE_JOIN)
+      .setCustomId(`${RACE_JOIN}-${newRaceId}`)
       .setLabel("JOIN THE RACE!")
       .setStyle(ButtonStyle.Primary),
   );
@@ -88,19 +131,8 @@ export const sendRaceJoinForm = async (
 
   await channel?.send({
     embeds: [embed],
-    components: [getRaceJoinButton()],
+    components: [getRaceJoinButton(newRaceId)],
   });
-};
-
-/**
- * Saves the information about user joining the race.
- * @param interaction ButtonInteraction
- */
-const saveRaceJoin = (interaction: ButtonInteraction) => {
-  const embedFields = interaction.message.embeds[0].data.fields;
-  console.log(Boolean(embedFields));
-  // TODO
-  // create an endpoint which would save the info of user joining race to the database.
 };
 
 /**
