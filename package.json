@@ -12,7 +12,6 @@
     "fetus:dev:watch": "env ENV=dev nodemon --exec npx tsx src/fetus.ts",
     "fetus:prod": "env ENV=prod npx tsx src/fetus.ts",
     "fetus:prod:watch": "env ENV=prod nodemon --exec npx tsx src/fetus.ts",
-    "start": "yarn build && env ENV=prod node dist/fetus.js",
     "lint": "eslint . --ext .ts --fix",
     "test": "echo TODO"
   },
@@ -33,7 +32,7 @@
     "dist/**/*"
   ],
   "dependencies": {
-    "@masochistme/sdk": "^1.6.0",
+    "@masochistme/sdk": "^1.6.1",
     "arcybot": "^1.4.4",
     "axios": "^0.27.2",
     "compromise": "^12.2.1",
