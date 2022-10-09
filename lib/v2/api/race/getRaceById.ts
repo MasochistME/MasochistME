@@ -4,7 +4,7 @@ import { Race, ResponseError } from 'v2/types';
 
 /**
  * Returns a race fron the database given the id, if it exists.
- * @param id ObjectId
+ * @param id string
  * @returns Race | ResponseError
  */
 export const getRaceById =
