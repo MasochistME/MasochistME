@@ -19,6 +19,7 @@ export type BaseRace = WithId<{
 	downloadGrace: number; // Time to download the game [seconds].
 	uploadGrace: number; // Time to upload a proof of finishing the game [seconds].
 	organizer: string; // Discord ID of the race's organizer.
+	isActive: boolean;
 	icon?: string; // URL of the race's icon
 }>;
 
