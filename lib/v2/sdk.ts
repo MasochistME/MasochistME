@@ -6,6 +6,7 @@ import {
 	updateRaceById,
 	getRaceById,
 	getRaceList,
+	getActiveRace,
 } from 'v2/api/race';
 
 export type Config = {
@@ -37,4 +38,5 @@ export class SDK {
 	public updateRaceById = <typeof updateRaceById>this.setUrl(updateRaceById);
 	public getRaceById = <typeof getRaceById>this.setUrl(getRaceById);
 	public getRaceList = <typeof getRaceList>this.setUrl(getRaceList);
+	public getActiveRace = <typeof getActiveRace>this.setUrl(getActiveRace);
 }
