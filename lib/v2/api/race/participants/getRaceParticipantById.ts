@@ -6,12 +6,12 @@ import { RacePlayer, ResponseError } from 'v2/types';
  * Returns an object representing a single participant in a single race.
  * @param raceId string
  * @param discordId string
- * @returns RacePlayer | ResponseError
+ * @returns RacePlayer
  */
 export const getRaceParticipantById = async (
 	{ raceId, discordId }: { raceId: string; discordId: string },
 	BASE_URL: string,
-): Promise<RacePlayer | ResponseError> => {
+): Promise<RacePlayer> => {
 	const url = `${BASE_URL}/race/${raceId}/participant/${discordId}`;
 
 	const racePlayerResponse = await axios.get<

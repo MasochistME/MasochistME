@@ -4,11 +4,9 @@ import { Race, ResponseError } from 'v2/types';
 
 /**
  * Returns a list of all the races that were ever registered.
- * @returns Race[] | ResponseError
+ * @returns Race[]
  */
-export const getRaceList = async (
-	BASE_URL: string,
-): Promise<Race[] | ResponseError> => {
+export const getRaceList = async (BASE_URL: string): Promise<Race[]> => {
 	const url = `${BASE_URL}/race/list`;
 
 	const raceResponse = await axios.get<

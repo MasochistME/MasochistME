@@ -13,7 +13,7 @@ type Update = {
  * @param raceId string
  * @param discordId string
  * @param update string
- * @returns UpdateResult | ResponseError
+ * @returns UpdateResult
  */
 export const updateRaceByParticipantId = async (
 	{
@@ -26,7 +26,7 @@ export const updateRaceByParticipantId = async (
 		update: Update;
 	},
 	BASE_URL: string,
-): Promise<UpdateResult | ResponseError> => {
+): Promise<UpdateResult> => {
 	const url = `${BASE_URL}/race/${raceId}/participant/${discordId}`;
 
 	const racePlayerResponse = await axios.put<

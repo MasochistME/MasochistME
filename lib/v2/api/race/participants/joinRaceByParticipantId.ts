@@ -7,12 +7,12 @@ import { RacePlayer, ResponseError } from 'v2/types';
  * Signs a user up for participatin in a specific race.
  * @param raceId string
  * @param discordId string
- * @returns InsertOneResult<Race> | ResponseError
+ * @returns InsertOneResult<Race>
  */
 export const joinRaceByParticipantId = async (
 	{ raceId, discordId }: { raceId: string; discordId: string },
 	BASE_URL: string,
-): Promise<InsertOneResult<RacePlayer> | ResponseError> => {
+): Promise<InsertOneResult<RacePlayer>> => {
 	const url = `${BASE_URL}/race/${raceId}/participant/${discordId}`;
 
 	const racePlayerResponse = await axios.post<

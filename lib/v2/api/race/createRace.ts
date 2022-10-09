@@ -6,12 +6,12 @@ import { Race, ResponseError } from 'v2/types';
 /**
  * Creates a new race.
  * @param race Omit<Race, '_id'>
- * @returns InsertOneResult<Race> | ResponseError
+ * @returns InsertOneResult<Race>
  */
 export const createRace = async (
 	{ race }: { race: Omit<Race, '_id'> },
 	BASE_URL: string,
-): Promise<InsertOneResult<Race> | ResponseError> => {
+): Promise<InsertOneResult<Race>> => {
 	const url = `${BASE_URL}/race`;
 
 	const raceResponse = await axios.post<

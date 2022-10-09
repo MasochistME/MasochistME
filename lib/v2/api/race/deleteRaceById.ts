@@ -6,12 +6,12 @@ import { ResponseError } from 'v2/types';
 /**
  * Deletes a race.
  * @param id string
- * @returns DeleteResult | ResponseError
+ * @returns DeleteResult
  */
 export const deleteRaceById = async (
 	{ id }: { id: string },
 	BASE_URL: string,
-): Promise<DeleteResult | ResponseError> => {
+): Promise<DeleteResult> => {
 	const url = `${BASE_URL}/race/id/${id}`;
 
 	const raceResponse = await axios.delete<

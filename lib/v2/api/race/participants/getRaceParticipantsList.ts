@@ -5,12 +5,12 @@ import { RacePlayer, ResponseError } from 'v2/types';
 /**
  * Returns a list of all participants from a single race.
  * @param raceId string
- * @returns RacePlayer[] | ResponseError
+ * @returns RacePlayer[]
  */
 export const getRaceParticipantsList = async (
 	{ raceId }: { raceId: string },
 	BASE_URL: string,
-): Promise<RacePlayer[] | ResponseError> => {
+): Promise<RacePlayer[]> => {
 	const url = `${BASE_URL}/race/${raceId}/participants/list`;
 
 	const racePlayerResponse = await axios.get<

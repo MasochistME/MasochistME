@@ -7,12 +7,12 @@ import { Race, ResponseError } from 'v2/types';
  * Updates a race by updating the fields that the user had passed.
  * @param id string
  * @param race Partial<Omit<Race, '_id'>>
- * @returns UpdateResult | ResponseError
+ * @returns UpdateResult
  */
 export const updateRaceById = async (
 	{ id, race }: { id: string; race: Partial<Omit<Race, '_id'>> },
 	BASE_URL: string,
-): Promise<UpdateResult | ResponseError> => {
+): Promise<UpdateResult> => {
 	const url = `${BASE_URL}/race/id/${id}`;
 
 	const raceResponse = await axios.put<
