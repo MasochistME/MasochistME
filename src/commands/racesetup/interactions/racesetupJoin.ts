@@ -35,9 +35,7 @@ export const racesetupJoin = async (
       return;
     }
   } catch (error) {
-    interaction.reply(
-      getErrorEmbed("Something went wrong", "Please try again later.", true),
-    );
+    // user not signed up for race yet, proceed
   }
 
   const originalEmbed = interaction.message.embeds[0].data;
@@ -98,6 +96,25 @@ const saveJoinRace = async (
 };
 
 /**
+ * Sends a race join form to users facing channel.
+ * @param interaction ButtonInteraction
+ */
+export const sendRaceJoinForm = async (
+  interaction: ButtonInteraction,
+  newRaceId: string,
+) => {
+  const newRace = await sdk.getRaceById({ id: newRaceId });
+
+  const raceRoomId = getOption("room_race");
+  const channel = getChannelById(interaction, raceRoomId);
+
+  await channel?.send({
+    embeds: [getNewRaceCensoredEmbed(newRace)],
+    components: [getRaceJoinButton(newRaceId)],
+  });
+};
+
+/**
  * Creates a "join" button
  * @returns ActionRowBuilder<ButtonBuilder>
  */
@@ -109,26 +126,6 @@ const getRaceJoinButton = (newRaceId: string) => {
       .setStyle(ButtonStyle.Primary),
   );
   return buttonBar;
-};
-
-/**
- * Sends a race join form to users facing channel.
- * @param interaction ButtonInteraction
- */
-export const sendRaceJoinForm = async (
-  interaction: ButtonInteraction,
-  newRaceId: string,
-) => {
-  const raceRoomId = getOption("room_race");
-  const channel = getChannelById(interaction, raceRoomId);
-
-  const newRace = await sdk.getRaceById({ id: newRaceId });
-  const embed = getNewRaceCensoredEmbed(newRace);
-
-  await channel?.send({
-    embeds: [embed],
-    components: [getRaceJoinButton(newRaceId)],
-  });
 };
 
 /**
@@ -170,18 +167,9 @@ const getNewRaceCensoredEmbed = (race: Race): APIEmbed => {
       value: `${race.uploadGrace} seconds`,
       inline: true,
     },
-    {
-      name: "Race organizer",
-      value: `<@${race.organizer}>`,
-    },
-    {
-      name: "---",
-      value: `Clicking the **JOIN** button below will sign you up for the race!\n\nYou will get a ping from the bot when the race opens - then you can click **START** button whenever you feel ready to go.\n\n---`,
-    },
   ];
 
   if (race.type === RaceType.SCORE_BASED)
-    // optional field
     fields.push({
       name: "Play time limit",
       value: `${(race as RaceScoreBased).playLimit} minutes`,
@@ -190,7 +178,17 @@ const getNewRaceCensoredEmbed = (race: Race): APIEmbed => {
 
   const embed: APIEmbed = {
     title: `📌 ${race.name.toUpperCase()} - new race sign-up form!`,
-    fields,
+    fields: [
+      ...fields,
+      {
+        name: "Race organizer",
+        value: `<@${race.organizer}>`,
+      },
+      {
+        name: "---",
+        value: `Clicking the **JOIN** button below will sign you up for the race!\n\nYou will get a ping from the bot when the race opens - then you can click **START** button whenever you feel ready to go.\n\n---`,
+      },
+    ],
   };
 
   return embed;
