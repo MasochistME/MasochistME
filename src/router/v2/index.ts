@@ -17,7 +17,7 @@ import {
  *         RACES         *
  *************************/
 routerV2.post('/race', createRace);
-routerV2.get('/race/id/:raceId', getRaceById);
-routerV2.put('/race/id/:raceId', editRaceById);
-routerV2.delete('/race/id/:raceId', deleteRaceById);
+routerV2.get('/race/id/:id', getRaceById);
+routerV2.put('/race/id/:id', editRaceById);
+routerV2.delete('/race/id/:id', deleteRaceById);
 routerV2.get('/race/list', getRaceList);
