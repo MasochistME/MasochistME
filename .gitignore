@@ -2,3 +2,6 @@
 /dist
 yarn-error.log
 .env
+
+.yalc
+yalc.lock
