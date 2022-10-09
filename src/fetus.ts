@@ -1,6 +1,7 @@
-import * as dotenv from "dotenv";
 import axios from "axios";
+import * as dotenv from "dotenv";
 import { Arcybot } from "arcybot";
+import { SDK } from "@masochistme/sdk/dist/v2/sdk";
 
 import { getOption, Database } from "utils";
 import { Cache } from "cache";
@@ -11,23 +12,22 @@ import { handleAutocomplete, handleButtons } from "interactions";
 dotenv.config();
 
 /************************
- *       DB CONFIG      *
+ *        CONFIG        *
  ************************/
 
 const botDb = process.env["ENV"] === "dev" ? "fetus-dev" : "fetus";
-const dbConfig = [
+
+export const mongo = new Database([
   { symbol: botDb, url: process.env["DB_FETUS"] },
   { symbol: "masochist", url: process.env["DB_MASOCHIST"] },
-];
+]);
 
-export const mongo = new Database(dbConfig);
+export const sdk = new SDK({
+  host: "http://localhost:3002",
+  authToken: process.env.ACCESS_TOKEN,
+});
 
-/************************
- *         CACHE        *
- ************************/
-
-const cacheConfig = { botDb };
-export const cache = new Cache(cacheConfig);
+export const cache = new Cache({ botDb });
 
 /************************
  *      BOT CONFIG      *
@@ -63,19 +63,6 @@ const init = async () => {
 };
 
 init();
-
-// const init = bot => {
-//   bot.on("message", classifyMessage);
-//   bot.on("messageUpdate", msgEdit);
-//   bot.on("messageDelete", msgDelete);
-//   bot.on("guildMemberAdd", userJoin);
-//   bot.on("guildMemberRemove", userLeave);
-
-//   cache.bot = bot;
-//   log.INFO(
-//     `${new Date().toLocaleString()} - Dr. Fetus reporting for destruction!`,
-//   );
-// };
 
 if (process.env.ACCESS_TOKEN)
   axios.defaults.headers.common["Authorization"] = process.env.ACCESS_TOKEN;
