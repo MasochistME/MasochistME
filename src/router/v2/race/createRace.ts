@@ -10,10 +10,10 @@ export const createRace = async (
 ): Promise<void> => {
   try {
     const { client, db } = await connectToDb();
-    const collection = db.collection<Race>('races');
+    const collection = db.collection<Omit<Race, '_id'>>('races');
     const race = req.body; // TODO add validation
 
-    const fixedRace = {
+    const fixedRace: Omit<Race, '_id'> = {
       ...race,
       startTime: new Date(race.startTime),
       endTime: new Date(race.endTime),
