@@ -79,10 +79,8 @@ const saveRaceDetails = async (): Promise<string> => {
   if (!race) throw new Error("No draft race data found.");
 
   const response = await sdk.createRace({ race });
-  // @ts-ignore // TODO fix those types in SDK!!!
   if (!response.acknowledged)
     throw new Error("Database refused to save draft race data.");
   setDraftRace();
-  // @ts-ignore // TODO fix those types in SDK!!!
-  return response.insertedId as string;
+  return String(response.insertedId);
 };

@@ -24,7 +24,6 @@ export const racesetupJoin = async (
       raceId,
       discordId: interaction.user.id,
     });
-    // @ts-ignore // TODO fix SDK types
     if (response) {
       interaction.reply(
         getInfoEmbed(
@@ -83,7 +82,6 @@ const saveJoinRace = async (
       raceId,
       discordId: interaction.user.id,
     });
-    // @ts-ignore // TODO fix SDK types
     if (!response.acknowledged)
       throw new Error("Could not join the race, please try again later.");
     return true;
@@ -125,8 +123,6 @@ export const sendRaceJoinForm = async (
   const channel = getChannelById(interaction, raceRoomId);
 
   const newRace = await sdk.getRaceById({ id: newRaceId });
-
-  //@ts-ignore // TODO fix types in SDK
   const embed = getNewRaceCensoredEmbed(newRace);
 
   await channel?.send({
