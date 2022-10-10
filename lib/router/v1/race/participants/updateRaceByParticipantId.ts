@@ -29,9 +29,9 @@ export const updateRaceByParticipantId = async (
       { _id: racePlayer._id },
       {
         $set: {
-          ...(startTime && { startTime }),
-          ...(endTime && { endTime }),
-          ...(score && { score }),
+          ...(startTime && { startTime: new Date(startTime) }),
+          ...(endTime && { endTime: new Date(endTime) }),
+          ...(score && { score: Number(score) }),
         },
       },
     );
