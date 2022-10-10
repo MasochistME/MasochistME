@@ -1,7 +1,7 @@
 import { InsertOneResult } from 'mongodb';
 import axios, { AxiosResponse } from 'axios';
 
-import { Race, ResponseError } from 'v2/types';
+import { Race, ResponseError } from 'v1/types';
 
 /**
  * Creates a new race.

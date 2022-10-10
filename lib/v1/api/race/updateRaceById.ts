@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { UpdateResult } from 'mongodb';
 
-import { Race, ResponseError } from 'v2/types';
+import { Race, ResponseError } from 'v1/types';
 
 /**
  * Updates a race by updating the fields that the user had passed.

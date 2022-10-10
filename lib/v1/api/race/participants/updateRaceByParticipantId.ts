@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { UpdateResult } from 'mongodb';
 
-import { ResponseError } from 'v2/types';
+import { ResponseError } from 'v1/types';
 
 type Update = {
 	startTime?: Date;

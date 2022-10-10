@@ -11,7 +11,7 @@ import {
 	getRaceParticipantsList,
 	joinRaceByParticipantId,
 	updateRaceByParticipantId,
-} from 'v2/api/race';
+} from 'v1/api/race';
 
 export type Config = {
 	host: string; // for example localhost:3000
@@ -28,7 +28,7 @@ type Head<T> = T extends (
 export class SDK {
 	private BASE_URL: string;
 	constructor(config: Config) {
-		this.BASE_URL = `${config.host}/api/v2`;
+		this.BASE_URL = `${config.host}/api/v1`;
 		if (config.authToken) {
 			axios.defaults.headers.common['Authorization'] = config.authToken;
 		} else {

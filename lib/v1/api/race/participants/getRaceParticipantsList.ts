@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 
-import { RacePlayer, ResponseError } from 'v2/types';
+import { RacePlayer, ResponseError } from 'v1/types';
 
 /**
  * Returns a list of all participants from a single race.

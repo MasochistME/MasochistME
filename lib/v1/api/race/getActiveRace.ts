@@ -1,13 +1,13 @@
 import axios, { AxiosResponse } from 'axios';
 
-import { Race, ResponseError } from 'v2/types';
+import { Race, ResponseError } from 'v1/types';
 
 /**
- * Returns a list of all the races that were ever registered.
+ * Returns a list of all the present and future races, sorting them by which starts the sooner.
  * @returns Race[]
  */
-export const getRaceList = async (BASE_URL: string): Promise<Race[]> => {
-	const url = `${BASE_URL}/race/list`;
+export const getActiveRace = async (BASE_URL: string): Promise<Race[]> => {
+	const url = `${BASE_URL}/race/active`;
 
 	const raceResponse = await axios.get<
 		Race[] | ResponseError,

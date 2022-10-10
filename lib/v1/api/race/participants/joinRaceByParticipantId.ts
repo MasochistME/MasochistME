@@ -1,7 +1,7 @@
 import { InsertOneResult } from 'mongodb';
 import axios, { AxiosResponse } from 'axios';
 
-import { RacePlayer, ResponseError } from 'v2/types';
+import { RacePlayer, ResponseError } from 'v1/types';
 
 /**
  * Signs a user up for participatin in a specific race.

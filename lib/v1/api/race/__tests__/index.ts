@@ -1,7 +1,7 @@
 import * as dotenv from 'dotenv';
 
-import { SDK } from 'v2/sdk';
-import { RaceType } from 'v2/types';
+import { SDK } from 'v1/sdk';
+import { RaceType } from 'v1/types';
 
 dotenv.config();
 

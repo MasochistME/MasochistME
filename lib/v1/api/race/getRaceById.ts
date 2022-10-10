@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 
-import { Race, ResponseError } from 'v2/types';
+import { Race, ResponseError } from 'v1/types';
 
 /**
  * Returns a race fron the database given the id, if it exists.
