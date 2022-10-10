@@ -7,7 +7,7 @@ import { connectToDb } from 'helpers/db';
 /**
  * Returns all patrons no matter the tier.
  */
-export const getAllPatrons = async (req: any, res: any) => {
+export const getAllPatrons = async (_req: any, res: any) => {
   const { client, db } = await connectToDb();
 
   db.collection<PatreonTier>('patreonTiers')
@@ -153,6 +153,7 @@ export const updatePatron = async (req: any, res: any) => {
   const urlSummary = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${process.env.STEAM_KEY}&steamids=${req.params.steamid}`;
   let userSummary: any;
   try {
+    // eslint-disable-next-line prefer-const
     userSummary = await axios.get(urlSummary);
   } catch (err: any) {
     log.WARN(urlSummary);

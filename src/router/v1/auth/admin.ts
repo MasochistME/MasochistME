@@ -17,7 +17,8 @@ export const getUserPermissions = async (req: any, res: any): Promise<void> => {
     const fixedMemberPermissions: string[] = [];
     member[0].groups.forEach((memberGroup: string) => {
       const memberPermissions =
-        groups.find((group: any) => group.name === memberGroup)?.permissions ?? [];
+        groups.find((group: any) => group.name === memberGroup)?.permissions ??
+        [];
       memberPermissions.forEach((permission: any) => {
         permission.scope.forEach((scope: any) =>
           fixedMemberPermissions.push(`${permission.name}:${scope}`),

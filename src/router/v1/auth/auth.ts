@@ -6,7 +6,11 @@ export const CLIENT_ERROR_PAGE_URL = `${
   process.env.ENV === 'dev' ? 'http://localhost:3000' : 'http://masochist.me'
 }/error`;
 
-export const authRedirectMiddleware = (req: any, _res: any, next: any): void => {
+export const authRedirectMiddleware = (
+  req: any,
+  _res: any,
+  next: any,
+): void => {
   req.url = req.originalUrl;
   next();
 };

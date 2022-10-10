@@ -242,9 +242,10 @@ const getUserAchievements = (userID: number, games: any, userToUpdate: any) =>
 
           const numberOfAllAchievements =
             response.data.playerstats.achievements.length;
-          const numberOfUnlockedAchievements = response.data.playerstats.achievements.filter(
-            (achievement: any) => Number(achievement.achieved) === 1,
-          ).length;
+          const numberOfUnlockedAchievements =
+            response.data.playerstats.achievements.filter(
+              (achievement: any) => Number(achievement.achieved) === 1,
+            ).length;
           let lastUnlocked = 0;
           response.data.playerstats.achievements.map((achievement: any) =>
             achievement.unlocktime > lastUnlocked
@@ -256,11 +257,10 @@ const getUserAchievements = (userID: number, games: any, userToUpdate: any) =>
 
           games[index].completionRate = completionRate;
           games[index].lastUnlocked = lastUnlocked;
-          games[
-            index
-          ].achievements = response.data.playerstats.achievements.filter(
-            (achievement: any) => achievement.achieved === 1,
-          );
+          games[index].achievements =
+            response.data.playerstats.achievements.filter(
+              (achievement: any) => achievement.achieved === 1,
+            );
 
           // event when 100%
           if (userToUpdate[0]) {
@@ -331,14 +331,15 @@ const getUserRanking = (curatedGames: any, userGames: any) =>
       .filter((game: any) => Number(game.completionRate) === Number(100))
       .map((filteredgame: any) => {
         const game = curatedGames.find(
-          (cachedgame: any) => Number(cachedgame.id) === Number(filteredgame.appid),
+          (cachedgame: any) =>
+            Number(cachedgame.id) === Number(filteredgame.appid),
         );
         //@ts-ignore
         game && ranking[game.rating]
-        //@ts-ignore
-          ? (ranking[game.rating] += 1)
-          //@ts-ignore
-          : (ranking[game.rating] = 1);
+          ? //@ts-ignore
+            (ranking[game.rating] += 1)
+          : //@ts-ignore
+            (ranking[game.rating] = 1);
       });
     resolve(ranking);
   });

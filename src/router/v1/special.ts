@@ -23,7 +23,10 @@ export const getSteamID = async (
  * Get all the rating tiers.
  * @param req
  */
-export const getRating = async (_req: Request, res: Response): Promise<void> => {
+export const getRating = async (
+  _req: Request,
+  res: Response,
+): Promise<void> => {
   const points = await getDataFromDB('points');
 
   if (points) {

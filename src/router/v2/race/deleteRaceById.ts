@@ -23,7 +23,7 @@ export const deleteRaceById = async (
     } else {
       res.status(200).send(response);
     }
-  } catch (err) {
+  } catch (err: any) {
     log.WARN(err);
     res.status(500).send({ error: err.message ?? 'Internal server error' });
   }

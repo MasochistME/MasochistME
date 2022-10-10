@@ -42,7 +42,10 @@ export const getStatus = async (_req?: any, res?: any): Promise<void> => {
   return;
 };
 
-export const initiateMainUpdate = async (req?: any, res?: any): Promise<void> => {
+export const initiateMainUpdate = async (
+  req?: any,
+  res?: any,
+): Promise<void> => {
   const { client, db } = await connectToDb();
   const usersFromDB = await getDataFromDB('users');
   let members: any;
@@ -137,7 +140,9 @@ export const initiateMainUpdate = async (req?: any, res?: any): Promise<void> =>
     updateStatus(db, percentage);
 
     if (
-      !usersFromDB.find((userFromDB: any) => userFromDB?.id === members[index]?.id)
+      !usersFromDB.find(
+        (userFromDB: any) => userFromDB?.id === members[index]?.id,
+      )
     ) {
       const userUrl = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${process.env.STEAM_KEY}&steamids=${members[index].id}`;
       let userData;

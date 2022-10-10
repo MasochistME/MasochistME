@@ -164,6 +164,7 @@ export const giveBadge = async (req: any, res: any) => {
 
   try {
     user = await getDataFromDB('users', { id: req.params.steamid });
+    // eslint-disable-next-line prefer-const
     badge = await getDataFromDB('badges', {
       _id: new ObjectId(req.params.badgeid),
     });

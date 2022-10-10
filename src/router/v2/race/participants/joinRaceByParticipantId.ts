@@ -12,9 +12,8 @@ export const joinRaceByParticipantId = async (
   try {
     const { client, db } = await connectToDb();
     const raceCollection = db.collection<Race>('races');
-    const racePlayerCollection = db.collection<Omit<RacePlayer, '_id'>>(
-      'racePlayers',
-    );
+    const racePlayerCollection =
+      db.collection<Omit<RacePlayer, '_id'>>('racePlayers');
     const { raceid: raceId, participantid: discordId } = req.params;
 
     try {
@@ -54,7 +53,7 @@ export const joinRaceByParticipantId = async (
     } else {
       res.status(201).send(response);
     }
-  } catch (err) {
+  } catch (err: any) {
     log.WARN(err);
     res.status(500).send({ error: err.message ?? 'Internal server error' });
   }

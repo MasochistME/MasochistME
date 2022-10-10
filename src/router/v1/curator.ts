@@ -277,6 +277,7 @@ export const updateCuratorGames = (_req?: any, res?: any): Promise<void> =>
       let game;
 
       try {
+        // eslint-disable-next-line prefer-const
         game = await axios.get(urlGamesDetails);
       } catch (err: any) {
         log.INFO(`- saving game ${gameId} failed`);
@@ -415,7 +416,7 @@ const extractMemberIDs = (raw: any) => {
     .filter((m: any) => m.id.length > 0);
 };
 
-export const getCuratorMembers = (req?: any, res?: any): Promise<void> =>
+export const getCuratorMembers = (_req?: any, res?: any): Promise<void> =>
   // eslint-disable-next-line no-async-promise-executor
   new Promise(async (resolve, reject) => {
     const curatorId = await findOption('curatorId');

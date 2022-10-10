@@ -5,7 +5,7 @@ import { log } from 'helpers/log';
 import { connectToDb } from 'helpers/db';
 
 export const getActiveRace = async (
-  req: Request,
+  _req: Request,
   res: Response,
 ): Promise<void> => {
   try {
@@ -23,7 +23,7 @@ export const getActiveRace = async (
     client.close();
 
     res.status(200).send(futureRaces);
-  } catch (err) {
+  } catch (err: any) {
     log.WARN(err);
     res.status(500).send({ error: err.message ?? 'Internal server error' });
   }
