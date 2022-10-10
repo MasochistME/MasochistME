@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as dotenv from "dotenv";
 import { Arcybot } from "arcybot";
-import { SDK } from "@masochistme/sdk/dist/v2/sdk";
+import { SDK } from "@masochistme/sdk/dist/v1/sdk";
 
 import { getOption, Database } from "utils";
 import { Cache } from "cache";

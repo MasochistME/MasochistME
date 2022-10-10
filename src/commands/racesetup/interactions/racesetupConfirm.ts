@@ -1,6 +1,6 @@
 import { ButtonInteraction } from "discord.js";
 import { getErrorEmbed } from "arcybot";
-import { Race } from "@masochistme/sdk/dist/v2/types";
+import { Race } from "@masochistme/sdk/dist/v1/types";
 
 import { sdk } from "fetus";
 import { RACE_CONFIRMATION } from "consts";

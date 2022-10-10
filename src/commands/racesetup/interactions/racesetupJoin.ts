@@ -7,11 +7,13 @@ import {
   APIEmbedField,
 } from "discord.js";
 import { getErrorEmbed, getInfoEmbed } from "arcybot";
-import { Race, RaceType, RaceScoreBased } from "@masochistme/sdk/dist/v2/types";
+import { Race, RaceType, RaceScoreBased } from "@masochistme/sdk/dist/v1/types";
 
 import { sdk } from "fetus";
 import { RACE_JOIN } from "consts";
 import { getChannelById, getOption, getUTCDate, cenzor } from "utils";
+
+import { raceStart } from "./raceStart";
 
 export const racesetupJoin = async (
   interaction: ButtonInteraction,
@@ -64,6 +66,7 @@ export const racesetupJoin = async (
   const registerUser = await saveJoinRace(interaction);
   if (registerUser) {
     interaction.update({ embeds: [updatedEmbed] });
+    raceStart(interaction); // TODO this is here temporarily!
   }
 };
 

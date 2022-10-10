@@ -10,3 +10,5 @@ export const USER_NO_DESCRIPTION = "This user does not have description yet.";
 export const REGISTRATION_REVIEW = "REGISTRATION_REVIEW";
 export const RACE_CONFIRMATION = "RACE_CONFIRMATION";
 export const RACE_JOIN = "RACE_JOIN";
+export const RACE_START = "RACE_START";
+export const RACE_FINISH = "RACE_FINISH";

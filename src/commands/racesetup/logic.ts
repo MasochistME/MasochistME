@@ -6,7 +6,7 @@ import {
   APIEmbedField,
 } from "discord.js";
 import { getErrorEmbed, DiscordInteraction, log } from "arcybot";
-import { Race, RaceScoreBased, RaceType } from "@masochistme/sdk/dist/v2/types";
+import { Race, RaceScoreBased, RaceType } from "@masochistme/sdk/dist/v1/types";
 
 import { RACE_CONFIRMATION } from "consts";
 import { isLink, getUTCDate } from "utils";

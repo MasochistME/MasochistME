@@ -1,5 +1,5 @@
 import { getErrorEmbed, DiscordInteraction, log, getInfoEmbed } from "arcybot";
-import { Race, RaceType, RaceScoreBased } from "@masochistme/sdk/dist/v2/types";
+import { Race, RaceType, RaceScoreBased } from "@masochistme/sdk/dist/v1/types";
 import { APIEmbed, APIEmbedField } from "discord.js";
 import dayjs from "dayjs";
 

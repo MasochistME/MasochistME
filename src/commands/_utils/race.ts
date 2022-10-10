@@ -1,4 +1,4 @@
-import { Race, RaceType } from "@masochistme/sdk/dist/v2/types";
+import { Race, RaceType } from "@masochistme/sdk/dist/v1/types";
 import { DiscordInteraction } from "arcybot";
 
 import { getDateFromDelay } from "utils/getDate";
@@ -29,6 +29,7 @@ export const getRace = (
     downloadGrace: raceData.downloadGrace,
     uploadGrace: raceData.uploadGrace,
     organizer: interaction.user.id,
+    isActive: false,
     ...(raceData.icon && { icon: raceData.icon }),
     ...(raceData.playLimit && { playLimit: raceData.playLimit }),
   };
