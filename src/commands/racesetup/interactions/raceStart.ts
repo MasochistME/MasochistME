@@ -19,13 +19,19 @@ export const raceReadyToGo = async (
   if (!interaction.isButton()) return;
   const raceId = interaction.customId.replace(`${RACE_JOIN}-`, "");
   const race = await sdk.getRaceById({ id: raceId });
-
+  const tempFields = [
+    {
+      name: "---",
+      value: `Good luck! You can start the race whenever it's convenient for you within the time limit.`,
+    },
+  ];
   interaction.user.send({
     embeds: [
       getRaceStartEmbed(
         race,
         `⏳ ${race.name.toUpperCase()} - READY TO GO`,
         true,
+        tempFields,
       ),
     ],
     components: [getRaceStartButtons(raceId, true, false)],
@@ -44,20 +50,28 @@ export const raceStart = async (
 
   const raceId = interaction.customId.replace(`${RACE_START}-`, "");
   const race = await sdk.getRaceById({ id: raceId });
+  const startTime = new Date();
 
   try {
     const { acknowledged } = await sdk.updateRaceByParticipantId({
       raceId,
       discordId: interaction.user.id,
-      update: { startTime: new Date() },
+      update: { startTime },
     });
     if (!acknowledged) throw new Error("Database did not respond.");
+    const tempFields = [
+      {
+        name: "---",
+        value: `**Your start time**: ${startTime.toLocaleTimeString()}`,
+      },
+    ];
     interaction.update({
       embeds: [
         getRaceStartEmbed(
           race,
           `⌛ ${race.name.toUpperCase()} - IN PROGRESS`,
           false,
+          tempFields,
         ),
       ],
       components: [getRaceStartButtons(raceId, false, true)],
@@ -80,20 +94,28 @@ export const raceFinish = async (
   if (!interaction.isButton()) return;
   const raceId = interaction.customId.replace(`${RACE_FINISH}-`, "");
   const race = await sdk.getRaceById({ id: raceId });
+  const endTime = new Date();
 
   try {
     const { acknowledged } = await sdk.updateRaceByParticipantId({
       raceId,
       discordId: interaction.user.id,
-      update: { endTime: new Date() },
+      update: { endTime },
     });
     if (!acknowledged) throw new Error("Database did not respond.");
+    const tempFields = [
+      {
+        name: "---",
+        value: `**Your finish time**: ${endTime.toLocaleTimeString()}`,
+      },
+    ];
     interaction.update({
       embeds: [
         getRaceStartEmbed(
           race,
           `☑️ ${race.name.toUpperCase()} - FINISHED`,
           false,
+          tempFields,
         ),
       ],
       components: [getRaceStartButtons(raceId, false, false)],
@@ -119,12 +141,16 @@ const getRaceStartButtons = (
   const buttonStartRace = new ButtonBuilder()
     .setCustomId(`${RACE_START}-${raceId}`)
     .setLabel("START")
-    .setStyle(ButtonStyle.Primary)
+    .setStyle(
+      isStartButtonEnabled ? ButtonStyle.Primary : ButtonStyle.Secondary,
+    )
     .setDisabled(!isStartButtonEnabled);
   const buttonFinishRace = new ButtonBuilder()
     .setCustomId(`${RACE_FINISH}-${raceId}`)
     .setLabel("FINISH")
-    .setStyle(ButtonStyle.Primary)
+    .setStyle(
+      isFinishButtonEnabled ? ButtonStyle.Primary : ButtonStyle.Secondary,
+    )
     .setDisabled(!isFinishButtonEnabled);
   const buttonBar = new ActionRowBuilder<ButtonBuilder>().addComponents(
     buttonStartRace,
@@ -143,12 +169,9 @@ const getRaceStartEmbed = (
   race: Race,
   title: string,
   isCenzored: boolean,
+  newFields: APIEmbedField[],
 ): APIEmbed => {
   const fields: APIEmbedField[] = [
-    {
-      name: "Name",
-      value: race.name,
-    },
     {
       name: "Instructions",
       value: isCenzored ? cenzor(race.instructions) : race.instructions,
@@ -194,10 +217,7 @@ const getRaceStartEmbed = (
         name: "Race organizer",
         value: `<@${race.organizer}>`,
       },
-      {
-        name: "---",
-        value: `Good luck! You can start the race whenever it's convenient for you within the time limit.`,
-      },
+      ...(newFields ?? []),
     ],
   };
 
