@@ -1,93 +1,44 @@
 import express from 'express';
-export const router = express.Router();
+export const routerV1 = express.Router();
 
-// -----------------------------------------------------------------
-// ------------------------------- NEW -----------------------------
-// -----------------------------------------------------------------
-
-import { initiateMainUpdate, getStatus } from './update';
-import { getUsers, getUserDetails, updateUser } from './users';
-import { connectUserWithDiscord, updateUserFields } from './masochist';
 import {
-  getAllBadges,
-  addBadge,
-  getBadge,
-  updateBadge,
-  deleteBadge,
-  giveBadge,
-  takeBadge,
-} from './badges';
-import {
-  getAllPatrons,
-  getPatronsByTier,
-  getPatron,
-  addPatron,
-  updatePatron,
-  deletePatron,
-} from './patrons';
-import {
-  getRanking,
-  getUserRanking,
-  getGameLeaderboards,
-  getTierDetails,
-} from './ranking';
-import {
-  getCuratorGames,
-  getCuratedGamesFromTier,
-  updateCuratorGames,
-  getCuratorMembers,
-} from './curator';
-import { getBlog } from './blog';
-import { getEvents } from './events';
-import {
-  getSteamID,
-  getRating,
-  getAllSettings,
-  getSetting,
-  getTabs,
-} from './special';
+  createRace,
+  getRaceById,
+  updateRaceById,
+  deleteRaceById,
+  getRaceList,
+  getActiveRace,
+  getRaceParticipantById,
+  joinRaceByParticipantId,
+  updateRaceByParticipantId,
+  getRaceParticipantsList,
+} from './race';
 
-router.get('/special/vanityid/:vanityid', getSteamID);
-router.get('/rating', getRating);
+/**
+ * masochist-api v1
+ */
 
-router.get('/badges', getAllBadges);
-router.post('/badges', addBadge);
-router.get('/badges/:id', getBadge);
-router.put('/badges/:id', updateBadge);
-router.delete('/badges/:id', deleteBadge);
-router.put('/badges/badge/:badgeid/user/:steamid', giveBadge);
-router.delete('/badges/badge/:badgeid/user/:steamid', takeBadge);
+/*************************
+ *         RACES         *
+ *************************/
 
-router.get('/patrons', getAllPatrons);
-router.get('/patrons/tier/:tier', getPatronsByTier);
-router.post('/patrons/tier/:tier/vanityid/:vanityid', addPatron);
-router.get('/patrons/patron/:steamid', getPatron);
-router.put('/patrons/patron/:steamid/tier/:tier', updatePatron);
-router.delete('/patrons/patron/:steamid', deletePatron);
+routerV1.post('/race', createRace);
+routerV1.get('/race/id/:id', getRaceById);
+routerV1.put('/race/id/:id', updateRaceById);
+routerV1.delete('/race/id/:id', deleteRaceById);
+routerV1.get('/race/list', getRaceList);
+routerV1.get('/race/active', getActiveRace);
 
-router.get('/curator/games', getCuratorGames);
-router.get('/curator/games/tier/:tier', getCuratedGamesFromTier);
-router.get('/curator/games/update', updateCuratorGames);
-router.get('/curator/members', getCuratorMembers);
-
-router.get('/users', getUsers);
-router.get('/users/user/:steamid', getUserDetails);
-router.get('/users/user/:steamid/update', updateUser);
-router.put('/users/user/:steamid/discord/:discordid', connectUserWithDiscord);
-router.put('/users/user/:steamid', updateUserFields);
-
-router.get('/update', initiateMainUpdate);
-router.get('/status', getStatus);
-
-router.get('/blog', getBlog);
-router.get('/events', getEvents);
-
-router.get('/ranking', getRanking);
-router.get('/ranking/user/:id', getUserRanking);
-router.get('/ranking/game/:id', getGameLeaderboards);
-router.get('/ranking/tier/:id', getTierDetails);
-
-router.get('/settings', getAllSettings);
-router.get('/settings/:setting', getSetting);
-
-router.get('/tabs', getTabs);
+routerV1.get(
+  '/race/:raceid/participant/:participantid',
+  getRaceParticipantById,
+);
+routerV1.post(
+  '/race/:raceid/participant/:participantid',
+  joinRaceByParticipantId,
+);
+routerV1.put(
+  '/race/:raceid/participant/:participantid',
+  updateRaceByParticipantId,
+);
+routerV1.get('/race/:raceid/participants/list', getRaceParticipantsList);

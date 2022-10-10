@@ -1,28 +1,28 @@
-import { ObjectId } from 'mongodb';
 import { Request, Response } from 'express';
-import { Race } from '@masochistme/sdk/dist/v2/types';
+import { Race } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
 import { connectToDb } from 'helpers/db';
 
-export const getRaceById = async (
-  req: Request,
+export const getActiveRace = async (
+  _req: Request,
   res: Response,
 ): Promise<void> => {
   try {
     const { client, db } = await connectToDb();
     const collection = db.collection<Race>('races');
-    const _id = new ObjectId(req.params.id);
+    const cursor = collection
+      .find({ endTime: { $gt: new Date() } })
+      .sort({ startTime: 1 });
+    const futureRaces: Race[] = [];
 
-    const race: Race | null = await collection.findOne({ _id });
+    await cursor.forEach((el: Race) => {
+      futureRaces.push(el);
+    });
 
     client.close();
 
-    if (!race) {
-      res.status(404).send({ error: 'Could not find the race with this id.' });
-    } else {
-      res.status(200).send(race);
-    }
+    res.status(200).send(futureRaces);
   } catch (err: any) {
     log.WARN(err);
     res.status(500).send({ error: err.message ?? 'Internal server error' });

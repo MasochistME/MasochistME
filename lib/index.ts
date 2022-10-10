@@ -11,10 +11,10 @@ import { tokenValidation } from 'helpers/validate';
 import { getDataFromDB } from 'helpers/db';
 import { log } from 'helpers/log';
 
-import { router } from 'router/v1';
-import { routerV2 } from 'router/v2';
-import { routerAuth } from 'router/v1/auth';
-import { initiateMainUpdate } from 'router/v1/update';
+import { routerLegacy } from 'router/legacy';
+import { routerV1 } from 'router/v1';
+import { routerAuth } from 'router/legacy/auth';
+import { initiateMainUpdate } from 'router/legacy/update';
 
 // const SteamStrategy = require('passport-steam').Strategy;
 const app = express();
@@ -90,8 +90,8 @@ app.put('*', tokenValidation);
 app.post('*', tokenValidation);
 app.delete('*', tokenValidation);
 
-app.use('/api', router);
-app.use('/api/v2', routerV2);
+app.use('/api', routerLegacy);
+app.use('/api/v1', routerV1);
 app.use('/auth', routerAuth);
 
 app.listen(process.env.PORT, () => {

@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 import { Request, Response } from 'express';
-import { Race } from '@masochistme/sdk/dist/v2/types';
+import { Race } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
 import { connectToDb } from 'helpers/db';

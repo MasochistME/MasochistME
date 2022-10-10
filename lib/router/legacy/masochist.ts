@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 
 import { log } from 'helpers/log';
 import { connectToDb, getDataFromDB } from 'helpers/db';
-import { Member } from 'router/v1/types/user';
+import { Member } from 'router/legacy/types/user';
 
 /**
  * Returns basic users' data.
