@@ -4,7 +4,6 @@ import axios from 'axios';
 import cache from 'cache';
 import { connectToDb, getDataFromDB } from 'helpers/db';
 import { log } from 'helpers/log';
-import config from '../../../config.json';
 
 /**
  * Returns basic users' data.
@@ -294,7 +293,10 @@ const getUserAchievements = (userID: number, games: any, userToUpdate: any) =>
           );
           log.WARN(err.message);
           if (games[index + 1]) {
-            setTimeout(() => getAchievementsDetails(index + 1), config.DELAY);
+            setTimeout(
+              () => getAchievementsDetails(index + 1),
+              Number(process.env.DELAY),
+            );
             return;
           } else {
             log.INFO(`--> [UPDATE] achievements for ${userID} [DONE]`);
@@ -305,7 +307,10 @@ const getUserAchievements = (userID: number, games: any, userToUpdate: any) =>
       }
 
       if (games[index + 1]) {
-        setTimeout(() => getAchievementsDetails(index + 1), config.DELAY);
+        setTimeout(
+          () => getAchievementsDetails(index + 1),
+          Number(process.env.DELAY),
+        );
       } else {
         log.INFO(`--> [UPDATE] achievements for ${userID} [DONE]`);
         resolve(games);

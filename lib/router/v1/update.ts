@@ -3,9 +3,9 @@ import { log } from 'helpers/log';
 import { connectToDb, getDataFromDB } from 'helpers/db';
 import { getCuratorMembers, updateCuratorGames } from 'router/v1/curator';
 import { TMemberJoinedEvent, TMemberLeftEvent } from 'router/v1/types/events';
-import config from '../../../config.json';
 
-const updateDelay = config.BIG_DELAY;
+const updateDelay = Number(process.env.BIG_DELAY);
+const shortDelay = Number(process.env.DELAY);
 
 export const updateStatus = (db: any, percent: number) => {
   db.collection('update').updateOne(
@@ -173,14 +173,14 @@ export const initiateMainUpdate = async (
       });
 
       if (members[index + 1]) {
-        setTimeout(() => iterateMembers(index + 1), config.DELAY);
+        setTimeout(() => iterateMembers(index + 1), shortDelay);
       } else {
         finalize();
         return;
       }
     } else {
       if (members[index + 1]) {
-        setTimeout(() => iterateMembers(index + 1), config.DELAY);
+        setTimeout(() => iterateMembers(index + 1), shortDelay);
       } else {
         finalize();
         return;

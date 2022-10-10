@@ -5,13 +5,13 @@
   "main": "dds.js",
   "scripts": {
     "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
-    "api:dev": "env ENV=dev npx tsx src/index.ts",
-    "api:dev:watch": "env ENV=dev nodemon --exec npx tsx src/index.ts",
-    "api:prod": "env ENV=prod npx tsx src/index.ts",
-    "api:prod:watch": "env ENV=prod nodemon --exec npx tsx src/index.ts",
+    "api:dev": "env ENV=dev PORT=3002 CORS=http://masochist.me DELAY=3000 BIG_DELAY=43200000 npx tsx lib/index.ts",
+    "api:dev:watch": "env ENV=dev PORT=3002 CORS=http://masochist.me DELAY=3000 BIG_DELAY=43200000 nodemon --exec npx tsx lib/index.ts",
+    "api:prod": "env ENV=prod PORT=3002 CORS=http://masochist.me DELAY=3000 BIG_DELAY=43200000 npx tsx lib/index.ts",
+    "api:prod:watch": "env ENV=prod PORT=3002 CORS=http://masochist.me DELAY=3000 BIG_DELAY=43200000 nodemon --exec npx tsx lib/index.ts",
     "clean": "rm -rf node_modules && rm -rf dist",
-    "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
-    "lint:fix": "eslint src --ext .jsx,.js,.tsx,.ts --fix --quiet"
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix --quiet"
   },
   "author": "Arcyvilk",
   "license": "ISC",

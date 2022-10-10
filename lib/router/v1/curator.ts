@@ -9,8 +9,6 @@ import { TGameEvent, TTierChangeEvent } from './types/events';
 import { findGame } from './ranking';
 import { updateStatus } from './update';
 
-import config from '../../../config.json';
-
 type TRating = {
   symbol: string;
   icon: string;
@@ -284,7 +282,10 @@ export const updateCuratorGames = (_req?: any, res?: any): Promise<void> =>
         log.INFO(`-- ${urlGamesDetails}`);
         log.WARN(err.message);
         if (games[index + 1]) {
-          setTimeout(() => getGameDetails(index + 1), config.DELAY);
+          setTimeout(
+            () => getGameDetails(index + 1),
+            Number(process.env.DELAY),
+          );
           return;
         } else {
           log.INFO('--> [UPDATE] curated games list [DONE]');
@@ -376,7 +377,10 @@ export const updateCuratorGames = (_req?: any, res?: any): Promise<void> =>
             client.close();
           }
           if (games[index + 1]) {
-            setTimeout(() => getGameDetails(index + 1), config.DELAY);
+            setTimeout(
+              () => getGameDetails(index + 1),
+              Number(process.env.DELAY),
+            );
           } else {
             log.INFO('--> [UPDATE] curated games list [DONE]');
             resolve();

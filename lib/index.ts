@@ -16,8 +16,6 @@ import { routerV2 } from 'router/v2';
 import { routerAuth } from 'router/v1/auth';
 import { initiateMainUpdate } from 'router/v1/update';
 
-import config from '../config.json';
-
 // const SteamStrategy = require('passport-steam').Strategy;
 const app = express();
 
@@ -96,8 +94,8 @@ app.use('/api', router);
 app.use('/api/v2', routerV2);
 app.use('/auth', routerAuth);
 
-app.listen(config.PORT, () => {
-  log.INFO(`Server listening at port ${config.PORT}!`);
+app.listen(process.env.PORT, () => {
+  log.INFO(`Server listening at port ${process.env.PORT}!`);
 });
 
 // ------------
@@ -105,7 +103,7 @@ app.listen(config.PORT, () => {
 const update = async () => {
   const lastUpdated = await getDataFromDB('update', { id: 'lastUpdated' });
 
-  if (Date.now() - lastUpdated[0].timestamp > config.BIG_DELAY) {
+  if (Date.now() - lastUpdated[0].timestamp > Number(process.env.BIG_DELAY)) {
     initiateMainUpdate();
   }
 };
