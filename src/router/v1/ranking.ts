@@ -9,7 +9,7 @@ import { TBadge } from './types/badges';
  * Returns basic info about ranking.
  */
 export const getRanking = async (
-  req: Request,
+  _req: Request,
   res: Response,
 ): Promise<void> => {
   try {
@@ -24,8 +24,8 @@ export const getRanking = async (
     const badges = await getDataFromDB('badges');
     const rating = await getDataFromDB('points');
     const filteredUsers: TUser[] = users
-      .filter(user => (user.member || user.protected) && !user.removed)
-      .map(user => {
+      .filter((user: any) => (user.member || user.protected) && !user.removed)
+      .map((user: any) => {
         const id = user.id;
         const pointsList: TPoints[] = Object.entries(user.ranking).map(
           entry => {
@@ -78,7 +78,7 @@ export const getRanking = async (
             total: badgesTotal,
           },
         };
-        const isPatron = patrons.find(patron => patron.steamid === id);
+        const isPatron = patrons.find((patron: any) => patron.steamid === id);
         const patreon = { tier: isPatron && Number(isPatron.tier) };
         return { id, points, patreon };
       });
@@ -114,7 +114,7 @@ export const getUserRanking = async (
       private: rawUser[0].private,
       member: rawUser[0].member,
       badges: rawUser[0].badges,
-      games: rawUser[0].games.map(game => {
+      games: rawUser[0].games.map((game: any) => {
         const playtime =
           typeof game.playtime_forever !== 'number'
             ? Number(game.playtime_forever)
@@ -282,7 +282,7 @@ const assignTrophies = (users: any): string | undefined =>
  * @param res
  */
 export const getTierDetails = async (
-  req: Request,
+  _req: Request,
   res: Response,
 ): Promise<void> => {
   try {

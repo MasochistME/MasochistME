@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 
-const stringify = data => {
+const stringify = (data: unknown) => {
   if (data == null || data == undefined) {
     return '';
   }
@@ -13,5 +13,5 @@ const stringify = data => {
   return data.toString();
 };
 
-export const hash = (type, data) =>
+export const hash = (type: any, data: any) =>
   crypto.createHash(type).update(stringify(data)).digest('hex');

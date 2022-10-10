@@ -17,9 +17,9 @@ export const getUserPermissions = async (req: any, res: any): Promise<void> => {
     const fixedMemberPermissions: string[] = [];
     member[0].groups.forEach((memberGroup: string) => {
       const memberPermissions =
-        groups.find(group => group.name === memberGroup)?.permissions ?? [];
-      memberPermissions.forEach(permission => {
-        permission.scope.forEach(scope =>
+        groups.find((group: any) => group.name === memberGroup)?.permissions ?? [];
+      memberPermissions.forEach((permission: any) => {
+        permission.scope.forEach((scope: any) =>
           fixedMemberPermissions.push(`${permission.name}:${scope}`),
         );
       });
@@ -29,7 +29,7 @@ export const getUserPermissions = async (req: any, res: any): Promise<void> => {
       fixedMemberPermissions.unshift('admin');
     }
     res.status(200).send(fixedMemberPermissions);
-  } catch (error) {
+  } catch (error: any) {
     log.WARN(error);
   }
 };

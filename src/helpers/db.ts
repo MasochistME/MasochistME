@@ -16,7 +16,7 @@ export const connectToDb = async (): Promise<{
       client,
       db: client.db(process.env.ENV === 'dev' ? 'masochist-dev' : 'masochist'),
     };
-  } catch (error) {
+  } catch (error: any) {
     log.WARN(error);
     throw error;
   }
@@ -32,7 +32,7 @@ export const getDataFromDB: any = async <T>(
 
   const dataFromDb: WithId<T>[] = [];
   const cursor = data.find(fieldToFind);
-  await cursor.forEach((el: WithId<T>) => {
+  await cursor.forEach((el: any) => {
     dataFromDb.push(el);
   });
   client.close();

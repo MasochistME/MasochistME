@@ -44,7 +44,7 @@ export const connectUserWithDiscord = async (
         client.close();
       },
     );
-  } catch (err) {
+  } catch (err: any) {
     log.WARN(err.message);
     res.status(500).send(err);
   }
@@ -91,7 +91,7 @@ export const updateUserFields = async (
         client.close();
       },
     );
-  } catch (err) {
+  } catch (err: any) {
     log.WARN(err.message);
     res.status(500).send(err);
   }

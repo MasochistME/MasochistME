@@ -7,7 +7,7 @@ import config from '../../../config.json';
 
 const updateDelay = config.BIG_DELAY;
 
-export const updateStatus = (db, percent: number) => {
+export const updateStatus = (db: any, percent: number) => {
   db.collection('update').updateOne(
     { id: 'lastUpdated' },
     {
@@ -18,7 +18,7 @@ export const updateStatus = (db, percent: number) => {
       },
     },
     { upsert: true },
-    err => {
+    (err: any) => {
       if (err) {
         log.WARN(err.message);
       }
@@ -26,11 +26,11 @@ export const updateStatus = (db, percent: number) => {
   );
 };
 
-export const getStatus = async (req?, res?): Promise<void> => {
+export const getStatus = async (_req?: any, res?: any): Promise<void> => {
   let lastUpdated;
   try {
     lastUpdated = await getDataFromDB('update', { id: 'lastUpdated' });
-  } catch (err) {
+  } catch (err: any) {
     log.WARN(err.message);
     res.status(500).send(err);
     return;
@@ -42,10 +42,10 @@ export const getStatus = async (req?, res?): Promise<void> => {
   return;
 };
 
-export const initiateMainUpdate = async (req?, res?): Promise<void> => {
+export const initiateMainUpdate = async (req?: any, res?: any): Promise<void> => {
   const { client, db } = await connectToDb();
   const usersFromDB = await getDataFromDB('users');
-  let members;
+  let members: any;
 
   log.INFO('--> [UPDATE] main update [INITIALIZED]');
 
@@ -63,7 +63,7 @@ export const initiateMainUpdate = async (req?, res?): Promise<void> => {
         return;
       }
     }
-  } catch (err) {
+  } catch (err: any) {
     log.WARN('--> [UPDATE] main update [ERR]');
     log.WARN(err.message);
     if (res) {
@@ -78,7 +78,7 @@ export const initiateMainUpdate = async (req?, res?): Promise<void> => {
   try {
     updateStatus(db, 0);
     members = await getCuratorMembers();
-  } catch (err) {
+  } catch (err: any) {
     log.WARN('--> [UPDATE] main update [ERR]');
     log.WARN(err.message);
     return;
@@ -86,7 +86,7 @@ export const initiateMainUpdate = async (req?, res?): Promise<void> => {
   try {
     updateStatus(db, 20);
     await updateCuratorGames();
-  } catch (err) {
+  } catch (err: any) {
     log.WARN('--> [UPDATE] main update [ERR]');
     log.WARN(err.message);
     return;
@@ -94,10 +94,10 @@ export const initiateMainUpdate = async (req?, res?): Promise<void> => {
 
   log.INFO('--> [UPDATE] checking if any members left...');
 
-  usersFromDB.map(userFromDB => {
+  usersFromDB.map((userFromDB: any) => {
     if (
       userFromDB.member &&
-      !members.find(member => userFromDB.id === member.id) &&
+      !members.find((member: any) => userFromDB.id === member.id) &&
       !userFromDB.protected
     ) {
       log.INFO(`--> [UPDATE] events - member ${userFromDB.id} left`);
@@ -137,7 +137,7 @@ export const initiateMainUpdate = async (req?, res?): Promise<void> => {
     updateStatus(db, percentage);
 
     if (
-      !usersFromDB.find(userFromDB => userFromDB?.id === members[index]?.id)
+      !usersFromDB.find((userFromDB: any) => userFromDB?.id === members[index]?.id)
     ) {
       const userUrl = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${process.env.STEAM_KEY}&steamids=${members[index].id}`;
       let userData;
@@ -147,7 +147,7 @@ export const initiateMainUpdate = async (req?, res?): Promise<void> => {
         const user = userData.data.response.players[0];
         members[index].name = user.personaname;
         members[index].avatar = user.avatarfull;
-      } catch (err) {
+      } catch (err: any) {
         log.WARN(`--> [UPDATE] member ${members[index].id} [ERROR]`);
         log.WARN(err.message);
       }

@@ -7,7 +7,7 @@ import { connectToDb } from 'helpers/db';
 /**
  * Returns all patrons no matter the tier.
  */
-export const getAllPatrons = async (req, res) => {
+export const getAllPatrons = async (req: any, res: any) => {
   const { client, db } = await connectToDb();
 
   db.collection<PatreonTier>('patreonTiers')
@@ -26,6 +26,7 @@ export const getAllPatrons = async (req, res) => {
             } else {
               (tiers ?? [])
                 .map(
+                  // @ts-ignore
                   (tier: PatreonTier & { list: any }) =>
                     (tier.list = (patrons ?? []).filter(
                       patron => patron.tier === tier.tier,
@@ -54,7 +55,7 @@ export const getAllPatrons = async (req, res) => {
  * Returns all patrons from particular tier.
  * @param req.params.tier
  */
-export const getPatronsByTier = async (req, res) => {
+export const getPatronsByTier = async (req: any, res: any) => {
   const { client, db } = await connectToDb();
 
   db.collection('patrons')
@@ -76,7 +77,7 @@ export const getPatronsByTier = async (req, res) => {
  * Returns a patron by their steam ID.
  * @param req.params.steamid
  */
-export const getPatron = async (req, res) => {
+export const getPatron = async (req: any, res: any) => {
   const { client, db } = await connectToDb();
 
   db.collection('patrons').findOne(
@@ -100,7 +101,7 @@ export const getPatron = async (req, res) => {
  * @param req.params.tier
  * @param req.params.vanityid
  */
-export const addPatron = async (req, res) => {
+export const addPatron = async (req: any, res: any) => {
   const { client, db } = await connectToDb();
   const urlVanity =
     'http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001';
@@ -147,13 +148,13 @@ export const addPatron = async (req, res) => {
  * @param req.params.steamid
  * @param req.params.tier
  */
-export const updatePatron = async (req, res) => {
+export const updatePatron = async (req: any, res: any) => {
   const { client, db } = await connectToDb();
   const urlSummary = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${process.env.STEAM_KEY}&steamids=${req.params.steamid}`;
-  let userSummary;
+  let userSummary: any;
   try {
     userSummary = await axios.get(urlSummary);
-  } catch (err) {
+  } catch (err: any) {
     log.WARN(urlSummary);
     log.WARN(err.message);
     return;
@@ -195,7 +196,7 @@ export const updatePatron = async (req, res) => {
  * Deletes a patron.
  * @param req.params.steamid
  */
-export const deletePatron = async (req, res) => {
+export const deletePatron = async (req: any, res: any) => {
   const { client, db } = await connectToDb();
 
   db.collection('patrons').deleteOne(

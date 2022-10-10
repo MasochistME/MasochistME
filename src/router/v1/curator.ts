@@ -37,7 +37,7 @@ type TGame = {
   protected?: boolean;
 };
 
-const fillGameData = (id, desc, score) => ({
+const fillGameData = (id: any, desc: any, score: any) => ({
   id,
   desc,
   rating: score,
@@ -48,7 +48,7 @@ const fillGameData = (id, desc, score) => ({
  * Returns all curated games
  */
 export const getCuratorGames = async (
-  req: Request,
+  _req: Request,
   res: Response,
 ): Promise<void> => {
   try {
@@ -80,22 +80,22 @@ export const getCuratorGames = async (
           ).length;
           const avgPlaytime = filteredUsers
             .filter((user: any) => user.percentage === 100)
-            .reduce((a, b) => a + b.playtime, 0);
+            .reduce((a: any, b: any) => a + b.playtime, 0);
           const gameBadges = badges.filter(
             (badge: any) => Number(badge.gameId) === Number(id),
           );
           const badgesPts = gameBadges
-            .map(badge => {
+            .map((badge: any) => {
               if (!badge?.points || badge.points < 0) {
                 return 0;
               }
               return Number(badge.points);
             })
-            .reduce((a, b) => a + b, 0);
+            .reduce((a: any, b: any) => a + b, 0);
           const achievementsNr = game.achievements.total;
           const filteredBadges = badges
-            .filter(badge => Number(badge.gameId) === Number(id))
-            .map(badge => badge._id);
+            .filter((badge: any) => Number(badge.gameId) === Number(id))
+            .map((badge: any) => badge._id);
           return {
             id: typeof id !== 'number' ? Number(id) : id,
             desc,
@@ -129,7 +129,7 @@ export const getCuratorGames = async (
  * Returns all curated games from particular tier
  * @param req.params.tier
  */
-export const getCuratedGamesFromTier = async (req, res) => {
+export const getCuratedGamesFromTier = async (req: any, res: any) => {
   try {
     const games = await getDataFromDB('games', { rating: req.params.tier });
     res.status(200).send(games);
@@ -142,7 +142,7 @@ export const getCuratedGamesFromTier = async (req, res) => {
  * Updates the list of curated games
  * @param req.headers.force_update - to force update all games
  */
-export const updateCuratorGames = (req?, res?): Promise<void> =>
+export const updateCuratorGames = (_req?: any, res?: any): Promise<void> =>
   // eslint-disable-next-line no-async-promise-executor
   new Promise(async resolve => {
     const { db } = await connectToDb();
@@ -176,7 +176,7 @@ export const updateCuratorGames = (req?, res?): Promise<void> =>
     const rawGameData = response.data.results_html.split('data-ds-appid=');
     rawGameData
       .filter((r: string) => r.includes(DESC_QUOTE))
-      .map(r => {
+      .map((r: any) => {
         const gameId = r
           .match(/(["'])(?:(?=(\\?))\2.)*?\1/g, '')[0]
           .replace(/"/g, '');
@@ -278,7 +278,7 @@ export const updateCuratorGames = (req?, res?): Promise<void> =>
 
       try {
         game = await axios.get(urlGamesDetails);
-      } catch (err) {
+      } catch (err: any) {
         log.INFO(`- saving game ${gameId} failed`);
         log.INFO(`-- ${urlGamesDetails}`);
         log.WARN(err.message);
@@ -388,13 +388,13 @@ export const updateCuratorGames = (req?, res?): Promise<void> =>
     getGameDetails(0);
   });
 
-const extractMemberIDs = raw => {
+const extractMemberIDs = (raw: any) => {
   const rawMembers = raw
     .toString()
     .substring(raw.indexOf('<steamID64>'), raw.indexOf('</members>'));
   const memberIDs = rawMembers.split('</steamID64>');
   return memberIDs
-    .map(id => {
+    .map((id: any) => {
       const memberID = id
         .replace('</steamID64>', '')
         .replace('<steamID64>', '')
@@ -412,10 +412,10 @@ const extractMemberIDs = raw => {
         id: memberID,
       };
     })
-    .filter(m => m.id.length > 0);
+    .filter((m: any) => m.id.length > 0);
 };
 
-export const getCuratorMembers = (req?, res?): Promise<void> =>
+export const getCuratorMembers = (req?: any, res?: any): Promise<void> =>
   // eslint-disable-next-line no-async-promise-executor
   new Promise(async (resolve, reject) => {
     const curatorId = await findOption('curatorId');

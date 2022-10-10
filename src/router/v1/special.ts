@@ -10,7 +10,7 @@ export const getSteamID = async (
   res: Response,
 ): Promise<void> => {
   const users = await getDataFromDB('users');
-  const steamID = users.find(user => user.name === req.params.vanityid);
+  const steamID = users.find((user: any) => user.name === req.params.vanityid);
 
   if (steamID) {
     res.status(200).send(steamID);
@@ -23,7 +23,7 @@ export const getSteamID = async (
  * Get all the rating tiers.
  * @param req
  */
-export const getRating = async (req: Request, res: Response): Promise<void> => {
+export const getRating = async (_req: Request, res: Response): Promise<void> => {
   const points = await getDataFromDB('points');
 
   if (points) {
@@ -39,7 +39,7 @@ export const getRating = async (req: Request, res: Response): Promise<void> => {
  * @param res
  */
 export const getAllSettings = async (
-  req: Request,
+  _req: Request,
   res: Response,
 ): Promise<void> => {
   const settings = await getDataFromDB('settings');
@@ -76,7 +76,7 @@ export const getSetting = async (
  * Get front end tabs.
  * @param req
  */
-export const getTabs = async (req: Request, res: Response): Promise<void> => {
+export const getTabs = async (_req: Request, res: Response): Promise<void> => {
   const tabs = await getDataFromDB('tabs');
 
   if (tabs) {

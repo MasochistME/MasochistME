@@ -9,13 +9,13 @@ import config from '../../../config.json';
 /**
  * Returns basic users' data.
  */
-export const getUsers = async (req: Request, res: Response): Promise<void> => {
+export const getUsers = async (_req: Request, res: Response): Promise<void> => {
   try {
     const users = await getDataFromDB('users');
     const filteredUsers = users
       .filter((user: any) => !user.removed)
       .map((user: any) => {
-        const filteredBadges = user.badges.map(badge => badge.id);
+        const filteredBadges = user.badges.map((badge: any) => badge.id);
         return {
           ...user,
           badges: filteredBadges,
@@ -45,14 +45,14 @@ export const getUserDetails = async (
       return;
     }
     const { badges, games } = rawUser;
-    const fixedGames = games.map(game => ({
+    const fixedGames = games.map((game: any) => ({
       appid: game.appid,
       playtime_forever: game.playtime_forever,
       completionRate: game.completionRate,
       lastUnlocked: game.lastUnlocked,
     }));
     res.status(200).send({ id, badges, games: fixedGames });
-  } catch (err) {
+  } catch (err: any) {
     log.WARN(err.message);
     res.status(500).send(err);
   }
@@ -62,7 +62,7 @@ export const getUserDetails = async (
  * Updates one particular user data.
  * @param req.params.id
  */
-export const updateUser = async (req, res) => {
+export const updateUser = async (req: any, res: any) => {
   // TODO remove badges that dont exist anymore
   const id = req.params.steamid;
   const curatedGames = await getDataFromDB('games');
@@ -74,7 +74,7 @@ export const updateUser = async (req, res) => {
   try {
     log.INFO(`--> [UPDATE] user ${id} [START]`);
     userData = await axios.get(userUrl);
-  } catch (err) {
+  } catch (err: any) {
     res.status(500).send(err);
     log.WARN(`--> [UPDATE] user ${id} [ERROR]`);
     log.WARN(err.message);
@@ -183,14 +183,14 @@ const getUserGames = async (
 
   games = games
     .filter(
-      game =>
+      (game: any) =>
         !!curatedGames.find(
-          cachedgame =>
+          (cachedgame: any) =>
             Number(cachedgame.id) === Number(game.appid) &&
             (cachedgame.curated || cachedgame.protected),
         ),
     )
-    .map(game => {
+    .map((game: any) => {
       return {
         appid: game.appid,
         playtime_forever: game.hours_forever
@@ -207,7 +207,7 @@ const getUserGames = async (
       userToUpdate,
     );
     return withAchievements;
-  } catch (err) {
+  } catch (err: any) {
     log.WARN(err.message);
     return [];
   }
@@ -243,10 +243,10 @@ const getUserAchievements = (userID: number, games: any, userToUpdate: any) =>
           const numberOfAllAchievements =
             response.data.playerstats.achievements.length;
           const numberOfUnlockedAchievements = response.data.playerstats.achievements.filter(
-            achievement => Number(achievement.achieved) === 1,
+            (achievement: any) => Number(achievement.achieved) === 1,
           ).length;
           let lastUnlocked = 0;
-          response.data.playerstats.achievements.map(achievement =>
+          response.data.playerstats.achievements.map((achievement: any) =>
             achievement.unlocktime > lastUnlocked
               ? (lastUnlocked = achievement.unlocktime)
               : null,
@@ -259,14 +259,14 @@ const getUserAchievements = (userID: number, games: any, userToUpdate: any) =>
           games[
             index
           ].achievements = response.data.playerstats.achievements.filter(
-            achievement => achievement.achieved === 1,
+            (achievement: any) => achievement.achieved === 1,
           );
 
           // event when 100%
           if (userToUpdate[0]) {
             //this user is not in database YET
             const userGames = userToUpdate[0].games.find(
-              g => g.appid === gameID,
+              (g: any) => g.appid === gameID,
             );
             if (
               userGames &&
@@ -286,7 +286,7 @@ const getUserAchievements = (userID: number, games: any, userToUpdate: any) =>
               db.collection('events').insertOne(eventDetails);
             }
           }
-        } catch (err) {
+        } catch (err: any) {
           log.WARN(
             `--> [${index + 1}/${
               Object.keys(games).length
@@ -314,7 +314,7 @@ const getUserAchievements = (userID: number, games: any, userToUpdate: any) =>
     getAchievementsDetails(0);
   });
 
-const getUserRanking = (curatedGames, userGames) =>
+const getUserRanking = (curatedGames: any, userGames: any) =>
   // eslint-disable-next-line no-async-promise-executor
   new Promise(async resolve => {
     const ranking = {};
@@ -324,16 +324,20 @@ const getUserRanking = (curatedGames, userGames) =>
     } catch (err) {
       resolve(ranking);
     }
-    rating.map(tier => (ranking[tier.id] = 0));
+    //@ts-ignore
+    rating.map((tier: unknown) => (ranking[tier.id] = 0));
 
     userGames
-      .filter(game => Number(game.completionRate) === Number(100))
-      .map(filteredgame => {
+      .filter((game: any) => Number(game.completionRate) === Number(100))
+      .map((filteredgame: any) => {
         const game = curatedGames.find(
-          cachedgame => Number(cachedgame.id) === Number(filteredgame.appid),
+          (cachedgame: any) => Number(cachedgame.id) === Number(filteredgame.appid),
         );
+        //@ts-ignore
         game && ranking[game.rating]
+        //@ts-ignore
           ? (ranking[game.rating] += 1)
+          //@ts-ignore
           : (ranking[game.rating] = 1);
       });
     resolve(ranking);

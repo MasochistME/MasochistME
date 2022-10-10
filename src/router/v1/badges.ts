@@ -9,7 +9,7 @@ import { TBadgeAddedEvent, TBadgeGivenEvent } from './types/events';
 /**
  * Returns all badges
  */
-export const getAllBadges = async (req, res) => {
+export const getAllBadges = async (_req: any, res: any) => {
   const { client, db } = await connectToDb();
   const data = db.collection('badges');
 
@@ -38,7 +38,7 @@ export const getAllBadges = async (req, res) => {
  * Returns a specific badge by its id
  * @param res.params.id
  */
-export const getBadge = async (req, res) => {
+export const getBadge = async (req: any, res: any) => {
   const { client, db } = await connectToDb();
   const data = db.collection('badges');
 
@@ -58,7 +58,7 @@ export const getBadge = async (req, res) => {
 /**
  * Adds a badge
  */
-export const addBadge = async (req, res) => {
+export const addBadge = async (req: any, res: any) => {
   if (!req.body) {
     // TODO validation!!!
     res.sendStatus(400);
@@ -97,7 +97,7 @@ export const addBadge = async (req, res) => {
  * Updates badge by its id
  * @param req.params.id
  */
-export const updateBadge = async (req, res) => {
+export const updateBadge = async (req: any, res: any) => {
   if (!req.body) {
     // TODO validation!!!
     res.sendStatus(400);
@@ -130,7 +130,7 @@ export const updateBadge = async (req, res) => {
  * Deletes badge by its id
  * @param req.params.id
  */
-export const deleteBadge = async (req, res) => {
+export const deleteBadge = async (req: any, res: any) => {
   const { client, db } = await connectToDb();
   const data = db.collection('badges');
 
@@ -153,7 +153,7 @@ export const deleteBadge = async (req, res) => {
  * @param req.params.badgeid
  * @param req.params.steamid
  */
-export const giveBadge = async (req, res) => {
+export const giveBadge = async (req: any, res: any) => {
   const { client, db } = await connectToDb();
   const newBadge = {
     id: req.params.badgeid,
@@ -179,7 +179,7 @@ export const giveBadge = async (req, res) => {
   user = user[0];
 
   if (user.badges) {
-    if (user.badges.find(badge => badge.id === req.params.badgeid)) {
+    if (user.badges.find((badge: any) => badge.id === req.params.badgeid)) {
       res
         .status(202)
         .send(
@@ -234,7 +234,7 @@ export const giveBadge = async (req, res) => {
  * @param req.params.badgeid
  * @param req.params.steamid
  */
-export const takeBadge = async (req, res): Promise<void> => {
+export const takeBadge = async (req: any, res: any): Promise<void> => {
   const { client, db } = await connectToDb();
   // const badgeId = req.params.badgeid;
   let user;
@@ -250,7 +250,7 @@ export const takeBadge = async (req, res): Promise<void> => {
 
   if (user.badges) {
     const badgeIndex = user.badges.findIndex(
-      badge => badge.id === req.params.badgeid,
+      (badge: any) => badge.id === req.params.badgeid,
     );
     if (badgeIndex === -1) {
       res

@@ -1,7 +1,7 @@
 import { hash } from 'helpers/hash';
 import { log } from 'helpers/log';
 
-export const tokenValidation = (req: any, res: any, next) => {
+export const tokenValidation = (req: any, res: any, next: any) => {
   const authorizationHeader = req.headers.authorization;
   const url = String(req.url ?? '<UNKNOWN>');
   const fakeToken = String(authorizationHeader ?? 'NONE');
