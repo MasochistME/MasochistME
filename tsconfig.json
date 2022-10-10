@@ -5,7 +5,7 @@
     "target": "es2021",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
     
     // Modules
-    "baseUrl": "./src",
+    "baseUrl": "./lib",
     "module": "es2022",                                  /* Specify what module code is generated. */
     "moduleResolution": "node",
     "resolveJsonModule": true,
@@ -25,6 +25,6 @@
     "strict": true,                                      /* Enable all strict type-checking options. */
     "skipLibCheck": true,                               /* Skip type checking all .d.ts files. */
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dir"],
+  "include": ["lib/**/*"],
+  "exclude": ["node_modules", "dist"],
 }
