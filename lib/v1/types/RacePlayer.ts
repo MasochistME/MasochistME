@@ -11,6 +11,7 @@ export type BaseRacePlayer = WithId<{
 	type: keyof typeof RaceType;
 	startTime: Date | null; // Time when member clicked the START button.
 	endTime: Date | null; // Time when member clicked the FINISH button.
+	dnf: boolean;
 }>;
 
 export interface RacePlayerScore extends Omit<BaseRacePlayer, 'type'> {
