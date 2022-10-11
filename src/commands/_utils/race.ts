@@ -22,6 +22,7 @@ export const getRace = (
   return {
     name: raceData.name,
     instructions: raceData.instructions,
+    objectives: raceData.objectives,
     type: raceData.playLimit ? RaceType.SCORE_BASED : RaceType.TIME_BASED,
     startTime: getDateFromDelay(raceData.startsIn),
     endTime: getDateFromDelay(raceData.startsIn + raceData.endsAfter),

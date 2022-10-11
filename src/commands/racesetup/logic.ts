@@ -23,6 +23,7 @@ import {
 export type RaceData = {
   name: string;
   instructions: string;
+  objectives: string;
   startsIn: number;
   endsAfter: number;
   downloadLink: string;
@@ -42,6 +43,7 @@ export const racesetup = async (
   const raceData: RaceData = {
     name: interaction.options.getString(Options.NAME, true),
     instructions: interaction.options.getString(Options.INSTRUCTIONS, true),
+    objectives: interaction.options.getString(Options.OBJECTIVES, true),
     startsIn: interaction.options.getNumber(Options.STARTS_IN, true),
     endsAfter: interaction.options.getNumber(Options.ENDS_AFTER, true),
     downloadLink: interaction.options.getString(Options.DOWNLOAD_LINK, true),
@@ -113,6 +115,10 @@ const getRaceConfirmationEmbed = (race: Omit<Race, "_id">) => {
     {
       name: "Instructions",
       value: race.instructions,
+    },
+    {
+      name: "Objectives",
+      value: race.objectives,
     },
     {
       name: "Start time",

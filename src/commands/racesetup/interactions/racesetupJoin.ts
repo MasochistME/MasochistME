@@ -140,7 +140,11 @@ const getNewRaceCensoredEmbed = (race: Race): APIEmbed => {
   const fields: APIEmbedField[] = [
     {
       name: "Instructions",
-      value: cenzor(race.instructions),
+      value: race.instructions,
+    },
+    {
+      name: "Objectives",
+      value: cenzor(race.objectives),
     },
     {
       name: "Start time",

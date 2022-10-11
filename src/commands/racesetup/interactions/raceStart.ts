@@ -27,7 +27,9 @@ export const raceReadyToGo = async (
   const tempFields = [
     {
       name: "---",
-      value: `Good luck! You can start the race whenever it's convenient for you within the time limit.`,
+      value: `Your race begins once you click the **REVEAL** button. You have ${race.downloadGrace} seconds to download and set up the game.
+      \n***Remember*** to click the **START** button when you are ready or your race will get forfeited!
+      \nGood luck! You can start the race whenever it's convenient for you within the time limit.`,
     },
   ];
   interaction.user.send({
@@ -271,7 +273,11 @@ const getRaceStartEmbed = (
   const fields: APIEmbedField[] = [
     {
       name: "Instructions",
-      value: isCenzored ? cenzor(race.instructions) : race.instructions,
+      value: race.instructions,
+    },
+    {
+      name: "Objectives",
+      value: isCenzored ? cenzor(race.objectives) : race.objectives,
     },
     {
       name: "Start time",

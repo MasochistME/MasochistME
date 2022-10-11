@@ -3,6 +3,7 @@ import { SlashCommandBuilder, SlashCommandSubcommandBuilder } from "discord.js";
 export enum Options {
   NAME = "name",
   INSTRUCTIONS = "instructions",
+  OBJECTIVES = "objectives",
   STARTS_IN = "starts-in",
   ENDS_AFTER = "ends-after",
   DOWNLOAD_LINK = "download-link",
@@ -30,7 +31,15 @@ const getCommonRequiredOptionsRaceSetup = (
     .addStringOption(option =>
       option
         .setName(Options.INSTRUCTIONS)
-        .setDescription("Instructions for the race")
+        .setDescription("Instructions visible before starting the race")
+        .setRequired(true),
+    )
+    .addStringOption(option =>
+      option
+        .setName(Options.OBJECTIVES)
+        .setDescription(
+          "Instructions visible after revealing the download link",
+        )
         .setRequired(true),
     )
     .addNumberOption(option =>
@@ -48,7 +57,9 @@ const getCommonRequiredOptionsRaceSetup = (
     .addStringOption(option =>
       option
         .setName(Options.DOWNLOAD_LINK)
-        .setDescription("Download link for the race game")
+        .setDescription(
+          "Download link for the race game (MUST start with http)",
+        )
         .setRequired(true),
     )
     .addNumberOption(option =>
