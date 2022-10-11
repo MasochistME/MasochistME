@@ -1,11 +1,9 @@
 import axios, { AxiosResponse } from 'axios';
 import { UpdateResult } from 'mongodb';
 
-import { ResponseError } from 'v1/types';
+import { RacePlayer, ResponseError } from 'v1/types';
 
-type Update = {
-	startTime?: Date;
-	endTime?: Date;
+type Update = Partial<Pick<RacePlayer, 'startTime' | 'endTime' | 'dnf'>> & {
 	score?: number;
 };
 /**
