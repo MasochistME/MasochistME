@@ -11,7 +11,8 @@ export enum RaceType {
  */
 export type BaseRace = WithId<{
 	name: string;
-	instructions: string;
+	instructions: string; // Visible part of the instructions.
+	objectives: string; // Cenzored part of the instructions.
 	type: keyof typeof RaceType;
 	startTime: Date; // A date in a timestamp format.
 	endTime: Date; // A date in a timestamp format.
