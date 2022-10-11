@@ -16,6 +16,7 @@ export const updateRaceById = async (
     const {
       name,
       instructions,
+      objectives,
       startTime,
       endTime,
       downloadLink,
@@ -30,6 +31,7 @@ export const updateRaceById = async (
         $set: {
           ...(name && { name }),
           ...(instructions && { instructions }),
+          ...(objectives && { objectives }),
           ...(startTime && { startTime }),
           ...(endTime && { endTime }),
           ...(downloadLink && { downloadLink }),
