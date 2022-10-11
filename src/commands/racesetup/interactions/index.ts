@@ -1,3 +1,9 @@
 export { racesetupConfirm } from "./racesetupConfirm";
 export { racesetupJoin } from "./racesetupJoin";
-export { raceReadyToGo, raceStart, raceFinish } from "./raceStart";
+export {
+  raceReadyToGo,
+  raceReveal,
+  raceStart,
+  raceFinish,
+  raceGiveUp,
+} from "./raceStart";

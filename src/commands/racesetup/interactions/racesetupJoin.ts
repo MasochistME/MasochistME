@@ -10,7 +10,7 @@ import { getErrorEmbed, getInfoEmbed } from "arcybot";
 import { Race, RaceType, RaceScoreBased } from "@masochistme/sdk/dist/v1/types";
 
 import { sdk } from "fetus";
-import { RACE_JOIN } from "consts";
+import { RaceButton } from "consts";
 import { getChannelById, getOption, getUTCDate, cenzor } from "utils";
 
 import { raceReadyToGo } from "./raceStart";
@@ -20,7 +20,7 @@ export const racesetupJoin = async (
 ): Promise<void> => {
   if (!interaction.isButton()) return;
 
-  const raceId = interaction.customId.replace(`${RACE_JOIN}-`, "");
+  const raceId = interaction.customId.replace(`${RaceButton.RACE_JOIN}-`, "");
   try {
     const response = await sdk.getRaceParticipantById({
       raceId,
@@ -77,7 +77,7 @@ export const racesetupJoin = async (
 const saveJoinRace = async (
   interaction: ButtonInteraction,
 ): Promise<boolean> => {
-  const raceId = interaction.customId.replace(`${RACE_JOIN}-`, "");
+  const raceId = interaction.customId.replace(`${RaceButton.RACE_JOIN}-`, "");
   try {
     const response = await sdk.joinRaceByParticipantId({
       raceId,
@@ -124,7 +124,7 @@ export const sendRaceJoinForm = async (
 const getRaceJoinButton = (newRaceId: string) => {
   const buttonBar = new ActionRowBuilder<ButtonBuilder>().addComponents(
     new ButtonBuilder()
-      .setCustomId(`${RACE_JOIN}-${newRaceId}`)
+      .setCustomId(`${RaceButton.RACE_JOIN}-${newRaceId}`)
       .setLabel("JOIN THE RACE!")
       .setStyle(ButtonStyle.Primary),
   );
@@ -138,10 +138,6 @@ const getRaceJoinButton = (newRaceId: string) => {
  */
 const getNewRaceCensoredEmbed = (race: Race): APIEmbed => {
   const fields: APIEmbedField[] = [
-    {
-      name: "Name",
-      value: race.name,
-    },
     {
       name: "Instructions",
       value: cenzor(race.instructions),
