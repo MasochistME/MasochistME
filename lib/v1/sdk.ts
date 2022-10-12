@@ -1,5 +1,14 @@
 import axios from 'axios';
 
+import { getGamesList, getBadgesByGameId } from 'v1/api/games';
+import {
+	getMembersList,
+	getMemberById,
+	updateMemberById,
+	getMemberBadgeList,
+	giveBadgeToMemberById,
+	revokeBadgeFromMemberById,
+} from 'v1/api/members';
 import {
 	createRace,
 	deleteRaceById,
@@ -7,12 +16,14 @@ import {
 	getRaceById,
 	getRaceList,
 	getActiveRace,
+} from 'v1/api/race';
+import {
 	getRaceParticipantById,
 	getRaceParticipantsList,
 	joinRaceByParticipantId,
 	updateRaceByParticipantId,
-} from 'v1/api/race';
-import { getBadgesByGameId } from 'v1/api/games';
+} from 'v1/api/racePlayers';
+
 import {
 	getBadgesList,
 	createBadge,
@@ -20,13 +31,6 @@ import {
 	updateBadgeById,
 	deleteBadgeById,
 } from 'v1/api/badges';
-import {
-	getMemberById,
-	updateMemberById,
-	getMemberBadgeList,
-	giveBadgeToMemberById,
-	revokeBadgeFromMemberById,
-} from 'v1/api/members';
 
 export type Config = {
 	host: string; // for example localhost:3000
@@ -50,23 +54,26 @@ export class SDK {
 			throw new Error('Authorization token is required.');
 		}
 	}
-	/*********************************
-	 *         MEMBERS         *
-	 *********************************/
-	public getMemberById = <T extends typeof getMemberById>(args: Head<T>) =>
-		getMemberById(args, this.BASE_URL);
-
-	public updateMemberById = <T extends typeof updateMemberById>(
-		args: Head<T>,
-	) => updateMemberById(args, this.BASE_URL);
 
 	/*************************
 	 *         GAMES         *
 	 *************************/
 
+	public getGamesList = () => getGamesList(this.BASE_URL);
 	public getBadgesByGameId = <T extends typeof getBadgesByGameId>(
 		args: Head<T>,
 	) => getBadgesByGameId(args, this.BASE_URL);
+
+	/*********************************
+	 *         MEMBERS         *
+	 *********************************/
+
+	public getMembersList = () => getMembersList(this.BASE_URL);
+	public getMemberById = <T extends typeof getMemberById>(args: Head<T>) =>
+		getMemberById(args, this.BASE_URL);
+	public updateMemberById = <T extends typeof updateMemberById>(
+		args: Head<T>,
+	) => updateMemberById(args, this.BASE_URL);
 
 	/**************************
 	 *         BADGES         *

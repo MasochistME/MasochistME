@@ -1,3 +1,4 @@
+export { getMembersList } from './getMembersList';
 export { getMemberById } from './getMemberById';
 export { updateMemberById } from './updateMemberById';
 export { getMemberBadgeList } from './getMemberBadgeList';
