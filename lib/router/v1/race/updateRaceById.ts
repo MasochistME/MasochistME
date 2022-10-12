@@ -23,6 +23,7 @@ export const updateRaceById = async (
       downloadGrace,
       uploadGrace,
       icon,
+      isActive,
     } = req.body; // TODO add validation
 
     const response = await collection.updateOne(
@@ -32,12 +33,13 @@ export const updateRaceById = async (
           ...(name && { name }),
           ...(instructions && { instructions }),
           ...(objectives && { objectives }),
-          ...(startTime && { startTime }),
-          ...(endTime && { endTime }),
+          ...(startTime && { startTime: new Date(startTime) }),
+          ...(endTime && { endTime: new Date(endTime) }),
           ...(downloadLink && { downloadLink }),
-          ...(downloadGrace && { downloadGrace }),
-          ...(uploadGrace && { uploadGrace }),
+          ...(downloadGrace && { downloadGrace: Number(downloadGrace) }),
+          ...(uploadGrace && { uploadGrace: Number(uploadGrace) }),
           ...(icon && { icon }),
+          ...(isActive && { isActive: Boolean(isActive) }),
         },
       },
     );
