@@ -13,7 +13,7 @@ export const giveBadgeToMemberById = async (
 	{ memberId, badgeId }: { memberId: string; badgeId: string },
 	BASE_URL: string,
 ): Promise<InsertOneResult<MemberBadge>> => {
-	const url = `${BASE_URL}/members/member/${memberId}/badges/${badgeId}`;
+	const url = `${BASE_URL}/members/member/${memberId}/badges/badge/${badgeId}`;
 
 	const memberBadgeResponse = await axios.post<
 		InsertOneResult<MemberBadge> | ResponseError,

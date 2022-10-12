@@ -13,7 +13,7 @@ export const revokeBadgeFromMemberById = async (
 	{ memberId, badgeId }: { memberId: string; badgeId: string },
 	BASE_URL: string,
 ): Promise<DeleteResult> => {
-	const url = `${BASE_URL}/members/member/${memberId}/badges/${badgeId}`;
+	const url = `${BASE_URL}/members/member/${memberId}/badges/badge/${badgeId}`;
 
 	const memberBadgeResponse = await axios.delete<
 		DeleteResult | ResponseError,
