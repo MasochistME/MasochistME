@@ -6,7 +6,7 @@ import { log } from 'helpers/log';
 import { connectToDb } from 'helpers/db';
 
 /**
- * Deleted a badge with a given badge ID, and removes it from all members that have it.
+ * Deletes a badge with a given badge ID, and removes it from all members that have it.
  * @param req Request
  * @param res Response
  * @returns void
@@ -19,7 +19,7 @@ export const deleteBadgeById = async (
     const { client, db } = await connectToDb();
     const collectionBadges = db.collection<Badge>('badges');
     const collectionMemberBadges = db.collection<MemberBadge>('memberBadges');
-    const _id = new ObjectId(req.params.id);
+    const _id = new ObjectId(req.params.badgeId);
 
     const responseBadges = await collectionBadges.deleteOne({ _id });
     const responseMemberBadges = await collectionMemberBadges.deleteMany({

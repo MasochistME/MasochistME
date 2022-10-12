@@ -12,7 +12,7 @@ export const getRaceById = async (
   try {
     const { client, db } = await connectToDb();
     const collection = db.collection<Race>('races');
-    const _id = new ObjectId(req.params.id);
+    const _id = new ObjectId(req.params.raceId);
 
     const race: Race | null = await collection.findOne({ _id });
 

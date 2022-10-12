@@ -17,7 +17,7 @@ export const giveBadgeToMemberById = async (
   try {
     const { client, db } = await connectToDb();
     const collection = db.collection<Omit<MemberBadge, '_id'>>('memberBadges');
-    const { badgeid: badgeId, memberid: memberId } = req.params;
+    const { badgeId, memberId } = req.params;
 
     const memberBadge: MemberBadge | null = await collection.findOne({
       badgeId,

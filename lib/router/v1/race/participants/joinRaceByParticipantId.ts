@@ -14,7 +14,7 @@ export const joinRaceByParticipantId = async (
     const raceCollection = db.collection<Race>('races');
     const racePlayerCollection =
       db.collection<Omit<RacePlayer, '_id'>>('racePlayers');
-    const { raceid: raceId, participantid: discordId } = req.params;
+    const { raceId, participantId: discordId } = req.params;
 
     try {
       new ObjectId(raceId);

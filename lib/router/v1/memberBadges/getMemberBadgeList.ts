@@ -6,18 +6,20 @@ import { connectToDb } from 'helpers/db';
 
 /**
  * Returns a list of all badges belonging to a single member.
- * @param _req Request
+ * @param req Request
  * @param res Response
  * @returns void
  */
 export const getMemberBadgeList = async (
-  _req: Request,
+  req: Request,
   res: Response,
 ): Promise<void> => {
   try {
     const { client, db } = await connectToDb();
     const collection = db.collection<MemberBadge>('memberBadges');
-    const cursor = collection.find();
+    const { memberId } = req.params;
+
+    const cursor = collection.find({ memberId });
     const memberBadges: MemberBadge[] = [];
 
     await cursor.forEach((el: MemberBadge) => {

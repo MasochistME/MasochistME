@@ -16,7 +16,7 @@ export const getRaceParticipantsList = async (
   try {
     const { client, db } = await connectToDb();
     const collection = db.collection<RacePlayer>('racePlayers');
-    const { raceid: raceId } = req.params;
+    const { raceId } = req.params;
 
     const cursor = collection.find({ raceId });
     const racePlayers: RacePlayer[] = [];

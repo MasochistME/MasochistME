@@ -11,7 +11,7 @@ export const updateRaceByParticipantId = async (
   try {
     const { client, db } = await connectToDb();
     const collection = db.collection<RacePlayer>('racePlayers');
-    const { raceid: raceId, participantid: discordId } = req.params;
+    const { raceId, participantId: discordId } = req.params;
 
     const racePlayer: RacePlayer | null = await collection.findOne({
       raceId,

@@ -25,6 +25,7 @@ import {
   giveBadgeToMemberById,
   revokeBadgeFromMemberById,
 } from './memberBadges';
+import { getBadgesByGameId } from './games';
 
 /**
  * masochist-api v1
@@ -34,13 +35,13 @@ import {
  *         MEMBERS         *
  ***************************/
 
-routerV1.get('/members/member/:memberid/badge/list', getMemberBadgeList);
+routerV1.get('/members/member/:memberId/badges/list', getMemberBadgeList);
 routerV1.post(
-  '/members/member/:memberid/badge/:badgeid',
+  '/members/member/:memberId/badges/badge/:badgeId',
   giveBadgeToMemberById,
 );
 routerV1.delete(
-  '/members/member/:memberid/badge/:badgeid',
+  '/members/member/:memberId/badges/badge/:badgeId',
   revokeBadgeFromMemberById,
 );
 
@@ -48,7 +49,7 @@ routerV1.delete(
  *         GAMES         *
  *************************/
 
-routerV1.get('/game/:gameid/badges', getRaceById);
+routerV1.get('/games/game/:gameId/badges/list', getBadgesByGameId);
 
 /**************************
  *         BADGES         *
@@ -56,31 +57,35 @@ routerV1.get('/game/:gameid/badges', getRaceById);
 
 routerV1.get('/badges/list', getBadgesList);
 routerV1.post('/badges', createBadge);
-routerV1.get('/badges/badge/:badgeid', getBadgeById);
-routerV1.put('/badges/badge/:badgeid', updateBadgeById);
-routerV1.delete('/badges/badge/:badgeid', deleteBadgeById);
+routerV1.get('/badges/badge/:badgeId', getBadgeById);
+routerV1.put('/badges/badge/:badgeId', updateBadgeById);
+routerV1.delete('/badges/badge/:badgeId', deleteBadgeById);
 
 /*************************
  *         RACES         *
  *************************/
 
-routerV1.post('/race', createRace);
-routerV1.get('/race/id/:id', getRaceById);
-routerV1.put('/race/id/:id', updateRaceById);
-routerV1.delete('/race/id/:id', deleteRaceById);
-routerV1.get('/race/list', getRaceList);
-routerV1.get('/race/active', getActiveRace);
+routerV1.post('/races', createRace);
+routerV1.get('/races/race/:raceId', getRaceById);
+routerV1.put('/races/race/:raceId', updateRaceById);
+routerV1.delete('/races/race/:raceId', deleteRaceById);
+routerV1.get('/races/list', getRaceList);
+routerV1.get('/races/active', getActiveRace);
+
+/*********************************
+ *       RACE PARTICIPANTS       *
+ *********************************/
 
 routerV1.get(
-  '/race/:raceid/participant/:participantid',
+  '/races/race/:raceId/participants/participant/:participantId',
   getRaceParticipantById,
 );
 routerV1.post(
-  '/race/:raceid/participant/:participantid',
+  '/races/race/:raceId/participants/participant/:participantId',
   joinRaceByParticipantId,
 );
 routerV1.put(
-  '/race/:raceid/participant/:participantid',
+  '/races/race/:raceId/participants/participant/:participantId',
   updateRaceByParticipantId,
 );
-routerV1.get('/race/:raceid/participants/list', getRaceParticipantsList);
+routerV1.get('/races/race/:raceId/participants/list', getRaceParticipantsList);
