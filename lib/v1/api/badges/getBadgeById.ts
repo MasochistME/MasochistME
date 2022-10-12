@@ -7,7 +7,7 @@ import { Badge, ResponseError } from 'v1/types';
  * @param badgeId string
  * @returns Badge
  */
-export const getRaceById = async (
+export const getBadgeById = async (
 	{ badgeId }: { badgeId: string },
 	BASE_URL: string,
 ): Promise<Badge> => {

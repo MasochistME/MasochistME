@@ -2,6 +2,9 @@ import axios, { AxiosResponse } from 'axios';
 
 import { Badge, ResponseError } from 'v1/types';
 
+// TODO
+// think if it should return just the MemberBadge[], or actual Badge[]
+
 /**
  * Returns a list of all badges belonging to member with given ID.
  * @param memberId string

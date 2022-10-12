@@ -6,10 +6,10 @@ import { Badge, ResponseError } from 'v1/types';
 /**
  * Updates a badge by updating the fields that the user had passed.
  * @param badgeId string
- * @param race Partial<Omit<Race, '_id'>>
+ * @param badge Partial<Omit<Badge, '_id'>>
  * @returns UpdateResult
  */
-export const updateRaceById = async (
+export const updateBadgeById = async (
 	{ badgeId, badge }: { badgeId: string; badge: Partial<Omit<Badge, '_id'>> },
 	BASE_URL: string,
 ): Promise<UpdateResult> => {
