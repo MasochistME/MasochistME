@@ -72,10 +72,10 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@masochistme/sdk@^1.10.0":
-  version "1.10.0"
-  resolved "https://registry.yarnpkg.com/@masochistme/sdk/-/sdk-1.10.0.tgz#c7af570706efc1122427ffed746bf46c39586ded"
-  integrity sha512-+1QhFReNfyEoqnVSVhJ+qudCbUiAYU8gwiXesA+yhS64bKpa/m3QGM07Qgkiye3k2LlfEn4Wt3oW/JamqyyW3A==
+"@masochistme/sdk@^1.10.1":
+  version "1.10.1"
+  resolved "https://registry.yarnpkg.com/@masochistme/sdk/-/sdk-1.10.1.tgz#b547ad068d21ddee458c65e9137f16795a7f4061"
+  integrity sha512-paheYNJc1EkkibVppdRfKwsJqx2qP+Y6GcLUqzm5uxvyO277v1/4cp5BIe7nX3cymlk7jjDUx8Y9RvsNiaLh6A==
   dependencies:
     axios "1.1.2"
     discord.js "^14.3.0"
