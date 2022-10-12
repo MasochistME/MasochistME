@@ -1,6 +1,6 @@
 import { DiscordInteraction } from "arcybot";
 
-import { cache } from "fetus";
+import { bot, cache } from "fetus";
 import { UNKNOWN_NAME } from "consts";
 import { ButtonInteraction } from "discord.js";
 
@@ -14,6 +14,13 @@ export const getChannelById = (
   const channel = interaction.guild?.channels.cache.find(
     ch => ch.id === channelId,
   );
+  if (channel?.isTextBased()) return channel;
+  return null;
+};
+
+export const getModChannel = () => {
+  const modRoom = getOption("room_mod");
+  const channel = bot.botClient.channels.cache.find(ch => ch.id === modRoom);
   if (channel?.isTextBased()) return channel;
   return null;
 };

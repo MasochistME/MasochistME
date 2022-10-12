@@ -13,7 +13,7 @@ import { sdk } from "fetus";
 import { RaceButton } from "consts";
 import { getChannelById, getOption, getUTCDate, cenzor } from "utils";
 
-import { raceReadyToGo } from "./raceStart";
+import { raceJoinAfterStart } from "./raceStart";
 
 export const racesetupJoin = async (
   interaction: ButtonInteraction,
@@ -64,9 +64,10 @@ export const racesetupJoin = async (
   };
 
   const registerUser = await saveJoinRace(interaction);
+  const race = await sdk.getRaceById({ raceId });
   if (registerUser) {
     interaction.update({ embeds: [updatedEmbed] });
-    raceReadyToGo(interaction); // TODO this is here temporarily!
+    if (race.isActive) raceJoinAfterStart(interaction);
   }
 };
 

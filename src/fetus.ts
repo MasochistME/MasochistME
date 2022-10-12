@@ -5,6 +5,7 @@ import { SDK } from "@masochistme/sdk/dist/v1/sdk";
 
 import { getOption, Database } from "utils";
 import { Cache } from "cache";
+import { handleRaceTimer } from "commands/_utils/race";
 
 import { commandsFunctions, customCommands } from "commands";
 import { handleAutocomplete, handleButtons } from "interactions";
@@ -27,6 +28,9 @@ export const sdk = new SDK({
 });
 
 export const cache = new Cache({ botDb });
+
+if (process.env.ACCESS_TOKEN)
+  axios.defaults.headers.common["Authorization"] = process.env.ACCESS_TOKEN;
 
 /************************
  *      BOT CONFIG      *
@@ -59,9 +63,9 @@ const init = async () => {
     if (interaction.isAutocomplete()) handleAutocomplete(interaction);
     if (interaction.isButton()) handleButtons(interaction);
   });
+
+  // Race timer checks every minute if any race should start.
+  handleRaceTimer();
 };
 
 init();
-
-if (process.env.ACCESS_TOKEN)
-  axios.defaults.headers.common["Authorization"] = process.env.ACCESS_TOKEN;

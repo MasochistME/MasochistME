@@ -6,18 +6,92 @@ import {
   APIEmbed,
   APIEmbedField,
 } from "discord.js";
+import { getErrorEmbed, getSuccessEmbed, log } from "arcybot";
 import { Race, RaceType, RaceScoreBased } from "@masochistme/sdk/dist/v1/types";
 
-import { sdk } from "fetus";
+import { bot, sdk } from "fetus";
 import { RaceButton } from "consts";
-import { getUTCDate, cenzor, createError, ErrorAction } from "utils";
+import {
+  getUTCDate,
+  getModChannel,
+  cenzor,
+  createError,
+  ErrorAction,
+} from "utils";
 
 /**
  * Message sent to race participant on DM when the race begins.
+ * @param raceId string
+ * @returns void
+ */
+export const raceReadyToGo = async (raceId: string): Promise<void> => {
+  try {
+    const race = await sdk.getRaceById({ raceId });
+    const participants = await sdk.getRaceParticipantsList({ raceId });
+    const participantsDiscordIds = participants.map(
+      participant => participant.discordId,
+    );
+    const tempFields = [
+      {
+        name: "---",
+        value: `Your race begins once you click the **REVEAL** button. You have ${race.downloadGrace} seconds to download and set up the game.
+      \n***Remember*** to click the **START** button when you are ready or your race will get forfeited!
+      \nGood luck! You can start the race whenever it's convenient for you within the time limit.`,
+      },
+    ];
+    log.INFO("Preparing to inform race participants about race starting...");
+    participantsDiscordIds.forEach((userId: string) => {
+      bot.botClient.users
+        .send(userId, {
+          embeds: [
+            getRaceStartEmbed(
+              race,
+              `⏳ ${race.name.toUpperCase()} - PREPARING...`,
+              true,
+              tempFields,
+            ),
+          ],
+          components: [getRaceStartButtons(raceId, true, false, false, false)],
+        })
+        .then(() => {
+          getModChannel()?.send(
+            getSuccessEmbed(
+              "Race starting - broadcast update",
+              `Participant <@${userId}> got informed about race starting.`,
+            ),
+          );
+          log.INFO(`Discord user ${userId} informed about the race starting!`);
+        })
+        .catch(() => {
+          getModChannel()?.send(
+            getErrorEmbed(
+              "Race starting - broadcast update",
+              `Participant <@${userId}> could not get informed about race starting.`,
+            ),
+          );
+          log.WARN(
+            `Discord user ${userId} could not be reached about the race starting!`,
+          );
+        });
+    });
+  } catch (err: any) {
+    getModChannel()?.send(
+      getErrorEmbed(
+        "Race starting - broadcast update",
+        err?.error ?? err?.message ?? err ?? "Something went wrong.",
+      ),
+    );
+    // createError(interaction, err, ErrorAction.REPLY);
+    log.WARN(err);
+  }
+};
+
+/**
+ * Handles situation where member joins the race after it already started.
  * @param interaction ButtonInteraction
  * @returns void
  */
-export const raceReadyToGo = async (
+export const raceJoinAfterStart = async (
   interaction: ButtonInteraction,
 ): Promise<void> => {
   if (!interaction.isButton()) return;
