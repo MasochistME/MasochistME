@@ -104,16 +104,16 @@ const saveJoinRace = async (
  */
 export const sendRaceJoinForm = async (
   interaction: ButtonInteraction,
-  newRaceId: string,
+  raceId: string,
 ) => {
-  const newRace = await sdk.getRaceById({ id: newRaceId });
+  const newRace = await sdk.getRaceById({ raceId });
 
   const raceRoomId = getOption("room_race");
   const channel = getChannelById(interaction, raceRoomId);
 
   await channel?.send({
     embeds: [getNewRaceCensoredEmbed(newRace)],
-    components: [getRaceJoinButton(newRaceId)],
+    components: [getRaceJoinButton(raceId)],
   });
 };
 

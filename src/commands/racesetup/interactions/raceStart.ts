@@ -23,7 +23,7 @@ export const raceReadyToGo = async (
 ): Promise<void> => {
   if (!interaction.isButton()) return;
   const raceId = interaction.customId.replace(`${RaceButton.RACE_JOIN}-`, "");
-  const race = await sdk.getRaceById({ id: raceId });
+  const race = await sdk.getRaceById({ raceId });
   const tempFields = [
     {
       name: "---",
@@ -56,7 +56,7 @@ export const raceReveal = async (
   if (!interaction.isButton()) return;
 
   const raceId = interaction.customId.replace(`${RaceButton.RACE_REVEAL}-`, "");
-  const race = await sdk.getRaceById({ id: raceId });
+  const race = await sdk.getRaceById({ raceId });
 
   interaction.update({
     embeds: [
@@ -81,7 +81,7 @@ export const raceStart = async (
   if (!interaction.isButton()) return;
 
   const raceId = interaction.customId.replace(`${RaceButton.RACE_START}-`, "");
-  const race = await sdk.getRaceById({ id: raceId });
+  const race = await sdk.getRaceById({ raceId });
   const startTime = new Date();
 
   try {
@@ -126,7 +126,7 @@ export const raceFinish = async (
 ): Promise<void> => {
   if (!interaction.isButton()) return;
   const raceId = interaction.customId.replace(`${RaceButton.RACE_FINISH}-`, "");
-  const race = await sdk.getRaceById({ id: raceId });
+  const race = await sdk.getRaceById({ raceId });
   const endTime = new Date();
 
   try {
@@ -177,7 +177,7 @@ export const raceGiveUp = async (
     `${RaceButton.RACE_GIVE_UP}-`,
     "",
   );
-  const race = await sdk.getRaceById({ id: raceId });
+  const race = await sdk.getRaceById({ raceId });
 
   try {
     const { acknowledged } = await sdk.updateRaceByParticipantId({
