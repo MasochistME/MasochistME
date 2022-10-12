@@ -23,7 +23,7 @@ export const badgedelete = async (
         "Badge deleted",
         `Done, fucker.\nBadge **${getBadgeNameById(
           badgeId,
-        ).toUpperCase()}** permanently deleted.\n**Important**: If any user had this badge assigned, they will still have it, but it won't display on their profile anymore. `,
+        ).toUpperCase()}** permanently deleted.\nEvery member which had this badge also had it removed.`,
       ),
     );
   } catch (err: any) {

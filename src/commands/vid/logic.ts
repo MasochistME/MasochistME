@@ -54,7 +54,7 @@ export const vid = async (interaction: DiscordInteraction): Promise<void> => {
   }
 
   try {
-    channel?.send(`${link} - ${interaction.member?.user.username}`);
+    channel?.send(`${link} - <@${interaction.user.id}>`);
     interaction.reply(
       getSuccessEmbed(
         "Video sent!",

@@ -15,23 +15,18 @@ export const createError = (
 ) => {
   log.WARN(err);
 
-  if (action === ErrorAction.REPLY) {
-    interaction.reply(
-      getErrorEmbed(
-        title ?? "Error",
-        err?.error ?? err?.message ?? message ?? err ?? "Something fucked up.",
-        true,
-      ),
-    );
-  }
+  const errorTitle = title ?? "Error";
+  const getErrorContent = () => {
+    if (err?.error?.length) return err.error;
+    if (err?.message?.length) return err?.message;
+    if (message) return message;
+    return "Something fucked up.";
+  };
 
+  if (action === ErrorAction.REPLY) {
+    interaction.reply(getErrorEmbed(errorTitle, getErrorContent(), true));
+  }
   if (action === ErrorAction.EDIT) {
-    interaction.editReply(
-      getErrorEmbed(
-        title ?? "Error",
-        err?.error ?? err?.message ?? message ?? err ?? "Something fucked up.",
-        true,
-      ),
-    );
+    interaction.editReply(getErrorEmbed(errorTitle, getErrorContent()));
   }
 };

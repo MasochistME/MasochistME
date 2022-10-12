@@ -1,17 +1,10 @@
-import { mongo } from "fetus";
-import { Badge, Game, Member, Points } from "types";
-
-export const getAllBadgesFromAPI = async () => {
-  const cursor = mongo.dbs.masochist.collection<Badge>("badges").find();
-  const badges: Badge[] = [];
-  await cursor.forEach(el => {
-    badges.push(el);
-  });
-  return badges;
-};
+import { cache, mongo } from "fetus";
+import { Game, Member, Points } from "types";
 
 export const getAllMembesFromAPI = async () => {
-  const cursor = mongo.dbs.masochist.collection<Member>("users").find();
+  const cursor = mongo.dbs[cache.masochistDb]
+    .collection<Member>("members")
+    .find();
   const members: Omit<Member, "games">[] = [];
   await cursor.forEach(el => {
     members.push(el);
@@ -20,7 +13,7 @@ export const getAllMembesFromAPI = async () => {
 };
 
 export const getAllGamesFromAPI = async () => {
-  const cursor = mongo.dbs.masochist.collection<Game>("games").find();
+  const cursor = mongo.dbs[cache.masochistDb].collection<Game>("games").find();
   const games: Omit<Game, "achievements" | "sale">[] = [];
   await cursor.forEach(el => {
     games.push(el);
@@ -29,14 +22,16 @@ export const getAllGamesFromAPI = async () => {
 };
 
 export const getMemberFromAPI = async (discordId: string) => {
-  const member: Member | null = await mongo.dbs.masochist
-    .collection<Member>("users")
+  const member: Member | null = await mongo.dbs[cache.masochistDb]
+    .collection<Member>("members")
     .findOne({ discordId });
   return member;
 };
 
 export const getPointsFromAPI = async () => {
-  const cursor = mongo.dbs.masochist.collection<Points>("points").find();
+  const cursor = mongo.dbs[cache.masochistDb]
+    .collection<Points>("points")
+    .find();
   const points: Points[] = [];
   await cursor.forEach(el => {
     points.push(el);

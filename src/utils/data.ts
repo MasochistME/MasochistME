@@ -18,9 +18,9 @@ export const getChannelById = (
   return null;
 };
 
-export const getBadgeNameById = (id?: string | null): string => {
-  if (!id) return UNKNOWN_NAME;
-  const badge = cache.badges.find(b => b.id === id);
+export const getBadgeNameById = (badgeId?: string | null): string => {
+  if (!badgeId) return UNKNOWN_NAME;
+  const badge = cache.badges.find(b => String(b._id) === badgeId);
   return badge?.name ?? UNKNOWN_NAME;
 };
 

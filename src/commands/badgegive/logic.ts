@@ -22,6 +22,9 @@ export const badgegive = async (
   const badgeId = interaction.options.getString("badge", true);
   const memberId = interaction.options.getString("member", true);
 
+  console.log(badgeId);
+  console.log(memberId);
+
   try {
     const response = await sdk.giveBadgeToMemberById({ memberId, badgeId });
     if (!response.acknowledged)

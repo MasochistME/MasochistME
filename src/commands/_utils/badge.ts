@@ -13,7 +13,7 @@ export const getBadgeChoices = (focused: string) => {
       name: `${(game?.name ?? "UNKNOWN GAME").toUpperCase()} - ${badge.name} (${
         badge.description
       })`,
-      value: badge.id,
+      value: String(badge._id),
     };
   });
 
@@ -28,7 +28,7 @@ export const getBadgeChoices = (focused: string) => {
 export const getGameChoices = (focused: string) => {
   const choices = cache.games.map(game => ({
     name: game.name,
-    value: game.id,
+    value: String(game.id),
   }));
 
   return getFilteredChoices(choices, focused);
@@ -42,7 +42,7 @@ export const getGameChoices = (focused: string) => {
 export const getMemberChoices = (focused: string) => {
   const choices = cache.members.map(member => ({
     name: member.name,
-    value: member.id,
+    value: String(member.id),
   }));
 
   return getFilteredChoices(choices, focused);

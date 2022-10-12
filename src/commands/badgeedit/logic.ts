@@ -60,7 +60,7 @@ export const badgeedit = async (
           name: "---",
           value: `You have updated a **${getBadgeNameById(
             badgeId,
-          )?.toUpperCase()}** badge!`,
+          ).toUpperCase()}** badge!`,
         },
       ],
     };

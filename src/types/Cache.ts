@@ -7,11 +7,6 @@ export type CacheItem = {
 
 export type CacheMember = CacheItem;
 
-export interface CacheBadge extends CacheItem {
-  gameId: string;
-  description: string;
-}
-
 export interface CacheGame extends CacheItem {
   description: string;
 }

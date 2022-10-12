@@ -33,6 +33,6 @@ export const update = async (
       ),
     );
   } catch (err: any) {
-    createError(interaction, err, ErrorAction.REPLY);
+    createError(interaction, err, ErrorAction.EDIT);
   }
 };
