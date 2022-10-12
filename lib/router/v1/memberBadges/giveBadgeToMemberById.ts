@@ -40,7 +40,7 @@ export const giveBadgeToMemberById = async (
     if (!response.acknowledged) {
       res.status(400).send({ error: 'Could not give this badge to member.' });
     } else {
-      res.status(200).send(response);
+      res.status(201).send(response);
     }
   } catch (err: any) {
     log.WARN(err);
