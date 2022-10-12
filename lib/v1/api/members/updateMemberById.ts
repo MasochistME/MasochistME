@@ -3,22 +3,17 @@ import { UpdateResult } from 'mongodb';
 
 import { Member, ResponseError } from 'v1/types';
 
-type MemberParams =
-	| { steamId: string; discordId: never }
-	| { steamId: never; discordId: string };
 type MemberUpdate = Partial<Pick<Member, 'description'>>;
 /**
  * Updates a member by updating the fields that the user had passed.
  * @param member MemberUpdate
- * @param steamId string | never
- * @param discordId string | never
+ * @param memberId string
  * @returns UpdateResult
  */
 export const updateMemberById = async (
-	{ member, steamId, discordId }: { member: MemberUpdate } & MemberParams,
+	{ member, memberId }: { member: MemberUpdate; memberId: string },
 	BASE_URL: string,
 ): Promise<UpdateResult> => {
-	const memberId = steamId ?? discordId;
 	const url = `${BASE_URL}/members/member/${memberId}`;
 
 	const memberResponse = await axios.put<

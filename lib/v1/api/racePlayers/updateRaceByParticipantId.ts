@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { UpdateResult } from 'mongodb';
 
-import { MemberIdEither, RacePlayer, ResponseError } from 'v1/types';
+import { RacePlayer, ResponseError } from 'v1/types';
 
 type Update = Partial<Pick<RacePlayer, 'startTime' | 'endTime' | 'dnf'>> & {
 	score?: number;
@@ -10,23 +10,21 @@ type Update = Partial<Pick<RacePlayer, 'startTime' | 'endTime' | 'dnf'>> & {
  * Updates a race participant object.
  * @param raceId string
  * @param update string
- * @param steamId string | never
- * @param discordId string | never
+ * @param memberId string - Discord ID
  * @returns UpdateResult
  */
 export const updateRaceByParticipantId = async (
 	{
 		raceId,
+		memberId,
 		update,
-		steamId,
-		discordId,
 	}: {
 		raceId: string;
+		memberId: string;
 		update: Update;
-	} & MemberIdEither,
+	},
 	BASE_URL: string,
 ): Promise<UpdateResult> => {
-	const memberId = steamId ?? discordId;
 	const url = `${BASE_URL}/races/race/${raceId}/participants/participant/${memberId}`;
 
 	const racePlayerResponse = await axios.put<

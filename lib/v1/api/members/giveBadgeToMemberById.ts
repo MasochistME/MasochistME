@@ -1,20 +1,18 @@
 import { InsertOneResult } from 'mongodb';
 import axios, { AxiosResponse } from 'axios';
 
-import { MemberBadge, MemberIdEither, ResponseError } from 'v1/types';
+import { MemberBadge, ResponseError } from 'v1/types';
 
 /**
- * Gives a badge by given badge ID to member by either Steam ID or Discord ID.
+ * Gives a badge by given badge ID to member by their Discord ID.
  * @param badgeId string
- * @param steamId string | never
- * @param discordId string | never
+ * @param memberId string - Discord ID
  * @returns InsertOneResult<MemberBadge>
  */
 export const giveBadgeToMemberById = async (
-	{ badgeId, steamId, discordId }: { badgeId: string } & MemberIdEither,
+	{ badgeId, memberId }: { badgeId: string; memberId: string },
 	BASE_URL: string,
 ): Promise<InsertOneResult<MemberBadge>> => {
-	const memberId = steamId ?? discordId;
 	const url = `${BASE_URL}/members/member/${memberId}/badges/badge/${badgeId}`;
 
 	const memberBadgeResponse = await axios.post<
