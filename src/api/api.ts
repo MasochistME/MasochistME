@@ -1,6 +1,6 @@
 import { CommandObject } from "arcybot";
 
-import { CacheOption } from "types";
+import { CacheOption } from "cache";
 import { mongo, cache } from "fetus";
 
 export const getCommandsFromAPI = async () => {

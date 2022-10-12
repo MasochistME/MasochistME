@@ -16,12 +16,9 @@ dotenv.config();
  ************************/
 
 const botDb = process.env["ENV"] === "dev" ? "fetus-dev" : "fetus";
-const masochistDb =
-  process.env["ENV"] === "dev" ? "masochist-dev" : "masochist";
 
 export const mongo = new Database([
   { symbol: botDb, url: process.env["DB_FETUS"] },
-  { symbol: masochistDb, url: process.env["DB_MASOCHIST"] },
 ]);
 
 export const sdk = new SDK({
@@ -29,7 +26,7 @@ export const sdk = new SDK({
   authToken: process.env.ACCESS_TOKEN,
 });
 
-export const cache = new Cache({ botDb, masochistDb });
+export const cache = new Cache({ botDb });
 
 /************************
  *      BOT CONFIG      *

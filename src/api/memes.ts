@@ -1,7 +1,7 @@
 import { ObjectId } from "mongodb";
 import { log } from "arcybot";
 
-import { Meme } from "types";
+import { Meme } from "cache";
 import { mongo, cache } from "fetus";
 
 export const getMemesFromAPI = async () => {

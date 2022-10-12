@@ -1,16 +1,16 @@
 import axios from "axios";
 import { APIEmbed } from "discord.js";
 import { DiscordInteraction } from "arcybot";
+import { Member } from "@masochistme/sdk/dist/v1/types";
+
+import { cache, sdk } from "fetus";
+import { createError, ErrorAction } from "utils";
 
 import { API_URL, UNKNOWN, USER_NO_DESCRIPTION } from "consts";
-import { getMemberFromAPI } from "api";
-import { Member } from "types";
-import { cache } from "fetus";
-import { createError, ErrorAction } from "utils";
 
 type PartialMember = Pick<
   Member,
-  "id" | "name" | "avatar" | "description" | "url"
+  "name" | "avatar" | "description" | "url" | "steamId"
 > & {
   tierCompletion: string;
   badges: string;
@@ -24,7 +24,9 @@ export const profile = async (
   await interaction.deferReply();
 
   try {
-    const member = await getMemberFromAPI(userId);
+    const member = await sdk.getMemberById({
+      discordId: userId,
+    });
     if (!member)
       throw `Your Discord account is not connected to the Masochist.ME profile.
       \nTo be able to use \`/profile\` command, please register first with the \`/register\` command.`;
@@ -34,7 +36,7 @@ export const profile = async (
     if (fullRanking.status !== 200) throw fullRanking.data;
 
     const usefulMemberInfo: PartialMember = {
-      id: member.id,
+      steamId: member.steamId,
       name: member.name,
       avatar: member.avatar,
       url: member.url,
@@ -67,11 +69,13 @@ const getMemberEmbed = (member: PartialMember) => {
       },
       {
         name: "Steam profile",
-        value: `https://steamcommunity.com/profiles/${member.id ?? UNKNOWN}`,
+        value: `https://steamcommunity.com/profiles/${
+          member.steamId ?? UNKNOWN
+        }`,
       },
       {
         name: "Masochist.ME link",
-        value: `http://masochist.me/profile/${member.id ?? UNKNOWN}`,
+        value: `http://masochist.me/profile/${member.steamId ?? UNKNOWN}`,
       },
       {
         name: "Rank:",
@@ -101,9 +105,10 @@ const getMemberEmbed = (member: PartialMember) => {
  */
 const getMemberRank = (member: Member, fullRanking: any) => {
   const memberRanking =
-    fullRanking.data.find((r: any) => r.id === member.id)?.points?.sum ?? "0";
+    fullRanking.data.find((r: any) => r.id === member.steamId)?.points?.sum ??
+    "0";
   const memberPosition = fullRanking.data.findIndex(
-    (r: any) => r.id === member.id,
+    (r: any) => r.id === member.steamId,
   );
   const fixedMemberPosition =
     memberPosition === -1
@@ -118,10 +123,10 @@ const getMemberRank = (member: Member, fullRanking: any) => {
  * @returns string
  */
 const getMemberTierCompletion = (member: Member) => {
-  const memberTierCompletionSummary = cache.points
-    .map(point => {
-      const memberTierCompletion = member.ranking[point.id] ?? "0";
-      return `\`\`Tier ${point.id} - ${memberTierCompletion}\`\``;
+  const memberTierCompletionSummary = cache.tiers
+    .map(tier => {
+      const memberTierCompletion = member.ranking[tier.id] ?? "0";
+      return `\`\`Tier ${tier.id} - ${memberTierCompletion}\`\``;
     })
     .join("\n");
   return memberTierCompletionSummary;
@@ -134,7 +139,8 @@ const getMemberTierCompletion = (member: Member) => {
  */
 const getMemberBadges = (member: Member, fullRanking: any) => {
   const memberBadges =
-    fullRanking.data.find((r: any) => r.id === member.id)?.points?.badges ?? {};
+    fullRanking.data.find((r: any) => r.id === member.steamId)?.points
+      ?.badges ?? {};
   const { points = "0", total = "0" } = memberBadges;
 
   return `\`\`${total}\`\`\n\n**Badges points:**\n\`\`${points}\`\``;

@@ -1,4 +1,8 @@
-import { ObjectId } from "mongodb";
+import { ObjectId, WithId } from "mongodb";
+
+export type Meme = WithId<{
+  meme: string;
+}>;
 
 export type CacheItem = {
   name: string;

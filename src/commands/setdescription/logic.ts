@@ -1,9 +1,7 @@
-import axios from "axios";
 import { getSuccessEmbed, DiscordInteraction } from "arcybot";
 
+import { sdk } from "fetus";
 import { createError, ErrorAction } from "utils";
-import { API_URL } from "consts";
-import { getMemberFromAPI } from "api";
 
 /**
  * Allows the user to set a custom description on their Masochist.ME profile.
@@ -18,13 +16,16 @@ export const setdescription = async (
   const description = interaction.options.getString("description", true);
 
   try {
-    const member = await getMemberFromAPI(interaction.user.id);
-    const steamId = member?.id;
+    const member = await sdk.getMemberById({ discordId: interaction.user.id });
+    const steamId = member?.steamId;
     if (!steamId)
       throw "Could not find your Masochist.ME user data. You might have not connected your Discord account with Masochist.ME one - to do so, use the `/register` command.";
-    const rankingUrl = `${API_URL}/users/user/${steamId}`;
-    const setMemberDescription = await axios.put(rankingUrl, { description });
-    if (setMemberDescription.status !== 200) throw setMemberDescription.data;
+    const response = await sdk.updateMemberById({
+      memberId: interaction.user.id,
+      member: { description },
+    });
+    if (!response.acknowledged)
+      throw "Cannot update member's description, please try again later.";
 
     interaction.editReply(
       getSuccessEmbed(

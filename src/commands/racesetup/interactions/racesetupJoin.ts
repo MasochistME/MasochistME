@@ -24,7 +24,7 @@ export const racesetupJoin = async (
   try {
     const response = await sdk.getRaceParticipantById({
       raceId,
-      discordId: interaction.user.id,
+      memberId: interaction.user.id,
     });
     if (response) {
       interaction.reply(
@@ -81,7 +81,7 @@ const saveJoinRace = async (
   try {
     const response = await sdk.joinRaceByParticipantId({
       raceId,
-      discordId: interaction.user.id,
+      memberId: interaction.user.id,
     });
     if (!response.acknowledged)
       throw new Error("Could not join the race, please try again later.");

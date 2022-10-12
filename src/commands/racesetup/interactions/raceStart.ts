@@ -100,7 +100,7 @@ export const raceStart = async (
     const startTime = new Date();
     const { acknowledged } = await sdk.updateRaceByParticipantId({
       raceId,
-      discordId: interaction.user.id,
+      memberId: interaction.user.id,
       update: { startTime },
     });
     if (!acknowledged) throw new Error("Database did not respond.");
@@ -146,7 +146,7 @@ export const raceFinish = async (
     const endTime = new Date();
     const { acknowledged } = await sdk.updateRaceByParticipantId({
       raceId,
-      discordId: interaction.user.id,
+      memberId: interaction.user.id,
       update: { endTime },
     });
     if (!acknowledged) throw new Error("Database did not respond.");
@@ -195,7 +195,7 @@ export const raceGiveUp = async (
 
     const { acknowledged } = await sdk.updateRaceByParticipantId({
       raceId,
-      discordId: interaction.user.id,
+      memberId: interaction.user.id,
       update: { dnf: true },
     });
     if (!acknowledged) throw new Error("Database did not respond.");
