@@ -2,6 +2,7 @@ import express from 'express';
 export const routerV1 = express.Router();
 
 import { getGamesList, getBadgesByGameId } from './games';
+import { getTiersList } from './tiers';
 import {
   getMembersList,
   getMemberById,
@@ -65,6 +66,12 @@ routerV1.post('/badges', createBadge);
 routerV1.get('/badges/badge/:badgeId', getBadgeById);
 routerV1.put('/badges/badge/:badgeId', updateBadgeById);
 routerV1.delete('/badges/badge/:badgeId', deleteBadgeById);
+
+/*************************
+ *         TIERS         *
+ *************************/
+
+routerV1.get('/tiers/list', getTiersList);
 
 /*************************
  *         RACES         *

@@ -1,0 +1,1 @@
+export { getTiersList } from './getTiersList';
