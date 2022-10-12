@@ -4,6 +4,12 @@ import { Badge } from '@masochistme/sdk/dist/v1/types';
 import { log } from 'helpers/log';
 import { connectToDb } from 'helpers/db';
 
+/**
+ * Creates a new badge.
+ * @param req Request
+ * @param res Response
+ * @returns void
+ */
 export const createBadge = async (
   req: Request,
   res: Response,

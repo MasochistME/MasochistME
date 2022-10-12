@@ -1,27 +1,37 @@
 import { ObjectId } from 'mongodb';
 import { Request, Response } from 'express';
-import { Badge } from '@masochistme/sdk/dist/v1/types';
+import { Badge, MemberBadge } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
 import { connectToDb } from 'helpers/db';
 
+/**
+ * Deleted a badge with a given badge ID, and removes it from all members that have it.
+ * @param req Request
+ * @param res Response
+ * @returns void
+ */
 export const deleteBadgeById = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
   try {
     const { client, db } = await connectToDb();
-    const collection = db.collection<Badge>('badges');
+    const collectionBadges = db.collection<Badge>('badges');
+    const collectionMemberBadges = db.collection<MemberBadge>('memberBadges');
     const _id = new ObjectId(req.params.id);
 
-    const response = await collection.deleteOne({ _id });
+    const responseBadges = await collectionBadges.deleteOne({ _id });
+    const responseMemberBadges = await collectionMemberBadges.deleteMany({
+      badgeId: String(_id),
+    });
 
     client.close();
 
-    if (!response.acknowledged) {
+    if (!responseBadges.acknowledged || !responseMemberBadges.acknowledged) {
       res.status(404).send({ error: 'Could not delete the badge.' });
     } else {
-      res.status(200).send(response);
+      res.status(200).send(responseBadges);
     }
   } catch (err: any) {
     log.WARN(err);

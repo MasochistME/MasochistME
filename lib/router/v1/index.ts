@@ -19,13 +19,30 @@ import {
   getBadgeById,
   updateBadgeById,
   deleteBadgeById,
-  giveBadgeToUserById,
-  revokeBadgeFromUserById,
 } from './badges';
+import {
+  getMemberBadgeList,
+  giveBadgeToMemberById,
+  revokeBadgeFromMemberById,
+} from './memberBadges';
 
 /**
  * masochist-api v1
  */
+
+/***************************
+ *         MEMBERS         *
+ ***************************/
+
+routerV1.get('/members/member/:memberid/badge/list', getMemberBadgeList);
+routerV1.post(
+  '/members/member/:memberid/badge/:badgeid',
+  giveBadgeToMemberById,
+);
+routerV1.delete(
+  '/members/member/:memberid/badge/:badgeid',
+  revokeBadgeFromMemberById,
+);
 
 /*************************
  *         GAMES         *
@@ -42,9 +59,6 @@ routerV1.post('/badges', createBadge);
 routerV1.get('/badges/badge/:badgeid', getBadgeById);
 routerV1.put('/badges/badge/:badgeid', updateBadgeById);
 routerV1.delete('/badges/badge/:badgeid', deleteBadgeById);
-
-routerV1.post('/badges/badge/:badgeid/user/:userid', giveBadgeToUserById);
-routerV1.delete('/badges/badge/:badgeid/user/:userid', revokeBadgeFromUserById);
 
 /*************************
  *         RACES         *
