@@ -8,13 +8,14 @@ import { sdk } from "fetus";
 
 import { RaceData } from "commands/racesetup/logic";
 import { raceReadyToGo } from "commands/racesetup/interactions/raceStart";
+import { raceResults } from "commands/racesetup/interactions/raceResults";
 
 /**
  * Executes every minute to check if any race needs to be started or finished.
  */
 export const handleRaceTimer = async () => {
   try {
-    const activeRaces = await sdk.getActiveRace();
+    const activeRaces = await sdk.getRaceList();
     activeRaces.forEach(async (race: Race) => {
       await handleRaceStart(race);
       await handleRaceFinish(race);
@@ -23,7 +24,7 @@ export const handleRaceTimer = async () => {
     log.WARN(err);
     getModChannel()?.send(
       getErrorEmbed(
-        "Error - race times",
+        "ERROR - RACE TIMER",
         "There was something wrong trying to check the race status.",
       ),
     );
@@ -38,11 +39,11 @@ export const handleRaceTimer = async () => {
  * @returns void
  */
 const handleRaceStart = async (race: Race) => {
-  const { startTime, endTime, isActive, _id } = race;
+  const { name, startTime, endTime, isActive, _id } = race;
   const raceId = String(_id);
   const raceShouldStart =
     !isActive &&
-    dayjs(startTime).diff(new Date()) < 0 &&
+    dayjs(startTime).diff(new Date()) <= 0 &&
     dayjs(endTime).diff(new Date()) > 0;
   if (!raceShouldStart) return;
   log.INFO("Detected a race to begin...");
@@ -53,8 +54,8 @@ const handleRaceStart = async (race: Race) => {
   if (!response.acknowledged) {
     getModChannel()?.send(
       getErrorEmbed(
-        "Error - race starting",
-        `Race **${race.name.toUpperCase()}** should start right now, but something fucked up and it could not start.`,
+        "ERROR - RACE STARTING...",
+        `Race **${name.toUpperCase()}** should start right now, but something fucked up and it could not start.`,
       ),
     );
   }
@@ -67,24 +68,27 @@ const handleRaceStart = async (race: Race) => {
  * @returns void
  */
 const handleRaceFinish = async (race: Race) => {
+  const { name, startTime, endTime, isActive, _id } = race;
+  const raceId = String(_id);
   const raceShouldEnd =
-    race.isActive &&
-    dayjs(race.startTime).diff(new Date()) < 0 &&
-    dayjs(race.endTime).diff(new Date()) < 0;
+    isActive &&
+    dayjs(startTime).diff(new Date()) <= 0 &&
+    dayjs(endTime).diff(new Date()) <= 0;
   if (!raceShouldEnd) return;
   log.INFO("Detected a race to end...");
   const response = await sdk.updateRaceById({
-    raceId: String(race._id),
-    race: { isActive: true },
+    raceId,
+    race: { isActive: false },
   });
   if (!response.acknowledged) {
     getModChannel()?.send(
       getErrorEmbed(
-        "Error - race finishing",
-        `Race **${race.name.toUpperCase()}** should finish right now, but something fucked up and it could not finish.`,
+        "ERROR - RACE FINISHING...",
+        `Race **${name.toUpperCase()}** should finish right now, but something fucked up and it could not finish.`,
       ),
     );
   }
+  raceResults(raceId);
 };
 
 /**

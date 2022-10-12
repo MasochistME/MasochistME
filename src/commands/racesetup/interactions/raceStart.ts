@@ -6,7 +6,7 @@ import {
   APIEmbed,
   APIEmbedField,
 } from "discord.js";
-import { getErrorEmbed, getSuccessEmbed, log } from "arcybot";
+import { getErrorEmbed, getInfoEmbed, getSuccessEmbed, log } from "arcybot";
 import { Race, RaceType, RaceScoreBased } from "@masochistme/sdk/dist/v1/types";
 
 import { bot, sdk } from "fetus";
@@ -40,6 +40,13 @@ export const raceReadyToGo = async (raceId: string): Promise<void> => {
       },
     ];
     log.INFO("Preparing to inform race participants about race starting...");
+    getModChannel()?.send(
+      getInfoEmbed(
+        `${race.name.toUpperCase()} - RACE STARTED`,
+        `Race successfully started!
+        \nI'm sending DMs to all participants now...`,
+      ),
+    );
     participantsDiscordIds.forEach((userId: string) => {
       bot.botClient.users
         .send(userId, {
@@ -56,7 +63,7 @@ export const raceReadyToGo = async (raceId: string): Promise<void> => {
         .then(() => {
           getModChannel()?.send(
             getSuccessEmbed(
-              "Race starting - broadcast update",
+              `${race.name.toUpperCase()} - PARTICIPANT UPDATED`,
               `Participant <@${userId}> got informed about race starting.`,
             ),
           );
@@ -65,7 +72,7 @@ export const raceReadyToGo = async (raceId: string): Promise<void> => {
         .catch(() => {
           getModChannel()?.send(
             getErrorEmbed(
-              "Race starting - broadcast update",
+              `${race.name.toUpperCase()} - PARTICIPANT NOT UPDATED`,
               `Participant <@${userId}> could not get informed about race starting.`,
             ),
           );
@@ -77,7 +84,7 @@ export const raceReadyToGo = async (raceId: string): Promise<void> => {
   } catch (err: any) {
     getModChannel()?.send(
       getErrorEmbed(
-        "Race starting - broadcast update",
+        `ERROR - RACE STARTING...`,
         err?.error ?? err?.message ?? err ?? "Something went wrong.",
       ),
     );
