@@ -17,3 +17,7 @@ export type Member = WithId<{
 	isProtected: boolean;
 	ranking?: any; // TODO FIX!!!
 }>;
+
+export type MemberIdEither =
+	| { steamId: string; discordId?: never }
+	| { steamId?: never; discordId: string };

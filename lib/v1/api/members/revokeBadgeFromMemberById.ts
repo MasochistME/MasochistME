@@ -1,18 +1,20 @@
 import axios, { AxiosResponse } from 'axios';
 import { DeleteResult } from 'mongodb';
 
-import { ResponseError } from 'v1/types';
+import { MemberIdEither, ResponseError } from 'v1/types';
 
 /**
- * Removes a badge by given badge ID from member by given member ID.
- * @param memberId string - Steam ID of the user
+ * Removes a badge by given badge ID from member by either Steam ID or Discord ID.
  * @param badgeId string
+ * @param steamId string | never
+ * @param discordId string | never
  * @returns DeleteResult<MemberBadge>
  */
 export const revokeBadgeFromMemberById = async (
-	{ memberId, badgeId }: { memberId: string; badgeId: string },
+	{ badgeId, steamId, discordId }: { badgeId: string } & MemberIdEither,
 	BASE_URL: string,
 ): Promise<DeleteResult> => {
+	const memberId = steamId ?? discordId;
 	const url = `${BASE_URL}/members/member/${memberId}/badges/badge/${badgeId}`;
 
 	const memberBadgeResponse = await axios.delete<

@@ -1,19 +1,21 @@
 import { InsertOneResult } from 'mongodb';
 import axios, { AxiosResponse } from 'axios';
 
-import { RacePlayer, ResponseError } from 'v1/types';
+import { MemberIdEither, RacePlayer, ResponseError } from 'v1/types';
 
 /**
  * Signs a user up for participatin in a specific race.
  * @param raceId string
- * @param discordId string
+ * @param steamId string | never
+ * @param discordId string | never
  * @returns InsertOneResult<Race>
  */
 export const joinRaceByParticipantId = async (
-	{ raceId, discordId }: { raceId: string; discordId: string },
+	{ raceId, steamId, discordId }: { raceId: string } & MemberIdEither,
 	BASE_URL: string,
 ): Promise<InsertOneResult<RacePlayer>> => {
-	const url = `${BASE_URL}/races/race/${raceId}/participants/participant/${discordId}`;
+	const memberId = steamId ?? discordId;
+	const url = `${BASE_URL}/races/race/${raceId}/participants/participant/${memberId}`;
 
 	const racePlayerResponse = await axios.post<
 		InsertOneResult<RacePlayer> | ResponseError,

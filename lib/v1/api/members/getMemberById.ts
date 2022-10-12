@@ -1,16 +1,18 @@
 import axios, { AxiosResponse } from 'axios';
 
-import { Member, ResponseError } from 'v1/types';
+import { Member, MemberIdEither, ResponseError } from 'v1/types';
 
 /**
- * Returns a member by given ID, if it exists.
- * @param memberId string
+ * Returns a member by either Steam ID or Discord ID, if it exists.
+ * @param steamId string | never
+ * @param discordId string | never
  * @returns Member
  */
 export const getMemberById = async (
-	{ memberId }: { memberId: string },
+	{ steamId, discordId }: MemberIdEither,
 	BASE_URL: string,
 ): Promise<Member> => {
+	const memberId = steamId ?? discordId;
 	const url = `${BASE_URL}/members/member/${memberId}`;
 
 	const memberResponse = await axios.get<
