@@ -28,7 +28,7 @@ export const getMemberById = async (
 
     client.close();
 
-    if (!memberSteam || !memberDiscord) {
+    if (!memberSteam && !memberDiscord) {
       res.status(404).send({ error: 'Could not find a member with this id.' });
     } else {
       res.status(200).send(memberSteam ?? memberDiscord);

@@ -21,7 +21,7 @@ export const updateMemberById = async (
     const { description } = req.body; // TODO add validation
 
     const response = await collection.updateOne(
-      { steamId: memberId },
+      { discordId: memberId },
       {
         $set: {
           ...(description && { description }),
