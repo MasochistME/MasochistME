@@ -5,11 +5,11 @@ import {
   APIEmbed,
   APIEmbedField,
 } from "discord.js";
-import { getErrorEmbed, DiscordInteraction, log } from "arcybot";
+import { DiscordInteraction } from "arcybot";
 import { Race, RaceScoreBased, RaceType } from "@masochistme/sdk/dist/v1/types";
 
 import { RACE_CONFIRMATION } from "consts";
-import { isLink, getUTCDate } from "utils";
+import { isLink, getUTCDate, createError, ErrorAction } from "utils";
 import { getRace, setDraftRace } from "commands/_utils/race";
 
 import { Options } from "./builder";
@@ -75,8 +75,7 @@ export const racesetup = async (
       components: [getRaceConfirmationButtons()],
     });
   } catch (err: any) {
-    interaction.editReply(getErrorEmbed("Error", "Your command did not work!"));
-    log.WARN(err);
+    createError(interaction, err, ErrorAction.EDIT);
   }
 };
 

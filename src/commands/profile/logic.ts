@@ -1,11 +1,12 @@
 import axios from "axios";
 import { APIEmbed } from "discord.js";
-import { DiscordInteraction, getErrorEmbed, log } from "arcybot";
+import { DiscordInteraction } from "arcybot";
 
 import { API_URL, UNKNOWN, USER_NO_DESCRIPTION } from "consts";
 import { getMemberFromAPI } from "api";
 import { Member } from "types";
 import { cache } from "fetus";
+import { createError, ErrorAction } from "utils";
 
 type PartialMember = Pick<
   Member,
@@ -45,9 +46,7 @@ export const profile = async (
     const embed = getMemberEmbed(usefulMemberInfo);
     interaction.editReply({ embeds: [embed] });
   } catch (err: any) {
-    interaction.editReply(
-      getErrorEmbed("Something went wrong :C", err ?? "Try again later.", true),
-    );
+    createError(interaction, err, ErrorAction.EDIT);
   }
 };
 

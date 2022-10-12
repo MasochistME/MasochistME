@@ -6,12 +6,11 @@ import {
   APIEmbed,
   APIEmbedField,
 } from "discord.js";
-import { getErrorEmbed } from "arcybot";
 import { Race, RaceType, RaceScoreBased } from "@masochistme/sdk/dist/v1/types";
 
 import { sdk } from "fetus";
 import { RaceButton } from "consts";
-import { getUTCDate, cenzor } from "utils";
+import { getUTCDate, cenzor, createError, ErrorAction } from "utils";
 
 /**
  * Message sent to race participant on DM when the race begins.
@@ -22,27 +21,32 @@ export const raceReadyToGo = async (
   interaction: ButtonInteraction,
 ): Promise<void> => {
   if (!interaction.isButton()) return;
-  const raceId = interaction.customId.replace(`${RaceButton.RACE_JOIN}-`, "");
-  const race = await sdk.getRaceById({ raceId });
-  const tempFields = [
-    {
-      name: "---",
-      value: `Your race begins once you click the **REVEAL** button. You have ${race.downloadGrace} seconds to download and set up the game.
+
+  try {
+    const raceId = interaction.customId.replace(`${RaceButton.RACE_JOIN}-`, "");
+    const race = await sdk.getRaceById({ raceId });
+    const tempFields = [
+      {
+        name: "---",
+        value: `Your race begins once you click the **REVEAL** button. You have ${race.downloadGrace} seconds to download and set up the game.
       \n***Remember*** to click the **START** button when you are ready or your race will get forfeited!
       \nGood luck! You can start the race whenever it's convenient for you within the time limit.`,
-    },
-  ];
-  interaction.user.send({
-    embeds: [
-      getRaceStartEmbed(
-        race,
-        `⏳ ${race.name.toUpperCase()} - PREPARING...`,
-        true,
-        tempFields,
-      ),
-    ],
-    components: [getRaceStartButtons(raceId, true, false, false, false)],
-  });
+      },
+    ];
+    interaction.user.send({
+      embeds: [
+        getRaceStartEmbed(
+          race,
+          `⏳ ${race.name.toUpperCase()} - PREPARING...`,
+          true,
+          tempFields,
+        ),
+      ],
+      components: [getRaceStartButtons(raceId, true, false, false, false)],
+    });
+  } catch (err: any) {
+    createError(interaction, err, ErrorAction.REPLY);
+  }
 };
 
 /**
@@ -55,19 +59,26 @@ export const raceReveal = async (
 ): Promise<void> => {
   if (!interaction.isButton()) return;
 
-  const raceId = interaction.customId.replace(`${RaceButton.RACE_REVEAL}-`, "");
-  const race = await sdk.getRaceById({ raceId });
+  try {
+    const raceId = interaction.customId.replace(
+      `${RaceButton.RACE_REVEAL}-`,
+      "",
+    );
+    const race = await sdk.getRaceById({ raceId });
 
-  interaction.update({
-    embeds: [
-      getRaceStartEmbed(
-        race,
-        `⌛ ${race.name.toUpperCase()} - READY TO GO`,
-        false,
-      ),
-    ],
-    components: [getRaceStartButtons(raceId, false, true, false, false)],
-  });
+    interaction.update({
+      embeds: [
+        getRaceStartEmbed(
+          race,
+          `⌛ ${race.name.toUpperCase()} - READY TO GO`,
+          false,
+        ),
+      ],
+      components: [getRaceStartButtons(raceId, false, true, false, false)],
+    });
+  } catch (err: any) {
+    createError(interaction, err, ErrorAction.REPLY);
+  }
 };
 
 /**
@@ -80,11 +91,13 @@ export const raceStart = async (
 ): Promise<void> => {
   if (!interaction.isButton()) return;
 
-  const raceId = interaction.customId.replace(`${RaceButton.RACE_START}-`, "");
-  const race = await sdk.getRaceById({ raceId });
-  const startTime = new Date();
-
   try {
+    const raceId = interaction.customId.replace(
+      `${RaceButton.RACE_START}-`,
+      "",
+    );
+    const race = await sdk.getRaceById({ raceId });
+    const startTime = new Date();
     const { acknowledged } = await sdk.updateRaceByParticipantId({
       raceId,
       discordId: interaction.user.id,
@@ -110,9 +123,7 @@ export const raceStart = async (
       components: [getRaceStartButtons(raceId, false, false, true, true)],
     });
   } catch (err: any) {
-    interaction.reply(
-      getErrorEmbed("Error", err ?? "Something went wrong. Try again later"),
-    );
+    createError(interaction, err, ErrorAction.REPLY);
   }
 };
 
@@ -125,11 +136,14 @@ export const raceFinish = async (
   interaction: ButtonInteraction,
 ): Promise<void> => {
   if (!interaction.isButton()) return;
-  const raceId = interaction.customId.replace(`${RaceButton.RACE_FINISH}-`, "");
-  const race = await sdk.getRaceById({ raceId });
-  const endTime = new Date();
 
   try {
+    const raceId = interaction.customId.replace(
+      `${RaceButton.RACE_FINISH}-`,
+      "",
+    );
+    const race = await sdk.getRaceById({ raceId });
+    const endTime = new Date();
     const { acknowledged } = await sdk.updateRaceByParticipantId({
       raceId,
       discordId: interaction.user.id,
@@ -158,9 +172,7 @@ export const raceFinish = async (
       components: [getRaceStartButtons(raceId, false, false, false, false)],
     });
   } catch (err: any) {
-    interaction.reply(
-      getErrorEmbed("Error", err ?? "Something went wrong. Try again later"),
-    );
+    createError(interaction, err, ErrorAction.REPLY);
   }
 };
 
@@ -173,13 +185,14 @@ export const raceGiveUp = async (
   interaction: ButtonInteraction,
 ): Promise<void> => {
   if (!interaction.isButton()) return;
-  const raceId = interaction.customId.replace(
-    `${RaceButton.RACE_GIVE_UP}-`,
-    "",
-  );
-  const race = await sdk.getRaceById({ raceId });
 
   try {
+    const raceId = interaction.customId.replace(
+      `${RaceButton.RACE_GIVE_UP}-`,
+      "",
+    );
+    const race = await sdk.getRaceById({ raceId });
+
     const { acknowledged } = await sdk.updateRaceByParticipantId({
       raceId,
       discordId: interaction.user.id,
@@ -204,9 +217,7 @@ export const raceGiveUp = async (
       components: [getRaceStartButtons(raceId, false, false, false, false)],
     });
   } catch (err: any) {
-    interaction.reply(
-      getErrorEmbed("Error", err ?? "Something went wrong. Try again later"),
-    );
+    createError(interaction, err, ErrorAction.REPLY);
   }
 };
 

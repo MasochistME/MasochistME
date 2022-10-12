@@ -1,11 +1,7 @@
 import axios from "axios";
-import {
-  getSuccessEmbed,
-  getErrorEmbed,
-  DiscordInteraction,
-  log,
-} from "arcybot";
+import { getSuccessEmbed, DiscordInteraction } from "arcybot";
 
+import { createError, ErrorAction } from "utils";
 import { API_URL } from "consts";
 import { getMemberFromAPI } from "api";
 
@@ -37,6 +33,6 @@ export const setdescription = async (
       ),
     );
   } catch (err: any) {
-    interaction.editReply(getErrorEmbed("Error", err, true));
+    createError(interaction, err, ErrorAction.EDIT);
   }
 };

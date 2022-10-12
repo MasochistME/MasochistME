@@ -1,6 +1,12 @@
 import { DiscordInteraction, getErrorEmbed, getSuccessEmbed } from "arcybot";
 
-import { getChannelById, getOption, isLink } from "utils";
+import {
+  createError,
+  ErrorAction,
+  getChannelById,
+  getOption,
+  isLink,
+} from "utils";
 
 /**
  * Sends a video to the designated channel.
@@ -57,8 +63,6 @@ export const vid = async (interaction: DiscordInteraction): Promise<void> => {
       ),
     );
   } catch (err: any) {
-    interaction.reply(
-      getErrorEmbed("Something fucked up", err.message ?? err, true),
-    );
+    createError(interaction, err, ErrorAction.REPLY);
   }
 };

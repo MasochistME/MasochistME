@@ -1,10 +1,10 @@
-import { getErrorEmbed, DiscordInteraction, log, getInfoEmbed } from "arcybot";
+import { DiscordInteraction, getInfoEmbed } from "arcybot";
 import { Race, RaceType, RaceScoreBased } from "@masochistme/sdk/dist/v1/types";
 import { APIEmbed, APIEmbedField } from "discord.js";
 import dayjs from "dayjs";
 
 import { sdk } from "fetus";
-import { getUTCDate } from "utils";
+import { createError, ErrorAction, getUTCDate } from "utils";
 
 /**
  * Displays info about an ongoing or soon starting race, if it exists.
@@ -26,9 +26,8 @@ export const race = async (interaction: DiscordInteraction): Promise<void> => {
     } else {
       interaction.editReply({ embeds: [getActiveRaceEmbed(activeRaces[0])] });
     }
-  } catch (error: any) {
-    interaction.editReply(getErrorEmbed("Error", error.message ?? "qq sob"));
-    log.WARN(error.message);
+  } catch (err: any) {
+    createError(interaction, err, ErrorAction.EDIT);
   }
 };
 

@@ -1,11 +1,7 @@
-import {
-  DiscordInteraction,
-  getErrorEmbed,
-  getAwaitEmbed,
-  getSuccessEmbed,
-} from "arcybot";
+import { DiscordInteraction, getAwaitEmbed, getSuccessEmbed } from "arcybot";
 
 import { bot, cache } from "fetus";
+import { createError, ErrorAction } from "utils";
 
 /**
  * Sends a meme to the channel.
@@ -37,6 +33,6 @@ export const update = async (
       ),
     );
   } catch (err: any) {
-    interaction.editReply(getErrorEmbed("Could not update cache", err));
+    createError(interaction, err, ErrorAction.REPLY);
   }
 };

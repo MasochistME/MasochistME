@@ -1,8 +1,12 @@
-import axios from "axios";
-import { getErrorEmbed, getSuccessEmbed, DiscordInteraction } from "arcybot";
+import { getSuccessEmbed, DiscordInteraction } from "arcybot";
 
-import { getBadgeNameById, getMemberNameById } from "utils";
-import { API_URL } from "consts";
+import {
+  createError,
+  ErrorAction,
+  getBadgeNameById,
+  getMemberNameById,
+} from "utils";
+import { sdk } from "fetus";
 
 /**
  * Gives a badge to a user with given id.
@@ -15,36 +19,26 @@ export const badgegive = async (
   if (interaction.isAutocomplete()) return;
   await interaction.deferReply();
 
-  const badgeId = interaction.options.getString("badge");
-  const memberId = interaction.options.getString("member");
-
-  const url = `${API_URL}/badges/badge/${badgeId}/user/${memberId}`;
+  const badgeId = interaction.options.getString("badge", true);
+  const memberId = interaction.options.getString("member", true);
 
   try {
-    const badgeRes = await axios.put(url);
-    if (badgeRes.status === 200)
-      interaction.editReply(
-        getSuccessEmbed(
-          "Badge given!",
-          `Member **${getMemberNameById(
-            memberId,
-          ).toUpperCase()}** now has badge **${getBadgeNameById(
-            badgeId,
-          ).toUpperCase()}**!`,
-        ),
+    const response = await sdk.giveBadgeToMemberById({ memberId, badgeId });
+    if (!response.acknowledged)
+      throw new Error(
+        "Could not give the badge to the member, please try again later.",
       );
-    else throw badgeRes.data;
-  } catch (err: any) {
     interaction.editReply(
-      getErrorEmbed(
-        `Error giving badge **${getBadgeNameById(
-          badgeId,
-        ).toUpperCase()}** to the user **${getMemberNameById(
+      getSuccessEmbed(
+        "Badge given!",
+        `Member **${getMemberNameById(
           memberId,
-        ).toUpperCase()}**.`,
-        err,
-        true,
+        ).toUpperCase()}** now has badge **${getBadgeNameById(
+          badgeId,
+        ).toUpperCase()}**!`,
       ),
     );
+  } catch (err: any) {
+    createError(interaction, err, ErrorAction.EDIT);
   }
 };
