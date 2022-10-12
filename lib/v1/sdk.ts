@@ -31,12 +31,6 @@ import {
 	updateBadgeById,
 	deleteBadgeById,
 } from 'v1/api/badges';
-import {
-	getMemeList,
-	getRandomMeme,
-	createMeme,
-	deleteMeme,
-} from 'v1/api/memes';
 
 export type Config = {
 	host: string; // for example localhost:3000
@@ -150,15 +144,4 @@ export class SDK {
 	>(
 		args: Head<T>,
 	) => updateRaceByParticipantId(args, this.BASE_URL);
-
-	/*********************
-	 *       MEMES       *
-	 *********************/
-
-	public getMemeList = () => getMemeList(this.BASE_URL);
-	public getRandomMeme = () => getRandomMeme(this.BASE_URL);
-	public createMeme = <T extends typeof createMeme>(args: Head<T>) =>
-		createMeme(args, this.BASE_URL);
-	public deleteMeme = <T extends typeof deleteMeme>(args: Head<T>) =>
-		deleteMeme(args, this.BASE_URL);
 }
