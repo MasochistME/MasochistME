@@ -19,16 +19,19 @@ export const getMemberById = async (
     const collection = db.collection<Member>('members');
     const { memberId } = req.params;
 
-    const member: Member | null = await collection.findOne({
+    const memberSteam: Member | null = await collection.findOne({
       steamId: memberId,
+    });
+    const memberDiscord: Member | null = await collection.findOne({
+      discordId: memberId,
     });
 
     client.close();
 
-    if (!member) {
+    if (!memberSteam || !memberDiscord) {
       res.status(404).send({ error: 'Could not find a member with this id.' });
     } else {
-      res.status(200).send(member);
+      res.status(200).send(memberSteam ?? memberDiscord);
     }
   } catch (err: any) {
     log.WARN(err);

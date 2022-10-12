@@ -1,25 +1,7 @@
 import express from 'express';
 export const routerV1 = express.Router();
 
-import {
-  createRace,
-  getRaceById,
-  updateRaceById,
-  deleteRaceById,
-  getRaceList,
-  getActiveRace,
-  getRaceParticipantById,
-  joinRaceByParticipantId,
-  updateRaceByParticipantId,
-  getRaceParticipantsList,
-} from './race';
-import {
-  getBadgesList,
-  createBadge,
-  getBadgeById,
-  updateBadgeById,
-  deleteBadgeById,
-} from './badges';
+import { getGamesList, getBadgesByGameId } from './games';
 import {
   getMembersList,
   getMemberById,
@@ -28,7 +10,27 @@ import {
   giveBadgeToMemberById,
   revokeBadgeFromMemberById,
 } from './members';
-import { getGamesList, getBadgesByGameId } from './games';
+import {
+  createRace,
+  getRaceById,
+  updateRaceById,
+  deleteRaceById,
+  getRaceList,
+  getActiveRace,
+} from './race';
+import {
+  getRaceParticipantById,
+  joinRaceByParticipantId,
+  updateRaceByParticipantId,
+  getRaceParticipantsList,
+} from './racePlayers';
+import {
+  getBadgesList,
+  createBadge,
+  getBadgeById,
+  updateBadgeById,
+  deleteBadgeById,
+} from './badges';
 
 /***************************
  *         MEMBERS         *
