@@ -9,12 +9,12 @@ import { Tier, ResponseError } from 'v1/types';
 export const getTiersList = async (BASE_URL: string): Promise<Tier[]> => {
 	const url = `${BASE_URL}/tiers/list`;
 
-	const raceResponse = await axios.get<
+	const tierResponse = await axios.get<
 		Tier[] | ResponseError,
 		AxiosResponse<Tier[] | ResponseError>
 	>(url, { validateStatus: () => true });
 
-	const { status, data } = raceResponse;
+	const { status, data } = tierResponse;
 
 	if (status !== 200) throw new Error((data as ResponseError).error);
 	return data as Tier[];
