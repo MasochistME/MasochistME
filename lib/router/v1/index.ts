@@ -21,10 +21,12 @@ import {
   deleteBadgeById,
 } from './badges';
 import {
+  getMemberById,
+  updateMemberById,
   getMemberBadgeList,
   giveBadgeToMemberById,
   revokeBadgeFromMemberById,
-} from './memberBadges';
+} from './members';
 import { getBadgesByGameId } from './games';
 
 /**
@@ -35,6 +37,8 @@ import { getBadgesByGameId } from './games';
  *         MEMBERS         *
  ***************************/
 
+routerV1.get('/members/member/:memberId', getMemberById);
+routerV1.put('/members/member/:memberId', updateMemberById);
 routerV1.get('/members/member/:memberId/badges/list', getMemberBadgeList);
 routerV1.post(
   '/members/member/:memberId/badges/badge/:badgeId',
