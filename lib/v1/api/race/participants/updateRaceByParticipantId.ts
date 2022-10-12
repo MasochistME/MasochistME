@@ -25,7 +25,7 @@ export const updateRaceByParticipantId = async (
 	},
 	BASE_URL: string,
 ): Promise<UpdateResult> => {
-	const url = `${BASE_URL}/race/${raceId}/participant/${discordId}`;
+	const url = `${BASE_URL}/races/race/${raceId}/participants/participant/${discordId}`;
 
 	const racePlayerResponse = await axios.put<
 		UpdateResult | ResponseError,

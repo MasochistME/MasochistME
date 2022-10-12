@@ -13,7 +13,7 @@ export const joinRaceByParticipantId = async (
 	{ raceId, discordId }: { raceId: string; discordId: string },
 	BASE_URL: string,
 ): Promise<InsertOneResult<RacePlayer>> => {
-	const url = `${BASE_URL}/race/${raceId}/participant/${discordId}`;
+	const url = `${BASE_URL}/races/race/${raceId}/participants/participant/${discordId}`;
 
 	const racePlayerResponse = await axios.post<
 		InsertOneResult<RacePlayer> | ResponseError,

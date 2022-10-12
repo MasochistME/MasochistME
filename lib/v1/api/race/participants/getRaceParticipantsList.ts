@@ -11,7 +11,7 @@ export const getRaceParticipantsList = async (
 	{ raceId }: { raceId: string },
 	BASE_URL: string,
 ): Promise<RacePlayer[]> => {
-	const url = `${BASE_URL}/race/${raceId}/participants/list`;
+	const url = `${BASE_URL}/races/race/${raceId}/participants/list`;
 
 	const racePlayerResponse = await axios.get<
 		RacePlayer[] | ResponseError,

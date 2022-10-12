@@ -4,14 +4,14 @@ import { Race, ResponseError } from 'v1/types';
 
 /**
  * Returns a race fron the database given the id, if it exists.
- * @param id string
+ * @param raceId string
  * @returns Race
  */
 export const getRaceById = async (
-	{ id }: { id: string },
+	{ raceId }: { raceId: string },
 	BASE_URL: string,
 ): Promise<Race> => {
-	const url = `${BASE_URL}/race/id/${id}`;
+	const url = `${BASE_URL}/races/race/${raceId}`;
 
 	const raceResponse = await axios.get<
 		Race | ResponseError,

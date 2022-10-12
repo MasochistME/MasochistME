@@ -11,7 +11,7 @@ export const getBadgesByGameId = async (
 	{ gameId }: { gameId: string },
 	BASE_URL: string,
 ): Promise<Badge[]> => {
-	const url = `${BASE_URL}/game/${gameId}/badges/list`;
+	const url = `${BASE_URL}/games/game/${gameId}/badges/list`;
 
 	const badgeResponse = await axios.get<
 		Badge[] | ResponseError,

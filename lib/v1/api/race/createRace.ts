@@ -12,7 +12,7 @@ export const createRace = async (
 	{ race }: { race: Omit<Race, '_id'> },
 	BASE_URL: string,
 ): Promise<InsertOneResult<Race>> => {
-	const url = `${BASE_URL}/race`;
+	const url = `${BASE_URL}/races`;
 
 	const raceResponse = await axios.post<
 		InsertOneResult<Race> | ResponseError,

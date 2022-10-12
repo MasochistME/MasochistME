@@ -7,7 +7,7 @@ import { Race, ResponseError } from 'v1/types';
  * @returns Race[]
  */
 export const getActiveRace = async (BASE_URL: string): Promise<Race[]> => {
-	const url = `${BASE_URL}/race/active`;
+	const url = `${BASE_URL}/races/active`;
 
 	const raceResponse = await axios.get<
 		Race[] | ResponseError,
