@@ -12,6 +12,19 @@ import {
 	joinRaceByParticipantId,
 	updateRaceByParticipantId,
 } from 'v1/api/race';
+import { getBadgesByGameId } from 'v1/api/games';
+import {
+	getBadgesList,
+	createBadge,
+	getBadgeById,
+	updateBadgeById,
+	deleteBadgeById,
+} from 'v1/api/badges';
+import {
+	getMemberBadgeList,
+	giveBadgeToMemberById,
+	revokeBadgeFromMemberById,
+} from 'v1/api/memberBadges';
 
 export type Config = {
 	host: string; // for example localhost:3000
@@ -35,6 +48,44 @@ export class SDK {
 			throw new Error('Authorization token is required.');
 		}
 	}
+
+	/*************************
+	 *         GAMES         *
+	 *************************/
+
+	public getBadgesByGameId = <T extends typeof getBadgesByGameId>(
+		args: Head<T>,
+	) => getBadgesByGameId(args, this.BASE_URL);
+
+	/**************************
+	 *         BADGES         *
+	 **************************/
+
+	public getBadgesList = () => getBadgesList(this.BASE_URL);
+	public createBadge = <T extends typeof createBadge>(args: Head<T>) =>
+		createBadge(args, this.BASE_URL);
+	public getBadgeById = <T extends typeof getBadgeById>(args: Head<T>) =>
+		getBadgeById(args, this.BASE_URL);
+	public updateBadgeById = <T extends typeof updateBadgeById>(args: Head<T>) =>
+		updateBadgeById(args, this.BASE_URL);
+	public deleteBadgeById = <T extends typeof deleteBadgeById>(args: Head<T>) =>
+		deleteBadgeById(args, this.BASE_URL);
+
+	/*********************************
+	 *         MEMBER BADGES         *
+	 *********************************/
+
+	public getMemberBadgeList = <T extends typeof getMemberBadgeList>(
+		args: Head<T>,
+	) => getMemberBadgeList(args, this.BASE_URL);
+	public giveBadgeToMemberById = <T extends typeof giveBadgeToMemberById>(
+		args: Head<T>,
+	) => giveBadgeToMemberById(args, this.BASE_URL);
+	public revokeBadgeFromMemberById = <
+		T extends typeof revokeBadgeFromMemberById,
+	>(
+		args: Head<T>,
+	) => revokeBadgeFromMemberById(args, this.BASE_URL);
 
 	/*********************
 	 *       RACES       *
