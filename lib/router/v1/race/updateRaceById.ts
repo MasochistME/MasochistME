@@ -39,7 +39,7 @@ export const updateRaceById = async (
           ...(downloadGrace && { downloadGrace: Number(downloadGrace) }),
           ...(uploadGrace && { uploadGrace: Number(uploadGrace) }),
           ...(icon && { icon }),
-          ...(isActive && { isActive: Boolean(isActive) }),
+          ...(isActive !== undefined && { isActive: Boolean(isActive) }),
         },
       },
     );
