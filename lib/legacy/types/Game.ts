@@ -14,7 +14,7 @@ export type Game = WithId<{
 	img: string; // URL of the image.
 	achievements: GameAchievements;
 	url: string; // URL to the game's Steam website.
-	sale: GameAchievements;
+	sale: GameSale;
 	curated: boolean; // Indicates i the game is currently being curated on Masochist.ME Steam curator.
 	protected: boolean; // If true, removing the game from curator does not remove it from Masochist.ME website.
 }>;
