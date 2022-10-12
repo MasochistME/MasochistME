@@ -21,22 +21,20 @@ import {
   deleteBadgeById,
 } from './badges';
 import {
+  getMembersList,
   getMemberById,
   updateMemberById,
   getMemberBadgeList,
   giveBadgeToMemberById,
   revokeBadgeFromMemberById,
 } from './members';
-import { getBadgesByGameId } from './games';
-
-/**
- * masochist-api v1
- */
+import { getGamesList, getBadgesByGameId } from './games';
 
 /***************************
  *         MEMBERS         *
  ***************************/
 
+routerV1.get('/members/list', getMembersList);
 routerV1.get('/members/member/:memberId', getMemberById);
 routerV1.put('/members/member/:memberId', updateMemberById);
 routerV1.get('/members/member/:memberId/badges/list', getMemberBadgeList);
@@ -53,6 +51,7 @@ routerV1.delete(
  *         GAMES         *
  *************************/
 
+routerV1.get('/games/list', getGamesList);
 routerV1.get('/games/game/:gameId/badges/list', getBadgesByGameId);
 
 /**************************
