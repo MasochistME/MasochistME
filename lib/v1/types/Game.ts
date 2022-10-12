@@ -1,5 +1,7 @@
 import { WithId } from 'mongodb';
 
+import { TierId } from 'legacy/types';
+
 /**
  * This is a type of a single object within the collection "games".
  * A single object describes a single game.
@@ -26,6 +28,3 @@ export type GameAchievements = {
 	total: number; // A total number of achievements that the game has.
 	list: []; // Currently this field is always an empty array.
 };
-
-// TODO this is temp
-export type TierId = '1' | '2' | '3' | '4' | '5';
