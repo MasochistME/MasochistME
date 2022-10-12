@@ -21,10 +21,12 @@ import {
 	deleteBadgeById,
 } from 'v1/api/badges';
 import {
+	getMemberById,
+	updateMemberById,
 	getMemberBadgeList,
 	giveBadgeToMemberById,
 	revokeBadgeFromMemberById,
-} from 'v1/api/memberBadges';
+} from 'v1/api/members';
 
 export type Config = {
 	host: string; // for example localhost:3000
@@ -48,6 +50,15 @@ export class SDK {
 			throw new Error('Authorization token is required.');
 		}
 	}
+	/*********************************
+	 *         MEMBERS         *
+	 *********************************/
+	public getMemberById = <T extends typeof getMemberById>(args: Head<T>) =>
+		getMemberById(args, this.BASE_URL);
+
+	public updateMemberById = <T extends typeof updateMemberById>(
+		args: Head<T>,
+	) => updateMemberById(args, this.BASE_URL);
 
 	/*************************
 	 *         GAMES         *
