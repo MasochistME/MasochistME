@@ -135,6 +135,7 @@ export const getRace = (
     uploadGrace: raceData.uploadGrace,
     organizer: interaction.user.id,
     isActive: false,
+    season: raceData.season,
     ...(raceData.icon && { icon: raceData.icon }),
     ...(raceData.playLimit && { playLimit: raceData.playLimit }),
   };

@@ -19,6 +19,7 @@ import {
   errorNegativeTimers,
   errorWrongDownloadLink,
 } from "./errors";
+import { sdk } from "fetus";
 
 export type RaceData = {
   name: string;
@@ -29,6 +30,7 @@ export type RaceData = {
   downloadLink: string;
   downloadGrace: number;
   uploadGrace: number;
+  season: string | null;
   playLimit: number | null;
   icon?: string;
 };
@@ -51,6 +53,7 @@ export const racesetup = async (
     uploadGrace: interaction.options.getNumber(Options.UPLOAD_GRACE, true),
     playLimit: interaction.options.getNumber(Options.PLAY_LIMIT),
     icon: interaction.options.getAttachment(Options.ICON)?.url,
+    season: null,
   };
 
   if (raceData.startsIn + raceData.endsAfter <= 0)
@@ -69,7 +72,11 @@ export const racesetup = async (
   const race = getRace(interaction, raceData);
 
   try {
-    setDraftRace(race);
+    const activeSeason = await sdk.getActiveSeason();
+    setDraftRace({
+      ...race,
+      season: String(activeSeason._id) ?? null, // TODO omit this field if the race is "special"
+    });
     interaction.reply({
       embeds: [getRaceConfirmationEmbed(race)],
       components: [getRaceConfirmationButtons()],
