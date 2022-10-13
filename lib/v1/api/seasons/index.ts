@@ -3,3 +3,4 @@ export { updateSeasonById } from './updateSeasonById';
 export { startSeasonById } from './startSeasonById';
 export { endActiveSeason } from './endActiveSeason';
 export { getActiveSeason } from './getActiveSeason';
+export { getSeasonsList } from './getSeasonsList';
