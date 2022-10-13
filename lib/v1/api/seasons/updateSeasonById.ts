@@ -6,14 +6,17 @@ import { Season, ResponseError } from 'v1/types';
 /**
  * Updates a season by updating the fields that the user had passed.
  * @param seasonId string
- * @param season Partial<Omit<Season, '_id'>>
+ * @param season Pick<Season, 'name' | 'description' | 'icon'>
  * @returns UpdateResult
  */
 export const updateSeasonById = async (
 	{
 		seasonId,
 		season,
-	}: { seasonId: string; season: Partial<Omit<Season, '_id'>> },
+	}: {
+		seasonId: string;
+		season: Pick<Season, 'name' | 'description' | 'icon'>;
+	},
 	BASE_URL: string,
 ): Promise<UpdateResult> => {
 	const url = `${BASE_URL}/seasons/season/${seasonId}`;
@@ -21,7 +24,7 @@ export const updateSeasonById = async (
 	const seasonResponse = await axios.put<
 		UpdateResult | ResponseError,
 		AxiosResponse<UpdateResult | ResponseError>,
-		Partial<Omit<Season, '_id'>>
+		Pick<Season, 'name' | 'description' | 'icon'>
 	>(url, season, { validateStatus: () => true });
 
 	const { status, data } = seasonResponse;
