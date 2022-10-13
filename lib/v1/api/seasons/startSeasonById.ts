@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { UpdateResult } from 'mongodb';
 
-import { Season, ResponseError } from 'v1/types';
+import { ResponseError } from 'v1/types';
 
 /**
  * Starts a new season. User must pass an ID of an already created race.
@@ -16,9 +16,8 @@ export const startSeasonById = async (
 
 	const seasonResponse = await axios.post<
 		UpdateResult | ResponseError,
-		AxiosResponse<UpdateResult | ResponseError>,
-		Pick<Season, 'startDate'>
-	>(url, { startDate: new Date() }, { validateStatus: () => true });
+		AxiosResponse<UpdateResult | ResponseError>
+	>(url, {}, { validateStatus: () => true });
 
 	const { status, data } = seasonResponse;
 
