@@ -6,7 +6,7 @@ import { createError, ErrorAction } from "utils";
 /**
  * Sends a meme to the channel.
  * @param interaction DiscordInteraction
- * @returns void
+ * @return void
  */
 export const update = async (
   interaction: DiscordInteraction,

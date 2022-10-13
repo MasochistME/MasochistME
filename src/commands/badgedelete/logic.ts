@@ -6,7 +6,7 @@ import { createError, ErrorAction, getBadgeNameById } from "utils";
 /**
  * Removes an existing badge.
  * @param interaction DiscordInteraction
- * @returns void
+ * @return void
  */
 export const badgedelete = async (
   interaction: DiscordInteraction,

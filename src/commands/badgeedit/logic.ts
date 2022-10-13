@@ -6,7 +6,7 @@ import { sdk } from "fetus";
 /**
  * Edits an existing badge.
  * @param interaction DiscordInteraction
- * @returns void
+ * @return void
  */
 export const badgeedit = async (
   interaction: DiscordInteraction,

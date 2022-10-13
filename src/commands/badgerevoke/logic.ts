@@ -11,7 +11,7 @@ import { sdk } from "fetus";
 /**
  * Removes a badge from a user with given id.
  * @param interaction DiscordInteraction
- * @returns void
+ * @return void
  */
 export const badgerevoke = async (
   interaction: DiscordInteraction,

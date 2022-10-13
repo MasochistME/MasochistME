@@ -6,7 +6,7 @@ import { getOption } from "utils";
 /**
  * Checks if the passed string is a link (starts with http).
  * @param supposedLink string
- * @returns boolean
+ * @return boolean
  */
 export const isLink = (supposedLink: string): boolean =>
   supposedLink.startsWith("http");
@@ -14,7 +14,7 @@ export const isLink = (supposedLink: string): boolean =>
 /**
  * Checks if the user interacting with command interface has the Mod role.
  * @param interaction DiscordInteraction | ButtonInteraction
- * @returns boolean
+ * @return boolean
  */
 export const isMod = (interaction: DiscordInteraction | ButtonInteraction) => {
   const modRole = getOption("modRole");
@@ -30,7 +30,7 @@ export const isMod = (interaction: DiscordInteraction | ButtonInteraction) => {
 /**
  * Returns the cenzored version of a string.
  * @param text string
- * @returns string
+ * @return string
  */
 export const cenzor = (text: string) => {
   return Array(text.length).fill("█").join("");

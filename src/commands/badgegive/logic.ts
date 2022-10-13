@@ -11,7 +11,7 @@ import { sdk } from "fetus";
 /**
  * Gives a badge to a user with given id.
  * @param interaction DiscordInteraction
- * @returns void
+ * @return void
  */
 export const badgegive = async (
   interaction: DiscordInteraction,

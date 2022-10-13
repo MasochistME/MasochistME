@@ -16,7 +16,7 @@ export enum Options {
 /**
  * Returns a bunch of common REQUIRED options shared between time-based and score-based races.
  * @param subcommand SlashCommandSubcommandBuilder
- * @returns SlashCommandSubcommandBuilder
+ * @return SlashCommandSubcommandBuilder
  */
 const getCommonRequiredOptionsRaceSetup = (
   subcommand: SlashCommandSubcommandBuilder,
@@ -79,7 +79,7 @@ const getCommonRequiredOptionsRaceSetup = (
 /**
  * Returns a bunch of common OPTIONAL options shared between time-based and score-based races.
  * @param subcommand SlashCommandSubcommandBuilder
- * @returns SlashCommandSubcommandBuilder
+ * @return SlashCommandSubcommandBuilder
  */
 const getCommonOptionalOptionsRaceSetup = (
   subcommand: SlashCommandSubcommandBuilder,

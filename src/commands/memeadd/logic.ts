@@ -6,7 +6,7 @@ import { createError, ErrorAction } from "utils";
 /**
  * Adds a new meme to the database.
  * @param interaction DiscordInteraction
- * @returns void
+ * @return void
  */
 export const memeadd = async (
   interaction: DiscordInteraction,

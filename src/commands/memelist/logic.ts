@@ -6,7 +6,7 @@ import { getMemesFromAPI } from "api";
 /**
  * Shows a full list of all the memes.
  * @param interaction DiscordInteraction
- * @returns void
+ * @return void
  */
 export const memelist = async (
   interaction: DiscordInteraction,

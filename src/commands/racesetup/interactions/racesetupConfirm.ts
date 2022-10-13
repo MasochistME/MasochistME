@@ -14,7 +14,7 @@ export const draftRaceData: { race?: Race } = {};
 /**
  * Handles buttons for the "racesetup" command.
  * @param interaction
- * @returns void
+ * @return void
  */
 export const racesetupConfirm = async (
   interaction: ButtonInteraction,

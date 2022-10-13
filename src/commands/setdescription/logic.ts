@@ -6,7 +6,7 @@ import { createError, ErrorAction } from "utils";
 /**
  * Allows the user to set a custom description on their Masochist.ME profile.
  * @param interaction DiscordInteraction
- * @returns void
+ * @return void
  */
 export const setdescription = async (
   interaction: DiscordInteraction,

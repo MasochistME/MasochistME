@@ -9,7 +9,7 @@ import { createError, ErrorAction, getUTCDate } from "utils";
 /**
  * Displays info about an ongoing or soon starting race, if it exists.
  * @param interaction DiscordInteraction
- * @returns void
+ * @return void
  */
 export const race = async (interaction: DiscordInteraction): Promise<void> => {
   await interaction.deferReply();
@@ -34,7 +34,7 @@ export const race = async (interaction: DiscordInteraction): Promise<void> => {
 /**
  * Creates an embed for the active race
  * @param activeRace Race
- * @returns APIEmbed
+ * @return APIEmbed
  */
 const getActiveRaceEmbed = (activeRace: Race): APIEmbed => {
   const isOngoing =

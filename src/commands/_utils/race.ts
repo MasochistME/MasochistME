@@ -36,7 +36,7 @@ export const handleRaceTimer = async () => {
 /**
  * Opens an inactive race if the time is up.
  * @param race Race
- * @returns void
+ * @return void
  */
 const handleRaceStart = async (race: Race) => {
   const { name, startTime, endTime, isActive, _id } = race;
@@ -65,7 +65,7 @@ const handleRaceStart = async (race: Race) => {
 /**
  * Expires an active race if the time is up.
  * @param race Race
- * @returns void
+ * @return void
  */
 const handleRaceFinish = async (race: Race) => {
   const { name, startTime, endTime, isActive, _id } = race;
@@ -107,7 +107,7 @@ export const setDraftRace = (race?: Omit<Race, "_id">) => {
 
 /**
  * Returns draft race if it exists, or null if it does not.
- * @returns Omit<Race, "_id"> | null
+ * @return Omit<Race, "_id"> | null
  */
 export const getDraftRace = (): Omit<Race, "_id"> | null => {
   return draftRace.race;
@@ -117,7 +117,7 @@ export const getDraftRace = (): Omit<Race, "_id"> | null => {
  *
  * @param interaction DiscordInteraction
  * @param raceData RaceData
- * @returns Omit<Race, "_id">
+ * @return Omit<Race, "_id">
  */
 export const getRace = (
   interaction: DiscordInteraction,

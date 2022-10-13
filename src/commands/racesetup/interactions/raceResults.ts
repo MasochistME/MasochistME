@@ -6,7 +6,7 @@ import { getModChannel } from "utils";
 /**
  * Aggregates and sends the results after race finish.
  * @param raceId string
- * @returns void
+ * @return void
  */
 export const raceResults = async (raceId: string): Promise<void> => {
   try {

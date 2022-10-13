@@ -22,7 +22,7 @@ import {
 /**
  * Message sent to race participant on DM when the race begins.
  * @param raceId string
- * @returns void
+ * @return void
  */
 export const raceReadyToGo = async (raceId: string): Promise<void> => {
   try {
@@ -96,7 +96,7 @@ export const raceReadyToGo = async (raceId: string): Promise<void> => {
 /**
  * Handles situation where member joins the race after it already started.
  * @param interaction ButtonInteraction
- * @returns void
+ * @return void
  */
 export const raceJoinAfterStart = async (
   interaction: ButtonInteraction,
@@ -133,7 +133,7 @@ export const raceJoinAfterStart = async (
 /**
  * Response to race participant clicking the REVEAL button.
  * @param interaction ButtonInteraction
- * @returns void
+ * @return void
  */
 export const raceReveal = async (
   interaction: ButtonInteraction,
@@ -165,7 +165,7 @@ export const raceReveal = async (
 /**
  * Response to race participant clicking the START button.
  * @param interaction ButtonInteraction
- * @returns void
+ * @return void
  */
 export const raceStart = async (
   interaction: ButtonInteraction,
@@ -211,7 +211,7 @@ export const raceStart = async (
 /**
  * Response to race participant clicking the FINISH button.
  * @param interaction
- * @returns void
+ * @return void
  */
 export const raceFinish = async (
   interaction: ButtonInteraction,
@@ -260,7 +260,7 @@ export const raceFinish = async (
 /**
  * Response to race participant clicking the GIVE UP button.
  * @param interaction
- * @returns void
+ * @return void
  */
 export const raceGiveUp = async (
   interaction: ButtonInteraction,
@@ -306,7 +306,7 @@ export const raceGiveUp = async (
  * Creates a row of buttons for the user to manage their race.
  * @param raceId string
  * @param canFinish boolean
- * @returns ActionRowBuilder<ButtonBuilder>
+ * @return ActionRowBuilder<ButtonBuilder>
  */
 const getRaceStartButtons = (
   raceId: string,
@@ -354,7 +354,7 @@ const getRaceStartButtons = (
  * Creates an embed for user to start and finish the race
  * @param race Race
  * @param isCenzored boolean
- * @returns APIEmbed
+ * @return APIEmbed
  */
 const getRaceStartEmbed = (
   race: Race,

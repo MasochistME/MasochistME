@@ -8,7 +8,7 @@ import { API_URL, REGISTRATION_REVIEW } from "consts";
 /**
  * Handles autocompletion for the create badge command
  * @param interaction
- * @returns void
+ * @return void
  */
 export const registrationReview = async (
   interaction: ButtonInteraction,
@@ -89,7 +89,7 @@ const connectDiscordUserToSteam = async (
  * @param interaction ButtonInteraction
  * @param user string - user's Discord mention string
  * @param steamId string - user's Steam ID
- * @returns APIEmbed
+ * @return APIEmbed
  */
 const getApplicationReviewedEmbed = (
   interaction: ButtonInteraction,

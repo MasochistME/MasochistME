@@ -35,7 +35,7 @@ export type RaceData = {
 /**
  * Describe your "racesetup" command here.
  * @param interaction DiscordInteraction
- * @returns void
+ * @return void
  */
 export const racesetup = async (
   interaction: DiscordInteraction,
@@ -81,7 +81,7 @@ export const racesetup = async (
 
 /**
  * Creates a row of buttons - confirm and reject - for the confirmation of new race
- * @returns ActionRowBuilder<ButtonBuilder>
+ * @return ActionRowBuilder<ButtonBuilder>
  */
 const getRaceConfirmationButtons = () => {
   const buttonConfirm = new ButtonBuilder()
@@ -103,7 +103,7 @@ const getRaceConfirmationButtons = () => {
 /**
  * Creates an embed for the race review before starting
  * @param interaction DiscordInteraction
- * @returns APIEmbed
+ * @return APIEmbed
  */
 const getRaceConfirmationEmbed = (race: Omit<Race, "_id">) => {
   const fields: APIEmbedField[] = [

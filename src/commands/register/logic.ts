@@ -13,7 +13,7 @@ import { getChannelById, getMemberNameById, getOption } from "utils";
  * Allows user to sent their MasochistME link for the mod approval
  * and connection of MasochistME profile to Discord profile
  * @param interaction DiscordInteraction
- * @returns void
+ * @return void
  */
 export const register = async (
   interaction: DiscordInteraction,
@@ -54,7 +54,7 @@ export const register = async (
 
 /**
  * Creates a row of buttons - approve and reject - for the mod review of user registration
- * @returns ActionRowBuilder<ButtonBuilder>
+ * @return ActionRowBuilder<ButtonBuilder>
  */
 const getModApprovalButtons = () => {
   const buttonApprove = new ButtonBuilder()
@@ -77,7 +77,7 @@ const getModApprovalButtons = () => {
  * Creates an embed for the mod review of user registration
  * @param interaction DiscordInteraction
  * @param steamId string - user's Steam ID
- * @returns APIEmbed
+ * @return APIEmbed
  */
 const getModApprovalEmbed = (
   interaction: DiscordInteraction,

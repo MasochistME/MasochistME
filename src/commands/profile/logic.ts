@@ -56,7 +56,7 @@ export const profile = async (
  * Creates an embed for the mod review of user registration
  * @param interaction DiscordInteraction
  * @param steamId string - user's Steam ID
- * @returns APIEmbed
+ * @return APIEmbed
  */
 const getMemberEmbed = (member: PartialMember) => {
   const embed: APIEmbed = {
@@ -101,7 +101,7 @@ const getMemberEmbed = (member: PartialMember) => {
 /**
  * Returns member's MasochistME rank.
  * @param member Member
- * @returns string
+ * @return string
  */
 const getMemberRank = (member: Member, fullRanking: any) => {
   const memberRanking =
@@ -120,7 +120,7 @@ const getMemberRank = (member: Member, fullRanking: any) => {
 /**
  * Returns the summary of member's tier completion statistics.
  * @param member Member
- * @returns string
+ * @return string
  */
 const getMemberTierCompletion = (member: Member) => {
   const memberTierCompletionSummary = cache.tiers
@@ -135,7 +135,7 @@ const getMemberTierCompletion = (member: Member) => {
 /**
  * Returns a number of badges that the member earned.
  * @param member Member
- * @returns string
+ * @return string
  */
 const getMemberBadges = (member: Member, fullRanking: any) => {
   const memberBadges =

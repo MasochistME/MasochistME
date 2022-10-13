@@ -9,7 +9,7 @@ import { Options } from "./builder";
 /**
  * Describe your "template" command here.
  * @param interaction DiscordInteraction
- * @returns void
+ * @return void
  */
 export const template = async (
   interaction: DiscordInteraction,

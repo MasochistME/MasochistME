@@ -6,7 +6,7 @@ import { createError, ErrorAction } from "utils";
 /**
  * Deletes a meme permanently from the database.
  * @param interaction DiscordInteraction
- * @returns void
+ * @return void
  */
 export const memedelete = async (
   interaction: DiscordInteraction,

@@ -4,7 +4,7 @@ import { getFilteredChoices } from "commands/_utils";
 /**
  * Filter the badge choice list based on the user provided autocomplete value.
  * @param focused string - user provided autocomplete value
- * @returns ApplicationCommandOptionChoiceData[]
+ * @return ApplicationCommandOptionChoiceData[]
  */
 export const getBadgeChoices = (focused: string) => {
   const choices = cache.badges.map(badge => {
@@ -23,7 +23,7 @@ export const getBadgeChoices = (focused: string) => {
 /**
  * Filter the game choice list based on the user provided autocomplete value.
  * @param focused string - user provided autocomplete value
- * @returns ApplicationCommandOptionChoiceData[]
+ * @return ApplicationCommandOptionChoiceData[]
  */
 export const getGameChoices = (focused: string) => {
   const choices = cache.games.map(game => ({
@@ -37,7 +37,7 @@ export const getGameChoices = (focused: string) => {
 /**
  * Filter the member choice list based on the user provided autocomplete value.
  * @param focused string - user provided autocomplete value
- * @returns ApplicationCommandOptionChoiceData[]
+ * @return ApplicationCommandOptionChoiceData[]
  */
 export const getMemberChoices = (focused: string) => {
   const choices = cache.members.map(member => ({

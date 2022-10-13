@@ -5,7 +5,7 @@ import { RaceData } from "./logic";
 /**
  * Handles error caused by race ending before it starts.
  * @param interaction DiscordInteraction
- * @returns void
+ * @return void
  */
 export const errorEndsBeforeStart = (interaction: DiscordInteraction) => {
   interaction.reply(
@@ -20,7 +20,7 @@ export const errorEndsBeforeStart = (interaction: DiscordInteraction) => {
 /**
  * Handles error caused by race being set up in the past.
  * @param interaction DiscordInteraction
- * @returns void
+ * @return void
  */
 export const errorRaceInThePast = (interaction: DiscordInteraction) => {
   interaction.reply(
@@ -36,7 +36,7 @@ export const errorRaceInThePast = (interaction: DiscordInteraction) => {
  * Handles error caused by any of the timers provided being negative.
  * @param interaction DiscordInteraction
  * @param raceData RaceData
- * @returns void
+ * @return void
  */
 export const errorNegativeTimers = (
   interaction: DiscordInteraction,
@@ -62,7 +62,7 @@ export const errorNegativeTimers = (
  * Handles error caused by download link not being an actual HTTP link.
  * @param interaction DiscordInteraction
  * @param raceData RaceData
- * @returns void
+ * @return void
  */
 export const errorWrongDownloadLink = (
   interaction: DiscordInteraction,

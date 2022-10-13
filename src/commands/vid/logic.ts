@@ -11,7 +11,7 @@ import {
 /**
  * Sends a video to the designated channel.
  * @param interaction DiscordInteraction
- * @returns void
+ * @return void
  */
 export const vid = async (interaction: DiscordInteraction): Promise<void> => {
   const link = interaction.options.getString("link", true);

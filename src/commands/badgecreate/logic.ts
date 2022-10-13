@@ -7,7 +7,7 @@ import { createError, ErrorAction } from "utils";
 /**
  * Creates a new badge.
  * @param interaction DiscordInteraction
- * @returns void
+ * @return void
  */
 export const badgecreate = async (
   interaction: DiscordInteraction,

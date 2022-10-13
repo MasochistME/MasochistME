@@ -8,7 +8,7 @@ import { getBadgeChoices } from "commands/_utils/badge";
 /**
  * Handles autocompletion for the badge edit commands
  * @param interaction
- * @returns void
+ * @return void
  */
 export const badgeEditAutocomplete = async (
   interaction: AutocompleteInteraction,

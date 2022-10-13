@@ -120,7 +120,7 @@ export const sendRaceJoinForm = async (
 
 /**
  * Creates a "join" button
- * @returns ActionRowBuilder<ButtonBuilder>
+ * @return ActionRowBuilder<ButtonBuilder>
  */
 const getRaceJoinButton = (newRaceId: string) => {
   const buttonBar = new ActionRowBuilder<ButtonBuilder>().addComponents(
@@ -135,7 +135,7 @@ const getRaceJoinButton = (newRaceId: string) => {
 /**
  * Creates an embed for the newly created race, censored
  * @param race Race
- * @returns APIEmbed
+ * @return APIEmbed
  */
 const getNewRaceCensoredEmbed = (race: Race): APIEmbed => {
   const fields: APIEmbedField[] = [
