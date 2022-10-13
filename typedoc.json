@@ -1,4 +1,13 @@
 {
   "entryPoints": ["lib/v1/*"],
-  "out": "__docs"
+  "out": "__docs",
+  "theme": "default",
+  "visibilityFilters": {
+    "protected": false,
+    "private": false,
+    "inherited": true,
+    "external": false,
+    "@alpha": false,
+    "@beta": false
+  }
 }
