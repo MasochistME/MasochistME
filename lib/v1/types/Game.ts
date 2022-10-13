@@ -1,13 +1,12 @@
-import { WithId } from 'mongodb';
-
-import { TierId } from 'legacy/types';
+import { WithId } from 'v1/types/Mongo';
+import { TierId } from 'v1/types/Tier';
 
 /**
  * This is a type of a single object within the collection "games".
  * A single object describes a single game.
  * @category  Games
  */
-export type Game = WithId<{
+export interface Game extends WithId {
 	/**
 	 * Steam ID of the game.
 	 */
@@ -48,7 +47,7 @@ export type Game = WithId<{
 	 * If true, removing the game from curator does not remove it from Masochist.ME website.
 	 */
 	isProtected: boolean;
-}>;
+}
 
 /**
  * Information about the current sale of a particular game.

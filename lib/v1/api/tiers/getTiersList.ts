@@ -4,10 +4,12 @@ import { Tier, ResponseError } from 'v1/types';
 
 /**
  * Returns a list of all tiers.
- *
  * @category Tiers
  */
-export const getTiersList = async (BASE_URL: string): Promise<Tier[]> => {
+export const getTiersList = async (
+	/** @ignore */
+	BASE_URL: string,
+): Promise<Tier[]> => {
 	const url = `${BASE_URL}/tiers/list`;
 
 	const tierResponse = await axios.get<

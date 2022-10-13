@@ -4,13 +4,15 @@ import { Badge, ResponseError } from 'v1/types';
 
 /**
  * Returns a list of all badges belonging to a game with given ID.
- *
  * @category Games
+ * @param params.gameId - ID of the game which badges we want to retrieve.
  */
 export const getBadgesByGameId = async (
-	{ gameId }: { gameId: string },
+	params: { gameId: string },
+	/** @ignore */
 	BASE_URL: string,
 ): Promise<Badge[]> => {
+	const { gameId } = params;
 	const url = `${BASE_URL}/games/game/${gameId}/badges/list`;
 
 	const badgeResponse = await axios.get<

@@ -4,10 +4,12 @@ import { Season, ResponseError } from 'v1/types';
 
 /**
  * Returns data of an active season, if there is any.
- *
  * @category Seasons
  */
-export const getActiveSeason = async (BASE_URL: string): Promise<Season> => {
+export const getActiveSeason = async (
+	/** @ignore */
+	BASE_URL: string,
+): Promise<Season> => {
 	const url = `${BASE_URL}/seasons/active`;
 
 	const seasonResponse = await axios.get<

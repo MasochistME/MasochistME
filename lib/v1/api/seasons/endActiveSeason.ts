@@ -5,10 +5,10 @@ import { ResponseError } from 'v1/types';
 
 /**
  * Ends an active season, if there is any.
- *
  * @category Seasons
  */
 export const endActiveSeason = async (
+	/** @ignore */
 	BASE_URL: string,
 ): Promise<UpdateResult> => {
 	const url = `${BASE_URL}/seasons/active`;

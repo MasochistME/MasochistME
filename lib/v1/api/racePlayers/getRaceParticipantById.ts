@@ -4,13 +4,16 @@ import { RacePlayer, ResponseError } from 'v1/types';
 
 /**
  * Returns an object representing a single participant in a single race.
- *
  * @category Race participants
+ * @param params.raceId   - ID of the race that member participates in.
+ * @param params.memberId - Discord ID of the chosen race participant.
  */
 export const getRaceParticipantById = async (
-	{ raceId, memberId }: { raceId: string; memberId: string },
+	params: { raceId: string; memberId: string },
+	/** @ignore */
 	BASE_URL: string,
 ): Promise<RacePlayer> => {
+	const { raceId, memberId } = params;
 	const url = `${BASE_URL}/races/race/${raceId}/participants/participant/${memberId}`;
 
 	const racePlayerResponse = await axios.get<

@@ -4,13 +4,16 @@ import { Badge, MemberIdEither, ResponseError } from 'v1/types';
 
 /**
  * Returns a list of all badges belonging to member with either Steam ID or Discord ID.
- *
  * @category Members
+ * @param params.steamId   - (Optional) Steam ID of the requested member.
+ * @param params.discordId - (Optional) Discord ID of the requested member.
  */
 export const getMemberBadgeList = async (
-	{ steamId, discordId }: MemberIdEither,
+	params: MemberIdEither,
+	/** @ignore */
 	BASE_URL: string,
 ): Promise<Badge[]> => {
+	const { steamId, discordId } = params;
 	const memberId = steamId ?? discordId;
 	const url = `${BASE_URL}/members/member/${memberId}/badges/list`;
 

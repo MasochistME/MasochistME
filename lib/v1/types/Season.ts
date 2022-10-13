@@ -1,11 +1,11 @@
-import { WithId } from 'mongodb';
+import { WithId } from 'v1/types/Mongo';
 
 /**
  * This is a type of a single object within the collection "seasons".
  * A single object describes a single race season.
  * @category  Seasons
  */
-export type Season = WithId<{
+export interface Season extends WithId {
 	/**
 	 * Name of the season.
 	 */
@@ -26,4 +26,4 @@ export type Season = WithId<{
 	 * If the season has ended, the date of ending is stored in this field.
 	 */
 	endDate: Date | null;
-}>;
+}

@@ -5,13 +5,15 @@ import { ResponseError } from 'v1/types';
 
 /**
  * Deletes a race.
- *
  * @category Races
+ * @param params.raceId - ID of the race to be deleted.
  */
 export const deleteRaceById = async (
-	{ raceId }: { raceId: string },
+	params: { raceId: string },
+	/** @ignore */
 	BASE_URL: string,
 ): Promise<DeleteResult> => {
+	const { raceId } = params;
 	const url = `${BASE_URL}/races/race/${raceId}`;
 
 	const raceResponse = await axios.delete<

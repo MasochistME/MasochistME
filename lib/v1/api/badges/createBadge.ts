@@ -5,13 +5,15 @@ import { Badge, ResponseError } from 'v1/types';
 
 /**
  * Creates a new badge.
- *
  * @category Badges
+ * @param params.badge - Data of the new badge. All fields of the type Badge are required.
  */
 export const createBadge = async (
-	{ badge }: { badge: Omit<Badge, '_id'> },
+	params: { badge: Omit<Badge, '_id'> },
+	/** @ignore */
 	BASE_URL: string,
 ): Promise<InsertOneResult<Badge>> => {
+	const { badge } = params;
 	const url = `${BASE_URL}/badges`;
 
 	const badgeResponse = await axios.post<

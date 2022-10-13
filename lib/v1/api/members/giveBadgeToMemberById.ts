@@ -5,13 +5,16 @@ import { MemberBadge, ResponseError } from 'v1/types';
 
 /**
  * Gives a badge by given badge ID to member by their Discord ID.
- *
  * @category Members
+ * @param params.badgeId  - ID of the badge to give to selected member.
+ * @param params.memberId - ID of member which is supposed to get a badge.
  */
 export const giveBadgeToMemberById = async (
-	{ badgeId, memberId }: { badgeId: string; memberId: string },
+	params: { badgeId: string; memberId: string },
+	/** @ignore */
 	BASE_URL: string,
 ): Promise<InsertOneResult<MemberBadge>> => {
+	const { badgeId, memberId } = params;
 	const url = `${BASE_URL}/members/member/${memberId}/badges/badge/${badgeId}`;
 
 	const memberBadgeResponse = await axios.post<

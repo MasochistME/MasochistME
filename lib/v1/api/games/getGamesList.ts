@@ -4,10 +4,12 @@ import { Game, ResponseError } from 'v1/types';
 
 /**
  * Returns a list of all games.
- *
  * @category Games
  */
-export const getGamesList = async (BASE_URL: string): Promise<Game[]> => {
+export const getGamesList = async (
+	/** @ignore */
+	BASE_URL: string,
+): Promise<Game[]> => {
 	const url = `${BASE_URL}/games/list`;
 
 	const gamesResponse = await axios.get<

@@ -1,11 +1,11 @@
-import { WithId } from 'mongodb';
+import { WithId } from 'v1/types/Mongo';
 
 /**
  * This is a type of a single object within the collection "members".
  * A single object describes a single member.
  * @category  Members
  */
-export type Member = WithId<{
+export interface Member extends WithId {
 	/**
 	 * Member's Steam username.
 	 */
@@ -50,7 +50,7 @@ export type Member = WithId<{
 	 * How many games from every tier the member completed.
 	 */
 	ranking?: any; // TODO FIX!!!
-}>;
+}
 
 /**
  * Type used when it does not matter what type of ID member provides while trying to retrieve their data.

@@ -5,13 +5,15 @@ import { Season, ResponseError } from 'v1/types';
 
 /**
  * Creates a new season.
- *
  * @category Seasons
+ * @param params.season - Object representing a season to be created.
  */
 export const createSeason = async (
-	{ season }: { season: Omit<Season, '_id'> },
+	params: { season: Omit<Season, '_id'> },
+	/** @ignore */
 	BASE_URL: string,
 ): Promise<InsertOneResult<Season>> => {
+	const { season } = params;
 	const url = `${BASE_URL}/seasons`;
 
 	const seasonResponse = await axios.post<

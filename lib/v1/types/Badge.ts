@@ -1,12 +1,10 @@
-/** @module Badges */
-
-import { WithId } from 'mongodb';
+import { WithId } from 'v1/types/Mongo';
 
 /**
  * Fields which are common for all types of badges.
  * @category  Badges
  */
-export type BaseBadge = WithId<{
+interface BaseBadge extends WithId {
 	/**
 	 * Name of the badge.
 	 */
@@ -35,10 +33,10 @@ export type BaseBadge = WithId<{
 	 * TODO [Is it even used?]
 	 */
 	legacy: boolean;
-}>;
+}
 
 /**
- * Fields required only for badges belonging to a Steam game.
+ * Badge for a Steam based game.
  * @category  Badges
  */
 export interface BadgeGameSteam extends BaseBadge {
@@ -57,7 +55,7 @@ export interface BadgeGameSteam extends BaseBadge {
 }
 
 /**
- * Fields required only for badges belonging to a non-Steam game.
+ * Badge for a non-Steam based game.
  * @category  Badges
  */
 export interface BadgeGameNonSteam extends BaseBadge {

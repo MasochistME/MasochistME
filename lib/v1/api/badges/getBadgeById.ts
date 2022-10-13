@@ -4,13 +4,15 @@ import { Badge, ResponseError } from 'v1/types';
 
 /**
  * Returns a badge by given ID, if it exists.
- *
  * @category Badges
+ * @param params.badgeId - ID of the badge to fetch.
  */
 export const getBadgeById = async (
-	{ badgeId }: { badgeId: string },
+	params: { badgeId: string },
+	/** @ignore */
 	BASE_URL: string,
 ): Promise<Badge> => {
+	const { badgeId } = params;
 	const url = `${BASE_URL}/badges/badge/${badgeId}`;
 
 	const badgeResponse = await axios.get<

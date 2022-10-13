@@ -4,10 +4,12 @@ import { Member, ResponseError } from 'v1/types';
 
 /**
  * Returns a list of all members.
- *
  * @category Members
  */
-export const getMembersList = async (BASE_URL: string): Promise<Member[]> => {
+export const getMembersList = async (
+	/** @ignore */
+	BASE_URL: string,
+): Promise<Member[]> => {
 	const url = `${BASE_URL}/members/list`;
 
 	const memberResponse = await axios.get<

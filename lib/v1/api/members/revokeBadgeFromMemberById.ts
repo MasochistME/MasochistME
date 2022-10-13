@@ -5,13 +5,16 @@ import { ResponseError } from 'v1/types';
 
 /**
  * Removes a badge by given badge ID from member by their Discord ID.
- *
  * @category Members
+ * @param params.badgeId  - ID of the badge to remove from selected member.
+ * @param params.memberId - ID of member which is supposed to have a badge revoked.
  */
 export const revokeBadgeFromMemberById = async (
-	{ badgeId, memberId }: { badgeId: string; memberId: string },
+	params: { badgeId: string; memberId: string },
+	/** @ignore */
 	BASE_URL: string,
 ): Promise<DeleteResult> => {
+	const { badgeId, memberId } = params;
 	const url = `${BASE_URL}/members/member/${memberId}/badges/badge/${badgeId}`;
 
 	const memberBadgeResponse = await axios.delete<

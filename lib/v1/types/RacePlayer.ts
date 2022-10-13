@@ -1,11 +1,11 @@
-import { WithId } from 'mongodb';
-import { RaceType } from './Race';
+import { WithId } from 'v1/types/Mongo';
+import { RaceType } from 'v1/types/Race';
 
 /**
  * Fields which are common for participants of all types of races.
  * @category  Race participants
  */
-export type BaseRacePlayer = WithId<{
+interface BaseRacePlayer extends WithId {
 	/**
 	 * Discord ID of the participant.
 	 */
@@ -30,10 +30,10 @@ export type BaseRacePlayer = WithId<{
 	 * If true, participant gave up.
 	 */
 	dnf: boolean;
-}>;
+}
 
 /**
- * Fields required only for participants of score based races.
+ * Participant of a score based race.
  * @category  Race participants
  */
 export interface RacePlayerScore extends Omit<BaseRacePlayer, 'type'> {
@@ -48,7 +48,7 @@ export interface RacePlayerScore extends Omit<BaseRacePlayer, 'type'> {
 }
 
 /**
- * Fields required only for participants of time based races.
+ * Participant of a time based race.
  * @category  Race participants
  */
 export interface RacePlayerTime extends Omit<BaseRacePlayer, 'type'> {

@@ -1,4 +1,4 @@
-import { WithId } from 'mongodb';
+import { WithId } from 'v1/types/Mongo';
 
 export enum RaceType {
 	TIME_BASED = 'time',
@@ -9,7 +9,7 @@ export enum RaceType {
  * Fields which are common for all types of races.
  * @category  Races
  */
-export type BaseRace = WithId<{
+interface BaseRace extends WithId {
 	/**
 	 * Name of the race.
 	 */
@@ -62,10 +62,10 @@ export type BaseRace = WithId<{
 	 * URL of the race's icon.
 	 */
 	icon?: string;
-}>;
+}
 
 /**
- * Fields required only for score based races.
+ * Race which is score based - members need to get the highest score possible within a time limit.
  * @category  Races
  */
 export interface RaceScoreBased extends Omit<BaseRace, 'type'> {
@@ -80,7 +80,7 @@ export interface RaceScoreBased extends Omit<BaseRace, 'type'> {
 }
 
 /**
- * Fields required only for time based races.
+ * Race which is time based - members need to complete the run as soon as possible.
  * @category  Races
  */
 export interface RaceTimeBased extends Omit<BaseRace, 'type'> {

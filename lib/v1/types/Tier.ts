@@ -1,11 +1,11 @@
-import { WithId } from 'mongodb';
+import { WithId } from 'v1/types/Mongo';
 
 /**
  * This is a type of a single object within the collection "tiers".
  * A single object describes a single tier.
  * @category  Tiers
  */
-export type Tier = WithId<{
+export interface Tier extends WithId {
 	/**
 	 * Unicode symbol of a tier (for example 🌟).
 	 */
@@ -26,7 +26,7 @@ export type Tier = WithId<{
 	 * ID of a tier, usually a stringified number from 1 to 5.
 	 */
 	id: TierId;
-}>;
+}
 
 /**
  * TODO this is temp

@@ -5,13 +5,15 @@ import { Race, ResponseError } from 'v1/types';
 
 /**
  * Creates a new race.
- *
  * @category Races
+ * @param params.race - Object with the data of the new race.
  */
 export const createRace = async (
-	{ race }: { race: Omit<Race, '_id'> },
+	params: { race: Omit<Race, '_id'> },
+	/** @ignore */
 	BASE_URL: string,
 ): Promise<InsertOneResult<Race>> => {
+	const { race } = params;
 	const url = `${BASE_URL}/races`;
 
 	const raceResponse = await axios.post<

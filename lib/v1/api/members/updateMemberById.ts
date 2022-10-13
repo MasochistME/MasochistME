@@ -6,13 +6,16 @@ import { Member, ResponseError } from 'v1/types';
 type MemberUpdate = Partial<Pick<Member, 'description'>>;
 /**
  * Updates a member by updating the fields that the user had passed.
- *
  * @category Members
+ * @param params.memberId - ID of the member to update.
+ * @param params.member   - Fields to be updated for selected member.
  */
 export const updateMemberById = async (
-	{ member, memberId }: { member: MemberUpdate; memberId: string },
+	params: { member: MemberUpdate; memberId: string },
+	/** @ignore */
 	BASE_URL: string,
 ): Promise<UpdateResult> => {
+	const { member, memberId } = params;
 	const url = `${BASE_URL}/members/member/${memberId}`;
 
 	const memberResponse = await axios.put<

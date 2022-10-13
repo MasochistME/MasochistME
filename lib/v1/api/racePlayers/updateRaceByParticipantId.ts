@@ -3,34 +3,33 @@ import { UpdateResult } from 'mongodb';
 
 import { RacePlayer, ResponseError } from 'v1/types';
 
-export type Update = Partial<
-	Pick<RacePlayer, 'startTime' | 'endTime' | 'dnf'>
-> & {
-	score?: number;
-};
 /**
  * Updates a race participant object.
- *
  * @category Race participants
+ * @param params.raceId   - ID of the race in which requested user participates.
+ * @param params.memberId - Discord ID of the race participant to be updated.
+ * @param params.update   - Fields that need to be changed.
  */
 export const updateRaceByParticipantId = async (
-	{
-		raceId,
-		memberId,
-		update,
-	}: {
+	params: {
 		raceId: string;
 		memberId: string;
-		update: Update;
+		update: Partial<Pick<RacePlayer, 'startTime' | 'endTime' | 'dnf'>> & {
+			score?: number;
+		};
 	},
+	/** @ignore */
 	BASE_URL: string,
 ): Promise<UpdateResult> => {
+	const { raceId, memberId, update } = params;
 	const url = `${BASE_URL}/races/race/${raceId}/participants/participant/${memberId}`;
 
 	const racePlayerResponse = await axios.put<
 		UpdateResult | ResponseError,
 		AxiosResponse<UpdateResult | ResponseError>,
-		Update
+		Partial<Pick<RacePlayer, 'startTime' | 'endTime' | 'dnf'>> & {
+			score?: number;
+		}
 	>(url, update, { validateStatus: () => true });
 
 	const { status, data } = racePlayerResponse;

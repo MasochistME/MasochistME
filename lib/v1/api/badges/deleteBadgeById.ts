@@ -5,13 +5,15 @@ import { ResponseError } from 'v1/types';
 
 /**
  * Deletes a badge.
- *
  * @category Badges
+ * @param params.badgeId - ID of the badge to delete.
  */
 export const deleteBadgeById = async (
-	{ badgeId }: { badgeId: string },
+	params: { badgeId: string },
+	/** @ignore */
 	BASE_URL: string,
 ): Promise<DeleteResult> => {
+	const { badgeId } = params;
 	const url = `${BASE_URL}/badges/badge/${badgeId}`;
 
 	const badgeResponse = await axios.delete<

@@ -5,13 +5,16 @@ import { Race, ResponseError } from 'v1/types';
 
 /**
  * Updates a race by updating the fields that the user had passed.
- *
  * @category Races
+ * @param params.raceId - ID of the race to update.
+ * @param params.race   - Fields to update in the chosen race.
  */
 export const updateRaceById = async (
-	{ raceId, race }: { raceId: string; race: Partial<Omit<Race, '_id'>> },
+	params: { raceId: string; race: Partial<Omit<Race, '_id'>> },
+	/** @ignore */
 	BASE_URL: string,
 ): Promise<UpdateResult> => {
+	const { raceId, race } = params;
 	const url = `${BASE_URL}/races/race/${raceId}`;
 
 	const raceResponse = await axios.put<

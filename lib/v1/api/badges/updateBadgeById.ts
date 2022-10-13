@@ -5,13 +5,16 @@ import { Badge, ResponseError } from 'v1/types';
 
 /**
  * Updates a badge by updating the fields that the user had passed.
- *
  * @category Badges
+ * @param params.badgeId - ID of the badge to update.
+ * @param params.badge   - Fields to update in the badge of given ID.
  */
 export const updateBadgeById = async (
-	{ badgeId, badge }: { badgeId: string; badge: Partial<Omit<Badge, '_id'>> },
+	params: { badgeId: string; badge: Partial<Omit<Badge, '_id'>> },
+	/** @ignore */
 	BASE_URL: string,
 ): Promise<UpdateResult> => {
+	const { badgeId, badge } = params;
 	const url = `${BASE_URL}/badges/badge/${badgeId}`;
 
 	const badgeResponse = await axios.put<

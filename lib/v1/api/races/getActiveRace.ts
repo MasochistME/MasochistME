@@ -4,10 +4,12 @@ import { Race, ResponseError } from 'v1/types';
 
 /**
  * Returns a list of all the present and future races, sorting them by which starts the sooner.
- *
  * @category Races
  */
-export const getActiveRace = async (BASE_URL: string): Promise<Race[]> => {
+export const getActiveRace = async (
+	/** @ignore */
+	BASE_URL: string,
+): Promise<Race[]> => {
 	const url = `${BASE_URL}/races/active`;
 
 	const raceResponse = await axios.get<
