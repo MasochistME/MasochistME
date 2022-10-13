@@ -1,3 +1,5 @@
+/** @module Badges */
+
 import { InsertOneResult } from 'mongodb';
 import axios, { AxiosResponse } from 'axios';
 
@@ -5,8 +7,12 @@ import { Badge, ResponseError } from 'v1/types';
 
 /**
  * Creates a new badge.
- * @param badge Omit<Badge, '_id'>
- * @returns InsertOneResult<Badge>
+ *
+ * @category Badges
+ * @function
+ *
+ * @param   {Omit<Badge, '_id'>}      badge  Body of a new badge.
+ * @return  {InsertOneResult<Badge>}         MongoDB insert one result object.
  */
 export const createBadge = async (
 	{ badge }: { badge: Omit<Badge, '_id'> },

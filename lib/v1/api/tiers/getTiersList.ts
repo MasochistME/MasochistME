@@ -1,10 +1,16 @@
+/** @module Tiers */
+
 import axios, { AxiosResponse } from 'axios';
 
 import { Tier, ResponseError } from 'v1/types';
 
 /**
  * Returns a list of all tiers.
- * @returns Tier[]
+ *
+ * @category Tiers
+ * @function
+ *
+ * @return  {Tier[]}  List of all tiers.
  */
 export const getTiersList = async (BASE_URL: string): Promise<Tier[]> => {
 	const url = `${BASE_URL}/tiers/list`;

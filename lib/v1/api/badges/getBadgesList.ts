@@ -1,10 +1,16 @@
+/** @module Badges */
+
 import axios, { AxiosResponse } from 'axios';
 
 import { Badge, ResponseError } from 'v1/types';
 
 /**
  * Returns a list of all badges.
- * @returns Badge[]
+ *
+ * @category Badges
+ * @function
+ *
+ * @return  {Badge[]}  List of all badges.
  */
 export const getBadgesList = async (BASE_URL: string): Promise<Badge[]> => {
 	const url = `${BASE_URL}/badges/list`;

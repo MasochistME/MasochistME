@@ -1,3 +1,5 @@
+/** @module Seasons */
+
 import axios, { AxiosResponse } from 'axios';
 import { UpdateResult } from 'mongodb';
 
@@ -5,8 +7,12 @@ import { ResponseError } from 'v1/types';
 
 /**
  * Starts a new season. User must pass an ID of an already created race.
- * @param seasonId string
- * @returns UpdateResult
+ *
+ * @category Seasons
+ * @function
+ *
+ * @param 	{String} 				seasonId  ID of the season to begin.
+ * @return  {UpdateResult}						MongoDB update result object.
  */
 export const startSeasonById = async (
 	{ seasonId }: { seasonId: string },

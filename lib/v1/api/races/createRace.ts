@@ -1,3 +1,5 @@
+/** @module Races */
+
 import { InsertOneResult } from 'mongodb';
 import axios, { AxiosResponse } from 'axios';
 
@@ -5,8 +7,12 @@ import { Race, ResponseError } from 'v1/types';
 
 /**
  * Creates a new race.
- * @param race Omit<Race, '_id'>
- * @returns InsertOneResult<Race>
+ *
+ * @category Races
+ * @function
+ *
+ * @param   {Omit<Race, '_id'>} 		 race  Data of the race to create.
+ * @return  {InsertOneResult<Race>}				 MongoDB insert one result object.
  */
 export const createRace = async (
 	{ race }: { race: Omit<Race, '_id'> },

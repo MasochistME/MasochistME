@@ -1,3 +1,5 @@
+/** @module Races */
+
 import { InsertOneResult } from 'mongodb';
 import axios, { AxiosResponse } from 'axios';
 
@@ -5,9 +7,14 @@ import { RacePlayer, ResponseError } from 'v1/types';
 
 /**
  * Signs a user up for participatin in a specific race.
- * @param raceId string
- * @param memberId string - Discord ID
- * @returns InsertOneResult<Race>
+ *
+ * @category Races
+ * @subcategory Participants
+ * @function
+ *
+ * @param 	{String}      					 raceId    ID of the race.
+ * @param   {String}      				   memberId  Discord ID of the requested race participant.
+ * @return  {InsertOneResult<Race>}            MongoDB insert one result object.
  */
 export const joinRaceByParticipantId = async (
 	{ raceId, memberId }: { raceId: string; memberId: string },

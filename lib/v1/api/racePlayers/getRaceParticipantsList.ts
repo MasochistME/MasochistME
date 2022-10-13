@@ -1,11 +1,18 @@
+/** @module RaceParticipants */
+
 import axios, { AxiosResponse } from 'axios';
 
 import { RacePlayer, ResponseError } from 'v1/types';
 
 /**
  * Returns a list of all participants from a single race.
- * @param raceId string
- * @returns RacePlayer[]
+ *
+ * @category Races
+ * @subcategory Participants
+ * @function
+ *
+ * @param 	{String}        raceId  ID of the race.
+ * @return 	{RacePlayer[]}          List of all participants of the particular race.
  */
 export const getRaceParticipantsList = async (
 	{ raceId }: { raceId: string },

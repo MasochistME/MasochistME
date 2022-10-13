@@ -1,3 +1,5 @@
+/** @module Seasons */
+
 import { InsertOneResult } from 'mongodb';
 import axios, { AxiosResponse } from 'axios';
 
@@ -5,8 +7,12 @@ import { Season, ResponseError } from 'v1/types';
 
 /**
  * Creates a new season.
- * @param season Omit<Season, '_id'>
- * @returns InsertOneResult<Season>
+ *
+ * @category Seasons
+ * @function
+ *
+ * @param 	{Omit<Season, '_id'>} 		 season  Data of the season to create.
+ * @return  {InsertOneResult<Season>}					 MongoDB insert one result object.
  */
 export const createSeason = async (
 	{ season }: { season: Omit<Season, '_id'> },

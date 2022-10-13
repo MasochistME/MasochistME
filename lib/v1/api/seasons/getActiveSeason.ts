@@ -1,10 +1,16 @@
+/** @module Seasons */
+
 import axios, { AxiosResponse } from 'axios';
 
 import { Season, ResponseError } from 'v1/types';
 
 /**
  * Returns data of an active season, if there is any.
- * @returns Season
+ *
+ * @category Seasons
+ * @function
+ *
+ * @return  {Season}  Data of the active season, if here is any.
  */
 export const getActiveSeason = async (BASE_URL: string): Promise<Season> => {
 	const url = `${BASE_URL}/seasons/active`;

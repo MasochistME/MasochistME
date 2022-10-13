@@ -1,3 +1,5 @@
+/** @module Badges */
+
 import axios, { AxiosResponse } from 'axios';
 import { DeleteResult } from 'mongodb';
 
@@ -5,8 +7,12 @@ import { ResponseError } from 'v1/types';
 
 /**
  * Deletes a badge.
- * @param badgeId string
- * @returns DeleteResult
+ *
+ * @category Badges
+ * @function
+ *
+ * @param   {String}        badgeId  ID of the badge to delete.
+ * @return  {DeleteResult}           MongoDB delete result object.
  */
 export const deleteBadgeById = async (
 	{ badgeId }: { badgeId: string },

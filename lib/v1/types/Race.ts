@@ -1,3 +1,6 @@
+// Race.ts
+/** @module Race */
+
 import { WithId } from 'mongodb';
 
 export enum RaceType {
@@ -6,31 +9,104 @@ export enum RaceType {
 }
 
 /**
- * This is a type of a single object within the collection "race".
- * A single object describes a single race.
+ * BaseRace
+ *
+ * @category  Races
+ * @memberof  Races
+ * @alias			BaseRace
+ *
+ * Fields which are common for all types of races.
  */
 export type BaseRace = WithId<{
+	/**
+	 * Name of the race.
+	 */
 	name: string;
-	instructions: string; // Visible part of the instructions.
-	objectives: string; // Cenzored part of the instructions.
+	/**
+	 * Part of the instructions visible to all members before starting a race.
+	 */
+	instructions: string;
+	/**
+	 * Part of the instruction visible only to members who started a race.
+	 */
+	objectives: string;
+	/**
+	 * Type of the race
+	 */
 	type: keyof typeof RaceType;
-	startTime: Date; // A date in a timestamp format.
-	endTime: Date; // A date in a timestamp format.
-	downloadLink: string; // URL to the game's website.
-	downloadGrace: number; // Time to download the game [seconds].
-	uploadGrace: number; // Time to upload a proof of finishing the game [seconds].
-	organizer: string; // Discord ID of the race's organizer.
+	/**
+	 * Date of starting the race.
+	 */
+	startTime: Date;
+	/**
+	 * Date of ending the race.
+	 */
+	endTime: Date;
+	/**
+	 * URL to the game's website.
+	 */
+	downloadLink: string;
+	/**
+	 * Time to download the game [seconds].
+	 */
+	downloadGrace: number;
+	/**
+	 * Time to upload a proof of finishing the game [seconds].
+	 */
+	uploadGrace: number;
+	/**
+	 * Discord ID of the race's organizer.
+	 */
+	organizer: string;
+	/**
+	 * Flag indicating if the race is currently ongoing.
+	 */
 	isActive: boolean;
-	icon?: string; // URL of the race's icon
+	/**
+	 * ID of the season that this race belongs to (if null, it's a special non-seasoned race).
+	 */
+	season: string | null;
+	/**
+	 * URL of the race's icon.
+	 */
+	icon?: string;
 }>;
 
+/**
+ * RaceScoreBased
+ *
+ * @category  Races
+ * @memberof  Races
+ * @alias     RaceScoreBased
+ *
+ * Fields required only for score based races.
+ */
 export interface RaceScoreBased extends Omit<BaseRace, 'type'> {
 	type: RaceType.SCORE_BASED;
 	playLimit: number; // Time limit for the user to achieve the highest score [minutes].
 }
 
+/**
+ * RaceTimeBased
+ *
+ * @category  Races
+ * @memberof  Races
+ * @alias     RaceTimeBased
+ *
+ * Fields required only for time based races.
+ */
 export interface RaceTimeBased extends Omit<BaseRace, 'type'> {
 	type: RaceType.TIME_BASED;
 }
 
+/**
+ * Race
+ *
+ * @category  Races
+ * @memberof  Races
+ * @alias			Race
+ *
+ * This is a type of a single object within the collection "race".
+ * A single object describes a single race.
+ */
 export type Race = RaceScoreBased | RaceTimeBased;

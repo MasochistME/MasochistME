@@ -1,3 +1,5 @@
+/** @module Races */
+
 import axios, { AxiosResponse } from 'axios';
 import { UpdateResult } from 'mongodb';
 
@@ -8,10 +10,15 @@ type Update = Partial<Pick<RacePlayer, 'startTime' | 'endTime' | 'dnf'>> & {
 };
 /**
  * Updates a race participant object.
- * @param raceId string
- * @param update string
- * @param memberId string - Discord ID
- * @returns UpdateResult
+ *
+ * @category Races
+ * @subcategory Participants
+ * @function
+ *
+ * @param 	{String}      	raceId    ID of the race.
+ * @param   {String}      	memberId  Discord ID of the requested race participant.
+ * @param 	{Update}  			update    Object of fields to update for race participant.
+ * @return 	{UpdateResult}						MongoDB update result object.
  */
 export const updateRaceByParticipantId = async (
 	{

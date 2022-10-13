@@ -1,3 +1,5 @@
+/** @module Members */
+
 import axios, { AxiosResponse } from 'axios';
 import { DeleteResult } from 'mongodb';
 
@@ -5,9 +7,13 @@ import { ResponseError } from 'v1/types';
 
 /**
  * Removes a badge by given badge ID from member by their Discord ID.
- * @param badgeId string
- * @param memberId string - Discord ID
- * @returns DeleteResult<MemberBadge>
+ *
+ * @category Members
+ * @function
+ *
+ * @param   {String}  								   badgeId   ID of the badge to remove.
+ * @param   {String}  									 memberId  Discord ID of the requested member.
+ * @return  {DeleteResult<MemberBadge>}						 MongoDB delete result object.
  */
 export const revokeBadgeFromMemberById = async (
 	{ badgeId, memberId }: { badgeId: string; memberId: string },

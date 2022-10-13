@@ -1,3 +1,5 @@
+/** @module Seasons */
+
 import axios, { AxiosResponse } from 'axios';
 import { UpdateResult } from 'mongodb';
 
@@ -5,9 +7,13 @@ import { Season, ResponseError } from 'v1/types';
 
 /**
  * Updates a season by updating the fields that the user had passed.
- * @param seasonId string
- * @param season Pick<Season, 'name' | 'description' | 'icon'>
- * @returns UpdateResult
+ *
+ * @category Seasons
+ * @function
+ *
+ * @param 	{String} 																			   seasonId  ID of the season to update.
+ * @param   {Pick<Season, 'name' | 'description' | 'icon'>}  season 	 Fields to update in the selected season.
+ * @return  {UpdateResult}
  */
 export const updateSeasonById = async (
 	{
