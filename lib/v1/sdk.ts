@@ -11,13 +11,20 @@ import {
 	revokeBadgeFromMemberById,
 } from 'v1/api/members';
 import {
+	getBadgesList,
+	createBadge,
+	getBadgeById,
+	updateBadgeById,
+	deleteBadgeById,
+} from 'v1/api/badges';
+import {
 	createRace,
 	deleteRaceById,
 	updateRaceById,
 	getRaceById,
 	getRaceList,
 	getActiveRace,
-} from 'v1/api/race';
+} from 'v1/api/races';
 import {
 	getRaceParticipantById,
 	getRaceParticipantsList,
@@ -25,12 +32,12 @@ import {
 	updateRaceByParticipantId,
 } from 'v1/api/racePlayers';
 import {
-	getBadgesList,
-	createBadge,
-	getBadgeById,
-	updateBadgeById,
-	deleteBadgeById,
-} from 'v1/api/badges';
+	createSeason,
+	updateSeasonById,
+	startSeasonById,
+	endActiveSeason,
+	getActiveSeason,
+} from 'v1/api/seasons';
 
 export type Config = {
 	host: string; // for example localhost:3000
@@ -144,4 +151,18 @@ export class SDK {
 	>(
 		args: Head<T>,
 	) => updateRaceByParticipantId(args, this.BASE_URL);
+
+	/***********************
+	 *       SEASONS       *
+	 ***********************/
+
+	public createSeason = <T extends typeof createSeason>(args: Head<T>) =>
+		createSeason(args, this.BASE_URL);
+	public updateSeasonById = <T extends typeof updateSeasonById>(
+		args: Head<T>,
+	) => updateSeasonById(args, this.BASE_URL);
+	public startSeasonById = <T extends typeof startSeasonById>(args: Head<T>) =>
+		startSeasonById(args, this.BASE_URL);
+	public endActiveSeason = () => endActiveSeason(this.BASE_URL);
+	public getActiveSeason = () => getActiveSeason(this.BASE_URL);
 }
