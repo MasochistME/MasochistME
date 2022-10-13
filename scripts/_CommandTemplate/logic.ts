@@ -1,9 +1,7 @@
-import {
-  getSuccessEmbed,
-  getErrorEmbed,
-  DiscordInteraction,
-  log,
-} from "arcybot";
+import { getSuccessEmbed, DiscordInteraction } from "arcybot";
+// @ts-ignore:next-line
+import { createError, ErrorAction } from "utils";
+
 import { Options } from "./builder";
 
 /**
@@ -33,7 +31,6 @@ export const template = async (
       ),
     );
   } catch (err: any) {
-    interaction.editReply(getErrorEmbed("Error", "Your command did not work!"));
-    log.WARN(err);
+    createError(interaction, err, ErrorAction.EDIT);
   }
 };
