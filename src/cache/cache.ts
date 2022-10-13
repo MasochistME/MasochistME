@@ -1,5 +1,5 @@
 import { CommandObject } from "arcybot";
-import { Badge, Tier } from "@masochistme/sdk/dist/v1/types";
+import { Badge, Season, Tier } from "@masochistme/sdk/dist/v1/types";
 
 import { getCommandsFromAPI, getAllOptionsFromAPI } from "api";
 import { sdk } from "fetus";
@@ -20,6 +20,7 @@ export class Cache {
   public games: CacheGame[] = [];
   public options: CacheOption[] = [];
   public tiers: Tier[] = [];
+  public seasons: Season[] = [];
   public commandList: CommandObject[] = [];
 
   constructor(config: CacheConfig) {
@@ -35,6 +36,7 @@ export class Cache {
   async updateMasochist() {
     this.tiers = await sdk.getTiersList();
     this.badges = await sdk.getBadgesList();
+    this.seasons = await sdk.getSeasonsList({ inactive: true });
     this.members = (await sdk.getMembersList())
       .map(m => ({ name: m.name, id: m.steamId }))
       .sort();

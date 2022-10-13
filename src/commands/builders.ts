@@ -13,6 +13,7 @@ import { registerBuilder } from "./register/builder";
 // import { updateBuilder } from "./update/builder";
 import { vidBuilder } from "./vid/builder";
 import { seasoncreateBuilder } from "./seasoncreate/builder";
+import { seasonstartBuilder } from "./seasonstart/builder";
 import { setdescriptionBuilder } from "./setdescription/builder";
 
 export const customCommands = [
@@ -31,5 +32,6 @@ export const customCommands = [
   // updateBuilder,
   vidBuilder,
   seasoncreateBuilder,
+  seasonstartBuilder,
   setdescriptionBuilder,
 ];
