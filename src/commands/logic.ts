@@ -13,6 +13,7 @@ import { profile } from "./profile/logic";
 import { race } from "./race/logic";
 import { racesetup } from "./racesetup/logic";
 import { register } from "./register/logic";
+import { seasoncreate } from "./seasoncreate/logic";
 import { setdescription } from "./setdescription/logic";
 import { update } from "./update/logic";
 import { vid } from "./vid/logic";
@@ -31,6 +32,7 @@ export const commandsFunctions: CommandFn[] = [
   race,
   racesetup,
   register,
+  seasoncreate,
   setdescription,
   update,
   vid,
