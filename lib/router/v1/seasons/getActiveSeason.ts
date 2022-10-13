@@ -12,8 +12,12 @@ export const getActiveSeason = async (
     const { client, db } = await connectToDb();
     const collection = db.collection<Season>('seasons');
     const cursor = collection
-      .find({ startTime: { $not: null }, endTime: null })
-      .sort({ startTime: 1 });
+      .find({
+        endDate: null,
+        //@ts-ignore:next-line
+        startDate: { $not: null },
+      })
+      .sort({ startDate: 1 });
     const activeSeasons: Season[] = [];
 
     await cursor.forEach((el: Season) => {
