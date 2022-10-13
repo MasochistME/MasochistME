@@ -1,7 +1,5 @@
-/** @module Races */
-
-import { InsertOneResult } from 'mongodb';
 import axios, { AxiosResponse } from 'axios';
+import { InsertOneResult } from 'mongodb';
 
 import { Race, ResponseError } from 'v1/types';
 

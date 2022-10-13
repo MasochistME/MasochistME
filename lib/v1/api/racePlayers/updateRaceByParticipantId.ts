@@ -1,5 +1,3 @@
-/** @module Races */
-
 import axios, { AxiosResponse } from 'axios';
 import { UpdateResult } from 'mongodb';
 

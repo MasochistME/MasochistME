@@ -1,5 +1,3 @@
-/** @module Badges */
-
 import axios, { AxiosResponse } from 'axios';
 
 import { Badge, ResponseError } from 'v1/types';

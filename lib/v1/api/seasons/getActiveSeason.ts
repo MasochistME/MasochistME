@@ -1,5 +1,3 @@
-/** @module Seasons */
-
 import axios, { AxiosResponse } from 'axios';
 
 import { Season, ResponseError } from 'v1/types';

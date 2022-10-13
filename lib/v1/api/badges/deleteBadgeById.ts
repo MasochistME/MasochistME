@@ -1,5 +1,3 @@
-/** @module Badges */
-
 import axios, { AxiosResponse } from 'axios';
 import { DeleteResult } from 'mongodb';
 

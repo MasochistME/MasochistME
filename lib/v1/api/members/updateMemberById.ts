@@ -1,5 +1,3 @@
-/** @module Members */
-
 import axios, { AxiosResponse } from 'axios';
 import { UpdateResult } from 'mongodb';
 

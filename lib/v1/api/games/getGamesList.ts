@@ -1,5 +1,3 @@
-/** @module Games */
-
 import axios, { AxiosResponse } from 'axios';
 
 import { Game, ResponseError } from 'v1/types';
@@ -8,6 +6,7 @@ import { Game, ResponseError } from 'v1/types';
  * Returns a list of all games.
  *
  * @category Games
+ * @subcategory API
  * @function
  *
  * @return {Game[]} List of all games.

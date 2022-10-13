@@ -1,7 +1,4 @@
-/**
- * @category 		Badges
- * @subcategory Types
- */
+/** @module Badges */
 
 import { WithId } from 'mongodb';
 

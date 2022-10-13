@@ -1,5 +1,4 @@
-// Race.ts
-/** @module Race */
+/** @module Races */
 
 import { WithId } from 'mongodb';
 
@@ -82,8 +81,14 @@ export type BaseRace = WithId<{
  * Fields required only for score based races.
  */
 export interface RaceScoreBased extends Omit<BaseRace, 'type'> {
+	/**
+	 * Score based race type.
+	 */
 	type: RaceType.SCORE_BASED;
-	playLimit: number; // Time limit for the user to achieve the highest score [minutes].
+	/**
+	 * Time limit for the user to achieve the highest score [minutes].
+	 */
+	playLimit: number;
 }
 
 /**
@@ -96,6 +101,9 @@ export interface RaceScoreBased extends Omit<BaseRace, 'type'> {
  * Fields required only for time based races.
  */
 export interface RaceTimeBased extends Omit<BaseRace, 'type'> {
+	/**
+	 * Time based race type.
+	 */
 	type: RaceType.TIME_BASED;
 }
 

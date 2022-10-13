@@ -1,16 +1,12 @@
-/**
- * @category 		Members
- * @subcategory API
- */
-
-import { InsertOneResult } from 'mongodb';
 import axios, { AxiosResponse } from 'axios';
+import { InsertOneResult } from 'mongodb';
 
 import { MemberBadge, ResponseError } from 'v1/types';
 
 /**
  * Gives a badge by given badge ID to member by their Discord ID.
  *
+ * @category Members
  * @function
  *
  * @param   {String} 											  badgeId   ID of the badge to give.

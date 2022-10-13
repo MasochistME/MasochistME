@@ -1,5 +1,4 @@
-// Member.ts
-/** @module Member */
+/** @module Members */
 
 import { WithId } from 'mongodb';
 

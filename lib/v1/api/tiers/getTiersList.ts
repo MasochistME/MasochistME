@@ -1,5 +1,3 @@
-/** @module Tiers */
-
 import axios, { AxiosResponse } from 'axios';
 
 import { Tier, ResponseError } from 'v1/types';

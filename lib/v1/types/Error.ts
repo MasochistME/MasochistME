@@ -1,12 +1,10 @@
-// Error.ts
-/** @module Error */
+/** @module Errors */
 
 /**
  * ResponseError
  *
  * @category  Errors
- * @memberof  Errors
- * @alias     Error
+ * @alias     ResponseError
  */
 export type ResponseError = {
 	error: string;

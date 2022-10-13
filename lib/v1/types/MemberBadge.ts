@@ -1,5 +1,4 @@
-// MemberBadge.ts
-/** @module MemberBadge */
+/** @module MemberBadges */
 
 import { WithId } from 'mongodb';
 

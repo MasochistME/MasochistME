@@ -1,5 +1,3 @@
-/** @module Games */
-
 import axios, { AxiosResponse } from 'axios';
 
 import { Badge, ResponseError } from 'v1/types';
@@ -8,6 +6,7 @@ import { Badge, ResponseError } from 'v1/types';
  * Returns a list of all badges belonging to a game with given ID.
  *
  * @category Games
+ * @subcategory API
  * @function
  *
  * @param   {String}   gameId  ID of the game.

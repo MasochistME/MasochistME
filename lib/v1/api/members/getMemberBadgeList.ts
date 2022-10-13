@@ -1,5 +1,3 @@
-/** @module Members */
-
 import axios, { AxiosResponse } from 'axios';
 
 import { Badge, MemberIdEither, ResponseError } from 'v1/types';

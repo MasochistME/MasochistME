@@ -1,5 +1,4 @@
-// Season.ts
-/** @module Season */
+/** @module Seasons */
 
 import { WithId } from 'mongodb';
 

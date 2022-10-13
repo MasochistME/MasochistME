@@ -1,5 +1,3 @@
-/** @module RaceParticipants */
-
 import axios, { AxiosResponse } from 'axios';
 
 import { RacePlayer, ResponseError } from 'v1/types';

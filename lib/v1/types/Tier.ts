@@ -1,5 +1,4 @@
-// Tier.ts
-/** @module Tier */
+/** @module Tiers */
 
 import { WithId } from 'mongodb';
 

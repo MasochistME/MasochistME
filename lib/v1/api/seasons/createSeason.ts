@@ -1,7 +1,5 @@
-/** @module Seasons */
-
-import { InsertOneResult } from 'mongodb';
 import axios, { AxiosResponse } from 'axios';
+import { InsertOneResult } from 'mongodb';
 
 import { Season, ResponseError } from 'v1/types';
 

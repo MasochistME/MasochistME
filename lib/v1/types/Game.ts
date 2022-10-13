@@ -1,5 +1,4 @@
-// Game.ts
-/** @module Game */
+/** @module Games */
 
 import { WithId } from 'mongodb';
 
