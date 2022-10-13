@@ -2,7 +2,10 @@ import axios from 'axios';
 import { log } from 'helpers/log';
 import { connectToDb, getDataFromDB } from 'helpers/db';
 import { getCuratorMembers, updateCuratorGames } from 'router/legacy/curator';
-import { TMemberJoinedEvent, TMemberLeftEvent } from 'router/legacy/types/events';
+import {
+  TMemberJoinedEvent,
+  TMemberLeftEvent,
+} from 'router/legacy/types/events';
 
 const updateDelay = Number(process.env.BIG_DELAY);
 const shortDelay = Number(process.env.DELAY);
