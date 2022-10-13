@@ -14,7 +14,7 @@ export const startSeasonById = async (
 ): Promise<UpdateResult> => {
 	const url = `${BASE_URL}/seasons/season/${seasonId}`;
 
-	const seasonResponse = await axios.put<
+	const seasonResponse = await axios.post<
 		UpdateResult | ResponseError,
 		AxiosResponse<UpdateResult | ResponseError>,
 		Pick<Season, 'startDate'>
