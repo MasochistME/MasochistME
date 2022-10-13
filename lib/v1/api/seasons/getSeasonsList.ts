@@ -13,13 +13,17 @@ export const getSeasonsList = async (
 	/** @ignore */
 	BASE_URL: string,
 ): Promise<Season[]> => {
-	const { finished, inactive } = params;
+	const { finished = undefined, inactive = undefined } = params;
 	const url = `${BASE_URL}/seasons/list`;
 
 	const seasonResponse = await axios.post<
 		Season[] | ResponseError,
 		AxiosResponse<Season[] | ResponseError>
-	>(url, { finished, inactive }, { validateStatus: () => true });
+	>(
+		url,
+		{ ...(finished && { finished }), ...(inactive && { inactive }) },
+		{ validateStatus: () => true },
+	);
 
 	const { status, data } = seasonResponse;
 
