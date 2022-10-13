@@ -6,10 +6,6 @@ import { Game, ResponseError } from 'v1/types';
  * Returns a list of all games.
  *
  * @category Games
- * @subcategory API
- * @function
- *
- * @return {Game[]} List of all games.
  */
 export const getGamesList = async (BASE_URL: string): Promise<Game[]> => {
 	const url = `${BASE_URL}/games/list`;

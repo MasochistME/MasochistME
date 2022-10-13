@@ -3,20 +3,15 @@ import { UpdateResult } from 'mongodb';
 
 import { RacePlayer, ResponseError } from 'v1/types';
 
-type Update = Partial<Pick<RacePlayer, 'startTime' | 'endTime' | 'dnf'>> & {
+export type Update = Partial<
+	Pick<RacePlayer, 'startTime' | 'endTime' | 'dnf'>
+> & {
 	score?: number;
 };
 /**
  * Updates a race participant object.
  *
- * @category Races
- * @subcategory Participants
- * @function
- *
- * @param 	{String}      	raceId    ID of the race.
- * @param   {String}      	memberId  Discord ID of the requested race participant.
- * @param 	{Update}  			update    Object of fields to update for race participant.
- * @return 	{UpdateResult}						MongoDB update result object.
+ * @category Race participants
  */
 export const updateRaceByParticipantId = async (
 	{

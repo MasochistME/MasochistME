@@ -5,13 +5,7 @@ import { RacePlayer, ResponseError } from 'v1/types';
 /**
  * Returns an object representing a single participant in a single race.
  *
- * @category Races
- * @subcategory Participants
- * @function
- *
- * @param 	{String}      raceId    ID of the race.
- * @param   {String}      memberId  Discord ID of the requested race participant.
- * @return  {RacePlayer}						Data of the race participant, if it exists.
+ * @category Race participants
  */
 export const getRaceParticipantById = async (
 	{ raceId, memberId }: { raceId: string; memberId: string },

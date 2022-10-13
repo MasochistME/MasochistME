@@ -1,16 +1,9 @@
-/** @module Races */
-
 import { WithId } from 'mongodb';
 import { RaceType } from './Race';
 
 /**
- * BaseRacePlayer
- *
- * @category  Races
- * @memberof  Races
- * @alias     BaseRacePlayer
- *
  * Fields which are common for participants of all types of races.
+ * @category  Race participants
  */
 export type BaseRacePlayer = WithId<{
 	/**
@@ -40,13 +33,8 @@ export type BaseRacePlayer = WithId<{
 }>;
 
 /**
- * RacePlayerScore
- *
- * @category  Races
- * @memberof  Races
- * @alias     RacePlayerScore
- *
  * Fields required only for participants of score based races.
+ * @category  Race participants
  */
 export interface RacePlayerScore extends Omit<BaseRacePlayer, 'type'> {
 	/**
@@ -60,13 +48,8 @@ export interface RacePlayerScore extends Omit<BaseRacePlayer, 'type'> {
 }
 
 /**
- * RacePlayerTime
- *
- * @category  Races
- * @memberof  Races
- * @alias     RacePlayerTime
- *
  * Fields required only for participants of time based races.
+ * @category  Race participants
  */
 export interface RacePlayerTime extends Omit<BaseRacePlayer, 'type'> {
 	/**
@@ -76,13 +59,8 @@ export interface RacePlayerTime extends Omit<BaseRacePlayer, 'type'> {
 }
 
 /**
- * RacePlayer
- *
- * @category  Races
- * @memberof  Races
- * @alias     RacePlayer
- *
  * This is a type of a single object within the collection "racePlayers".
  * A single object describes a single participant in a single race.
+ * @category  Race participants
  */
 export type RacePlayer = RacePlayerScore | RacePlayerTime;

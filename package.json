@@ -22,7 +22,7 @@
     "lint": "eslint . --ext .ts",
     "test": "echo TODO",
     "semantic-release": "semantic-release",
-    "docs": "jsdoc -c jsdoc.json -d __docs -r"
+    "docs": "typedoc"
   },
   "dependencies": {
     "axios": "1.1.2",
@@ -49,6 +49,7 @@
     "prettier": "^2.7.1",
     "semantic-release": "^19.0.5",
     "tsc-alias": "^1.7.0",
+    "typedoc": "^0.23.16",
     "typescript": "^4.8.2"
   }
 }

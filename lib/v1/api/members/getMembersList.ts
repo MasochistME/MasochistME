@@ -6,9 +6,6 @@ import { Member, ResponseError } from 'v1/types';
  * Returns a list of all members.
  *
  * @category Members
- * @function
- *
- * @return  {Member[]}  List of all members.
  */
 export const getMembersList = async (BASE_URL: string): Promise<Member[]> => {
 	const url = `${BASE_URL}/members/list`;

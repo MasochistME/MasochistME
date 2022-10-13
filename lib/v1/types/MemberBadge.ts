@@ -1,16 +1,9 @@
-/** @module MemberBadges */
-
 import { WithId } from 'mongodb';
 
 /**
- * MemberBadge
- *
- * @category  Badges
- * @memberof  Badges
- * @alias     MemberBadge
- *
  * This is a type of a single object within the collection "memberBadges".
  * A single object describes a single badge belonging to a single member.
+ * @category  Badges
  */
 export type MemberBadge = WithId<{
 	/**

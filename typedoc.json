@@ -1,0 +1,4 @@
+{
+  "entryPoints": ["lib/v1/*"],
+  "out": "__docs"
+}

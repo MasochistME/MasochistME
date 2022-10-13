@@ -3,16 +3,10 @@
 import { WithId } from 'mongodb';
 
 /**
- * BaseBadge
- *
- * @category  Badges
- * @memberof  Badges
- * @alias			BaseBadge
- * @typedef   Badge
- *
  * Fields which are common for all types of badges.
+ * @category  Badges
  */
-type BaseBadge = WithId<{
+export type BaseBadge = WithId<{
 	/**
 	 * Name of the badge.
 	 */
@@ -44,15 +38,10 @@ type BaseBadge = WithId<{
 }>;
 
 /**
- * BadgeGameSteam
- *
- * @category  Badges
- * @memberof  Badges
- * @alias			BadgeGameSteam
- *
  * Fields required only for badges belonging to a Steam game.
+ * @category  Badges
  */
-interface BadgeGameSteam extends BaseBadge {
+export interface BadgeGameSteam extends BaseBadge {
 	/**
 	 * Steam game ID. If null, the game is not a Steam game.
 	 */
@@ -68,15 +57,10 @@ interface BadgeGameSteam extends BaseBadge {
 }
 
 /**
- * BadgeGameNonSteam
- *
- * @category  Badges
- * @memberof  Badges
- * @alias			BadgeGameNonSteam
- *
  * Fields required only for badges belonging to a non-Steam game.
+ * @category  Badges
  */
-interface BadgeGameNonSteam extends BaseBadge {
+export interface BadgeGameNonSteam extends BaseBadge {
 	/**
 	 * Steam game ID. If null, the game is not a Steam game.
 	 */
@@ -92,13 +76,8 @@ interface BadgeGameNonSteam extends BaseBadge {
 }
 
 /**
- * Badge
- *
- * @category  Badges
- * @memberof  Badges
- * @alias     Badge
- *
  * This is a type of a single object within the collection "badges".
  * A single object describes a single badge.
+ * @category  Badges
  */
 export type Badge = BadgeGameSteam | BadgeGameNonSteam;

@@ -7,10 +7,6 @@ import { Season, ResponseError } from 'v1/types';
  * Creates a new season.
  *
  * @category Seasons
- * @function
- *
- * @param 	{Omit<Season, '_id'>} 		 season  Data of the season to create.
- * @return  {InsertOneResult<Season>}					 MongoDB insert one result object.
  */
 export const createSeason = async (
 	{ season }: { season: Omit<Season, '_id'> },

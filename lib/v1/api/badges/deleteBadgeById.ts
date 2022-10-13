@@ -7,10 +7,6 @@ import { ResponseError } from 'v1/types';
  * Deletes a badge.
  *
  * @category Badges
- * @function
- *
- * @param   {String}        badgeId  ID of the badge to delete.
- * @return  {DeleteResult}           MongoDB delete result object.
  */
 export const deleteBadgeById = async (
 	{ badgeId }: { badgeId: string },

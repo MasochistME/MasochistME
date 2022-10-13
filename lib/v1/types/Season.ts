@@ -1,16 +1,9 @@
-/** @module Seasons */
-
 import { WithId } from 'mongodb';
 
 /**
- * Season
- *
- * @category  Seasons
- * @memberof  Seasons
- * @alias     Season
- *
  * This is a type of a single object within the collection "seasons".
  * A single object describes a single race season.
+ * @category  Seasons
  */
 export type Season = WithId<{
 	/**

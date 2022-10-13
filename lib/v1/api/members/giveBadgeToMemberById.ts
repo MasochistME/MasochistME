@@ -7,11 +7,6 @@ import { MemberBadge, ResponseError } from 'v1/types';
  * Gives a badge by given badge ID to member by their Discord ID.
  *
  * @category Members
- * @function
- *
- * @param   {String} 											  badgeId   ID of the badge to give.
- * @param   {String} 											  memberId  Discord ID of the requested member.
- * @return  {InsertOneResult<MemberBadge>}						MongoDB insert one result object.
  */
 export const giveBadgeToMemberById = async (
 	{ badgeId, memberId }: { badgeId: string; memberId: string },

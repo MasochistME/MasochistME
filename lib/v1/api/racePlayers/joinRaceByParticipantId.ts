@@ -6,13 +6,7 @@ import { RacePlayer, ResponseError } from 'v1/types';
 /**
  * Signs a user up for participatin in a specific race.
  *
- * @category Races
- * @subcategory Participants
- * @function
- *
- * @param 	{String}      					 raceId    ID of the race.
- * @param   {String}      				   memberId  Discord ID of the requested race participant.
- * @return  {InsertOneResult<Race>}            MongoDB insert one result object.
+ * @category Race participants
  */
 export const joinRaceByParticipantId = async (
 	{ raceId, memberId }: { raceId: string; memberId: string },

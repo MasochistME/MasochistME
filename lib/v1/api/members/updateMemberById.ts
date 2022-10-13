@@ -8,11 +8,6 @@ type MemberUpdate = Partial<Pick<Member, 'description'>>;
  * Updates a member by updating the fields that the user had passed.
  *
  * @category Members
- * @function
- *
- * @param 	{String} 																memberId  ID of the member to update.
- * @param 	{Partial<Pick<Member, 'description'>>}  member    Selected fields to update for the given member.
- * @return 	{UpdateResult}																		MongoDB update result object.
  */
 export const updateMemberById = async (
 	{ member, memberId }: { member: MemberUpdate; memberId: string },

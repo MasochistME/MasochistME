@@ -6,10 +6,6 @@ import { Badge, ResponseError } from 'v1/types';
  * Returns a badge by given ID, if it exists.
  *
  * @category Badges
- * @function
- *
- * @param   {String}  badgeId  ID of the badge to retrieve.
- * @return  {Badge}            Badge's data (if it exists).
  */
 export const getBadgeById = async (
 	{ badgeId }: { badgeId: string },

@@ -44,7 +44,7 @@ export type Config = {
 	authToken?: string;
 };
 
-type Head<T> = T extends (
+export type Head<T> = T extends (
 	first: infer FirstArgument,
 	...args: any[] | never
 ) => any

@@ -1,16 +1,9 @@
-/** @module Members */
-
 import { WithId } from 'mongodb';
 
 /**
- * Member
- *
- * @category  Members
- * @memberof  Members
- * @alias     Member
- *
  * This is a type of a single object within the collection "members".
  * A single object describes a single member.
+ * @category  Members
  */
 export type Member = WithId<{
 	/**
@@ -60,13 +53,8 @@ export type Member = WithId<{
 }>;
 
 /**
- * MemberIDEither
- *
- * @category  Members
- * @memberof  Members
- * @alias     MemberIDEither
- *
  * Type used when it does not matter what type of ID member provides while trying to retrieve their data.
+ * @category  Members
  */
 export type MemberIdEither =
 	| { steamId: string; discordId?: never }

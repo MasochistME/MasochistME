@@ -5,12 +5,7 @@ import { RacePlayer, ResponseError } from 'v1/types';
 /**
  * Returns a list of all participants from a single race.
  *
- * @category Races
- * @subcategory Participants
- * @function
- *
- * @param 	{String}        raceId  ID of the race.
- * @return 	{RacePlayer[]}          List of all participants of the particular race.
+ * @category Race participants
  */
 export const getRaceParticipantsList = async (
 	{ raceId }: { raceId: string },

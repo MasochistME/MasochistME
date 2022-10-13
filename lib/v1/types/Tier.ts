@@ -1,16 +1,9 @@
-/** @module Tiers */
-
 import { WithId } from 'mongodb';
 
 /**
- * Tier
- *
- * @category  Tiers
- * @memberof  Tiers
- * @alias     Tier
- *
  * This is a type of a single object within the collection "tiers".
  * A single object describes a single tier.
+ * @category  Tiers
  */
 export type Tier = WithId<{
 	/**
@@ -36,12 +29,7 @@ export type Tier = WithId<{
 }>;
 
 /**
- * TierId
- *
- * @category  Tiers
- * @memberof  Tiers
- * @alias     TierId
- *
  * TODO this is temp
+ * @category  Tiers
  */
 export type TierId = '1' | '2' | '3' | '4' | '5';

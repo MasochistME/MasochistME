@@ -7,10 +7,6 @@ import { ResponseError } from 'v1/types';
  * Deletes a race.
  *
  * @category Races
- * @function
- *
- * @param 	{String}			  raceId  ID of the race to delete.
- * @return  {DeleteResult}					MongoDB delete result object.
  */
 export const deleteRaceById = async (
 	{ raceId }: { raceId: string },

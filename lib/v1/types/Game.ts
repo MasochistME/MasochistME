@@ -1,18 +1,11 @@
-/** @module Games */
-
 import { WithId } from 'mongodb';
 
 import { TierId } from 'legacy/types';
 
 /**
- * Game
- *
- * @category  Games
- * @memberof  Games
- * @alias     Game
- *
  * This is a type of a single object within the collection "games".
  * A single object describes a single game.
+ * @category  Games
  */
 export type Game = WithId<{
 	/**
@@ -58,13 +51,8 @@ export type Game = WithId<{
 }>;
 
 /**
- * GameSale
- *
- * @category  Games
- * @memberof  Games
- * @alias     GameSale
- *
  * Information about the current sale of a particular game.
+ * @category  Games
  */
 export type GameSale = {
 	/**
@@ -78,13 +66,8 @@ export type GameSale = {
 };
 
 /**
- * GameAchievements
- *
- * @category  Games
- * @memberof  Games
- * @alias			GameAchievements
- *
  * Information about achievements for a specific game.
+ * @category  Games
  */
 export type GameAchievements = {
 	/**

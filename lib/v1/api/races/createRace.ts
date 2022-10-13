@@ -7,10 +7,6 @@ import { Race, ResponseError } from 'v1/types';
  * Creates a new race.
  *
  * @category Races
- * @function
- *
- * @param   {Omit<Race, '_id'>} 		 race  Data of the race to create.
- * @return  {InsertOneResult<Race>}				 MongoDB insert one result object.
  */
 export const createRace = async (
 	{ race }: { race: Omit<Race, '_id'> },

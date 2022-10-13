@@ -1,5 +1,3 @@
-/** @module Races */
-
 import { WithId } from 'mongodb';
 
 export enum RaceType {
@@ -8,13 +6,8 @@ export enum RaceType {
 }
 
 /**
- * BaseRace
- *
- * @category  Races
- * @memberof  Races
- * @alias			BaseRace
- *
  * Fields which are common for all types of races.
+ * @category  Races
  */
 export type BaseRace = WithId<{
 	/**
@@ -72,13 +65,8 @@ export type BaseRace = WithId<{
 }>;
 
 /**
- * RaceScoreBased
- *
- * @category  Races
- * @memberof  Races
- * @alias     RaceScoreBased
- *
  * Fields required only for score based races.
+ * @category  Races
  */
 export interface RaceScoreBased extends Omit<BaseRace, 'type'> {
 	/**
@@ -92,13 +80,8 @@ export interface RaceScoreBased extends Omit<BaseRace, 'type'> {
 }
 
 /**
- * RaceTimeBased
- *
- * @category  Races
- * @memberof  Races
- * @alias     RaceTimeBased
- *
  * Fields required only for time based races.
+ * @category  Races
  */
 export interface RaceTimeBased extends Omit<BaseRace, 'type'> {
 	/**
@@ -108,13 +91,8 @@ export interface RaceTimeBased extends Omit<BaseRace, 'type'> {
 }
 
 /**
- * Race
- *
- * @category  Races
- * @memberof  Races
- * @alias			Race
- *
  * This is a type of a single object within the collection "race".
  * A single object describes a single race.
+ * @category  Races
  */
 export type Race = RaceScoreBased | RaceTimeBased;

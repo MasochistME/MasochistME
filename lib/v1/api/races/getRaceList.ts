@@ -6,9 +6,6 @@ import { Race, ResponseError } from 'v1/types';
  * Returns a list of all the races that were ever registered.
  *
  * @category Races
- * @function
- *
- * @return  {Race[]}  List of all races - past, present and future.
  */
 export const getRaceList = async (BASE_URL: string): Promise<Race[]> => {
 	const url = `${BASE_URL}/races/list`;

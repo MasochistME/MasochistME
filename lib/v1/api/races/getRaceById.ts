@@ -6,10 +6,6 @@ import { Race, ResponseError } from 'v1/types';
  * Returns a race fron the database given the id, if it exists.
  *
  * @category Races
- * @function
- *
- * @param 	{String}  raceId  ID of the race to fetch.
- * @return  {Race}
  */
 export const getRaceById = async (
 	{ raceId }: { raceId: string },

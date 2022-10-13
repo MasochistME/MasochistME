@@ -1,0 +1,13 @@
+name: Docs!
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Wait for it
+        run: echo TODO
