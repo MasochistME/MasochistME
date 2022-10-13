@@ -8,7 +8,7 @@ import { connectToDb } from 'helpers/db';
  * Returns a member by the given ID (if it exists).
  * @param req Request
  * @param res Response
- * @returns void
+ * @return void
  */
 export const getMemberById = async (
   req: Request,

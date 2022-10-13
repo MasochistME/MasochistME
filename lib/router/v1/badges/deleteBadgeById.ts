@@ -9,7 +9,7 @@ import { connectToDb } from 'helpers/db';
  * Deletes a badge with a given badge ID, and removes it from all members that have it.
  * @param req Request
  * @param res Response
- * @returns void
+ * @return void
  */
 export const deleteBadgeById = async (
   req: Request,

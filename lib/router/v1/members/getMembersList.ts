@@ -8,7 +8,7 @@ import { connectToDb } from 'helpers/db';
  * Returns a list of all members stored in the database.
  * @param _req Request
  * @param res Response
- * @returns void
+ * @return void
  */
 export const getMembersList = async (
   _req: Request,

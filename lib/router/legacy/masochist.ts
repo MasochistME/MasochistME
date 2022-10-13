@@ -55,7 +55,7 @@ export const connectUserWithDiscord = async (
  * Editable fields: description
  * @param req
  * @param res
- * @returns
+ * @return
  */
 export const updateUserFields = async (
   req: Request,

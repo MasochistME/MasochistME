@@ -8,7 +8,7 @@ import { connectToDb } from 'helpers/db';
  * Gives a badge with given badge ID to member with given member ID.
  * @param req Request
  * @param res Response
- * @returns void
+ * @return void
  */
 export const giveBadgeToMemberById = async (
   req: Request,

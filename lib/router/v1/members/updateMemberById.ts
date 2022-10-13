@@ -8,7 +8,7 @@ import { connectToDb } from 'helpers/db';
  * Updates a member with given member ID. All of the updatable fields are optional.
  * @param req Request
  * @param res Response
- * @returns void
+ * @return void
  */
 export const updateMemberById = async (
   req: Request,

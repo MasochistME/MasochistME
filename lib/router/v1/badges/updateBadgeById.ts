@@ -9,7 +9,7 @@ import { connectToDb } from 'helpers/db';
  * Updates a badge with given badge ID. All of the updatable fields are optional.
  * @param req Request
  * @param res Response
- * @returns void
+ * @return void
  */
 export const updateBadgeById = async (
   req: Request,

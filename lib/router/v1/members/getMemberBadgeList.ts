@@ -8,7 +8,7 @@ import { connectToDb } from 'helpers/db';
  * Returns a list of all badges belonging to a single member.
  * @param req Request
  * @param res Response
- * @returns void
+ * @return void
  */
 export const getMemberBadgeList = async (
   req: Request,

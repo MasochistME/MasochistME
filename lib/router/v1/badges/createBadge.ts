@@ -8,7 +8,7 @@ import { connectToDb } from 'helpers/db';
  * Creates a new badge.
  * @param req Request
  * @param res Response
- * @returns void
+ * @return void
  */
 export const createBadge = async (
   req: Request,

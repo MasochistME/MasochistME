@@ -9,7 +9,7 @@ import { connectToDb } from 'helpers/db';
  * Updates a season by its ID. All of the updatable fields are optional.
  * @param req Request
  * @param res Response
- * @returns void
+ * @return void
  */
 export const updateSeasonById = async (
   req: Request<

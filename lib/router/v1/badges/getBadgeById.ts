@@ -9,7 +9,7 @@ import { connectToDb } from 'helpers/db';
  * Returns a badge by the given ID (if it exists).
  * @param req Request
  * @param res Response
- * @returns void
+ * @return void
  */
 export const getBadgeById = async (
   req: Request,

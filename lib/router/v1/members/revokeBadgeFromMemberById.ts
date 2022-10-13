@@ -8,7 +8,7 @@ import { connectToDb } from 'helpers/db';
  * Removes a badge with given badge ID from member with given member ID.
  * @param req Request
  * @param res Response
- * @returns void
+ * @return void
  */
 export const revokeBadgeFromMemberById = async (
   req: Request,

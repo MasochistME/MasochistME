@@ -8,7 +8,7 @@ import { connectToDb } from 'helpers/db';
  * Returns a list of all games stored in the database.
  * @param _req Request
  * @param res Response
- * @returns void
+ * @return void
  */
 export const getGamesList = async (
   _req: Request,
