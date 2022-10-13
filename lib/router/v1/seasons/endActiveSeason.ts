@@ -25,7 +25,7 @@ export const endActiveSeason = async (
     if (!response.acknowledged) {
       res.status(400).send({ error: 'Could not end this season.' });
     } else {
-      res.status(201).send(response);
+      res.status(200).send(response);
     }
   } catch (err: any) {
     log.WARN(err);
