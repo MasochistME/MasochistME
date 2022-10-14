@@ -4,7 +4,20 @@ import { UpdateResult } from 'mongodb';
 import { ResponseError } from 'v1/types';
 
 /**
- * Ends an active season, if there is any.
+ * Ends an active racing season (if it exists).
+ *
+ * ## Usage
+ *
+ * ```ts
+ * const {
+ * 	acknowledged,
+ * 	matchedCount,
+ * 	modifiedCount,
+ * 	upsertedCount,
+ * 	upsertedId,
+ * } = await sdk.endActiveSeason();
+ * ```
+ *
  * @category Seasons
  */
 export const endActiveSeason = async (

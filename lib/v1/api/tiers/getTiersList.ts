@@ -3,7 +3,14 @@ import axios, { AxiosResponse } from 'axios';
 import { Tier, ResponseError } from 'v1/types';
 
 /**
- * Returns a list of all tiers.
+ * Returns a list of all game tiers.
+ *
+ * ## Usage
+ *
+ * ```ts
+ * const tiers: Tier[] = await sdk.getTiersList();
+ * ```
+ *
  * @category Tiers
  */
 export const getTiersList = async (

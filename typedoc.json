@@ -1,7 +1,9 @@
 {
   "entryPoints": ["lib/v1/*"],
+  "exclude": ["**/sdk.ts"],
   "out": "__docs",
   "theme": "default",
+  "categorizeByGroup": false,
   "visibilityFilters": {
     "protected": false,
     "private": false,

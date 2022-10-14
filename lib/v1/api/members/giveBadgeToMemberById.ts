@@ -4,7 +4,23 @@ import { InsertOneResult } from 'mongodb';
 import { MemberBadge, ResponseError } from 'v1/types';
 
 /**
- * Gives a badge by given badge ID to member by their Discord ID.
+ * Gives an existing badge to an existing member.
+ *
+ * Badge is identified by its stringified `ObjectID`.
+ * Member is identified by their Discord ID.
+ *
+ * ## Usage
+ *
+ * ```ts
+ * const badgeId: string = "567678d96778a6876cc78";
+ * const memberId: string = "2938274356793";
+ *
+ * const {
+ * 	acknowledged,
+ *  insertedId,
+ * } = await sdk.giveBadgeToMemberById({ badgeId, memberId });
+ * ```
+ *
  * @category Members
  * @param params.badgeId  - ID of the badge to give to selected member.
  * @param params.memberId - ID of member which is supposed to get a badge.

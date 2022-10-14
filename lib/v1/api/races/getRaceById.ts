@@ -3,7 +3,15 @@ import axios, { AxiosResponse } from 'axios';
 import { Race, ResponseError } from 'v1/types';
 
 /**
- * Returns a race fron the database given the id, if it exists.
+ * Returns a race by the given ID (if it exists).
+ *
+ * Race is identified by its stringified `ObjectID`.
+ *
+ * ## Usage
+ * ```ts
+ * const race: Race = await sdk.getRaceById({ raceId: "5dffce657d876ad" });
+ * ```
+ *
  * @category Races
  * @param params.raceId - ID of the race to fetch.
  */

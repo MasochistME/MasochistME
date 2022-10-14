@@ -4,6 +4,13 @@ import { Member, ResponseError } from 'v1/types';
 
 /**
  * Returns a list of all members.
+ *
+ * ## Usage
+ *
+ * ```ts
+ * const members: Member[] = await sdk.getMembersList();
+ * ```
+ *
  * @category Members
  */
 export const getMembersList = async (

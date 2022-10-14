@@ -4,7 +4,34 @@ import { UpdateResult } from 'mongodb';
 import { Badge, ResponseError } from 'v1/types';
 
 /**
- * Updates a badge by updating the fields that the user had passed.
+ * Updates a badge by given ID.
+ *
+ * Badge is identified by its stringified `ObjectID`.
+ *
+ * ### Updatable fields
+ * - `name`
+ * - `description`
+ * - `points`
+ * - `requirements`
+ * - `image`
+ *
+ * ## Usage
+ *
+ * ```ts
+ * const badgeId: string = "5f5e555d5a578b6";
+ * const badge: Partial<Badge> = {
+ *	points: 10,
+ * };
+ *
+ * const {
+ * 	acknowledged,
+ * 	matchedCount,
+ * 	modifiedCount,
+ * 	upsertedCount,
+ * 	upsertedId,
+ * } = await sdk.updateBadgeById({ badgeId, badge });
+ * ```
+ *
  * @category Badges
  * @param params.badgeId - ID of the badge to update.
  * @param params.badge   - Fields to update in the badge of given ID.

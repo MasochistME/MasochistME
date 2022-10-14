@@ -5,6 +5,30 @@ import { Race, ResponseError } from 'v1/types';
 
 /**
  * Creates a new race.
+ *
+ * ## Usage
+ * ```ts
+ * const race: Omit<Race, "_id"> = {
+ * 	name: "The best race ever!",
+ *  instructions: "You will need a controller, so prepare.",
+ *  objectives: "Get 100 starts in the shortest time possible.",
+ *  type: RaceType.TIME,
+ *  startTime: new Date(),
+ *  endTime: new Date(16893846783483),
+ *  downloadLink: "http://masochist.me",
+ *  downloadGrace: "30",
+ *  uploadGrace: "30",
+ *  organizer: "738927465878329",
+ *  season: "5eda7778c87dd9a7",
+ *  icon: "http://http.cat/404.jpg",
+ * };
+ *
+ * const {
+ * 	acknowledged,
+ *  insertedId,
+ * } = await sdk.createRace({ race });
+ * ```
+ *
  * @category Races
  * @param params.race - Object with the data of the new race.
  */

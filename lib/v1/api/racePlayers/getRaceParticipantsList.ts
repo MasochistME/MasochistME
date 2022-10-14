@@ -3,7 +3,16 @@ import axios, { AxiosResponse } from 'axios';
 import { RacePlayer, ResponseError } from 'v1/types';
 
 /**
- * Returns a list of all participants from a single race.
+ * Returns a list of all participants from a single race by given ID (if it exists).
+ *
+ * Race is identified by its stringified `ObjectID`.
+ *
+ * ## Usage
+ * ```ts
+ * const raceId: string = "5f5e555d5a578b6";
+ * const participants: RacePlayer[] = await sdk.getRaceParticipantsList({ raceId });
+ * ```
+ *
  * @category Race participants
  * @param params.raceId - ID of the race to get its participants from.
  */

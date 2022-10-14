@@ -4,7 +4,18 @@ import { DeleteResult } from 'mongodb';
 import { ResponseError } from 'v1/types';
 
 /**
- * Deletes a race.
+ * Deletes a race by given ID (if it exists).
+ *
+ * Race is identified by its stringified `ObjectID`.
+ *
+ * ## Usage
+ * ```ts
+ * const {
+ * 	acknowledged,
+ * 	deletedCount,
+ * } = await deleteRaceById({ raceId: "57da777687ecf89" });
+ * ```
+ *
  * @category Races
  * @param params.raceId - ID of the race to be deleted.
  */

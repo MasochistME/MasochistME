@@ -4,7 +4,23 @@ import { DeleteResult } from 'mongodb';
 import { ResponseError } from 'v1/types';
 
 /**
- * Removes a badge by given badge ID from member by their Discord ID.
+ * Removes a badge from an existing member.
+ *
+ * Badge is identified by its stringified `ObjectID`.
+ * Member is be identified by their Discord ID.
+ *
+ * ## Usage
+ *
+ * ```ts
+ * const badgeId: string = "567678d96778a6876cc78";
+ * const memberId: string = "2938274356793";
+ *
+ * const {
+ * 	acknowledged,
+ * 	deletedCount,
+ * } = await sdk.revokeBadgeFromMemberById({ badgeId, memberId });
+ * ```
+ *
  * @category Members
  * @param params.badgeId  - ID of the badge to remove from selected member.
  * @param params.memberId - ID of member which is supposed to have a badge revoked.

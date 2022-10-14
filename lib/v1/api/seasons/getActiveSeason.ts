@@ -3,7 +3,14 @@ import axios, { AxiosResponse } from 'axios';
 import { Season, ResponseError } from 'v1/types';
 
 /**
- * Returns data of an active season, if there is any.
+ * Returns data of an active season (if it exists).
+ *
+ * ## Usage
+ *
+ * ```ts
+ * const activeSeason: Season = await sdk.getActiveSeason();
+ * ```
+ *
  * @category Seasons
  */
 export const getActiveSeason = async (

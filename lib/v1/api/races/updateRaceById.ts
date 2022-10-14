@@ -4,7 +4,36 @@ import { UpdateResult } from 'mongodb';
 import { Race, ResponseError } from 'v1/types';
 
 /**
- * Updates a race by updating the fields that the user had passed.
+ * Updates a race by given ID (if it exists).
+ *
+ * ### Updatable fields
+ * - `name`
+ * - `instructions`
+ * - `objectives`
+ * - `startTime`
+ * - `endTime`
+ * - `downloadLink`
+ * - `downloadGrace`
+ * - `uploadGrace`
+ * - `icon`
+ * - `isActive`
+ *
+ * ## Usage
+ * ```ts
+ * const raceId: string = "5f5e555d5a578b6";
+ * const race: Partial<Race> = {
+ *	downloadLink: "http://http.cat/201.jpg",
+ * };
+ *
+ * const {
+ * 	acknowledged,
+ * 	matchedCount,
+ * 	modifiedCount,
+ * 	upsertedCount,
+ * 	upsertedId,
+ * } = await sdk.updateRaceById({ raceId, race });
+ * ```
+ *
  * @category Races
  * @param params.raceId - ID of the race to update.
  * @param params.race   - Fields to update in the chosen race.

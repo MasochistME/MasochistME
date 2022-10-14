@@ -3,7 +3,21 @@ import axios, { AxiosResponse } from 'axios';
 import { RacePlayer, ResponseError } from 'v1/types';
 
 /**
- * Returns an object representing a single participant in a single race.
+ * Returns an object representing a race participant (if they exist).
+ *
+ * Race is retrieved by its stringified `ObjectId`.
+ * Member is retrieved by their Discord ID.
+ *
+ * ## Usage
+ *
+ * ```ts
+ * const raceId: string = "89d88787e899caa8";
+ * const memberId: string = "3498759483298";
+ *
+ * const participant: RacePlayer =
+ * 	await sdk.getRaceParticipantById({ raceId, memberId });
+ * ```
+ *
  * @category Race participants
  * @param params.raceId   - ID of the race that member participates in.
  * @param params.memberId - Discord ID of the chosen race participant.

@@ -3,7 +3,15 @@ import axios, { AxiosResponse } from 'axios';
 import { Member, MemberIdEither, ResponseError } from 'v1/types';
 
 /**
- * Returns a member by either Steam ID or Discord ID, if it exists.
+ * Returns a member, if they exist.
+ * Member can be identified by either Discord ID or Steam ID, but at least one of those values **must** be provided.
+ *
+ * ## Usage
+ *
+ * ```ts
+ * const member: Member = await sdk.getMemberById({ steamId: "567876545678" });
+ * ```
+ *
  * @category Members
  * @param params.steamId   - (Optional) Steam ID of the requested member.
  * @param params.discordId - (Optional) Discord ID of the requested member.

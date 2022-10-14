@@ -5,6 +5,29 @@ import { Badge, ResponseError } from 'v1/types';
 
 /**
  * Creates a new badge.
+ *
+ * ## Usage
+ *
+ * ```ts
+ * const badge: Omit<Badge, '_id'> = {
+ *   name: "New Badge",
+ *   description: "Very cool new badge.",
+ *   requirements: "video",
+ *   img: "http://http.cat/404.jpg",
+ *   points: 5,
+ *   gameId: 25413,
+ *   title: null,
+ *   isSteamGame: true,
+ *   enabled: true,
+ *   legacy: false,
+ * };
+ *
+ * const {
+ * 	acknowledged,
+ * 	insertedId,
+ * } = await sdk.createBadge({ badge });
+ * ```
+ *
  * @category Badges
  * @param params.badge - Data of the new badge. All fields of the type Badge are required.
  */

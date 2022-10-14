@@ -4,7 +4,23 @@ import { InsertOneResult } from 'mongodb';
 import { Season, ResponseError } from 'v1/types';
 
 /**
- * Creates a new season.
+ * Creates a new inactive season.
+ *
+ * ## Usage
+ *
+ * ```ts
+ * const season: Season = {
+ * 	name: "Season III",
+ * 	description: "It's a third racing season!",
+ * 	icon: "http://http.cat/404.jpg",
+ * };
+ *
+ * const {
+ * 	acknowledged,
+ * 	insertedId,
+ * } = await sdk.createSeason({ season });
+ * ```
+ *
  * @category Seasons
  * @param params.season - Object representing a season to be created.
  */

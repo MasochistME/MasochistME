@@ -4,7 +4,32 @@ import { UpdateResult } from 'mongodb';
 import { Season, ResponseError } from 'v1/types';
 
 /**
- * Updates a season by updating the fields that the user had passed.
+ * Updates a season by given ID (if it exists).
+ *
+ * Season is identified by its stringified `ObjectID`.
+ *
+ * ### Updatable fields
+ * - `name`
+ * - `description`
+ * - `icon`
+ *
+ * ## Usage
+ *
+ * ```ts
+ * const seasonId: string = "9e9f99daa45c7";
+ * const season: Season = {
+ * 	name: "Updated season name",
+ * };
+ *
+ * const {
+ * 	acknowledged,
+ * 	matchedCount,
+ * 	modifiedCount,
+ * 	upsertedCount,
+ * 	upsertedId,
+ * } = await sdk.updateSeasonById({ seasonId, season });
+ * ```
+ *
  * @category Seasons
  * @param params.seasonId - ID of the season.
  * @param params.season   - fields that should be changed in a season, if it exists.

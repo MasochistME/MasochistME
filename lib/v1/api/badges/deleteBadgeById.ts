@@ -4,7 +4,19 @@ import { DeleteResult } from 'mongodb';
 import { ResponseError } from 'v1/types';
 
 /**
- * Deletes a badge.
+ * Delete a badge with given ID (if it exists).
+ *
+ * Badge is identified by its stringified `ObjectID`.
+ *
+ * ## Usage
+ *
+ * ```ts
+ * const {
+ * 	acknowledged,
+ * 	deletedCount,
+ * } = await sdk.deleteBadgeById({ bagdeId: '5f5e555d5a578b6' });
+ * ```
+ *
  * @category Badges
  * @param params.badgeId - ID of the badge to delete.
  */

@@ -4,7 +4,32 @@ import { UpdateResult } from 'mongodb';
 import { RacePlayer, ResponseError } from 'v1/types';
 
 /**
- * Updates a race participant object.
+ * Updates a race participant by given ID (if it exists).
+ *
+ * Race is identified by its stringified `ObjectID`.
+ * Participant is identified by their Discord ID.
+ *
+ * ### Updatable fields
+ * - `startTime`
+ * - `endTime`
+ * - `dnf`
+ *
+ * ## Usage
+ *
+ * ```ts
+ * const raceId: string = "5f5e555d5a578b6";
+ * const memberId: string = "9674893087456";
+ * const update = { dnf: true };
+ *
+ * const {
+ * 	acknowledged,
+ * 	matchedCount,
+ * 	modifiedCount,
+ * 	upsertedCount,
+ * 	upsertedId,
+ * } = await sdk.updateRaceByParticipantId({ raceId, memberId, update });
+ * ```
+ *
  * @category Race participants
  * @param params.raceId   - ID of the race in which requested user participates.
  * @param params.memberId - Discord ID of the race participant to be updated.

@@ -4,6 +4,13 @@ import { Badge, ResponseError } from 'v1/types';
 
 /**
  * Returns a list of all badges.
+ *
+ * ## Usage
+ *
+ * ```ts
+ * const badges: Badge[] = await sdk.getBadgesList();
+ * ```
+ *
  * @category Badges
  */
 export const getBadgesList = async (

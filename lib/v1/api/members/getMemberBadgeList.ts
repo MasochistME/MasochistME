@@ -3,7 +3,15 @@ import axios, { AxiosResponse } from 'axios';
 import { Badge, MemberIdEither, ResponseError } from 'v1/types';
 
 /**
- * Returns a list of all badges belonging to member with either Steam ID or Discord ID.
+ * Returns a list of all badges belonging to a member.
+ * Member can be identified by either Discord ID or Steam ID, but at least one of those values **must** be provided.
+ *
+ * ## Usage
+ *
+ * ```ts
+ * const badges: Badge[] = await sdk.getMemberBadgeList({ steamId: "567897654" });
+ * ```
+ *
  * @category Members
  * @param params.steamId   - (Optional) Steam ID of the requested member.
  * @param params.discordId - (Optional) Discord ID of the requested member.

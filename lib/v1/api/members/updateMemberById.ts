@@ -4,8 +4,32 @@ import { UpdateResult } from 'mongodb';
 import { Member, ResponseError } from 'v1/types';
 
 type MemberUpdate = Partial<Pick<Member, 'description'>>;
+
 /**
- * Updates a member by updating the fields that the user had passed.
+ * Updates a member by given member ID.
+ *
+ * Member is identified by their Discord ID.
+ *
+ * ### Updatable fields
+ * - `description`
+ *
+ * ## Usage
+ *
+ * ```ts
+ * const memberId: string = "2938274356793";
+ * const member: Member = {
+ * 	description: "Lorem ipsum dolor sit amet.",
+ * };
+ *
+ * const {
+ * 	acknowledged,
+ * 	matchedCount,
+ * 	modifiedCount,
+ * 	upsertedCount,
+ * 	upsertedId,
+ * } = await sdk.updateMemberById({ memberId, member });
+ * ```
+ *
  * @category Members
  * @param params.memberId - ID of the member to update.
  * @param params.member   - Fields to be updated for selected member.

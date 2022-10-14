@@ -3,7 +3,16 @@ import axios, { AxiosResponse } from 'axios';
 import { Badge, ResponseError } from 'v1/types';
 
 /**
- * Returns a list of all badges belonging to a game with given ID.
+ * Returns a list of all badges assigned to a game with given ID (if it exists).
+ *
+ * Game is identified by its Steam ID.
+ *
+ * ## Usage
+ *
+ * ```ts
+ * const badges: Badge[] = await sdk.getBadgesByGameId({ gameId: '21645' });
+ * ```
+ *
  * @category Games
  * @param params.gameId - ID of the game which badges we want to retrieve.
  */

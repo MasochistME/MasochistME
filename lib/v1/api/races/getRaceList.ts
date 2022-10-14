@@ -3,7 +3,13 @@ import axios, { AxiosResponse } from 'axios';
 import { Race, ResponseError } from 'v1/types';
 
 /**
- * Returns a list of all the races that were ever registered.
+ * Returns a list of all races.
+ *
+ * ## Usage
+ * ```ts
+ * const races: Race[] = await sdk.getRaceList();
+ * ```
+ *
  * @category Races
  */
 export const getRaceList = async (

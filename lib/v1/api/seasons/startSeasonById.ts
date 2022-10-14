@@ -4,7 +4,22 @@ import { UpdateResult } from 'mongodb';
 import { ResponseError } from 'v1/types';
 
 /**
- * Starts a new season. User must pass an ID of an already created race.
+ * Starts a new season by the given ID (if it exists).
+ * The season must already be created AND inactive.
+ *
+ * Season is identified by its stringified `ObjectID`.
+ *
+ * ## Usage
+ *
+ * ```ts
+ * const {
+ * 	acknowledged,
+ * 	matchedCount,
+ * 	modifiedCount,
+ * 	upsertedCount,
+ * 	upsertedId,
+ * } = await sdk.startSeasonById({ seasonId: "9e9f99daa45c7" });
+ * ```
  * @category Seasons
  * @param params.seasonId - ID of the season to be started.
  */

@@ -3,7 +3,16 @@ import axios, { AxiosResponse } from 'axios';
 import { Badge, ResponseError } from 'v1/types';
 
 /**
- * Returns a badge by given ID, if it exists.
+ * Retrieve a badge with given ID (if it exists).
+ *
+ * Badge is identified by its stringified `ObjectID`.
+ *
+ * ## Usage
+ *
+ * ```ts
+ * const badge: Badge = await sdk.getBadgeById({ badgeId: '5f5e555d5a578b6' });
+ * ```
+ *
  * @category Badges
  * @param params.badgeId - ID of the badge to fetch.
  */

@@ -4,6 +4,13 @@ import { Game, ResponseError } from 'v1/types';
 
 /**
  * Returns a list of all games.
+ *
+ * ## Usage
+ *
+ * ```ts
+ * const games: Game[] = await sdk.getGamesList();
+ * ```
+ *
  * @category Games
  */
 export const getGamesList = async (

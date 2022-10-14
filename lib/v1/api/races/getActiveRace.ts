@@ -4,6 +4,12 @@ import { Race, ResponseError } from 'v1/types';
 
 /**
  * Returns a list of all the present and future races, sorting them by which starts the sooner.
+ *
+ * ## Usage
+ * ```ts
+ * const races: Race[] = await sdk.getActiveRace();
+ * ```
+ *
  * @category Races
  */
 export const getActiveRace = async (

@@ -4,7 +4,22 @@ import { InsertOneResult } from 'mongodb';
 import { RacePlayer, ResponseError } from 'v1/types';
 
 /**
- * Signs a user up for participatind in a specific race.
+ * Signs a member up for participating in a specific race by given ID (if it exists).
+ *
+ * Race is identified by its stringified `ObjectID`.
+ * Member is identified by their Discord ID.
+ *
+ * ## Usage
+ * ```ts
+ * const raceId: string = "5f5e555d5a578b6";
+ * const memberId: string = "90876543782";
+ *
+ * const {
+ * 	acknowledged,
+ * 	insertedId,
+ * } = await sdk.joinRaceByParticipantId({ raceId, memberId });
+ * ```
+ *
  * @category Race participants
  * @param params.raceId   - ID of a race to sign a member to.
  * @param params.memberId - ID of a member that wishes to sign into a race.
