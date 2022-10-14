@@ -28,13 +28,13 @@ export interface Game extends WithId {
 	 */
 	img: string;
 	/**
-	 * List of the game's achievements.
-	 */
-	achievements: GameAchievements;
-	/**
 	 * URL to the game's Steam website.
 	 */
 	url: string;
+	/**
+	 * List of the game's achievements.
+	 */
+	achievements: GameAchievements;
 	/**
 	 * Information about the game's current Steam sale.
 	 */
