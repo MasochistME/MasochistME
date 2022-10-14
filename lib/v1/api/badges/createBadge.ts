@@ -28,8 +28,6 @@ import { Badge, ResponseError } from 'v1/types';
  * } = await sdk.createBadge({ badge });
  * ```
  *
- * @category Badges
- * @module Dupa
  * @param params.badge - Data of the new badge. All fields of the type Badge are required.
  */
 export const createBadge = async (

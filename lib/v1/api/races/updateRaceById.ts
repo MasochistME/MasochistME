@@ -34,7 +34,6 @@ import { Race, ResponseError } from 'v1/types';
  * } = await sdk.updateRaceById({ raceId, race });
  * ```
  *
- * @category Races
  * @param params.raceId - ID of the race to update.
  * @param params.race   - Fields to update in the chosen race.
  */

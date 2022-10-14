@@ -1,3 +1,7 @@
+/**
+ * @module Badges
+ */
+
 export { getBadgesList } from './getBadgesList';
 export { createBadge } from './createBadge';
 export { getBadgeById } from './getBadgeById';

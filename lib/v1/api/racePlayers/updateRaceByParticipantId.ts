@@ -30,7 +30,6 @@ import { RacePlayer, ResponseError } from 'v1/types';
  * } = await sdk.updateRaceByParticipantId({ raceId, memberId, update });
  * ```
  *
- * @category Race participants
  * @param params.raceId   - ID of the race in which requested user participates.
  * @param params.memberId - Discord ID of the race participant to be updated.
  * @param params.update   - Fields that need to be changed.

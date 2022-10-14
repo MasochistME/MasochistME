@@ -1,3 +1,7 @@
+/**
+ * @module Races
+ */
+
 import { WithId } from 'v1/types/Mongo';
 
 export enum RaceType {
@@ -7,7 +11,6 @@ export enum RaceType {
 
 /**
  * Fields which are common for all types of races.
- * @category  Races
  */
 interface BaseRace extends WithId {
 	/**
@@ -66,7 +69,6 @@ interface BaseRace extends WithId {
 
 /**
  * Race which is score based - members need to get the highest score possible within a time limit.
- * @category  Races
  */
 export interface RaceScoreBased extends Omit<BaseRace, 'type'> {
 	/**
@@ -81,7 +83,6 @@ export interface RaceScoreBased extends Omit<BaseRace, 'type'> {
 
 /**
  * Race which is time based - members need to complete the run as soon as possible.
- * @category  Races
  */
 export interface RaceTimeBased extends Omit<BaseRace, 'type'> {
 	/**
@@ -93,6 +94,5 @@ export interface RaceTimeBased extends Omit<BaseRace, 'type'> {
 /**
  * This is a type of a single object within the collection "race".
  * A single object describes a single race.
- * @category  Races
  */
 export type Race = RaceScoreBased | RaceTimeBased;

@@ -14,7 +14,6 @@ import { Badge, ResponseError } from 'v1/types';
  * const badges: Badge[] = await sdk.getBadgesByGameId({ gameId });
  * ```
  *
- * @category Games
  * @param params.gameId - ID of the game which badges we want to retrieve.
  */
 export const getBadgesByGameId = async (

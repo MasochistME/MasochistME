@@ -21,7 +21,6 @@ import { ResponseError } from 'v1/types';
  * } = await sdk.revokeBadgeFromMemberById({ badgeId, memberId });
  * ```
  *
- * @category Members
  * @param params.badgeId  - ID of the badge to remove from selected member.
  * @param params.memberId - ID of member which is supposed to have a badge revoked.
  */

@@ -1,10 +1,13 @@
+/**
+ * @module Games
+ */
+
 import { WithId } from 'v1/types/Mongo';
 import { TierId } from 'v1/types/Tier';
 
 /**
  * This is a type of a single object within the collection "games".
  * A single object describes a single game.
- * @category  Games
  */
 export interface Game extends WithId {
 	/**
@@ -51,7 +54,6 @@ export interface Game extends WithId {
 
 /**
  * Information about the current sale of a particular game.
- * @category  Games
  */
 export type GameSale = {
 	/**
@@ -66,7 +68,6 @@ export type GameSale = {
 
 /**
  * Information about achievements for a specific game.
- * @category  Games
  */
 export type GameAchievements = {
 	/**

@@ -13,7 +13,6 @@ import { Race, ResponseError } from 'v1/types';
  * const race: Race = await sdk.getRaceById({ raceId });
  * ```
  *
- * @category Races
  * @param params.raceId - ID of the race to fetch.
  */
 export const getRaceById = async (

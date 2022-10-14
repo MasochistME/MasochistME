@@ -13,7 +13,6 @@ import { Member, MemberIdEither, ResponseError } from 'v1/types';
  * const member: Member = await sdk.getMemberById({ steamId });
  * ```
  *
- * @category Members
  * @param params.steamId   - (Optional) Steam ID of the requested member.
  * @param params.discordId - (Optional) Discord ID of the requested member.
  */

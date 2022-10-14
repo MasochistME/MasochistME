@@ -1,9 +1,12 @@
+/**
+ * @module Seasons
+ */
+
 import { WithId } from 'v1/types/Mongo';
 
 /**
  * This is a type of a single object within the collection "seasons".
  * A single object describes a single race season.
- * @category  Seasons
  */
 export interface Season extends WithId {
 	/**

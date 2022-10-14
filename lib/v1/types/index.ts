@@ -1,3 +1,8 @@
+/**
+ * @module types
+ * @ignore
+ */
+
 export * from './Badge';
 export * from './Error';
 export * from './Game';

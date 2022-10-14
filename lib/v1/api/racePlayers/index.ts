@@ -1,3 +1,7 @@
+/**
+ * @module Races
+ */
+
 export { getRaceParticipantById } from './getRaceParticipantById';
 export { getRaceParticipantsList } from './getRaceParticipantsList';
 export { joinRaceByParticipantId } from './joinRaceByParticipantId';

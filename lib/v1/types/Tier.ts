@@ -1,9 +1,12 @@
+/**
+ * @module Tiers
+ */
+
 import { WithId } from 'v1/types/Mongo';
 
 /**
  * This is a type of a single object within the collection "tiers".
  * A single object describes a single tier.
- * @category  Tiers
  */
 export interface Tier extends WithId {
 	/**
@@ -30,6 +33,5 @@ export interface Tier extends WithId {
 
 /**
  * TODO this is temp
- * @category  Tiers
  */
 export type TierId = '1' | '2' | '3' | '4' | '5';

@@ -10,8 +10,6 @@ import { Tier, ResponseError } from 'v1/types';
  * ```ts
  * const tiers: Tier[] = await sdk.getTiersList();
  * ```
- *
- * @category Tiers
  */
 export const getTiersList = async (
 	/** @ignore */

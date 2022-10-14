@@ -13,7 +13,6 @@ import { RacePlayer, ResponseError } from 'v1/types';
  * const participants: RacePlayer[] = await sdk.getRaceParticipantsList({ raceId });
  * ```
  *
- * @category Race participants
  * @param params.raceId - ID of the race to get its participants from.
  */
 export const getRaceParticipantsList = async (

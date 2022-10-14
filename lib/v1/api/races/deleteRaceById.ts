@@ -17,7 +17,6 @@ import { ResponseError } from 'v1/types';
  * } = await deleteRaceById({ raceId });
  * ```
  *
- * @category Races
  * @param params.raceId - ID of the race to be deleted.
  */
 export const deleteRaceById = async (

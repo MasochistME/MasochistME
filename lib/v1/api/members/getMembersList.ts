@@ -11,7 +11,6 @@ import { Member, ResponseError } from 'v1/types';
  * const members: Member[] = await sdk.getMembersList();
  * ```
  *
- * @category Members
  */
 export const getMembersList = async (
 	/** @ignore */

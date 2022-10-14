@@ -11,7 +11,6 @@ import { Game, ResponseError } from 'v1/types';
  * const games: Game[] = await sdk.getGamesList();
  * ```
  *
- * @category Games
  */
 export const getGamesList = async (
 	/** @ignore */

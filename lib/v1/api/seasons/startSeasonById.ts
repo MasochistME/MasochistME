@@ -21,7 +21,6 @@ import { ResponseError } from 'v1/types';
  * 	upsertedId,
  * } = await sdk.startSeasonById({ seasonId });
  * ```
- * @category Seasons
  * @param params.seasonId - ID of the season to be started.
  */
 export const startSeasonById = async (

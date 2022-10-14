@@ -21,7 +21,6 @@ import { MemberBadge, ResponseError } from 'v1/types';
  * } = await sdk.giveBadgeToMemberById({ badgeId, memberId });
  * ```
  *
- * @category Members
  * @param params.badgeId  - ID of the badge to give to selected member.
  * @param params.memberId - ID of member which is supposed to get a badge.
  */

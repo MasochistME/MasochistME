@@ -18,8 +18,6 @@ import { ResponseError } from 'v1/types';
  * } = await sdk.deleteBadgeById({ bagdeId });
  * ```
  *
- * @category Badges
- * @module Dupa
  * @param params.badgeId - ID of the badge to delete.
  */
 export const deleteBadgeById = async (

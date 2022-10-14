@@ -18,7 +18,6 @@ import { ResponseError } from 'v1/types';
  * } = await sdk.endActiveSeason();
  * ```
  *
- * @category Seasons
  */
 export const endActiveSeason = async (
 	/** @ignore */

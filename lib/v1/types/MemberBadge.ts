@@ -1,9 +1,12 @@
+/**
+ * @module Badges
+ */
+
 import { WithId } from 'v1/types/Mongo';
 
 /**
  * This is a type of a single object within the collection "memberBadges".
  * A single object describes a single badge belonging to a single member.
- * @category  Badges
  */
 export interface MemberBadge extends WithId {
 	/**

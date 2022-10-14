@@ -11,7 +11,6 @@ import { Season, ResponseError } from 'v1/types';
  * const activeSeason: Season = await sdk.getActiveSeason();
  * ```
  *
- * @category Seasons
  */
 export const getActiveSeason = async (
 	/** @ignore */

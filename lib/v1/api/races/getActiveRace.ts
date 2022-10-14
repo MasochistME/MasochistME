@@ -10,7 +10,6 @@ import { Race, ResponseError } from 'v1/types';
  * const races: Race[] = await sdk.getActiveRace();
  * ```
  *
- * @category Races
  */
 export const getActiveRace = async (
 	/** @ignore */

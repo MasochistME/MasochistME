@@ -21,7 +21,6 @@ import { Season, ResponseError } from 'v1/types';
  * } = await sdk.createSeason({ season });
  * ```
  *
- * @category Seasons
  * @param params.season - Object representing a season to be created.
  */
 export const createSeason = async (

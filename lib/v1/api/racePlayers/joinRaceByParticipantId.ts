@@ -20,7 +20,6 @@ import { RacePlayer, ResponseError } from 'v1/types';
  * } = await sdk.joinRaceByParticipantId({ raceId, memberId });
  * ```
  *
- * @category Race participants
  * @param params.raceId   - ID of a race to sign a member to.
  * @param params.memberId - ID of a member that wishes to sign into a race.
  */

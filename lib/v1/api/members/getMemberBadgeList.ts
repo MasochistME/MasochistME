@@ -13,7 +13,6 @@ import { Badge, MemberIdEither, ResponseError } from 'v1/types';
  * const badges: Badge[] = await sdk.getMemberBadgeList({ steamId });
  * ```
  *
- * @category Members
  * @param params.steamId   - (Optional) Steam ID of the requested member.
  * @param params.discordId - (Optional) Discord ID of the requested member.
  */

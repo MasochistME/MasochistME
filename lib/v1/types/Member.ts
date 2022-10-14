@@ -1,9 +1,12 @@
+/**
+ * @module Members
+ */
+
 import { WithId } from 'v1/types/Mongo';
 
 /**
  * This is a type of a single object within the collection "members".
  * A single object describes a single member.
- * @category  Members
  */
 export interface Member extends WithId {
 	/**
@@ -54,7 +57,6 @@ export interface Member extends WithId {
 
 /**
  * Type used when it does not matter what type of ID member provides while trying to retrieve their data.
- * @category  Members
  */
 export type MemberIdEither =
 	| { steamId: string; discordId?: never }

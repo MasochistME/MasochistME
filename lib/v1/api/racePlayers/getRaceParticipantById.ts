@@ -18,7 +18,6 @@ import { RacePlayer, ResponseError } from 'v1/types';
  * 	await sdk.getRaceParticipantById({ raceId, memberId });
  * ```
  *
- * @category Race participants
  * @param params.raceId   - ID of the race that member participates in.
  * @param params.memberId - Discord ID of the chosen race participant.
  */

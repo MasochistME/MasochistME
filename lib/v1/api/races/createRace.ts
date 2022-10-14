@@ -29,7 +29,6 @@ import { Race, ResponseError } from 'v1/types';
  * } = await sdk.createRace({ race });
  * ```
  *
- * @category Races
  * @param params.race - Object with the data of the new race.
  */
 export const createRace = async (

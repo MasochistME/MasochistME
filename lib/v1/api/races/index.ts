@@ -1,3 +1,7 @@
+/**
+ * @module Races
+ */
+
 export { createRace } from './createRace';
 export { deleteRaceById } from './deleteRaceById';
 export { updateRaceById } from './updateRaceById';

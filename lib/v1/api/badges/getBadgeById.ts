@@ -14,7 +14,6 @@ import { Badge, ResponseError } from 'v1/types';
  * const badge: Badge = await sdk.getBadgeById({ badgeId });
  * ```
  *
- * @category Badges
  * @param params.badgeId - ID of the badge to fetch.
  */
 export const getBadgeById = async (

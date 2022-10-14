@@ -1,3 +1,7 @@
+/**
+ * @module Members
+ */
+
 export { getMembersList } from './getMembersList';
 export { getMemberById } from './getMemberById';
 export { updateMemberById } from './updateMemberById';

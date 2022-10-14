@@ -30,7 +30,6 @@ import { Season, ResponseError } from 'v1/types';
  * } = await sdk.updateSeasonById({ seasonId, season });
  * ```
  *
- * @category Seasons
  * @param params.seasonId - ID of the season.
  * @param params.season   - fields that should be changed in a season, if it exists.
  */

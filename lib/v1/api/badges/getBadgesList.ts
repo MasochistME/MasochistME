@@ -11,7 +11,6 @@ import { Badge, ResponseError } from 'v1/types';
  * const badges: Badge[] = await sdk.getBadgesList();
  * ```
  *
- * @category Badges
  */
 export const getBadgesList = async (
 	/** @ignore */

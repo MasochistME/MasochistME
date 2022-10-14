@@ -30,7 +30,6 @@ type MemberUpdate = Partial<Pick<Member, 'description'>>;
  * } = await sdk.updateMemberById({ memberId, member });
  * ```
  *
- * @category Members
  * @param params.memberId - ID of the member to update.
  * @param params.member   - Fields to be updated for selected member.
  */

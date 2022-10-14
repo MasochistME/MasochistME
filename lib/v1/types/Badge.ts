@@ -1,15 +1,16 @@
+/**
+ * @module Badges
+ */
 import { WithId } from 'v1/types/Mongo';
 
 /**
  * This is a type of a single object within the collection "badges".
  * A single object describes a single badge.
- * @category  Badges
  */
 export type Badge = BadgeGameSteam | BadgeGameNonSteam;
 
 /**
  * Fields which are common for all types of badges.
- * @category  Badges
  */
 interface BaseBadge extends WithId {
 	/**
@@ -44,7 +45,6 @@ interface BaseBadge extends WithId {
 
 /**
  * Badge for a Steam based game.
- * @category  Badges
  */
 export interface BadgeGameSteam extends BaseBadge {
 	/**
@@ -63,7 +63,6 @@ export interface BadgeGameSteam extends BaseBadge {
 
 /**
  * Badge for a non-Steam based game.
- * @category  Badges
  */
 export interface BadgeGameNonSteam extends BaseBadge {
 	/**

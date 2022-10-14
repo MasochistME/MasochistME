@@ -18,7 +18,6 @@ import { Season, ResponseError } from 'v1/types';
  * const seasonsInactive: Season[] = await sdk.getSeasonsList({ inactive: true });
  * ```
  *
- * @category Seasons
  * @param params.finished - Get only seasons which are finished.
  * @param params.inactive - Get only seasons which are yet to start.
  */

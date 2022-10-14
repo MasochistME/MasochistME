@@ -32,7 +32,6 @@ import { Badge, ResponseError } from 'v1/types';
  * } = await sdk.updateBadgeById({ badgeId, badge });
  * ```
  *
- * @category Badges
  * @param params.badgeId - ID of the badge to update.
  * @param params.badge   - Fields to update in the badge of given ID.
  */
