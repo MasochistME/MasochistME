@@ -10,7 +10,8 @@ import { Badge, ResponseError } from 'v1/types';
  * ## Usage
  *
  * ```ts
- * const badges: Badge[] = await sdk.getBadgesByGameId({ gameId: '21645' });
+ * const gameId: string = "21645";
+ * const badges: Badge[] = await sdk.getBadgesByGameId({ gameId });
  * ```
  *
  * @category Games

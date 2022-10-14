@@ -9,7 +9,8 @@ import { Member, MemberIdEither, ResponseError } from 'v1/types';
  * ## Usage
  *
  * ```ts
- * const member: Member = await sdk.getMemberById({ steamId: "567876545678" });
+ * const steamId: string = "567876545678";
+ * const member: Member = await sdk.getMemberById({ steamId });
  * ```
  *
  * @category Members

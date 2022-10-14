@@ -17,7 +17,7 @@ import { Season, ResponseError } from 'v1/types';
  *
  * ```ts
  * const seasonId: string = "9e9f99daa45c7";
- * const season: Season = {
+ * const season: Partial<Season> = {
  * 	name: "Updated season name",
  * };
  *

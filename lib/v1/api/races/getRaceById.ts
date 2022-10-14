@@ -9,7 +9,8 @@ import { Race, ResponseError } from 'v1/types';
  *
  * ## Usage
  * ```ts
- * const race: Race = await sdk.getRaceById({ raceId: "5dffce657d876ad" });
+ * const raceId: string = "57da777687ecf89";
+ * const race: Race = await sdk.getRaceById({ raceId });
  * ```
  *
  * @category Races

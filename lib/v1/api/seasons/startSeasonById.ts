@@ -12,13 +12,14 @@ import { ResponseError } from 'v1/types';
  * ## Usage
  *
  * ```ts
+ * const seasonId: string = "9e9f99daa45c7";
  * const {
  * 	acknowledged,
  * 	matchedCount,
  * 	modifiedCount,
  * 	upsertedCount,
  * 	upsertedId,
- * } = await sdk.startSeasonById({ seasonId: "9e9f99daa45c7" });
+ * } = await sdk.startSeasonById({ seasonId });
  * ```
  * @category Seasons
  * @param params.seasonId - ID of the season to be started.

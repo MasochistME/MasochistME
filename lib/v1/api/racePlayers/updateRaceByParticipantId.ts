@@ -19,7 +19,7 @@ import { RacePlayer, ResponseError } from 'v1/types';
  * ```ts
  * const raceId: string = "5f5e555d5a578b6";
  * const memberId: string = "9674893087456";
- * const update = { dnf: true };
+ * const update: Partial<RacePlayer> = { dnf: true };
  *
  * const {
  * 	acknowledged,

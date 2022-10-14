@@ -11,10 +11,11 @@ import { ResponseError } from 'v1/types';
  * ## Usage
  *
  * ```ts
+ * const badgeId: string = "5f5e555d5a578b6";
  * const {
  * 	acknowledged,
  * 	deletedCount,
- * } = await sdk.deleteBadgeById({ bagdeId: '5f5e555d5a578b6' });
+ * } = await sdk.deleteBadgeById({ bagdeId });
  * ```
  *
  * @category Badges

@@ -10,10 +10,11 @@ import { ResponseError } from 'v1/types';
  *
  * ## Usage
  * ```ts
+ * const raceId: string = "57da777687ecf89";
  * const {
  * 	acknowledged,
  * 	deletedCount,
- * } = await deleteRaceById({ raceId: "57da777687ecf89" });
+ * } = await deleteRaceById({ raceId });
  * ```
  *
  * @category Races

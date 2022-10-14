@@ -10,7 +10,8 @@ import { Badge, ResponseError } from 'v1/types';
  * ## Usage
  *
  * ```ts
- * const badge: Badge = await sdk.getBadgeById({ badgeId: '5f5e555d5a578b6' });
+ * const bagdeId: string = "5f5e555d5a578b6";
+ * const badge: Badge = await sdk.getBadgeById({ badgeId });
  * ```
  *
  * @category Badges

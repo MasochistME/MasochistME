@@ -9,7 +9,8 @@ import { Badge, MemberIdEither, ResponseError } from 'v1/types';
  * ## Usage
  *
  * ```ts
- * const badges: Badge[] = await sdk.getMemberBadgeList({ steamId: "567897654" });
+ * const steamId: string = "567876545678";
+ * const badges: Badge[] = await sdk.getMemberBadgeList({ steamId });
  * ```
  *
  * @category Members
