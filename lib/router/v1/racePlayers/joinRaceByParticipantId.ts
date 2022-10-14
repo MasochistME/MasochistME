@@ -37,8 +37,8 @@ export const joinRaceByParticipantId = async (
       discordId,
       raceId,
       type: race.type,
-      startTime: null,
-      endTime: null,
+      startDate: null,
+      endDate: null,
       dnf: false,
       ...(race.type === RaceType.SCORE_BASED && { score: null }),
     };

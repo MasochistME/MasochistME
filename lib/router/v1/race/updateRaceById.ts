@@ -17,14 +17,14 @@ export const updateRaceById = async (
       name,
       instructions,
       objectives,
-      startTime,
-      endTime,
+      startDate,
+      endDate,
       downloadLink,
       downloadGrace,
       uploadGrace,
       icon,
       isActive,
-    } = req.body; // TODO add validation
+    } = req.body; // TODO Add Request<Race> body validation
 
     const response = await collection.updateOne(
       { _id },
@@ -33,8 +33,8 @@ export const updateRaceById = async (
           ...(name && { name }),
           ...(instructions && { instructions }),
           ...(objectives && { objectives }),
-          ...(startTime && { startTime: new Date(startTime) }),
-          ...(endTime && { endTime: new Date(endTime) }),
+          ...(startDate && { startDate: new Date(startDate) }),
+          ...(endDate && { endDate: new Date(endDate) }),
           ...(downloadLink && { downloadLink }),
           ...(downloadGrace && { downloadGrace: Number(downloadGrace) }),
           ...(uploadGrace && { uploadGrace: Number(uploadGrace) }),

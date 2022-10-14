@@ -11,12 +11,12 @@ export const createRace = async (
   try {
     const { client, db } = await connectToDb();
     const collection = db.collection<Omit<Race, '_id'>>('races');
-    const race = req.body; // TODO add validation
+    const race = req.body; // TODO Add Request<Race> body validation
 
     const fixedRace: Omit<Race, '_id'> = {
       ...race,
-      startTime: new Date(race.startTime),
-      endTime: new Date(race.endTime),
+      startDate: new Date(race.startDate),
+      endDate: new Date(race.endDate),
     };
 
     const response = await collection.insertOne(fixedRace);

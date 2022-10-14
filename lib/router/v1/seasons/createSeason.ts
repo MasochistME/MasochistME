@@ -11,7 +11,7 @@ export const createSeason = async (
   try {
     const { client, db } = await connectToDb();
     const collection = db.collection<Omit<Season, '_id'>>('seasons');
-    const season = req.body; // TODO add validation
+    const season = req.body; // TODO Add Request<Season> body validation
 
     const response = await collection.insertOne({
       ...season,

@@ -6,7 +6,6 @@ import { connectToDb } from 'helpers/db';
 
 /**
  * Returns a list of all seasons.
- * @category Seasons
  * @param params.finished - Get only seasons which are finished.
  * @param params.inactive - Get only seasons which are yet to start.
  */

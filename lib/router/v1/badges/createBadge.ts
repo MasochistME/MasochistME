@@ -17,7 +17,7 @@ export const createBadge = async (
   try {
     const { client, db } = await connectToDb();
     const collection = db.collection<Omit<Badge, '_id'>>('badges');
-    const badge = req.body; // TODO add validation
+    const badge = req.body; // TODO Add Request<Badge> body validation
 
     const response = await collection.insertOne(badge);
 

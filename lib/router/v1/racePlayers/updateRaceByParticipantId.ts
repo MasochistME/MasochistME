@@ -23,14 +23,14 @@ export const updateRaceByParticipantId = async (
       return;
     }
 
-    const { startTime, endTime, score, dnf } = req.body; // TODO add validation
+    const { startDate, endDate, score, dnf } = req.body; // TODO Add Request<RacePlayer> body validation
 
     const response = await collection.updateOne(
       { _id: racePlayer._id },
       {
         $set: {
-          ...(startTime && { startTime: new Date(startTime) }),
-          ...(endTime && { endTime: new Date(endTime) }),
+          ...(startDate && { startDate: new Date(startDate) }),
+          ...(endDate && { endDate: new Date(endDate) }),
           ...(score && { score: Number(score) }),
           ...(dnf && { dnf }),
         },

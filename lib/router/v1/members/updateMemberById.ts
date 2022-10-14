@@ -18,7 +18,7 @@ export const updateMemberById = async (
     const { client, db } = await connectToDb();
     const collection = db.collection<Member>('members');
     const { memberId } = req.params;
-    const { description } = req.body; // TODO add validation
+    const { description } = req.body; // TODO Add Request<Member> body validation
 
     const response = await collection.updateOne(
       { discordId: memberId },

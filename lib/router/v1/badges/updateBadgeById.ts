@@ -19,7 +19,7 @@ export const updateBadgeById = async (
     const { client, db } = await connectToDb();
     const collection = db.collection<Badge>('badges');
     const _id = new ObjectId(req.params.badgeId);
-    const { name, description, points, requirements, image } = req.body; // TODO add validation
+    const { name, description, points, requirements, image } = req.body; // TODO Add Request<Badge> body validation
 
     const response = await collection.updateOne(
       { _id },
