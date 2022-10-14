@@ -17,6 +17,7 @@ export const createRace = async (
       ...race,
       startDate: new Date(race.startDate),
       endDate: new Date(race.endDate),
+      isActive: false,
     };
 
     const response = await collection.insertOne(fixedRace);
