@@ -24,9 +24,9 @@ export interface Season extends WithId {
 	/**
 	 * If the season has started, the date of starting is stored in this field.
 	 */
-	startDate: Date | null;
+	startTime: Date | null;
 	/**
 	 * If the season has ended, the date of ending is stored in this field.
 	 */
-	endDate: Date | null;
+	endTime: Date | null;
 }
