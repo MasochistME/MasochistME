@@ -14,13 +14,17 @@ export const getSeasonsList = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const { finished = undefined, inactive = undefined } = req.body;
+    const { active, inactive, finished, unfinished } = req.body.filter ?? {};
     const { client, db } = await connectToDb();
     const collection = db.collection<Season>('seasons');
-    const cursor = collection.find({
-      ...(inactive && { startDate: null }),
-      ...(finished && { endDate: { $not: null } }),
-    });
+    const cursor = collection
+      .find({
+        ...(inactive && { startDate: null, endDate: null }), //  has NO start date and NO end date
+        ...(active && { startDate: { $ne: null }, endDate: null }), // has start date AND no end date
+        ...(finished && { endDate: { $ne: null } }), // has start date AND end date
+        ...(unfinished && { endDate: null }), // has no end date
+      })
+      .sort({ startDate: 1 });
     const seasons: Season[] = [];
 
     await cursor.forEach((el: Season) => {
