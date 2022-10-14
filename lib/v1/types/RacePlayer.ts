@@ -24,11 +24,11 @@ interface BaseRacePlayer extends WithId {
 	/**
 	 * Time when member clicked the START button.
 	 */
-	startTime: Date | null;
+	startDate: Date | null;
 	/**
 	 * Time when member clicked the FINISH button.
 	 */
-	endTime: Date | null;
+	endDate: Date | null;
 	/**
 	 * If true, participant gave up.
 	 */

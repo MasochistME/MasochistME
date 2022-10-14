@@ -32,11 +32,11 @@ interface BaseRace extends WithId {
 	/**
 	 * Date of starting the race.
 	 */
-	startTime: Date;
+	startDate: Date;
 	/**
 	 * Date of ending the race.
 	 */
-	endTime: Date;
+	endDate: Date;
 	/**
 	 * URL to the game's website.
 	 */

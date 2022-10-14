@@ -10,8 +10,8 @@ import { Race, ResponseError } from 'v1/types';
  * - `name`
  * - `instructions`
  * - `objectives`
- * - `startTime`
- * - `endTime`
+ * - `startDate`
+ * - `endDate`
  * - `downloadLink`
  * - `downloadGrace`
  * - `uploadGrace`

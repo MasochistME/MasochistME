@@ -10,8 +10,8 @@ import { RacePlayer, ResponseError } from 'v1/types';
  * Participant is identified by their Discord ID.
  *
  * ### Updatable fields
- * - `startTime`
- * - `endTime`
+ * - `startDate`
+ * - `endDate`
  * - `dnf`
  *
  * ## Usage
@@ -38,7 +38,7 @@ export const updateRaceByParticipantId = async (
 	params: {
 		raceId: string;
 		memberId: string;
-		update: Partial<Pick<RacePlayer, 'startTime' | 'endTime' | 'dnf'>> & {
+		update: Partial<Pick<RacePlayer, 'startDate' | 'endDate' | 'dnf'>> & {
 			score?: number;
 		};
 	},
@@ -51,7 +51,7 @@ export const updateRaceByParticipantId = async (
 	const racePlayerResponse = await axios.put<
 		UpdateResult | ResponseError,
 		AxiosResponse<UpdateResult | ResponseError>,
-		Partial<Pick<RacePlayer, 'startTime' | 'endTime' | 'dnf'>> & {
+		Partial<Pick<RacePlayer, 'startDate' | 'endDate' | 'dnf'>> & {
 			score?: number;
 		}
 	>(url, update, { validateStatus: () => true });
