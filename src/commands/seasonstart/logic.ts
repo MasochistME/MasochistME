@@ -44,4 +44,4 @@ export const seasonstart = async (
   }
 };
 
-// TODO consider ending an old active race
+// TODO Consider if this should also end an old active race

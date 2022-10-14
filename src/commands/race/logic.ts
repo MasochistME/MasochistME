@@ -38,8 +38,8 @@ export const race = async (interaction: DiscordInteraction): Promise<void> => {
  */
 const getActiveRaceEmbed = (activeRace: Race): APIEmbed => {
   const isOngoing =
-    dayjs(activeRace.startTime).diff(new Date()) < 0 &&
-    dayjs(activeRace.endTime).diff(new Date()) > 0;
+    dayjs(activeRace.startDate).diff(new Date()) < 0 &&
+    dayjs(activeRace.endDate).diff(new Date()) > 0;
 
   const fields: APIEmbedField[] = [
     {
@@ -53,15 +53,15 @@ const getActiveRaceEmbed = (activeRace: Race): APIEmbed => {
     {
       name: "Start time",
       value: isOngoing
-        ? getUTCDate(activeRace.startTime)
-        : dayjs(activeRace.startTime).fromNow(),
+        ? getUTCDate(activeRace.startDate)
+        : dayjs(activeRace.startDate).fromNow(),
       inline: true,
     },
     {
       name: "Finish time",
       value: isOngoing
-        ? dayjs(activeRace.endTime).fromNow()
-        : getUTCDate(activeRace.endTime),
+        ? dayjs(activeRace.endDate).fromNow()
+        : getUTCDate(activeRace.endDate),
       inline: true,
     },
     {

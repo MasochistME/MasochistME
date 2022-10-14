@@ -149,12 +149,12 @@ const getNewRaceCensoredEmbed = (race: Race): APIEmbed => {
     },
     {
       name: "Start time",
-      value: getUTCDate(race.startTime),
+      value: getUTCDate(race.startDate),
       inline: true,
     },
     {
       name: "Finish time",
-      value: getUTCDate(race.endTime),
+      value: getUTCDate(race.endDate),
       inline: true,
     },
     {

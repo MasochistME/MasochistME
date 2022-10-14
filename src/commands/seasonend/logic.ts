@@ -25,4 +25,4 @@ export const seasonend = async (
   }
 };
 
-// TODO add sending public leaderboards at the end of a season maybe?
+// TODO Add sending public leaderboards at the end of a season maybe?

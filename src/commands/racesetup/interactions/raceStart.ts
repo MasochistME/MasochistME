@@ -178,17 +178,17 @@ export const raceStart = async (
       "",
     );
     const race = await sdk.getRaceById({ raceId });
-    const startTime = new Date();
+    const startDate = new Date();
     const { acknowledged } = await sdk.updateRaceByParticipantId({
       raceId,
       memberId: interaction.user.id,
-      update: { startTime },
+      update: { startDate },
     });
     if (!acknowledged) throw new Error("Database did not respond.");
     const tempFields = [
       {
         name: "Your start time",
-        value: startTime.toLocaleTimeString(),
+        value: startDate.toLocaleTimeString(),
         inline: true,
       },
     ];
@@ -224,11 +224,11 @@ export const raceFinish = async (
       "",
     );
     const race = await sdk.getRaceById({ raceId });
-    const endTime = new Date();
+    const endDate = new Date();
     const { acknowledged } = await sdk.updateRaceByParticipantId({
       raceId,
       memberId: interaction.user.id,
-      update: { endTime },
+      update: { endDate },
     });
     if (!acknowledged) throw new Error("Database did not respond.");
     const originalEmbed = interaction.message.embeds[0].data;
@@ -238,7 +238,7 @@ export const raceFinish = async (
         ...(originalEmbed.fields ?? []),
         {
           name: "Your finish time",
-          value: endTime.toLocaleTimeString(),
+          value: endDate.toLocaleTimeString(),
           inline: true,
         },
       ],
@@ -373,12 +373,12 @@ const getRaceStartEmbed = (
     },
     {
       name: "Start time",
-      value: getUTCDate(race.startTime),
+      value: getUTCDate(race.startDate),
       inline: true,
     },
     {
       name: "Finish time",
-      value: getUTCDate(race.endTime),
+      value: getUTCDate(race.endDate),
       inline: true,
     },
     {

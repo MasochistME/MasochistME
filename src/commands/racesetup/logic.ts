@@ -75,7 +75,7 @@ export const racesetup = async (
     const activeSeason = await sdk.getActiveSeason();
     setDraftRace({
       ...race,
-      season: String(activeSeason._id) ?? null, // TODO omit this field if the race is "special"
+      season: String(activeSeason._id) ?? null, // TODO Omit this field if the race is "special"
     });
     interaction.reply({
       embeds: [getRaceConfirmationEmbed(race)],
@@ -128,12 +128,12 @@ const getRaceConfirmationEmbed = (race: Omit<Race, "_id">) => {
     },
     {
       name: "Start time",
-      value: getUTCDate(race.startTime),
+      value: getUTCDate(race.startDate),
       inline: true,
     },
     {
       name: "Finish time",
-      value: getUTCDate(race.endTime),
+      value: getUTCDate(race.endDate),
       inline: true,
     },
     {

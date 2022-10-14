@@ -39,12 +39,12 @@ export const handleRaceTimer = async () => {
  * @return void
  */
 const handleRaceStart = async (race: Race) => {
-  const { name, startTime, endTime, isActive, _id } = race;
+  const { name, startDate, endDate, isActive, _id } = race;
   const raceId = String(_id);
   const raceShouldStart =
     !isActive &&
-    dayjs(startTime).diff(new Date()) <= 0 &&
-    dayjs(endTime).diff(new Date()) > 0;
+    dayjs(startDate).diff(new Date()) <= 0 &&
+    dayjs(endDate).diff(new Date()) > 0;
   if (!raceShouldStart) return;
   log.INFO("Detected a race to begin...");
   const response = await sdk.updateRaceById({
@@ -68,12 +68,12 @@ const handleRaceStart = async (race: Race) => {
  * @return void
  */
 const handleRaceFinish = async (race: Race) => {
-  const { name, startTime, endTime, isActive, _id } = race;
+  const { name, startDate, endDate, isActive, _id } = race;
   const raceId = String(_id);
   const raceShouldEnd =
     isActive &&
-    dayjs(startTime).diff(new Date()) <= 0 &&
-    dayjs(endTime).diff(new Date()) <= 0;
+    dayjs(startDate).diff(new Date()) <= 0 &&
+    dayjs(endDate).diff(new Date()) <= 0;
   if (!raceShouldEnd) return;
   log.INFO("Detected a race to end...");
   const response = await sdk.updateRaceById({
@@ -128,8 +128,8 @@ export const getRace = (
     instructions: raceData.instructions,
     objectives: raceData.objectives,
     type: raceData.playLimit ? RaceType.SCORE_BASED : RaceType.TIME_BASED,
-    startTime: getDateFromDelay(raceData.startsIn),
-    endTime: getDateFromDelay(raceData.startsIn + raceData.endsAfter),
+    startDate: getDateFromDelay(raceData.startsIn),
+    endDate: getDateFromDelay(raceData.startsIn + raceData.endsAfter),
     downloadLink: raceData.downloadLink,
     downloadGrace: raceData.downloadGrace,
     uploadGrace: raceData.uploadGrace,
