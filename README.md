@@ -3,7 +3,9 @@
 SDK abstracting communication with the [Masochist.ME API](https://github.com/MasochistME/masochist-api).
 
 → [Documentation](https://masochistme.github.io/masochist-sdk)
+
 → [NPM package](https://www.npmjs.com/package/@masochistme/sdk)
+
 → [GitHub repository](https://github.com/MasochistME/masochist-sdk)
 
 ## Usage
