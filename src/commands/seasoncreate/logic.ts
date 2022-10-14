@@ -16,7 +16,7 @@ export const seasoncreate = async (
 ): Promise<void> => {
   await interaction.deferReply();
 
-  const season: Omit<Season, "_id" | "startDate" | "endDate"> = {
+  const season: Pick<Season, "name" | "description" | "icon"> = {
     name: interaction.options.getString(Options.NAME, true),
     description: interaction.options.getString(Options.DESCRIPTION, true),
     icon: interaction.options.getAttachment(Options.ICON, true).url,
