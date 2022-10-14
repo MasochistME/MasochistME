@@ -18,25 +18,25 @@ import { Season, ResponseError } from 'v1/types';
  * const seasonsInactive: Season[] = await sdk.getSeasonsList({ inactive: true });
  * ```
  *
- * @param params.finished - Get only seasons which are finished.
- * @param params.inactive - Get only seasons which are yet to start.
+ * @param params.filter - Filter to apply to races.
+ * @param params.filter.inactive - Get only seasons which are yet to start.
+ * @param params.filter.active - Get only seasons which are finished.
+ * @param params.filter.finished - Get only seasons which are finished.
  */
 export const getSeasonsList = async (
-	params: { finished?: boolean; inactive?: boolean },
+	params: {
+		filter: { finished?: boolean; active?: boolean; inactive?: boolean };
+	},
 	/** @ignore */
 	BASE_URL: string,
 ): Promise<Season[]> => {
-	const { finished = undefined, inactive = undefined } = params;
+	const { filter } = params;
 	const url = `${BASE_URL}/seasons/list`;
 
 	const seasonResponse = await axios.post<
 		Season[] | ResponseError,
 		AxiosResponse<Season[] | ResponseError>
-	>(
-		url,
-		{ ...(finished && { finished }), ...(inactive && { inactive }) },
-		{ validateStatus: () => true },
-	);
+	>(url, filter, { validateStatus: () => true });
 
 	const { status, data } = seasonResponse;
 
