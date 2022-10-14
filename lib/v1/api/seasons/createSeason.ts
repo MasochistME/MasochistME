@@ -9,7 +9,7 @@ import { Season, ResponseError } from 'v1/types';
  * ## Usage
  *
  * ```ts
- * const season: Season = {
+ * const season: Pick<Season, 'name' | 'description' | 'icon'> = {
  * 	name: "Season III",
  * 	description: "It's a third racing season!",
  * 	icon: "http://http.cat/404.jpg",
@@ -24,7 +24,9 @@ import { Season, ResponseError } from 'v1/types';
  * @param params.season - Object representing a season to be created.
  */
 export const createSeason = async (
-	params: { season: Omit<Season, '_id' | 'startDate' | 'endDate'> },
+	params: {
+		season: Pick<Season, 'name' | 'description' | 'icon'>;
+	},
 	/** @ignore */
 	BASE_URL: string,
 ): Promise<InsertOneResult<Season>> => {
@@ -34,7 +36,7 @@ export const createSeason = async (
 	const seasonResponse = await axios.post<
 		InsertOneResult<Season> | ResponseError,
 		AxiosResponse<InsertOneResult<Season> | ResponseError>,
-		Omit<Season, '_id' | 'startDate' | 'endDate'>
+		Pick<Season, 'name' | 'description' | 'icon'>
 	>(url, season, { validateStatus: () => true });
 
 	const { status, data } = seasonResponse;
