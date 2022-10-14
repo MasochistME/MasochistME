@@ -108,4 +108,4 @@ const update = async () => {
   }
 };
 
-setInterval(update, 60000); // TODO change to 600000
+setInterval(update, 60000); // TODO Change update cadence from 60000 to 600000

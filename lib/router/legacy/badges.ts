@@ -60,7 +60,7 @@ export const getBadge = async (req: any, res: any) => {
  */
 export const addBadge = async (req: any, res: any) => {
   if (!req.body) {
-    // TODO validation!!!
+    // TODO Add Request<Badge> body validation
     res.sendStatus(400);
     return;
   }
@@ -99,7 +99,7 @@ export const addBadge = async (req: any, res: any) => {
  */
 export const updateBadge = async (req: any, res: any) => {
   if (!req.body) {
-    // TODO validation!!!
+    // TODO Add Request<Badge> body validation
     res.sendStatus(400);
     return;
   }

@@ -265,7 +265,7 @@ export const updateCuratorGames = (_req?: any, res?: any): Promise<void> =>
         ) && gameFromDb.protected,
     );
 
-    games.push(...gamesThatShouldNotGetDecurated); // TODO this might be wrong
+    games.push(...gamesThatShouldNotGetDecurated); // TODO This might be wrong - add validation
 
     const getGameDetails = async (index: number) => {
       const { client, db } = await connectToDb();

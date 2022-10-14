@@ -131,7 +131,7 @@ export const initiateMainUpdate = async (
 
   log.INFO('--> [UPDATE] checking if any members joined...');
 
-  // TODO this should be first filtered before going thru all users again
+  // TODO This should be first filtered before going thru all users again
 
   const iterateMembers = async (index: number) => {
     log.INFO(

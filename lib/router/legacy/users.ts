@@ -62,7 +62,7 @@ export const getUserDetails = async (
  * @param req.params.id
  */
 export const updateUser = async (req: any, res: any) => {
-  // TODO remove badges that dont exist anymore
+  // TODO Remove badges that dont exist anymore
   const id = req.params.steamid;
   const curatedGames = await getDataFromDB('games');
   const userToUpdate = await getDataFromDB('users', { id });
@@ -126,7 +126,7 @@ export const updateUser = async (req: any, res: any) => {
     badges: userToUpdate[0] ? userToUpdate[0].badges : [],
     private: isUserPrivate,
     updated: Date.now(),
-    // member: false // TODO check if Steam user is member!!!
+    // member: false // TODO Check if Steam user is a Curator member
   };
 
   db.collection('users').updateOne(

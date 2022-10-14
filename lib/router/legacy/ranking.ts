@@ -13,12 +13,12 @@ export const getRanking = async (
   res: Response,
 ): Promise<void> => {
   try {
-    // TODO users: remove games.achievements from database
+    // TODO Users: remove games.achievements from database
     // change games.playtime_forever type to Number
     // rename games.playtime_forever => games.playtime
     // change ranking to ranking [ { tier: number, sum: number } ]
 
-    // TODO patreon: rename steamid to steamId or just id
+    // TODO Patreon: rename steamid to steamId or just id
     const users = await getDataFromDB('users');
     const patrons = await getDataFromDB('patrons');
     const badges = await getDataFromDB('badges');
