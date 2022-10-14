@@ -18,14 +18,20 @@ import { Season, ResponseError } from 'v1/types';
  * const seasonsInactive: Season[] = await sdk.getSeasonsList({ inactive: true });
  * ```
  *
- * @param params.filter - Filter to apply to races.
+ * @param params.filter - Filter to apply to returned races list.
  * @param params.filter.inactive - Get only seasons which are yet to start.
- * @param params.filter.active - Get only seasons which are finished.
- * @param params.filter.finished - Get only seasons which are finished.
+ * @param params.filter.active - Get only currently active seasons.
+ * @param params.filter.finished - Get only past seasons.
+ * @param params.filter.unfinished - Get only seasons which are not finished.
  */
 export const getSeasonsList = async (
 	params: {
-		filter: { finished?: boolean; active?: boolean; inactive?: boolean };
+		filter: {
+			finished?: boolean;
+			active?: boolean;
+			inactive?: boolean;
+			unfinished?: boolean;
+		};
 	},
 	/** @ignore */
 	BASE_URL: string,
