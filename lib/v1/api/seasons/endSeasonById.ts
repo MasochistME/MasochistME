@@ -4,8 +4,8 @@ import { UpdateResult } from 'mongodb';
 import { Season, ResponseError } from 'v1/types';
 
 /**
- * Starts a new season by the given ID (if it exists).
- * The season must already be created AND inactive.
+ * Ends an active season by the given ID (if it exists).
+ * The season must already be created AND active AND NOT finished.
  *
  * Season is identified by its stringified `ObjectID`.
  *
@@ -19,12 +19,12 @@ import { Season, ResponseError } from 'v1/types';
  * 	modifiedCount,
  * 	upsertedCount,
  * 	upsertedId,
- * } = await sdk.startSeasonById({ seasonId });
+ * } = await sdk.endSeasonById({ seasonId });
  * ```
  *
  * @param params.seasonId - ID of the season to be started.
  */
-export const startSeasonById = async (
+export const endSeasonById = async (
 	params: { seasonId: string },
 	/** @ignore */
 	BASE_URL: string,
@@ -35,8 +35,8 @@ export const startSeasonById = async (
 	const seasonResponse = await axios.put<
 		UpdateResult | ResponseError,
 		AxiosResponse<UpdateResult | ResponseError>,
-		Pick<Season, 'startDate'>
-	>(url, { startDate: new Date() }, { validateStatus: () => true });
+		Pick<Season, 'endDate'>
+	>(url, { endDate: new Date() }, { validateStatus: () => true });
 
 	const { status, data } = seasonResponse;
 

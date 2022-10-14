@@ -35,7 +35,7 @@ import {
 	createSeason,
 	updateSeasonById,
 	startSeasonById,
-	endActiveSeason,
+	endSeasonById,
 	getSeasonsList,
 } from 'v1/api/seasons';
 
@@ -163,7 +163,8 @@ export class SDK {
 	) => updateSeasonById(args, this.BASE_URL);
 	public startSeasonById = <T extends typeof startSeasonById>(args: Head<T>) =>
 		startSeasonById(args, this.BASE_URL);
-	public endActiveSeason = () => endActiveSeason(this.BASE_URL);
+	public endSeasonById = <T extends typeof endSeasonById>(args: Head<T>) =>
+		endSeasonById(args, this.BASE_URL);
 	public getSeasonsList = <T extends typeof getSeasonsList>(args: Head<T>) =>
 		getSeasonsList(args, this.BASE_URL);
 }
