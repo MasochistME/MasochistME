@@ -1,5 +1,4 @@
 {
-  "name": "Masochist.ME SDK",
   "disableSources": true,
   "entryPoints": ["lib/v1/api/*", "lib/v1/types/*"],
   // "entryPointStrategy": "expand",
