@@ -32,7 +32,7 @@ import { Race, ResponseError } from 'v1/types';
  * @param params.race - Object with the data of the new race.
  */
 export const createRace = async (
-	params: { race: Omit<Race, '_id'> },
+	params: { race: Omit<Race, '_id' | 'isActive'> },
 	/** @ignore */
 	BASE_URL: string,
 ): Promise<InsertOneResult<Race>> => {
@@ -42,7 +42,7 @@ export const createRace = async (
 	const raceResponse = await axios.post<
 		InsertOneResult<Race> | ResponseError,
 		AxiosResponse<InsertOneResult<Race> | ResponseError>,
-		Omit<Race, '_id'>
+		Omit<Race, '_id' | 'isActive'>
 	>(url, race, { validateStatus: () => true });
 
 	const { status, data } = raceResponse;
