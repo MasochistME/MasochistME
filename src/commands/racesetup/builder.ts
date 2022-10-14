@@ -2,6 +2,7 @@ import { SlashCommandBuilder, SlashCommandSubcommandBuilder } from "discord.js";
 
 export enum Options {
   NAME = "name",
+  SEASON = "season",
   INSTRUCTIONS = "instructions",
   OBJECTIVES = "objectives",
   STARTS_IN = "starts-in",
@@ -30,6 +31,14 @@ const getCommonRequiredOptionsRaceSetup = (
     )
     .addStringOption(option =>
       option
+        .setName(Options.DOWNLOAD_LINK)
+        .setDescription(
+          "Download link for the race game (MUST start with http)",
+        )
+        .setRequired(true),
+    )
+    .addStringOption(option =>
+      option
         .setName(Options.INSTRUCTIONS)
         .setDescription("Instructions visible before starting the race")
         .setRequired(true),
@@ -54,14 +63,6 @@ const getCommonRequiredOptionsRaceSetup = (
         .setDescription("Race ends after? [hours]")
         .setRequired(true),
     )
-    .addStringOption(option =>
-      option
-        .setName(Options.DOWNLOAD_LINK)
-        .setDescription(
-          "Download link for the race game (MUST start with http)",
-        )
-        .setRequired(true),
-    )
     .addNumberOption(option =>
       option
         .setName(Options.DOWNLOAD_GRACE)
@@ -84,9 +85,20 @@ const getCommonRequiredOptionsRaceSetup = (
 const getCommonOptionalOptionsRaceSetup = (
   subcommand: SlashCommandSubcommandBuilder,
 ) => {
-  return subcommand.addAttachmentOption(option =>
-    option.setName(Options.ICON).setDescription("(Optional) Icon of the race"),
-  );
+  return subcommand
+    .addStringOption(option =>
+      option
+        .setName(Options.SEASON)
+        .setDescription(
+          "(Optional) Active season the race should be included in",
+        )
+        .setAutocomplete(true),
+    )
+    .addAttachmentOption(option =>
+      option
+        .setName(Options.ICON)
+        .setDescription("(Optional) Icon of the race"),
+    );
 };
 
 /**

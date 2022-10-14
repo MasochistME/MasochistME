@@ -2,17 +2,37 @@ import { cache } from "fetus";
 import { getFilteredChoices } from "commands/_utils";
 
 /**
- * Filter the season choice list based on the user provided autocomplete value.
+ * Filter the list of inactive seasons based on the user provided autocomplete value.
  * @param focused string - user provided autocomplete value
  * @return ApplicationCommandOptionChoiceData[]
  */
-export const getSeasonChoices = (focused: string) => {
-  const choices = cache.seasons.map(season => {
-    return {
-      name: season.name.toUpperCase(),
-      value: String(season._id),
-    };
-  });
+export const getSeasonInactiveChoices = (focused: string) => {
+  const choices = cache.seasons
+    .filter(season => !season.startDate)
+    .map(season => {
+      return {
+        name: season.name.toUpperCase(),
+        value: String(season._id),
+      };
+    });
+
+  return getFilteredChoices(choices, focused);
+};
+
+/**
+ * Filter the list of active seasons based on the user provided autocomplete value.
+ * @param focused string - user provided autocomplete value
+ * @return ApplicationCommandOptionChoiceData[]
+ */
+export const getSeasonActiveChoices = (focused: string) => {
+  const choices = cache.seasons
+    .filter(season => season.startDate && !season.endDate)
+    .map(season => {
+      return {
+        name: season.name.toUpperCase(),
+        value: String(season._id),
+      };
+    });
 
   return getFilteredChoices(choices, focused);
 };

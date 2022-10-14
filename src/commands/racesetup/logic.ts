@@ -53,7 +53,7 @@ export const racesetup = async (
     uploadGrace: interaction.options.getNumber(Options.UPLOAD_GRACE, true),
     playLimit: interaction.options.getNumber(Options.PLAY_LIMIT),
     icon: interaction.options.getAttachment(Options.ICON)?.url,
-    season: null,
+    season: interaction.options.getString(Options.SEASON, false),
   };
 
   if (raceData.startsIn + raceData.endsAfter <= 0)
@@ -72,11 +72,7 @@ export const racesetup = async (
   const race = getRace(interaction, raceData);
 
   try {
-    const activeSeason = await sdk.getActiveSeason();
-    setDraftRace({
-      ...race,
-      season: String(activeSeason._id) ?? null, // TODO Omit this field if the race is "special"
-    });
+    setDraftRace(race);
     interaction.reply({
       embeds: [getRaceConfirmationEmbed(race)],
       components: [getRaceConfirmationButtons()],
@@ -112,7 +108,7 @@ const getRaceConfirmationButtons = () => {
  * @param interaction DiscordInteraction
  * @return APIEmbed
  */
-const getRaceConfirmationEmbed = (race: Omit<Race, "_id">) => {
+const getRaceConfirmationEmbed = (race: Omit<Race, "_id" | "isActive">) => {
   const fields: APIEmbedField[] = [
     {
       name: "Name",

@@ -31,7 +31,7 @@ export const seasoncreate = async (
       thumbnail: { url: season.icon },
       fields: [
         { name: "Name", value: season.name },
-        { name: "Name", value: season.description },
+        { name: "Description", value: season.description },
         {
           name: "---",
           value: `You have created a new season! Its ID is **${response.insertedId}**.

@@ -15,7 +15,7 @@ export const seasonstart = async (
   await interaction.deferReply();
   try {
     const seasonId = interaction.options.getString(Options.SEASON_ID, true);
-    const seasonList = await sdk.getSeasonsList({ inactive: true });
+    const seasonList = await sdk.getSeasonsList({ filter: { inactive: true } });
     const specifiedSeason = seasonList.find(
       season => seasonId === String(season._id),
     );
@@ -27,10 +27,9 @@ export const seasonstart = async (
     if (specifiedSeason?.startDate)
       throw new Error("You cannot start a season which is already started.");
 
-    const responseFinish = await sdk.endActiveSeason();
-    const responseStart = await sdk.startSeasonById({ seasonId });
+    const response = await sdk.startSeasonById({ seasonId });
 
-    if (!responseFinish.acknowledged || !responseStart.acknowledged)
+    if (!response.acknowledged)
       throw new Error("Could not start a new season, please try again later.");
 
     interaction.editReply(
@@ -43,5 +42,3 @@ export const seasonstart = async (
     createError(interaction, err, ErrorAction.EDIT);
   }
 };
-
-// TODO Consider if this should also end an old active race
