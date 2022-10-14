@@ -52,7 +52,7 @@ export interface Member extends WithId {
 	/**
 	 * How many games from every tier the member completed.
 	 */
-	ranking?: any; // TODO FIX!!!
+	ranking?: any; // TODO Move the MemberRanking to a separate database
 }
 
 /**

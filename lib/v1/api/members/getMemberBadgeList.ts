@@ -36,5 +36,4 @@ export const getMemberBadgeList = async (
 	return data as Badge[];
 };
 
-// TODO
-// think if it should return just the MemberBadge[], or actual Badge[]
+// TODO Think if it should return just the MemberBadge[], or actual Badge[]
