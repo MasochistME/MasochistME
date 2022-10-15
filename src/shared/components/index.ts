@@ -1,6 +1,4 @@
 import Loader from './Loader';
-import Login from './Login';
-// import LoginModal from './LoginModal';
 import Header from './Header';
 import MiniHeader from './MiniHeader';
 import Nav from './Nav';
@@ -19,7 +17,6 @@ import Table from './layout/Table';
 
 export {
   Loader,
-  Login,
   Header,
   MiniHeader,
   Nav,
@@ -31,7 +28,6 @@ export {
   HoverIcon,
   Badge,
   BigBadge,
-  // LoginModal,
   Flex,
   Wrapper,
   Section,

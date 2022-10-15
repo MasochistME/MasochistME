@@ -14,7 +14,6 @@ import PageSupport from './Support';
 import PageBadges from './Badges';
 import PageProfile from './Profile';
 import PageGame from './Game';
-import PageAdmin from './Admin';
 
 const WrapperContent = styled.div`
   position: relative;
@@ -49,7 +48,7 @@ type Props = {
 };
 
 export default function Page(props: Props): JSX.Element {
-  const { page, subpage = undefined } = props;
+  const { page } = props;
   const dispatch = useDispatch();
   const selectPage = () => {
     switch (page) {
@@ -69,8 +68,6 @@ export default function Page(props: Props): JSX.Element {
         return <PageGame />;
       case 'badges':
         return <PageBadges />;
-      case 'admin':
-        return <PageAdmin page={subpage} />;
       case 'notfound':
         return <PageNotFound />;
       default:

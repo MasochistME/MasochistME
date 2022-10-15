@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { fonts, colors, media } from 'shared/theme';
-import Login from './Login';
 
 const WrapperHeader = styled.div`
   display: flex;
@@ -33,7 +32,6 @@ export default function Header(): JSX.Element {
     <WrapperHeader>
       <span />
       <HeaderMotto>0.1% - games that masochists love</HeaderMotto>
-      <Login />
     </WrapperHeader>
   );
 }
