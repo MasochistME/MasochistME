@@ -1,18 +1,18 @@
 {
-  "name": "pointonepercent",
+  "name": "masochistme",
   "version": "3.0.0",
   "private": true,
   "type": "module",
-  "description": "0.1% - games that masochists love.",
+  "description": "MasochistME - games that masochists love.",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Arcyvilk/PointOnePercent.git"
+    "url": "git+https://github.com/MasochistME/MasochistME.git"
   },
   "author": "Arcyvilk",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Arcyvilk/PointOnePercent/issues"
+    "url": "https://github.com/MasochistME/MasochistME/issues"
   },
   "scripts": {
     "prod-pop": "yarn run build && serve -l 3000 -s",
@@ -40,7 +40,7 @@
     "react-redux": "^7.2.2",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^4.0.1",
+    "react-scripts": "^5.0.1",
     "react-slidedown": "^2.4.4",
     "redux": "^4.0.0",
     "redux-devtools-extension": "^2.13.8",
