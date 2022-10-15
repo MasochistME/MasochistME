@@ -11,16 +11,16 @@ import './shared/styles/antStyles.css';
 import './index.css';
 
 class Root extends React.Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <GlobalStyle />
-        <AppContextProvider>
-          <App />
-        </AppContextProvider>
-      </Provider>
-    );
-  }
+	render() {
+		return (
+			<Provider store={store}>
+				<GlobalStyle />
+				<AppContextProvider>
+					<App />
+				</AppContextProvider>
+			</Provider>
+		);
+	}
 }
 
 ReactDOM.render(<Root />, document.getElementById('root'));

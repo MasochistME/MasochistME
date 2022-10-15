@@ -7,40 +7,40 @@ import UserDetails from './UserDetails';
 import 'react-slidedown/lib/slidedown.css';
 
 const StyledUser = styled.li`
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  box-sizing: border-box;
-  cursor: pointer;
-  justify-content: space-between;
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	box-sizing: border-box;
+	cursor: pointer;
+	justify-content: space-between;
 `;
 
 type TUser = {
-  id: any;
-  position: number;
+	id: any;
+	position: number;
 };
 export default function User(props: TUser): JSX.Element {
-  const { id, position } = props;
-  const [show, setShow] = useState(false);
+	const { id, position } = props;
+	const [show, setShow] = useState(false);
 
-  const changeDetailsVisibility = (): any => setShow(!show);
+	const changeDetailsVisibility = (): any => setShow(!show);
 
-  const details = show ? (
-    <UserDetails key={`details-${id}`} id={id} show={show} />
-  ) : null;
+	const details = show ? (
+		<UserDetails key={`details-${id}`} id={id} show={show} />
+	) : null;
 
-  return (
-    <StyledUser>
-      <UserSummary
-        id={id}
-        position={position}
-        onShowDetails={changeDetailsVisibility}
-      />
-      <SlideDown className="my-dropdown-slidedown" style={{ width: '100%' }}>
-        {details}
-      </SlideDown>
-    </StyledUser>
-  );
+	return (
+		<StyledUser>
+			<UserSummary
+				id={id}
+				position={position}
+				onShowDetails={changeDetailsVisibility}
+			/>
+			<SlideDown className="my-dropdown-slidedown" style={{ width: '100%' }}>
+				{details}
+			</SlideDown>
+		</StyledUser>
+	);
 }

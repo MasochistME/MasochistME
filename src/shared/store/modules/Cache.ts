@@ -13,68 +13,68 @@ export const CACHE_GAME_DETAILS = 'CACHE_GAME_DETAILS';
 
 // ACTION CREATORS
 export function cacheGames(data: any): any {
-  return {
-    type: CACHE_GAMES,
-    data,
-  };
+	return {
+		type: CACHE_GAMES,
+		data,
+	};
 }
 export function cacheRating(data: any): any {
-  return {
-    type: CACHE_RATING,
-    data,
-  };
+	return {
+		type: CACHE_RATING,
+		data,
+	};
 }
 export function cacheUsers(data: any): any {
-  return {
-    type: CACHE_USERS,
-    data,
-  };
+	return {
+		type: CACHE_USERS,
+		data,
+	};
 }
 export function cacheEvents(data: any): any {
-  return {
-    type: CACHE_EVENTS,
-    data,
-  };
+	return {
+		type: CACHE_EVENTS,
+		data,
+	};
 }
 export function cacheBlog(data: any): any {
-  return {
-    type: CACHE_BLOG,
-    data,
-  };
+	return {
+		type: CACHE_BLOG,
+		data,
+	};
 }
 export function cachePatrons(data: any): any {
-  return {
-    type: CACHE_PATRONS,
-    data,
-  };
+	return {
+		type: CACHE_PATRONS,
+		data,
+	};
 }
 export function cacheBadges(data: any): any {
-  return {
-    type: CACHE_BADGES,
-    data,
-  };
+	return {
+		type: CACHE_BADGES,
+		data,
+	};
 }
 export function cacheRanking(data: any): any {
-  return {
-    type: CACHE_RANKING,
-    data,
-  };
+	return {
+		type: CACHE_RANKING,
+		data,
+	};
 }
 export function cacheStatus(data: any): any {
-  return {
-    type: CACHE_STATUS,
-    data,
-  };
+	return {
+		type: CACHE_STATUS,
+		data,
+	};
 }
 export function cacheUserDetails(data: any): any {
-  return {
-    type: CACHE_USER_DETAILS,
-    data,
-  };
+	return {
+		type: CACHE_USER_DETAILS,
+		data,
+	};
 }
 export function cacheGameDetails(data: any): any {
-  return {
-    type: CACHE_GAME_DETAILS,
-    data,
-  };
+	return {
+		type: CACHE_GAME_DETAILS,
+		data,
+	};
 }

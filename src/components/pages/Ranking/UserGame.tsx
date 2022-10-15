@@ -7,57 +7,57 @@ import { ProgressBar } from 'shared/components';
 import UserBadges from '../Leaderboards/UserBadges';
 
 const Game = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  height: 37px;
-  align-items: center;
-  background-color: ${colors.darkBlueTransparent};
-  border-bottom: 1px solid ${colors.newDark};
-  border-top: 1px solid ${colors.newMediumGrey};
-  &:first-child {
-    border-top: none;
-  }
-  &:last-child {
-    border-bottom: none;
-  }
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	height: 37px;
+	align-items: center;
+	background-color: ${colors.darkBlueTransparent};
+	border-bottom: 1px solid ${colors.newDark};
+	border-top: 1px solid ${colors.newMediumGrey};
+	&:first-child {
+		border-top: none;
+	}
+	&:last-child {
+		border-bottom: none;
+	}
 `;
 const Logo = styled.img`
-  margin: 0;
-  padding: 0;
-  min-height: 37px;
-  max-height: 37px;
-  @media (max-width: ${media.tablets}) {
-    display: none;
-  }
+	margin: 0;
+	padding: 0;
+	min-height: 37px;
+	max-height: 37px;
+	@media (max-width: ${media.tablets}) {
+		display: none;
+	}
 `;
 const Info = styled.div`
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: space-between;
-  margin: 0 10px;
+	display: flex;
+	width: 100%;
+	align-items: center;
+	justify-content: space-between;
+	margin: 0 10px;
 `;
 const Times = styled.div`
-  display: flex;
-  flex-direction: column;
-  font-size: 0.7em;
-  font-family: ${fonts.Verdana};
-  color: ${colors.superLightGrey};
-  width: 80px;
-  min-width: 80px;
-  margin: 0 0 0 6px;
+	display: flex;
+	flex-direction: column;
+	font-size: 0.7em;
+	font-family: ${fonts.Verdana};
+	color: ${colors.superLightGrey};
+	width: 80px;
+	min-width: 80px;
+	margin: 0 0 0 6px;
 `;
 const CompletionTimer = styled.div`
-  @media (max-width: ${media.tablets}) {
-    display: none;
-  }
+	@media (max-width: ${media.tablets}) {
+		display: none;
+	}
 `;
 const Title = styled.div`
-  margin-left: 5px;
-  &:hover {
-    color: ${colors.white};
-  }
+	margin-left: 5px;
+	&:hover {
+		color: ${colors.white};
+	}
 `;
 
 UserGame.Game = Game;
@@ -70,45 +70,45 @@ UserGame.ProgressBar = ProgressBar;
 UserGame.UserBadges = UserBadges;
 
 type TUserProps = {
-  game: any;
-  user: any;
+	game: any;
+	user: any;
 };
 
 export default function UserGame(props: TUserProps): JSX.Element {
-  const { game, user } = props;
-  const history = useHistory();
-  const percentage = isNaN(Math.floor(game.percentage))
-    ? 0
-    : Math.floor(game.percentage);
+	const { game, user } = props;
+	const history = useHistory();
+	const percentage = isNaN(Math.floor(game.percentage))
+		? 0
+		: Math.floor(game.percentage);
 
-  const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
+	const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
 
-  return (
-    <UserGame.Game>
-      <UserGame.Times>
-        {game.percentage === 100 ? (
-          <UserGame.CompletionTimer>
-            {new Date(game.lastUnlocked * 1000).toLocaleString()}
-          </UserGame.CompletionTimer>
-        ) : null}
-        <div style={{ display: 'none' }}>
-          {game.playtime
-            ? typeof game.playtime === 'number'
-              ? Math.round(game.playtime)
-              : Math.round(Number(game.playtime))
-            : 0}{' '}
-          h
-        </div>
-      </UserGame.Times>
-      <UserGame.Logo src={game.img} alt="logo" />
-      <UserGame.Info>
-        <Flex row>
-          <i className={game.rating} />
-          <UserGame.Title onClick={onGameClick}> {game.title}</UserGame.Title>
-        </Flex>
-      </UserGame.Info>
-      <UserGame.UserBadges game={game} user={user} />
-      <UserGame.ProgressBar percentage={percentage} />
-    </UserGame.Game>
-  );
+	return (
+		<UserGame.Game>
+			<UserGame.Times>
+				{game.percentage === 100 ? (
+					<UserGame.CompletionTimer>
+						{new Date(game.lastUnlocked * 1000).toLocaleString()}
+					</UserGame.CompletionTimer>
+				) : null}
+				<div style={{ display: 'none' }}>
+					{game.playtime
+						? typeof game.playtime === 'number'
+							? Math.round(game.playtime)
+							: Math.round(Number(game.playtime))
+						: 0}{' '}
+					h
+				</div>
+			</UserGame.Times>
+			<UserGame.Logo src={game.img} alt="logo" />
+			<UserGame.Info>
+				<Flex row>
+					<i className={game.rating} />
+					<UserGame.Title onClick={onGameClick}> {game.title}</UserGame.Title>
+				</Flex>
+			</UserGame.Info>
+			<UserGame.UserBadges game={game} user={user} />
+			<UserGame.ProgressBar percentage={percentage} />
+		</UserGame.Game>
+	);
 }

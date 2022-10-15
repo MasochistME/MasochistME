@@ -8,9 +8,9 @@ import List from './List';
 import Badges from './Badges';
 
 type Props = {
-  id: any;
-  rating: any;
-  compact?: boolean;
+	id: any;
+	rating: any;
+	compact?: boolean;
 };
 
 // ---------------------------------------------
@@ -20,58 +20,58 @@ type Props = {
 Leaderboards.List = List;
 
 export default function Leaderboards(props: Props): JSX.Element | null {
-  const { id, compact } = props;
-  const history = useHistory();
-  const loaded = useGameDetails(id);
-  const game = useSelector((state: any) => {
-    const gameBasic = state.games.list.find(
-      (g: any) => Number(g.id) === Number(id),
-    );
-    const gameDetails = state.games.details.find(
-      (g: any) => Number(g.id) === Number(id),
-    );
-    return {
-      ...gameBasic,
-      ...gameDetails,
-    };
-  });
+	const { id, compact } = props;
+	const history = useHistory();
+	const loaded = useGameDetails(id);
+	const game = useSelector((state: any) => {
+		const gameBasic = state.games.list.find(
+			(g: any) => Number(g.id) === Number(id),
+		);
+		const gameDetails = state.games.details.find(
+			(g: any) => Number(g.id) === Number(id),
+		);
+		return {
+			...gameBasic,
+			...gameDetails,
+		};
+	});
 
-  const onShowGame = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) => {
-    history.push(`/game/${id}`);
-    event.stopPropagation();
-  };
+	const onShowGame = (
+		event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+	) => {
+		history.push(`/game/${id}`);
+		event.stopPropagation();
+	};
 
-  return (
-    <WrapperLeaderboards>
-      <Flex
-        row
-        align
-        style={{
-          justifyContent: 'space-between',
-          borderBottom: '1px solid #444',
-          marginBottom: '12px',
-        }}>
-        <h2 style={{ borderBottom: 0 }}>
-          <a
-            href={`https://store.steampowered.com/app/${game?.id ?? ''}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={event => event.stopPropagation()}>
-            <i className="fab fa-steam" /> {game?.title ?? 'Loading...'}
-          </a>
-        </h2>
-        <CustomButton onClick={onShowGame}>Details</CustomButton>
-      </Flex>
-      {loaded && game ? (
-        <Flex column>
-          {game.badges?.length ? <Badges game={game} mini /> : null}
-          <Leaderboards.List game={game} compact={compact} />
-        </Flex>
-      ) : (
-        <Spinner />
-      )}
-    </WrapperLeaderboards>
-  );
+	return (
+		<WrapperLeaderboards>
+			<Flex
+				row
+				align
+				style={{
+					justifyContent: 'space-between',
+					borderBottom: '1px solid #444',
+					marginBottom: '12px',
+				}}>
+				<h2 style={{ borderBottom: 0 }}>
+					<a
+						href={`https://store.steampowered.com/app/${game?.id ?? ''}`}
+						target="_blank"
+						rel="noopener noreferrer"
+						onClick={event => event.stopPropagation()}>
+						<i className="fab fa-steam" /> {game?.title ?? 'Loading...'}
+					</a>
+				</h2>
+				<CustomButton onClick={onShowGame}>Details</CustomButton>
+			</Flex>
+			{loaded && game ? (
+				<Flex column>
+					{game.badges?.length ? <Badges game={game} mini /> : null}
+					<Leaderboards.List game={game} compact={compact} />
+				</Flex>
+			) : (
+				<Spinner />
+			)}
+		</WrapperLeaderboards>
+	);
 }

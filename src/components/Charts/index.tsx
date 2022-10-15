@@ -6,10 +6,10 @@ import PieChart from './PieChart';
 import StackedBarChart from './StackedBarChart';
 
 export {
-  BarChart,
-  ChartWrapper,
-  DoughnutChart,
-  LineChart,
-  PieChart,
-  StackedBarChart,
+	BarChart,
+	ChartWrapper,
+	DoughnutChart,
+	LineChart,
+	PieChart,
+	StackedBarChart,
 };

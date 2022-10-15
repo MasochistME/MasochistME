@@ -7,11 +7,11 @@ import TierChangeEvent from './TierChangeEvent';
 import BadgeEvent from './BadgeEvent';
 
 export {
-  AchievementNumberChangeEvent,
-  CompleteEvent,
-  CustomEvent,
-  GameEvent,
-  MemberEvent,
-  TierChangeEvent,
-  BadgeEvent,
+	AchievementNumberChangeEvent,
+	CompleteEvent,
+	CustomEvent,
+	GameEvent,
+	MemberEvent,
+	TierChangeEvent,
+	BadgeEvent,
 };

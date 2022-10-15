@@ -2,48 +2,48 @@ import styled from 'styled-components';
 import { media, colors } from 'shared/theme';
 
 export const EventInfo = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 100%;
-  justify-content: space-between;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	width: 100%;
+	justify-content: space-between;
 `;
 
 export const EventImg = styled.img`
-  height: 35px;
-  max-height: 35px;
-  margin: 0 5px;
+	height: 35px;
+	max-height: 35px;
+	margin: 0 5px;
 `;
 
 export const EventDescription = styled.div`
-  width: 100%;
-  @media (max-width: ${media.tablets}) {
-    display: none;
-  }
+	width: 100%;
+	@media (max-width: ${media.tablets}) {
+		display: none;
+	}
 `;
 
 export const EventLink = styled.span`
-  cursor: pointer;
-  &:hover {
-    color: ${colors.white};
-  }
+	cursor: pointer;
+	&:hover {
+		color: ${colors.white};
+	}
 `;
 
 export const EventSummary = styled.div`
-  display: flex;
-  flex-direction: row;
-  & > * {
-    margin: 0 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  & > i {
-    width: 20px;
-    box-sizing: border-box;
-  }
+	display: flex;
+	flex-direction: row;
+	& > * {
+		margin: 0 5px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	& > i {
+		width: 20px;
+		box-sizing: border-box;
+	}
 
-  /* .event-summary > *
+	/* .event-summary > *
   margin: 0 5px
   display: flex
   justify-content: center

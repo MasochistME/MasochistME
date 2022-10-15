@@ -16,84 +16,84 @@ import PageProfile from './Profile';
 import PageGame from './Game';
 
 const WrapperContent = styled.div`
-  position: relative;
-  width: 70%;
-  height: auto;
-  box-sizing: border-box;
-  color: ${colors.superLightGrey};
-  @media (max-width: ${media.netbooks}) {
-    width: 100%;
-  }
+	position: relative;
+	width: 70%;
+	height: auto;
+	box-sizing: border-box;
+	color: ${colors.superLightGrey};
+	@media (max-width: ${media.netbooks}) {
+		width: 100%;
+	}
 `;
 
 const WrapperPage = styled.div`
-  margin: 30px 30px 0 0;
+	margin: 30px 30px 0 0;
 `;
 
 type TPage =
-  | 'home'
-  | 'games'
-  | 'ranking'
-  | 'events'
-  | 'support'
-  | 'profile'
-  | 'game'
-  | 'badges'
-  | 'admin'
-  | 'notfound';
+	| 'home'
+	| 'games'
+	| 'ranking'
+	| 'events'
+	| 'support'
+	| 'profile'
+	| 'game'
+	| 'badges'
+	| 'admin'
+	| 'notfound';
 type TSubPage = 'badges' | 'users' | 'games' | undefined;
 type Props = {
-  page: TPage;
-  subpage?: TSubPage;
+	page: TPage;
+	subpage?: TSubPage;
 };
 
 export default function Page(props: Props): JSX.Element {
-  const { page } = props;
-  const dispatch = useDispatch();
-  const selectPage = () => {
-    switch (page) {
-      case 'home':
-        return <PageHome />;
-      case 'games':
-        return <PageAllGames />;
-      case 'ranking':
-        return <PageRanking />;
-      case 'events':
-        return <PageEvents />;
-      case 'support':
-        return <PageSupport />;
-      case 'profile':
-        return <PageProfile />;
-      case 'game':
-        return <PageGame />;
-      case 'badges':
-        return <PageBadges />;
-      case 'notfound':
-        return <PageNotFound />;
-      default:
-        return <PageHome />;
-    }
-  };
+	const { page } = props;
+	const dispatch = useDispatch();
+	const selectPage = () => {
+		switch (page) {
+			case 'home':
+				return <PageHome />;
+			case 'games':
+				return <PageAllGames />;
+			case 'ranking':
+				return <PageRanking />;
+			case 'events':
+				return <PageEvents />;
+			case 'support':
+				return <PageSupport />;
+			case 'profile':
+				return <PageProfile />;
+			case 'game':
+				return <PageGame />;
+			case 'badges':
+				return <PageBadges />;
+			case 'notfound':
+				return <PageNotFound />;
+			default:
+				return <PageHome />;
+		}
+	};
 
-  useEffect(() => {
-    dispatch(changeTab(page));
-  }, [page]);
+	useEffect(() => {
+		dispatch(changeTab(page));
+	}, [page]);
 
-  return (
-    <Wrapper type="main">
-      {/* <LoginModal /> */}
-      <Header />
-      <Wrapper type="nav">
-        <Nav />
-      </Wrapper>
-      <Wrapper type="middle">
-        <WrapperContent>
-          <MiniHeader />
-          <WrapperPage>{selectPage()}</WrapperPage>
-        </WrapperContent>
-        <SidebarWrapper />
-      </Wrapper>
-      <Wrapper type="footer" />
-    </Wrapper>
-  );
+	return (
+		<Wrapper type="main">
+			{/* <LoginModal /> */}
+			<Header />
+			<Wrapper type="nav">
+				<Nav />
+			</Wrapper>
+			<Wrapper type="middle">
+				<WrapperContent>
+					<MiniHeader />
+					<WrapperPage>{selectPage()}</WrapperPage>
+				</WrapperContent>
+				<SidebarWrapper />
+			</Wrapper>
+			<Wrapper type="footer" />
+		</Wrapper>
+	);
 }

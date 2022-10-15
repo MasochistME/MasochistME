@@ -4,15 +4,15 @@ export const CHANGE_GAMES_VIEW = 'CHANGE_GAMES_VIEW';
 
 // ACTION CREATORS
 export function changeTab(tab: any): any {
-  return {
-    type: CHANGE_TAB,
-    tab,
-  };
+	return {
+		type: CHANGE_TAB,
+		tab,
+	};
 }
 
 export function changeGamesView(view: 'list' | 'tiles'): any {
-  return {
-    type: CHANGE_GAMES_VIEW,
-    view,
-  };
+	return {
+		type: CHANGE_GAMES_VIEW,
+		view,
+	};
 }

@@ -1,10 +1,10 @@
 export const swapRatingToIcon = (
-  scoreID: string | number,
-  rating: any,
+	scoreID: string | number,
+	rating: any,
 ): string => {
-  return rating
-    ? rating.find((r: any) => r.id === scoreID).icon
-    : 'fas fa-spinner';
+	return rating
+		? rating.find((r: any) => r.id === scoreID).icon
+		: 'fas fa-spinner';
 };
 
 /**
@@ -14,9 +14,9 @@ export const swapRatingToIcon = (
  * @returns
  */
 export const stringCompare = (a = '', b = ''): any => {
-  const al = a.replace(/\s+/g, '');
-  const bl = b.replace(/\s+/g, '');
-  return al.localeCompare(bl, 'nb');
+	const al = a.replace(/\s+/g, '');
+	const bl = b.replace(/\s+/g, '');
+	return al.localeCompare(bl, 'nb');
 };
 
 /**
@@ -26,7 +26,7 @@ export const stringCompare = (a = '', b = ''): any => {
  * @returns
  */
 export const booleanCompare = (a = false, b = false): any => {
-  const a1 = a ? 'true' : 'false';
-  const b1 = b ? 'true' : 'false';
-  return stringCompare(a1, b1);
+	const a1 = a ? 'true' : 'false';
+	const b1 = b ? 'true' : 'false';
+	return stringCompare(a1, b1);
 };
