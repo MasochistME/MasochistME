@@ -2,7 +2,6 @@
   "name": "masochistme",
   "version": "3.0.0",
   "private": true,
-  "type": "module",
   "description": "MasochistME - games that masochists love.",
   "main": "index.js",
   "repository": {
@@ -15,15 +14,16 @@
     "url": "https://github.com/MasochistME/MasochistME/issues"
   },
   "scripts": {
+    "maso:dev": "env ENV=dev PORT=80 react-app-rewired start",
+    "maso:prod": "env ENV=prod PORT=80 react-app-rewired start",
     "prod-pop": "yarn run build && serve -l 3000 -s",
     "masochist:serve": "serve -l 3000 -s",
     "server": "node ./start.js",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "echo TODO",
-    "eject": "react-scripts eject",
-    "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
-    "lint:fix": "eslint src --ext .jsx,.js,.tsx,.ts --fix"
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .tsx,.ts --fix",
+    "test": "echo TODO"
   },
   "dependencies": {
     "antd": "^4.12.3",
@@ -60,12 +60,13 @@
     "@types/react-redux": "^7.1.15",
     "@types/react-router-dom": "^5.1.7",
     "@types/styled-components": "^5.1.7",
-    "@typescript-eslint/eslint-plugin": "^4.11.1",
-    "@typescript-eslint/parser": "^4.11.1",
-    "eslint": "^7.17.0",
-    "eslint-config-prettier": "^7.1.0",
-    "eslint-plugin-prettier": "^3.3.0",
-    "prettier": "^2.2.1"
+    "@typescript-eslint/eslint-plugin": "^5.40.0",
+    "@typescript-eslint/parser": "^5.40.0",
+    "eslint": "^8.25.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.7.1",
+    "react-app-rewired": "^2.2.1"
   },
   "browserslist": [
     ">0.2%",
