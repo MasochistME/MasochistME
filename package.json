@@ -16,10 +16,11 @@
   },
   "scripts": {
     "prod-pop": "yarn run build && serve -l 3000 -s",
+    "masochist:serve": "serve -l 3000 -s",
     "server": "node ./start.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "echo TODO",
     "eject": "react-scripts eject",
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint src --ext .jsx,.js,.tsx,.ts --fix"
