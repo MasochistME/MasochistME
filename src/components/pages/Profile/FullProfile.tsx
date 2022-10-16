@@ -8,6 +8,8 @@ import { changeTab } from 'shared/store/modules/Tabs';
 import { Flex, Wrapper, Section, BigBadge } from 'shared/components';
 import { Badges } from './styles';
 import ProfileGraphs from './ProfileGraphs';
+import { useBadges } from 'shared/hooks';
+import { Badge } from '@masochistme/sdk/dist/v1/types';
 
 FullProfile.Badges = Badges;
 FullProfile.Badge = BigBadge;
@@ -22,11 +24,12 @@ export default function FullProfile(props: Props): JSX.Element {
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const { id } = useParams<{ id: string }>();
+	const { data } = useBadges();
 
 	const games = useSelector((state: any) => state.games.list);
 
-	const badges = useSelector((state: any) => {
-		const userBadges = state.badges
+	const getBadges = (): Badge[] => {
+		const userBadges = data
 			.filter(
 				(badge: any) =>
 					user?.badges && user.badges.find((b: any) => b.id === badge._id),
@@ -52,7 +55,8 @@ export default function FullProfile(props: Props): JSX.Element {
 			['desc'],
 		);
 		return orderedUserBadges;
-	});
+	};
+	const badges = getBadges();
 
 	const onBadgeClick = (id?: string) => id && history.push(`/game/${id}`);
 
@@ -74,7 +78,7 @@ export default function FullProfile(props: Props): JSX.Element {
 									display: 'flex',
 									flexFlow: 'row wrap',
 								}}>
-								{badges.map((badge, index) => {
+								{badges.map((badge: Badge, index: number) => {
 									const game = games.find(
 										(g: any) => Number(g.id) === Number(badge.gameId),
 									);
@@ -83,8 +87,8 @@ export default function FullProfile(props: Props): JSX.Element {
 											src={badge.img}
 											alt="badge"
 											title={`${
-												badge?.game !== 'unknown'
-													? badge?.game.toUpperCase()
+												badge?.title && badge.title !== 'unknown'
+													? badge?.title.toUpperCase()
 													: game?.title.toUpperCase()
 											} - ${badge.name} (${badge.points} pts)\n"${
 												badge.description

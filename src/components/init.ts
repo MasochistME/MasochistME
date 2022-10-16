@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { orderBy } from 'lodash';
 import axios from 'axios';
@@ -14,13 +14,13 @@ import {
 	cacheUserDetails,
 	cacheGameDetails,
 } from 'shared/store/modules/Cache';
-import { AppContext } from 'shared/store/context';
+import { useAppContext } from 'shared/store/context';
 import { showGamesRated } from 'shared/store/modules/CheckBoxes';
 import { log } from 'shared/helpers';
 
 export default function useInit(): boolean {
 	const dispatch = useDispatch();
-	const { path } = useContext(AppContext);
+	const { path } = useAppContext();
 	const [loaded, setLoaded] = useState(false);
 
 	const loadRating = () => {
@@ -147,7 +147,7 @@ export function useUserDetails(id: string): {
 	isUserError?: boolean;
 } {
 	const dispatch = useDispatch();
-	const { path } = useContext(AppContext);
+	const { path } = useAppContext();
 
 	const isUserLoaded = useSelector(
 		(state: any) => !!state.users.details.find((user: any) => user.id === id),
@@ -183,7 +183,7 @@ export function useUserDetails(id: string): {
  * @param id - game id
  */
 export function useGameDetails(id: string): boolean {
-	const { path } = useContext(AppContext);
+	const { path } = useAppContext();
 	const dispatch = useDispatch();
 	const loaded = useSelector(
 		(state: any) =>

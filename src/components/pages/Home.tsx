@@ -5,38 +5,14 @@ import { colors, fonts } from 'shared/theme';
 import { TBlog } from 'shared/types/blog';
 import { Section, Spinner } from 'shared/components';
 
-const Blog = styled.div`
-	div {
-		margin-bottom: 10px;
-	}
-`;
-
-const Entry = styled.div`
-	box-sizing: border-box;
-	padding: 10px;
-	background-color: ${colors.darkBlueTransparent};
-	box-shadow: 0 0 20px ${colors.newDark};
-	h1 {
-		margin: 0;
-		font-size: 1.8em;
-		font-family: ${fonts.Cinzel};
-	}
-	h2 {
-		margin: 0;
-		font-size: 1.2em;
-		text-align: right;
-		font-family: ${fonts.Cinzel};
-		border-bottom: 1px solid ${colors.newMediumGrey};
-		margin-bottom: 10px;
-	}
-	p {
-		font-size: 1em;
-		padding: 0 1em;
-	}
-`;
+import { useBadges } from 'shared/hooks';
 
 export default function PageHome(): JSX.Element {
 	const blog = useSelector((state: any) => state.blog || []);
+
+	const { data, isLoading, isError } = useBadges();
+
+	console.log(data);
 
 	return (
 		<div>
@@ -76,3 +52,33 @@ export default function PageHome(): JSX.Element {
 		</div>
 	);
 }
+
+const Blog = styled.div`
+	div {
+		margin-bottom: 10px;
+	}
+`;
+
+const Entry = styled.div`
+	box-sizing: border-box;
+	padding: 10px;
+	background-color: ${colors.darkBlueTransparent};
+	box-shadow: 0 0 20px ${colors.newDark};
+	h1 {
+		margin: 0;
+		font-size: 1.8em;
+		font-family: ${fonts.Cinzel};
+	}
+	h2 {
+		margin: 0;
+		font-size: 1.2em;
+		text-align: right;
+		font-family: ${fonts.Cinzel};
+		border-bottom: 1px solid ${colors.newMediumGrey};
+		margin-bottom: 10px;
+	}
+	p {
+		font-size: 1em;
+		padding: 0 1em;
+	}
+`;

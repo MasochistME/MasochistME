@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { orderBy } from 'lodash';
 
-import { useUsers } from 'shared/hooks';
+import { useBadges, useUsers } from 'shared/hooks';
 import { swapRatingToIcon } from 'shared/helpers';
 import { TEventTypes } from 'shared/types/events';
 import { SmallEvent, Section, SectionTitle, EventLink } from '../';
@@ -17,7 +17,7 @@ export default function SectionHistory(): JSX.Element {
 	const users = useUsers(false);
 	const games = useSelector((state: any) => state.games.list);
 	const rating = useSelector((state: any) => state.rating);
-	const badges = useSelector((state: any) => state.badges);
+	const { data: badges } = useBadges();
 
 	const sortEvents = (event: any, eventIndex: number) => {
 		const user = users.find((m: any) => m.id === event.member);

@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Flex, Badge } from 'shared/components';
+import { useBadges } from 'shared/hooks';
 
 const StyledFlex = styled(Flex)`
 	& > * {
@@ -17,13 +18,12 @@ export default function UserBadges(props: {
 	game: any;
 }): JSX.Element {
 	const { user, game } = props;
+	const { data } = useBadges();
 
-	const badges = useSelector((state: any) =>
-		state.badges.filter(
-			(badge: any) =>
-				game?.badges?.includes(badge['_id']) &&
-				user?.badges?.includes(badge['_id']),
-		),
+	const badges = data.filter(
+		(badge: any) =>
+			game?.badges?.includes(badge['_id']) &&
+			user?.badges?.includes(badge['_id']),
 	);
 
 	const mappedBadges = badges.map((badge: any) => {

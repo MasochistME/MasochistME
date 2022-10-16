@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Flex, Section } from 'shared/components';
 import { Description, Field, BadgeImg } from './styles';
+import { useBadges } from 'shared/hooks';
 
 const StyledBadges = styled.div`
 	min-width: 400px;
@@ -18,8 +19,9 @@ export default function Badges(props: {
 	mini?: boolean;
 }): JSX.Element {
 	const { game, mini } = props;
-	const badges = useSelector((state: any) =>
-		state.badges.filter((badge: any) => game.badges.includes(badge['_id'])),
+	const { data } = useBadges();
+	const badges = data.filter((badge: any) =>
+		game.badges.includes(badge['_id']),
 	);
 
 	return mini ? (

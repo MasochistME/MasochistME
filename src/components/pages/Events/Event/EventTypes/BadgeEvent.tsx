@@ -9,8 +9,9 @@ import {
 	EventImg,
 	EventLink,
 } from 'components/pages/Events/styles';
-import { useUsers } from 'shared/hooks';
+import { useBadges, useUsers } from 'shared/hooks';
 import logo from 'shared/images/logo.png';
+import { Badge } from '@masochistme/sdk/dist/v1/types';
 
 type Props = {
 	event: any;
@@ -34,9 +35,8 @@ export default function BadgeEvent(props: Props): JSX.Element | null {
 
 function BadgeAdded({ event }: { event: any }) {
 	const history = useHistory();
-	const badge = useSelector((state: any) =>
-		state.badges.find((b: any) => b['_id'] === event.badge),
-	);
+	const { data: badges } = useBadges();
+	const badge = badges.find((b: Badge) => b['_id'] === event.badge);
 	const game = useSelector((state: any) =>
 		state.games.list.find((g: any) => Number(g.id) === Number(event.game)),
 	);
@@ -71,9 +71,8 @@ function BadgeAdded({ event }: { event: any }) {
 function BadgeGiven({ event }: { event: any }) {
 	const history = useHistory();
 	const users = useUsers(false);
-	const badge = useSelector((state: any) =>
-		state.badges.find((b: any) => b['_id'] === event.badge),
-	);
+	const { data: badges } = useBadges();
+	const badge = badges.find((b: any) => b['_id'] === event.badge);
 
 	const user = users.find((u: any) => u.id === event.member);
 
