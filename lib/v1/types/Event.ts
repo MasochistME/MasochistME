@@ -15,6 +15,8 @@ export enum EventType {
 	GAME_REMOVE = 'gameRemoved',
 	BADGE_CREATE = 'badgeAdded',
 	BADGE_GET = 'badgeGiven',
+	ACHIEVEMENTS_CHANGE = 'achievementNumberChange',
+	CUSTOM = 'custom',
 }
 
 /**
@@ -35,7 +37,9 @@ export type Event =
 	| EventGameRemove
 	| EventGameTierChange
 	| EventMemberJoin
-	| EventMemberLeave;
+	| EventMemberLeave
+	| EventAchievementNumberChange
+	| EventCustom;
 
 /**
  * Fields which are common for all types of events.
@@ -181,4 +185,49 @@ export interface EventBadgeGet extends Omit<BaseEvent, 'type'> {
 	 * Steam ID of the member who got granted the badge.
 	 */
 	memberId: string;
+}
+
+/**
+ * Event generated when a Masochist.ME curated game changes its number of achievements.
+ */
+export interface EventAchievementNumberChange extends Omit<BaseEvent, 'type'> {
+	/**
+	 * Type of the event.
+	 */
+	type: EventType.ACHIEVEMENTS_CHANGE;
+	/**
+	 * Steam ID of the game that changed its tier.
+	 */
+	gameId: number;
+	/**
+	 * Previous number of achievements.
+	 */
+	oldNumber: number;
+	/**
+	 * New number of achievements.
+	 */
+	newNumber: number;
+}
+
+/**
+ * A custom event.
+ */
+export interface EventCustom extends Omit<BaseEvent, 'type'> {
+	/**
+	 * Type of the event.
+	 */
+	type: EventType.CUSTOM;
+	/**
+	 * Content of the event.
+	 */
+	content: {
+		/**
+		 * Text to be displayed alongside event.
+		 */
+		text: string;
+		/**
+		 * FontAwesome icon to be shown in the event.
+		 */
+		icon: string;
+	};
 }
