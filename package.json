@@ -6,15 +6,12 @@
   "author": "Arcyvilk <arcyvilk@gmail.com>",
   "license": "MIT",
   "sideEffects": false,
-  "type": "module",
   "engines": {
     "node": ">=16"
   },
   "files": [
     "dist/**/*"
   ],
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
     "dev": "nodemon --exec npx tsx __example/index.ts",
