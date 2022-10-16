@@ -20,7 +20,7 @@ const AppContextProvider = ({
 }: {
 	children: React.ReactNode;
 }): JSX.Element => {
-	const path = process.env?.HOST ?? 'http://localhost:3002';
+	const path = process?.env?.REACT_APP_API ?? 'http://localhost:3002';
 	const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 	const [isAdmin, setIsAdmin] = useState<boolean>(false);
 	const [permissions, setPermissions] = useState<Permission[]>([]);

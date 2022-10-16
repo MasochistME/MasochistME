@@ -152,7 +152,7 @@ export default function ProfileGraphs(props: Props): JSX.Element {
 								r.id ===
 								games.find((g: any) => parseInt(g.id) === game.id).rating,
 						).score;
-					} catch (err) {
+					} catch (err: any) {
 						log.WARN(err);
 						date.points = 0;
 					}

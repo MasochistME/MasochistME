@@ -1,14 +1,10 @@
 import React, { useContext, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import * as dotenv from 'dotenv';
-
 import Page from 'components/pages';
 import { log } from 'shared/helpers';
 import { useUserPermissions } from 'shared/hooks';
 import { AppContext } from 'shared/store/context';
 import useInit from './init';
-
-dotenv.config();
 
 export default function App(): JSX.Element {
 	const loaded = useInit();

@@ -38,6 +38,7 @@ export default function User(props: TUser): JSX.Element {
 				position={position}
 				onShowDetails={changeDetailsVisibility}
 			/>
+			{/** @ts-ignore */}
 			<SlideDown className="my-dropdown-slidedown" style={{ width: '100%' }}>
 				{details}
 			</SlideDown>
