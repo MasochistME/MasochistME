@@ -4,9 +4,10 @@ import { Event } from '@masochistme/sdk/dist/v1/types';
 
 import { Flex, Wrapper, Spinner } from 'components';
 import { useActiveTab, useEvents } from 'shared/hooks';
-import EventItem from './EventItem';
-import { eventsDict } from './eventsDict';
 import { TabDict } from 'shared/config/tabs';
+
+import { eventsDict } from './eventsDict';
+import EventItem from './EventItem';
 
 export const TabEvents = (): JSX.Element => {
 	useActiveTab(TabDict.EVENTS);

@@ -12,7 +12,7 @@ import {
 	EventInfo,
 	EventImg,
 	EventLink,
-} from 'pages/TabEvents/styles';
+} from './components';
 import logo from 'shared/images/logo.png';
 import { useTiers } from 'shared/hooks';
 
@@ -20,9 +20,9 @@ type Props = {
 	event: EventAchievementNumberChange;
 };
 
-export default function AchievementNumberChangeEvent(
+export const AchievementNumberChangeEvent = (
 	props: Props,
-): JSX.Element | null {
+): JSX.Element | null => {
 	const { event } = props;
 	const history = useHistory();
 	const { tiersData } = useTiers();
@@ -53,4 +53,4 @@ export default function AchievementNumberChangeEvent(
 			</EventSummary>
 		</EventInfo>
 	) : null;
-}
+};

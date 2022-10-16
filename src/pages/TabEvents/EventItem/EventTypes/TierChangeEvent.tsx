@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { EventGameTierChange } from '@masochistme/sdk/dist/v1/types';
 
+import logo from 'shared/images/logo.png';
+import { useTiers } from 'shared/hooks';
 import { getTierIcon } from 'shared/helpers';
 import {
 	EventDescription,
@@ -10,13 +12,11 @@ import {
 	EventInfo,
 	EventImg,
 	EventLink,
-} from 'pages/TabEvents/styles';
-import logo from 'shared/images/logo.png';
-import { useTiers } from 'shared/hooks';
+} from './components';
 
 type Props = { event: EventGameTierChange };
 
-export default function TierChangeEvent(props: Props): JSX.Element | null {
+export const TierChangeEvent = (props: Props): JSX.Element | null => {
 	const { event } = props;
 	const history = useHistory();
 	const { tiersData } = useTiers();
@@ -63,4 +63,4 @@ export default function TierChangeEvent(props: Props): JSX.Element | null {
 			</EventSummary>
 		</EventInfo>
 	) : null;
-}
+};

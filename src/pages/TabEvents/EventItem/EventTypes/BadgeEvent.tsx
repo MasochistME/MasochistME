@@ -4,45 +4,45 @@ import { useHistory } from 'react-router-dom';
 import {
 	EventBadgeCreate,
 	EventBadgeGet,
+	Badge,
 } from '@masochistme/sdk/dist/v1/types';
 
+import { useBadges, useUsers } from 'shared/hooks';
+import logo from 'shared/images/logo.png';
 import {
 	EventDescription,
 	EventSummary,
 	EventInfo,
 	EventImg,
 	EventLink,
-} from 'pages/TabEvents/styles';
-import { useBadges, useUsers } from 'shared/hooks';
-import logo from 'shared/images/logo.png';
-import { Badge } from '@masochistme/sdk/dist/v1/types';
+} from './components';
 
 type Props = {
 	event: EventBadgeCreate | EventBadgeGet;
 	action: 'added' | 'given';
 };
 
-export default function BadgeEvent(props: Props): JSX.Element | null {
+export const BadgeEvent = (props: Props): JSX.Element | null => {
 	const { event, action } = props;
 	if (action === 'added') {
-		return <BadgeAdded event={event} />;
+		return <BadgeAdded event={event as EventBadgeCreate} />;
 	}
 	if (action === 'given') {
-		return <BadgeGiven event={event} />;
+		return <BadgeGiven event={event as EventBadgeGet} />;
 	}
 	return null;
-}
+};
 
-// ----------------------------------------------
-// ----------------------------------------------
-// ----------------------------------------------
-
-function BadgeAdded({ event }: { event: any }) {
+/**
+ * Component displaying info about badge creation event.
+ */
+const BadgeAdded = ({ event }: { event: EventBadgeCreate }) => {
 	const history = useHistory();
 	const { data: badges } = useBadges();
-	const badge = badges.find((b: Badge) => b['_id'] === event.badge);
+
+	const badge = badges.find((b: Badge) => String(b._id) === event.badgeId);
 	const game = useSelector((state: any) =>
-		state.games.list.find((g: any) => Number(g.id) === Number(event.game)),
+		state.games.list.find((g: any) => Number(g.id) === Number(event.gameId)),
 	);
 
 	const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
@@ -53,10 +53,12 @@ function BadgeAdded({ event }: { event: any }) {
 			{badge && game ? (
 				<EventDescription>
 					<EventLink className="bold" onClick={onGameClick}>
-						{game?.title ? game.title : `Game ${event.game}`}
+						{game?.title ? game.title : `Game ${event.gameId}`}
 					</EventLink>{' '}
 					has gotten a new badge -{' '}
-					<span className="bold">{badge?.name ? badge.name : event.badge}</span>
+					<span className="bold">
+						{badge?.name ? badge.name : event.badgeId}
+					</span>
 					!
 				</EventDescription>
 			) : null}
@@ -66,19 +68,17 @@ function BadgeAdded({ event }: { event: any }) {
 			</EventSummary>
 		</EventInfo>
 	);
-}
+};
 
-// ----------------------------------------------
-// ----------------------------------------------
-// ----------------------------------------------
-
-function BadgeGiven({ event }: { event: any }) {
+/**
+ * Component displaying info about badge granted event.
+ */
+const BadgeGiven = ({ event }: { event: EventBadgeGet }) => {
 	const history = useHistory();
 	const users = useUsers(false);
 	const { data: badges } = useBadges();
-	const badge = badges.find((b: any) => b['_id'] === event.badge);
-
-	const user = users.find((u: any) => u.id === event.member);
+	const badge = badges.find((b: Badge) => String(b._id) === event.badgeId);
+	const user = users.find((u: any) => u.id === event.memberId);
 
 	const onUserClick = () => user?.id && history.push(`/profile/${user.id}`);
 
@@ -88,10 +88,10 @@ function BadgeGiven({ event }: { event: any }) {
 			{badge && user ? (
 				<EventDescription>
 					<EventLink className="bold" onClick={onUserClick}>
-						{user?.name ?? `User ${event.member}`}
+						{user?.name ?? `User ${event.memberId}`}
 					</EventLink>{' '}
 					has earned a new badge -{' '}
-					<span className="bold">{badge?.name ?? event.badge}</span>!
+					<span className="bold">{badge?.name ?? event.badgeId}</span>!
 				</EventDescription>
 			) : null}
 			<EventSummary>
@@ -104,4 +104,4 @@ function BadgeGiven({ event }: { event: any }) {
 			</EventSummary>
 		</EventInfo>
 	);
-}
+};

@@ -37,29 +37,29 @@ export default function EventItem(props: Props): JSX.Element | null {
 		const type: EventType = event.type;
 
 		switch (type) {
-			case 'newGame':
+			case EventType.GAME_ADD:
 				return <GameEvent event={event as EventGameAdd} action="added" />;
-			case 'gameRemoved':
+			case EventType.GAME_REMOVE:
 				return <GameEvent event={event as EventGameRemove} action="removed" />;
-			case 'memberJoined':
+			case EventType.MEMBER_JOIN:
 				return <MemberEvent event={event as EventMemberJoin} action="join" />;
-			case 'memberLeft':
+			case EventType.MEMBER_LEAVE:
 				return <MemberEvent event={event as EventMemberLeave} action="leave" />;
-			case 'complete':
+			case EventType.COMPLETE:
 				return <CompleteEvent event={event as EventComplete} />;
-			case 'tierChange':
+			case EventType.GAME_TIER_CHANGE:
 				return <TierChangeEvent event={event as EventGameTierChange} />;
-			case 'badgeAdded':
+			case EventType.BADGE_CREATE:
 				return <BadgeEvent event={event as EventBadgeCreate} action="added" />;
-			case 'badgeGiven':
+			case EventType.BADGE_GET:
 				return <BadgeEvent event={event as EventBadgeGet} action="given" />;
-			case 'achievementNumberChange':
+			case EventType.ACHIEVEMENTS_CHANGE:
 				return (
 					<AchievementNumberChangeEvent
 						event={event as EventAchievementNumberChange}
 					/>
 				);
-			case 'custom':
+			case EventType.CUSTOM:
 				return <CustomEvent event={event as EventCustom} />;
 			default:
 				return null;

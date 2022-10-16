@@ -1,17 +1,7 @@
-import AchievementNumberChangeEvent from './AchievementNumberChangeEvent';
-import CompleteEvent from './CompleteEvent';
-import CustomEvent from './CustomEvent';
-import GameEvent from './GameEvent';
-import MemberEvent from './MemberEvent';
-import TierChangeEvent from './TierChangeEvent';
-import BadgeEvent from './BadgeEvent';
-
-export {
-	AchievementNumberChangeEvent,
-	CompleteEvent,
-	CustomEvent,
-	GameEvent,
-	MemberEvent,
-	TierChangeEvent,
-	BadgeEvent,
-};
+export { AchievementNumberChangeEvent } from './AchievementNumberChangeEvent';
+export { CompleteEvent } from './CompleteEvent';
+export { CustomEvent } from './CustomEvent';
+export { GameEvent } from './GameEvent';
+export { MemberEvent } from './MemberEvent';
+export { TierChangeEvent } from './TierChangeEvent';
+export { BadgeEvent } from './BadgeEvent';

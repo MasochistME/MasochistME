@@ -1,30 +1,31 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { EventComplete } from '@masochistme/sdk/dist/v1/types';
 
+import { useTiers, useUsers } from 'shared/hooks';
+import logo from 'shared/images/logo.png';
 import {
 	EventDescription,
 	EventSummary,
 	EventInfo,
 	EventImg,
 	EventLink,
-} from 'pages/TabEvents/styles';
-import { useTiers, useUsers } from 'shared/hooks';
-import logo from 'shared/images/logo.png';
+} from './components';
 
 type Props = {
-	event: any;
+	event: EventComplete;
 };
 
-export default function CompleteEvent(props: Props): JSX.Element | null {
+export const CompleteEvent = (props: Props): JSX.Element | null => {
 	const { event } = props;
 	const history = useHistory();
 	const users = useUsers(false);
 	const { tiersData } = useTiers();
 	const game = useSelector((state: any) =>
-		state.games.list.find((g: any) => Number(g.id) === Number(event.game)),
+		state.games.list.find((g: any) => Number(g.id) === Number(event.gameId)),
 	);
-	const user = users.find((u: any) => u.id === event.member);
+	const user = users.find((u: any) => u.id === event.memberId);
 	const gameRating = tiersData.find((r: any) =>
 		game ? Number(r.id) === Number(game.rating) : null,
 	);
@@ -37,11 +38,12 @@ export default function CompleteEvent(props: Props): JSX.Element | null {
 			<EventImg src={user?.avatar ?? logo} alt="game-img" />
 			<EventDescription>
 				<EventLink className="bold" onClick={onUserClick}>
-					{user?.name ?? `User ${event.member} (no longer member of the group)`}
+					{user?.name ??
+						`User ${event.memberId} (no longer member of the group)`}
 				</EventLink>{' '}
 				completed{' '}
 				<EventLink className="bold" onClick={onGameClick}>
-					{game?.title ?? `game ${event.game} (no longer curated)`}
+					{game?.title ?? `game ${event.gameId} (no longer curated)`}
 				</EventLink>
 				!
 			</EventDescription>
@@ -55,4 +57,4 @@ export default function CompleteEvent(props: Props): JSX.Element | null {
 			</EventSummary>
 		</EventInfo>
 	);
-}
+};

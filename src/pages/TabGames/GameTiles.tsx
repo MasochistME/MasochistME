@@ -1,12 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { orderBy } from 'lodash';
+import { TierId } from '@masochistme/sdk/dist/v1/types';
 
 import { Spinner, Wrapper } from 'components';
 import { useTiers } from 'shared/hooks';
 import { GameTile } from './GameTile';
 import { useAppContext } from 'shared/store/context';
-import { TierId } from '@masochistme/sdk/dist/v1/types';
 
 export const GameTiles = (): JSX.Element => {
 	const { tiersData } = useTiers();

@@ -3,22 +3,22 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { EventGameAdd, EventGameRemove } from '@masochistme/sdk/dist/v1/types';
 
+import logo from 'shared/images/logo.png';
+import { useTiers } from 'shared/hooks';
 import {
 	EventDescription,
 	EventSummary,
 	EventInfo,
 	EventImg,
 	EventLink,
-} from 'pages/TabEvents/styles';
-import logo from 'shared/images/logo.png';
-import { useTiers } from 'shared/hooks';
+} from './components';
 
 type Props = {
 	event: EventGameAdd | EventGameRemove;
 	action: 'added' | 'removed';
 };
 
-export default function GameEvent(props: Props): JSX.Element | null {
+export const GameEvent = (props: Props): JSX.Element | null => {
 	const { event, action } = props;
 	const history = useHistory();
 	const { tiersData } = useTiers();
@@ -69,4 +69,4 @@ export default function GameEvent(props: Props): JSX.Element | null {
 			</EventSummary>
 		</EventInfo>
 	);
-}
+};

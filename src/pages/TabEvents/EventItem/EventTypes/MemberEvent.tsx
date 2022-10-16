@@ -5,22 +5,22 @@ import {
 	EventMemberLeave,
 } from '@masochistme/sdk/dist/v1/types';
 
+import { useUsers } from 'shared/hooks';
+import logo from 'shared/images/logo.png';
 import {
 	EventDescription,
 	EventSummary,
 	EventInfo,
 	EventImg,
 	EventLink,
-} from 'pages/TabEvents/styles';
-import { useUsers } from 'shared/hooks';
-import logo from 'shared/images/logo.png';
+} from './components';
 
 type Props = {
 	event: EventMemberJoin | EventMemberLeave;
 	action: 'join' | 'leave';
 };
 
-export default function MemberEvent(props: Props): JSX.Element | null {
+export const MemberEvent = (props: Props): JSX.Element | null => {
 	const { event, action } = props;
 	const history = useHistory();
 	const users = useUsers(false);
@@ -59,4 +59,4 @@ export default function MemberEvent(props: Props): JSX.Element | null {
 			</EventSummary>
 		</EventInfo>
 	);
-}
+};

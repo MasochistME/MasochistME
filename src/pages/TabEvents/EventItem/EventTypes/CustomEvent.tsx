@@ -1,20 +1,20 @@
 import React from 'react';
 import { EventCustom } from '@masochistme/sdk/dist/v1/types';
 
+import logo from 'shared/images/logo.png';
 import { useUsers } from 'shared/hooks';
 import {
 	EventDescription,
 	EventSummary,
 	EventInfo,
 	EventImg,
-} from 'pages/TabEvents/styles';
-import logo from 'shared/images/logo.png';
+} from './components';
 
 type TCustomEvent = {
 	event: EventCustom;
 };
 
-export default function CustomEvent(props: TCustomEvent): JSX.Element | null {
+export const CustomEvent = (props: TCustomEvent): JSX.Element | null => {
 	const { event } = props;
 	const content = event.content;
 
@@ -45,4 +45,4 @@ export default function CustomEvent(props: TCustomEvent): JSX.Element | null {
 			</EventSummary>
 		</EventInfo>
 	);
-}
+};
