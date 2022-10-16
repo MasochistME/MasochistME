@@ -5,6 +5,7 @@
 
 export * from './Badge';
 export * from './Error';
+export * from './Event';
 export * from './Game';
 export * from './MemberBadge';
 export * from './Member';
