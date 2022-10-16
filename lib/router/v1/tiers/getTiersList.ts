@@ -16,7 +16,7 @@ export const getTiersList = async (
   try {
     const { client, db } = await connectToDb();
     const collection = db.collection<Tier>('tiers');
-    const cursor = collection.find();
+    const cursor = collection.find().sort({ score: 1 });
     const tiers: Tier[] = [];
 
     await cursor.forEach((el: Tier) => {
