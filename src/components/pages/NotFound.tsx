@@ -1,7 +1,7 @@
 import React from 'react';
 import { Flex, Wrapper } from 'shared/components';
 
-export default function PageNotFound(): JSX.Element {
+export const NotFound = (): JSX.Element => {
 	return (
 		<Flex column>
 			<Wrapper type="description">
@@ -17,4 +17,4 @@ export default function PageNotFound(): JSX.Element {
 			</Wrapper>
 		</Flex>
 	);
-}
+};

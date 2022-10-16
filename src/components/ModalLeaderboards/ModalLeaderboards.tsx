@@ -4,8 +4,8 @@ import { useHistory } from 'react-router-dom';
 import { useGameDetails } from 'components/init';
 import { Flex, Spinner, CustomButton } from 'shared/components';
 import { WrapperLeaderboards } from './styles';
-import List from './List';
-import Badges from './Badges';
+import { List } from './List';
+import { Badges } from './Badges';
 
 type Props = {
 	id: any;
@@ -13,13 +13,7 @@ type Props = {
 	compact?: boolean;
 };
 
-// ---------------------------------------------
-// ---------------------------------------------
-// ---------------------------------------------
-
-Leaderboards.List = List;
-
-export default function Leaderboards(props: Props): JSX.Element | null {
+export const ModalLeaderboards = (props: Props): JSX.Element | null => {
 	const { id, compact } = props;
 	const history = useHistory();
 	const loaded = useGameDetails(id);
@@ -67,11 +61,13 @@ export default function Leaderboards(props: Props): JSX.Element | null {
 			{loaded && game ? (
 				<Flex column>
 					{game.badges?.length ? <Badges game={game} mini /> : null}
-					<Leaderboards.List game={game} compact={compact} />
+					<ModalLeaderboards.List game={game} compact={compact} />
 				</Flex>
 			) : (
 				<Spinner />
 			)}
 		</WrapperLeaderboards>
 	);
-}
+};
+
+ModalLeaderboards.List = List;

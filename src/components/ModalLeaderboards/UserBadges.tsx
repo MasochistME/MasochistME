@@ -1,22 +1,15 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+
 import { Flex, Badge } from 'shared/components';
 import { useBadges } from 'shared/hooks';
 
-const StyledFlex = styled(Flex)`
-	& > * {
-		margin-right: 4px;
-	}
-	&:first-child {
-		margin-left: 4px;
-	}
-`;
-
-export default function UserBadges(props: {
+type Props = {
 	user: any;
 	game: any;
-}): JSX.Element {
+};
+
+export const UserBadges = (props: Props): JSX.Element => {
 	const { user, game } = props;
 	const { data } = useBadges();
 
@@ -39,4 +32,13 @@ export default function UserBadges(props: {
 	});
 
 	return <StyledFlex>{mappedBadges}</StyledFlex>;
-}
+};
+
+const StyledFlex = styled(Flex)`
+	& > * {
+		margin-right: 4px;
+	}
+	&:first-child {
+		margin-left: 4px;
+	}
+`;

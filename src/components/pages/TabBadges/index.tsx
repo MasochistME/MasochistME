@@ -6,7 +6,7 @@ import { Badge } from '@masochistme/sdk/dist/v1/types';
 import { useBadges } from 'shared/hooks';
 import { Wrapper, Flex } from 'shared/components';
 
-export default function PageBadges(): JSX.Element {
+export const TabBadges = (): JSX.Element => {
 	const games = useSelector((state: any) => state.games.list);
 	const { data } = useBadges();
 	const badges = orderBy(
@@ -47,4 +47,4 @@ export default function PageBadges(): JSX.Element {
 			</Wrapper>
 		</Flex>
 	);
-}
+};

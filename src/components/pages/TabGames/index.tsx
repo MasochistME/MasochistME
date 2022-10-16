@@ -7,7 +7,7 @@ import ViewGamesTiles from './ViewGamesTiles';
 import ViewGamesList from './ViewGamesList';
 import { useTiers } from 'shared/hooks';
 
-export default function PageAllGames(): JSX.Element {
+export const TabGames = (): JSX.Element => {
 	const dispatch = useDispatch();
 	const { tiersData } = useTiers();
 	const gamesView = useSelector((state: any) => state.games.view);
@@ -67,4 +67,4 @@ export default function PageAllGames(): JSX.Element {
 			<ViewGamesList />
 		</Flex>
 	);
-}
+};

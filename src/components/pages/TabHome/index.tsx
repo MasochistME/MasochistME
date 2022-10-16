@@ -7,7 +7,7 @@ import { Section, Spinner } from 'shared/components';
 
 import { useBadges } from 'shared/hooks';
 
-export default function PageHome(): JSX.Element {
+export const TabHome = (): JSX.Element => {
 	const blog = useSelector((state: any) => state.blog || []);
 
 	const { data, isLoading, isError } = useBadges();
@@ -51,7 +51,7 @@ export default function PageHome(): JSX.Element {
 			</Blog>
 		</div>
 	);
-}
+};
 
 const Blog = styled.div`
 	div {

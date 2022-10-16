@@ -11,11 +11,7 @@ import { useUserDetails } from 'components/init';
 import FullProfile from './FullProfile';
 import ProfileHeader from './ProfileHeader';
 
-Profile.Badges = Badges;
-Profile.Badge = BigBadge;
-Profile.Section = Section;
-
-export default function Profile(): JSX.Element {
+export const TabProfile = (): JSX.Element => {
 	const dispatch = useDispatch();
 	const { id } = useParams<{ id: string }>();
 	const { isUserLoaded } = useUserDetails(id);
@@ -73,7 +69,7 @@ export default function Profile(): JSX.Element {
 			{showUserProfile && <FullProfile user={user} />}
 		</Flex>
 	);
-}
+};
 
 type ProfileWarningProps = {
 	description: string;
@@ -87,3 +83,7 @@ const ProfileWarning = (props: ProfileWarningProps): JSX.Element => {
 		</Wrapper>
 	);
 };
+
+TabProfile.Badges = Badges;
+TabProfile.Badge = BigBadge;
+TabProfile.Section = Section;

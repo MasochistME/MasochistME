@@ -1,19 +1,21 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
+
 import { media, colors } from 'shared/theme';
 import { changeTab } from 'shared/store/modules/Tabs';
 import { MiniHeader, Wrapper, Header, Nav } from 'shared/components';
 import SidebarWrapper from 'components/sidebar/SidebarWrapper';
-import PageHome from './Home';
-import PageNotFound from './NotFound';
-import PageAllGames from './AllGames';
-import PageRanking from './Ranking';
-import PageEvents from './Events';
-import PageSupport from './Support';
-import PageBadges from './Badges';
-import PageProfile from './Profile';
-import PageGame from './Game';
+
+import { TabBadges } from './TabBadges';
+import { TabEvents } from './TabEvents';
+import { TabGame } from './TabGame';
+import { TabGames } from './TabGames';
+import { TabHome } from './TabHome';
+import { TabLeaderboards } from './TabLeaderboards';
+import { TabProfile } from './TabProfile';
+import { TabSupport } from './TabSupport';
+import { NotFound } from './NotFound';
 
 type TPage =
 	| 'home'
@@ -35,28 +37,29 @@ type Props = {
 export default function Page(props: Props): JSX.Element {
 	const { page } = props;
 	const dispatch = useDispatch();
-	const selectPage = () => {
+
+	const selectTab = () => {
 		switch (page) {
 			case 'home':
-				return <PageHome />;
+				return <TabHome />;
 			case 'games':
-				return <PageAllGames />;
+				return <TabGames />;
 			case 'ranking':
-				return <PageRanking />;
+				return <TabLeaderboards />;
 			case 'events':
-				return <PageEvents />;
+				return <TabEvents />;
 			case 'support':
-				return <PageSupport />;
+				return <TabSupport />;
 			case 'profile':
-				return <PageProfile />;
+				return <TabProfile />;
 			case 'game':
-				return <PageGame />;
+				return <TabGame />;
 			case 'badges':
-				return <PageBadges />;
+				return <TabBadges />;
 			case 'notfound':
-				return <PageNotFound />;
+				return <NotFound />;
 			default:
-				return <PageHome />;
+				return <TabHome />;
 		}
 	};
 
@@ -73,7 +76,7 @@ export default function Page(props: Props): JSX.Element {
 			<Wrapper type="middle">
 				<WrapperContent>
 					<MiniHeader />
-					<WrapperPage>{selectPage()}</WrapperPage>
+					<WrapperPage>{selectTab()}</WrapperPage>
 				</WrapperContent>
 				<SidebarWrapper />
 			</Wrapper>

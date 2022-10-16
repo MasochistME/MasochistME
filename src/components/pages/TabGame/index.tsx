@@ -6,8 +6,7 @@ import styled from 'styled-components';
 import { media } from 'shared/theme';
 import { StackedBarChart } from 'components/Charts';
 import { Flex, Spinner, Wrapper, Section } from 'shared/components';
-import List from '../Leaderboards/List';
-import Badges from '../Leaderboards/Badges';
+import { List, Badges } from 'components/ModalLeaderboards';
 import GameHeader from './GameHeader';
 
 const FlexibleFlex = styled(Flex)`
@@ -23,7 +22,7 @@ const FlexibleSection = styled(Section)`
 	}
 `;
 
-export default function PageGame(): JSX.Element {
+export const TabGame = (): JSX.Element => {
 	const { id } = useParams<{ id: string }>();
 	const loaded = useGameDetails(id);
 	const game = useSelector((state: any) => {
@@ -82,4 +81,4 @@ export default function PageGame(): JSX.Element {
 			</Wrapper>
 		</Flex>
 	);
-}
+};

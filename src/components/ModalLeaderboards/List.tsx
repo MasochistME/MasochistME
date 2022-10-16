@@ -12,29 +12,14 @@ import {
 	UserTimes,
 	UserAvatar,
 } from './styles';
-import UserBadges from './UserBadges';
+import { UserBadges } from './UserBadges';
 
-const LeaderboardsList = styled.ul`
-	width: 100%;
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-`;
-
-List.User = User;
-List.Link = Link;
-List.UserInfo = UserInfo;
-List.UserName = UserName;
-List.UserTimes = UserTimes;
-List.UserAvatar = UserAvatar;
-List.UserBadges = UserBadges;
-List.ProgressBar = ProgressBar;
-
-export default function List(props: {
+type Props = {
 	game: any;
 	compact?: boolean;
-}): JSX.Element {
+};
+
+export const List = (props: Props): JSX.Element => {
 	const { game, compact } = props;
 	const history = useHistory();
 	const users = useUsers(true);
@@ -95,4 +80,21 @@ export default function List(props: {
 			))}
 		</LeaderboardsList>
 	);
-}
+};
+
+const LeaderboardsList = styled.ul`
+	width: 100%;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+`;
+
+List.User = User;
+List.Link = Link;
+List.UserInfo = UserInfo;
+List.UserName = UserName;
+List.UserTimes = UserTimes;
+List.UserAvatar = UserAvatar;
+List.UserBadges = UserBadges;
+List.ProgressBar = ProgressBar;

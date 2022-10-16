@@ -1,23 +1,11 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+
 import { Flex, Section } from 'shared/components';
-import { Description, Field, BadgeImg } from './styles';
 import { useBadges } from 'shared/hooks';
+import { Description, Field, BadgeImg } from './styles';
 
-const StyledBadges = styled.div`
-	min-width: 400px;
-`;
-
-Badges.Img = BadgeImg;
-Badges.Field = Field;
-Badges.Section = Section;
-Badges.Description = Description;
-
-export default function Badges(props: {
-	game: any;
-	mini?: boolean;
-}): JSX.Element {
+export const Badges = (props: { game: any; mini?: boolean }): JSX.Element => {
 	const { game, mini } = props;
 	const { data } = useBadges();
 	const badges = data.filter((badge: any) =>
@@ -77,4 +65,13 @@ export default function Badges(props: {
 			</Badges.Section>
 		</StyledBadges>
 	);
-}
+};
+
+const StyledBadges = styled.div`
+	min-width: 400px;
+`;
+
+Badges.Img = BadgeImg;
+Badges.Field = Field;
+Badges.Section = Section;
+Badges.Description = Description;

@@ -4,7 +4,7 @@ type Props = {
 	percentage: number;
 };
 
-export default function LeaderboardsProgressBar(props: Props): JSX.Element {
+export const LeaderboardsProgressBar = (props: Props): JSX.Element => {
 	const { percentage } = props;
 	return (
 		<div className="leaderboards-user-completion">
@@ -14,4 +14,4 @@ export default function LeaderboardsProgressBar(props: Props): JSX.Element {
 			<div className="leaderboards-user-completion-percentage">{`${percentage}%`}</div>
 		</div>
 	);
-}
+};

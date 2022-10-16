@@ -17,7 +17,7 @@ const RankingList = styled.ul`
 	width: 100%;
 `;
 
-export default function PageRanking(): JSX.Element {
+export const TabLeaderboards = (): JSX.Element => {
 	const { tiersData } = useTiers();
 	const searchUser = useSelector((state: any) => state.search.user);
 	const ranking = useSelector((state: any) => state.ranking);
@@ -74,4 +74,4 @@ export default function PageRanking(): JSX.Element {
 			</WrapperRanking>
 		</Flex>
 	);
-}
+};

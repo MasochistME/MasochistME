@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Modal from 'react-modal';
 import styled from 'styled-components';
+
 import { getTierIcon } from 'shared/helpers';
 import { colors } from 'shared/theme';
+import { ModalLeaderboards } from 'components/ModalLeaderboards';
 import { Img, Desc, Info, Title, Rating } from './styles';
-import Leaderboards from '../Leaderboards';
 
 Modal.setAppElement('#root');
 
@@ -98,7 +99,7 @@ export default function Game(props: TGame): JSX.Element {
 			{
 				// @ts-ignore
 				<Modal isOpen={modalIsOpen} style={{ ...modalStyle }}>
-					<Leaderboards id={game.id} rating={game.rating} compact />
+					<ModalLeaderboards id={game.id} rating={game.rating} compact />
 				</Modal>
 			}
 		</StyledGame>

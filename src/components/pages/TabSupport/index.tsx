@@ -20,7 +20,7 @@ const HallOfFame = styled.p`
 	padding: 10px 0 3px 0;
 `;
 
-export default function PageSupport(): JSX.Element {
+export const TabSupport = (): JSX.Element => {
 	const patrons = useSelector((state: any) =>
 		orderBy(state.patrons, ['tier'], ['desc']),
 	);
@@ -61,4 +61,4 @@ export default function PageSupport(): JSX.Element {
 			</Wrapper>
 		</Flex>
 	);
-}
+};
