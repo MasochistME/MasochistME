@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { fonts, colors, media } from 'shared/theme';
+import Flex from './layout/Flex';
+import { IconButton } from './IconButton';
 
 const WrapperHeader = styled.div`
 	display: flex;
@@ -28,9 +30,21 @@ const HeaderMotto = styled.p`
 `;
 
 export default function Header(): JSX.Element {
+	const onButtonCuratorClick = () => {
+		window.open('https://store.steampowered.com/curator/41289936', '_blank');
+	};
+	const onButtonPatreonClick = () => {
+		window.open('https://www.patreon.com/pointonepercent', '_blank');
+	};
+
 	return (
 		<WrapperHeader>
+			<span />
 			<HeaderMotto>Masochist.ME - games that masochists love</HeaderMotto>
+			<Flex>
+				<IconButton icon="fab fa-steam" onClick={onButtonCuratorClick} />
+				<IconButton icon="fab fa-patreon" onClick={onButtonPatreonClick} />
+			</Flex>
 		</WrapperHeader>
 	);
 }

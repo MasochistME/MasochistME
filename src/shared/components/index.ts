@@ -7,6 +7,7 @@ import Spinner from './Spinner';
 import Update from './Update';
 import ProgressBar from './ProgressBar';
 import CustomButton from './CustomButton';
+import { IconButton } from './IconButton';
 import HoverIcon from './HoverIcon';
 import { Badge, BigBadge } from './Badge';
 
@@ -32,4 +33,5 @@ export {
 	Wrapper,
 	Section,
 	Table,
+	IconButton,
 };
