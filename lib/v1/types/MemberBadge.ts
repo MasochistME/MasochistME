@@ -1,5 +1,5 @@
 /**
- * @module Member
+ * @module Members
  */
 
 import { WithId } from 'v1/types/Mongo';
