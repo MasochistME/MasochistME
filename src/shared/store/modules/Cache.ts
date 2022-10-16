@@ -2,7 +2,6 @@
 export const CACHE_GAMES = 'CACHE_GAMES';
 export const CACHE_USERS = 'CACHE_USERS';
 export const CACHE_RATING = 'CACHE_RATING';
-export const CACHE_EVENTS = 'CACHE_EVENTS';
 export const CACHE_BLOG = 'CACHE_BLOG';
 export const CACHE_PATRONS = 'CACHE_PATRONS';
 export const CACHE_RANKING = 'CACHE_RANKING';
@@ -26,12 +25,6 @@ export function cacheRating(data: any): any {
 export function cacheUsers(data: any): any {
 	return {
 		type: CACHE_USERS,
-		data,
-	};
-}
-export function cacheEvents(data: any): any {
-	return {
-		type: CACHE_EVENTS,
 		data,
 	};
 }

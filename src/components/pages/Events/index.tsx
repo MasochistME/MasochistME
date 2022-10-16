@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { Flex, Wrapper, Spinner } from 'shared/components';
 import Event from './Event';
+import { useEvents } from 'shared/hooks';
 
 const EventTypes = styled.ul`
 	li {
@@ -62,7 +63,7 @@ const eventTypes = [
 ];
 
 export default function PageEvents(): JSX.Element {
-	const events = useSelector((state: any) => state.events);
+	const { data: events } = useEvents();
 	const eventsDescriptions = eventTypes.map((event: any, index: number) => (
 		<li key={`event-desc-${index}`}>
 			<i className={event.icon}></i> - {event.description}

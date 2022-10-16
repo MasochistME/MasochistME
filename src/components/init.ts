@@ -6,7 +6,6 @@ import {
 	cacheGames,
 	cacheUsers,
 	cacheRating,
-	cacheEvents,
 	cacheBlog,
 	cachePatrons,
 	cacheRanking,
@@ -61,17 +60,6 @@ export default function useInit(): boolean {
 			.catch(log.WARN);
 	};
 
-	const loadEvents = () => {
-		axios
-			.get(`${path}/api/events?limit=100`)
-			.then(response => {
-				if (response?.status === 200) {
-					return dispatch(cacheEvents(response.data));
-				}
-			})
-			.catch(log.WARN);
-	};
-
 	const loadPatrons = () => {
 		axios
 			.get(`${path}/api/patrons`)
@@ -120,7 +108,6 @@ export default function useInit(): boolean {
 		loadGames();
 		loadUsers();
 		loadRating();
-		loadEvents();
 		loadBlog();
 		loadPatrons();
 		loadRanking();

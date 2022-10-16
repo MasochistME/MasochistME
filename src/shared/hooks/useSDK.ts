@@ -13,3 +13,18 @@ export const useBadges = () => {
 
 	return { data, isLoading, isFetched, isError };
 };
+
+export const useEvents = () => {
+	const { sdk } = useAppContext();
+
+	const {
+		data = [],
+		isLoading,
+		isFetched,
+		isError,
+	} = useQuery(['masochist', 'events'], () =>
+		sdk.getEventsList({ filter: {}, limit: 50 }),
+	);
+
+	return { data, isLoading, isFetched, isError };
+};
