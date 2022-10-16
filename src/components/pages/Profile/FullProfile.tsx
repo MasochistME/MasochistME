@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import { orderBy } from 'lodash';
 
 import { changeTab } from 'shared/store/modules/Tabs';
-import { AppContext } from 'shared/store/context';
 import { Flex, Wrapper, Section, BigBadge } from 'shared/components';
 import { Badges } from './styles';
 import ProfileGraphs from './ProfileGraphs';
@@ -22,9 +21,7 @@ export default function FullProfile(props: Props): JSX.Element {
 
 	const history = useHistory();
 	const dispatch = useDispatch();
-	const { isLoggedIn, userId } = useContext(AppContext);
 	const { id } = useParams<{ id: string }>();
-	const canEdit = isLoggedIn && userId === id;
 
 	const games = useSelector((state: any) => state.games.list);
 
@@ -60,11 +57,7 @@ export default function FullProfile(props: Props): JSX.Element {
 	const onBadgeClick = (id?: string) => id && history.push(`/game/${id}`);
 
 	useEffect(() => {
-		if (canEdit) {
-			dispatch(changeTab('me'));
-		} else {
-			dispatch(changeTab('profile'));
-		}
+		dispatch(changeTab('profile'));
 	}, [id]);
 
 	return (

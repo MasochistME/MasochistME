@@ -9,7 +9,6 @@ import {
 	cacheEvents,
 	cacheBlog,
 	cachePatrons,
-	cacheBadges,
 	cacheRanking,
 	cacheStatus,
 	cacheUserDetails,
@@ -95,17 +94,6 @@ export default function useInit(): boolean {
 			.catch(log.WARN);
 	};
 
-	const loadBadges = () => {
-		axios
-			.get(`${path}/api/badges`)
-			.then(response => {
-				if (response?.status === 200) {
-					return dispatch(cacheBadges(response.data));
-				}
-			})
-			.catch(log.WARN);
-	};
-
 	const loadRanking = () => {
 		axios
 			.get(`${path}/api/ranking`)
@@ -134,12 +122,12 @@ export default function useInit(): boolean {
 		loadRating();
 		loadEvents();
 		loadBlog();
-		loadBadges();
 		loadPatrons();
 		loadRanking();
-		setInterval(() => {
-			loadStatus();
-		}, 1000);
+		// TODO disabled when dev/staging
+		// setInterval(() => {
+		// 	loadStatus();
+		// }, 1000);
 		setLoaded(true);
 	};
 

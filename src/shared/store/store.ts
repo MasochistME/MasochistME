@@ -13,7 +13,6 @@ import {
 	CACHE_EVENTS,
 	CACHE_BLOG,
 	CACHE_PATRONS,
-	CACHE_BADGES,
 	CACHE_RANKING,
 	CACHE_STATUS,
 	CACHE_USER_DETAILS,
@@ -179,11 +178,6 @@ const reducer = (state = defaultState, action: any) => {
 			return {
 				...state,
 				blog: action.data,
-			};
-		case CACHE_BADGES:
-			return {
-				...state,
-				badges: action.data,
 			};
 		case CACHE_RANKING:
 			return {

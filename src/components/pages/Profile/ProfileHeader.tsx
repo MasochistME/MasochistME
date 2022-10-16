@@ -29,13 +29,11 @@ type Props = {
 
 export default function ProfileHeader(props: Props): JSX.Element {
 	const { user } = props;
-	const { isLoggedIn, userId, path } = useContext(AppContext);
+	const { path } = useContext(AppContext);
 	const [updating, setUpdating] = useState(false);
 	const [message, setMessage] = useState('');
 	const description: string =
 		user?.description ?? 'Currently there is no info provided about this user.';
-	const canEdit = isLoggedIn && userId === user?.id;
-	const isUserAMember = user && (user.member || user.protected);
 
 	const patron = useSelector((state: any) =>
 		state.patrons.find((tier: any) =>
@@ -59,38 +57,6 @@ export default function ProfileHeader(props: Props): JSX.Element {
 			})
 			.catch(log.WARN);
 	};
-
-	const profileDescription = () => {
-		if (canEdit) {
-			return (
-				<Flex
-					row
-					style={{
-						width: '100%',
-						height: '100%',
-						alignContent: 'space-between',
-					}}>
-					<Flex row style={{ width: '100%' }}>
-						<ProfileHeader.InputDescription
-							value={description}
-							onChange={onDescriptionChange}
-						/>
-					</Flex>
-					<Flex row>
-						<i className="fas fa-edit" />
-					</Flex>
-				</Flex>
-			);
-		} else {
-			return <div>{description}</div>;
-		}
-	};
-
-	const onDescriptionChange =
-		(/*event: React.ChangeEvent<HTMLInputElement>*/) => {
-			// TODO
-			// setDescription(event.target.value);
-		};
 
 	return (
 		<Wrapper type="description">
@@ -131,11 +97,9 @@ export default function ProfileHeader(props: Props): JSX.Element {
 						updating ? (
 							<ProfileHeader.UpdateMsg>{message}</ProfileHeader.UpdateMsg>
 						) : (
-							isUserAMember && (
-								<CustomButton onClick={() => sendUpdateRequest(user?.id)}>
-									Update
-								</CustomButton>
-							)
+							<CustomButton onClick={() => sendUpdateRequest(user?.id)}>
+								Update
+							</CustomButton>
 						)
 					) : (
 						<button
@@ -159,7 +123,7 @@ export default function ProfileHeader(props: Props): JSX.Element {
 							<Spinner />
 						</ProfileHeader.EmptyAvatar>
 					)}
-					{profileDescription()}
+					<div>{description}</div>
 				</ProfileHeader.Basic>
 			</div>
 		</Wrapper>
