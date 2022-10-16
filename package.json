@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@masochistme/sdk": "^1.11.13",
+    "@tanstack/react-query": "^4.12.0",
     "antd": "^4.12.3",
     "axios": ">=0.18.1",
     "babel-polyfill": "^6.26.0",
