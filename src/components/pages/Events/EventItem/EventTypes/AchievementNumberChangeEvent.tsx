@@ -2,6 +2,11 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
+	EventAchievementNumberChange,
+	Tier,
+} from '@masochistme/sdk/dist/v1/types';
+
+import {
 	EventDescription,
 	EventSummary,
 	EventInfo,
@@ -9,9 +14,10 @@ import {
 	EventLink,
 } from 'components/pages/Events/styles';
 import logo from 'shared/images/logo.png';
+import { useTiers } from 'shared/hooks';
 
 type Props = {
-	event: any;
+	event: EventAchievementNumberChange;
 };
 
 export default function AchievementNumberChangeEvent(
@@ -19,17 +25,16 @@ export default function AchievementNumberChangeEvent(
 ): JSX.Element | null {
 	const { event } = props;
 	const history = useHistory();
-	const rating = useSelector((state: any) =>
-		state.rating.find((r: any) =>
-			game ? Number(r.id) === Number(game.rating) : null,
-		),
+	const { tiersData } = useTiers();
+	const tier = tiersData.find((t: Tier) =>
+		game ? Number(t.id) === Number(game.rating) : null,
 	);
 	const games = useSelector((state: any) => state.games.list);
-	const game = games.find((g: any) => Number(g.id) === Number(event.game));
+	const game = games.find((g: any) => Number(g.id) === Number(event.gameId));
 
 	const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
 
-	return game && rating ? (
+	return game && tier ? (
 		<EventInfo>
 			<EventImg alt="game-img" src={logo} />
 			<EventDescription>
@@ -43,7 +48,7 @@ export default function AchievementNumberChangeEvent(
 			<EventSummary>
 				<i
 					className={game ? 'fas fa-tasks' : 'fas fa-exclamation-triangle'}></i>
-				<i className={rating ? rating.icon : 'far fa-question-circle'}></i>
+				<i className={tier ? tier.icon : 'far fa-question-circle'}></i>
 				<EventImg alt="game-img" src={game ? game.img : logo} />
 			</EventSummary>
 		</EventInfo>

@@ -9,7 +9,7 @@ import {
 	EventImg,
 	EventLink,
 } from 'components/pages/Events/styles';
-import { useUsers } from 'shared/hooks';
+import { useTiers, useUsers } from 'shared/hooks';
 import logo from 'shared/images/logo.png';
 
 type Props = {
@@ -20,12 +20,12 @@ export default function CompleteEvent(props: Props): JSX.Element | null {
 	const { event } = props;
 	const history = useHistory();
 	const users = useUsers(false);
+	const { tiersData } = useTiers();
 	const game = useSelector((state: any) =>
 		state.games.list.find((g: any) => Number(g.id) === Number(event.game)),
 	);
 	const user = users.find((u: any) => u.id === event.member);
-	const rating = useSelector((state: any) => state.rating);
-	const gameRating = rating.find((r: any) =>
+	const gameRating = tiersData.find((r: any) =>
 		game ? Number(r.id) === Number(game.rating) : null,
 	);
 

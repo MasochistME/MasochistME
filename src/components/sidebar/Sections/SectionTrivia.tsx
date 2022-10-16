@@ -1,18 +1,18 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { useUsers } from 'shared/hooks';
+import { useTiers, useUsers } from 'shared/hooks';
 import { Spinner } from 'shared/components';
 import { Section, SectionTitle } from '../';
 
 export default function SectionTrivia(): JSX.Element {
+	const { tiersData } = useTiers();
 	const users = useUsers(true);
-	const rating = useSelector((state: any) => state.rating);
 	const games = useSelector((state: any) => state.games.list);
 
 	const mapCurated = () => {
-		if (games && rating) {
-			return rating.map((tier: any, index: number) => {
+		if (games && tiersData) {
+			return tiersData.map((tier: any, index: number) => {
 				return (
 					<li style={{ marginLeft: '30px' }} key={`${tier.score}-${index}`}>
 						<i className={tier.icon} />
@@ -30,7 +30,7 @@ export default function SectionTrivia(): JSX.Element {
 	return (
 		<Section>
 			<SectionTitle>Trivia</SectionTitle>
-			{users.length && rating ? (
+			{users.length && tiersData ? (
 				<>
 					<p>
 						Users total: <span className="bold">{users.length}</span>

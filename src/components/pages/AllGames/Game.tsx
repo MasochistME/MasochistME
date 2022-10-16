@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Modal from 'react-modal';
 import styled from 'styled-components';
-import { swapRatingToIcon } from 'shared/helpers';
+import { getTierIcon } from 'shared/helpers';
 import { colors } from 'shared/theme';
 import { Img, Desc, Info, Title, Rating } from './styles';
 import Leaderboards from '../Leaderboards';
@@ -88,7 +88,7 @@ export default function Game(props: TGame): JSX.Element {
 					<Game.Rating>
 						<i
 							className={
-								game ? swapRatingToIcon(game.rating, rating) : 'fas fa-spinner'
+								game ? getTierIcon(game.rating, rating) : 'fas fa-spinner'
 							}></i>
 					</Game.Rating>
 					<Game.Title>{game.title}</Game.Title>

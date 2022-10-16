@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import SearchBar from 'shared/components/SearchBar';
 import { Flex, Wrapper, Spinner } from 'shared/components';
-import { useUsers } from 'shared/hooks';
+import { useTiers, useUsers } from 'shared/hooks';
 import User from './User';
 
 const WrapperRanking = styled.div`
@@ -18,8 +18,8 @@ const RankingList = styled.ul`
 `;
 
 export default function PageRanking(): JSX.Element {
+	const { tiersData } = useTiers();
 	const searchUser = useSelector((state: any) => state.search.user);
-	const rating = useSelector((state: any) => state.rating);
 	const ranking = useSelector((state: any) => state.ranking);
 	const users = useUsers(true);
 
@@ -44,18 +44,17 @@ export default function PageRanking(): JSX.Element {
 					<p>
 						Ranking system utilizes the games&lsquo; score system. Depending on
 						the game&lsquo;s individual difficulty level, it is given one of{' '}
-						{rating?.length ?? ''} possible marks:
+						{tiersData?.length ?? 'X'} possible marks:
 					</p>
 					<ul>
-						{rating &&
-							rating
-								?.sort((a: any, b: any) => a?.score - b?.score)
-								.map((r: any, rIndex: number) => (
-									<li key={`r-${rIndex}`}>
-										<i className={r?.icon} /> - worth {r?.score} pts -{' '}
-										{r?.description}{' '}
-									</li>
-								))}
+						{tiersData
+							?.sort((a: any, b: any) => a?.score - b?.score)
+							.map((r: any, rIndex: number) => (
+								<li key={`r-${rIndex}`}>
+									<i className={r?.icon} /> - worth {r?.score} pts -{' '}
+									{r?.description}{' '}
+								</li>
+							))}
 					</ul>
 					<p>
 						Completing a game might mean earning its most demanding achievement,

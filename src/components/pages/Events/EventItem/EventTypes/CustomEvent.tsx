@@ -1,4 +1,6 @@
 import React from 'react';
+import { EventCustom } from '@masochistme/sdk/dist/v1/types';
+
 import { useUsers } from 'shared/hooks';
 import {
 	EventDescription,
@@ -9,14 +11,8 @@ import {
 import logo from 'shared/images/logo.png';
 
 type TCustomEvent = {
-	event: any;
+	event: EventCustom;
 };
-
-// {
-//   text: String;
-//   icon: String;
-//   user?: String;
-// }
 
 export default function CustomEvent(props: TCustomEvent): JSX.Element | null {
 	const { event } = props;
@@ -27,8 +23,8 @@ export default function CustomEvent(props: TCustomEvent): JSX.Element | null {
 	if (!content) {
 		return null;
 	}
-	const { text, icon, user } = content;
-	const userData = users.find((m: any) => Number(m.id) === Number(user));
+	const { text, icon, memberId } = content;
+	const userData = users.find((m: any) => Number(m.id) === Number(memberId));
 
 	return (
 		<EventInfo>

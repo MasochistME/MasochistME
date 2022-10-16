@@ -1,11 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { orderBy } from 'lodash';
+
 import { Spinner, Wrapper } from 'shared/components';
 import Game from './Game';
+import { useTiers } from 'shared/hooks';
 
 export default function ViewGamesTiles(): JSX.Element {
-	const rating = useSelector((state: any) => state.rating);
+	const { tiersData } = useTiers();
 	const searchGame = useSelector((state: any) => state.search.game);
 	const showGamesRated = useSelector((state: any) => state.showGamesRated);
 	const inView = useSelector((state: any) => state.games.view === 'tiles');
@@ -29,7 +31,7 @@ export default function ViewGamesTiles(): JSX.Element {
 						showGamesRated.find(
 							(score: any) => parseInt(score, 10) === parseInt(game.rating, 10),
 						) ? (
-						<Game key={`id-game-${game.id}`} id={game.id} rating={rating} />
+						<Game key={`id-game-${game.id}`} id={game.id} rating={tiersData} />
 					) : null;
 				})
 			) : (

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { orderBy } from 'lodash';
 
 import { useUserDetails } from 'components/init';
-import { useUsers } from 'shared/hooks';
+import { useTiers, useUsers } from 'shared/hooks';
 import { Spinner } from 'shared/components';
 import { Display, DetailsSummary, RatingScore } from './styles';
 import UserGame from './UserGame';
@@ -21,7 +21,7 @@ export default function UserDetails(props: TUserDetails): JSX.Element {
 	const { id, show } = props;
 	const userLoaded = useUserDetails(id);
 	const users = useUsers(true);
-	const rating = useSelector((state: any) => state.rating);
+	const { tiersData } = useTiers();
 	const games = useSelector((state: any) => state.games.list);
 	const user = useSelector((state: any) => {
 		const userBasic = users.find((user: any) => user.id === id);
@@ -53,7 +53,9 @@ export default function UserDetails(props: TUserDetails): JSX.Element {
 				// most likely non-steam game, or deleted one
 				return;
 			}
-			const ratingIcon = rating.find((r: any) => r.id === gameDetails.rating);
+			const ratingIcon = tiersData.find(
+				(r: any) => r.id === gameDetails.rating,
+			);
 			return (
 				<UserGame
 					key={`game-${game.id}`}

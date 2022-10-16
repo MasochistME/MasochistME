@@ -1,6 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import {
+	EventBadgeCreate,
+	EventBadgeGet,
+} from '@masochistme/sdk/dist/v1/types';
 
 import {
 	EventDescription,
@@ -14,7 +18,7 @@ import logo from 'shared/images/logo.png';
 import { Badge } from '@masochistme/sdk/dist/v1/types';
 
 type Props = {
-	event: any;
+	event: EventBadgeCreate | EventBadgeGet;
 	action: 'added' | 'given';
 };
 

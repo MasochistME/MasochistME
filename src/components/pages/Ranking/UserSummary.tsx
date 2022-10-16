@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { useUsers } from 'shared/hooks';
+import { useTiers, useUsers } from 'shared/hooks';
 import { Flex } from 'shared/components';
 import {
 	Info,
@@ -39,7 +39,7 @@ function UserSummary(props: TUserSummary): JSX.Element {
 	const [userId, setUserId] = useState(0);
 
 	const users = useUsers(true);
-	const rating = useSelector((state: any) => state.rating);
+	const { tiersData } = useTiers();
 	const user = useSelector((state: any) => {
 		const userRank = state.ranking.find((u: any) => u.id === id);
 		const userDetails = users.find((u: any) => u.id === id);
@@ -57,7 +57,7 @@ function UserSummary(props: TUserSummary): JSX.Element {
 	const disabled = user.points.sum - user.points.badges <= 0 ? true : false;
 
 	const gameTierPoints = () => {
-		return rating.map((score: any, scoreIndex: number) => {
+		return tiersData.map((score: any, scoreIndex: number) => {
 			const scoreId =
 				typeof score.id !== 'number' ? Number(score.id) : score.id;
 			const tierPoints = user.points.list.find(

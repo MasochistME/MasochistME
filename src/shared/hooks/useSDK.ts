@@ -28,3 +28,16 @@ export const useEvents = () => {
 
 	return { data, isLoading, isFetched, isError };
 };
+
+export const useTiers = () => {
+	const { sdk } = useAppContext();
+
+	const {
+		data: tiersData = [],
+		isLoading,
+		isFetched,
+		isError,
+	} = useQuery(['masochist', 'tiers'], () => sdk.getTiersList());
+
+	return { tiersData, isLoading, isFetched, isError };
+};

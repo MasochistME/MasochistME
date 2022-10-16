@@ -1,6 +1,8 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { Tier } from '@masochistme/sdk/dist/v1/types';
+
 import { Flex, Spinner, Wrapper } from 'shared/components';
+import { useTiers } from 'shared/hooks';
 import { Basic, Image, EmptyImage } from './styles';
 
 GameHeader.Image = Image;
@@ -9,12 +11,9 @@ GameHeader.EmptyImage = EmptyImage;
 
 export default function GameHeader(props: { game: any }): JSX.Element {
 	const { game } = props;
-	const gameRating = useSelector(
-		(state: any) =>
-			state.rating &&
-			state.rating.find((r: any) =>
-				game ? Number(r.id) === Number(game.rating) : null,
-			),
+	const { tiersData } = useTiers();
+	const gameRating = tiersData.find((tier: Tier) =>
+		game ? Number(tier.id) === Number(game.rating) : null,
 	);
 
 	return (

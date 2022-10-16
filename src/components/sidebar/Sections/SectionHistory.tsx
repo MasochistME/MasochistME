@@ -2,12 +2,6 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { orderBy } from 'lodash';
-
-import { useBadges, useEvents, useUsers } from 'shared/hooks';
-import { swapRatingToIcon } from 'shared/helpers';
-import { TEventTypes } from 'shared/types/events';
-import { SmallEvent, Section, SectionTitle, EventLink } from '../';
-import Spinner from 'shared/components/Spinner';
 import {
 	Event,
 	EventAchievementNumberChange,
@@ -22,6 +16,11 @@ import {
 	EventMemberLeave,
 	EventType,
 } from '@masochistme/sdk/dist/v1/types';
+
+import { useBadges, useEvents, useTiers, useUsers } from 'shared/hooks';
+import { getTierIcon } from 'shared/helpers';
+import { SmallEvent, Section, SectionTitle, EventLink } from '../';
+import Spinner from 'shared/components/Spinner';
 
 export default function SectionHistory(): JSX.Element {
 	const { data: events } = useEvents();
@@ -182,7 +181,7 @@ const useEventComponents = () => {
 	};
 
 	const getEventGameTierChange = (event: EventGameTierChange) => {
-		const rating = useSelector((state: any) => state.rating);
+		const { tiersData } = useTiers();
 		const game = games.find((g: any) => Number(g.id) === Number(event.gameId));
 		const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
 
@@ -194,7 +193,7 @@ const useEventComponents = () => {
 					{game.title}
 				</EventLink>{' '}
 				changed its tier to{' '}
-				<i className={swapRatingToIcon(game.rating, rating)} />!
+				<i className={getTierIcon(game.rating, tiersData)} />!
 			</SmallEvent>
 		) : null;
 	};

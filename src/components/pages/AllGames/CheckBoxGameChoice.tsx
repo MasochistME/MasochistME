@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { showGamesRated } from 'shared/store/modules/CheckBoxes';
-import { swapRatingToIcon } from 'shared/helpers';
+import { getTierIcon } from 'shared/helpers';
 
 type Props = {
 	score: any;
@@ -11,7 +11,7 @@ type Props = {
 export default function CheckBoxGameChoice(props: Props): JSX.Element {
 	const { score, rating } = props;
 	const dispatch = useDispatch();
-	const icon = swapRatingToIcon(score, rating);
+	const icon = getTierIcon(score, rating);
 	const gamesRated = useSelector((state: any) => state.showGamesRated);
 
 	const changeRatingVisibility = (event: any): void => {

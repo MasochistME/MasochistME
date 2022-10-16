@@ -3,9 +3,11 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { orderBy } from 'lodash';
-import { swapRatingToIcon } from 'shared/helpers';
+import { getTierIcon } from 'shared/helpers';
 import { Flex, Spinner, Wrapper, Table } from 'shared/components';
 import { TableLink, defaultSort } from 'shared/components/layout/Table';
+import { useTiers } from 'shared/hooks';
+import { Tier } from '@masochistme/sdk/dist/v1/types';
 
 const GameImg = styled.img.attrs(({ src }: { src: string }) => {
 	return {
@@ -31,8 +33,8 @@ type GameData = {
 
 export default function ViewGamesList(): JSX.Element {
 	const history = useHistory();
+	const { tiersData } = useTiers();
 	const inView = useSelector((state: any) => state.games.view === 'list');
-	const rating = useSelector((state: any) => state.rating);
 	const searchGame = useSelector((state: any) => state.search.game);
 	const showGamesRated = useSelector((state: any) => state.showGamesRated);
 	const games = useSelector((state: any) => {
@@ -56,7 +58,7 @@ export default function ViewGamesList(): JSX.Element {
 	const gamesColumns = [
 		{
 			render: (game: GameData) => {
-				const icon = swapRatingToIcon(game.rating, rating);
+				const icon = getTierIcon(game.rating, tiersData);
 				return (
 					<Flex style={{ margin: '0 8px 0 12px' }}>
 						<i className={icon} />
@@ -92,15 +94,18 @@ export default function ViewGamesList(): JSX.Element {
 				</Flex>
 			),
 			render: (game: GameData) => {
-				const points =
-					game.badgesPts +
-						rating.find((r: any) => r.id === game.rating)?.score ?? 0;
+				const tierPoints =
+					tiersData.find((r: Tier) => r.id === game.rating)?.score ?? 0;
+				const points = game.badgesPts + tierPoints;
+
 				return <div>{points}</div>;
 			},
 			sorter: (a: GameData, b: GameData) => {
-				const points = (game: GameData) =>
-					game.badgesPts +
-						rating.find((r: any) => r.id === game.rating)?.score ?? 0;
+				const points = (game: GameData) => {
+					const tierPoints =
+						tiersData.find((r: Tier) => r.id === game.rating)?.score ?? 0;
+					return game.badgesPts + tierPoints;
+				};
 				return defaultSort(points(a), points(b));
 			},
 		},

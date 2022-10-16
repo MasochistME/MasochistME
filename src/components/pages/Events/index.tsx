@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
 import { Flex, Wrapper, Spinner } from 'shared/components';
-import Event from './Event';
+import EventItem from './EventItem';
 import { useEvents } from 'shared/hooks';
+import { Event } from '@masochistme/sdk/dist/v1/types';
 
 const EventTypes = styled.ul`
 	li {
@@ -87,8 +87,8 @@ export default function PageEvents(): JSX.Element {
 			<Wrapper type="page">
 				<EventsList>
 					{events?.length ? (
-						events.map((event: any, eventIndex: number) => (
-							<Event event={event} key={`event-${eventIndex}`} />
+						events.map((event: Event) => (
+							<EventItem event={event} key={`event-${event._id}`} />
 						))
 					) : (
 						<Spinner />

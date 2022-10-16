@@ -15,21 +15,6 @@ import PageBadges from './Badges';
 import PageProfile from './Profile';
 import PageGame from './Game';
 
-const WrapperContent = styled.div`
-	position: relative;
-	width: 70%;
-	height: auto;
-	box-sizing: border-box;
-	color: ${colors.superLightGrey};
-	@media (max-width: ${media.netbooks}) {
-		width: 100%;
-	}
-`;
-
-const WrapperPage = styled.div`
-	margin: 30px 30px 0 0;
-`;
-
 type TPage =
 	| 'home'
 	| 'games'
@@ -96,3 +81,18 @@ export default function Page(props: Props): JSX.Element {
 		</Wrapper>
 	);
 }
+
+const WrapperContent = styled.div`
+	position: relative;
+	width: 70%;
+	height: auto;
+	box-sizing: border-box;
+	color: ${colors.superLightGrey};
+	@media (max-width: ${media.netbooks}) {
+		width: 100%;
+	}
+`;
+
+const WrapperPage = styled.div`
+	margin: 30px 30px 0 0;
+`;

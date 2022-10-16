@@ -7,6 +7,7 @@ import { log } from 'shared/helpers';
 import DoughnutChart from 'components/Charts/DoughnutChart';
 import LineChart from 'components/Charts/LineChart';
 import ChartWrapper from 'components/Charts/ChartWrapper';
+import { useTiers } from 'shared/hooks';
 
 const GraphsWrapper = styled.div`
 	display: flex;
@@ -29,8 +30,8 @@ type Props = {
 
 export default function ProfileGraphs(props: Props): JSX.Element {
 	const { user } = props;
+	const { tiersData } = useTiers();
 	const games = useSelector((state: any) => state.games.list);
-	const rating = useSelector((state: any) => state.rating);
 
 	const summarizeTotalTimes = (
 		type: any,
@@ -174,8 +175,8 @@ export default function ProfileGraphs(props: Props): JSX.Element {
 		<GraphsWrapper>
 			<ChartWrapper title="HOURS PLAYED (TOTAL)">
 				<DoughnutChart
-					labels={summarizeTotalTimes('label', 'total', rating, user, games)}
-					dataset={summarizeTotalTimes('sum', 'total', rating, user, games)}
+					labels={summarizeTotalTimes('label', 'total', tiersData, user, games)}
+					dataset={summarizeTotalTimes('sum', 'total', tiersData, user, games)}
 				/>
 			</ChartWrapper>
 			<ChartWrapper title="HOURS PLAYED (COMPLETED)">
@@ -183,30 +184,36 @@ export default function ProfileGraphs(props: Props): JSX.Element {
 					labels={summarizeTotalTimes(
 						'label',
 						'completed',
-						rating,
+						tiersData,
 						user,
 						games,
 					)}
-					dataset={summarizeTotalTimes('sum', 'completed', rating, user, games)}
+					dataset={summarizeTotalTimes(
+						'sum',
+						'completed',
+						tiersData,
+						user,
+						games,
+					)}
 				/>
 			</ChartWrapper>
 			<ChartWrapper title="GAMES COMPLETED">
 				<DoughnutChart
-					labels={summarizeTotalGames('label', rating, user, games)}
-					dataset={summarizeTotalGames('sum', rating, user, games)}
+					labels={summarizeTotalGames('label', tiersData, user, games)}
+					dataset={summarizeTotalGames('sum', tiersData, user, games)}
 				/>
 			</ChartWrapper>
 			<ChartWrapper title="COMPLETION TIMELINE" width="100%">
 				<LineChart
-					labels={getTimelines('label', rating, user, games)}
+					labels={getTimelines('label', tiersData, user, games)}
 					datasets={[
 						{
 							label: 'games',
-							data: getTimelines('games', rating, user, games),
+							data: getTimelines('games', tiersData, user, games),
 						},
 						{
 							label: 'points',
-							data: getTimelines('points', rating, user, games),
+							data: getTimelines('points', tiersData, user, games),
 						},
 					]}
 				/>

@@ -1,7 +1,6 @@
 // CONSTANTS
 export const CACHE_GAMES = 'CACHE_GAMES';
 export const CACHE_USERS = 'CACHE_USERS';
-export const CACHE_RATING = 'CACHE_RATING';
 export const CACHE_BLOG = 'CACHE_BLOG';
 export const CACHE_PATRONS = 'CACHE_PATRONS';
 export const CACHE_RANKING = 'CACHE_RANKING';
@@ -13,12 +12,6 @@ export const CACHE_GAME_DETAILS = 'CACHE_GAME_DETAILS';
 export function cacheGames(data: any): any {
 	return {
 		type: CACHE_GAMES,
-		data,
-	};
-}
-export function cacheRating(data: any): any {
-	return {
-		type: CACHE_RATING,
 		data,
 	};
 }

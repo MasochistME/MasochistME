@@ -5,7 +5,6 @@ import axios from 'axios';
 import {
 	cacheGames,
 	cacheUsers,
-	cacheRating,
 	cacheBlog,
 	cachePatrons,
 	cacheRanking,
@@ -16,22 +15,16 @@ import {
 import { useAppContext } from 'shared/store/context';
 import { showGamesRated } from 'shared/store/modules/CheckBoxes';
 import { log } from 'shared/helpers';
+import { useTiers } from 'shared/hooks';
 
 export default function useInit(): boolean {
 	const dispatch = useDispatch();
 	const { path } = useAppContext();
+	const { tiersData } = useTiers();
 	const [loaded, setLoaded] = useState(false);
 
 	const loadRating = () => {
-		axios
-			.get(`${path}/api/rating`)
-			.then(response => {
-				if (response?.status === 200) {
-					dispatch(showGamesRated(response.data.map((r: any) => r.id)));
-					dispatch(cacheRating(response.data));
-				}
-			})
-			.catch(log.WARN);
+		dispatch(showGamesRated(tiersData.map((r: any) => r.id)));
 	};
 
 	const loadGames = () => {

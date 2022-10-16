@@ -9,7 +9,6 @@ import { SHOW_PROFILE } from './modules/Profiles';
 import {
 	CACHE_GAMES,
 	CACHE_USERS,
-	CACHE_RATING,
 	CACHE_BLOG,
 	CACHE_PATRONS,
 	CACHE_RANKING,
@@ -157,11 +156,6 @@ const reducer = (state = defaultState, action: any) => {
 					...state.users,
 					list: action.data,
 				},
-			};
-		case CACHE_RATING:
-			return {
-				...state,
-				rating: action.data,
 			};
 		case CACHE_PATRONS:
 			return {

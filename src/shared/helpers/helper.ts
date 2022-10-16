@@ -1,10 +1,12 @@
-export const swapRatingToIcon = (
+import { Tier } from '@masochistme/sdk/dist/v1/types';
+
+export const getTierIcon = (
 	scoreID: string | number,
-	rating: any,
+	tiers: Tier[],
 ): string => {
-	return rating
-		? rating.find((r: any) => r.id === scoreID).icon
-		: 'fas fa-spinner';
+	return (
+		tiers?.find((tier: Tier) => tier.id === scoreID)?.icon ?? 'fas fa-spinner'
+	);
 };
 
 /**
