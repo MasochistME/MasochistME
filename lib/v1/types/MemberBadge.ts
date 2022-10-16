@@ -1,5 +1,5 @@
 /**
- * @module Badges
+ * @module Member
  */
 
 import { WithId } from 'v1/types/Mongo';
