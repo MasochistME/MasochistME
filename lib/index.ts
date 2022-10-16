@@ -20,10 +20,7 @@ app.use(
   cors({
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    origin:
-      process.env.ENV === 'dev'
-        ? 'http://localhost:3000'
-        : 'http://masochist.me',
+    origin: process.env.CORS ?? 'http://localhost:3000',
   }),
 );
 app.set('trust proxy', 1);
