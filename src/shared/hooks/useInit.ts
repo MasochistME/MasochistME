@@ -12,19 +12,12 @@ import {
 	cacheStatus,
 } from 'shared/store/modules/Cache';
 import { useAppContext } from 'shared/store/context';
-import { showGamesRated } from 'shared/store/modules/CheckBoxes';
 import { log } from 'shared/helpers';
-import { useTiers } from 'shared/hooks';
 
 export const useInit = (): boolean => {
 	const dispatch = useDispatch();
 	const { path } = useAppContext();
-	const { tiersData } = useTiers();
 	const [loaded, setLoaded] = useState(false);
-
-	const loadRating = () => {
-		dispatch(showGamesRated(tiersData.map((r: any) => r.id)));
-	};
 
 	const loadGames = () => {
 		axios
@@ -99,7 +92,6 @@ export const useInit = (): boolean => {
 	const init = () => {
 		loadGames();
 		loadUsers();
-		loadRating();
 		loadBlog();
 		loadPatrons();
 		loadRanking();

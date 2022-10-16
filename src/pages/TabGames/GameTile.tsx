@@ -10,6 +10,51 @@ import { Img, Desc, Info, Title, Rating } from './styles';
 
 Modal.setAppElement('#root');
 
+type Props = {
+	id: any;
+	rating: any;
+};
+
+export const GameTile = (props: Props): JSX.Element => {
+	const { id, rating } = props;
+	const [modalIsOpen, setModalIsOpen] = useState(false);
+
+	const game = useSelector((state: any) =>
+		state.games.list.find((g: any) => g.id === id),
+	);
+
+	const onExtend = (event: any) => {
+		event.cancelBubble = true;
+		setModalIsOpen(!modalIsOpen);
+	};
+
+	return (
+		<StyledGame onClick={onExtend}>
+			<GameTile.Img
+				className={`rated-${game.rating}`}
+				extended={modalIsOpen}
+				src={game?.img}>
+				<GameTile.Info>
+					<GameTile.Rating>
+						<i
+							className={
+								game ? getTierIcon(game.rating, rating) : 'fas fa-spinner'
+							}></i>
+					</GameTile.Rating>
+					<GameTile.Title>{game.title}</GameTile.Title>
+					<GameTile.Desc>{game.desc}</GameTile.Desc>
+				</GameTile.Info>
+			</GameTile.Img>
+			{
+				// @ts-ignore
+				<Modal isOpen={modalIsOpen} style={{ ...modalStyle }}>
+					<ModalLeaderboards id={game.id} rating={game.rating} compact />
+				</Modal>
+			}
+		</StyledGame>
+	);
+};
+
 const StyledGame = styled.div.attrs(({ extended }: { extended?: boolean }) => {
 	const style = extended
 		? {
@@ -55,53 +100,8 @@ const modalStyle = {
 	},
 };
 
-type TGame = {
-	id: any;
-	rating: any;
-};
-
-Game.Img = Img;
-Game.Desc = Desc;
-Game.Info = Info;
-Game.Title = Title;
-Game.Rating = Rating;
-
-export default function Game(props: TGame): JSX.Element {
-	const { id, rating } = props;
-	const [modalIsOpen, setModalIsOpen] = useState(false);
-
-	const game = useSelector((state: any) =>
-		state.games.list.find((g: any) => g.id === id),
-	);
-
-	const onExtend = (event: any) => {
-		event.cancelBubble = true;
-		setModalIsOpen(!modalIsOpen);
-	};
-
-	return (
-		<StyledGame onClick={onExtend}>
-			<Game.Img
-				className={`rated-${game.rating}`}
-				extended={modalIsOpen}
-				src={game?.img}>
-				<Game.Info>
-					<Game.Rating>
-						<i
-							className={
-								game ? getTierIcon(game.rating, rating) : 'fas fa-spinner'
-							}></i>
-					</Game.Rating>
-					<Game.Title>{game.title}</Game.Title>
-					<Game.Desc>{game.desc}</Game.Desc>
-				</Game.Info>
-			</Game.Img>
-			{
-				// @ts-ignore
-				<Modal isOpen={modalIsOpen} style={{ ...modalStyle }}>
-					<ModalLeaderboards id={game.id} rating={game.rating} compact />
-				</Modal>
-			}
-		</StyledGame>
-	);
-}
+GameTile.Img = Img;
+GameTile.Desc = Desc;
+GameTile.Info = Info;
+GameTile.Title = Title;
+GameTile.Rating = Rating;

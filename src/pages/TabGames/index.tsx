@@ -4,11 +4,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { SearchBar } from 'containers';
 import { Wrapper, Flex, HoverIcon } from 'components';
 import { changeGamesView } from 'shared/store/modules/Tabs';
-import CheckBoxGameChoice from './CheckBoxGameChoice';
-import ViewGamesTiles from './ViewGamesTiles';
-import ViewGamesList from './ViewGamesList';
 import { useActiveTab, useTiers } from 'shared/hooks';
 import { TabDict } from 'shared/config/tabs';
+
+import { CheckBoxGameChoice } from './CheckBoxGameChoice';
+import { GameTiles } from './GameTiles';
+import { GameList } from './GameList';
+import { Tier } from '@masochistme/sdk/dist/v1/types';
 
 export const TabGames = (): JSX.Element => {
 	useActiveTab(TabDict.GAMES);
@@ -51,11 +53,10 @@ export const TabGames = (): JSX.Element => {
 				{tiersData ? (
 					<Flex row align style={{ justifyContent: 'space-between' }}>
 						<div className="wrapper-choicebar">
-							{tiersData.map((r: any) => (
+							{tiersData.map((tier: Tier) => (
 								<CheckBoxGameChoice
-									key={`checkbox-game-${r.id}`}
-									score={r.id}
-									rating={tiersData}
+									key={`checkbox-game-${tier.id}`}
+									tier={tier.id}
 								/>
 							))}
 						</div>
@@ -68,8 +69,8 @@ export const TabGames = (): JSX.Element => {
 					</Flex>
 				) : null}
 			</Wrapper>
-			<ViewGamesTiles />
-			<ViewGamesList />
+			<GameTiles />
+			<GameList />
 		</Flex>
 	);
 };

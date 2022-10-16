@@ -7,16 +7,8 @@ import { getTierIcon } from 'shared/helpers';
 import { Flex, Spinner, Wrapper, Table } from 'components';
 import { TableLink, defaultSort } from 'components/layout/Table';
 import { useTiers } from 'shared/hooks';
-import { Tier } from '@masochistme/sdk/dist/v1/types';
-
-const GameImg = styled.img.attrs(({ src }: { src: string }) => {
-	return {
-		src,
-	};
-})<{ src: string }>`
-	height: 48px;
-	width: auto;
-`;
+import { Tier, TierId } from '@masochistme/sdk/dist/v1/types';
+import { useAppContext } from 'shared/store/context';
 
 type GameData = {
 	id: any;
@@ -31,19 +23,20 @@ type GameData = {
 	sale: { onSale: boolean; discount: number };
 };
 
-export default function ViewGamesList(): JSX.Element {
+export const GameList = (): JSX.Element => {
 	const history = useHistory();
 	const { tiersData } = useTiers();
+	const { visibleTiers } = useAppContext();
+
 	const inView = useSelector((state: any) => state.games.view === 'list');
 	const searchGame = useSelector((state: any) => state.search.game);
-	const showGamesRated = useSelector((state: any) => state.showGamesRated);
 	const games = useSelector((state: any) => {
 		const filteredGames = state.games.list.filter(
 			(game: any) =>
 				(game.curated || game.protected) &&
 				game?.title.toLowerCase().includes(searchGame.toLowerCase()) &&
-				showGamesRated.find(
-					(score: any) => Number(score) === Number(game.rating),
+				visibleTiers.find(
+					(tier: TierId) => Number(tier) === Number(game.rating),
 				),
 		);
 		return orderBy(
@@ -189,4 +182,13 @@ export default function ViewGamesList(): JSX.Element {
 			)}
 		</Wrapper>
 	);
-}
+};
+
+const GameImg = styled.img.attrs(({ src }: { src: string }) => {
+	return {
+		src,
+	};
+})<{ src: string }>`
+	height: 48px;
+	width: auto;
+`;

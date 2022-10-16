@@ -3,13 +3,16 @@ import { useSelector } from 'react-redux';
 import { orderBy } from 'lodash';
 
 import { Spinner, Wrapper } from 'components';
-import Game from './Game';
 import { useTiers } from 'shared/hooks';
+import { GameTile } from './GameTile';
+import { useAppContext } from 'shared/store/context';
+import { TierId } from '@masochistme/sdk/dist/v1/types';
 
-export default function ViewGamesTiles(): JSX.Element {
+export const GameTiles = (): JSX.Element => {
 	const { tiersData } = useTiers();
+	const { visibleTiers } = useAppContext();
+
 	const searchGame = useSelector((state: any) => state.search.game);
-	const showGamesRated = useSelector((state: any) => state.showGamesRated);
 	const inView = useSelector((state: any) => state.games.view === 'tiles');
 	const games = useSelector((state: any) => {
 		const filteredGames = state.games.list.filter(
@@ -28,10 +31,14 @@ export default function ViewGamesTiles(): JSX.Element {
 				games.map((game: any) => {
 					return game?.title.toLowerCase().indexOf(searchGame.toLowerCase()) !==
 						-1 &&
-						showGamesRated.find(
-							(score: any) => parseInt(score, 10) === parseInt(game.rating, 10),
+						visibleTiers.find(
+							(tier: TierId) => Number(tier) === Number(game.rating),
 						) ? (
-						<Game key={`id-game-${game.id}`} id={game.id} rating={tiersData} />
+						<GameTile
+							key={`id-game-${game.id}`}
+							id={game.id}
+							rating={tiersData}
+						/>
 					) : null;
 				})
 			) : (
@@ -39,4 +46,4 @@ export default function ViewGamesTiles(): JSX.Element {
 			)}
 		</Wrapper>
 	);
-}
+};

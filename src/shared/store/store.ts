@@ -4,7 +4,6 @@ import thunk from 'redux-thunk';
 
 import { CHANGE_GAMES_VIEW } from './modules/Tabs';
 import { SEARCH_GAME, SEARCH_USER } from './modules/Search';
-import { SHOW_GAMES_RATED } from './modules/CheckBoxes';
 import {
 	CACHE_GAMES,
 	CACHE_USERS,
@@ -44,8 +43,6 @@ type TStore = {
 		lastUpdated: number | undefined;
 		percentage: number;
 	};
-	showLoginModal: boolean;
-	showGamesRated: any[];
 };
 
 const defaultState: TStore = {
@@ -75,8 +72,6 @@ const defaultState: TStore = {
 		lastUpdated: undefined,
 		percentage: 0,
 	},
-	showLoginModal: false,
-	showGamesRated: [],
 };
 
 const reducer = (state = defaultState, action: any) => {
@@ -98,11 +93,6 @@ const reducer = (state = defaultState, action: any) => {
 			return {
 				...state,
 				search: { ...state.search, user: action.user },
-			};
-		case SHOW_GAMES_RATED:
-			return {
-				...state,
-				showGamesRated: action.showGamesRated,
 			};
 		case CACHE_GAMES:
 			return {

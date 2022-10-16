@@ -13,23 +13,24 @@ export const Header = (): JSX.Element => {
 	};
 
 	return (
-		<WrapperHeader>
+		<Wrapper>
 			<span />
 			<HeaderMotto>Masochist.ME - games that masochists love</HeaderMotto>
 			<Flex>
 				<IconButton icon="fab fa-steam" onClick={onButtonCuratorClick} />
 				<IconButton icon="fab fa-patreon" onClick={onButtonPatreonClick} />
 			</Flex>
-		</WrapperHeader>
+		</Wrapper>
 	);
 };
 
-const WrapperHeader = styled.div`
+const Wrapper = styled.div`
 	display: flex;
 	width: 100%;
 	height: 70px;
+	padding: 0 32px;
 	align-items: center;
-	justify-content: space-evenly;
+	justify-content: space-between;
 	background-color: ${colors.newDark};
 	// background-image: url('../../shared/images/bg_nav.png');
 	color: ${colors.lightGrey};

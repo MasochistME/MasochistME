@@ -1,47 +1,46 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { showGamesRated } from 'shared/store/modules/CheckBoxes';
+import { TierId } from '@masochistme/sdk/dist/v1/types';
+
+import { useAppContext } from 'shared/store/context';
 import { getTierIcon } from 'shared/helpers';
+import { useTiers } from 'shared/hooks';
 
 type Props = {
-	score: any;
-	rating: any;
+	tier: TierId;
 };
 
-export default function CheckBoxGameChoice(props: Props): JSX.Element {
-	const { score, rating } = props;
-	const dispatch = useDispatch();
-	const icon = getTierIcon(score, rating);
-	const gamesRated = useSelector((state: any) => state.showGamesRated);
+export const CheckBoxGameChoice = (props: Props): JSX.Element => {
+	const { tier } = props;
 
-	const changeRatingVisibility = (event: any): void => {
-		let visibleGamesRatedArray = [];
-		event.target.checked
-			? (visibleGamesRatedArray = [event.target.value].concat(gamesRated))
-			: (visibleGamesRatedArray = gamesRated.filter(
-					(rating: any) => rating !== event.target.value,
-			  ));
-		dispatch(showGamesRated(visibleGamesRatedArray));
+	const { visibleTiers, setVisibleTiers } = useAppContext();
+	const { tiersData } = useTiers();
+
+	const icon = getTierIcon(tier, tiersData);
+
+	const changeRatingVisibility = (
+		event: React.ChangeEvent<HTMLInputElement>,
+	): void => {
+		if (event.target.checked) setVisibleTiers([...visibleTiers, tier]);
+		else setVisibleTiers(visibleTiers.filter(t => t !== tier));
 	};
 
-	const checked = gamesRated.includes(score);
+	const isChecked = visibleTiers.includes(tier);
 
 	return (
 		<div>
 			<input
-				name="game"
-				value={score}
-				checked={checked}
-				id={`game-choice-${score}`}
-				className="game-choice-checkbox"
 				type="checkbox"
-				defaultChecked
+				name={`checkbox-${tier}`}
+				value={tier}
+				checked={isChecked}
+				id={`game-choice-${tier}`}
+				className="game-choice-checkbox"
 				onChange={changeRatingVisibility}
 				style={{ display: 'none' }}
 			/>
-			<label className="checkbox-label" htmlFor={`game-choice-${score}`}>
+			<label className="checkbox-label" htmlFor={`game-choice-${tier}`}>
 				<i className={icon}></i>
 			</label>
 		</div>
 	);
-}
+};

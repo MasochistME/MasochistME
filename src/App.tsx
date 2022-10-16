@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import { Main } from 'pages/Main';
-import { useInit } from 'shared/hooks';
+import { useLoadTiers, useInit } from 'shared/hooks';
 
 import {
 	TabBadges,
@@ -18,6 +18,7 @@ import {
 
 export const App = (): JSX.Element => {
 	const loaded = useInit();
+	useLoadTiers();
 
 	if (!loaded) return <div>Loading...</div>;
 
