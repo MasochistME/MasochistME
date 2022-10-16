@@ -1,15 +1,15 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import headerImg from 'shared/images/miniheader.png';
 import { colors, fonts, media } from 'shared/theme';
+import { Tab, tabs } from 'shared/config/tabs';
+import { useAppContext } from 'shared/store/context';
 import { Flex } from 'components';
 
 export const MiniHeader = (): JSX.Element => {
-	const tabs = useSelector((state: any) => state.tabs);
-
-	const findTab = () => tabs.list.find((tab: any) => tab.link === tabs.active);
+	const { activeTab } = useAppContext();
+	const findTab = () => tabs.find((tab: Tab) => tab.id === activeTab);
 
 	return (
 		<StyledMiniHeader>

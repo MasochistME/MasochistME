@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import { useActiveTab, useUsers } from 'shared/hooks';
-import { showProfile } from 'shared/store/modules/Profiles';
 import { Flex, Wrapper, Spinner, Section, BigBadge } from 'components';
 import { Badges } from './styles';
 import { useUserDetails } from 'shared/hooks';
@@ -15,7 +14,6 @@ import { TabDict } from 'shared/config/tabs';
 export const TabProfile = (): JSX.Element => {
 	useActiveTab(TabDict.PROFILE);
 
-	const dispatch = useDispatch();
 	const { id } = useParams<{ id: string }>();
 	const { isUserLoaded } = useUserDetails(id);
 	const users = useUsers(false);
@@ -44,11 +42,6 @@ export const TabProfile = (): JSX.Element => {
 		!isUserPrivate && !isUserError && user && !user.member && !user.protected;
 	const showUserProfile =
 		!isUserLoading && !isUserPrivate && !isUserError && !isUserNotAMember;
-
-	useEffect(() => {
-		window.scrollTo(0, 0);
-		dispatch(showProfile(id));
-	}, [id]);
 
 	return (
 		<Flex column>

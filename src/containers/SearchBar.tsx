@@ -1,32 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
 import { media, fonts } from 'shared/theme';
 import { searchGames, searchUsers } from 'shared/store/modules/Search';
+import { useAppContext } from 'shared/store/context';
+import { TabDict } from 'shared/config/tabs';
 
 export const SearchBar = (): JSX.Element => {
 	const dispatch = useDispatch();
-	const activeTab = useSelector((state: any) => state.tabs.active);
+	const { activeTab } = useAppContext();
 
-	const [searchFor, setSearchFor] = useState(undefined as string | undefined);
+	const [searchFor, setSearchFor] = useState<string | undefined>();
 
 	const adjustToTab = (): void => {
-		switch (activeTab) {
-			case 'games': {
-				setSearchFor('game');
-				return;
-			}
-			case 'ranking': {
-				setSearchFor('user');
-				return;
-			}
-			default:
-				return;
-		}
+		if (activeTab === TabDict.GAMES) setSearchFor('game');
+		if (activeTab === TabDict.LEADERBOARDS) setSearchFor('user');
 	};
 
-	const onSearch = (event: any): void => {
+	const onSearch = (event: React.ChangeEvent<HTMLInputElement>): void => {
 		const searchString = event.target.value;
 		switch (searchFor) {
 			case 'game': {
