@@ -229,5 +229,9 @@ export interface EventCustom extends Omit<BaseEvent, 'type'> {
 		 * FontAwesome icon to be shown in the event.
 		 */
 		icon: string;
+		/**
+		 * Steam ID of the member who is involved in the event.
+		 */
+		memberId: string;
 	};
 }
