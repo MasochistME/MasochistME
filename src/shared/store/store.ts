@@ -1,8 +1,8 @@
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
-import tabs from '../config/tabs.json';
-import { CHANGE_TAB, CHANGE_GAMES_VIEW } from './modules/Tabs';
+import { tabs } from 'shared/config/tabs';
+import { CHANGE_GAMES_VIEW } from './modules/Tabs';
 import { SEARCH_GAME, SEARCH_USER } from './modules/Search';
 import { SHOW_GAMES_RATED } from './modules/CheckBoxes';
 import { SHOW_PROFILE } from './modules/Profiles';
@@ -28,12 +28,9 @@ type TStore = {
 		list: any[];
 		details: any[];
 	};
-	events: any[];
 	blog: any[];
 	patrons: any[];
-	badges: any[];
 	ranking: any[];
-	rating: null;
 	tabs: {
 		active: 'home';
 		list: any[];
@@ -67,12 +64,9 @@ const defaultState: TStore = {
 		list: [],
 		details: [],
 	},
-	events: [],
 	blog: [],
 	patrons: [],
-	badges: [],
 	ranking: [],
-	rating: null,
 	tabs: {
 		active: 'home',
 		list: tabs,
@@ -98,18 +92,6 @@ const defaultState: TStore = {
 
 const reducer = (state = defaultState, action: any) => {
 	switch (action.type) {
-		case CHANGE_TAB:
-			return {
-				...state,
-				search: {
-					game: '',
-					user: '',
-				},
-				tabs: {
-					...state.tabs,
-					active: action.tab,
-				},
-			};
 		case CHANGE_GAMES_VIEW:
 			return {
 				...state,

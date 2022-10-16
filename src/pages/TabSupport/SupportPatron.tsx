@@ -1,7 +1,32 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+
 import { colors } from 'shared/theme';
+
+type TSupportPatron = {
+	patron: any;
+	tier: any;
+};
+
+export const SupportPatron = (props: TSupportPatron): JSX.Element => {
+	const { patron, tier } = props;
+	const history = useHistory();
+
+	const onUserClick = () =>
+		patron?.steamid && history.push(`/profile/${patron.steamid}`);
+
+	return (
+		<WrapperPatron>
+			<SupportPatron.Avatar
+				tier={Number(tier)}
+				src={patron.avatar}
+				onClick={onUserClick}
+			/>
+			<SupportPatron.Nickname>{patron.name}</SupportPatron.Nickname>
+		</WrapperPatron>
+	);
+};
 
 const WrapperPatron = styled.div`
 	display: flex;
@@ -52,29 +77,5 @@ const Nickname = styled.p`
 	letter-spacing: 0.15em;
 `;
 
-type TSupportPatron = {
-	patron: any;
-	tier: any;
-};
-
-export default function Patron(props: TSupportPatron): JSX.Element {
-	const { patron, tier } = props;
-	const history = useHistory();
-
-	const onUserClick = () =>
-		patron?.steamid && history.push(`/profile/${patron.steamid}`);
-
-	return (
-		<WrapperPatron>
-			<Patron.Avatar
-				tier={Number(tier)}
-				src={patron.avatar}
-				onClick={onUserClick}
-			/>
-			<Patron.Nickname>{patron.name}</Patron.Nickname>
-		</WrapperPatron>
-	);
-}
-
-Patron.Nickname = Nickname;
-Patron.Avatar = Avatar;
+SupportPatron.Nickname = Nickname;
+SupportPatron.Avatar = Avatar;

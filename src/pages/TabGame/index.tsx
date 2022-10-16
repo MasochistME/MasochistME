@@ -4,25 +4,15 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { media } from 'shared/theme';
-import { useGameDetails } from 'shared/hooks';
+import { useActiveTab, useGameDetails } from 'shared/hooks';
 import { Flex, Spinner, Wrapper, Section } from 'components';
 import { StackedBarChart, List, Badges } from 'containers';
 import GameHeader from './GameHeader';
-
-const FlexibleFlex = styled(Flex)`
-	width: 100%;
-	margin-bottom: 16px;
-	@media (max-width: ${media.smallNetbooks}) {
-		flex-direction: column;
-	}
-`;
-const FlexibleSection = styled(Section)`
-	@media (min-width: ${media.smallNetbooks}) {
-		width: 100%;
-	}
-`;
+import { TabDict } from 'shared/config/tabs';
 
 export const TabGame = (): JSX.Element => {
+	useActiveTab(TabDict.GAME);
+
 	const { id } = useParams<{ id: string }>();
 	const loaded = useGameDetails(id);
 	const game = useSelector((state: any) => {
@@ -82,3 +72,16 @@ export const TabGame = (): JSX.Element => {
 		</Flex>
 	);
 };
+
+const FlexibleFlex = styled(Flex)`
+	width: 100%;
+	margin-bottom: 16px;
+	@media (max-width: ${media.smallNetbooks}) {
+		flex-direction: column;
+	}
+`;
+const FlexibleSection = styled(Section)`
+	@media (min-width: ${media.smallNetbooks}) {
+		width: 100%;
+	}
+`;

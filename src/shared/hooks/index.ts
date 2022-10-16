@@ -1,3 +1,4 @@
+export * from './useActiveTab';
 export * from './useGameDetails';
 export * from './useInit';
 export * from './useSDK';

@@ -7,9 +7,12 @@ import { changeGamesView } from 'shared/store/modules/Tabs';
 import CheckBoxGameChoice from './CheckBoxGameChoice';
 import ViewGamesTiles from './ViewGamesTiles';
 import ViewGamesList from './ViewGamesList';
-import { useTiers } from 'shared/hooks';
+import { useActiveTab, useTiers } from 'shared/hooks';
+import { TabDict } from 'shared/config/tabs';
 
 export const TabGames = (): JSX.Element => {
+	useActiveTab(TabDict.GAMES);
+
 	const dispatch = useDispatch();
 	const { tiersData } = useTiers();
 	const gamesView = useSelector((state: any) => state.games.view);

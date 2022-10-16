@@ -2,25 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { orderBy } from 'lodash';
-import { Flex, Spinner, Wrapper } from 'components';
-import SupportTier from './SupportTier';
+
 import patreon_button from 'shared/images/patreon.png';
+import { useActiveTab } from 'shared/hooks';
+import { TabDict } from 'shared/config/tabs';
+import { Flex, Spinner, Wrapper } from 'components';
 
-const PatreonButton = styled.img`
-	cursor: pointer;
-	box-shadow: 0 0 10px #000;
-	margin: 0;
-	padding: 0;
-	width: 200px;
-`;
-
-const HallOfFame = styled.p`
-	font-size: 1.5em;
-	border-bottom: 2px solid #ccc;
-	padding: 10px 0 3px 0;
-`;
+import { SupportTier } from './SupportTier';
 
 export const TabSupport = (): JSX.Element => {
+	useActiveTab(TabDict.SUPPORT);
+
 	const patrons = useSelector((state: any) =>
 		orderBy(state.patrons, ['tier'], ['desc']),
 	);
@@ -62,3 +54,17 @@ export const TabSupport = (): JSX.Element => {
 		</Flex>
 	);
 };
+
+const PatreonButton = styled.img`
+	cursor: pointer;
+	box-shadow: 0 0 10px #000;
+	margin: 0;
+	padding: 0;
+	width: 200px;
+`;
+
+const HallOfFame = styled.p`
+	font-size: 1.5em;
+	border-bottom: 2px solid #ccc;
+	padding: 10px 0 3px 0;
+`;

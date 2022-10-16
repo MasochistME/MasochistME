@@ -3,10 +3,13 @@ import { orderBy } from 'lodash';
 import { useSelector } from 'react-redux';
 
 import { Badge } from '@masochistme/sdk/dist/v1/types';
-import { useBadges } from 'shared/hooks';
+import { useActiveTab, useBadges } from 'shared/hooks';
 import { Wrapper, Flex } from 'components';
+import { TabDict } from 'shared/config/tabs';
 
 export const TabBadges = (): JSX.Element => {
+	useActiveTab(TabDict.BADGES);
+
 	const games = useSelector((state: any) => state.games.list);
 	const { data } = useBadges();
 	const badges = orderBy(

@@ -1,18 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
+
 import { colors, fonts } from 'shared/theme';
 import { TBlog } from 'shared/types/blog';
+import { useActiveTab } from 'shared/hooks';
+import { TabDict } from 'shared/config/tabs';
+
 import { Section, Spinner } from 'components';
 
-import { useBadges } from 'shared/hooks';
-
 export const TabHome = (): JSX.Element => {
+	useActiveTab(TabDict.HOME);
+
 	const blog = useSelector((state: any) => state.blog || []);
-
-	const { data, isLoading, isError } = useBadges();
-
-	console.log(data);
 
 	return (
 		<div>

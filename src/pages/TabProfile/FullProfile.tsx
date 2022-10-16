@@ -1,15 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useParams, useHistory } from 'react-router-dom';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { orderBy } from 'lodash';
 
-import { changeTab } from 'shared/store/modules/Tabs';
 import { Flex, Wrapper, Section, BigBadge } from 'components';
 import { Badges } from './styles';
 import ProfileGraphs from './ProfileGraphs';
-import { useBadges } from 'shared/hooks';
+import { useActiveTab, useBadges } from 'shared/hooks';
 import { Badge } from '@masochistme/sdk/dist/v1/types';
+import { TabDict } from 'shared/config/tabs';
 
 FullProfile.Badges = Badges;
 FullProfile.Badge = BigBadge;
@@ -19,11 +18,11 @@ type Props = {
 	user: any;
 };
 export default function FullProfile(props: Props): JSX.Element {
+	useActiveTab(TabDict.PROFILE);
+
 	const { user } = props;
 
 	const history = useHistory();
-	const dispatch = useDispatch();
-	const { id } = useParams<{ id: string }>();
 	const { data } = useBadges();
 
 	const games = useSelector((state: any) => state.games.list);
@@ -56,13 +55,10 @@ export default function FullProfile(props: Props): JSX.Element {
 		);
 		return orderedUserBadges;
 	};
+
 	const badges = getBadges();
 
 	const onBadgeClick = (id?: string) => id && history.push(`/game/${id}`);
-
-	useEffect(() => {
-		dispatch(changeTab('profile'));
-	}, [id]);
 
 	return (
 		<Flex column>

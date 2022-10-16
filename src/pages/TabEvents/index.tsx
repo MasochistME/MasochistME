@@ -3,11 +3,14 @@ import styled from 'styled-components';
 import { Event } from '@masochistme/sdk/dist/v1/types';
 
 import { Flex, Wrapper, Spinner } from 'components';
-import { useEvents } from 'shared/hooks';
+import { useActiveTab, useEvents } from 'shared/hooks';
 import EventItem from './EventItem';
 import { eventsDict } from './eventsDict';
+import { TabDict } from 'shared/config/tabs';
 
 export const TabEvents = (): JSX.Element => {
+	useActiveTab(TabDict.EVENTS);
+
 	const { data: events } = useEvents();
 	const eventsDescriptions = eventsDict.map((event: any, index: number) => (
 		<li key={`event-desc-${index}`}>

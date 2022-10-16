@@ -16,47 +16,45 @@ import {
 	NotFound,
 } from 'pages';
 
-export default function App(): JSX.Element {
+export const App = (): JSX.Element => {
 	const loaded = useInit();
 
 	if (!loaded) return <div>Loading...</div>;
 
 	return (
-		<Main>
-			<Router>
-				<Switch>
-					<Route exact path="/">
-						<TabHome />
-					</Route>
-					<Route exact path="/home">
-						<TabHome />
-					</Route>
-					<Route exact path="/games">
-						<TabGames />
-					</Route>
-					<Route exact path="/ranking">
-						<TabLeaderboards />
-					</Route>
-					<Route exact path="/events">
-						<TabEvents />
-					</Route>
-					<Route exact path="/support">
-						<TabSupport />
-					</Route>
-					<Route exact path="/badges">
-						<TabBadges />
-					</Route>
-					<Route exact path="/profile/:id">
-						<TabProfile />
-					</Route>
-					<Route exact path="/game/:id">
-						<TabGame />
-					</Route>
-					<Route>
-						<NotFound />
-					</Route>
-				</Switch>
-			</Router>
-		</Main>
+		<Router>
+			<Switch>
+				<Route exact path="/">
+					<Main tab={<TabHome />} />
+				</Route>
+				<Route exact path="/home">
+					<Main tab={<TabHome />} />
+				</Route>
+				<Route exact path="/games">
+					<Main tab={<TabGames />} />
+				</Route>
+				<Route exact path="/ranking">
+					<Main tab={<TabLeaderboards />} />
+				</Route>
+				<Route exact path="/events">
+					<Main tab={<TabEvents />} />
+				</Route>
+				<Route exact path="/support">
+					<Main tab={<TabSupport />} />
+				</Route>
+				<Route exact path="/badges">
+					<Main tab={<TabBadges />} />
+				</Route>
+				<Route exact path="/profile/:id">
+					<Main tab={<TabProfile />} />
+				</Route>
+				<Route exact path="/game/:id">
+					<Main tab={<TabGame />} />
+				</Route>
+				<Route>
+					<Main tab={<NotFound />} />
+				</Route>
+			</Switch>
+		</Router>
 	);
-}
+};

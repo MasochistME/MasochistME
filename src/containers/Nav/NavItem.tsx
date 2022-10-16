@@ -1,40 +1,41 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+
+import { useAppContext } from 'shared/store/context';
 import { colors, media } from 'shared/theme';
+import { Tab } from 'shared/config/tabs';
 import { Flex } from 'components';
 
 type Props = {
-	item: any;
+	tab: Tab;
 };
 
 export const NavItem = (props: Props): JSX.Element => {
-	const { item } = props;
+	const { tab } = props;
+
+	const { activeTab } = useAppContext();
 	const history = useHistory();
-	const activeTab = useSelector((state: any) => state.tabs.active);
-	const isActive = item.link === activeTab;
+
+	const isActive = tab.id === activeTab;
 
 	const onTabOpen = (): void => {
-		if (item.external) {
-			window.open(item.link);
-			return;
-		}
-		history.push(`/${item.link}`);
+		if (tab.external) window.open(tab.link);
+		else history.push(`/${tab.link}`);
 	};
 
 	return (
-		<Tab onClick={onTabOpen} active={isActive}>
+		<TabItem onClick={onTabOpen} active={isActive}>
 			<Flex column align>
-				<i className={item.icon} />
-				<p>{item.text}</p>
+				<i className={tab.icon} />
+				<p>{tab.text}</p>
 			</Flex>
-		</Tab>
+		</TabItem>
 	);
 };
 
-const Tab = styled.li.attrs(({ active }: { active?: boolean }) => {
-	const style: any = {};
+const TabItem = styled.li.attrs(({ active }: { active?: boolean }) => {
+	const style: React.CSSProperties = {};
 	if (active) {
 		style.backgroundColor = colors.newDark;
 	}

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { useUsers } from 'shared/hooks';
+import { useActiveTab, useUsers } from 'shared/hooks';
 import { showProfile } from 'shared/store/modules/Profiles';
 import { Flex, Wrapper, Spinner, Section, BigBadge } from 'components';
 import { Badges } from './styles';
@@ -10,8 +10,11 @@ import { useUserDetails } from 'shared/hooks';
 
 import FullProfile from './FullProfile';
 import ProfileHeader from './ProfileHeader';
+import { TabDict } from 'shared/config/tabs';
 
 export const TabProfile = (): JSX.Element => {
+	useActiveTab(TabDict.PROFILE);
+
 	const dispatch = useDispatch();
 	const { id } = useParams<{ id: string }>();
 	const { isUserLoaded } = useUserDetails(id);

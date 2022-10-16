@@ -3,10 +3,11 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 
-import App from './App';
 import GlobalStyle from 'shared/styles/globalStyles';
-import AppContextProvider from 'shared/store/context';
 import store from 'shared/store/store';
+import { AppContextProvider } from 'shared/store/context';
+
+import { App } from './App';
 
 import './fonts/FontAwesome/css/all.css';
 import './shared/styles/antStyles.css';
@@ -17,14 +18,14 @@ const queryClient = new QueryClient();
 class Root extends React.Component {
 	render() {
 		return (
-			<QueryClientProvider client={queryClient}>
-				<Provider store={store}>
-					<GlobalStyle />
-					<AppContextProvider>
+			<AppContextProvider>
+				<QueryClientProvider client={queryClient}>
+					<Provider store={store}>
+						<GlobalStyle />
 						<App />
-					</AppContextProvider>
-				</Provider>
-			</QueryClientProvider>
+					</Provider>
+				</QueryClientProvider>
+			</AppContextProvider>
 		);
 	}
 }

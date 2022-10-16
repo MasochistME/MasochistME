@@ -1,22 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
 
+import { tabs, Tab } from 'shared/config/tabs';
 import { NavItem } from './NavItem';
 
 export const Nav = (): JSX.Element => {
-	const tabs = useSelector((state: any) => state.tabs);
-
 	return (
-		<Row>
-			{tabs.list.map((item: any, index: number) =>
-				item.visible ? <NavItem key={`nav-${index} `} item={item} /> : null,
+		<NavBar>
+			{tabs.map((tab: Tab, index: number) =>
+				tab.visible ? <NavItem key={`nav-${index} `} tab={tab} /> : null,
 			)}
-		</Row>
+		</NavBar>
 	);
 };
 
-const Row = styled.ul`
+const NavBar = styled.ul`
 	display: flex;
 	flex-direction: row;
 `;

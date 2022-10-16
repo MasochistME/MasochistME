@@ -1,32 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import { orderBy } from 'lodash';
-import { colors } from 'shared/theme';
-import SupportPatron from './SupportPatron';
 
-const Tier = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	width: 100%;
-	h2 {
-		border-bottom: 2px solid ${colors.lightGrey};
-		padding-bottom: 10px;
-	}
-`;
-const Patrons = styled.div`
-	width: 100%;
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: center;
-`;
+import { colors } from 'shared/theme';
+import { SupportPatron } from './SupportPatron';
 
 type TSupportTier = {
 	tier: any;
 };
 
-export default function SupportTier(props: TSupportTier): JSX.Element {
+export const SupportTier = (props: TSupportTier): JSX.Element => {
 	const { tier } = props;
 	const patrons = orderBy(
 		tier.list,
@@ -50,4 +33,22 @@ export default function SupportTier(props: TSupportTier): JSX.Element {
 			</Patrons>
 		</Tier>
 	);
-}
+};
+
+const Tier = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+	h2 {
+		border-bottom: 2px solid ${colors.lightGrey};
+		padding-bottom: 10px;
+	}
+`;
+const Patrons = styled.div`
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+`;

@@ -5,35 +5,12 @@ import { media, colors } from 'shared/theme';
 import { Wrapper } from 'components';
 import { MiniHeader, Header, Nav, Sidebar } from 'containers';
 
-// import { TabBadges } from './TabBadges';
-// import { TabEvents } from './TabEvents';
-// import { TabGame } from './TabGame';
-// import { TabGames } from './TabGames';
-// import { TabHome } from './TabHome';
-// import { TabLeaderboards } from './TabLeaderboards';
-// import { TabProfile } from './TabProfile';
-// import { TabSupport } from './TabSupport';
-// import { NotFound } from './NotFound';
-
-// type TPage =
-// 	| 'home'
-// 	| 'games'
-// 	| 'ranking'
-// 	| 'events'
-// 	| 'support'
-// 	| 'profile'
-// 	| 'game'
-// 	| 'badges'
-// 	| 'admin'
-// 	| 'notfound';
-// type TSubPage = 'badges' | 'users' | 'games' | undefined;
-
 type Props = {
-	children: React.ReactNode;
+	tab: React.ReactNode;
 };
 
 export const Main = (props: Props): JSX.Element => {
-	const { children } = props;
+	const { tab } = props;
 
 	return (
 		<Wrapper type="main">
@@ -42,10 +19,10 @@ export const Main = (props: Props): JSX.Element => {
 				<Nav />
 			</Wrapper>
 			<Wrapper type="middle">
-				<WrapperContent>
+				<Content>
 					<MiniHeader />
-					<WrapperPage>{children}</WrapperPage>
-				</WrapperContent>
+					<SubPage>{tab}</SubPage>
+				</Content>
 				<Sidebar />
 			</Wrapper>
 			<Wrapper type="footer" />
@@ -53,7 +30,7 @@ export const Main = (props: Props): JSX.Element => {
 	);
 };
 
-const WrapperContent = styled.div`
+const Content = styled.div`
 	position: relative;
 	width: 70%;
 	height: auto;
@@ -64,6 +41,6 @@ const WrapperContent = styled.div`
 	}
 `;
 
-const WrapperPage = styled.div`
+const SubPage = styled.div`
 	margin: 30px 30px 0 0;
 `;

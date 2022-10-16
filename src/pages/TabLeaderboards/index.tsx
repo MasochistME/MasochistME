@@ -4,8 +4,9 @@ import styled from 'styled-components';
 
 import { SearchBar } from 'containers';
 import { Flex, Wrapper, Spinner } from 'components';
-import { useTiers, useUsers } from 'shared/hooks';
+import { useActiveTab, useTiers, useUsers } from 'shared/hooks';
 import User from './User';
+import { TabDict } from 'shared/config/tabs';
 
 const WrapperRanking = styled.div`
 	width: 100%;
@@ -19,6 +20,8 @@ const RankingList = styled.ul`
 `;
 
 export const TabLeaderboards = (): JSX.Element => {
+	useActiveTab(TabDict.LEADERBOARDS);
+
 	const { tiersData } = useTiers();
 	const searchUser = useSelector((state: any) => state.search.user);
 	const ranking = useSelector((state: any) => state.ranking);
