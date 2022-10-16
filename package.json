@@ -20,6 +20,7 @@
     "test": "echo TODO"
   },
   "dependencies": {
+    "@masochistme/sdk": "^1.11.13",
     "antd": "^4.12.3",
     "axios": ">=0.18.1",
     "babel-polyfill": "^6.26.0",
