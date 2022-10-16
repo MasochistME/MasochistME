@@ -50,12 +50,14 @@ export default function PageRanking(): JSX.Element {
 					</p>
 					<ul>
 						{rating &&
-							rating?.map((r: any, rIndex: number) => (
-								<li key={`r-${rIndex}`}>
-									<i className={r?.icon} /> - worth {r?.score} pts -{' '}
-									{r?.description}{' '}
-								</li>
-							))}
+							rating
+								?.sort((a: any, b: any) => a?.score - b?.score)
+								.map((r: any, rIndex: number) => (
+									<li key={`r-${rIndex}`}>
+										<i className={r?.icon} /> - worth {r?.score} pts -{' '}
+										{r?.description}{' '}
+									</li>
+								))}
 					</ul>
 					<p>
 						Completing a game might mean earning its most demanding achievement,
