@@ -7,6 +7,14 @@ import { WithId } from 'v1/types/Mongo';
 /**
  * This is a type of a single object within the collection "members".
  * A single object describes a single member.
+ *
+ * **Important**: there are several BREAKING changes here in comparison to the legacy Member format:
+ *
+ * - `id` → **renamed** to `steamID`
+ * - `games` → **removed**
+ * - `ranking` → **removed**
+ * - `badges` → **removed**
+ * - `url` → **removed** (can be constructed using member's Steam ID)
  */
 export interface Member extends WithId {
 	/**
@@ -30,10 +38,6 @@ export interface Member extends WithId {
 	 */
 	avatar: string;
 	/**
-	 * Link to member's Steam profile.
-	 */
-	url: string;
-	/**
 	 * Date of the last update of the member's MasochistME profile.
 	 */
 	lastUpdated: Date;
@@ -49,10 +53,6 @@ export interface Member extends WithId {
 	 * If the member is not currently a part of curator, this flag will protect them from being removed from website.
 	 */
 	isProtected: boolean;
-	/**
-	 * How many games from every tier the member completed.
-	 */
-	ranking?: any; // TODO Move the MemberRanking to a separate database
 }
 
 /**

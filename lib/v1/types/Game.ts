@@ -8,6 +8,16 @@ import { TierId } from 'v1/types/Tier';
 /**
  * This is a type of a single object within the collection "games".
  * A single object describes a single game.
+ *
+ * **Important**: there are several BREAKING changes here in comparison to the legacy Game format:
+ *
+ * - `id` → **type change** → was `string`, is `number`
+ * - `rating` → **removed**
+ * - `img` → **removed** (can be constructed using just Steam ID in the following way: `https://cdn.akamai.steamstatic.com/steam/apps/${GAME_ID}/header.jpg`)
+ * - `achievements` → **removed**
+ * - `achievementsTotal` → **added**
+ * - `url` → **removed** (can be constructed using just Steam ID in the following way: `http://store.steampowered.com/api/appdetails?appids=${GAME_ID}`)
+ * - `sale` → **removed**
  */
 export interface Game extends WithId {
 	/**
@@ -25,23 +35,11 @@ export interface Game extends WithId {
 	/**
 	 * ID of the tier that the game belongs to.
 	 */
-	rating: TierId;
+	tier: TierId;
 	/**
-	 * URL of the game's thumbnail.
+	 * Number of the achievements total that the game has.
 	 */
-	img: string;
-	/**
-	 * URL to the game's Steam website.
-	 */
-	url: string;
-	/**
-	 * List of the game's achievements.
-	 */
-	achievements: GameAchievements;
-	/**
-	 * Information about the game's current Steam sale.
-	 */
-	sale: GameSale;
+	achievementsTotal: number;
 	/**
 	 * Indicates if the game is currently being curated on Masochist.ME Steam curator.
 	 */
@@ -51,31 +49,3 @@ export interface Game extends WithId {
 	 */
 	isProtected: boolean;
 }
-
-/**
- * Information about the current sale of a particular game.
- */
-export type GameSale = {
-	/**
-	 * Flag indicating if the game is currently on sale.
-	 */
-	onSale: boolean;
-	/**
-	 * If the game is on sale, this is the percentage value of the discount [0-100].
-	 */
-	discount: number;
-};
-
-/**
- * Information about achievements for a specific game.
- */
-export type GameAchievements = {
-	/**
-	 * A total number of achievements that the game has.
-	 */
-	total: number;
-	/**
-	 * Currently this field is always an empty array.
-	 */
-	list: never[];
-};
