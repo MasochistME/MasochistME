@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 
-import App from 'components/App';
+import App from './App';
 import GlobalStyle from 'shared/styles/globalStyles';
 import AppContextProvider from 'shared/store/context';
 import store from 'shared/store/store';
