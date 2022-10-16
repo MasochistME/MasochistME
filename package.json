@@ -13,12 +13,13 @@
   "bugs": {
     "url": "https://github.com/MasochistME/MasochistME/issues"
   },
-  "proxy": "http://localhost:3000",
   "scripts": {
-    "maso:dev": "env ENV=dev PORT=8081 react-app-rewired start",
-    "maso:prod": "env ENV=prod PORT=8000 react-app-rewired start",
-    "build:dev": "env ENV=prod PORT=8081 react-app-rewired build",
-    "build:prod": "env ENV=prod PORT=8000 react-app-rewired build",
+    "maso:dev": "env PORT=8081 HOST=http://localhost:3081 react-app-rewired start",
+    "maso:staging": "env PORT=8081 HOST=http://89.47.165.141:3081 react-app-rewired start",
+    "maso:prod": "env PORT=8000 HOST=http://89.47.165.141:3002 react-app-rewired start",
+    "build:dev": "env PORT=8081 HOST=http://localhost:3081 react-app-rewired build",
+    "build:staging": "env PORT=8081 HOST=http://89.47.165.141:3081 react-app-rewired build",
+    "build:prod": "env PORT=8000 HOST=http://89.47.165.141:3002 react-app-rewired build",
     "lint": "eslint src --ext .ts,.tsx",
     "test": "echo TODO"
   },
