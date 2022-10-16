@@ -16,8 +16,8 @@ dotenv.config();
 
 const botDb = process.env["ENV"] === "dev" ? "fetus-dev" : "fetus";
 const dbConfig = [
-  { symbol: botDb, url: process.env["DB_FETUS"] },
-  { symbol: "masochist", url: process.env["DB_MASOCHIST"] },
+  { symbol: botDb, url: process.env["DB"] },
+  { symbol: "masochist", url: process.env["DB"] },
 ];
 
 export const mongo = new Database(dbConfig);

@@ -12,7 +12,7 @@
     "fetus:dev:watch": "env ENV=dev nodemon --exec npx tsx src/fetus.ts",
     "fetus:prod": "env ENV=prod npx tsx src/fetus.ts",
     "fetus:prod:watch": "env ENV=prod nodemon --exec npx tsx src/fetus.ts",
-    "start": "yarn build && env ENV=prod node dist/fetus.js",
+    "start": "env ENV=prod node dist/fetus.js",
     "lint": "eslint . --ext .ts --fix",
     "test": "echo TODO"
   },
