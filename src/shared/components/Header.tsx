@@ -30,8 +30,7 @@ const HeaderMotto = styled.p`
 export default function Header(): JSX.Element {
 	return (
 		<WrapperHeader>
-			<span />
-			<HeaderMotto>0.1% - games that masochists love</HeaderMotto>
+			<HeaderMotto>Masochist.ME - games that masochists love</HeaderMotto>
 		</WrapperHeader>
 	);
 }

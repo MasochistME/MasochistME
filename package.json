@@ -17,13 +17,9 @@
   "scripts": {
     "maso:dev": "env ENV=dev PORT=8000 react-app-rewired start",
     "maso:prod": "env ENV=prod PORT=8000 react-app-rewired start",
-    "prod-pop": "yarn run build && serve -l 3000 -s",
-    "masochist:serve": "serve -l 3000 -s",
-    "server": "node ./start.js",
-    "start": "react-app-rewired start",
-    "build": "env ENV=prod react-app-rewired build",
+    "build:dev": "env ENV=prod react-app-rewired build",
+    "build:prod": "env ENV=prod react-app-rewired build",
     "lint": "eslint src --ext .ts,.tsx",
-    "lint:fix": "eslint src --ext .tsx,.ts --fix",
     "test": "echo TODO"
   },
   "dependencies": {
@@ -32,7 +28,6 @@
     "babel-polyfill": "^6.26.0",
     "chart.js": "^2.8.0",
     "crypto-js": "^4.0.0",
-    "express": "^4.16.3",
     "lodash": "^4.17.13",
     "moment": "^2.24.0",
     "node-cache": "^5.1.0",

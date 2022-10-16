@@ -81,7 +81,6 @@ export default function Page(props: Props): JSX.Element {
 
 	return (
 		<Wrapper type="main">
-			{/* <LoginModal /> */}
 			<Header />
 			<Wrapper type="nav">
 				<Nav />
