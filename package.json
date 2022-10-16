@@ -15,9 +15,7 @@
   },
   "scripts": {
     "maso:start": "react-app-rewired start",
-    "maso:build:dev": "env REACT_APP_PORT=8081 REACT_APP_API=http://localhost:3081 react-app-rewired build",
-    "maso:build:staging": "env REACT_APP_PORT=8081 REACT_APP_API=http://89.47.165.141:3081 react-app-rewired build",
-    "maso:build:prod": "env REACT_APP_PORT=8000 REACT_APP_API=http://89.47.165.141:3002 react-app-rewired build",
+    "maso:build": "react-app-rewired build",
     "lint": "eslint src --ext .ts,.tsx",
     "test": "echo TODO"
   },
@@ -57,12 +55,10 @@
     "@types/styled-components": "^5.1.7",
     "@typescript-eslint/eslint-plugin": "^5.40.0",
     "@typescript-eslint/parser": "^5.40.0",
-    "dotenv": "^16.0.3",
     "eslint": "^8.25.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.7.1",
-    "react-app-rewire-define-plugin": "^1.0.0",
     "react-app-rewired": "^2.2.1"
   },
   "browserslist": [

@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import * as dotenv from 'dotenv';
 
 import App from 'components/App';
 import GlobalStyle from 'shared/styles/globalStyles';
@@ -11,8 +10,6 @@ import store from 'shared/store/store';
 import './fonts/FontAwesome/css/all.css';
 import './shared/styles/antStyles.css';
 import './index.css';
-
-dotenv.config();
 
 class Root extends React.Component {
 	render() {

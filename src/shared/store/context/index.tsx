@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Permission } from './types';
 
+import config from 'config.json';
+
 type ContextType = {
 	path: string;
 	isLoggedIn: boolean;
@@ -20,7 +22,7 @@ const AppContextProvider = ({
 }: {
 	children: React.ReactNode;
 }): JSX.Element => {
-	const path = process?.env?.REACT_APP_API ?? 'http://localhost:3002';
+	const path = config.API;
 	const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 	const [isAdmin, setIsAdmin] = useState<boolean>(false);
 	const [permissions, setPermissions] = useState<Permission[]>([]);

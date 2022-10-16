@@ -32,3 +32,6 @@ package-lock.json
 /api/members.json
 /api/blog.json
 .eslintcache
+config.dev.json
+config.prod.json
+config.staging.json
