@@ -63,7 +63,7 @@ export default function ProfileGraphs(props: Props): JSX.Element {
 					rating: games.find((g: any) => parseInt(g.id) === game.id).rating,
 				};
 				const index = data.findIndex((d: any) => d.id === game.rating);
-				data[index].sum += game.playtime;
+				if (data[index]?.sum) data[index].sum += game.playtime;
 				return game;
 			});
 
@@ -100,7 +100,7 @@ export default function ProfileGraphs(props: Props): JSX.Element {
 					rating: games.find((g: any) => parseInt(g.id) === game.id).rating,
 				};
 				const index = data.findIndex((d: any) => d.id === game.rating);
-				data[index].sum += 1;
+				if (data[index]?.sum) data[index].sum += 1;
 				return game;
 			});
 		return data.map((d: any) => d[type]);

@@ -25,9 +25,8 @@ export default function UserDetails(props: TUserDetails): JSX.Element {
 	const games = useSelector((state: any) => state.games.list);
 	const user = useSelector((state: any) => {
 		const userBasic = users.find((user: any) => user.id === id);
-		const userGames = state.users.details.find(
-			(user: any) => user.id === id,
-		)?.games;
+		const userGames =
+			state.users.details.find((user: any) => user.id === id)?.games ?? [];
 		const userRanking = state.ranking.find((user: any) => user.id === id);
 		return {
 			...userBasic,
