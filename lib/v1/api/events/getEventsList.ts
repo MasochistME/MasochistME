@@ -26,7 +26,7 @@ import { Event, EventType, ResponseError } from 'v1/types';
 export const getEventsList = async (
 	params: {
 		filter: {
-			type?: keyof typeof EventType;
+			type?: EventType;
 			memberId?: string;
 		};
 		limit?: number;
