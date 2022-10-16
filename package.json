@@ -29,6 +29,7 @@
     "babel-polyfill": "^6.26.0",
     "chart.js": "^2.8.0",
     "crypto-js": "^4.0.0",
+    "dotenv": "^16.0.3",
     "lodash": "^4.17.13",
     "moment": "^2.24.0",
     "node-cache": "^5.1.0",
