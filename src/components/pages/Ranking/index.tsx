@@ -24,9 +24,7 @@ export default function PageRanking(): JSX.Element {
 	const users = useUsers(true);
 
 	const createRankingList = () => {
-		if (ranking?.length <= 0) {
-			return;
-		}
+		if (!ranking?.length) return;
 		return ranking?.map((user: any, position: number) => {
 			const userName: any = users.find((u: any) => u.id === user.id)?.name;
 			if (userName) {
