@@ -55,6 +55,15 @@ routerV1.put('/badges/badge/:badgeId', updateBadgeById);
 routerV1.delete('/badges/badge/:badgeId', deleteBadgeById);
 
 /*************************
+ *         EVENTS         *
+ *************************/
+
+import { getEventsList, createEvent } from './events';
+
+routerV1.post('/events/list', getEventsList);
+routerV1.post('/events', createEvent);
+
+/*************************
  *         TIERS         *
  *************************/
 
