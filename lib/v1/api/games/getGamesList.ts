@@ -47,7 +47,7 @@ export const getGamesList = async (
 };
 
 export type GamesListParams = {
-	filter?: Partial<Pick<Game, 'tier' | 'isCurated' | 'isProtected'>>;
+	filter?: Partial<Pick<Game, 'tier' | 'isCurated'>>;
 	sort?: {
 		[key in keyof Partial<
 			Pick<Game, 'title' | 'tier' | 'achievementsTotal'>
