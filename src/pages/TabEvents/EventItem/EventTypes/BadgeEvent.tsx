@@ -10,7 +10,7 @@ import {
 
 import { getGameThumbnail } from 'utils';
 import { useBadges, useGames, useMembers } from 'sdk';
-import logo from 'shared/images/logo.png';
+import logo from 'shared/images/logo.ico';
 import {
 	EventDescription,
 	EventSummary,

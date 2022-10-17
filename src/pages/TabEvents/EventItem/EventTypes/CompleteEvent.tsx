@@ -9,7 +9,7 @@ import {
 
 import { getGameThumbnail } from 'utils';
 import { useTiers, useMembers, useGames } from 'sdk';
-import logo from 'shared/images/logo.png';
+import logo from 'shared/images/logo.ico';
 import {
 	EventDescription,
 	EventSummary,

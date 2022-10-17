@@ -6,7 +6,7 @@ import {
 	Game,
 } from '@masochistme/sdk/dist/v1/types';
 
-import logo from 'shared/images/logo.png';
+import logo from 'shared/images/logo.ico';
 import { getGameThumbnail } from 'utils';
 import { useTiers, useGames } from 'sdk';
 import {

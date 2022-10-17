@@ -105,6 +105,7 @@ const useEventComponents = () => {
 	const { gamesData: games } = useGames();
 	const { membersData: members } = useMembers();
 	const { badgesData: badges } = useBadges();
+	const { tiersData } = useTiers();
 
 	const getEventMemberJoin = (event: EventMemberJoin) => {
 		const member = members.find((m: Member) => m.steamId === event.memberId);
@@ -193,8 +194,7 @@ const useEventComponents = () => {
 	};
 
 	const getEventGameTierChange = (event: EventGameTierChange) => {
-		const { tiersData } = useTiers();
-		const game = games.find((g: Game) => g.id === Number(event.gameId));
+		const game = games.find((g: Game) => g.id === event.gameId);
 
 		const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
 

@@ -1,4 +1,4 @@
-import logo from 'shared/images/logo.png';
+import logo from 'shared/images/logo.ico';
 
 export const getGameThumbnail = (gameId?: number) => {
 	if (gameId)

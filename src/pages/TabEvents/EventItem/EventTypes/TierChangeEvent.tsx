@@ -6,7 +6,7 @@ import {
 	EventGameTierChange,
 } from '@masochistme/sdk/dist/v1/types';
 
-import logo from 'shared/images/logo.png';
+import logo from 'shared/images/logo.ico';
 import { useGames, useTiers } from 'sdk';
 import { getGameThumbnail, getTierIcon } from 'utils';
 import {
