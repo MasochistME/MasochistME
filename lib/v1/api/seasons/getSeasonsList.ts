@@ -1,14 +1,21 @@
 import axios, { AxiosResponse } from 'axios';
 
-import { Season, ResponseError } from 'v1/types';
+import { Season, Sort, ResponseError } from 'v1/types';
 
 /**
  * Returns a list of all seasons.
  *
  * ### Filter options
  *
- * - `finished` - return only finished seasons,
- * - `inactive` - return only seasons which are yet to start.
+ * - `finished` - filter by seasons which have start and end date,
+ * - `active` - filter by seasons which have start date but did not yet finish,
+ * - `inactive` - filter by seasons which do not have start date,
+ * - `unfinished` - filter by seasons which do not have end date,
+ *
+ * ### Sort options
+ *
+ * - `startDate` - sorts by season starting date,
+ * - `endDate` - sorts by season ending date.
  *
  * ## Usage
  *
@@ -23,15 +30,21 @@ import { Season, ResponseError } from 'v1/types';
  * @param params.filter.active - Get only currently active seasons.
  * @param params.filter.finished - Get only past seasons.
  * @param params.filter.unfinished - Get only seasons which are not finished.
+ * @param params.sort - Fields to sort season list by.
+ * @param params.limit - How many seasons will get returned.
  */
 export const getSeasonsList = async (
 	params: {
-		filter: {
+		filter?: {
 			finished?: boolean;
 			active?: boolean;
 			inactive?: boolean;
 			unfinished?: boolean;
 		};
+		sort?: {
+			[key in keyof Partial<Pick<Season, 'startDate' | 'endDate'>>]: Sort;
+		};
+		limit?: number;
 	},
 	/** @ignore */
 	BASE_URL: string,

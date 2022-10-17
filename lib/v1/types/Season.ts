@@ -2,7 +2,7 @@
  * @module Seasons
  */
 
-import { WithId } from 'v1/types/Mongo';
+import { WithId } from 'v1/types/__Helpers';
 
 /**
  * This is a type of a single object within the collection "seasons".

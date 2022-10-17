@@ -2,7 +2,7 @@
  * @module Races
  */
 
-import { WithId } from 'v1/types/Mongo';
+import { WithId } from 'v1/types/__Helpers';
 import { RaceType } from 'v1/types/Race';
 
 /**

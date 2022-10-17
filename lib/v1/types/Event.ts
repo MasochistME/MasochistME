@@ -1,7 +1,7 @@
 /**
  * @module Events
  */
-import { WithId } from 'v1/types/Mongo';
+import { WithId } from 'v1/types/__Helpers';
 
 /**
  * Enum describing various types of events.

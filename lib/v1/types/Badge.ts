@@ -1,7 +1,7 @@
 /**
  * @module Badges
  */
-import { WithId } from 'v1/types/Mongo';
+import { WithId } from 'v1/types/__Helpers';
 
 /**
  * This is a type of a single object within the collection "badges".
@@ -36,11 +36,11 @@ interface BaseBadge extends WithId {
 	/**
 	 * TODO [Is it even used?]
 	 */
-	enabled: boolean;
+	isEnabled: boolean;
 	/**
 	 * TODO [Is it even used?]
 	 */
-	legacy: boolean;
+	isLegacy: boolean;
 }
 
 /**

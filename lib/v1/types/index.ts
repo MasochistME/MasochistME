@@ -3,8 +3,8 @@
  * @ignore
  */
 
+export * from './__Helpers';
 export * from './Badge';
-export * from './Error';
 export * from './Event';
 export * from './Game';
 export * from './MemberBadge';

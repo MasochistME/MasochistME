@@ -67,7 +67,8 @@ export class SDK {
 	 *         GAMES         *
 	 *************************/
 
-	public getGamesList = () => getGamesList(this.BASE_URL);
+	public getGamesList = <T extends typeof getGamesList>(args: Head<T>) =>
+		getGamesList(args, this.BASE_URL);
 	public getBadgesByGameId = <T extends typeof getBadgesByGameId>(
 		args: Head<T>,
 	) => getBadgesByGameId(args, this.BASE_URL);
@@ -76,7 +77,8 @@ export class SDK {
 	 *         MEMBERS         *
 	 ***************************/
 
-	public getMembersList = () => getMembersList(this.BASE_URL);
+	public getMembersList = <T extends typeof getMembersList>(args: Head<T>) =>
+		getMembersList(args, this.BASE_URL);
 	public getMemberById = <T extends typeof getMemberById>(args: Head<T>) =>
 		getMemberById(args, this.BASE_URL);
 	public updateMemberById = <T extends typeof updateMemberById>(
@@ -93,7 +95,8 @@ export class SDK {
 	 *         BADGES         *
 	 **************************/
 
-	public getBadgesList = () => getBadgesList(this.BASE_URL);
+	public getBadgesList = <T extends typeof getBadgesList>(args: Head<T>) =>
+		getBadgesList(args, this.BASE_URL);
 	public createBadge = <T extends typeof createBadge>(args: Head<T>) =>
 		createBadge(args, this.BASE_URL);
 	public getBadgeById = <T extends typeof getBadgeById>(args: Head<T>) =>
@@ -132,6 +135,8 @@ export class SDK {
 	 *       RACES       *
 	 *********************/
 
+	public getRaceList = <T extends typeof getRaceList>(args: Head<T>) =>
+		getRaceList(args, this.BASE_URL);
 	public createRace = <T extends typeof createRace>(args: Head<T>) =>
 		createRace(args, this.BASE_URL);
 	public deleteRaceById = <T extends typeof deleteRaceById>(args: Head<T>) =>
@@ -140,7 +145,6 @@ export class SDK {
 		updateRaceById(args, this.BASE_URL);
 	public getRaceById = <T extends typeof getRaceById>(args: Head<T>) =>
 		getRaceById(args, this.BASE_URL);
-	public getRaceList = () => getRaceList(this.BASE_URL);
 	public getActiveRace = () => getActiveRace(this.BASE_URL);
 
 	/*********************************

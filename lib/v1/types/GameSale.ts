@@ -2,7 +2,7 @@
  * @module Games
  */
 
-import { WithId } from 'v1/types/Mongo';
+import { WithId } from 'v1/types/__Helpers';
 
 /**
  * Information about the current sale of a particular game.

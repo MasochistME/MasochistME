@@ -1,46 +1,44 @@
 import axios, { AxiosResponse } from 'axios';
 
-import { Event, EventType, ResponseError } from 'v1/types';
+import { Event, Sort, ResponseError } from 'v1/types';
 
 /**
  * Returns a list of all events.
  *
- * ### Filter options
+ * ### Sort options
  *
- * - `type` - return only events of a specific type,
- * - `memberId` - return only events related to a specific member.
+ * - `date` - sorts by date of event.
  *
  * ## Usage
  *
  * ```ts
- * const eventsAll: Event[] = await sdk.getEventsList({ filter: {} });
- * const eventsNewest: Event[] = await sdk.getEventsList({ filter: {}, limit: 100 });
+ * const eventsAll: Event[] = await sdk.getEventsList({ });
+ * const eventsNewest: Event[] = await sdk.getEventsList({ sort: { date: 'desc' }});
  * const eventsComplete: Event[] = await sdk.getEventsList({ filter: { type: EventType.COMPLETE }});
  * ```
  *
  * @param params.filter - Filter to apply to returned events list.
- * @param params.filter.type - Get events of only particular type.
- * @param params.filter.memberId - Get events related to a specific member.
+ * @param params.sort - Fields to sort event list by.
  * @param params.limit - Limit how many events you want to have returned (sorted from newest).
  */
 export const getEventsList = async (
 	params: {
-		filter: {
-			type?: EventType;
-			memberId?: string;
+		filter?: Partial<Event>;
+		sort?: {
+			[key in keyof Partial<Pick<Event, 'date'>>]: Sort;
 		};
 		limit?: number;
 	},
 	/** @ignore */
 	BASE_URL: string,
 ): Promise<Event[]> => {
-	const { filter } = params;
+	const { filter, sort, limit } = params;
 	const url = `${BASE_URL}/events/list`;
 
 	const eventResponse = await axios.post<
 		Event[] | ResponseError,
 		AxiosResponse<Event[] | ResponseError>
-	>(url, filter, { validateStatus: () => true });
+	>(url, { filter, sort, limit }, { validateStatus: () => true });
 
 	const { status, data } = eventResponse;
 
