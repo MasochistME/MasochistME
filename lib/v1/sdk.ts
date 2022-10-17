@@ -39,6 +39,10 @@ import {
 	endSeasonById,
 	getSeasonsList,
 } from 'v1/api/seasons';
+import {
+	getLeaderboardsList,
+	getMemberLeaderboardsPositionById,
+} from './api/leaderboards';
 
 export type Config = {
 	host: string; // for example localhost:3000
@@ -182,4 +186,17 @@ export class SDK {
 		endSeasonById(args, this.BASE_URL);
 	public getSeasonsList = <T extends typeof getSeasonsList>(args: Head<T>) =>
 		getSeasonsList(args, this.BASE_URL);
+
+	/****************************
+	 *       LEADERBOARDS       *
+	 ****************************/
+
+	public getLeaderboardsList = <T extends typeof getLeaderboardsList>(
+		args: Head<T>,
+	) => getLeaderboardsList(args, this.BASE_URL);
+	public getMemberLeaderboardsPositionById = <
+		T extends typeof getMemberLeaderboardsPositionById,
+	>(
+		args: Head<T>,
+	) => getMemberLeaderboardsPositionById(args, this.BASE_URL);
 }

@@ -7,6 +7,7 @@ export * from './__Helpers';
 export * from './Badge';
 export * from './Event';
 export * from './Game';
+export * from './Leaderboards';
 export * from './MemberBadge';
 export * from './Member';
 export * from './Race';
