@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { Member } from '@masochistme/sdk/dist/v1/types';
 
 import { useActiveTab, useMembers } from 'shared/hooks';
 import { Flex, Wrapper, Spinner, Section, BigBadge } from 'components';
@@ -18,7 +19,7 @@ export const TabProfile = (): JSX.Element => {
 	const { isUserLoaded } = useUserDetails(id);
 	const { membersData } = useMembers();
 
-	const userBasic = membersData.find((user: any) => user.id === id);
+	const memberBasic = membersData.find((m: Member) => m.steamId === id);
 
 	const user = useSelector((state: any) => {
 		if (!isUserLoaded) {
@@ -29,7 +30,7 @@ export const TabProfile = (): JSX.Element => {
 			(user: any) => user.id === id,
 		)?.points;
 		return {
-			...userBasic,
+			...memberBasic,
 			...userDetails,
 			points: userRanking,
 		};
@@ -45,7 +46,7 @@ export const TabProfile = (): JSX.Element => {
 
 	return (
 		<Flex column>
-			{!isUserError && <ProfileHeader user={userBasic} error={isUserError} />}
+			{!isUserError && <ProfileHeader user={memberBasic} error={isUserError} />}
 			{isUserLoading && <Spinner />}
 			{isUserPrivate && (
 				<ProfileWarning description="This user has their profile set to private." />
