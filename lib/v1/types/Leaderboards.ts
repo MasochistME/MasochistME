@@ -28,7 +28,7 @@ export interface Leaderboards extends WithId {
 	/**
 	 * Statistics about the member's completed games.
 	 */
-	games: LeaderboardsCategory & { tier: TierId };
+	games: (LeaderboardsCategory & { tier: TierId })[];
 }
 
 export type LeaderboardsCategory = {
