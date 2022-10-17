@@ -1,15 +1,16 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { Game } from '@masochistme/sdk/dist/v1/types';
 
-import { media } from 'shared/theme';
-import { useActiveTab } from 'shared/hooks';
 import { useGames, useGameBadges } from 'sdk';
 import { Flex, Spinner, Wrapper, Section } from 'components';
 import { StackedBarChart, List, Badges } from 'containers';
-import GameHeader from './GameHeader';
+import { media } from 'shared/theme';
+import { useActiveTab } from 'shared/hooks';
 import { TabDict } from 'shared/config/tabs';
-import { Game } from '@masochistme/sdk/dist/v1/types';
+
+import { GameHeader } from './GameHeader';
 
 export const TabGame = (): JSX.Element => {
 	useActiveTab(TabDict.GAME);
@@ -20,8 +21,9 @@ export const TabGame = (): JSX.Element => {
 	const { gamesData, isFetched: loaded } = useGames();
 	const { gameBadgesData = [] } = useGameBadges(gameId);
 
-	const game = {
-		...gamesData.find((g: Game) => g.id === gameId),
+	const game = gamesData.find((g: Game) => g.id === gameId);
+	const gameDetails = {
+		...game,
 		badges: gameBadgesData,
 		completions: 'TODO!!!',
 		avgPlaytime: 'TODO!!!',
@@ -34,14 +36,14 @@ export const TabGame = (): JSX.Element => {
 			<Wrapper type="page">
 				{loaded && game ? (
 					<FlexibleFlex>
-						{game.badges?.length ? <Badges gameId={gameId} /> : null}
+						{gameDetails.badges?.length ? <Badges gameId={gameId} /> : null}
 						<FlexibleSection
 							style={{
 								height: '250px',
 								justifyContent: 'space-between',
 							}}>
 							<h3 style={{ textAlign: 'center' }}>
-								Completions: {game?.completions ?? 'unknown'}
+								Completions: {gameDetails?.completions ?? 'unknown'}
 								<br />
 								Average completion time
 							</h3>
@@ -50,13 +52,13 @@ export const TabGame = (): JSX.Element => {
 								datasets={[
 									{
 										label: 'this game',
-										data: [game.avgPlaytime],
+										data: [gameDetails.avgPlaytime],
 										colorNormal: '#e30000ff',
 										colorTransparent: '#e3000033',
 									},
 									{
 										label: 'games from this tier',
-										data: [game?.avgPlaytimeForTier ?? 0],
+										data: [gameDetails?.avgPlaytimeForTier ?? 0],
 										colorNormal: '#141620ff',
 										colorTransparent: '#14162066',
 									},

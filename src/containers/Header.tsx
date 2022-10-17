@@ -11,6 +11,9 @@ export const Header = (): JSX.Element => {
 	const onButtonPatreonClick = () => {
 		window.open('https://www.patreon.com/pointonepercent', '_blank');
 	};
+	const onButtonDiscordClick = () => {
+		window.open('https://discord.com/invite/cRNWDSam', '_blank');
+	};
 
 	return (
 		<Wrapper>
@@ -18,6 +21,7 @@ export const Header = (): JSX.Element => {
 			<HeaderMotto>Masochist.ME - games that masochists love</HeaderMotto>
 			<Flex>
 				<IconButton icon="fab fa-steam" onClick={onButtonCuratorClick} />
+				<IconButton icon="fab fa-discord" onClick={onButtonDiscordClick} />
 				<IconButton icon="fab fa-patreon" onClick={onButtonPatreonClick} />
 			</Flex>
 		</Wrapper>

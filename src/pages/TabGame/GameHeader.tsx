@@ -1,20 +1,21 @@
 import React from 'react';
-import { Tier } from '@masochistme/sdk/dist/v1/types';
+import { Game, Tier } from '@masochistme/sdk/dist/v1/types';
 
-import { Flex, Spinner, Wrapper } from 'components';
+import { getGameThumbnail } from 'utils';
 import { useTiers } from 'sdk';
-import { Basic, Image, EmptyImage } from './styles';
+import { Flex, Wrapper } from 'components';
+import { Basic, Image } from './styles';
 
-GameHeader.Image = Image;
-GameHeader.Basic = Basic;
-GameHeader.EmptyImage = EmptyImage;
+type Props = {
+	game?: Game;
+};
 
-export default function GameHeader(props: { game: any }): JSX.Element {
+export const GameHeader = (props: Props): JSX.Element => {
 	const { game } = props;
 	const { tiersData } = useTiers();
-	const gameRating = tiersData.find((tier: Tier) =>
-		game ? Number(tier.id) === Number(game.rating) : null,
-	);
+
+	const gameRating = tiersData.find((tier: Tier) => tier.id === game?.tier);
+	const gameThumbnail = getGameThumbnail(game?.id);
 
 	return (
 		<Wrapper type="description">
@@ -37,25 +38,17 @@ export default function GameHeader(props: { game: any }): JSX.Element {
 					<div>
 						<i
 							className={gameRating?.icon ?? 'far fa-question-circle'}
-							title={`This game is worth ${
-								gameRating?.score ?? '<unknown>'
-							} pts.`}></i>
+							title={`This game is worth ${gameRating?.score ?? '?'} pts.`}></i>
 					</div>
 				</Flex>
-				<GameHeader.Basic>
-					{game?.img ? (
-						<GameHeader.Image src={game?.img} />
-					) : (
-						<GameHeader.EmptyImage>
-							<Spinner />
-						</GameHeader.EmptyImage>
-					)}
+				<Basic>
+					<Image src={gameThumbnail} />
 					<div style={{ fontSize: '1.3em', textAlign: 'center' }}>
-						{game?.desc ?? 'Loading...'}
+						{game?.description ?? 'Loading...'}
 					</div>
 					<div />
-				</GameHeader.Basic>
+				</Basic>
 			</div>
 		</Wrapper>
 	);
-}
+};

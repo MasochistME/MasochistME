@@ -41,8 +41,9 @@ export const ProfileHeader = (props: Props): JSX.Element => {
 
 	const lastUpdated = 0; // TODO Get real last update date
 
-	const sendUpdateRequest = (steamId?: string) => {
-		if (!steamId) return;
+	// TODO isDisabled is temporary for the dev environment, remove in prod
+	const sendUpdateRequest = (steamId?: string, isDisabled?: boolean) => {
+		if (!steamId || isDisabled) return;
 
 		setMessage('Updating... refresh in a few minutes');
 		setUpdating(true);
@@ -93,7 +94,8 @@ export const ProfileHeader = (props: Props): JSX.Element => {
 						updating ? (
 							<UpdateMsg>{message}</UpdateMsg>
 						) : (
-							<CustomButton onClick={() => sendUpdateRequest(member?.steamId)}>
+							<CustomButton
+								onClick={() => sendUpdateRequest(member?.steamId, true)}>
 								Update
 							</CustomButton>
 						)
