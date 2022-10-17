@@ -8,19 +8,22 @@ import { Tier, ResponseError } from 'v1/types';
  * ## Usage
  *
  * ```ts
- * const tiers: Tier[] = await sdk.getTiersList();
+ * const tiers: Tier[] = await sdk.getTiersList({ });
  * ```
  */
 export const getTiersList = async (
+	_params: {
+		// empty (for now)
+	},
 	/** @ignore */
 	BASE_URL: string,
 ): Promise<Tier[]> => {
 	const url = `${BASE_URL}/tiers/list`;
 
-	const tierResponse = await axios.get<
+	const tierResponse = await axios.post<
 		Tier[] | ResponseError,
 		AxiosResponse<Tier[] | ResponseError>
-	>(url, { validateStatus: () => true });
+	>(url, {}, { validateStatus: () => true });
 
 	const { status, data } = tierResponse;
 

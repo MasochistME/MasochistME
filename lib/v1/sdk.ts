@@ -89,7 +89,8 @@ export class SDK {
 	 *         TIERS         *
 	 *********************************/
 
-	public getTiersList = () => getTiersList(this.BASE_URL);
+	public getTiersList = <T extends typeof getTiersList>(args: Head<T>) =>
+		getTiersList(args, this.BASE_URL);
 
 	/**************************
 	 *         BADGES         *
