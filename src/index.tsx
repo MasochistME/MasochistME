@@ -13,7 +13,14 @@ import './shared/fonts/FontAwesome/css/all.css';
 import './shared/styles/antStyles.css';
 import './index.css';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+	defaultOptions: {
+		queries: {
+			retry: false,
+			staleTime: 2 * 60 * 1000,
+		},
+	},
+});
 
 class Root extends React.Component {
 	render() {
