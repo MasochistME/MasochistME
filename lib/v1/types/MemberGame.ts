@@ -12,11 +12,11 @@ export interface MemberGame extends WithId {
 	/**
 	 * Steam ID of the member who has the game.
 	 */
-	memberId: number;
+	memberId: string;
 	/**
 	 * Steam ID of the game.
 	 */
-	steamId: number;
+	gameId: number;
 	/**
 	 * Number of hours that member spent playing this game.
 	 * **Important**: currently this field is called `playtime_forever` and is stored as a string.
