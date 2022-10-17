@@ -28,9 +28,12 @@ export interface Leaderboards extends WithId {
 	/**
 	 * Statistics about the member's completed games.
 	 */
-	games: (LeaderboardsCategory & { tier: TierId })[];
+	games: LeaderboardsCategoryGame[];
 }
 
+/**
+ * A base leaderboards category.
+ */
 export type LeaderboardsCategory = {
 	/**
 	 * Total number of points that member earned in this category.
@@ -41,3 +44,8 @@ export type LeaderboardsCategory = {
 	 */
 	total: number;
 };
+
+/**
+ * Base leaderboards category expanded with game's tier.
+ */
+export type LeaderboardsCategoryGame = LeaderboardsCategory & { tier: TierId };
