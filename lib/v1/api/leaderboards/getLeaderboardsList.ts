@@ -49,7 +49,7 @@ export const getLeaderboardsList = async (
 };
 
 export type LeaderboardsListParams = {
-	filter?: 'patreonTier' | 'isMember';
+	filter?: { patreonTier?: number; isMember?: boolean };
 	sort?: {
 		[key in
 			| 'position'
