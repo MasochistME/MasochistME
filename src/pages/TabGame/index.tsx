@@ -3,7 +3,8 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { media } from 'shared/theme';
-import { useActiveTab, useGames, useGameBadges } from 'shared/hooks';
+import { useActiveTab } from 'shared/hooks';
+import { useGames, useGameBadges } from 'sdk';
 import { Flex, Spinner, Wrapper, Section } from 'components';
 import { StackedBarChart, List, Badges } from 'containers';
 import GameHeader from './GameHeader';

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Badge } from '@masochistme/sdk/dist/v1/types';
 
 import { Flex, BadgeTile } from 'components';
-import { useBadges } from 'shared/hooks';
+import { useBadges } from 'sdk';
 
 type Props = {
 	user: any;

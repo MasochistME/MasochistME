@@ -8,7 +8,7 @@ import {
 
 import logo from 'shared/images/logo.png';
 import { getGameThumbnail } from 'utils';
-import { useTiers, useGames } from 'shared/hooks';
+import { useTiers, useGames } from 'sdk';
 import {
 	EventDescription,
 	EventSummary,

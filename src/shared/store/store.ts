@@ -6,7 +6,6 @@ import {
 	CACHE_USERS,
 	CACHE_BLOG,
 	CACHE_PATRONS,
-	CACHE_RANKING,
 	CACHE_STATUS,
 	CACHE_USER_DETAILS,
 } from './Cache';
@@ -19,7 +18,6 @@ type TStore = {
 	};
 	blog: any[];
 	patrons: any[];
-	ranking: any[];
 	profile: {
 		username: string | undefined;
 		privilege: string | undefined;
@@ -39,7 +37,6 @@ const defaultState: TStore = {
 	},
 	blog: [],
 	patrons: [],
-	ranking: [],
 	profile: {
 		username: undefined,
 		privilege: undefined,
@@ -71,11 +68,6 @@ const reducer = (state = defaultState, action: any) => {
 			return {
 				...state,
 				blog: action.data,
-			};
-		case CACHE_RANKING:
-			return {
-				...state,
-				ranking: action.data,
 			};
 		case CACHE_STATUS:
 			return {

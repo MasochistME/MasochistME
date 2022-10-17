@@ -2,7 +2,7 @@ import React from 'react';
 import { EventCustom, Member } from '@masochistme/sdk/dist/v1/types';
 
 import logo from 'shared/images/logo.png';
-import { useMembers } from 'shared/hooks';
+import { useMembers } from 'sdk';
 import {
 	EventDescription,
 	EventSummary,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Game, Tier } from '@masochistme/sdk/dist/v1/types';
 
-import { useTiers, useMembers, useGames } from 'shared/hooks';
+import { useTiers, useMembers, useGames } from 'sdk';
 import { Spinner } from 'components';
 import { Section, SectionTitle } from 'containers/Sidebar/components';
 

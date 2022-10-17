@@ -9,7 +9,7 @@ import {
 } from '@masochistme/sdk/dist/v1/types';
 
 import { getGameThumbnail } from 'utils';
-import { useBadges, useGames, useMembers } from 'shared/hooks';
+import { useBadges, useGames, useMembers } from 'sdk';
 import logo from 'shared/images/logo.png';
 import {
 	EventDescription,

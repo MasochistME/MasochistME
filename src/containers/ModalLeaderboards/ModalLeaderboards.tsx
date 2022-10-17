@@ -3,11 +3,11 @@ import { useHistory } from 'react-router-dom';
 import { Game } from '@masochistme/sdk/dist/v1/types';
 
 import { Flex, Spinner, CustomButton } from 'components';
+import { useGames } from 'sdk';
 
 import { WrapperLeaderboards } from './components';
 import { List } from './List';
 import { Badges } from './Badges';
-import { useGames } from 'shared/hooks';
 
 type Props = {
 	gameId: number;

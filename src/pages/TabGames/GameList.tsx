@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { Game, TierId } from '@masochistme/sdk/dist/v1/types';
 
-import { useGames, useTiers } from 'shared/hooks';
+import { useGames, useTiers } from 'sdk';
 import { useAppContext } from 'shared/store/context';
 import { getGameThumbnail, getTierIcon } from 'utils';
 import { Flex, Spinner, Wrapper, Table } from 'components';

@@ -2,7 +2,7 @@ import React from 'react';
 import { Tier } from '@masochistme/sdk/dist/v1/types';
 
 import { Flex, Spinner, Wrapper } from 'components';
-import { useTiers } from 'shared/hooks';
+import { useTiers } from 'sdk';
 import { Basic, Image, EmptyImage } from './styles';
 
 GameHeader.Image = Image;

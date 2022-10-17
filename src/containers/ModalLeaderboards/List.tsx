@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { useMembers } from 'shared/hooks';
+import { useMembers } from 'sdk';
 import { ProgressBar, Flex } from 'components';
 import {
 	User,

@@ -7,29 +7,24 @@ import { UserDetails } from './UserDetails';
 
 import 'react-slidedown/lib/slidedown.css';
 
-const StyledUser = styled.li`
-	display: flex;
-	flex-direction: column;
-	margin: 0;
-	padding: 0;
-	width: 100%;
-	box-sizing: border-box;
-	cursor: pointer;
-	justify-content: space-between;
-`;
-
 type Props = {
 	steamId: any;
 	position: number;
 };
 export const User = (props: Props): JSX.Element => {
 	const { steamId, position } = props;
-	const [show, setShow] = useState(false);
+	const [isVisible, setIsVisible] = useState(false);
 
-	const changeDetailsVisibility = (): any => setShow(!show);
+	const changeDetailsVisibility = () => {
+		setIsVisible(!isVisible);
+	};
 
-	const details = show ? (
-		<UserDetails key={`details-${steamId}`} steamId={steamId} show={show} />
+	const details = isVisible ? (
+		<UserDetails
+			key={`details-${steamId}`}
+			steamId={steamId}
+			isVisible={isVisible}
+		/>
 	) : null;
 
 	return (
@@ -46,3 +41,14 @@ export const User = (props: Props): JSX.Element => {
 		</StyledUser>
 	);
 };
+
+const StyledUser = styled.li`
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	box-sizing: border-box;
+	cursor: pointer;
+	justify-content: space-between;
+`;

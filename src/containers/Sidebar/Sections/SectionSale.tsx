@@ -11,7 +11,7 @@ import {
 	SalePercentage,
 } from 'containers/Sidebar/components';
 import { Spinner } from 'components';
-import { useGames } from 'shared/hooks';
+import { useGames } from 'sdk';
 
 export const SectionSale = (): JSX.Element => {
 	const { gamesData } = useGames();

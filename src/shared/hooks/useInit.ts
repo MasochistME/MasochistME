@@ -6,7 +6,6 @@ import {
 	cacheUsers,
 	cacheBlog,
 	cachePatrons,
-	cacheRanking,
 	// cacheStatus,
 } from 'shared/store/Cache';
 import { useAppContext } from 'shared/store/context';
@@ -50,17 +49,6 @@ export const useInit = (): boolean => {
 			.catch(log.WARN);
 	};
 
-	const loadRanking = () => {
-		axios
-			.get(`${path}/api/ranking`)
-			.then(response => {
-				if (response?.status === 200) {
-					return dispatch(cacheRanking(response.data));
-				}
-			})
-			.catch(log.WARN);
-	};
-
 	// const loadStatus = () => {
 	// 	axios
 	// 		.get(`${path}/api/status`)
@@ -76,7 +64,6 @@ export const useInit = (): boolean => {
 		loadUsers();
 		loadBlog();
 		loadPatrons();
-		loadRanking();
 		// TODO disabled when dev/staging
 		// setInterval(() => {
 		// 	loadStatus();

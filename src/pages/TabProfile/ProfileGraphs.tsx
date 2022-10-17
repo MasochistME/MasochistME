@@ -6,7 +6,7 @@ import { Tier, Game } from '@masochistme/sdk/dist/v1/types';
 
 import { DoughnutChart, LineChart, ChartWrapper } from 'containers';
 import { log } from 'utils';
-import { useGames, useTiers } from 'shared/hooks';
+import { useGames, useTiers } from 'sdk';
 
 const GraphsWrapper = styled.div`
 	display: flex;

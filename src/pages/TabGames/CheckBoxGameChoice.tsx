@@ -3,7 +3,7 @@ import { TierId } from '@masochistme/sdk/dist/v1/types';
 
 import { useAppContext } from 'shared/store/context';
 import { getTierIcon } from 'utils';
-import { useTiers } from 'shared/hooks';
+import { useTiers } from 'sdk';
 
 type Props = {
 	tier: TierId;

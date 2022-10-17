@@ -3,7 +3,8 @@ import { useSelector } from 'react-redux';
 import { orderBy } from 'lodash';
 import { Game, Member, Tier } from '@masochistme/sdk/dist/v1/types';
 
-import { useTiers, useUserDetails, useMembers, useGames } from 'shared/hooks';
+import { useTiers, useMembers, useGames } from 'sdk';
+import { useUserDetails } from 'shared/hooks';
 import { getGameThumbnail } from 'utils/getGameUrl';
 import { Spinner } from 'components';
 
@@ -12,28 +13,21 @@ import { UserGame } from './UserGame';
 
 type Props = {
 	steamId: any;
-	show: any;
+	isVisible: any;
 };
 
 export const UserDetails = (props: Props): JSX.Element => {
-	const { steamId, show } = props;
+	const { steamId, isVisible } = props;
 
 	const userLoaded = useUserDetails(steamId);
 	const { membersData } = useMembers();
-	const { gamesData: games } = useGames();
+	const { gamesData } = useGames();
 	const { tiersData } = useTiers();
 
-	const member = useSelector((state: any) => {
-		const memberBasic = membersData.find((m: Member) => m.steamId === steamId);
-		const memberGames =
-			state.users.details.find((user: any) => user.id === steamId)?.games ?? [];
-		const userRanking = state.ranking.find((user: any) => user.id === steamId);
-		return {
-			...memberBasic,
-			games: memberGames,
-			ranking: userRanking,
-		};
-	});
+	const member = {
+		...membersData.find((m: Member) => m.steamId === steamId),
+		games: [],
+	};
 
 	const composeGameList = () => {
 		const userGames = orderBy(
@@ -46,7 +40,7 @@ export const UserDetails = (props: Props): JSX.Element => {
 		);
 
 		return userGames.map(memberGame => {
-			const game = games.find((g: Game) => g.id === memberGame.id);
+			const game = gamesData.find((g: Game) => g.id === memberGame.id);
 			if (!game) {
 				// most likely non-steam game, or deleted one
 				return;
@@ -67,6 +61,7 @@ export const UserDetails = (props: Props): JSX.Element => {
 		});
 	};
 
-	if (userLoaded) return <Display show={show}>{composeGameList()}</Display>;
+	if (userLoaded)
+		return <Display isVisible={isVisible}>{composeGameList()}</Display>;
 	return <Spinner />;
 };

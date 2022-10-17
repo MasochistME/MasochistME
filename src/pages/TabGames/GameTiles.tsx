@@ -2,7 +2,7 @@ import React from 'react';
 import { Game, TierId } from '@masochistme/sdk/dist/v1/types';
 
 import { Spinner, Wrapper } from 'components';
-import { useGames } from 'shared/hooks';
+import { useGames } from 'sdk';
 import { GameTile } from './GameTile';
 import { useAppContext } from 'shared/store/context';
 

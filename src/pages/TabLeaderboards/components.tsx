@@ -8,7 +8,7 @@ type TSummary = {
 
 export const Summary = styled.div.attrs(
 	({ disabled, shekelmaster }: TSummary) => {
-		const style: any = {};
+		const style: React.CSSProperties = {};
 		if (shekelmaster) {
 			style.backgroundColor = colors.tier4Transparent;
 			style.borderTop = `1px solid ${colors.tier4Muted}`;
@@ -66,7 +66,7 @@ export const Icons = styled.div`
 export const PatronIcon = styled.i.attrs(({ tier }: { tier?: number }) => {
 	// @ts-ignore
 	const color: string = colors[`tier${tier}`];
-	const style: any = {};
+	const style: React.CSSProperties = {};
 	if (color) {
 		style.textShadow = `0 0 5px ${color}`;
 	}
@@ -104,13 +104,13 @@ export const RatingScore = styled.div`
 
 export const Name = styled.div.attrs(
 	({ shekelmaster }: { shekelmaster?: boolean }) => {
-		const style: any = {};
+		const style: React.CSSProperties = {};
 		if (shekelmaster) {
 			style.color = colors.tier4;
 		}
 		return { style };
 	},
-)<{ shekelmaster?: boolean; tier: number }>`
+)<{ shekelmaster?: boolean }>`
 	text-transform: uppercase;
 `;
 
@@ -122,18 +122,20 @@ export const Ranking = styled.div`
 	}
 `;
 
-export const Display = styled.div.attrs(({ show }: { show?: boolean }) => {
-	const style: any = {};
-	if (show) {
-		style.display = 'flex !important';
-		style.transition = 'height 1s';
-		style.height = 'auto';
-	} else {
-		style.display = 'none !important';
-		style.height = 0;
-	}
-	return { style };
-})<{ show?: boolean }>`
+export const Display = styled.div.attrs(
+	({ isVisible }: { isVisible?: boolean }) => {
+		const style: React.CSSProperties = {};
+		if (isVisible) {
+			style.display = 'flex !important';
+			style.transition = 'height 1s';
+			style.height = 'auto';
+		} else {
+			style.display = 'none !important';
+			style.height = 0;
+		}
+		return { style };
+	},
+)<{ isVisible?: boolean }>`
 	width: 100%;
 	padding: 0 55px;
 	box-sizing: border-box;

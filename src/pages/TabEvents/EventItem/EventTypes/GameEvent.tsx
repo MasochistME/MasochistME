@@ -8,7 +8,7 @@ import {
 } from '@masochistme/sdk/dist/v1/types';
 
 import logo from 'shared/images/logo.png';
-import { useGames, useTiers } from 'shared/hooks';
+import { useGames, useTiers } from 'sdk';
 import {
 	EventDescription,
 	EventSummary,

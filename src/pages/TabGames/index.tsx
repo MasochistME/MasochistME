@@ -4,8 +4,9 @@ import { Tier } from '@masochistme/sdk/dist/v1/types';
 import { useAppContext, GameView } from 'shared/store/context';
 import { SearchBar } from 'containers';
 import { Wrapper, Flex, HoverIcon } from 'components';
-import { useActiveTab, useTiers } from 'shared/hooks';
+import { useActiveTab } from 'shared/hooks';
 import { TabDict } from 'shared/config/tabs';
+import { useTiers } from 'sdk';
 
 import { CheckBoxGameChoice } from './CheckBoxGameChoice';
 import { GameTiles } from './GameTiles';

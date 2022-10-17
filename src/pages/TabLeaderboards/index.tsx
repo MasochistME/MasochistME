@@ -1,48 +1,39 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { Member, Tier } from '@masochistme/sdk/dist/v1/types';
+import { Member, Tier, Leaderboards } from '@masochistme/sdk/dist/v1/types';
 
+import { useTiers, useMembers, useLeaderboards } from 'sdk';
 import { useAppContext } from 'shared/store/context';
-import { useActiveTab, useTiers, useMembers } from 'shared/hooks';
+import { useActiveTab } from 'shared/hooks';
 import { TabDict } from 'shared/config/tabs';
 import { SearchBar } from 'containers';
 import { Flex, Wrapper, Spinner } from 'components';
 
 import { User } from './User';
 
-const WrapperRanking = styled.div`
-	width: 100%;
-`;
-const RankingList = styled.ul`
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
-	width: 100%;
-`;
-
 export const TabLeaderboards = (): JSX.Element => {
 	const { queryMember } = useAppContext();
 	useActiveTab(TabDict.LEADERBOARDS);
 
-	const ranking = useSelector((state: any) => state.ranking);
+	const { leaderboardsData, isLoading, isError } = useLeaderboards();
 	const { tiersData } = useTiers();
 	const { membersData } = useMembers();
 
 	const createRankingList = () => {
-		if (!ranking?.length) return;
-		return ranking?.map((user: any, position: number) => {
-			const memberName = membersData.find(
-				(m: Member) => m.steamId === user.id,
-			)?.name;
-			if (memberName) {
-				const isUserSearch =
-					memberName.toLowerCase().indexOf(queryMember.toLowerCase()) !== -1;
-				return isUserSearch ? (
-					<User steamId={user.id} position={position} key={`user-${user.id}`} />
-				) : null;
-			}
+		if (isError) return;
+		return leaderboardsData?.map((leader: Leaderboards) => {
+			const memberName =
+				membersData.find((m: Member) => m.steamId === leader.memberId)?.name ??
+				'UNKNOWN';
+			const isUserSearch =
+				memberName.toLowerCase().indexOf(queryMember.toLowerCase()) !== -1;
+			return isUserSearch ? (
+				<User
+					steamId={leader.memberId}
+					position={leader.position}
+					key={`leaderboards-leader-${leader.memberId}`}
+				/>
+			) : null;
 		});
 	};
 
@@ -56,14 +47,12 @@ export const TabLeaderboards = (): JSX.Element => {
 						{tiersData?.length ?? 'X'} possible marks:
 					</p>
 					<ul>
-						{tiersData
-							?.sort((tierA: Tier, tierB: Tier) => tierA?.score - tierB?.score)
-							.map((tier: Tier, tierIndex: number) => (
-								<li key={`tier-${tierIndex}`}>
-									<i className={tier?.icon} /> - worth {tier?.score} pts -{' '}
-									{tier?.description}{' '}
-								</li>
-							))}
+						{tiersData.map((tier: Tier) => (
+							<li key={`tier-${String(tier._id)}`}>
+								<i className={tier.icon} /> - worth {tier.score} pts -{' '}
+								{tier?.description}
+							</li>
+						))}
 					</ul>
 					<p>
 						Completing a game might mean earning its most demanding achievement,
@@ -76,11 +65,24 @@ export const TabLeaderboards = (): JSX.Element => {
 					</p>
 				</div>
 				<SearchBar />
-				{!ranking?.length && <Spinner />}
 			</Wrapper>
 			<WrapperRanking>
-				<RankingList>{ranking?.length && createRankingList()}</RankingList>
+				<RankingList>
+					{isLoading ? <Spinner /> : createRankingList()}
+				</RankingList>
 			</WrapperRanking>
 		</Flex>
 	);
 };
+
+const WrapperRanking = styled.div`
+	width: 100%;
+`;
+
+const RankingList = styled.ul`
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	width: 100%;
+`;

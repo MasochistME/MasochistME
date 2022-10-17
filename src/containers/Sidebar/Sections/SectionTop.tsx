@@ -1,9 +1,8 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { useMembers } from 'shared/hooks';
+import { useLeaderboards, useMembers } from 'sdk';
 import {
 	SmallMember,
 	EventLink,
@@ -11,31 +10,36 @@ import {
 	SectionTitle,
 } from 'containers/Sidebar/components';
 import { Spinner } from 'components';
-import { Member } from '@masochistme/sdk/dist/v1/types';
 
 export const SectionTop = (): JSX.Element => {
 	const history = useHistory();
 
 	const { membersData } = useMembers();
+	const { leaderboardsData, isFetched, isLoading } = useLeaderboards(10);
 
-	const members = useSelector((state: any) => {
-		const membersRating = state.ranking.slice(0, 10);
-		const membersFull = membersRating.map((user: any) => ({
-			...user,
-			name: membersData.find((m: Member) => m.steamId === user.id)?.name,
-		}));
-		return membersFull;
-	});
+	const leaderboards = leaderboardsData.map(leader => ({
+		position: leader.position,
+		memberId: leader.memberId,
+		sum: leader.sum,
+		name:
+			membersData.find(member => member.steamId === leader.memberId)?.name ??
+			'UNKNOWN',
+	}));
 
-	const userRow = (user: any, index: number) => {
-		const onUserClick = () => history.push(`/profile/${user.id}`);
+	const leaderboardRow = (leader: {
+		sum: number;
+		name: string;
+		memberId: string;
+		position: number;
+	}) => {
+		const onUserClick = () => history.push(`/profile/${leader.memberId}`);
 		return (
-			<SmallMember key={`sidebar-user-${index}`}>
-				<div>{index + 1}.</div>
+			<SmallMember key={`leaderboards-${leader.memberId}`}>
+				<div>{leader.position}.</div>
 				<EventLink onClick={onUserClick}>
-					<span className="bold">{user.name}</span>
+					<span className="bold">{leader.name}</span>
 				</EventLink>
-				<div>{user.points.sum} pts</div>
+				<div>{leader.sum} pts</div>
 			</SmallMember>
 		);
 	};
@@ -44,13 +48,8 @@ export const SectionTop = (): JSX.Element => {
 		<Section>
 			<SectionTitle>Top 10 users</SectionTitle>
 			<FlexColumn>
-				{members.length ? (
-					members.map((user: any, userIndex: number) =>
-						userRow(user, userIndex),
-					)
-				) : (
-					<Spinner />
-				)}
+				{isFetched && leaderboards?.map(leader => leaderboardRow(leader))}
+				{isLoading && <Spinner />}
 			</FlexColumn>
 		</Section>
 	);

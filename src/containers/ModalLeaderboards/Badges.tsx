@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Badge } from '@masochistme/sdk/dist/v1/types';
 
 import { Flex, Section } from 'components';
-import { useGameBadges } from 'shared/hooks';
+import { useGameBadges } from 'sdk';
 import { Description, Field, BadgeImg } from './components';
 
 type Props = {

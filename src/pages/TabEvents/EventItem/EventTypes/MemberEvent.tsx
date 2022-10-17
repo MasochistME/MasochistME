@@ -6,7 +6,7 @@ import {
 	Member,
 } from '@masochistme/sdk/dist/v1/types';
 
-import { useMembers } from 'shared/hooks';
+import { useMembers } from 'sdk';
 import logo from 'shared/images/logo.png';
 import {
 	EventDescription,

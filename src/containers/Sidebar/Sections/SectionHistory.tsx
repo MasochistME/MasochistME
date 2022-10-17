@@ -19,13 +19,7 @@ import {
 	Member,
 } from '@masochistme/sdk/dist/v1/types';
 
-import {
-	useBadges,
-	useEvents,
-	useTiers,
-	useMembers,
-	useGames,
-} from 'shared/hooks';
+import { useBadges, useEvents, useTiers, useMembers, useGames } from 'sdk';
 import { getTierIcon } from 'utils';
 import {
 	SmallEvent,
@@ -36,7 +30,7 @@ import {
 import { Spinner } from 'components';
 
 export const SectionHistory = (): JSX.Element => {
-	const { eventsData } = useEvents();
+	const { eventsData } = useEvents(10);
 	const {
 		getEventMemberJoin,
 		getEventMemberLeave,

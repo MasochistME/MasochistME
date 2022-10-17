@@ -3,10 +3,10 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Member } from '@masochistme/sdk/dist/v1/types';
 
-import { useActiveTab, useMembers } from 'shared/hooks';
+import { useMembers } from 'sdk';
 import { Flex, Wrapper, Spinner, Section, BigBadge } from 'components';
 import { Badges } from './styles';
-import { useUserDetails } from 'shared/hooks';
+import { useActiveTab, useUserDetails } from 'shared/hooks';
 
 import { FullProfile } from './FullProfile';
 import { ProfileHeader } from './ProfileHeader';

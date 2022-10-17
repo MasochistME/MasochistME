@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import { Event } from '@masochistme/sdk/dist/v1/types';
 
 import { Flex, Wrapper, Spinner } from 'components';
-import { useActiveTab, useEvents } from 'shared/hooks';
+import { useActiveTab } from 'shared/hooks';
+import { useEvents } from 'sdk';
 import { TabDict } from 'shared/config/tabs';
 
 import { eventsDict } from './eventsDict';

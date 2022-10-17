@@ -4,7 +4,8 @@ import { orderBy } from 'lodash';
 import { Badge, Game } from '@masochistme/sdk/dist/v1/types';
 
 import { Flex, Wrapper, Section, BigBadge } from 'components';
-import { useActiveTab, useBadges, useGames } from 'shared/hooks';
+import { useActiveTab } from 'shared/hooks';
+import { useBadges, useGames } from 'sdk';
 import { TabDict } from 'shared/config/tabs';
 
 import { Badges } from './styles';

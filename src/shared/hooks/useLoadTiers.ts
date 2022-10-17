@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useTiers } from 'shared/hooks/useSDK';
+import { useTiers } from 'sdk';
 import { useAppContext } from 'shared/store/context';
 
 export const useLoadTiers = () => {
