@@ -19,11 +19,13 @@ import { Badge, Sort, ResponseError } from 'v1/types';
  * ## Usage
  *
  * ```ts
- * const gameId: string = "21645";
+ * const gameId: number = 21645;
  * const badgesAll: Badge[] = await sdk.getBadgesByGameId({ gameId });
  * const badgePointsAsc: Badge[] = await sdk.getBadgesByGameId({ gameId, sort: { points: 'asc' }});
  * const badgesNonLegacy: Badge[] = await sdk.getBadgesByGameId({ gameId, filter: { isLegacy: false }});
  * ```
+ *
+ * // TODO currently this endpoint does not support non-Steam games as those don't have gameID.
  *
  * @param params.gameId - ID of the game which badges we want to retrieve.
  * @param params.filter - Filter to apply to returned badge list.
@@ -50,7 +52,7 @@ export const getBadgesByGameIdList = async (
 };
 
 export type BadgesByGameIdListParams = {
-	gameId: string;
+	gameId: number;
 	filter?: Partial<Pick<Badge, 'isEnabled' | 'isLegacy'>>;
 	sort?: {
 		[key in keyof Partial<Pick<Badge, 'points'>>]: Sort;
