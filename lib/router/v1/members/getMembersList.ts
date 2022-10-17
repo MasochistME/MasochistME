@@ -22,6 +22,7 @@ export const getMembersList = async (
     const cursor = collection
       .find(filter)
       .sort({
+        ...(sort.name && { name: sortCollection(sort.name) }),
         ...(sort.lastUpdated && {
           lastUpdated: sortCollection(sort.lastUpdated),
         }),

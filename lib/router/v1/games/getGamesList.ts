@@ -22,6 +22,7 @@ export const getGamesList = async (
     const cursor = collection
       .find(filter)
       .sort({
+        ...(sort.title && { title: sortCollection(sort.title) }),
         ...(sort.tier && { tier: sortCollection(sort.tier) }),
         ...(sort.achievementsTotal && {
           achievementsTotal: sortCollection(sort.achievementsTotal),
