@@ -1,10 +1,8 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { orderBy } from 'lodash';
 import { Game, Member, Tier } from '@masochistme/sdk/dist/v1/types';
 
 import { useTiers, useMembers, useGames } from 'sdk';
-import { useUserDetails } from 'shared/hooks';
 import { getGameThumbnail } from 'utils/getGameUrl';
 import { Spinner } from 'components';
 
@@ -19,8 +17,7 @@ type Props = {
 export const UserDetails = (props: Props): JSX.Element => {
 	const { steamId, isVisible } = props;
 
-	const userLoaded = useUserDetails(steamId);
-	const { membersData } = useMembers();
+	const { membersData, isFetched } = useMembers();
 	const { gamesData } = useGames();
 	const { tiersData } = useTiers();
 
@@ -61,7 +58,7 @@ export const UserDetails = (props: Props): JSX.Element => {
 		});
 	};
 
-	if (userLoaded)
+	if (isFetched)
 		return <Display isVisible={isVisible}>{composeGameList()}</Display>;
 	return <Spinner />;
 };

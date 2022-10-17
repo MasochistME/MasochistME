@@ -1,6 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import { Member } from '@masochistme/sdk/dist/v1/types';
+
 import { log } from 'utils';
 import { AppContext } from 'shared/store/context';
 import { Wrapper, Flex, Spinner, CustomButton } from 'components';
@@ -11,41 +13,45 @@ import {
 	Patron,
 	UpdateDate,
 	UpdateMsg,
-	InputDescription,
 } from './components';
 
 type Props = {
-	user: any;
+	member?: Member;
 	error: boolean;
 };
 
 export const ProfileHeader = (props: Props): JSX.Element => {
-	const { user } = props;
+	const { member } = props;
 	const { path } = useContext(AppContext);
+
 	const [updating, setUpdating] = useState(false);
 	const [message, setMessage] = useState('');
+
 	const description: string =
-		user?.description ?? 'Currently there is no info provided about this user.';
+		member?.description ??
+		'Currently there is no info provided about this user.';
 
 	const patron = useSelector((state: any) =>
 		state.patrons.find((tier: any) =>
-			tier.list.find((p: any) => user?.id === p.steamid)
+			tier.list.find((p: any) => member?.steamId === p.steamid)
 				? { tier: tier.tier, description: tier.description }
 				: false,
 		),
 	);
 
-	const sendUpdateRequest = (id: any) => {
+	const lastUpdated = 0; // TODO Get real last update date
+
+	const sendUpdateRequest = (steamId?: string) => {
+		if (!steamId) return;
+
 		setMessage('Updating... refresh in a few minutes');
 		setUpdating(true);
 
-		const url = `${path}/api/users/user/${id}/update`;
+		const url = `${path}/api/users/user/${steamId}/update`;
 		axios
 			.get(url)
-			.then((res: any) => {
-				if (res.data) {
-					setMessage(res.data);
-				}
+			.then(res => {
+				res.data && setMessage(res.data);
 			})
 			.catch(log.WARN);
 	};
@@ -58,11 +64,11 @@ export const ProfileHeader = (props: Props): JSX.Element => {
 				<Flex row align style={{ justifyContent: 'space-between' }}>
 					<h1 style={{ margin: '0' }}>
 						<a
-							href={`https://steamcommunity.com/profiles/${user?.id}`}
+							href={`https://steamcommunity.com/profiles/${member?.steamId}`}
 							target="_blank"
 							rel="noopener noreferrer">
 							<i className="fab fa-steam" style={{ marginRight: '10px' }} />
-							{user?.name ?? 'Loading...'}
+							{member?.name ?? 'Loading...'}
 						</a>
 					</h1>
 					{patron && (
@@ -78,16 +84,16 @@ export const ProfileHeader = (props: Props): JSX.Element => {
 				<UpdateDate>
 					{
 						<span>{`Last updated: ${
-							user?.updated
-								? new Date(user?.updated).toLocaleString()
+							member?.lastUpdated
+								? new Date(member?.lastUpdated).toLocaleString()
 								: 'Loading...'
 						}`}</span>
 					}
-					{Date.now() - user?.updated > 3600000 ? (
+					{Date.now() - lastUpdated > 3600000 ? (
 						updating ? (
 							<UpdateMsg>{message}</UpdateMsg>
 						) : (
-							<CustomButton onClick={() => sendUpdateRequest(user?.id)}>
+							<CustomButton onClick={() => sendUpdateRequest(member?.steamId)}>
 								Update
 							</CustomButton>
 						)
@@ -95,16 +101,16 @@ export const ProfileHeader = (props: Props): JSX.Element => {
 						<button
 							className="custom-button button-blocked"
 							title={`${Number(
-								(3600000 - (Date.now() - user?.updated)) / 60000,
+								(3600000 - (Date.now() - lastUpdated)) / 60000,
 							)} minutes till you can update again`}>
 							Update
 						</button>
 					)}
 				</UpdateDate>
 				<Basic>
-					{user?.avatar ? (
+					{member?.avatar ? (
 						<Avatar
-							src={user?.avatar}
+							src={member?.avatar}
 							tier={Number(patron?.tier)}
 							alt="avatar"
 						/>

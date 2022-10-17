@@ -2,7 +2,7 @@ import React from 'react';
 import { orderBy } from 'lodash';
 import styled from 'styled-components';
 import moment from 'moment';
-import { Tier, Game } from '@masochistme/sdk/dist/v1/types';
+import { Tier, Game, Member } from '@masochistme/sdk/dist/v1/types';
 
 import { DoughnutChart, LineChart, ChartWrapper } from 'containers';
 import { log } from 'utils';
@@ -18,11 +18,11 @@ const GraphsWrapper = styled.div`
 `;
 
 type Props = {
-	user: any;
+	member: Member;
 };
 
 export const ProfileGraphs = (props: Props): JSX.Element => {
-	const { user } = props;
+	const { member } = props;
 	const { tiersData: tiers } = useTiers();
 	const { gamesData: games } = useGames();
 
@@ -30,33 +30,45 @@ export const ProfileGraphs = (props: Props): JSX.Element => {
 		<GraphsWrapper>
 			<ChartWrapper title="HOURS PLAYED (TOTAL)">
 				<DoughnutChart
-					labels={summarizeTotalTimes('label', 'total', tiers, user, games)}
-					dataset={summarizeTotalTimes('sum', 'total', tiers, user, games)}
+					labels={summarizeTotalTimes('label', 'total', tiers, member, games)}
+					dataset={summarizeTotalTimes('sum', 'total', tiers, member, games)}
 				/>
 			</ChartWrapper>
 			<ChartWrapper title="HOURS PLAYED (COMPLETED)">
 				<DoughnutChart
-					labels={summarizeTotalTimes('label', 'completed', tiers, user, games)}
-					dataset={summarizeTotalTimes('sum', 'completed', tiers, user, games)}
+					labels={summarizeTotalTimes(
+						'label',
+						'completed',
+						tiers,
+						member,
+						games,
+					)}
+					dataset={summarizeTotalTimes(
+						'sum',
+						'completed',
+						tiers,
+						member,
+						games,
+					)}
 				/>
 			</ChartWrapper>
 			<ChartWrapper title="GAMES COMPLETED">
 				<DoughnutChart
-					labels={summarizeTotalGames('label', tiers, user, games)}
-					dataset={summarizeTotalGames('sum', tiers, user, games)}
+					labels={summarizeTotalGames('label', tiers, member, games)}
+					dataset={summarizeTotalGames('sum', tiers, member, games)}
 				/>
 			</ChartWrapper>
 			<ChartWrapper title="COMPLETION TIMELINE" width="100%">
 				<LineChart
-					labels={getTimelines('label', tiers, user, games)}
+					labels={getTimelines('label', tiers, member, games)}
 					datasets={[
 						{
 							label: 'games',
-							data: getTimelines('games', tiers, user, games),
+							data: getTimelines('games', tiers, member, games),
 						},
 						{
 							label: 'points',
-							data: getTimelines('points', tiers, user, games),
+							data: getTimelines('points', tiers, member, games),
 						},
 					]}
 				/>
@@ -72,12 +84,13 @@ const summarizeTotalTimes = (
 	type: string,
 	scope: string,
 	tiers: Tier[],
-	user: any,
+	_member: Member,
 	games: Game[],
 ) => {
 	const data: Rating[] = [];
 
-	let userGames = user?.games;
+	// let memberGames = member?.games;
+	let memberGames: any[] = []; // TODO Replace with real member games data
 
 	tiers.map((tier: Tier) =>
 		data.push({
@@ -88,10 +101,10 @@ const summarizeTotalTimes = (
 	);
 
 	if (scope === 'completed') {
-		userGames = userGames.filter((game: any) => game.percentage === 100);
+		memberGames = memberGames.filter((game: any) => game.percentage === 100);
 	}
 
-	userGames
+	memberGames
 		.filter((game: any) => games.find((g: Game) => g.id === game.id))
 		.map((game: any) => {
 			game = {
@@ -114,7 +127,7 @@ const summarizeTotalTimes = (
 const getTimelines = (
 	type: string,
 	tiers: Tier[],
-	user: any,
+	_member: Member,
 	games: Game[],
 ) => {
 	let data = [];
@@ -123,14 +136,15 @@ const getTimelines = (
 	let startDate = 0;
 	let endDate = 0;
 
-	let timelines = user?.games.filter((game: any) => game.percentage === 100);
+	// let timelines = member?.games.filter((game: any) => game.percentage === 100);
+	let timelines: any[] = []; // TODO Replace with real timelines data
 	timelines = orderBy(timelines, ['lastUnlocked'], ['asc']);
 
 	// @ts-ignore
-	startDate = moment(new Date(timelines[0].lastUnlocked * 1000));
+	startDate = moment(new Date(timelines[0]?.lastUnlocked * 1000));
 	// @ts-ignore
 	endDate = moment(
-		new Date(timelines[timelines.length - 1].lastUnlocked * 1000),
+		new Date(timelines[timelines.length - 1]?.lastUnlocked * 1000),
 	);
 
 	// @ts-ignore
@@ -186,10 +200,12 @@ const getTimelines = (
 const summarizeTotalGames = (
 	type: string,
 	tiers: Tier[],
-	user: any,
+	_member: Member,
 	games: Game[],
 ) => {
 	const data: any = [];
+	const memberGames: any[] = []; // TODO Replace with real member games data
+	// const memberGames = member?.games ?? [];
 
 	tiers.map((tier: Tier) =>
 		data.push({
@@ -199,7 +215,7 @@ const summarizeTotalGames = (
 		}),
 	);
 
-	user?.games
+	memberGames
 		.filter(
 			(game: any) =>
 				game.percentage === 100 &&

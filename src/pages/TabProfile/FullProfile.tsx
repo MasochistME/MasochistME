@@ -1,39 +1,61 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { orderBy } from 'lodash';
-import { Badge, Game } from '@masochistme/sdk/dist/v1/types';
+import { Badge, Game, Member } from '@masochistme/sdk/dist/v1/types';
 
 import { Flex, Wrapper, Section, BigBadge } from 'components';
 import { useActiveTab } from 'shared/hooks';
-import { useBadges, useGames } from 'sdk';
+import {
+	useBadges,
+	useGames,
+	useMemberBadges,
+	useMemberLeaderboards,
+} from 'sdk';
 import { TabDict } from 'shared/config/tabs';
 
 import { Badges } from './styles';
 import { ProfileGraphs } from './ProfileGraphs';
 
 type Props = {
-	user: any;
+	member: Member;
 };
 
 export const FullProfile = (props: Props): JSX.Element => {
-	const { user } = props;
+	const { member } = props;
 	const history = useHistory();
 
 	useActiveTab(TabDict.PROFILE);
 
 	const { badgesData } = useBadges();
 	const { gamesData: games } = useGames();
-
-	const badges = getUserBadges(badgesData, games, user);
+	const { leaderData } = useMemberLeaderboards(member.steamId);
+	const { memberBadgeData = [] } = useMemberBadges(member.steamId);
 
 	const onBadgeClick = (gameId: number | null) => {
 		if (gameId) history.push(`/game/${gameId}`);
 	};
 
+	const memberBadges = badgesData.map((badge: Badge) => {
+		const game = games.find((g: Game) => g.id === badge.gameId);
+		return (
+			<BigBadge
+				src={badge.img}
+				alt="badge"
+				title={`${
+					badge?.title && badge.title !== 'unknown'
+						? badge?.title.toUpperCase()
+						: game?.title.toUpperCase()
+				} - ${badge.name} (${badge.points} pts)\n"${badge.description}"`}
+				key={`member-badge-${String(badge._id)}`}
+				onClick={() => onBadgeClick(badge.gameId)}
+			/>
+		);
+	});
+
 	return (
 		<Flex column>
 			<Wrapper type="page">
-				{badges?.length ? (
+				{memberBadgeData.length !== 0 && (
 					<Badges>
 						<Section style={{ width: '100%' }}>
 							<h3>Badges</h3>
@@ -44,65 +66,13 @@ export const FullProfile = (props: Props): JSX.Element => {
 									display: 'flex',
 									flexFlow: 'row wrap',
 								}}>
-								{badges.map((badge: Badge, index: number) => {
-									const game = games.find(
-										(g: any) => Number(g.id) === Number(badge.gameId),
-									);
-									return (
-										<BigBadge
-											src={badge.img}
-											alt="badge"
-											title={`${
-												badge?.title && badge.title !== 'unknown'
-													? badge?.title.toUpperCase()
-													: game?.title.toUpperCase()
-											} - ${badge.name} (${badge.points} pts)\n"${
-												badge.description
-											}"`}
-											key={`badge-${index}`}
-											onClick={() => onBadgeClick(badge.gameId)}
-										/>
-									);
-								})}
+								{memberBadges}
 							</Flex>
 						</Section>
 					</Badges>
-				) : null}
-				{!isNaN(user?.points?.sum) && user?.points?.sum !== 0 ? (
-					<ProfileGraphs user={user} />
-				) : null}
+				)}
+				{leaderData?.sum && <ProfileGraphs member={member} />}
 			</Wrapper>
 		</Flex>
 	);
-};
-
-const getUserBadges = (badges: Badge[], games: Game[], user: any): Badge[] => {
-	const userBadges = badges
-		.filter(
-			(badge: Badge) =>
-				user?.badges &&
-				user.badges.find((b: any) => b.id === String(badge._id)),
-		)
-		.map((badge: Badge) => {
-			const getGame = () => {
-				if (badge.isSteamGame)
-					return (
-						games.find((game: Game) => game.id === badge.gameId)?.title ??
-						'unknown'
-					);
-				else return badge.title;
-			};
-			const points = badge.points;
-			return {
-				...badge,
-				points,
-				game: getGame(),
-			};
-		});
-	const orderedUserBadges = orderBy(
-		userBadges,
-		[badge => badge.points],
-		['desc'],
-	);
-	return orderedUserBadges;
 };

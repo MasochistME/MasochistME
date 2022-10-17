@@ -1,12 +1,10 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Member } from '@masochistme/sdk/dist/v1/types';
 
 import { useMembers } from 'sdk';
-import { Flex, Wrapper, Spinner, Section, BigBadge } from 'components';
-import { Badges } from './styles';
-import { useActiveTab, useUserDetails } from 'shared/hooks';
+import { Flex, Wrapper, Spinner } from 'components';
+import { useActiveTab } from 'shared/hooks';
 
 import { FullProfile } from './FullProfile';
 import { ProfileHeader } from './ProfileHeader';
@@ -16,54 +14,27 @@ export const TabProfile = (): JSX.Element => {
 	useActiveTab(TabDict.PROFILE);
 
 	const { id } = useParams<{ id: string }>();
-	const { isUserLoaded } = useUserDetails(id);
-	const { membersData } = useMembers();
+	const { membersData, isLoading, isError, isFetched } = useMembers();
 
-	const memberBasic = membersData.find((m: Member) => m.steamId === id);
+	const member = membersData.find((m: Member) => m.steamId === id);
 
-	const user = useSelector((state: any) => {
-		if (!isUserLoaded) {
-			return;
-		}
-		const userDetails = state.users.details.find((user: any) => user.id === id);
-		const userRanking = state.ranking.find(
-			(user: any) => user.id === id,
-		)?.points;
-		return {
-			...memberBasic,
-			...userDetails,
-			points: userRanking,
-		};
-	});
-
-	const isUserLoading = !isUserLoaded;
-	const isUserPrivate = user?.private;
-	const isUserError = user?.error;
-	const isUserNotAMember =
-		!isUserPrivate && !isUserError && user && !user.member && !user.protected;
-	const showUserProfile =
-		!isUserLoading && !isUserPrivate && !isUserError && !isUserNotAMember;
+	const isUserPrivate = member?.isPrivate;
+	const isUserNotAMember = member && !member.isMember && !member.isProtected;
 
 	return (
 		<Flex column>
-			{!isUserError && <ProfileHeader user={memberBasic} error={isUserError} />}
-			{isUserLoading && <Spinner />}
+			{!isError && <ProfileHeader member={member} error={false} />}
+			{isLoading && <Spinner />}
 			{isUserPrivate && (
 				<ProfileWarning description="This user has their profile set to private." />
 			)}
 			{isUserNotAMember && (
 				<ProfileWarning description="This user is no longer a member of the curator." />
 			)}
-			{isUserError && (
-				<ProfileWarning
-					description={
-						user.error === 404
-							? `User with id ${id} does not exist.`
-							: 'We could not contact the server. Please try again later.'
-					}
-				/>
+			{isError && (
+				<ProfileWarning description={`User with id ${id} does not exist.`} />
 			)}
-			{showUserProfile && <FullProfile user={user} />}
+			{isFetched && member && <FullProfile member={member} />}
 		</Flex>
 	);
 };
@@ -80,7 +51,3 @@ const ProfileWarning = (props: ProfileWarningProps): JSX.Element => {
 		</Wrapper>
 	);
 };
-
-TabProfile.Badges = Badges;
-TabProfile.Badge = BigBadge;
-TabProfile.Section = Section;
