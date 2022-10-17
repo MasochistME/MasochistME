@@ -8,8 +8,8 @@ import { Flex, Wrapper, Spinner, Section, BigBadge } from 'components';
 import { Badges } from './styles';
 import { useUserDetails } from 'shared/hooks';
 
-import FullProfile from './FullProfile';
-import ProfileHeader from './ProfileHeader';
+import { FullProfile } from './FullProfile';
+import { ProfileHeader } from './ProfileHeader';
 import { TabDict } from 'shared/config/tabs';
 
 export const TabProfile = (): JSX.Element => {

@@ -1,10 +1,14 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { EventGameAdd, EventGameRemove } from '@masochistme/sdk/dist/v1/types';
+import {
+	Game,
+	Tier,
+	EventGameAdd,
+	EventGameRemove,
+} from '@masochistme/sdk/dist/v1/types';
 
 import logo from 'shared/images/logo.png';
-import { useTiers } from 'shared/hooks';
+import { useGames, useTiers } from 'shared/hooks';
 import {
 	EventDescription,
 	EventSummary,
@@ -12,6 +16,7 @@ import {
 	EventImg,
 	EventLink,
 } from './components';
+import { getGameThumbnail } from 'utils';
 
 type Props = {
 	event: EventGameAdd | EventGameRemove;
@@ -21,13 +26,13 @@ type Props = {
 export const GameEvent = (props: Props): JSX.Element | null => {
 	const { event, action } = props;
 	const history = useHistory();
-	const { tiersData } = useTiers();
-	const games = useSelector((state: any) => state.games.list);
 
-	const game = games.find((g: any) => Number(g.id) === Number(event.gameId));
-	const gameRating = tiersData.find((r: any) =>
-		game ? Number(r.id) === Number(game.rating) : null,
-	);
+	const { tiersData } = useTiers();
+	const { gamesData: games } = useGames();
+
+	const game = games.find((g: Game) => g.id === event.gameId);
+	const gameRating = tiersData.find((tier: Tier) => tier.id === game?.tier);
+	const gameImg = getGameThumbnail(game?.id);
 
 	const onGameClick = () =>
 		action === 'added' && game?.id && history.push(`/game/${game.id}`);
@@ -47,7 +52,7 @@ export const GameEvent = (props: Props): JSX.Element | null => {
 			) : (
 				<EventDescription>
 					<EventLink className="bold" onClick={onGameClick}>
-						{game ? game.title : `Game ${event.gameId}`}
+						Game {event.gameId}
 					</EventLink>{' '}
 					(no longer curated) has been{' '}
 					{action === 'added' ? 'curated!' : 'removed from curator!'}
@@ -65,7 +70,7 @@ export const GameEvent = (props: Props): JSX.Element | null => {
 					className={
 						gameRating ? gameRating.icon : 'far fa-question-circle'
 					}></i>
-				<EventImg alt="game-img" src={game ? game.img : logo} />
+				<EventImg alt="game-img" src={gameImg} />
 			</EventSummary>
 		</EventInfo>
 	);

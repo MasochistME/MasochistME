@@ -1,28 +1,28 @@
 import React from 'react';
 import { orderBy } from 'lodash';
-import { useSelector } from 'react-redux';
+import { Badge, Game } from '@masochistme/sdk/dist/v1/types';
 
-import { Badge } from '@masochistme/sdk/dist/v1/types';
-import { useActiveTab, useBadges } from 'shared/hooks';
-import { Wrapper, Flex } from 'components';
+import { useActiveTab, useBadges, useGames } from 'shared/hooks';
 import { TabDict } from 'shared/config/tabs';
+import { Wrapper, Flex } from 'components';
 
 export const TabBadges = (): JSX.Element => {
 	useActiveTab(TabDict.BADGES);
 
-	const games = useSelector((state: any) => state.games.list);
+	const { gamesData: games } = useGames();
 	const { badgesData } = useBadges();
+
 	const badges = orderBy(
-		badgesData.map(
-			(badge: Badge) =>
-				(badge = {
-					...badge,
-					title: badge.isSteamGame
-						? badge.title
-						: games.find((game: any) => game.id === badge.gameId)?.title ??
-						  'unknown',
-				}),
-		),
+		badgesData.map((badge: Badge) => {
+			const gameTitle = badge.isSteamGame
+				? games.find((game: Game) => game.id === badge.gameId)?.title ??
+				  'unknown'
+				: badge.title;
+			return {
+				...badge,
+				gameTitle,
+			};
+		}),
 		['gameId'],
 		['desc'],
 	);
@@ -36,15 +36,15 @@ export const TabBadges = (): JSX.Element => {
 				</div>
 			</Wrapper>
 			<Wrapper type="page">
-				{badges.map((badge: Badge, index) => (
+				{badges.map(badge => (
 					<img
 						className="profile-badge"
 						src={badge.img}
 						alt="badge"
-						title={`${badge.title?.toUpperCase()} - ${badge.name} (${
+						title={`${badge.gameTitle?.toUpperCase()} - ${badge.name} (${
 							badge.points
 						} pts)\n"${badge.description}"`}
-						key={`badge-${index}`}
+						key={`badge-${String(badge._id)}`}
 					/>
 				))}
 			</Wrapper>

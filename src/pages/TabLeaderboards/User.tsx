@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { SlideDown } from 'react-slidedown';
 import styled from 'styled-components';
-import UserSummary from './UserSummary';
-import UserDetails from './UserDetails';
+
+import { UserSummary } from './UserSummary';
+import { UserDetails } from './UserDetails';
 
 import 'react-slidedown/lib/slidedown.css';
 
@@ -17,24 +18,24 @@ const StyledUser = styled.li`
 	justify-content: space-between;
 `;
 
-type TUser = {
-	id: any;
+type Props = {
+	steamId: any;
 	position: number;
 };
-export default function User(props: TUser): JSX.Element {
-	const { id, position } = props;
+export const User = (props: Props): JSX.Element => {
+	const { steamId, position } = props;
 	const [show, setShow] = useState(false);
 
 	const changeDetailsVisibility = (): any => setShow(!show);
 
 	const details = show ? (
-		<UserDetails key={`details-${id}`} id={id} show={show} />
+		<UserDetails key={`details-${steamId}`} steamId={steamId} show={show} />
 	) : null;
 
 	return (
 		<StyledUser>
 			<UserSummary
-				id={id}
+				steamId={steamId}
 				position={position}
 				onShowDetails={changeDetailsVisibility}
 			/>
@@ -44,4 +45,4 @@ export default function User(props: TUser): JSX.Element {
 			</SlideDown>
 		</StyledUser>
 	);
-}
+};

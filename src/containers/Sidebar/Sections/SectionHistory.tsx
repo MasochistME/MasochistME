@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { orderBy } from 'lodash';
 import {
@@ -16,11 +15,18 @@ import {
 	EventMemberJoin,
 	EventMemberLeave,
 	EventType,
+	Game,
 	Member,
 } from '@masochistme/sdk/dist/v1/types';
 
-import { useBadges, useEvents, useTiers, useMembers } from 'shared/hooks';
-import { getTierIcon } from 'shared/helpers';
+import {
+	useBadges,
+	useEvents,
+	useTiers,
+	useMembers,
+	useGames,
+} from 'shared/hooks';
+import { getTierIcon } from 'utils';
 import {
 	SmallEvent,
 	Section,
@@ -102,14 +108,12 @@ export const SectionHistory = (): JSX.Element => {
 const useEventComponents = () => {
 	const history = useHistory();
 
-	const games = useSelector((state: any) => state.games.list);
-	const { membersData } = useMembers();
-	const { badgesData } = useBadges();
+	const { gamesData: games } = useGames();
+	const { membersData: members } = useMembers();
+	const { badgesData: badges } = useBadges();
 
 	const getEventMemberJoin = (event: EventMemberJoin) => {
-		const member = membersData.find(
-			(m: Member) => m.steamId === event.memberId,
-		);
+		const member = members.find((m: Member) => m.steamId === event.memberId);
 		const onUserClick = () =>
 			member?.steamId && history.push(`/profile/${member.steamId}`);
 
@@ -126,9 +130,7 @@ const useEventComponents = () => {
 	};
 
 	const getEventMemberLeave = (event: EventMemberLeave) => {
-		const member = membersData.find(
-			(m: Member) => m.steamId === event.memberId,
-		);
+		const member = members.find((m: Member) => m.steamId === event.memberId);
 		const onUserClick = () =>
 			member?.steamId && history.push(`/profile/${member.steamId}`);
 
@@ -145,7 +147,7 @@ const useEventComponents = () => {
 	};
 
 	const getEventGameAdd = (event: EventGameAdd) => {
-		const game = games.find((g: any) => Number(g.id) === Number(event.gameId));
+		const game = games.find((g: Game) => g.id === Number(event.gameId));
 		const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
 
 		return game ? (
@@ -161,7 +163,7 @@ const useEventComponents = () => {
 	};
 
 	const getEventGameRemove = (event: EventGameRemove) => {
-		const game = games.find((g: any) => Number(g.id) === Number(event.gameId));
+		const game = games.find((g: Game) => g.id === Number(event.gameId));
 
 		return game ? (
 			<SmallEvent key={`sidebar-event-${event._id}`}>
@@ -173,10 +175,9 @@ const useEventComponents = () => {
 	};
 
 	const getEventComplete = (event: EventComplete) => {
-		const member = membersData.find(
-			(m: Member) => m.steamId === event.memberId,
-		);
-		const game = games.find((g: any) => Number(g.id) === Number(event.gameId));
+		const member = members.find((m: Member) => m.steamId === event.memberId);
+		const game = games.find((g: Game) => g.id === Number(event.gameId));
+
 		const onUserClick = () =>
 			member?.steamId && history.push(`/profile/${member.steamId}`);
 		const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
@@ -199,7 +200,8 @@ const useEventComponents = () => {
 
 	const getEventGameTierChange = (event: EventGameTierChange) => {
 		const { tiersData } = useTiers();
-		const game = games.find((g: any) => Number(g.id) === Number(event.gameId));
+		const game = games.find((g: Game) => g.id === Number(event.gameId));
+
 		const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
 
 		return game ? (
@@ -209,17 +211,15 @@ const useEventComponents = () => {
 					{' '}
 					{game.title}
 				</EventLink>{' '}
-				changed its tier to{' '}
-				<i className={getTierIcon(game.rating, tiersData)} />!
+				changed its tier to <i className={getTierIcon(game.tier, tiersData)} />!
 			</SmallEvent>
 		) : null;
 	};
 
 	const getEventBadgeCreate = (event: EventBadgeCreate) => {
-		const game = games.find((g: any) => Number(g.id) === Number(event.gameId));
-		const badge = badgesData.find(
-			(b: Badge) => String(b._id) === event.badgeId,
-		);
+		const game = games.find((g: Game) => g.id === Number(event.gameId));
+		const badge = badges.find((b: Badge) => String(b._id) === event.badgeId);
+
 		const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
 
 		return badge && game ? (
@@ -235,12 +235,9 @@ const useEventComponents = () => {
 	};
 
 	const getEventBadgeGiven = (event: EventBadgeGet) => {
-		const badge = badgesData.find(
-			(b: Badge) => String(b._id) === event.badgeId,
-		);
-		const member = membersData.find(
-			(m: Member) => m.steamId === event.memberId,
-		);
+		const badge = badges.find((b: Badge) => String(b._id) === event.badgeId);
+		const member = members.find((m: Member) => m.steamId === event.memberId);
+
 		const onUserClick = () =>
 			member?.steamId && history.push(`/profile/${member.steamId}`);
 
@@ -259,7 +256,7 @@ const useEventComponents = () => {
 	const getEventGameAchievementNumberChange = (
 		event: EventAchievementNumberChange,
 	) => {
-		const game = games.find((g: any) => Number(g.id) === Number(event.gameId));
+		const game = games.find((g: Game) => g.id === Number(event.gameId));
 		const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
 
 		return game ? (

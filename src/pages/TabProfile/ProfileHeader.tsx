@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-import { log } from 'shared/helpers';
+import { log } from 'utils';
 import { AppContext } from 'shared/store/context';
 import { Wrapper, Flex, Spinner, CustomButton } from 'components';
 import {
@@ -14,20 +14,12 @@ import {
 	InputDescription,
 } from './components';
 
-ProfileHeader.Avatar = Avatar;
-ProfileHeader.EmptyAvatar = EmptyAvatar;
-ProfileHeader.Basic = Basic;
-ProfileHeader.Patron = Patron;
-ProfileHeader.UpdateDate = UpdateDate;
-ProfileHeader.UpdateMsg = UpdateMsg;
-ProfileHeader.InputDescription = InputDescription;
-
 type Props = {
 	user: any;
 	error: boolean;
 };
 
-export default function ProfileHeader(props: Props): JSX.Element {
+export const ProfileHeader = (props: Props): JSX.Element => {
 	const { user } = props;
 	const { path } = useContext(AppContext);
 	const [updating, setUpdating] = useState(false);
@@ -73,19 +65,17 @@ export default function ProfileHeader(props: Props): JSX.Element {
 							{user?.name ?? 'Loading...'}
 						</a>
 					</h1>
-					{patron ? (
-						<ProfileHeader.Patron
+					{patron && (
+						<Patron
 							title={`This user is a tier ${
 								patron?.description?.toUpperCase() ?? 'Loading...'
 							} supporter`}>
 							<i className="fas fa-medal" />{' '}
 							{patron?.description?.toUpperCase() ?? 'Loading...'}{' '}
-						</ProfileHeader.Patron>
-					) : (
-						''
+						</Patron>
 					)}
 				</Flex>
-				<ProfileHeader.UpdateDate>
+				<UpdateDate>
 					{
 						<span>{`Last updated: ${
 							user?.updated
@@ -95,7 +85,7 @@ export default function ProfileHeader(props: Props): JSX.Element {
 					}
 					{Date.now() - user?.updated > 3600000 ? (
 						updating ? (
-							<ProfileHeader.UpdateMsg>{message}</ProfileHeader.UpdateMsg>
+							<UpdateMsg>{message}</UpdateMsg>
 						) : (
 							<CustomButton onClick={() => sendUpdateRequest(user?.id)}>
 								Update
@@ -110,22 +100,22 @@ export default function ProfileHeader(props: Props): JSX.Element {
 							Update
 						</button>
 					)}
-				</ProfileHeader.UpdateDate>
-				<ProfileHeader.Basic>
+				</UpdateDate>
+				<Basic>
 					{user?.avatar ? (
-						<ProfileHeader.Avatar
+						<Avatar
 							src={user?.avatar}
 							tier={Number(patron?.tier)}
 							alt="avatar"
 						/>
 					) : (
-						<ProfileHeader.EmptyAvatar>
+						<EmptyAvatar>
 							<Spinner />
-						</ProfileHeader.EmptyAvatar>
+						</EmptyAvatar>
 					)}
 					<div>{description}</div>
-				</ProfileHeader.Basic>
+				</Basic>
 			</div>
 		</Wrapper>
 	);
-}
+};

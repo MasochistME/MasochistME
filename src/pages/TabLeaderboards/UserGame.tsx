@@ -8,11 +8,11 @@ import { UserBadges } from 'containers';
 
 type TUserProps = {
 	game: any;
-	user: any;
+	member: any;
 };
 
 export const UserGame = (props: TUserProps): JSX.Element => {
-	const { game, user } = props;
+	const { game, member } = props;
 	const history = useHistory();
 	const percentage = isNaN(Math.floor(game.percentage))
 		? 0
@@ -21,12 +21,12 @@ export const UserGame = (props: TUserProps): JSX.Element => {
 	const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
 
 	return (
-		<UserGame.Game>
-			<UserGame.Times>
+		<StyledUserGame>
+			<StyledUserGameStats>
 				{game.percentage === 100 ? (
-					<UserGame.CompletionTimer>
+					<StyledUserGameCompletionTime>
 						{new Date(game.lastUnlocked * 1000).toLocaleString()}
-					</UserGame.CompletionTimer>
+					</StyledUserGameCompletionTime>
 				) : null}
 				<div style={{ display: 'none' }}>
 					{game.playtime
@@ -36,21 +36,23 @@ export const UserGame = (props: TUserProps): JSX.Element => {
 						: 0}{' '}
 					h
 				</div>
-			</UserGame.Times>
-			<UserGame.Logo src={game.img} alt="logo" />
-			<UserGame.Info>
+			</StyledUserGameStats>
+			<StyledUserGameThumbnail src={game.img} alt="Game thumbnail" />
+			<StyledUserGameInfo>
 				<Flex row>
 					<i className={game.rating} />
-					<UserGame.Title onClick={onGameClick}> {game.title}</UserGame.Title>
+					<StyledUserGameTitle onClick={onGameClick}>
+						{game.title}
+					</StyledUserGameTitle>
 				</Flex>
-			</UserGame.Info>
-			<UserGame.UserBadges game={game} user={user} />
-			<UserGame.ProgressBar percentage={percentage} />
-		</UserGame.Game>
+			</StyledUserGameInfo>
+			<UserBadges game={game} user={member} />
+			<ProgressBar percentage={percentage} />
+		</StyledUserGame>
 	);
 };
 
-const Game = styled.div`
+const StyledUserGame = styled.div`
 	display: flex;
 	flex-direction: row;
 	width: 100%;
@@ -66,7 +68,8 @@ const Game = styled.div`
 		border-bottom: none;
 	}
 `;
-const Logo = styled.img`
+
+const StyledUserGameThumbnail = styled.img`
 	margin: 0;
 	padding: 0;
 	min-height: 37px;
@@ -75,14 +78,16 @@ const Logo = styled.img`
 		display: none;
 	}
 `;
-const Info = styled.div`
+
+const StyledUserGameInfo = styled.div`
 	display: flex;
 	width: 100%;
 	align-items: center;
 	justify-content: space-between;
 	margin: 0 10px;
 `;
-const Times = styled.div`
+
+const StyledUserGameStats = styled.div`
 	display: flex;
 	flex-direction: column;
 	font-size: 0.7em;
@@ -92,23 +97,16 @@ const Times = styled.div`
 	min-width: 80px;
 	margin: 0 0 0 6px;
 `;
-const CompletionTimer = styled.div`
+
+const StyledUserGameCompletionTime = styled.div`
 	@media (max-width: ${media.tablets}) {
 		display: none;
 	}
 `;
-const Title = styled.div`
+
+const StyledUserGameTitle = styled.div`
 	margin-left: 5px;
 	&:hover {
 		color: ${colors.white};
 	}
 `;
-
-UserGame.Game = Game;
-UserGame.Logo = Logo;
-UserGame.Info = Info;
-UserGame.Times = Times;
-UserGame.Title = Title;
-UserGame.CompletionTimer = CompletionTimer;
-UserGame.ProgressBar = ProgressBar;
-UserGame.UserBadges = UserBadges;

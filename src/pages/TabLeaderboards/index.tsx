@@ -4,11 +4,12 @@ import styled from 'styled-components';
 import { Member, Tier } from '@masochistme/sdk/dist/v1/types';
 
 import { useAppContext } from 'shared/store/context';
+import { useActiveTab, useTiers, useMembers } from 'shared/hooks';
+import { TabDict } from 'shared/config/tabs';
 import { SearchBar } from 'containers';
 import { Flex, Wrapper, Spinner } from 'components';
-import { useActiveTab, useTiers, useMembers } from 'shared/hooks';
-import User from './User';
-import { TabDict } from 'shared/config/tabs';
+
+import { User } from './User';
 
 const WrapperRanking = styled.div`
 	width: 100%;
@@ -39,7 +40,7 @@ export const TabLeaderboards = (): JSX.Element => {
 				const isUserSearch =
 					memberName.toLowerCase().indexOf(queryMember.toLowerCase()) !== -1;
 				return isUserSearch ? (
-					<User id={user.id} position={position} key={`user-${user.id}`} />
+					<User steamId={user.id} position={position} key={`user-${user.id}`} />
 				) : null;
 			}
 		});

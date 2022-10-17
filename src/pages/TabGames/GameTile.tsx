@@ -1,27 +1,29 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 import Modal from 'react-modal';
 import styled from 'styled-components';
+import { Game } from '@masochistme/sdk/dist/v1/types';
 
-import { getTierIcon } from 'shared/helpers';
+import { getTierIcon, getGameThumbnail } from 'utils';
+import { useTiers, useGames } from 'shared/hooks';
 import { colors } from 'shared/theme';
 import { ModalLeaderboards } from 'containers';
 import { Img, Desc, Info, Title, Rating } from './styles';
+import { Spinner } from 'components';
 
 Modal.setAppElement('#root');
 
 type Props = {
-	id: any;
-	rating: any;
+	gameId: number;
 };
 
 export const GameTile = (props: Props): JSX.Element => {
-	const { id, rating } = props;
+	const { gameId } = props;
 	const [modalIsOpen, setModalIsOpen] = useState(false);
 
-	const game = useSelector((state: any) =>
-		state.games.list.find((g: any) => g.id === id),
-	);
+	const { tiersData } = useTiers();
+	const { gamesData } = useGames();
+
+	const game = gamesData.find((g: Game) => g.id === gameId);
 
 	const onExtend = (event: any) => {
 		event.cancelBubble = true;
@@ -29,50 +31,55 @@ export const GameTile = (props: Props): JSX.Element => {
 	};
 
 	return (
-		<StyledGame onClick={onExtend}>
-			<GameTile.Img
-				className={`rated-${game.rating}`}
-				extended={modalIsOpen}
-				src={game?.img}>
-				<GameTile.Info>
-					<GameTile.Rating>
-						<i
-							className={
-								game ? getTierIcon(game.rating, rating) : 'fas fa-spinner'
-							}></i>
-					</GameTile.Rating>
-					<GameTile.Title>{game.title}</GameTile.Title>
-					<GameTile.Desc>{game.desc}</GameTile.Desc>
-				</GameTile.Info>
-			</GameTile.Img>
-			{
-				// @ts-ignore
-				<Modal isOpen={modalIsOpen} style={{ ...modalStyle }}>
-					<ModalLeaderboards id={game.id} rating={game.rating} compact />
-				</Modal>
-			}
-		</StyledGame>
+		<StyledGameTile onClick={onExtend}>
+			{!game && <Spinner />}
+			{game && (
+				<>
+					<Img
+						className={`game-tier-${game.tier}`}
+						extended={modalIsOpen}
+						src={getGameThumbnail(game.id)}>
+						<Info>
+							<Rating>
+								<i
+									className={
+										game ? getTierIcon(game.tier, tiersData) : 'fas fa-spinner'
+									}></i>
+							</Rating>
+							<Title>{game.title}</Title>
+							<Desc>{game.description}</Desc>
+						</Info>
+					</Img>
+					{/* @ts-ignore */}
+					<Modal isOpen={modalIsOpen} style={{ ...modalStyle }}>
+						<ModalLeaderboards gameId={game.id} compact />
+					</Modal>
+				</>
+			)}
+		</StyledGameTile>
 	);
 };
 
-const StyledGame = styled.div.attrs(({ extended }: { extended?: boolean }) => {
-	const style = extended
-		? {
-				position: 'fixed',
-				top: 0,
-				left: 0,
-				zIndex: 1000,
-				width: '100vw',
-				height: '100vh',
-				display: 'flex',
-				flexDirection: 'column',
-				alignItems: 'center',
-				justifyContent: 'center',
-				backgroundColor: `${colors.newDark}dd`,
-		  }
-		: {};
-	return { style };
-})<{ extended?: boolean }>``;
+const StyledGameTile = styled.div.attrs(
+	({ extended }: { extended?: boolean }) => {
+		const style = extended
+			? {
+					position: 'fixed',
+					top: 0,
+					left: 0,
+					zIndex: 1000,
+					width: '100vw',
+					height: '100vh',
+					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'center',
+					justifyContent: 'center',
+					backgroundColor: `${colors.newDark}dd`,
+			  }
+			: {};
+		return { style };
+	},
+)<{ extended?: boolean }>``;
 
 const modalStyle = {
 	overlay: {
@@ -99,9 +106,3 @@ const modalStyle = {
 		alignItems: 'center',
 	},
 };
-
-GameTile.Img = Img;
-GameTile.Desc = Desc;
-GameTile.Info = Info;
-GameTile.Title = Title;
-GameTile.Rating = Rating;

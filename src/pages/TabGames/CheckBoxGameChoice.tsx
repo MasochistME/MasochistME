@@ -2,7 +2,7 @@ import React from 'react';
 import { TierId } from '@masochistme/sdk/dist/v1/types';
 
 import { useAppContext } from 'shared/store/context';
-import { getTierIcon } from 'shared/helpers';
+import { getTierIcon } from 'utils';
 import { useTiers } from 'shared/hooks';
 
 type Props = {

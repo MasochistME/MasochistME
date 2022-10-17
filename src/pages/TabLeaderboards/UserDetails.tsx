@@ -1,35 +1,33 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { orderBy } from 'lodash';
+import { Game, Member, Tier } from '@masochistme/sdk/dist/v1/types';
 
-import { useTiers, useUserDetails, useMembers } from 'shared/hooks';
+import { useTiers, useUserDetails, useMembers, useGames } from 'shared/hooks';
+import { getGameThumbnail } from 'utils/getGameUrl';
 import { Spinner } from 'components';
-import { Display, DetailsSummary, RatingScore } from './styles';
-import { UserGame } from './UserGame';
-import { Member, Tier } from '@masochistme/sdk/dist/v1/types';
 
-type TUserDetails = {
-	id: any;
+import { Display } from './components';
+import { UserGame } from './UserGame';
+
+type Props = {
+	steamId: any;
 	show: any;
 };
 
-UserDetails.Display = Display;
-UserDetails.DetailsSummary = DetailsSummary;
-UserDetails.RatingScore = RatingScore;
+export const UserDetails = (props: Props): JSX.Element => {
+	const { steamId, show } = props;
 
-export default function UserDetails(props: TUserDetails): JSX.Element {
-	const { id, show } = props;
-
-	const userLoaded = useUserDetails(id);
+	const userLoaded = useUserDetails(steamId);
 	const { membersData } = useMembers();
+	const { gamesData: games } = useGames();
 	const { tiersData } = useTiers();
 
-	const games = useSelector((state: any) => state.games.list);
 	const member = useSelector((state: any) => {
-		const memberBasic = membersData.find((m: Member) => m.steamId === id);
+		const memberBasic = membersData.find((m: Member) => m.steamId === steamId);
 		const memberGames =
-			state.users.details.find((user: any) => user.id === id)?.games ?? [];
-		const userRanking = state.ranking.find((user: any) => user.id === id);
+			state.users.details.find((user: any) => user.id === steamId)?.games ?? [];
+		const userRanking = state.ranking.find((user: any) => user.id === steamId);
 		return {
 			...memberBasic,
 			games: memberGames,
@@ -47,36 +45,28 @@ export default function UserDetails(props: TUserDetails): JSX.Element {
 			['desc', 'desc'],
 		);
 
-		return userGames.map(game => {
-			const gameDetails = games.find(
-				(g: any) => Number(g.id) === Number(game.id),
-			);
-			if (!gameDetails) {
+		return userGames.map(memberGame => {
+			const game = games.find((g: Game) => g.id === memberGame.id);
+			if (!game) {
 				// most likely non-steam game, or deleted one
 				return;
 			}
-			const ratingIcon = tiersData.find(
-				(tier: Tier) => tier.id === gameDetails.rating,
-			);
+			const ratingIcon = tiersData.find((tier: Tier) => tier.id === game.tier);
 			return (
 				<UserGame
-					key={`game-${game.id}`}
-					user={member}
+					key={`game-${memberGame.id}`}
+					member={member}
 					game={{
-						...game,
-						badges: gameDetails.badges,
-						title: gameDetails.title,
+						...memberGame,
+						title: game.title,
 						rating: ratingIcon ? ratingIcon.icon : 'fas fa-spinner',
-						img: gameDetails.img,
+						img: getGameThumbnail(game.id),
 					}}
 				/>
 			);
 		});
 	};
 
-	return userLoaded ? (
-		<UserDetails.Display show={show}>{composeGameList()}</UserDetails.Display>
-	) : (
-		<Spinner />
-	);
-}
+	if (userLoaded) return <Display show={show}>{composeGameList()}</Display>;
+	return <Spinner />;
+};

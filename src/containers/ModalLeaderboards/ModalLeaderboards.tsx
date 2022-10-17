@@ -1,40 +1,31 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { Game } from '@masochistme/sdk/dist/v1/types';
 
-import { useGameDetails } from 'shared/hooks';
 import { Flex, Spinner, CustomButton } from 'components';
-import { WrapperLeaderboards } from './styles';
+
+import { WrapperLeaderboards } from './components';
 import { List } from './List';
 import { Badges } from './Badges';
+import { useGames } from 'shared/hooks';
 
 type Props = {
-	id: any;
-	rating: any;
+	gameId: number;
 	compact?: boolean;
 };
 
 export const ModalLeaderboards = (props: Props): JSX.Element | null => {
-	const { id, compact } = props;
+	const { gameId, compact } = props;
 	const history = useHistory();
-	const loaded = useGameDetails(id);
-	const game = useSelector((state: any) => {
-		const gameBasic = state.games.list.find(
-			(g: any) => Number(g.id) === Number(id),
-		);
-		const gameDetails = state.games.details.find(
-			(g: any) => Number(g.id) === Number(id),
-		);
-		return {
-			...gameBasic,
-			...gameDetails,
-		};
-	});
+
+	const { gamesData, isFetched: isGameLoaded } = useGames();
+
+	const game = gamesData.find((g: Game) => g.id === gameId);
 
 	const onShowGame = (
 		event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
 	) => {
-		history.push(`/game/${id}`);
+		history.push(`/game/${gameId}`);
 		event.stopPropagation();
 	};
 
@@ -59,10 +50,10 @@ export const ModalLeaderboards = (props: Props): JSX.Element | null => {
 				</h2>
 				<CustomButton onClick={onShowGame}>Details</CustomButton>
 			</Flex>
-			{loaded && game ? (
+			{isGameLoaded && game ? (
 				<Flex column>
-					{game.badges?.length ? <Badges game={game} mini /> : null}
-					<ModalLeaderboards.List game={game} compact={compact} />
+					<Badges gameId={gameId} isCompact />
+					<List game={game} compact={compact} />
 				</Flex>
 			) : (
 				<Spinner />
@@ -70,5 +61,3 @@ export const ModalLeaderboards = (props: Props): JSX.Element | null => {
 		</WrapperLeaderboards>
 	);
 };
-
-ModalLeaderboards.List = List;

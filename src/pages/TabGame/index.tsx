@@ -1,32 +1,31 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { media } from 'shared/theme';
-import { useActiveTab, useGameDetails } from 'shared/hooks';
+import { useActiveTab, useGames, useGameBadges } from 'shared/hooks';
 import { Flex, Spinner, Wrapper, Section } from 'components';
 import { StackedBarChart, List, Badges } from 'containers';
 import GameHeader from './GameHeader';
 import { TabDict } from 'shared/config/tabs';
+import { Game } from '@masochistme/sdk/dist/v1/types';
 
 export const TabGame = (): JSX.Element => {
 	useActiveTab(TabDict.GAME);
 
 	const { id } = useParams<{ id: string }>();
-	const loaded = useGameDetails(id);
-	const game = useSelector((state: any) => {
-		const gameBasic = state.games.list.find(
-			(g: any) => Number(g.id) === Number(id),
-		);
-		const gameDetails = state.games.details.find(
-			(g: any) => Number(g.id) === Number(id),
-		);
-		return {
-			...gameBasic,
-			...gameDetails,
-		};
-	});
+	const gameId = Number(id);
+
+	const { gamesData, isFetched: loaded } = useGames();
+	const { gameBadgesData = [] } = useGameBadges(gameId);
+
+	const game = {
+		...gamesData.find((g: Game) => g.id === gameId),
+		badges: gameBadgesData,
+		completions: 'TODO!!!',
+		avgPlaytime: 'TODO!!!',
+		avgPlaytimeForTier: 'TODO!!!',
+	};
 
 	return (
 		<Flex column>
@@ -34,7 +33,7 @@ export const TabGame = (): JSX.Element => {
 			<Wrapper type="page">
 				{loaded && game ? (
 					<FlexibleFlex>
-						{game.badges?.length ? <Badges game={game} /> : null}
+						{game.badges?.length ? <Badges gameId={gameId} /> : null}
 						<FlexibleSection
 							style={{
 								height: '250px',
@@ -80,6 +79,7 @@ const FlexibleFlex = styled(Flex)`
 		flex-direction: column;
 	}
 `;
+
 const FlexibleSection = styled(Section)`
 	@media (min-width: ${media.smallNetbooks}) {
 		width: 100%;

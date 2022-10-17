@@ -3,22 +3,16 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 
 import {
-	CACHE_GAMES,
 	CACHE_USERS,
 	CACHE_BLOG,
 	CACHE_PATRONS,
 	CACHE_RANKING,
 	CACHE_STATUS,
 	CACHE_USER_DETAILS,
-	CACHE_GAME_DETAILS,
 } from './Cache';
 
 // STORES
 type TStore = {
-	games: {
-		list: any[];
-		details: any[];
-	};
 	users: {
 		list: any[];
 		details: any[];
@@ -39,10 +33,6 @@ type TStore = {
 };
 
 const defaultState: TStore = {
-	games: {
-		list: [],
-		details: [],
-	},
 	users: {
 		list: [],
 		details: [],
@@ -64,14 +54,6 @@ const defaultState: TStore = {
 
 const reducer = (state = defaultState, action: any) => {
 	switch (action.type) {
-		case CACHE_GAMES:
-			return {
-				...state,
-				games: {
-					...state.games,
-					list: action.data,
-				},
-			};
 		case CACHE_USERS:
 			return {
 				...state,
@@ -109,16 +91,6 @@ const reducer = (state = defaultState, action: any) => {
 				...state,
 				users: {
 					...state.users,
-					details,
-				},
-			};
-		}
-		case CACHE_GAME_DETAILS: {
-			const details: any[] = [...state.games.details, action.data];
-			return {
-				...state,
-				games: {
-					...state.games,
 					details,
 				},
 			};

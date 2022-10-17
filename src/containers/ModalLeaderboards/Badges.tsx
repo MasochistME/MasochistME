@@ -3,23 +3,37 @@ import styled from 'styled-components';
 import { Badge } from '@masochistme/sdk/dist/v1/types';
 
 import { Flex, Section } from 'components';
-import { useBadges } from 'shared/hooks';
-import { Description, Field, BadgeImg } from './styles';
+import { useGameBadges } from 'shared/hooks';
+import { Description, Field, BadgeImg } from './components';
 
-export const Badges = (props: { game: any; mini?: boolean }): JSX.Element => {
-	const { game, mini } = props;
-	const { badgesData } = useBadges();
-	const badges = badgesData.filter((badge: Badge) =>
-		game.badges.includes(badge['_id']),
+type Props = {
+	gameId: number;
+	isCompact?: boolean;
+};
+
+export const Badges = (props: Props): JSX.Element | null => {
+	const { gameId, isCompact = false } = props;
+
+	const { gameBadgesData: badges, isFetched: isBadgeListLoaded } =
+		useGameBadges(gameId);
+
+	if (!isBadgeListLoaded || !badges?.length) return null;
+
+	return isCompact ? (
+		<BadgesSizeCompact badges={badges} />
+	) : (
+		<BadgesSizeStandard badges={badges} />
 	);
+};
 
-	return mini ? (
+const BadgesSizeCompact = ({ badges }: { badges: Badge[] }) => {
+	return (
 		<StyledBadges>
-			<Badges.Section>
+			<Section>
 				<h3>Badges</h3>
 				<Flex row style={{ margin: '8px' }}>
 					{badges.map((badge: any, index: number) => (
-						<Badges.Img
+						<BadgeImg
 							style={{ margin: '5px 10px 5px 5px' }}
 							src={badge.img}
 							alt="badge"
@@ -28,11 +42,15 @@ export const Badges = (props: { game: any; mini?: boolean }): JSX.Element => {
 						/>
 					))}
 				</Flex>
-			</Badges.Section>
+			</Section>
 		</StyledBadges>
-	) : (
+	);
+};
+
+const BadgesSizeStandard = ({ badges }: { badges: Badge[] }) => {
+	return (
 		<StyledBadges>
-			<Badges.Section>
+			<Section>
 				<h3>Badges</h3>
 				<Flex
 					column
@@ -43,27 +61,27 @@ export const Badges = (props: { game: any; mini?: boolean }): JSX.Element => {
 						boxSizing: 'border-box',
 					}}>
 					{badges.map((badge: any, index: number) => (
-						<Badges.Description key={`badge-${index}`}>
+						<Description key={`badge-${index}`}>
 							<h4 style={{ margin: 0, textAlign: 'center' }}>
 								{badge.name?.toUpperCase()}
 							</h4>
 							<Flex row style={{ width: '100%' }}>
-								<Badges.Img
+								<BadgeImg
 									style={{ margin: '5px 10px 5px 5px' }}
 									src={badge.img}
 									alt="badge"
 									key={`badge-${index}`}
 								/>
 								<Flex column style={{ width: '100%' }}>
-									<Badges.Field>Points: {badge.points} pts</Badges.Field>
-									<Badges.Field>Proof: {badge.requirements}</Badges.Field>
-									<Badges.Field>Description: {badge.description}</Badges.Field>
+									<Field>Points: {badge.points} pts</Field>
+									<Field>Proof: {badge.requirements}</Field>
+									<Field>Description: {badge.description}</Field>
 								</Flex>
 							</Flex>
-						</Badges.Description>
+						</Description>
 					))}
 				</Flex>
-			</Badges.Section>
+			</Section>
 		</StyledBadges>
 	);
 };
@@ -71,8 +89,3 @@ export const Badges = (props: { game: any; mini?: boolean }): JSX.Element => {
 const StyledBadges = styled.div`
 	min-width: 400px;
 `;
-
-Badges.Img = BadgeImg;
-Badges.Field = Field;
-Badges.Section = Section;
-Badges.Description = Description;

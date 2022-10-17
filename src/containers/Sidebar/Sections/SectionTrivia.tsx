@@ -1,30 +1,28 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { Game, Tier } from '@masochistme/sdk/dist/v1/types';
 
-import { useTiers, useMembers } from 'shared/hooks';
+import { useTiers, useMembers, useGames } from 'shared/hooks';
 import { Spinner } from 'components';
 import { Section, SectionTitle } from 'containers/Sidebar/components';
 
 export const SectionTrivia = (): JSX.Element => {
 	const { tiersData } = useTiers();
 	const { membersData } = useMembers();
-	const games = useSelector((state: any) => state.games.list);
+	const { gamesData: games } = useGames();
 
 	const mapCurated = () => {
-		if (games && tiersData) {
-			return tiersData.map((tier: any, index: number) => {
-				return (
-					<li style={{ marginLeft: '30px' }} key={`${tier.score}-${index}`}>
-						<i className={tier.icon} />
-						<span className="bold">{` : ${
-							games.filter(
-								(game: any) => Number(game.rating) === Number(tier.id),
-							).length
-						}`}</span>
-					</li>
-				);
-			});
-		}
+		if (!games || !tiersData) return [];
+
+		return tiersData.map((tier: Tier) => (
+			<li
+				style={{ marginLeft: '30px' }}
+				key={`tier-${tier.score}-${String(tier._id)}`}>
+				<i className={tier.icon} />
+				<span className="bold">{` : ${
+					games.filter((game: Game) => game.tier === tier.id).length
+				}`}</span>
+			</li>
+		));
 	};
 
 	return (

@@ -1,11 +1,14 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
 	EventAchievementNumberChange,
 	Tier,
+	Game,
 } from '@masochistme/sdk/dist/v1/types';
 
+import logo from 'shared/images/logo.png';
+import { getGameThumbnail } from 'utils';
+import { useTiers, useGames } from 'shared/hooks';
 import {
 	EventDescription,
 	EventSummary,
@@ -13,8 +16,6 @@ import {
 	EventImg,
 	EventLink,
 } from './components';
-import logo from 'shared/images/logo.png';
-import { useTiers } from 'shared/hooks';
 
 type Props = {
 	event: EventAchievementNumberChange;
@@ -25,16 +26,20 @@ export const AchievementNumberChangeEvent = (
 ): JSX.Element | null => {
 	const { event } = props;
 	const history = useHistory();
+
 	const { tiersData } = useTiers();
-	const tier = tiersData.find((t: Tier) =>
-		game ? Number(t.id) === Number(game.rating) : null,
-	);
-	const games = useSelector((state: any) => state.games.list);
-	const game = games.find((g: any) => Number(g.id) === Number(event.gameId));
+	const { gamesData: games } = useGames();
 
-	const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
+	const game = games.find((g: Game) => g.id === event.gameId);
+	const tier = tiersData.find((t: Tier) => t.id === game?.tier);
+	const gameImg = getGameThumbnail(game?.id);
 
-	return game && tier ? (
+	const onGameClick = () => {
+		if (game?.id) history.push(`/game/${game.id}`);
+	};
+
+	if (!game || !tier) return null;
+	return (
 		<EventInfo>
 			<EventImg alt="game-img" src={logo} />
 			<EventDescription>
@@ -48,9 +53,9 @@ export const AchievementNumberChangeEvent = (
 			<EventSummary>
 				<i
 					className={game ? 'fas fa-tasks' : 'fas fa-exclamation-triangle'}></i>
-				<i className={tier ? tier.icon : 'far fa-question-circle'}></i>
-				<EventImg alt="game-img" src={game ? game.img : logo} />
+				<i className={tier?.icon ?? 'far fa-question-circle'}></i>
+				<EventImg alt="game-img" src={gameImg} />
 			</EventSummary>
 		</EventInfo>
-	) : null;
+	);
 };

@@ -11,7 +11,7 @@ import {
 	UserName,
 	UserTimes,
 	UserAvatar,
-} from './styles';
+} from './components';
 import { UserBadges } from './UserBadges';
 import { Member } from '@masochistme/sdk/dist/v1/types';
 
@@ -55,28 +55,22 @@ export const List = (props: Props): JSX.Element => {
 	return (
 		<LeaderboardsList>
 			{leaderboards.map((user: any, userIndex: number) => (
-				<List.User key={`leaderboards-user-${userIndex}`}>
-					{!compact && (
-						<List.UserTimes>{assignDateIfFinished(user)}</List.UserTimes>
-					)}
+				<User key={`leaderboards-user-${userIndex}`}>
+					{!compact && <UserTimes>{assignDateIfFinished(user)}</UserTimes>}
 					<UserAvatar
 						className="leaderboards-user-image"
 						alt="avatar"
 						src={user.avatar}
 					/>
-					<List.UserInfo>
-						<List.UserName>
+					<UserInfo>
+						<UserName>
 							{`${user.trophy ? user.trophy : ''}`}
-							<List.Link onClick={() => onUserClick(user?.id)}>
-								{user.name}
-							</List.Link>
-						</List.UserName>
-						<Flex>
-							{!compact && <List.UserBadges user={user} game={game} />}
-						</Flex>
-					</List.UserInfo>
-					<List.ProgressBar percentage={Math.floor(user.percentage)} />
-				</List.User>
+							<Link onClick={() => onUserClick(user?.id)}>{user.name}</Link>
+						</UserName>
+						<Flex>{!compact && <UserBadges user={user} game={game} />}</Flex>
+					</UserInfo>
+					<ProgressBar percentage={Math.floor(user.percentage)} />
+				</User>
 			))}
 		</LeaderboardsList>
 	);
@@ -89,12 +83,3 @@ const LeaderboardsList = styled.ul`
 	padding: 0;
 	box-sizing: border-box;
 `;
-
-List.User = User;
-List.Link = Link;
-List.UserInfo = UserInfo;
-List.UserName = UserName;
-List.UserTimes = UserTimes;
-List.UserAvatar = UserAvatar;
-List.UserBadges = UserBadges;
-List.ProgressBar = ProgressBar;

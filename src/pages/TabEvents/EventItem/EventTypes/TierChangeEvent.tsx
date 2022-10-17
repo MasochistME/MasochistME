@@ -1,11 +1,14 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { EventGameTierChange } from '@masochistme/sdk/dist/v1/types';
+import {
+	Game,
+	Tier,
+	EventGameTierChange,
+} from '@masochistme/sdk/dist/v1/types';
 
 import logo from 'shared/images/logo.png';
-import { useTiers } from 'shared/hooks';
-import { getTierIcon } from 'shared/helpers';
+import { useGames, useTiers } from 'shared/hooks';
+import { getGameThumbnail, getTierIcon } from 'utils';
 import {
 	EventDescription,
 	EventSummary,
@@ -19,48 +22,43 @@ type Props = { event: EventGameTierChange };
 export const TierChangeEvent = (props: Props): JSX.Element | null => {
 	const { event } = props;
 	const history = useHistory();
-	const { tiersData } = useTiers();
-	const games = useSelector((state: any) => state.games.list);
 
-	const game = games.find(
-		(g: any) => Number(g.id) === Number(props.event.gameId),
-	);
-	const gameRating = tiersData.find((r: any) =>
-		game ? Number(r.id) === Number(game.rating) : null,
-	);
-	const demoted = Number(props.event.oldTier) > Number(props.event.newTier);
+	const { tiersData } = useTiers();
+	const { gamesData } = useGames();
+
+	const game = gamesData.find((g: Game) => g.id === event.gameId);
+
+	if (!game) return null;
+
+	const gameRating = tiersData.find((tier: Tier) => tier.id === game?.tier);
+	const gameImg = getGameThumbnail(game.id);
+	const isDemoted = Number(event.oldTier) > Number(event.newTier);
 
 	const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
 
-	return game && gameRating ? (
+	return (
 		<EventInfo>
 			<EventImg alt="game-img" src={logo} />
 			<EventDescription>
 				<EventLink className="bold" onClick={onGameClick}>
-					{game ? game.title : '-'}
+					{game.title ?? '-'}
 				</EventLink>
-				{demoted ? ' demoted ' : ' promoted '}
+				{isDemoted ? ' demoted ' : ' promoted '}
 				from <i className={getTierIcon(event.oldTier, tiersData)}></i> to{' '}
 				<i className={getTierIcon(event.newTier, tiersData)}></i>!
 			</EventDescription>
 			<EventSummary>
-				{demoted ? (
-					<i
-						className={
-							game ? 'fas fa-caret-square-down' : 'fas fa-exclamation-triangle'
-						}></i>
+				{isDemoted ? (
+					<i className={'fas fa-caret-square-down'}></i>
 				) : (
-					<i
-						className={
-							game ? 'fas fa-caret-square-up' : 'fas fa-exclamation-triangle'
-						}></i>
+					<i className={'fas fa-caret-square-up'}></i>
 				)}
 				<i
 					className={
 						gameRating ? gameRating.icon : 'far fa-question-circle'
 					}></i>
-				<EventImg alt="game-img" src={game ? game.img : logo} />
+				<EventImg alt="game-img" src={gameImg} />
 			</EventSummary>
 		</EventInfo>
-	) : null;
+	);
 };

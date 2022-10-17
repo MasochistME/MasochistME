@@ -1,14 +1,15 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
 	EventBadgeCreate,
 	EventBadgeGet,
 	Badge,
 	Member,
+	Game,
 } from '@masochistme/sdk/dist/v1/types';
 
-import { useBadges, useMembers } from 'shared/hooks';
+import { getGameThumbnail } from 'utils';
+import { useBadges, useGames, useMembers } from 'shared/hooks';
 import logo from 'shared/images/logo.png';
 import {
 	EventDescription,
@@ -39,14 +40,17 @@ export const BadgeEvent = (props: Props): JSX.Element | null => {
  */
 const BadgeAdded = ({ event }: { event: EventBadgeCreate }) => {
 	const history = useHistory();
+
+	const { gamesData } = useGames();
 	const { badgesData } = useBadges();
 
 	const badge = badgesData.find((b: Badge) => String(b._id) === event.badgeId);
-	const game = useSelector((state: any) =>
-		state.games.list.find((g: any) => Number(g.id) === Number(event.gameId)),
-	);
+	const game = gamesData.find((g: Game) => g.id === event.gameId);
+	const gameImg = getGameThumbnail(game?.id);
 
-	const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
+	const onGameClick = () => {
+		if (game?.id) history.push(`/game/${game.id}`);
+	};
 
 	return (
 		<EventInfo>
@@ -54,18 +58,15 @@ const BadgeAdded = ({ event }: { event: EventBadgeCreate }) => {
 			{badge && game ? (
 				<EventDescription>
 					<EventLink className="bold" onClick={onGameClick}>
-						{game?.title ? game.title : `Game ${event.gameId}`}
+						{game?.title ?? `Game ${event.gameId}`}
 					</EventLink>{' '}
 					has gotten a new badge -{' '}
-					<span className="bold">
-						{badge?.name ? badge.name : event.badgeId}
-					</span>
-					!
+					<span className="bold">{badge?.name ?? event.badgeId}</span>!
 				</EventDescription>
 			) : null}
 			<EventSummary>
 				<i className="fas fa-award"></i>
-				<EventImg src={game ? game.img : logo} alt="game-img" />
+				<EventImg src={gameImg} alt="game-img" />
 			</EventSummary>
 		</EventInfo>
 	);

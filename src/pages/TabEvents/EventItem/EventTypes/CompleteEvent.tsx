@@ -1,9 +1,14 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { EventComplete, Member, Tier } from '@masochistme/sdk/dist/v1/types';
+import {
+	EventComplete,
+	Game,
+	Member,
+	Tier,
+} from '@masochistme/sdk/dist/v1/types';
 
-import { useTiers, useMembers } from 'shared/hooks';
+import { getGameThumbnail } from 'utils';
+import { useTiers, useMembers, useGames } from 'shared/hooks';
 import logo from 'shared/images/logo.png';
 import {
 	EventDescription,
@@ -23,14 +28,12 @@ export const CompleteEvent = (props: Props): JSX.Element | null => {
 
 	const { membersData } = useMembers();
 	const { tiersData } = useTiers();
-	const member = membersData.find((m: Member) => m.steamId === event.memberId);
-	const game = useSelector((state: any) =>
-		state.games.list.find((g: any) => Number(g.id) === Number(event.gameId)),
-	);
+	const { gamesData } = useGames();
 
-	const gameRating = tiersData.find((tier: Tier) =>
-		game ? Number(tier.id) === Number(game.rating) : null,
-	);
+	const member = membersData.find((m: Member) => m.steamId === event.memberId);
+	const game = gamesData.find((g: Game) => g.id === event.gameId);
+	const gameRating = tiersData.find((tier: Tier) => tier.id === game?.tier);
+	const gameImg = getGameThumbnail(game?.id);
 
 	const onUserClick = () => {
 		if (member?.steamId) history.push(`/profile/${member.steamId}`);
@@ -59,7 +62,7 @@ export const CompleteEvent = (props: Props): JSX.Element | null => {
 						member ? 'fas fa-check-square' : 'fas fa-exclamation-triangle'
 					}></i>
 				<i className={gameRating?.icon ?? 'far fa-question-circle'}></i>
-				<EventImg src={game?.img ?? logo} alt="game-img" />
+				<EventImg src={gameImg} alt="game-img" />
 			</EventSummary>
 		</EventInfo>
 	);

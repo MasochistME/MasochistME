@@ -1,20 +1,12 @@
 // CONSTANTS
-export const CACHE_GAMES = 'CACHE_GAMES';
 export const CACHE_USERS = 'CACHE_USERS';
 export const CACHE_BLOG = 'CACHE_BLOG';
 export const CACHE_PATRONS = 'CACHE_PATRONS';
 export const CACHE_RANKING = 'CACHE_RANKING';
 export const CACHE_STATUS = 'CACHE_STATUS';
 export const CACHE_USER_DETAILS = 'CACHE_USER_DETAILS';
-export const CACHE_GAME_DETAILS = 'CACHE_GAME_DETAILS';
 
 // ACTION CREATORS
-export function cacheGames(data: any): any {
-	return {
-		type: CACHE_GAMES,
-		data,
-	};
-}
 export function cacheUsers(data: any): any {
 	return {
 		type: CACHE_USERS,
@@ -48,12 +40,6 @@ export function cacheStatus(data: any): any {
 export function cacheUserDetails(data: any): any {
 	return {
 		type: CACHE_USER_DETAILS,
-		data,
-	};
-}
-export function cacheGameDetails(data: any): any {
-	return {
-		type: CACHE_GAME_DETAILS,
 		data,
 	};
 }

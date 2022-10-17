@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { orderBy } from 'lodash';
 import axios from 'axios';
 
 import {
-	cacheGames,
 	cacheUsers,
 	cacheBlog,
 	cachePatrons,
@@ -12,27 +10,12 @@ import {
 	// cacheStatus,
 } from 'shared/store/Cache';
 import { useAppContext } from 'shared/store/context';
-import { log } from 'shared/helpers';
+import { log } from 'utils';
 
 export const useInit = (): boolean => {
 	const dispatch = useDispatch();
 	const { path } = useAppContext();
 	const [loaded, setLoaded] = useState(false);
-
-	const loadGames = () => {
-		axios
-			.get(`${path}/api/curator/games`)
-			.then(response => {
-				if (response?.status === 200) {
-					return dispatch(
-						cacheGames(
-							orderBy(response.data, ['rating', 'title'], ['desc', 'asc']),
-						),
-					);
-				}
-			})
-			.catch(log.WARN);
-	};
 
 	const loadUsers = () => {
 		axios
@@ -90,7 +73,6 @@ export const useInit = (): boolean => {
 	// };
 
 	const init = () => {
-		loadGames();
 		loadUsers();
 		loadBlog();
 		loadPatrons();

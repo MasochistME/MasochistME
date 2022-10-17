@@ -14,28 +14,18 @@ import {
 	Position,
 	PatronIcon,
 	RatingScore,
-} from './styles';
+} from './components';
 import { Member } from '@masochistme/sdk/dist/v1/types';
 
-UserSummary.Name = Name;
-UserSummary.Info = Info;
-UserSummary.Icons = Icons;
-UserSummary.Avatar = Avatar;
-UserSummary.Summary = Summary;
-UserSummary.Ranking = Ranking;
-UserSummary.Position = Position;
-UserSummary.PatronIcon = PatronIcon;
-UserSummary.RatingScore = RatingScore;
-
-type TUserSummary = {
-	id: any;
+type Props = {
+	steamId: any;
 	position: number;
 	onShowDetails: () => any;
 };
 
-function UserSummary(props: TUserSummary): JSX.Element {
+export const UserSummary = (props: Props): JSX.Element => {
 	const history = useHistory();
-	const { id, position, onShowDetails } = props;
+	const { steamId, position, onShowDetails } = props;
 	const [detailsVisible, setDetailsVisible] = useState(false);
 	const [userId, setUserId] = useState(0);
 
@@ -43,8 +33,8 @@ function UserSummary(props: TUserSummary): JSX.Element {
 	const { tiersData } = useTiers();
 
 	const member = useSelector((state: any) => {
-		const userRank = state.ranking.find((u: any) => u.id === id);
-		const memberData = membersData.find((m: Member) => m.steamId === id);
+		const userRank = state.ranking.find((u: any) => u.id === steamId);
+		const memberData = membersData.find((m: Member) => m.steamId === steamId);
 		return {
 			...userRank,
 			private: memberData?.isPrivate,
@@ -66,12 +56,12 @@ function UserSummary(props: TUserSummary): JSX.Element {
 				(gameTier: any) => gameTier.tier === scoreId,
 			);
 			return (
-				<UserSummary.RatingScore
+				<RatingScore
 					key={`member-rating-score-${scoreIndex}`}
 					title={`Sum of all games completed in tier ${scoreId}.\nPoints total: ${tierPoints?.points}`}>
 					{tierPoints?.total}
 					<i className={score.icon} style={{ paddingRight: '5px' }} />
-				</UserSummary.RatingScore>
+				</RatingScore>
 			);
 		});
 	};
@@ -127,28 +117,28 @@ function UserSummary(props: TUserSummary): JSX.Element {
 	}, []);
 
 	return (
-		<UserSummary.Summary
+		<Summary
 			shekelmaster={shekelmaster}
 			disabled={disabled}
 			onClick={onShowProfile}>
-			<UserSummary.Position>{position + 1}</UserSummary.Position>
-			<UserSummary.Avatar src={member.avatar} alt="avatar" />
-			<UserSummary.Icons>
+			<Position>{position + 1}</Position>
+			<Avatar src={member.avatar} alt="avatar" />
+			<Icons>
 				{patreonTier ? (
-					<UserSummary.PatronIcon
+					<PatronIcon
 						tier={patreonTier}
 						className="fas fa-donate"
 						// title={patron.description.toUpperCase()}
 					/>
 				) : (
-					<UserSummary.PatronIcon
+					<PatronIcon
 						className="fas fa-donate"
 						style={{ color: 'transparent' }}
 					/>
 				)}
 				{infoIcon()}
-			</UserSummary.Icons>
-			<UserSummary.Info>
+			</Icons>
+			<Info>
 				<Flex
 					row
 					justify
@@ -170,26 +160,24 @@ function UserSummary(props: TUserSummary): JSX.Element {
 					) : (
 						<div></div>
 					)}
-					<UserSummary.Name tier={patreonTier} shekelmaster={shekelmaster}>
+					<Name tier={patreonTier} shekelmaster={shekelmaster}>
 						{member.name}
-					</UserSummary.Name>
+					</Name>
 				</Flex>
 				<div className="dummy"></div>
-				<UserSummary.Ranking>
-					<UserSummary.RatingScore title="Sum of all points">
+				<Ranking>
+					<RatingScore title="Sum of all points">
 						{member.points.sum ? member.points.sum : 0}
 						<span className="bold"> Σ</span>
-					</UserSummary.RatingScore>
+					</RatingScore>
 					{gameTierPoints()}
-					<UserSummary.RatingScore
+					<RatingScore
 						title={`Sum of all badges earned.\nPoints total: ${badges.points}`}>
 						{badges.total}
 						<i className="fas fa-medal" style={{ paddingRight: '5px' }} />
-					</UserSummary.RatingScore>
-				</UserSummary.Ranking>
-			</UserSummary.Info>
-		</UserSummary.Summary>
+					</RatingScore>
+				</Ranking>
+			</Info>
+		</Summary>
 	);
-}
-
-export default React.memo(UserSummary);
+};
