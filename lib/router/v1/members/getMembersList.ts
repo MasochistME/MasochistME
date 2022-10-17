@@ -1,24 +1,32 @@
 import { Request, Response } from 'express';
 import { Member } from '@masochistme/sdk/dist/v1/types';
+import { MembersListParams } from '@masochistme/sdk/dist/v1/api/members';
 
 import { log } from 'helpers/log';
-import { connectToDb } from 'helpers/db';
+import { connectToDb, sortCollection } from 'helpers/db';
 
 /**
  * Returns a list of all members stored in the database.
- * @param _req Request
- * @param res Response
- * @return void
  */
 export const getMembersList = async (
-  _req: Request,
+  req: Request<any, any, MembersListParams>,
   res: Response,
 ): Promise<void> => {
   try {
+    const { filter = {}, sort = {}, limit = 1000 } = req.body;
+
     const { client, db } = await connectToDb();
     const collection = db.collection<Member>('members');
-    const cursor = collection.find();
     const members: Member[] = [];
+
+    const cursor = collection
+      .find(filter)
+      .sort({
+        ...(sort.lastUpdated && {
+          lastUpdated: sortCollection(sort.lastUpdated),
+        }),
+      })
+      .limit(limit);
 
     await cursor.forEach((el: Member) => {
       members.push(el);

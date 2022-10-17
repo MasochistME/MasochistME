@@ -1,6 +1,7 @@
-import { Db, MongoClient, WithId } from 'mongodb';
+import { Db, MongoClient, WithId, SortDirection } from 'mongodb';
 
 import { log } from 'helpers/log';
+import { Sort } from '@masochistme/sdk/dist/v1/types';
 
 export const connectToDb = async (): Promise<{
   client: MongoClient;
@@ -20,6 +21,11 @@ export const connectToDb = async (): Promise<{
     log.WARN(error);
     throw error;
   }
+};
+
+export const sortCollection = (sort: Sort | undefined): SortDirection => {
+  if (sort === 'desc') return -1;
+  return 1;
 };
 
 export const getDataFromDB: any = async <T>(

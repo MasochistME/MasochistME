@@ -1,28 +1,31 @@
 import { Request, Response } from 'express';
 import { Badge } from '@masochistme/sdk/dist/v1/types';
-import { BadgesListParams } from '@masochistme/sdk/dist/v1/api/badges';
+import { BadgesByGameIdListParams } from '@masochistme/sdk/dist/v1/api/games';
 
 import { log } from 'helpers/log';
 import { connectToDb, sortCollection } from 'helpers/db';
 
 /**
- * Returns a list of all badges stored in the database.
+ * Returns a list of all badges belonging to a game with given ID.
  */
-export const getBadgesList = async (
-  req: Request<any, any, BadgesListParams>,
+export const getBadgesByGameIdList = async (
+  req: Request<any, any, BadgesByGameIdListParams>,
   res: Response,
 ): Promise<void> => {
   try {
     const { filter = {}, sort = {}, limit = 1000 } = req.body;
+    const { gameId } = req.params;
 
     const { client, db } = await connectToDb();
     const collection = db.collection<Badge>('badges');
     const badges: Badge[] = [];
-    const fixedSort = {
-      ...(sort.points && { points: sortCollection(sort.points) }),
-    };
 
-    const cursor = collection.find(filter).sort(fixedSort).limit(limit);
+    const cursor = collection
+      .find({ gameId: Number(gameId), ...filter })
+      .sort({
+        ...(sort.points && { points: sortCollection(sort.points) }),
+      })
+      .limit(limit);
 
     await cursor.forEach((el: Badge) => {
       badges.push(el);

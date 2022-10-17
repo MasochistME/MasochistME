@@ -1,25 +1,33 @@
 import { Request, Response } from 'express';
 import { RacePlayer } from '@masochistme/sdk/dist/v1/types';
+import { RaceParticipantsListParams } from '@masochistme/sdk/dist/v1/api/racePlayers';
 
 import { log } from 'helpers/log';
-import { connectToDb } from 'helpers/db';
+import { connectToDb, sortCollection } from 'helpers/db';
 
 /**
  * Returns a list of all participants of a race.
- * @param req
- * @param res
  */
 export const getRaceParticipantsList = async (
-  req: Request,
+  req: Request<any, any, RaceParticipantsListParams>,
   res: Response,
 ): Promise<void> => {
   try {
-    const { client, db } = await connectToDb();
-    const collection = db.collection<RacePlayer>('racePlayers');
+    const { filter = {}, sort = {}, limit = 1000 } = req.body;
     const { raceId } = req.params;
 
-    const cursor = collection.find({ raceId });
+    const { client, db } = await connectToDb();
+    const collection = db.collection<RacePlayer>('racePlayers');
     const racePlayers: RacePlayer[] = [];
+
+    const cursor = collection
+      .find({ raceId, ...filter })
+      .sort({
+        ...(sort.startDate && { startDate: sortCollection(sort.startDate) }),
+        ...(sort.endDate && { endDate: sortCollection(sort.endDate) }),
+        ...(sort.score && { score: sortCollection(sort.score) }),
+      })
+      .limit(limit);
 
     await cursor.forEach((el: RacePlayer) => {
       racePlayers.push(el);

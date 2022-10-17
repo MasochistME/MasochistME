@@ -1,26 +1,31 @@
 import { Request, Response } from 'express';
 import { MemberBadge } from '@masochistme/sdk/dist/v1/types';
+import { MemberBadgeListParams } from '@masochistme/sdk/dist/v1/api/members';
 
 import { log } from 'helpers/log';
-import { connectToDb } from 'helpers/db';
+import { connectToDb, sortCollection } from 'helpers/db';
 
 /**
  * Returns a list of all badges belonging to a single member.
- * @param req Request
- * @param res Response
- * @return void
  */
 export const getMemberBadgeList = async (
-  req: Request,
+  req: Request<any, any, MemberBadgeListParams>,
   res: Response,
 ): Promise<void> => {
   try {
-    const { client, db } = await connectToDb();
-    const collection = db.collection<MemberBadge>('memberBadges');
+    const { filter = {}, sort = {}, limit = 1000 } = req.body;
     const { memberId } = req.params;
 
-    const cursor = collection.find({ memberId });
+    const { client, db } = await connectToDb();
+    const collection = db.collection<MemberBadge>('memberBadges');
     const memberBadges: MemberBadge[] = [];
+
+    const cursor = collection
+      .find({ memberId, ...filter })
+      .sort({
+        ...(sort.points && { points: sortCollection(sort.points) }),
+      })
+      .limit(limit);
 
     await cursor.forEach((el: MemberBadge) => {
       memberBadges.push(el);

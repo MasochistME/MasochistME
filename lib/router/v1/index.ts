@@ -14,10 +14,10 @@ import {
   revokeBadgeFromMemberById,
 } from './members';
 
-routerV1.get('/members/list', getMembersList);
+routerV1.post('/members/list', getMembersList);
 routerV1.get('/members/member/:memberId', getMemberById);
 routerV1.put('/members/member/:memberId', updateMemberById);
-routerV1.get('/members/member/:memberId/badges/list', getMemberBadgeList);
+routerV1.post('/members/member/:memberId/badges/list', getMemberBadgeList);
 routerV1.post(
   '/members/member/:memberId/badges/badge/:badgeId',
   giveBadgeToMemberById,
@@ -31,10 +31,10 @@ routerV1.delete(
  *         GAMES         *
  *************************/
 
-import { getGamesList, getBadgesByGameId } from './games';
+import { getGamesList, getBadgesByGameIdList } from './games';
 
-routerV1.get('/games/list', getGamesList);
-routerV1.get('/games/game/:gameId/badges/list', getBadgesByGameId);
+routerV1.post('/games/list', getGamesList);
+routerV1.post('/games/game/:gameId/badges/list', getBadgesByGameIdList);
 
 /**************************
  *         BADGES         *
@@ -48,7 +48,7 @@ import {
   deleteBadgeById,
 } from './badges';
 
-routerV1.get('/badges/list', getBadgesList);
+routerV1.post('/badges/list', getBadgesList);
 routerV1.post('/badges', createBadge);
 routerV1.get('/badges/badge/:badgeId', getBadgeById);
 routerV1.put('/badges/badge/:badgeId', updateBadgeById);
@@ -69,7 +69,7 @@ routerV1.post('/events', createEvent);
 
 import { getTiersList } from './tiers';
 
-routerV1.get('/tiers/list', getTiersList);
+routerV1.post('/tiers/list', getTiersList);
 
 /*************************
  *         RACES         *
@@ -88,7 +88,7 @@ routerV1.post('/races', createRace);
 routerV1.get('/races/race/:raceId', getRaceById);
 routerV1.put('/races/race/:raceId', updateRaceById);
 routerV1.delete('/races/race/:raceId', deleteRaceById);
-routerV1.get('/races/list', getRaceList);
+routerV1.post('/races/list', getRaceList);
 routerV1.get('/races/active', getActiveRace);
 
 /*********************************
@@ -114,7 +114,7 @@ routerV1.put(
   '/races/race/:raceId/participants/participant/:participantId',
   updateRaceByParticipantId,
 );
-routerV1.get('/races/race/:raceId/participants/list', getRaceParticipantsList);
+routerV1.post('/races/race/:raceId/participants/list', getRaceParticipantsList);
 
 /***************************
  *         SEASONS         *

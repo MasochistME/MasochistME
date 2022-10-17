@@ -1,22 +1,25 @@
 import { Request, Response } from 'express';
 import { Season } from '@masochistme/sdk/dist/v1/types';
+import { SeasonsListParams } from '@masochistme/sdk/dist/v1/api/seasons';
 
 import { log } from 'helpers/log';
-import { connectToDb } from 'helpers/db';
+import { connectToDb, sortCollection } from 'helpers/db';
 
 /**
  * Returns a list of all seasons.
- * @param params.finished - Get only seasons which are finished.
- * @param params.inactive - Get only seasons which are yet to start.
  */
 export const getSeasonsList = async (
-  req: Request,
+  req: Request<any, any, SeasonsListParams>,
   res: Response,
 ): Promise<void> => {
   try {
-    const { active, inactive, finished, unfinished } = req.body.filter ?? {};
+    const { filter = {}, sort = {}, limit = 1000 } = req.body;
+    const { active, inactive, finished, unfinished } = filter;
+
     const { client, db } = await connectToDb();
     const collection = db.collection<Season>('seasons');
+    const seasons: Season[] = [];
+
     const cursor = collection
       .find({
         ...(inactive && { startDate: null, endDate: null }), //  has NO start date and NO end date
@@ -24,8 +27,11 @@ export const getSeasonsList = async (
         ...(finished && { endDate: { $ne: null } }), // has start date AND end date
         ...(unfinished && { endDate: null }), // has no end date
       })
-      .sort({ startDate: 1 });
-    const seasons: Season[] = [];
+      .sort({
+        ...(sort.startDate && { startDate: sortCollection(sort.startDate) }),
+        ...(sort.endDate && { endDate: sortCollection(sort.endDate) }),
+      })
+      .limit(limit);
 
     await cursor.forEach((el: Season) => {
       if (finished && !el.endDate) return;

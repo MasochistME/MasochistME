@@ -1,2 +1,2 @@
 export { getGamesList } from './getGamesList';
-export { getBadgesByGameId } from './getBadgesByGameId';
+export { getBadgesByGameIdList } from './getBadgesByGameIdList';
