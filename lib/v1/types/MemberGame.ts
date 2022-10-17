@@ -10,6 +10,10 @@ import { WithId } from 'v1/types/__Helpers';
  */
 export interface MemberGame extends WithId {
 	/**
+	 * Steam ID of the member who has the game.
+	 */
+	memberId: number;
+	/**
 	 * Steam ID of the game.
 	 */
 	steamId: number;
