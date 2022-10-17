@@ -48,7 +48,7 @@ export const getMembersList = async (
 export type MembersListParams = {
 	filter?: Partial<Pick<Member, 'isPrivate' | 'isMember' | 'isProtected'>>;
 	sort?: {
-		[key in keyof Partial<Pick<Member, 'lastUpdated'>>]: Sort;
+		[key in keyof Partial<Pick<Member, 'name' | 'lastUpdated'>>]: Sort;
 	};
 	limit?: number;
 };
