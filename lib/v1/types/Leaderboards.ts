@@ -29,6 +29,10 @@ export interface Leaderboards extends WithId {
 	 * Statistics about the member's completed games.
 	 */
 	games: LeaderboardsCategoryGame[];
+	/**
+	 * Sum of all the points that member has.
+	 */
+	sum: number;
 }
 
 /**
