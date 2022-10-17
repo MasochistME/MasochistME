@@ -2,13 +2,12 @@
  * @module Leaderboards
  */
 
-import { WithId } from 'v1/types/__Helpers';
 import { TierId } from './Tier';
 
 /**
  * Information about a single member on leaderboards.
  */
-export interface Leaderboards extends WithId {
+export interface Leaderboards {
 	/**
 	 * Steam ID of the member.
 	 */
@@ -38,7 +37,7 @@ export interface Leaderboards extends WithId {
 /**
  * A base leaderboards category.
  */
-export type LeaderboardsCategory = {
+export interface LeaderboardsCategory {
 	/**
 	 * Total number of points that member earned in this category.
 	 */
@@ -47,9 +46,11 @@ export type LeaderboardsCategory = {
 	 * Total number of games/badges that member unlocked.
 	 */
 	total: number;
-};
+}
 
 /**
  * Base leaderboards category expanded with game's tier.
  */
-export type LeaderboardsCategoryGame = LeaderboardsCategory & { tier: TierId };
+export interface LeaderboardsCategoryGame extends LeaderboardsCategory {
+	tier: TierId;
+}
