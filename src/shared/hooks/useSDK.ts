@@ -16,20 +16,33 @@ export const useMembers = () => {
 	return { membersData, isLoading, isFetched, isError };
 };
 
+export const useGames = () => {
+	const { sdk } = useAppContext();
+
+	const {
+		data: gamesData = [],
+		isLoading,
+		isFetched,
+		isError,
+	} = useQuery(['masochist', 'games'], () => sdk.getGamesList({}));
+
+	return { gamesData, isLoading, isFetched, isError };
+};
+
 export const useBadges = () => {
 	const { sdk } = useAppContext();
 
 	const {
-		data = [],
+		data: badgesData = [],
 		isLoading,
 		isFetched,
 		isError,
 	} = useQuery(['masochist', 'badges'], () => sdk.getBadgesList({}));
 
-	return { data, isLoading, isFetched, isError };
+	return { badgesData, isLoading, isFetched, isError };
 };
 
-export const useUserBadges = (steamId: string) => {
+export const useMemberBadges = (steamId: string) => {
 	const { sdk } = useAppContext();
 
 	const {
@@ -48,7 +61,7 @@ export const useEvents = () => {
 	const { sdk } = useAppContext();
 
 	const {
-		data = [],
+		data: eventsData = [],
 		isLoading,
 		isFetched,
 		isError,
@@ -56,7 +69,7 @@ export const useEvents = () => {
 		sdk.getEventsList({ filter: {}, limit: 50 }),
 	);
 
-	return { data, isLoading, isFetched, isError };
+	return { eventsData, isLoading, isFetched, isError };
 };
 
 export const useTiers = () => {

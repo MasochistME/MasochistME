@@ -1,4 +1,4 @@
-export { Badge, BigBadge } from './Badge';
+export { BadgeTile, BigBadge } from './Badge';
 export { CustomButton } from './CustomButton';
 export { HoverIcon } from './HoverIcon';
 export { IconButton } from './IconButton';

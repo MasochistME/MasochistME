@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { colors } from 'shared/theme';
 
-export const Badge = styled.img`
+export const BadgeTile = styled.img`
 	max-width: 24px;
 	max-height: 24px;
 	border: 3px solid black;

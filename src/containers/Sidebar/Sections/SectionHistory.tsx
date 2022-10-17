@@ -30,7 +30,7 @@ import {
 import { Spinner } from 'components';
 
 export const SectionHistory = (): JSX.Element => {
-	const { data: events } = useEvents();
+	const { eventsData } = useEvents();
 	const {
 		getEventMemberJoin,
 		getEventMemberLeave,
@@ -85,12 +85,12 @@ export const SectionHistory = (): JSX.Element => {
 		}
 	};
 
-	const sortedEvents = orderBy(events, ['date'], ['desc']).slice(0, 10);
+	const sortedEvents = orderBy(eventsData, ['date'], ['desc']).slice(0, 10);
 
 	return (
 		<Section>
 			<SectionTitle>Last events</SectionTitle>
-			{events?.length ? (
+			{eventsData?.length ? (
 				sortedEvents.map((event: Event) => classifyEvents(event))
 			) : (
 				<Spinner />
@@ -104,7 +104,7 @@ const useEventComponents = () => {
 
 	const games = useSelector((state: any) => state.games.list);
 	const { membersData } = useMembers();
-	const { data: badges } = useBadges();
+	const { badgesData } = useBadges();
 
 	const getEventMemberJoin = (event: EventMemberJoin) => {
 		const member = membersData.find(
@@ -217,7 +217,9 @@ const useEventComponents = () => {
 
 	const getEventBadgeCreate = (event: EventBadgeCreate) => {
 		const game = games.find((g: any) => Number(g.id) === Number(event.gameId));
-		const badge = badges.find((b: Badge) => String(b._id) === event.badgeId);
+		const badge = badgesData.find(
+			(b: Badge) => String(b._id) === event.badgeId,
+		);
 		const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
 
 		return badge && game ? (
@@ -233,7 +235,9 @@ const useEventComponents = () => {
 	};
 
 	const getEventBadgeGiven = (event: EventBadgeGet) => {
-		const badge = badges.find((b: Badge) => String(b._id) === event.badgeId);
+		const badge = badgesData.find(
+			(b: Badge) => String(b._id) === event.badgeId,
+		);
 		const member = membersData.find(
 			(m: Member) => m.steamId === event.memberId,
 		);

@@ -23,12 +23,12 @@ export default function FullProfile(props: Props): JSX.Element {
 	const { user } = props;
 
 	const history = useHistory();
-	const { data } = useBadges();
+	const { badgesData } = useBadges();
 
 	const games = useSelector((state: any) => state.games.list);
 
 	const getBadges = (): Badge[] => {
-		const userBadges = data
+		const userBadges = badgesData
 			.filter(
 				(badge: any) =>
 					user?.badges && user.badges.find((b: any) => b.id === badge._id),

@@ -12,7 +12,7 @@ import EventItem from './EventItem';
 export const TabEvents = (): JSX.Element => {
 	useActiveTab(TabDict.EVENTS);
 
-	const { data: events } = useEvents();
+	const { eventsData } = useEvents();
 	const eventsDescriptions = eventsDict.map((event: any, index: number) => (
 		<li key={`event-desc-${index}`}>
 			<i className={event.icon}></i> - {event.description}
@@ -35,8 +35,8 @@ export const TabEvents = (): JSX.Element => {
 			</Wrapper>
 			<Wrapper type="page">
 				<EventsList>
-					{events?.length ? (
-						events.map((event: Event) => (
+					{eventsData?.length ? (
+						eventsData.map((event: Event) => (
 							<EventItem event={event} key={`event-${event._id}`} />
 						))
 					) : (

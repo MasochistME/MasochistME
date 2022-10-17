@@ -39,9 +39,9 @@ export const BadgeEvent = (props: Props): JSX.Element | null => {
  */
 const BadgeAdded = ({ event }: { event: EventBadgeCreate }) => {
 	const history = useHistory();
-	const { data: badges } = useBadges();
+	const { badgesData } = useBadges();
 
-	const badge = badges.find((b: Badge) => String(b._id) === event.badgeId);
+	const badge = badgesData.find((b: Badge) => String(b._id) === event.badgeId);
 	const game = useSelector((state: any) =>
 		state.games.list.find((g: any) => Number(g.id) === Number(event.gameId)),
 	);
@@ -78,9 +78,9 @@ const BadgeGiven = ({ event }: { event: EventBadgeGet }) => {
 	const history = useHistory();
 
 	const { membersData } = useMembers();
-	const { data: badges } = useBadges();
+	const { badgesData } = useBadges();
 
-	const badge = badges.find((b: Badge) => String(b._id) === event.badgeId);
+	const badge = badgesData.find((b: Badge) => String(b._id) === event.badgeId);
 	const member = membersData.find((m: Member) => m.steamId === event.memberId);
 
 	const onUserClick = () => {

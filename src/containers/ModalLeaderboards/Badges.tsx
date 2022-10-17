@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Badge } from '@masochistme/sdk/dist/v1/types';
 
 import { Flex, Section } from 'components';
 import { useBadges } from 'shared/hooks';
@@ -7,8 +8,8 @@ import { Description, Field, BadgeImg } from './styles';
 
 export const Badges = (props: { game: any; mini?: boolean }): JSX.Element => {
 	const { game, mini } = props;
-	const { data } = useBadges();
-	const badges = data.filter((badge: any) =>
+	const { badgesData } = useBadges();
+	const badges = badgesData.filter((badge: Badge) =>
 		game.badges.includes(badge['_id']),
 	);
 

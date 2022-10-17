@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Badge } from '@masochistme/sdk/dist/v1/types';
 
-import { Flex, Badge } from 'components';
+import { Flex, BadgeTile } from 'components';
 import { useBadges } from 'shared/hooks';
 
 type Props = {
@@ -11,18 +12,17 @@ type Props = {
 
 export const UserBadges = (props: Props): JSX.Element => {
 	const { user, game } = props;
-	const { data } = useBadges();
+	const { badgesData } = useBadges();
 
-	const badges = data.filter(
-		(badge: any) =>
-			game?.badges?.includes(badge['_id']) &&
-			user?.badges?.includes(badge['_id']),
+	const badges = badgesData.filter(
+		(badge: Badge) =>
+			game?.badges?.includes(badge._id) && user?.badges?.includes(badge._id),
 	);
 
 	const mappedBadges = badges.map((badge: any) => {
 		const title = `${badge.name} (${badge.points} pts)\n"${badge.description}"`;
 		return (
-			<Badge
+			<BadgeTile
 				src={badge.img}
 				alt={badge._id}
 				key={`img-badge-${badge._id}`}

@@ -11,9 +11,9 @@ export const TabBadges = (): JSX.Element => {
 	useActiveTab(TabDict.BADGES);
 
 	const games = useSelector((state: any) => state.games.list);
-	const { data } = useBadges();
+	const { badgesData } = useBadges();
 	const badges = orderBy(
-		data.map(
+		badgesData.map(
 			(badge: Badge) =>
 				(badge = {
 					...badge,
