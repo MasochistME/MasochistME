@@ -1,31 +1,25 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { Tier } from '@masochistme/sdk/dist/v1/types';
 
+import { useAppContext, GameView } from 'shared/store/context';
 import { SearchBar } from 'containers';
 import { Wrapper, Flex, HoverIcon } from 'components';
-import { changeGamesView } from 'shared/store/modules/Tabs';
 import { useActiveTab, useTiers } from 'shared/hooks';
 import { TabDict } from 'shared/config/tabs';
 
 import { CheckBoxGameChoice } from './CheckBoxGameChoice';
 import { GameTiles } from './GameTiles';
 import { GameList } from './GameList';
-import { Tier } from '@masochistme/sdk/dist/v1/types';
 
 export const TabGames = (): JSX.Element => {
+	const { gameListView, setGameListView } = useAppContext();
+	const { tiersData } = useTiers();
+
 	useActiveTab(TabDict.GAMES);
 
-	const dispatch = useDispatch();
-	const { tiersData } = useTiers();
-	const gamesView = useSelector((state: any) => state.games.view);
-
 	const onGameViewClick = () => {
-		if (gamesView === 'tiles') {
-			dispatch(changeGamesView('list'));
-		}
-		if (gamesView === 'list') {
-			dispatch(changeGamesView('tiles'));
-		}
+		if (gameListView === GameView.TILE) setGameListView(GameView.LIST);
+		if (gameListView === GameView.LIST) setGameListView(GameView.TILE);
 	};
 
 	return (
@@ -63,14 +57,14 @@ export const TabGames = (): JSX.Element => {
 						<SearchBar />
 						<HoverIcon
 							type="fas fa-th-list"
-							isActive={gamesView === 'list'}
+							isActive={gameListView === GameView.LIST}
 							onClick={onGameViewClick}
 						/>
 					</Flex>
 				) : null}
 			</Wrapper>
-			<GameTiles />
-			<GameList />
+			{gameListView === GameView.TILE && <GameTiles />}
+			{gameListView === GameView.LIST && <GameList />}
 		</Flex>
 	);
 };

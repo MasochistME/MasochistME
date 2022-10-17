@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 
-import { cacheGameDetails } from 'shared/store/modules/Cache';
+import { cacheGameDetails } from 'shared/store/Cache';
 import { useAppContext } from 'shared/store/context';
 import { log } from 'shared/helpers';
 

@@ -1,7 +1,7 @@
 import { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { cacheUserDetails } from 'shared/store/modules/Cache';
+import { cacheUserDetails } from 'shared/store/Cache';
 import { useAppContext } from 'shared/store/context';
 
 /**

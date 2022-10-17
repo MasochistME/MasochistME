@@ -2,7 +2,6 @@ import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 
-import { CHANGE_GAMES_VIEW } from './modules/Tabs';
 import {
 	CACHE_GAMES,
 	CACHE_USERS,
@@ -12,14 +11,13 @@ import {
 	CACHE_STATUS,
 	CACHE_USER_DETAILS,
 	CACHE_GAME_DETAILS,
-} from './modules/Cache';
+} from './Cache';
 
 // STORES
 type TStore = {
 	games: {
 		list: any[];
 		details: any[];
-		view: 'list' | 'tiles';
 	};
 	users: {
 		list: any[];
@@ -44,7 +42,6 @@ const defaultState: TStore = {
 	games: {
 		list: [],
 		details: [],
-		view: 'tiles',
 	},
 	users: {
 		list: [],
@@ -67,14 +64,6 @@ const defaultState: TStore = {
 
 const reducer = (state = defaultState, action: any) => {
 	switch (action.type) {
-		case CHANGE_GAMES_VIEW:
-			return {
-				...state,
-				games: {
-					...state.games,
-					view: action.view,
-				},
-			};
 		case CACHE_GAMES:
 			return {
 				...state,

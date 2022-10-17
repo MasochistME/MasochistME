@@ -10,7 +10,7 @@ import {
 	cachePatrons,
 	cacheRanking,
 	// cacheStatus,
-} from 'shared/store/modules/Cache';
+} from 'shared/store/Cache';
 import { useAppContext } from 'shared/store/context';
 import { log } from 'shared/helpers';
 

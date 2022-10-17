@@ -12,7 +12,6 @@ export const GameTiles = (): JSX.Element => {
 	const { tiersData } = useTiers();
 	const { visibleTiers, queryGame } = useAppContext();
 
-	const inView = useSelector((state: any) => state.games.view === 'tiles');
 	const games = useSelector((state: any) => {
 		const filteredGames = state.games.list.filter(
 			(game: any) => game.curated || game.protected,
@@ -25,7 +24,7 @@ export const GameTiles = (): JSX.Element => {
 	});
 
 	return (
-		<Wrapper type="page" style={{ display: inView ? 'flex' : 'none' }}>
+		<Wrapper type="page">
 			{games && games.length ? (
 				games.map((game: any) => {
 					return game?.title.toLowerCase().indexOf(queryGame.toLowerCase()) !==

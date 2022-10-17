@@ -29,7 +29,6 @@ export const GameList = (): JSX.Element => {
 
 	const { tiersData } = useTiers();
 
-	const inView = useSelector((state: any) => state.games.view === 'list');
 	const games = useSelector((state: any) => {
 		const filteredGames = state.games.list.filter(
 			(game: any) =>
@@ -161,7 +160,7 @@ export const GameList = (): JSX.Element => {
 	}));
 
 	return (
-		<Wrapper type="page" style={{ display: inView ? 'flex' : 'none' }}>
+		<Wrapper type="page">
 			{games && games.length ? (
 				<Table
 					dataSource={gamesData}
