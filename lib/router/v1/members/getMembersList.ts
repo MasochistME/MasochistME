@@ -14,13 +14,20 @@ export const getMembersList = async (
 ): Promise<void> => {
   try {
     const { filter = {}, sort = {}, limit = 1000 } = req.body;
+    const { isPrivate, isMember, ...restFilter } = filter;
 
     const { client, db } = await connectToDb();
     const collection = db.collection<Member>('members');
     const members: Member[] = [];
 
     const cursor = collection
-      .find(filter)
+      .find({
+        ...restFilter,
+        ...(isPrivate !== undefined && { isPrivate }),
+        ...(isMember !== undefined && {
+          $or: [{ isMember: true }, { isProtected: true }],
+        }),
+      })
       .sort({
         ...(sort.name && { name: sortCollection(sort.name) }),
         ...(sort.lastUpdated && {

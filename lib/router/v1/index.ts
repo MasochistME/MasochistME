@@ -27,6 +27,21 @@ routerV1.delete(
   revokeBadgeFromMemberById,
 );
 
+/********************************
+ *         LEADERBOARDS         *
+ ********************************/
+
+import {
+  getLeaderboardsList,
+  getMemberLeaderboardsPositionById,
+} from './leaderboards';
+
+routerV1.post('/leaderboards/list', getLeaderboardsList);
+routerV1.get(
+  '/leaderboards/member/:memberId',
+  getMemberLeaderboardsPositionById,
+);
+
 /*************************
  *         GAMES         *
  *************************/

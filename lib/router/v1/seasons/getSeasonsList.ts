@@ -22,10 +22,13 @@ export const getSeasonsList = async (
 
     const cursor = collection
       .find({
-        ...(inactive && { startDate: null, endDate: null }), //  has NO start date and NO end date
-        ...(active && { startDate: { $ne: null }, endDate: null }), // has start date AND no end date
-        ...(finished && { endDate: { $ne: null } }), // has start date AND end date
-        ...(unfinished && { endDate: null }), // has no end date
+        ...(inactive !== undefined && { startDate: null, endDate: null }), //  has NO start date and NO end date
+        ...(active !== undefined && {
+          startDate: { $ne: null },
+          endDate: null,
+        }), // has start date AND no end date
+        ...(finished !== undefined && { endDate: { $ne: null } }), // has start date AND end date
+        ...(unfinished !== undefined && { endDate: null }), // has no end date
       })
       .sort({
         ...(sort.startDate && { startDate: sortCollection(sort.startDate) }),

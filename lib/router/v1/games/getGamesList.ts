@@ -14,13 +14,19 @@ export const getGamesList = async (
 ): Promise<void> => {
   try {
     const { filter = {}, sort = {}, limit = 1000 } = req.body;
+    const { isCurated, ...restFilter } = filter;
 
     const { client, db } = await connectToDb();
     const collection = db.collection<Game>('games');
     const games: Game[] = [];
 
     const cursor = collection
-      .find(filter)
+      .find({
+        ...restFilter,
+        ...(isCurated !== undefined && {
+          $or: [{ isCurated: true }, { isProtected: true }],
+        }),
+      })
       .sort({
         ...(sort.title && { title: sortCollection(sort.title) }),
         ...(sort.tier && { tier: sortCollection(sort.tier) }),

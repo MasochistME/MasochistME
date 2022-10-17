@@ -14,6 +14,7 @@ export const getMemberBadgeList = async (
 ): Promise<void> => {
   try {
     const { filter = {}, sort = {}, limit = 1000 } = req.body;
+    const { isEnabled, isLegacy, isSteamGame, ...restFilter } = filter;
     const { memberId } = req.params;
 
     const { client, db } = await connectToDb();
@@ -21,7 +22,13 @@ export const getMemberBadgeList = async (
     const memberBadges: MemberBadge[] = [];
 
     const cursor = collection
-      .find({ memberId, ...filter })
+      .find({
+        memberId,
+        ...restFilter,
+        ...(isEnabled !== undefined && { isEnabled }),
+        ...(isLegacy !== undefined && { isLegacy }),
+        ...(isSteamGame !== undefined && { isSteamGame }),
+      })
       .sort({
         ...(sort.points && { points: sortCollection(sort.points) }),
       })

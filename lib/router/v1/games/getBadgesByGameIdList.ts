@@ -14,6 +14,7 @@ export const getBadgesByGameIdList = async (
 ): Promise<void> => {
   try {
     const { filter = {}, sort = {}, limit = 1000 } = req.body;
+    const { isEnabled, isLegacy, ...restFilter } = filter;
     const { gameId } = req.params;
 
     const { client, db } = await connectToDb();
@@ -21,7 +22,12 @@ export const getBadgesByGameIdList = async (
     const badges: Badge[] = [];
 
     const cursor = collection
-      .find({ gameId: Number(gameId), ...filter })
+      .find({
+        gameId: Number(gameId),
+        ...restFilter,
+        ...(isEnabled !== undefined && { isEnabled }),
+        ...(isLegacy !== undefined && { isLegacy }),
+      })
       .sort({
         ...(sort.points && { points: sortCollection(sort.points) }),
       })
