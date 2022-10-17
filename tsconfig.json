@@ -9,7 +9,7 @@
     "module": "CommonJS",                                  /* Specify what module code is generated. */
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": true,
+    "isolatedModules": false,
 
     // Emit
     "declaration": true,

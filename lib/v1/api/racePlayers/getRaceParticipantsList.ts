@@ -32,16 +32,7 @@ import { RacePlayer, Sort, ResponseError, RacePlayerScore } from 'v1/types';
  * @param params.limit - How many race participants will get returned.
  */
 export const getRaceParticipantsList = async (
-	params: {
-		raceId: number;
-		filter?: Partial<Pick<RacePlayer, 'dnf'>>;
-		sort?: {
-			[key in keyof Partial<
-				Pick<RacePlayerScore, 'startDate' | 'endDate' | 'score'>
-			>]: Sort;
-		};
-		limit?: number;
-	},
+	params: RaceParticipantsListParams,
 	/** @ignore */
 	BASE_URL: string,
 ): Promise<RacePlayer[]> => {
@@ -57,4 +48,15 @@ export const getRaceParticipantsList = async (
 
 	if (status !== 200) throw new Error((data as ResponseError).error);
 	return data as RacePlayer[];
+};
+
+export type RaceParticipantsListParams = {
+	raceId: number;
+	filter?: Partial<Pick<RacePlayer, 'dnf'>>;
+	sort?: {
+		[key in keyof Partial<
+			Pick<RacePlayerScore, 'startDate' | 'endDate' | 'score'>
+		>]: Sort;
+	};
+	limit?: number;
 };

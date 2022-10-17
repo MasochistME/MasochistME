@@ -27,13 +27,7 @@ import { Member, Sort, ResponseError } from 'v1/types';
  * @param params.limit - How many members will get returned.
  */
 export const getMembersList = async (
-	params: {
-		filter?: Partial<Pick<Member, 'isPrivate' | 'isMember'>>;
-		sort?: {
-			[key in keyof Partial<Pick<Member, 'lastUpdated'>>]: Sort;
-		};
-		limit?: number;
-	},
+	params: MembersListParams,
 	/** @ignore */
 	BASE_URL: string,
 ): Promise<Member[]> => {
@@ -49,4 +43,12 @@ export const getMembersList = async (
 
 	if (status !== 200) throw new Error((data as ResponseError).error);
 	return data as Member[];
+};
+
+export type MembersListParams = {
+	filter?: Partial<Pick<Member, 'isPrivate' | 'isMember'>>;
+	sort?: {
+		[key in keyof Partial<Pick<Member, 'lastUpdated'>>]: Sort;
+	};
+	limit?: number;
 };

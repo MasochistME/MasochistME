@@ -30,15 +30,8 @@ import { Badge, Sort, ResponseError } from 'v1/types';
  * @param params.sort - Fields to sort badge list by.
  * @param params.limit - How many badges will get returned.
  */
-export const getBadgesByGameId = async (
-	params: {
-		gameId: string;
-		filter?: Partial<Pick<Badge, 'isEnabled' | 'isLegacy'>>;
-		sort?: {
-			[key in keyof Partial<Pick<Badge, 'points'>>]: Sort;
-		};
-		limit?: number;
-	},
+export const getBadgesByGameIdList = async (
+	params: BadgesByGameIdListParams,
 	/** @ignore */
 	BASE_URL: string,
 ): Promise<Badge[]> => {
@@ -54,4 +47,13 @@ export const getBadgesByGameId = async (
 
 	if (status !== 200) throw new Error((data as ResponseError).error);
 	return data as Badge[];
+};
+
+export type BadgesByGameIdListParams = {
+	gameId: string;
+	filter?: Partial<Pick<Badge, 'isEnabled' | 'isLegacy'>>;
+	sort?: {
+		[key in keyof Partial<Pick<Badge, 'points'>>]: Sort;
+	};
+	limit?: number;
 };

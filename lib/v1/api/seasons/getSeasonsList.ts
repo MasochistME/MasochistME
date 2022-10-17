@@ -34,18 +34,7 @@ import { Season, Sort, ResponseError } from 'v1/types';
  * @param params.limit - How many seasons will get returned.
  */
 export const getSeasonsList = async (
-	params: {
-		filter?: {
-			finished?: boolean;
-			active?: boolean;
-			inactive?: boolean;
-			unfinished?: boolean;
-		};
-		sort?: {
-			[key in keyof Partial<Pick<Season, 'startDate' | 'endDate'>>]: Sort;
-		};
-		limit?: number;
-	},
+	params: SeasonsListParams,
 	/** @ignore */
 	BASE_URL: string,
 ): Promise<Season[]> => {
@@ -61,4 +50,17 @@ export const getSeasonsList = async (
 
 	if (status !== 200) throw new Error((data as ResponseError).error);
 	return data as Season[];
+};
+
+export type SeasonsListParams = {
+	filter?: {
+		finished?: boolean;
+		active?: boolean;
+		inactive?: boolean;
+		unfinished?: boolean;
+	};
+	sort?: {
+		[key in keyof Partial<Pick<Season, 'startDate' | 'endDate'>>]: Sort;
+	};
+	limit?: number;
 };

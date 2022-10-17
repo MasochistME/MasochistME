@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { getGamesList, getBadgesByGameId } from 'v1/api/games';
+import { getGamesList, getBadgesByGameIdList } from 'v1/api/games';
 import { getTiersList } from 'v1/api/tiers';
 import {
 	getMembersList,
@@ -69,9 +69,9 @@ export class SDK {
 
 	public getGamesList = <T extends typeof getGamesList>(args: Head<T>) =>
 		getGamesList(args, this.BASE_URL);
-	public getBadgesByGameId = <T extends typeof getBadgesByGameId>(
+	public getBadgesByGameId = <T extends typeof getBadgesByGameIdList>(
 		args: Head<T>,
-	) => getBadgesByGameId(args, this.BASE_URL);
+	) => getBadgesByGameIdList(args, this.BASE_URL);
 
 	/***************************
 	 *         MEMBERS         *

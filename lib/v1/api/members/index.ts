@@ -2,9 +2,12 @@
  * @module Members
  */
 
-export { getMembersList } from './getMembersList';
+export { getMembersList, MembersListParams } from './getMembersList';
 export { getMemberById } from './getMemberById';
 export { updateMemberById } from './updateMemberById';
-export { getMemberBadgeList } from './getMemberBadgeList';
+export {
+	getMemberBadgeList,
+	MemberBadgeListParams,
+} from './getMemberBadgeList';
 export { giveBadgeToMemberById } from './giveBadgeToMemberById';
 export { revokeBadgeFromMemberById } from './revokeBadgeFromMemberById';

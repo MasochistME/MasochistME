@@ -2,5 +2,8 @@
  * @module Games
  */
 
-export { getGamesList } from './getGamesList';
-export { getBadgesByGameId } from './getBadgesByGameId';
+export { getGamesList, GamesListParams } from './getGamesList';
+export {
+	getBadgesByGameIdList,
+	BadgesByGameIdListParams,
+} from './getBadgesByGameIdList';

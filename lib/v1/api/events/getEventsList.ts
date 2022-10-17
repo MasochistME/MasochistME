@@ -22,13 +22,7 @@ import { Event, Sort, ResponseError } from 'v1/types';
  * @param params.limit - Limit how many events you want to have returned (sorted from newest).
  */
 export const getEventsList = async (
-	params: {
-		filter?: Partial<Event>;
-		sort?: {
-			[key in keyof Partial<Pick<Event, 'date'>>]: Sort;
-		};
-		limit?: number;
-	},
+	params: EventsListParams,
 	/** @ignore */
 	BASE_URL: string,
 ): Promise<Event[]> => {
@@ -44,4 +38,12 @@ export const getEventsList = async (
 
 	if (status !== 200) throw new Error((data as ResponseError).error);
 	return data as Event[];
+};
+
+export type EventsListParams = {
+	filter?: Partial<Event>;
+	sort?: {
+		[key in keyof Partial<Pick<Event, 'date'>>]: Sort;
+	};
+	limit?: number;
 };

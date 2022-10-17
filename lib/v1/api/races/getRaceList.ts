@@ -31,15 +31,7 @@ import { Race, Sort, ResponseError } from 'v1/types';
  *
  */
 export const getRaceList = async (
-	params: {
-		filter?: Partial<Pick<Race, 'type' | 'season'>>;
-		sort?: {
-			[key in keyof Partial<
-				Pick<Race, 'startDate' | 'endDate' | 'season'>
-			>]: Sort;
-		};
-		limit?: number;
-	},
+	params: RaceListParams,
 	/** @ignore */
 	BASE_URL: string,
 ): Promise<Race[]> => {
@@ -55,4 +47,14 @@ export const getRaceList = async (
 
 	if (status !== 200) throw new Error((data as ResponseError).error);
 	return data as Race[];
+};
+
+export type RaceListParams = {
+	filter?: Partial<Pick<Race, 'type' | 'season'>>;
+	sort?: {
+		[key in keyof Partial<
+			Pick<Race, 'startDate' | 'endDate' | 'season'>
+		>]: Sort;
+	};
+	limit?: number;
 };

@@ -34,15 +34,7 @@ import { Badge, MemberIdEither, Sort, ResponseError } from 'v1/types';
  * @param params.limit - How many badges will get returned.
  */
 export const getMemberBadgeList = async (
-	params: MemberIdEither & {
-		filter?: Partial<
-			Pick<Badge, 'gameId' | 'title' | 'isEnabled' | 'isLegacy' | 'isSteamGame'>
-		>;
-		sort?: {
-			[key in keyof Partial<Pick<Badge, 'points'>>]: Sort;
-		};
-		limit?: number;
-	},
+	params: MemberBadgeListParams,
 	/** @ignore */
 	BASE_URL: string,
 ): Promise<Badge[]> => {
@@ -62,3 +54,13 @@ export const getMemberBadgeList = async (
 };
 
 // TODO Think if it should return just the MemberBadge[], or actual Badge[]
+
+export type MemberBadgeListParams = MemberIdEither & {
+	filter?: Partial<
+		Pick<Badge, 'gameId' | 'title' | 'isEnabled' | 'isLegacy' | 'isSteamGame'>
+	>;
+	sort?: {
+		[key in keyof Partial<Pick<Badge, 'points'>>]: Sort;
+	};
+	limit?: number;
+};

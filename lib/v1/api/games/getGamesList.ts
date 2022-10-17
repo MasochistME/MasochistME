@@ -28,13 +28,7 @@ import { Game, Sort, ResponseError } from 'v1/types';
  * @param params.limit - How many games will get returned.
  */
 export const getGamesList = async (
-	params: {
-		filter?: Partial<Pick<Game, 'tier' | 'isCurated'>>;
-		sort?: {
-			[key in keyof Partial<Pick<Game, 'tier' | 'achievementsTotal'>>]: Sort;
-		};
-		limit?: number;
-	},
+	params: GamesListParams,
 	/** @ignore */
 	BASE_URL: string,
 ): Promise<Game[]> => {
@@ -50,4 +44,12 @@ export const getGamesList = async (
 
 	if (status !== 200) throw new Error((data as ResponseError).error);
 	return data as Game[];
+};
+
+export type GamesListParams = {
+	filter?: Partial<Pick<Game, 'tier' | 'isCurated'>>;
+	sort?: {
+		[key in keyof Partial<Pick<Game, 'tier' | 'achievementsTotal'>>]: Sort;
+	};
+	limit?: number;
 };

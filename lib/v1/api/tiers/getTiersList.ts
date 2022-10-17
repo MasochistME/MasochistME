@@ -12,9 +12,7 @@ import { Tier, ResponseError } from 'v1/types';
  * ```
  */
 export const getTiersList = async (
-	_params: {
-		// empty (for now)
-	},
+	_params: TiersListParams,
 	/** @ignore */
 	BASE_URL: string,
 ): Promise<Tier[]> => {
@@ -29,4 +27,8 @@ export const getTiersList = async (
 
 	if (status !== 200) throw new Error((data as ResponseError).error);
 	return data as Tier[];
+};
+
+export type TiersListParams = {
+	// empty (for now)
 };

@@ -2,4 +2,4 @@
  * @module Tiers
  */
 
-export { getTiersList } from './getTiersList';
+export { getTiersList, TiersListParams } from './getTiersList';

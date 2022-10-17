@@ -3,4 +3,4 @@
  */
 
 export { createEvent } from './createEvent';
-export { getEventsList } from './getEventsList';
+export { getEventsList, EventsListParams } from './getEventsList';
