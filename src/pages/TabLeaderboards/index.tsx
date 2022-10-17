@@ -1,13 +1,14 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { Member, Tier } from '@masochistme/sdk/dist/v1/types';
 
+import { useAppContext } from 'shared/store/context';
 import { SearchBar } from 'containers';
 import { Flex, Wrapper, Spinner } from 'components';
 import { useActiveTab, useTiers, useMembers } from 'shared/hooks';
 import User from './User';
 import { TabDict } from 'shared/config/tabs';
-import { Member, Tier } from '@masochistme/sdk/dist/v1/types';
 
 const WrapperRanking = styled.div`
 	width: 100%;
@@ -21,9 +22,9 @@ const RankingList = styled.ul`
 `;
 
 export const TabLeaderboards = (): JSX.Element => {
+	const { queryMember } = useAppContext();
 	useActiveTab(TabDict.LEADERBOARDS);
 
-	const searchUser = useSelector((state: any) => state.search.user);
 	const ranking = useSelector((state: any) => state.ranking);
 	const { tiersData } = useTiers();
 	const { membersData } = useMembers();
@@ -36,7 +37,7 @@ export const TabLeaderboards = (): JSX.Element => {
 			)?.name;
 			if (memberName) {
 				const isUserSearch =
-					memberName.toLowerCase().indexOf(searchUser.toLowerCase()) !== -1;
+					memberName.toLowerCase().indexOf(queryMember.toLowerCase()) !== -1;
 				return isUserSearch ? (
 					<User id={user.id} position={position} key={`user-${user.id}`} />
 				) : null;

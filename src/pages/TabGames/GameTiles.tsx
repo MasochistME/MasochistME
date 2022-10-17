@@ -10,9 +10,8 @@ import { useAppContext } from 'shared/store/context';
 
 export const GameTiles = (): JSX.Element => {
 	const { tiersData } = useTiers();
-	const { visibleTiers } = useAppContext();
+	const { visibleTiers, queryGame } = useAppContext();
 
-	const searchGame = useSelector((state: any) => state.search.game);
 	const inView = useSelector((state: any) => state.games.view === 'tiles');
 	const games = useSelector((state: any) => {
 		const filteredGames = state.games.list.filter(
@@ -29,7 +28,7 @@ export const GameTiles = (): JSX.Element => {
 		<Wrapper type="page" style={{ display: inView ? 'flex' : 'none' }}>
 			{games && games.length ? (
 				games.map((game: any) => {
-					return game?.title.toLowerCase().indexOf(searchGame.toLowerCase()) !==
+					return game?.title.toLowerCase().indexOf(queryGame.toLowerCase()) !==
 						-1 &&
 						visibleTiers.find(
 							(tier: TierId) => Number(tier) === Number(game.rating),

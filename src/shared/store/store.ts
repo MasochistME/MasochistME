@@ -3,7 +3,6 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 
 import { CHANGE_GAMES_VIEW } from './modules/Tabs';
-import { SEARCH_GAME, SEARCH_USER } from './modules/Search';
 import {
 	CACHE_GAMES,
 	CACHE_USERS,
@@ -29,10 +28,6 @@ type TStore = {
 	blog: any[];
 	patrons: any[];
 	ranking: any[];
-	search: {
-		game: string;
-		user: string;
-	};
 	profile: {
 		username: string | undefined;
 		privilege: string | undefined;
@@ -58,10 +53,6 @@ const defaultState: TStore = {
 	blog: [],
 	patrons: [],
 	ranking: [],
-	search: {
-		game: '',
-		user: '',
-	},
 	profile: {
 		username: undefined,
 		privilege: undefined,
@@ -83,16 +74,6 @@ const reducer = (state = defaultState, action: any) => {
 					...state.games,
 					view: action.view,
 				},
-			};
-		case SEARCH_GAME:
-			return {
-				...state,
-				search: { ...state.search, game: action.game },
-			};
-		case SEARCH_USER:
-			return {
-				...state,
-				search: { ...state.search, user: action.user },
 			};
 		case CACHE_GAMES:
 			return {

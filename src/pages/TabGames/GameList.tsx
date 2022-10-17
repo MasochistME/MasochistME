@@ -25,16 +25,16 @@ type GameData = {
 
 export const GameList = (): JSX.Element => {
 	const history = useHistory();
+	const { visibleTiers, queryGame } = useAppContext();
+
 	const { tiersData } = useTiers();
-	const { visibleTiers } = useAppContext();
 
 	const inView = useSelector((state: any) => state.games.view === 'list');
-	const searchGame = useSelector((state: any) => state.search.game);
 	const games = useSelector((state: any) => {
 		const filteredGames = state.games.list.filter(
 			(game: any) =>
 				(game.curated || game.protected) &&
-				game?.title.toLowerCase().includes(searchGame.toLowerCase()) &&
+				game?.title.toLowerCase().includes(queryGame.toLowerCase()) &&
 				visibleTiers.find(
 					(tier: TierId) => Number(tier) === Number(game.rating),
 				),

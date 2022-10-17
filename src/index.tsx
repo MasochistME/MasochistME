@@ -9,7 +9,7 @@ import { AppContextProvider } from 'shared/store/context';
 
 import { App } from './App';
 
-import './fonts/FontAwesome/css/all.css';
+import './shared/fonts/FontAwesome/css/all.css';
 import './shared/styles/antStyles.css';
 import './index.css';
 

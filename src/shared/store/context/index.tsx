@@ -12,6 +12,10 @@ type ContextType = {
 	setActiveTab: (activeTab: TabDict) => void;
 	visibleTiers: TierId[];
 	setVisibleTiers: (visibleTiers: TierId[]) => void;
+	queryGame: string;
+	setQueryGame: (queryGame: string) => void;
+	queryMember: string;
+	setQueryMember: (queryMember: string) => void;
 };
 
 export const AppContextProvider = ({
@@ -21,6 +25,8 @@ export const AppContextProvider = ({
 }): JSX.Element => {
 	const [activeTab, setActiveTab] = useState<TabDict>(TabDict.HOME);
 	const [visibleTiers, setVisibleTiers] = useState<TierId[]>([]);
+	const [queryGame, setQueryGame] = useState<string>('');
+	const [queryMember, setQueryMember] = useState<string>('');
 
 	const path = config.API;
 	const sdk = new SDK({
@@ -35,6 +41,10 @@ export const AppContextProvider = ({
 		setActiveTab,
 		visibleTiers,
 		setVisibleTiers,
+		queryGame,
+		setQueryGame,
+		queryMember,
+		setQueryMember,
 	};
 
 	return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
