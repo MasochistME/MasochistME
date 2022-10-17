@@ -69,7 +69,7 @@ export class SDK {
 
 	public getGamesList = <T extends typeof getGamesList>(args: Head<T>) =>
 		getGamesList(args, this.BASE_URL);
-	public getBadgesByGameId = <T extends typeof getBadgesByGameIdList>(
+	public getBadgesByGameIdList = <T extends typeof getBadgesByGameIdList>(
 		args: Head<T>,
 	) => getBadgesByGameIdList(args, this.BASE_URL);
 
