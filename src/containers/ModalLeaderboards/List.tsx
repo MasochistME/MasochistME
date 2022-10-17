@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { useUsers } from 'shared/hooks';
+import { useMembers } from 'shared/hooks';
 import { ProgressBar, Flex } from 'components';
 import {
 	User,
@@ -13,6 +13,7 @@ import {
 	UserAvatar,
 } from './styles';
 import { UserBadges } from './UserBadges';
+import { Member } from '@masochistme/sdk/dist/v1/types';
 
 type Props = {
 	game: any;
@@ -22,7 +23,7 @@ type Props = {
 export const List = (props: Props): JSX.Element => {
 	const { game, compact } = props;
 	const history = useHistory();
-	const users = useUsers(true);
+	const { membersData } = useMembers();
 
 	const assignDateIfFinished = (leaderboards: any): string | JSX.Element =>
 		leaderboards?.percentage === 100 ? (
@@ -33,22 +34,21 @@ export const List = (props: Props): JSX.Element => {
 			</Flex>
 		);
 
-	const leaderboards = game?.players
-		? game.players.map((player: any) => {
-				const user = users.find((u: any) => u.id === player.id);
-				return {
-					id: player.id,
-					name: user.name,
-					avatar: user.avatar,
-					gameId: game.id,
-					trophy: player.trophy,
-					percentage: player.percentage,
-					lastUnlocked: player.lastUnlocked,
-					playtime: player.playtime,
-					badges: user.badges,
-				};
-		  })
-		: [];
+	const leaderboards = (game?.players ?? []).map((player: any) => {
+		const member = membersData.find((m: Member) => m.steamId === player.id);
+		if (!member) return;
+		return {
+			id: member.steamId,
+			name: member.name,
+			avatar: member.avatar,
+			gameId: game.id,
+			trophy: player.trophy,
+			percentage: player.percentage,
+			lastUnlocked: player.lastUnlocked,
+			playtime: player.playtime,
+			// badges: member.badges, // TODO inject member badges here
+		};
+	});
 
 	const onUserClick = (id?: string) => id && history.push(`/profile/${id}`);
 

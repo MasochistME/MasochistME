@@ -1,6 +1,21 @@
 import { useQuery } from '@tanstack/react-query';
 import { useAppContext } from 'shared/store/context';
 
+export const useMembers = () => {
+	const { sdk } = useAppContext();
+
+	const {
+		data: membersData = [],
+		isLoading,
+		isFetched,
+		isError,
+	} = useQuery(['masochist', 'members'], () =>
+		sdk.getMembersList({ filter: { isMember: true } }),
+	);
+
+	return { membersData, isLoading, isFetched, isError };
+};
+
 export const useBadges = () => {
 	const { sdk } = useAppContext();
 
@@ -9,9 +24,24 @@ export const useBadges = () => {
 		isLoading,
 		isFetched,
 		isError,
-	} = useQuery(['masochist', 'badges'], () => sdk.getBadgesList());
+	} = useQuery(['masochist', 'badges'], () => sdk.getBadgesList({}));
 
 	return { data, isLoading, isFetched, isError };
+};
+
+export const useUserBadges = (steamId: string) => {
+	const { sdk } = useAppContext();
+
+	const {
+		data: memberBadgeData = [],
+		isLoading,
+		isFetched,
+		isError,
+	} = useQuery(['masochist', 'member', steamId, 'badges'], () =>
+		sdk.getMemberBadgeList({ steamId }),
+	);
+
+	return { memberBadgeData, isLoading, isFetched, isError };
 };
 
 export const useEvents = () => {
@@ -37,7 +67,7 @@ export const useTiers = () => {
 		isLoading,
 		isFetched,
 		isError,
-	} = useQuery(['masochist', 'tiers'], () => sdk.getTiersList());
+	} = useQuery(['masochist', 'tiers'], () => sdk.getTiersList({}));
 
 	return { tiersData, isLoading, isFetched, isError };
 };

@@ -5,9 +5,10 @@ import {
 	EventBadgeCreate,
 	EventBadgeGet,
 	Badge,
+	Member,
 } from '@masochistme/sdk/dist/v1/types';
 
-import { useBadges, useUsers } from 'shared/hooks';
+import { useBadges, useMembers } from 'shared/hooks';
 import logo from 'shared/images/logo.png';
 import {
 	EventDescription,
@@ -75,20 +76,24 @@ const BadgeAdded = ({ event }: { event: EventBadgeCreate }) => {
  */
 const BadgeGiven = ({ event }: { event: EventBadgeGet }) => {
 	const history = useHistory();
-	const users = useUsers(false);
-	const { data: badges } = useBadges();
-	const badge = badges.find((b: Badge) => String(b._id) === event.badgeId);
-	const user = users.find((u: any) => u.id === event.memberId);
 
-	const onUserClick = () => user?.id && history.push(`/profile/${user.id}`);
+	const { membersData } = useMembers();
+	const { data: badges } = useBadges();
+
+	const badge = badges.find((b: Badge) => String(b._id) === event.badgeId);
+	const member = membersData.find((m: Member) => m.steamId === event.memberId);
+
+	const onUserClick = () => {
+		if (member?.steamId) history.push(`/profile/${member.steamId}`);
+	};
 
 	return (
 		<EventInfo>
-			<EventImg src={user?.avatar ?? logo} alt="game-img" />
-			{badge && user ? (
+			<EventImg src={member?.avatar ?? logo} alt="game-img" />
+			{badge && member ? (
 				<EventDescription>
 					<EventLink className="bold" onClick={onUserClick}>
-						{user?.name ?? `User ${event.memberId}`}
+						{member?.name ?? `User ${event.memberId}`}
 					</EventLink>{' '}
 					has earned a new badge -{' '}
 					<span className="bold">{badge?.name ?? event.badgeId}</span>!
@@ -97,7 +102,7 @@ const BadgeGiven = ({ event }: { event: EventBadgeGet }) => {
 			<EventSummary>
 				<i
 					className={
-						user ? 'fas fa-check-square' : 'fas fa-exclamation-triangle'
+						member ? 'fas fa-check-square' : 'fas fa-exclamation-triangle'
 					}></i>
 				<i className="fas fa-medal"></i>
 				<EventImg src={badge ? badge.img : logo} alt="game-img" />

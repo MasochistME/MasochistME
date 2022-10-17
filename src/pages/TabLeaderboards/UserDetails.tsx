@@ -2,10 +2,11 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { orderBy } from 'lodash';
 
-import { useTiers, useUserDetails, useUsers } from 'shared/hooks';
+import { useTiers, useUserDetails, useMembers } from 'shared/hooks';
 import { Spinner } from 'components';
 import { Display, DetailsSummary, RatingScore } from './styles';
 import { UserGame } from './UserGame';
+import { Member, Tier } from '@masochistme/sdk/dist/v1/types';
 
 type TUserDetails = {
 	id: any;
@@ -18,25 +19,27 @@ UserDetails.RatingScore = RatingScore;
 
 export default function UserDetails(props: TUserDetails): JSX.Element {
 	const { id, show } = props;
+
 	const userLoaded = useUserDetails(id);
-	const users = useUsers(true);
+	const { membersData } = useMembers();
 	const { tiersData } = useTiers();
+
 	const games = useSelector((state: any) => state.games.list);
-	const user = useSelector((state: any) => {
-		const userBasic = users.find((user: any) => user.id === id);
-		const userGames =
+	const member = useSelector((state: any) => {
+		const memberBasic = membersData.find((m: Member) => m.steamId === id);
+		const memberGames =
 			state.users.details.find((user: any) => user.id === id)?.games ?? [];
 		const userRanking = state.ranking.find((user: any) => user.id === id);
 		return {
-			...userBasic,
-			games: userGames,
+			...memberBasic,
+			games: memberGames,
 			ranking: userRanking,
 		};
 	});
 
 	const composeGameList = () => {
 		const userGames = orderBy(
-			user.games.map((game: any) => ({
+			member.games.map((game: any) => ({
 				...game,
 				percentage: typeof game.percentage !== 'number' ? 0 : game.percentage,
 			})),
@@ -53,12 +56,12 @@ export default function UserDetails(props: TUserDetails): JSX.Element {
 				return;
 			}
 			const ratingIcon = tiersData.find(
-				(r: any) => r.id === gameDetails.rating,
+				(tier: Tier) => tier.id === gameDetails.rating,
 			);
 			return (
 				<UserGame
 					key={`game-${game.id}`}
-					user={user}
+					user={member}
 					game={{
 						...game,
 						badges: gameDetails.badges,

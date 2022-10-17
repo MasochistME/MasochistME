@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { orderBy } from 'lodash';
 import {
+	Badge,
 	Event,
 	EventAchievementNumberChange,
 	EventBadgeCreate,
@@ -15,9 +16,10 @@ import {
 	EventMemberJoin,
 	EventMemberLeave,
 	EventType,
+	Member,
 } from '@masochistme/sdk/dist/v1/types';
 
-import { useBadges, useEvents, useTiers, useUsers } from 'shared/hooks';
+import { useBadges, useEvents, useTiers, useMembers } from 'shared/hooks';
 import { getTierIcon } from 'shared/helpers';
 import {
 	SmallEvent,
@@ -99,20 +101,24 @@ export const SectionHistory = (): JSX.Element => {
 
 const useEventComponents = () => {
 	const history = useHistory();
-	const users = useUsers(false);
+
 	const games = useSelector((state: any) => state.games.list);
+	const { membersData } = useMembers();
 	const { data: badges } = useBadges();
 
 	const getEventMemberJoin = (event: EventMemberJoin) => {
-		const user = users.find((m: any) => m.id === event.memberId);
-		const onUserClick = () => user?.id && history.push(`/profile/${user.id}`);
+		const member = membersData.find(
+			(m: Member) => m.steamId === event.memberId,
+		);
+		const onUserClick = () =>
+			member?.steamId && history.push(`/profile/${member.steamId}`);
 
-		return user ? (
+		return member ? (
 			<SmallEvent key={`sidebar-event-${event._id}`}>
 				<i className="fas fa-user-plus"></i>
 				<EventLink className="bold" onClick={onUserClick}>
 					{' '}
-					{user.name}
+					{member.name}
 				</EventLink>{' '}
 				has joined the group!
 			</SmallEvent>
@@ -120,15 +126,18 @@ const useEventComponents = () => {
 	};
 
 	const getEventMemberLeave = (event: EventMemberLeave) => {
-		const user = users.find((m: any) => m.id === event.memberId);
-		const onUserClick = () => user?.id && history.push(`/profile/${user.id}`);
+		const member = membersData.find(
+			(m: Member) => m.steamId === event.memberId,
+		);
+		const onUserClick = () =>
+			member?.steamId && history.push(`/profile/${member.steamId}`);
 
-		return user ? (
+		return member ? (
 			<SmallEvent key={`sidebar-event-${event._id}`}>
 				<i className="fas fa-user-minus"></i>
 				<EventLink className="bold" onClick={onUserClick}>
 					{' '}
-					{user.name}
+					{member.name}
 				</EventLink>{' '}
 				has left the group!
 			</SmallEvent>
@@ -164,17 +173,20 @@ const useEventComponents = () => {
 	};
 
 	const getEventComplete = (event: EventComplete) => {
-		const user = users.find((m: any) => m.id === event.memberId);
+		const member = membersData.find(
+			(m: Member) => m.steamId === event.memberId,
+		);
 		const game = games.find((g: any) => Number(g.id) === Number(event.gameId));
-		const onUserClick = () => user?.id && history.push(`/profile/${user.id}`);
+		const onUserClick = () =>
+			member?.steamId && history.push(`/profile/${member.steamId}`);
 		const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
 
-		return user && game ? (
+		return member && game ? (
 			<SmallEvent key={`sidebar-event-${event._id}`}>
 				<i className="fas fa-check-square"></i>
 				<EventLink className="bold" onClick={onUserClick}>
 					{' '}
-					{user.name}
+					{member.name}
 				</EventLink>{' '}
 				completed{' '}
 				<EventLink className="bold" onClick={onGameClick}>
@@ -205,7 +217,7 @@ const useEventComponents = () => {
 
 	const getEventBadgeCreate = (event: EventBadgeCreate) => {
 		const game = games.find((g: any) => Number(g.id) === Number(event.gameId));
-		const badge = badges.find((b: any) => b['_id'] === event.badgeId);
+		const badge = badges.find((b: Badge) => String(b._id) === event.badgeId);
 		const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
 
 		return badge && game ? (
@@ -221,16 +233,19 @@ const useEventComponents = () => {
 	};
 
 	const getEventBadgeGiven = (event: EventBadgeGet) => {
-		const badge = badges.find((b: any) => b['_id'] === event.badgeId);
-		const user = users.find((m: any) => m.id === event.memberId);
-		const onUserClick = () => user?.id && history.push(`/profile/${user.id}`);
+		const badge = badges.find((b: Badge) => String(b._id) === event.badgeId);
+		const member = membersData.find(
+			(m: Member) => m.steamId === event.memberId,
+		);
+		const onUserClick = () =>
+			member?.steamId && history.push(`/profile/${member.steamId}`);
 
-		return user && badge ? (
+		return member && badge ? (
 			<SmallEvent key={`sidebar-event-${event._id}`}>
 				<i className="fas fa-medal"></i>
 				<EventLink className="bold" onClick={onUserClick}>
 					{' '}
-					{user.name}{' '}
+					{member.name}{' '}
 				</EventLink>{' '}
 				got a new badge - <span className="bold">{badge.name}</span>!
 			</SmallEvent>

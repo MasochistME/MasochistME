@@ -1,13 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { useTiers, useUsers } from 'shared/hooks';
+import { useTiers, useMembers } from 'shared/hooks';
 import { Spinner } from 'components';
 import { Section, SectionTitle } from 'containers/Sidebar/components';
 
 export const SectionTrivia = (): JSX.Element => {
 	const { tiersData } = useTiers();
-	const users = useUsers(true);
+	const { membersData } = useMembers();
 	const games = useSelector((state: any) => state.games.list);
 
 	const mapCurated = () => {
@@ -30,10 +30,10 @@ export const SectionTrivia = (): JSX.Element => {
 	return (
 		<Section>
 			<SectionTitle>Trivia</SectionTitle>
-			{users.length && tiersData ? (
+			{membersData.length && tiersData ? (
 				<>
 					<p>
-						Users total: <span className="bold">{users.length}</span>
+						Users total: <span className="bold">{membersData.length}</span>
 					</p>
 					<p>Curated games:</p>
 					<ul>

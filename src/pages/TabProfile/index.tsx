@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { useActiveTab, useUsers } from 'shared/hooks';
+import { useActiveTab, useMembers } from 'shared/hooks';
 import { Flex, Wrapper, Spinner, Section, BigBadge } from 'components';
 import { Badges } from './styles';
 import { useUserDetails } from 'shared/hooks';
@@ -16,9 +16,9 @@ export const TabProfile = (): JSX.Element => {
 
 	const { id } = useParams<{ id: string }>();
 	const { isUserLoaded } = useUserDetails(id);
-	const users = useUsers(false);
+	const { membersData } = useMembers();
 
-	const userBasic = users.find((user: any) => user.id === id);
+	const userBasic = membersData.find((user: any) => user.id === id);
 
 	const user = useSelector((state: any) => {
 		if (!isUserLoaded) {

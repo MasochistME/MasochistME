@@ -1,8 +1,8 @@
 import React from 'react';
-import { EventCustom } from '@masochistme/sdk/dist/v1/types';
+import { EventCustom, Member } from '@masochistme/sdk/dist/v1/types';
 
 import logo from 'shared/images/logo.png';
-import { useUsers } from 'shared/hooks';
+import { useMembers } from 'shared/hooks';
 import {
 	EventDescription,
 	EventSummary,
@@ -18,17 +18,19 @@ export const CustomEvent = (props: TCustomEvent): JSX.Element | null => {
 	const { event } = props;
 	const content = event.content;
 
-	const users = useUsers(false);
+	const { membersData } = useMembers();
 
 	if (!content) {
 		return null;
 	}
 	const { text, icon, memberId } = content;
-	const userData = users.find((m: any) => Number(m.id) === Number(memberId));
+	const memberData = membersData.find(
+		(m: Member) => Number(m.steamId) === Number(memberId),
+	);
 
 	return (
 		<EventInfo>
-			<EventImg alt="avatar" src={userData ? userData.avatar : logo} />
+			<EventImg alt="avatar" src={memberData?.avatar ?? logo} />
 			{
 				<EventDescription>
 					{text &&

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { useTiers, useUsers } from 'shared/hooks';
+import { useTiers, useMembers } from 'shared/hooks';
 import { Flex } from 'components';
 import {
 	Info,
@@ -15,6 +15,7 @@ import {
 	PatronIcon,
 	RatingScore,
 } from './styles';
+import { Member } from '@masochistme/sdk/dist/v1/types';
 
 UserSummary.Name = Name;
 UserSummary.Info = Info;
@@ -38,29 +39,30 @@ function UserSummary(props: TUserSummary): JSX.Element {
 	const [detailsVisible, setDetailsVisible] = useState(false);
 	const [userId, setUserId] = useState(0);
 
-	const users = useUsers(true);
+	const { membersData } = useMembers();
 	const { tiersData } = useTiers();
-	const user = useSelector((state: any) => {
+
+	const member = useSelector((state: any) => {
 		const userRank = state.ranking.find((u: any) => u.id === id);
-		const userDetails = users.find((u: any) => u.id === id);
+		const memberData = membersData.find((m: Member) => m.steamId === id);
 		return {
 			...userRank,
-			private: userDetails.private,
-			name: userDetails.name,
-			avatar: userDetails.avatar,
-			updated: userDetails.updated,
+			private: memberData?.isPrivate,
+			name: memberData?.name,
+			avatar: memberData?.avatar,
+			updated: memberData?.lastUpdated,
 		};
 	});
-	const badges = user.points.badges;
-	const patreonTier = user.patreon.tier;
+	const badges = member.points.badges;
+	const patreonTier = member.patreon.tier;
 	const shekelmaster = Number(patreonTier) === 4;
-	const disabled = user.points.sum - user.points.badges <= 0 ? true : false;
+	const disabled = member.points.sum - member.points.badges <= 0 ? true : false;
 
 	const gameTierPoints = () => {
 		return tiersData.map((score: any, scoreIndex: number) => {
 			const scoreId =
 				typeof score.id !== 'number' ? Number(score.id) : score.id;
-			const tierPoints = user.points.list.find(
+			const tierPoints = member.points.list.find(
 				(gameTier: any) => gameTier.tier === scoreId,
 			);
 			return (
@@ -75,7 +77,7 @@ function UserSummary(props: TUserSummary): JSX.Element {
 	};
 
 	const infoIcon = () => {
-		if (user?.private) {
+		if (member?.private) {
 			return (
 				<i
 					className="fas fa-exclamation-triangle"
@@ -89,7 +91,7 @@ function UserSummary(props: TUserSummary): JSX.Element {
 				/>
 			);
 		}
-		if (Date.now() - user?.updated > 2592000000) {
+		if (Date.now() - member?.updated > 2592000000) {
 			return (
 				<i
 					className="fas fa-exclamation-circle"
@@ -121,7 +123,7 @@ function UserSummary(props: TUserSummary): JSX.Element {
 	};
 
 	useEffect(() => {
-		setUserId(user.id);
+		setUserId(member.id);
 	}, []);
 
 	return (
@@ -130,7 +132,7 @@ function UserSummary(props: TUserSummary): JSX.Element {
 			disabled={disabled}
 			onClick={onShowProfile}>
 			<UserSummary.Position>{position + 1}</UserSummary.Position>
-			<UserSummary.Avatar src={user.avatar} alt="avatar" />
+			<UserSummary.Avatar src={member.avatar} alt="avatar" />
 			<UserSummary.Icons>
 				{patreonTier ? (
 					<UserSummary.PatronIcon
@@ -169,13 +171,13 @@ function UserSummary(props: TUserSummary): JSX.Element {
 						<div></div>
 					)}
 					<UserSummary.Name tier={patreonTier} shekelmaster={shekelmaster}>
-						{user.name}
+						{member.name}
 					</UserSummary.Name>
 				</Flex>
 				<div className="dummy"></div>
 				<UserSummary.Ranking>
 					<UserSummary.RatingScore title="Sum of all points">
-						{user.points.sum ? user.points.sum : 0}
+						{member.points.sum ? member.points.sum : 0}
 						<span className="bold"> Σ</span>
 					</UserSummary.RatingScore>
 					{gameTierPoints()}

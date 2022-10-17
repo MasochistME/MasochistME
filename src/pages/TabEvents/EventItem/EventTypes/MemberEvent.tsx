@@ -3,9 +3,10 @@ import { useHistory } from 'react-router-dom';
 import {
 	EventMemberJoin,
 	EventMemberLeave,
+	Member,
 } from '@masochistme/sdk/dist/v1/types';
 
-import { useUsers } from 'shared/hooks';
+import { useMembers } from 'shared/hooks';
 import logo from 'shared/images/logo.png';
 import {
 	EventDescription,
@@ -23,25 +24,27 @@ type Props = {
 export const MemberEvent = (props: Props): JSX.Element | null => {
 	const { event, action } = props;
 	const history = useHistory();
-	const users = useUsers(false);
-	const user = users.find((u: any) => u.id === event.memberId);
 
-	const onUserClick = () => user?.id && history.push(`/profile/${user.id}`);
+	const { membersData } = useMembers();
+	const member = membersData.find((m: Member) => m.steamId === event.memberId);
+
+	const onUserClick = () =>
+		member?.steamId && history.push(`/profile/${member.steamId}`);
 
 	return (
 		<EventInfo>
-			<EventImg alt="avatar" src={user?.avatar ?? logo} />
-			{user ? (
+			<EventImg alt="avatar" src={member?.avatar ?? logo} />
+			{member ? (
 				<EventDescription>
 					<EventLink className="bold" onClick={onUserClick}>
-						{user?.name ?? `User ${event.memberId}`}
+						{member?.name ?? `User ${event.memberId}`}
 					</EventLink>{' '}
 					has {action === 'join' ? 'joined' : 'left'} the group!
 				</EventDescription>
 			) : (
 				<EventDescription>
 					<EventLink className="bold" onClick={onUserClick}>
-						{user?.name ?? `User ${event.memberId}`}
+						{`User ${event.memberId}`}
 					</EventLink>{' '}
 					has {action === 'join' ? 'joined' : 'left'} the group!
 				</EventDescription>
@@ -49,7 +52,7 @@ export const MemberEvent = (props: Props): JSX.Element | null => {
 			<EventSummary>
 				<i
 					className={
-						user
+						member
 							? action === 'join'
 								? 'fas fa-user-plus'
 								: 'fas fa-user-minus'

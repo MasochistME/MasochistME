@@ -9,7 +9,7 @@ import {
 	cacheBlog,
 	cachePatrons,
 	cacheRanking,
-	cacheStatus,
+	// cacheStatus,
 } from 'shared/store/modules/Cache';
 import { useAppContext } from 'shared/store/context';
 import { log } from 'shared/helpers';
@@ -78,16 +78,16 @@ export const useInit = (): boolean => {
 			.catch(log.WARN);
 	};
 
-	const loadStatus = () => {
-		axios
-			.get(`${path}/api/status`)
-			.then(response => {
-				if (response?.status === 200) {
-					return dispatch(cacheStatus(response.data));
-				}
-			})
-			.catch(log.WARN);
-	};
+	// const loadStatus = () => {
+	// 	axios
+	// 		.get(`${path}/api/status`)
+	// 		.then(response => {
+	// 			if (response?.status === 200) {
+	// 				return dispatch(cacheStatus(response.data));
+	// 			}
+	// 		})
+	// 		.catch(log.WARN);
+	// };
 
 	const init = () => {
 		loadGames();

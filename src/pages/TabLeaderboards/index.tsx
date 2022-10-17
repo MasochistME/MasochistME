@@ -4,9 +4,10 @@ import styled from 'styled-components';
 
 import { SearchBar } from 'containers';
 import { Flex, Wrapper, Spinner } from 'components';
-import { useActiveTab, useTiers, useUsers } from 'shared/hooks';
+import { useActiveTab, useTiers, useMembers } from 'shared/hooks';
 import User from './User';
 import { TabDict } from 'shared/config/tabs';
+import { Member, Tier } from '@masochistme/sdk/dist/v1/types';
 
 const WrapperRanking = styled.div`
 	width: 100%;
@@ -22,18 +23,20 @@ const RankingList = styled.ul`
 export const TabLeaderboards = (): JSX.Element => {
 	useActiveTab(TabDict.LEADERBOARDS);
 
-	const { tiersData } = useTiers();
 	const searchUser = useSelector((state: any) => state.search.user);
 	const ranking = useSelector((state: any) => state.ranking);
-	const users = useUsers(true);
+	const { tiersData } = useTiers();
+	const { membersData } = useMembers();
 
 	const createRankingList = () => {
 		if (!ranking?.length) return;
 		return ranking?.map((user: any, position: number) => {
-			const userName: any = users.find((u: any) => u.id === user.id)?.name;
-			if (userName) {
+			const memberName = membersData.find(
+				(m: Member) => m.steamId === user.id,
+			)?.name;
+			if (memberName) {
 				const isUserSearch =
-					userName.toLowerCase().indexOf(searchUser.toLowerCase()) !== -1;
+					memberName.toLowerCase().indexOf(searchUser.toLowerCase()) !== -1;
 				return isUserSearch ? (
 					<User id={user.id} position={position} key={`user-${user.id}`} />
 				) : null;
@@ -52,11 +55,11 @@ export const TabLeaderboards = (): JSX.Element => {
 					</p>
 					<ul>
 						{tiersData
-							?.sort((a: any, b: any) => a?.score - b?.score)
-							.map((r: any, rIndex: number) => (
-								<li key={`r-${rIndex}`}>
-									<i className={r?.icon} /> - worth {r?.score} pts -{' '}
-									{r?.description}{' '}
+							?.sort((tierA: Tier, tierB: Tier) => tierA?.score - tierB?.score)
+							.map((tier: Tier, tierIndex: number) => (
+								<li key={`tier-${tierIndex}`}>
+									<i className={tier?.icon} /> - worth {tier?.score} pts -{' '}
+									{tier?.description}{' '}
 								</li>
 							))}
 					</ul>
