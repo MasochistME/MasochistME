@@ -12,7 +12,7 @@ export interface Patron extends WithId {
 	/**
 	 * Steam ID of the patron.
 	 */
-	steamId: string;
+	memberId: string;
 	/**
 	 * Patron tier.
 	 */
