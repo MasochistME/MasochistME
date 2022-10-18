@@ -34,7 +34,8 @@ interface BaseBadge extends WithId {
 	 */
 	description: string;
 	/**
-	 * TODO [Is it even used?]
+	 * TODO
+	 * When the game to which the badge belongs gets decurated, this flag switches to false.
 	 */
 	isEnabled: boolean;
 	/**

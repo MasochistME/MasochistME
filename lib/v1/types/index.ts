@@ -10,6 +10,7 @@ export * from './Game';
 export * from './GameSale';
 export * from './Leaderboards';
 export * from './Member';
+export * from './MemberAchievement';
 export * from './MemberBadge';
 export * from './MemberGame';
 export * from './Patron';

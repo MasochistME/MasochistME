@@ -1,6 +1,12 @@
 import axios, { AxiosResponse } from 'axios';
 
-import { Badge, MemberIdEither, Sort, ResponseError } from 'v1/types';
+import {
+	Badge,
+	MemberBadge,
+	MemberIdEither,
+	Sort,
+	ResponseError,
+} from 'v1/types';
 
 /**
  * Returns a list of all badges belonging to a member.
@@ -37,20 +43,20 @@ export const getMemberBadgeList = async (
 	params: MemberBadgeListParams,
 	/** @ignore */
 	BASE_URL: string,
-): Promise<Badge[]> => {
+): Promise<MemberBadge[]> => {
 	const { steamId, discordId, filter, sort, limit } = params;
 	const memberId = steamId ?? discordId;
 	const url = `${BASE_URL}/members/member/${memberId}/badges/list`;
 
-	const badgeResponse = await axios.post<
-		Badge[] | ResponseError,
-		AxiosResponse<Badge[] | ResponseError>
+	const memberBadgeListResponse = await axios.post<
+		MemberBadge[] | ResponseError,
+		AxiosResponse<MemberBadge[] | ResponseError>
 	>(url, { filter, sort, limit }, { validateStatus: () => true });
 
-	const { status, data } = badgeResponse;
+	const { status, data } = memberBadgeListResponse;
 
 	if (status !== 200) throw new Error((data as ResponseError).error);
-	return data as Badge[];
+	return data as MemberBadge[];
 };
 
 // TODO Think if it should return just the MemberBadge[], or actual Badge[]

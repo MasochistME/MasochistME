@@ -7,6 +7,8 @@ import {
 	getMemberById,
 	updateMemberById,
 	getMemberBadgeList,
+	getMemberGameList,
+	getMemberAchievementList,
 	giveBadgeToMemberById,
 	revokeBadgeFromMemberById,
 } from 'v1/api/members';
@@ -88,6 +90,12 @@ export class SDK {
 	public updateMemberById = <T extends typeof updateMemberById>(
 		args: Head<T>,
 	) => updateMemberById(args, this.BASE_URL);
+	public getMemberGameList = <T extends typeof getMemberGameList>(
+		args: Head<T>,
+	) => getMemberGameList(args, this.BASE_URL);
+	public getMemberAchievementList = <T extends typeof getMemberAchievementList>(
+		args: Head<T>,
+	) => getMemberAchievementList(args, this.BASE_URL);
 
 	/*********************************
 	 *         TIERS         *
