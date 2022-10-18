@@ -6,45 +6,59 @@ import { colors, fonts, media } from 'shared/theme';
 import { Tab, tabs } from 'shared/config/tabs';
 import { useAppContext } from 'shared/store/context';
 import { Flex } from 'components';
+import { UpdateStatus } from 'containers';
 
-export const MiniHeader = (): JSX.Element => {
+export const SubHeader = (): JSX.Element => {
 	const { activeTab } = useAppContext();
 	const findTab = () => tabs.find((tab: Tab) => tab.id === activeTab);
 
 	return (
-		<StyledMiniHeader>
-			<Flex row align style={{ height: '100%' }}>
-				<i className={findTab()?.icon ?? 'fas fa-question-circle'} />
-				<p>{findTab()?.text ?? '404'}</p>
-			</Flex>
-		</StyledMiniHeader>
+		<StyledSubHeader row>
+			<StyledTitle row align style={{ height: '100%' }}>
+				<StyledSubHeaderIcon
+					className={findTab()?.icon ?? 'fas fa-question-circle'}
+				/>
+				<h2>{findTab()?.text ?? '404'}</h2>
+			</StyledTitle>
+			<UpdateStatus />
+		</StyledSubHeader>
 	);
 };
 
-const StyledMiniHeader = styled.div`
-	width: 100%;
+const StyledSubHeader = styled(Flex)`
+	text-transform: uppercase;
 	height: 100px;
-	padding: 0 20px;
+	min-width: 100%;
 	box-sizing: border-box;
+`;
+
+const StyledSubHeaderIcon = styled.i`
+	margin-right: 20px;
+	font-size: 2.3em;
+	@media (max-width: ${media.tablets}) {
+		display: none;
+	}
+`;
+
+const StyledTitle = styled(Flex)`
 	color: ${colors.superLightGrey};
 	font-family: ${fonts.Cinzel};
-	text-transform: uppercase;
+
 	letter-spacing: 0.3em;
 	font-size: 2em;
+	flex: 1 1 100%;
+	height: 100%;
+	padding: 0 24px;
 	background-color: ${colors.superDarkGrey};
 	background-image: url(${headerImg});
 	background-repeat: no-repeat;
 	background-position-x: right;
 	background-size: cover;
-	p {
-		margin: 0;
+
+	h2 {
+		font-size: 1em;
+		font-weight: normal;
 		text-shadow: 0px 0px 5px ${colors.newDark};
-	}
-	i {
-		margin-right: 20px;
-		font-size: 2.3em;
-		@media (max-width: ${media.tablets}) {
-			display: none;
-		}
+		margin: 0;
 	}
 `;

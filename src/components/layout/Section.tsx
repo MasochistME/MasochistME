@@ -7,7 +7,6 @@ export const Section = styled.div`
 	justify-content: center;
 	align-items: center;
 	padding: 0;
-	margin: 0 10px 10px 10px;
 	box-sizing: border-box;
 	box-shadow: 0 0 20px ${colors.superDarkGrey};
 	background-color: ${colors.superLightGrey}11;

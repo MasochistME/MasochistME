@@ -4,7 +4,6 @@ import axios from 'axios';
 
 import {
 	cacheUsers,
-	cacheBlog,
 	cachePatrons,
 	// cacheStatus,
 } from 'shared/store/Cache';
@@ -38,17 +37,6 @@ export const useInit = (): boolean => {
 			.catch(log.WARN);
 	};
 
-	const loadBlog = () => {
-		axios
-			.get(`${path}/api/blog`)
-			.then(response => {
-				if (response?.status === 200) {
-					return dispatch(cacheBlog(response.data));
-				}
-			})
-			.catch(log.WARN);
-	};
-
 	// const loadStatus = () => {
 	// 	axios
 	// 		.get(`${path}/api/status`)
@@ -62,7 +50,6 @@ export const useInit = (): boolean => {
 
 	const init = () => {
 		loadUsers();
-		loadBlog();
 		loadPatrons();
 		// TODO disabled when dev/staging
 		// setInterval(() => {

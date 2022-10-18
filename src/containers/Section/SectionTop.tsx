@@ -3,13 +3,8 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { useLeaderboards, useCuratorMembers } from 'sdk';
-import {
-	SmallMember,
-	EventLink,
-	Section,
-	SectionTitle,
-} from 'containers/Sidebar/components';
-import { Spinner } from 'components';
+import { EventLink, Section } from 'containers';
+import { Flex, Spinner } from 'components';
 
 export const SectionTop = (): JSX.Element => {
 	const history = useHistory();
@@ -34,30 +29,32 @@ export const SectionTop = (): JSX.Element => {
 	}) => {
 		const onUserClick = () => history.push(`/profile/${leader.memberId}`);
 		return (
-			<SmallMember key={`leaderboards-${leader.memberId}`}>
+			<StyledSectionTopMember row align key={`leaderboards-${leader.memberId}`}>
 				<div>{leader.position}.</div>
 				<EventLink onClick={onUserClick}>
 					<span className="bold">{leader.name}</span>
 				</EventLink>
 				<div>{leader.sum} pts</div>
-			</SmallMember>
+			</StyledSectionTopMember>
 		);
 	};
 
 	return (
-		<Section>
-			<SectionTitle>Top 10 users</SectionTitle>
-			<FlexColumn>
-				{isFetched && leaderboards?.map(leader => leaderboardRow(leader))}
-				{isLoading && <Spinner />}
-			</FlexColumn>
-		</Section>
+		<Section
+			title="Top 10 users"
+			content={
+				<Flex column align justify>
+					{isFetched && leaderboards?.map(leader => leaderboardRow(leader))}
+					{isLoading && <Spinner />}
+				</Flex>
+			}
+		/>
 	);
 };
 
-const FlexColumn = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
+export const StyledSectionTopMember = styled(Flex)`
+	width: 100%;
+	justify-content: space-between;
+	padding: 0 16px;
+	margin-bottom: 1px;
 `;

@@ -27,16 +27,11 @@ import {
 	useAllGames,
 } from 'sdk';
 import { getTierIcon } from 'utils';
-import {
-	SmallEvent,
-	Section,
-	SectionTitle,
-	EventLink,
-} from 'containers/Sidebar/components';
+import { SmallEvent, Section, EventLink } from 'containers';
 import { Spinner } from 'components';
 
 export const SectionHistory = (): JSX.Element => {
-	const { eventsData } = useEvents(10);
+	const { eventsData, isLoading } = useEvents(10);
 	const {
 		getEventMemberJoin,
 		getEventMemberLeave,
@@ -91,17 +86,17 @@ export const SectionHistory = (): JSX.Element => {
 		}
 	};
 
-	const sortedEvents = orderBy(eventsData, ['date'], ['desc']).slice(0, 10);
-
 	return (
-		<Section>
-			<SectionTitle>Last events</SectionTitle>
-			{eventsData?.length ? (
-				sortedEvents.map((event: Event) => classifyEvents(event))
-			) : (
-				<Spinner />
-			)}
-		</Section>
+		<Section
+			title="Last events"
+			content={
+				<>
+					{isLoading && <Spinner />}
+					{!isLoading &&
+						eventsData.map((event: Event) => classifyEvents(event))}
+				</>
+			}
+		/>
 	);
 };
 
@@ -118,16 +113,18 @@ const useEventComponents = () => {
 		const onUserClick = () =>
 			member?.steamId && history.push(`/profile/${member.steamId}`);
 
-		return member ? (
-			<SmallEvent key={`sidebar-event-${event._id}`}>
-				<i className="fas fa-user-plus"></i>
-				<EventLink className="bold" onClick={onUserClick}>
-					{' '}
-					{member.name}
-				</EventLink>{' '}
-				has joined the group!
-			</SmallEvent>
-		) : null;
+		return (
+			member && (
+				<SmallEvent key={`sidebar-event-${event._id}`}>
+					<i className="fas fa-user-plus"></i>
+					<EventLink className="bold" onClick={onUserClick}>
+						{' '}
+						{member.name}
+					</EventLink>{' '}
+					has joined the group!
+				</SmallEvent>
+			)
+		);
 	};
 
 	const getEventMemberLeave = (event: EventMemberLeave) => {
@@ -135,44 +132,50 @@ const useEventComponents = () => {
 		const onUserClick = () =>
 			member?.steamId && history.push(`/profile/${member.steamId}`);
 
-		return member ? (
-			<SmallEvent key={`sidebar-event-${event._id}`}>
-				<i className="fas fa-user-minus"></i>
-				<EventLink className="bold" onClick={onUserClick}>
-					{' '}
-					{member.name}
-				</EventLink>{' '}
-				has left the group!
-			</SmallEvent>
-		) : null;
+		return (
+			member && (
+				<SmallEvent key={`sidebar-event-${event._id}`}>
+					<i className="fas fa-user-minus"></i>
+					<EventLink className="bold" onClick={onUserClick}>
+						{' '}
+						{member.name}
+					</EventLink>{' '}
+					has left the group!
+				</SmallEvent>
+			)
+		);
 	};
 
 	const getEventGameAdd = (event: EventGameAdd) => {
 		const game = games.find((g: Game) => g.id === event.gameId);
 		const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
 
-		return game ? (
-			<SmallEvent key={`sidebar-event-${event._id}`}>
-				<i className="fas fa-plus-square"></i>
-				<EventLink className="bold" onClick={onGameClick}>
-					{' '}
-					{game.title}
-				</EventLink>{' '}
-				has been curated!
-			</SmallEvent>
-		) : null;
+		return (
+			game && (
+				<SmallEvent key={`sidebar-event-${event._id}`}>
+					<i className="fas fa-plus-square"></i>
+					<EventLink className="bold" onClick={onGameClick}>
+						{' '}
+						{game.title}
+					</EventLink>{' '}
+					has been curated!
+				</SmallEvent>
+			)
+		);
 	};
 
 	const getEventGameRemove = (event: EventGameRemove) => {
 		const game = games.find((g: Game) => g.id === event.gameId);
 
-		return game ? (
-			<SmallEvent key={`sidebar-event-${event._id}`}>
-				<i className="fas fa-minus-square"></i>
-				<EventLink className="bold"> {game.title}</EventLink> has been removed
-				from curator!
-			</SmallEvent>
-		) : null;
+		return (
+			game && (
+				<SmallEvent key={`sidebar-event-${event._id}`}>
+					<i className="fas fa-minus-square"></i>
+					<EventLink className="bold"> {game.title}</EventLink> has been removed
+					from curator!
+				</SmallEvent>
+			)
+		);
 	};
 
 	const getEventComplete = (event: EventComplete) => {
@@ -183,20 +186,23 @@ const useEventComponents = () => {
 			member?.steamId && history.push(`/profile/${member.steamId}`);
 		const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
 
-		return member && game ? (
-			<SmallEvent key={`sidebar-event-${event._id}`}>
-				<i className="fas fa-check-square"></i>
-				<EventLink className="bold" onClick={onUserClick}>
-					{' '}
-					{member.name}
-				</EventLink>{' '}
-				completed{' '}
-				<EventLink className="bold" onClick={onGameClick}>
-					{game.title}
-				</EventLink>
-				!
-			</SmallEvent>
-		) : null;
+		return (
+			member &&
+			game && (
+				<SmallEvent key={`sidebar-event-${event._id}`}>
+					<i className="fas fa-check-square"></i>
+					<EventLink className="bold" onClick={onUserClick}>
+						{' '}
+						{member.name}
+					</EventLink>{' '}
+					completed{' '}
+					<EventLink className="bold" onClick={onGameClick}>
+						{game.title}
+					</EventLink>
+					!
+				</SmallEvent>
+			)
+		);
 	};
 
 	const getEventGameTierChange = (event: EventGameTierChange) => {
@@ -204,16 +210,19 @@ const useEventComponents = () => {
 
 		const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
 
-		return game ? (
-			<SmallEvent key={`sidebar-event-${event._id}`}>
-				<i className="fas fa-undo-alt"></i>
-				<EventLink className="bold" onClick={onGameClick}>
-					{' '}
-					{game.title}
-				</EventLink>{' '}
-				changed its tier to <i className={getTierIcon(game.tier, tiersData)} />!
-			</SmallEvent>
-		) : null;
+		return (
+			game && (
+				<SmallEvent key={`sidebar-event-${event._id}`}>
+					<i className="fas fa-undo-alt"></i>
+					<EventLink className="bold" onClick={onGameClick}>
+						{' '}
+						{game.title}
+					</EventLink>{' '}
+					changed its tier to{' '}
+					<i className={getTierIcon(game.tier, tiersData)} />!
+				</SmallEvent>
+			)
+		);
 	};
 
 	const getEventBadgeCreate = (event: EventBadgeCreate) => {
@@ -222,16 +231,19 @@ const useEventComponents = () => {
 
 		const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
 
-		return badge && game ? (
-			<SmallEvent key={`sidebar-event-${event._id}`}>
-				<i className="fas fa-award"></i>
-				<EventLink className="bold" onClick={onGameClick}>
-					{' '}
-					{game.title}
-				</EventLink>{' '}
-				got a new badge!
-			</SmallEvent>
-		) : null;
+		return (
+			badge &&
+			game && (
+				<SmallEvent key={`sidebar-event-${event._id}`}>
+					<i className="fas fa-award"></i>
+					<EventLink className="bold" onClick={onGameClick}>
+						{' '}
+						{game.title}
+					</EventLink>{' '}
+					got a new badge!
+				</SmallEvent>
+			)
+		);
 	};
 
 	const getEventBadgeGiven = (event: EventBadgeGet) => {
@@ -241,16 +253,19 @@ const useEventComponents = () => {
 		const onUserClick = () =>
 			member?.steamId && history.push(`/profile/${member.steamId}`);
 
-		return member && badge ? (
-			<SmallEvent key={`sidebar-event-${event._id}`}>
-				<i className="fas fa-medal"></i>
-				<EventLink className="bold" onClick={onUserClick}>
-					{' '}
-					{member.name}{' '}
-				</EventLink>{' '}
-				got a new badge - <span className="bold">{badge.name}</span>!
-			</SmallEvent>
-		) : null;
+		return (
+			member &&
+			badge && (
+				<SmallEvent key={`sidebar-event-${event._id}`}>
+					<i className="fas fa-medal"></i>
+					<EventLink className="bold" onClick={onUserClick}>
+						{' '}
+						{member.name}{' '}
+					</EventLink>{' '}
+					got a new badge - <span className="bold">{badge.name}</span>!
+				</SmallEvent>
+			)
+		);
 	};
 
 	const getEventGameAchievementNumberChange = (
@@ -259,18 +274,20 @@ const useEventComponents = () => {
 		const game = games.find((g: Game) => g.id === event.gameId);
 		const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
 
-		return game ? (
-			<SmallEvent key={`sidebar-event-${event._id}`}>
-				<i className="fas fa-tasks"></i>
-				<EventLink className="bold" onClick={onGameClick}>
-					{' '}
-					{game.title}
-				</EventLink>{' '}
-				{event.oldNumber < event.newNumber
-					? `got ${event.newNumber - event.oldNumber} new achievements!`
-					: `had ${event.oldNumber - event.newNumber} achievements removed!`}
-			</SmallEvent>
-		) : null;
+		return (
+			game && (
+				<SmallEvent key={`sidebar-event-${event._id}`}>
+					<i className="fas fa-tasks"></i>
+					<EventLink className="bold" onClick={onGameClick}>
+						{' '}
+						{game.title}
+					</EventLink>{' '}
+					{event.oldNumber < event.newNumber
+						? `got ${event.newNumber - event.oldNumber} new achievements!`
+						: `had ${event.oldNumber - event.newNumber} achievements removed!`}
+				</SmallEvent>
+			)
+		);
 	};
 
 	const getEventCustom = (event: EventCustom) => {

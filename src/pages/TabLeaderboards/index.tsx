@@ -38,7 +38,7 @@ export const TabLeaderboards = (): JSX.Element => {
 	};
 
 	return (
-		<Flex column>
+		<Flex column style={{ width: '100%' }}>
 			<Wrapper type="description">
 				<div className="page-description">
 					<p>

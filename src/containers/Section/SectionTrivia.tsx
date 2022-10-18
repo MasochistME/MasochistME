@@ -3,12 +3,14 @@ import { Game, Tier } from '@masochistme/sdk/dist/v1/types';
 
 import { useTiers, useCuratorMembers, useCuratedGames } from 'sdk';
 import { Spinner } from 'components';
-import { Section, SectionTitle } from 'containers/Sidebar/components';
+import { Section } from 'containers';
 
 export const SectionTrivia = (): JSX.Element => {
-	const { tiersData } = useTiers();
-	const { membersData } = useCuratorMembers();
+	const { tiersData, isLoading: isTiersLoading } = useTiers();
+	const { membersData, isLoading: isMembersLoading } = useCuratorMembers();
 	const { gamesData: games } = useCuratedGames();
+
+	const isLoading = isMembersLoading && isTiersLoading;
 
 	const mapCurated = () => {
 		if (!games || !tiersData) return [];
@@ -26,24 +28,27 @@ export const SectionTrivia = (): JSX.Element => {
 	};
 
 	return (
-		<Section>
-			<SectionTitle>Trivia</SectionTitle>
-			{membersData.length && tiersData ? (
+		<Section
+			title="Trivia"
+			content={
 				<>
-					<p>
-						Users total: <span className="bold">{membersData.length}</span>
-					</p>
-					<p>Curated games:</p>
-					<ul>
-						<li style={{ marginLeft: '30px' }}>
-							total: <span className="bold">{games.length}</span>
-						</li>
-						<ul>{mapCurated()}</ul>
-					</ul>
+					{isLoading && <Spinner />}
+					{!isLoading && (
+						<>
+							<p>
+								Users total: <span className="bold">{membersData.length}</span>
+							</p>
+							<p>Curated games:</p>
+							<ul>
+								<li style={{ marginLeft: '30px' }}>
+									total: <span className="bold">{games.length}</span>
+								</li>
+								<ul>{mapCurated()}</ul>
+							</ul>
+						</>
+					)}
 				</>
-			) : (
-				<Spinner />
-			)}
-		</Section>
+			}
+		/>
 	);
 };

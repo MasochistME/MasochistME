@@ -4,7 +4,6 @@ import thunk from 'redux-thunk';
 
 import {
 	CACHE_USERS,
-	CACHE_BLOG,
 	CACHE_PATRONS,
 	CACHE_STATUS,
 	CACHE_USER_DETAILS,
@@ -16,7 +15,6 @@ type TStore = {
 		list: any[];
 		details: any[];
 	};
-	blog: any[];
 	patrons: any[];
 	profile: {
 		username: string | undefined;
@@ -35,7 +33,6 @@ const defaultState: TStore = {
 		list: [],
 		details: [],
 	},
-	blog: [],
 	patrons: [],
 	profile: {
 		username: undefined,
@@ -63,11 +60,6 @@ const reducer = (state = defaultState, action: any) => {
 			return {
 				...state,
 				patrons: action.data,
-			};
-		case CACHE_BLOG:
-			return {
-				...state,
-				blog: action.data,
 			};
 		case CACHE_STATUS:
 			return {

@@ -3,13 +3,7 @@ import styled from 'styled-components';
 import { Game } from '@masochistme/sdk/dist/v1/types';
 
 import { getGameThumbnail } from 'utils';
-import {
-	Section,
-	SectionTitle,
-	SaleBrick,
-	SaleLink,
-	SalePercentage,
-} from 'containers/Sidebar/components';
+import { Section, SaleBrick, SaleLink, SalePercentage } from 'containers';
 import { Spinner } from 'components';
 import { useCuratedGames } from 'sdk';
 
@@ -38,12 +32,15 @@ export const SectionSale = (): JSX.Element => {
 		});
 
 	return (
-		<Section>
-			<SectionTitle>Games on sale</SectionTitle>
-			<SectionSaleUl>
-				{gamesOnSale.length ? gamesOnSale : <Spinner />}
-			</SectionSaleUl>
-		</Section>
+		<Section
+			fullWidth
+			title="Games on sale"
+			content={
+				<SectionSaleUl>
+					{gamesOnSale.length ? gamesOnSale : <Spinner />}
+				</SectionSaleUl>
+			}
+		/>
 	);
 };
 

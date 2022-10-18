@@ -16,35 +16,34 @@ export const Header = (): JSX.Element => {
 	};
 
 	return (
-		<Wrapper>
+		<StyledHeader align>
 			<span />
-			<HeaderMotto>Masochist.ME - games that masochists love</HeaderMotto>
+			<StyledHeaderTitle>
+				Masochist.ME - games that masochists love
+			</StyledHeaderTitle>
 			<Flex>
 				<IconButton icon="fab fa-steam" onClick={onButtonCuratorClick} />
 				<IconButton icon="fab fa-discord" onClick={onButtonDiscordClick} />
 				<IconButton icon="fab fa-patreon" onClick={onButtonPatreonClick} />
 			</Flex>
-		</Wrapper>
+		</StyledHeader>
 	);
 };
 
-const Wrapper = styled.div`
-	display: flex;
-	width: 100%;
+const StyledHeader = styled(Flex)`
+	flex: 1 0 100%;
+	min-width: 100%;
 	height: 70px;
-	padding: 0 32px;
-	align-items: center;
+	padding: 12px 32px;
 	justify-content: space-between;
 	background-color: ${colors.newDark};
-	// background-image: url('../../shared/images/bg_nav.png');
 	color: ${colors.lightGrey};
 	font-family: ${fonts.Raleway};
-	div {
-		margin: 10px;
-	}
 `;
-const HeaderMotto = styled.p`
+
+const StyledHeaderTitle = styled.h1`
 	font-size: 1.2em;
+	font-weight: normal;
 	letter-spacing: 0.5em;
 	margin: 0 10px;
 	text-align: center;

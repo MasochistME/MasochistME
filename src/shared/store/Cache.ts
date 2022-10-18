@@ -1,6 +1,5 @@
 // CONSTANTS
 export const CACHE_USERS = 'CACHE_USERS';
-export const CACHE_BLOG = 'CACHE_BLOG';
 export const CACHE_PATRONS = 'CACHE_PATRONS';
 export const CACHE_STATUS = 'CACHE_STATUS';
 export const CACHE_USER_DETAILS = 'CACHE_USER_DETAILS';
@@ -9,12 +8,6 @@ export const CACHE_USER_DETAILS = 'CACHE_USER_DETAILS';
 export function cacheUsers(data: any): any {
 	return {
 		type: CACHE_USERS,
-		data,
-	};
-}
-export function cacheBlog(data: any): any {
-	return {
-		type: CACHE_BLOG,
 		data,
 	};
 }

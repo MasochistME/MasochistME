@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { colors, fonts, media } from 'shared/theme';
 
 import { tabs, Tab } from 'shared/config/tabs';
 import { NavItem } from './NavItem';
@@ -14,7 +15,29 @@ export const Nav = (): JSX.Element => {
 	);
 };
 
-const NavBar = styled.ul`
+const NavBar = styled.ul.attrs(
+	({ style = {} }: { style?: React.CSSProperties }) => {
+		return { style };
+	},
+)<{ style?: React.CSSProperties }>`
 	display: flex;
 	flex-direction: row;
+	width: 100%;
+	height: 100px;
+	margin: 0;
+	padding: 0;
+	background-color: ${colors.superDarkGrey};
+	box-shadow: 0 0 30px ${colors.newDark};
+	color: ${colors.superLightGrey};
+	font-family: ${fonts.Raleway};
+	font-size: 0.8em;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	position: sticky;
+	top: 0px;
+	z-index: 1000;
+	list-style-type: none;
+	@media (max-width: ${media.tablets}) {
+		height: 50px;
+	}
 `;

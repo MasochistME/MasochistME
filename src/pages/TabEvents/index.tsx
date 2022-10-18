@@ -21,7 +21,7 @@ export const TabEvents = (): JSX.Element => {
 	));
 
 	return (
-		<Flex column>
+		<Flex column style={{ width: '100%' }}>
 			<Wrapper type="description">
 				<div className="page-description">
 					<p>This is the list showcasing the last 100 events.</p>
