@@ -165,8 +165,6 @@ const useEventComponents = () => {
 
 	const getEventGameRemove = (event: EventGameRemove) => {
 		const game = games.find((g: Game) => g.id === event.gameId);
-		console.log(games);
-		console.log(event.gameId);
 
 		return game ? (
 			<SmallEvent key={`sidebar-event-${event._id}`}>

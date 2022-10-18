@@ -1,17 +1,17 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { orderBy } from 'lodash';
+import styled from 'styled-components';
 import { Badge, Game, Member } from '@masochistme/sdk/dist/v1/types';
 
 import { Flex, Wrapper, Section, BigBadge } from 'components';
 import { useActiveTab } from 'shared/hooks';
+import { TabDict } from 'shared/config/tabs';
 import {
+	useAllGames,
 	useBadges,
-	useCuratedGames,
 	useMemberBadges,
 	useMemberLeaderboards,
 } from 'sdk';
-import { TabDict } from 'shared/config/tabs';
 
 import { Badges } from './styles';
 import { ProfileGraphs } from './ProfileGraphs';
@@ -26,48 +26,49 @@ export const FullProfile = (props: Props): JSX.Element => {
 
 	useActiveTab(TabDict.PROFILE);
 
+	const { gamesData: games } = useAllGames();
 	const { badgesData } = useBadges();
-	const { gamesData: games } = useCuratedGames();
 	const { leaderData } = useMemberLeaderboards(member.steamId);
-	const { memberBadgeData = [] } = useMemberBadges(member.steamId);
+	const { memberBadgesData = [] } = useMemberBadges(member.steamId);
 
 	const onBadgeClick = (gameId: number | null) => {
 		if (gameId) history.push(`/game/${gameId}`);
 	};
 
+	const getBadgeTooltip = (badge: Badge, game?: Game) => {
+		const title =
+			badge?.title && badge.title !== 'unknown'
+				? badge.title
+				: game?.title ?? 'unknown';
+		return `${title.toUpperCase()} - ${badge.name} (${badge.points} pts)\n"${
+			badge.description
+		}`;
+	};
+
 	const memberBadges = badgesData.map((badge: Badge) => {
 		const game = games.find((g: Game) => g.id === badge.gameId);
-		return (
-			<BigBadge
-				src={badge.img}
-				alt="badge"
-				title={`${
-					badge?.title && badge.title !== 'unknown'
-						? badge?.title.toUpperCase()
-						: game?.title.toUpperCase()
-				} - ${badge.name} (${badge.points} pts)\n"${badge.description}"`}
-				key={`member-badge-${String(badge._id)}`}
-				onClick={() => onBadgeClick(badge.gameId)}
-			/>
-		);
+		if (!game || game.isCurated || game.isProtected) {
+			const tooltip = getBadgeTooltip(badge, game);
+			return (
+				<BigBadge
+					src={badge.img}
+					alt={`Badge`}
+					title={tooltip}
+					key={`member-badge-${String(badge._id)}`}
+					onClick={() => onBadgeClick(badge.gameId)}
+				/>
+			);
+		}
 	});
 
 	return (
 		<Flex column>
 			<Wrapper type="page">
-				{memberBadgeData.length !== 0 && (
+				{memberBadgesData.length !== 0 && (
 					<Badges>
 						<Section style={{ width: '100%' }}>
 							<h3>Badges</h3>
-							<Flex
-								justify
-								style={{
-									width: '100%',
-									display: 'flex',
-									flexFlow: 'row wrap',
-								}}>
-								{memberBadges}
-							</Flex>
+							<BadgeSection justify>{memberBadges}</BadgeSection>
 						</Section>
 					</Badges>
 				)}
@@ -76,3 +77,8 @@ export const FullProfile = (props: Props): JSX.Element => {
 		</Flex>
 	);
 };
+
+const BadgeSection = styled(Flex)`
+	width: 100%;
+	flex-flow: row wrap;
+`;

@@ -9,7 +9,7 @@ import { TabDict } from 'shared/config/tabs';
 import { SearchBar } from 'containers';
 import { Flex, Wrapper, Spinner } from 'components';
 
-import { User } from './User';
+import { LeaderboardsMember } from './LeaderboardsMember';
 
 export const TabLeaderboards = (): JSX.Element => {
 	const { queryMember } = useAppContext();
@@ -28,7 +28,7 @@ export const TabLeaderboards = (): JSX.Element => {
 			const isUserSearch =
 				memberName.toLowerCase().indexOf(queryMember.toLowerCase()) !== -1;
 			return isUserSearch ? (
-				<User
+				<LeaderboardsMember
 					steamId={leader.memberId}
 					position={leader.position}
 					key={`leaderboards-leader-${leader.memberId}`}

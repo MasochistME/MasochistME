@@ -37,7 +37,6 @@ export const Position = styled.div`
 	max-width: 64px;
 	text-align: center;
 	font-size: 1.2em;
-	border-right: 1px solid ${colors.newDark};
 	@media (max-width: ${media.tablets}) {
 		display: none;
 	}
@@ -50,7 +49,6 @@ export const Avatar = styled.img`
 	max-height: 64px;
 	box-sizing: border-box;
 	padding: 5px;
-	border-left: 1px solid ${colors.newMediumGrey};
 	@media (max-width: ${media.tablets}) {
 		display: none;
 	}
@@ -119,31 +117,6 @@ export const Ranking = styled.div`
 	flex-direction: row;
 	@media (max-width: ${media.tablets}) {
 		display: none !important;
-	}
-`;
-
-export const Display = styled.div.attrs(
-	({ isVisible }: { isVisible?: boolean }) => {
-		const style: React.CSSProperties = {};
-		if (isVisible) {
-			style.display = 'flex !important';
-			style.transition = 'height 1s';
-			style.height = 'auto';
-		} else {
-			style.display = 'none !important';
-			style.height = 0;
-		}
-		return { style };
-	},
-)<{ isVisible?: boolean }>`
-	width: 100%;
-	padding: 0 55px;
-	box-sizing: border-box;
-	&:first-child {
-		border-top: none;
-	}
-	@media (max-width: ${media.smallNetbooks}) {
-		padding: 0;
 	}
 `;
 

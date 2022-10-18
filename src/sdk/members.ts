@@ -42,7 +42,7 @@ export const useMemberBadges = (steamId: string) => {
 	const { sdk } = useAppContext();
 
 	const {
-		data: memberBadgeData = [],
+		data: memberBadgesData = [],
 		isLoading,
 		isFetched,
 		isError,
@@ -52,24 +52,45 @@ export const useMemberBadges = (steamId: string) => {
 		{ enabled: !!steamId },
 	);
 
-	return { memberBadgeData, isLoading, isFetched, isError };
+	return { memberBadgesData, isLoading, isFetched, isError };
 };
 
 /**
  *
  */
-// TODO
-// export const useMemberGames = (steamId: string) => {
-// 	const { sdk } = useAppContext();
+export const useMemberGames = (steamId: string) => {
+	const { sdk } = useAppContext();
 
-// 	const {
-// 		data: memberGameData = [],
-// 		isLoading,
-// 		isFetched,
-// 		isError,
-// 	} = useQuery(['masochist', 'member', steamId, 'games'], () =>
-// 		sdk.getMembersGameList({ steamId }),
-// 	);
+	const {
+		data: memberGamesData = [],
+		isLoading,
+		isFetched,
+		isError,
+	} = useQuery(
+		['masochist', 'member', steamId, 'games'],
+		() => sdk.getMemberGameList({ steamId }),
+		{ enabled: !!steamId },
+	);
 
-// 	return { memberGameData, isLoading, isFetched, isError };
-// };
+	return { memberGamesData, isLoading, isFetched, isError };
+};
+
+/**
+ *
+ */
+export const useMemberAchievements = (steamId: string) => {
+	const { sdk } = useAppContext();
+
+	const {
+		data: memberAchievementsData = [],
+		isLoading,
+		isFetched,
+		isError,
+	} = useQuery(
+		['masochist', 'member', steamId, 'achievements'],
+		() => sdk.getMemberAchievementList({ steamId }),
+		{ enabled: !!steamId },
+	);
+
+	return { memberAchievementsData, isLoading, isFetched, isError };
+};

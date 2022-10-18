@@ -83,13 +83,10 @@ export const ProfileHeader = (props: Props): JSX.Element => {
 					)}
 				</Flex>
 				<UpdateDate>
-					{
-						<span>{`Last updated: ${
-							member?.lastUpdated
-								? new Date(member?.lastUpdated).toLocaleString()
-								: 'Loading...'
-						}`}</span>
-					}
+					Last updated:{' '}
+					{member?.lastUpdated
+						? new Date(member?.lastUpdated).toLocaleString()
+						: 'Loading...'}
 					{Date.now() - lastUpdated > 3600000 ? (
 						updating ? (
 							<UpdateMsg>{message}</UpdateMsg>

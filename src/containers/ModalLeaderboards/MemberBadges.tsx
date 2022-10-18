@@ -2,30 +2,34 @@ import React from 'react';
 import styled from 'styled-components';
 import { Badge } from '@masochistme/sdk/dist/v1/types';
 
+import { useMemberBadges } from 'sdk';
 import { Flex, BadgeTile } from 'components';
 import { useBadges } from 'sdk';
 
 type Props = {
-	user: any;
-	game: any;
+	memberId: string;
+	gameId: number;
 };
 
-export const UserBadges = (props: Props): JSX.Element => {
-	const { user, game } = props;
+export const MemberBadges = (props: Props): JSX.Element => {
+	const { memberId, gameId } = props;
+
+	const { memberBadgesData } = useMemberBadges(memberId);
 	const { badgesData } = useBadges();
 
 	const badges = badgesData.filter(
 		(badge: Badge) =>
-			game?.badges?.includes(badge._id) && user?.badges?.includes(badge._id),
+			badge.gameId === gameId &&
+			memberBadgesData.find(b => b.badgeId === String(badge._id)),
 	);
 
-	const mappedBadges = badges.map((badge: any) => {
+	const mappedBadges = badges.map((badge: Badge) => {
 		const title = `${badge.name} (${badge.points} pts)\n"${badge.description}"`;
 		return (
 			<BadgeTile
 				src={badge.img}
-				alt={badge._id}
-				key={`img-badge-${badge._id}`}
+				alt={`Badge image - ${badge.name}`}
+				key={`badge-tile-${badge._id}`}
 				title={title}
 			/>
 		);

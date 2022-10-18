@@ -17,12 +17,12 @@ import {
 } from './components';
 
 type Props = {
-	steamId: any;
+	steamId: string;
 	position: number;
-	onShowDetails: () => any;
+	onShowDetails: () => void;
 };
 
-export const UserSummary = (props: Props): JSX.Element => {
+export const LeaderboardsMemberSummary = (props: Props): JSX.Element => {
 	const history = useHistory();
 	const { steamId, position, onShowDetails } = props;
 	const [detailsVisible, setDetailsVisible] = useState(false);
@@ -99,7 +99,9 @@ export const UserSummary = (props: Props): JSX.Element => {
 		);
 	};
 
-	const onShowDetailsClick = (event: any): void => {
+	const onShowDetailsClick = (
+		event: React.MouseEvent<HTMLDivElement>,
+	): void => {
 		setDetailsVisible(!detailsVisible);
 		onShowDetails();
 		event.stopPropagation();

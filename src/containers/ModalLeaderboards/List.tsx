@@ -12,7 +12,7 @@ import {
 	UserTimes,
 	UserAvatar,
 } from './components';
-import { UserBadges } from './UserBadges';
+import { MemberBadges } from './MemberBadges';
 import { Member } from '@masochistme/sdk/dist/v1/types';
 
 type Props = {
@@ -67,7 +67,11 @@ export const List = (props: Props): JSX.Element => {
 							{`${user.trophy ? user.trophy : ''}`}
 							<Link onClick={() => onUserClick(user?.id)}>{user.name}</Link>
 						</UserName>
-						<Flex>{!compact && <UserBadges user={user} game={game} />}</Flex>
+						<Flex>
+							{!compact && (
+								<MemberBadges memberId={user?.id} gameId={game.id} />
+							)}
+						</Flex>{' '}
 					</UserInfo>
 					<ProgressBar percentage={Math.floor(user.percentage)} />
 				</User>
