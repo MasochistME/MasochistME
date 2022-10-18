@@ -5,7 +5,7 @@ import { Badge, Game } from '@masochistme/sdk/dist/v1/types';
 import { useActiveTab } from 'shared/hooks';
 import { useBadges, useCuratedGames } from 'sdk';
 import { TabDict } from 'shared/config/tabs';
-import { Wrapper, Flex } from 'components';
+import { Wrapper, Flex, Tooltip } from 'components';
 
 export const TabBadges = (): JSX.Element => {
 	useActiveTab(TabDict.BADGES);
@@ -38,15 +38,17 @@ export const TabBadges = (): JSX.Element => {
 			</Wrapper>
 			<Wrapper type="page">
 				{badges.map(badge => (
-					<img
-						className="profile-badge"
-						src={badge.img}
-						alt="badge"
-						title={`${badge.gameTitle?.toUpperCase()} - ${badge.name} (${
+					<Tooltip
+						content={`${badge.gameTitle?.toUpperCase()} - ${badge.name} (${
 							badge.points
-						} pts)\n"${badge.description}"`}
-						key={`badge-${String(badge._id)}`}
-					/>
+						} pts)\n"${badge.description}"`}>
+						<img
+							className="profile-badge"
+							src={badge.img}
+							alt="badge"
+							key={`badge-${String(badge._id)}`}
+						/>
+					</Tooltip>
 				))}
 			</Wrapper>
 		</Flex>

@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { Badge, Game, Member } from '@masochistme/sdk/dist/v1/types';
 
-import { Flex, Wrapper, Section, BigBadge } from 'components';
+import { Flex, Wrapper, Section, Tooltip, BigBadge } from 'components';
 import { useActiveTab } from 'shared/hooks';
 import { TabDict } from 'shared/config/tabs';
 import {
@@ -35,28 +35,31 @@ export const FullProfile = (props: Props): JSX.Element => {
 		if (gameId) history.push(`/game/${gameId}`);
 	};
 
-	const getBadgeTooltip = (badge: Badge, game?: Game) => {
-		const title =
-			badge?.title && badge.title !== 'unknown'
-				? badge.title
-				: game?.title ?? 'unknown';
-		return `${title.toUpperCase()} - ${badge.name} (${badge.points} pts)\n"${
-			badge.description
-		}`;
-	};
-
 	const memberBadges = badgesData.map((badge: Badge) => {
 		const game = games.find((g: Game) => g.id === badge.gameId);
 		if (!game || game.isCurated || game.isProtected) {
-			const tooltip = getBadgeTooltip(badge, game);
 			return (
-				<BigBadge
-					src={badge.img}
-					alt={`Badge`}
-					title={tooltip}
-					key={`member-badge-${String(badge._id)}`}
-					onClick={() => onBadgeClick(badge.gameId)}
-				/>
+				<Tooltip
+					content={
+						<Flex column>
+							<div>
+								<span style={{ fontWeight: 'bold' }}>
+									{(game?.title ?? 'unknown game').toUpperCase()}
+								</span>{' '}
+								- {`${badge.name} (${badge.points} pts)`}
+							</div>
+							<span style={{ maxWidth: '300px', fontStyle: 'italic' }}>
+								{badge.description}
+							</span>
+						</Flex>
+					}>
+					<BigBadge
+						src={badge.img}
+						alt={`Badge`}
+						key={`member-badge-${String(badge._id)}`}
+						onClick={() => onBadgeClick(badge.gameId)}
+					/>
+				</Tooltip>
 			);
 		}
 	});

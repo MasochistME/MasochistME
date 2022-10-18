@@ -5,6 +5,7 @@ export { IconButton } from './IconButton';
 export { Loader } from './Loader';
 export { ProgressBar } from './ProgressBar';
 export { Spinner } from './Spinner';
+export { Tooltip } from './Tooltip';
 export { Update } from './Update';
 
 export { Flex } from './layout/Flex';

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Badge } from '@masochistme/sdk/dist/v1/types';
 
-import { Flex, Section } from 'components';
+import { Flex, Section, Tooltip } from 'components';
 import { useGameBadges } from 'sdk';
 import { Description, Field, BadgeImg } from './components';
 
@@ -33,13 +33,15 @@ const BadgesSizeCompact = ({ badges }: { badges: Badge[] }) => {
 				<h3>Badges</h3>
 				<Flex row style={{ margin: '8px' }}>
 					{badges.map((badge: any, index: number) => (
-						<BadgeImg
-							style={{ margin: '5px 10px 5px 5px' }}
-							src={badge.img}
-							alt="badge"
-							key={`badge-${index}`}
-							title={`${badge.points} pts - ${badge.name}\n"${badge.description}"`}
-						/>
+						<Tooltip
+							content={`${badge.points} pts - ${badge.name}\n"${badge.description}"`}>
+							<BadgeImg
+								style={{ margin: '5px 10px 5px 5px' }}
+								src={badge.img}
+								alt="badge"
+								key={`badge-${index}`}
+							/>
+						</Tooltip>
 					))}
 				</Flex>
 			</Section>

@@ -6,7 +6,7 @@ import { Game, TierId } from '@masochistme/sdk/dist/v1/types';
 import { useCuratedGames, useTiers } from 'sdk';
 import { useAppContext } from 'shared/store/context';
 import { getGameThumbnail, getTierIcon } from 'utils';
-import { Flex, Spinner, Wrapper, Table } from 'components';
+import { Flex, Spinner, Wrapper, Table, Tooltip } from 'components';
 import { TableLink, defaultSort } from 'components/layout/Table';
 
 type GameData = {
@@ -62,18 +62,17 @@ export const GameList = (): JSX.Element => {
 			),
 			sorter: (a: GameData, b: GameData) => defaultSort(a.title, b.title),
 		},
+		// TODO fix the ones below
 		// {
 		// 	title: () => (
-		// 		<Flex
-		// 			row
-		// 			align
-		// 			justify
-		// 			title="The total sum of base points and all the game badges (excluding negative ones)">
-		// 			Points{' '}
-		// 			<i
-		// 				className="fas fa-question-circle"
-		// 				style={{ fontSize: '12px', marginLeft: '6px' }}></i>
-		// 		</Flex>
+		// 		<Tooltip content="The total sum of base points and all the game badges (excluding negative ones)">
+		// 			<Flex row align justify>
+		// 				Points{' '}
+		// 				<i
+		// 					className="fas fa-question-circle"
+		// 					style={{ fontSize: '12px', marginLeft: '6px' }}></i>
+		// 			</Flex>
+		// 		</Tooltip>
 		// 	),
 		// 	render: (game: GameData) => {
 		// 		const tierPoints =
@@ -99,16 +98,14 @@ export const GameList = (): JSX.Element => {
 		// },
 		// {
 		// 	title: () => (
-		// 		<Flex
-		// 			row
-		// 			align
-		// 			justify
-		// 			title="Average time needed to complete 100% of the Steam achievements">
-		// 			Avg playtime{' '}
-		// 			<i
-		// 				className="fas fa-question-circle"
-		// 				style={{ fontSize: '12px', marginLeft: '6px' }}></i>
-		// 		</Flex>
+		// 		<Tooltip content="Average time needed to complete 100% of the Steam achievements">
+		// 			<Flex row align justify>
+		// 				Avg playtime{' '}
+		// 				<i
+		// 					className="fas fa-question-circle"
+		// 					style={{ fontSize: '12px', marginLeft: '6px' }}></i>
+		// 			</Flex>
+		// 		</Tooltip>
 		// 	),
 		// 	render: (game: GameData) => <div>{`${game.avgPlaytime} h`}</div>,
 		// 	sorter: (a: GameData, b: GameData) =>

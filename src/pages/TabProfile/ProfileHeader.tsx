@@ -5,7 +5,7 @@ import { Member } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'utils';
 import { AppContext } from 'shared/store/context';
-import { Wrapper, Flex, Spinner, CustomButton } from 'components';
+import { Wrapper, Flex, Spinner, CustomButton, Tooltip } from 'components';
 import {
 	Avatar,
 	EmptyAvatar,
@@ -73,13 +73,15 @@ export const ProfileHeader = (props: Props): JSX.Element => {
 						</a>
 					</h1>
 					{patron && (
-						<Patron
-							title={`This user is a tier ${
+						<Tooltip
+							content={`This user is a tier ${
 								patron?.description?.toUpperCase() ?? 'Loading...'
 							} supporter`}>
-							<i className="fas fa-medal" />{' '}
-							{patron?.description?.toUpperCase() ?? 'Loading...'}{' '}
-						</Patron>
+							<Patron>
+								<i className="fas fa-medal" />{' '}
+								{patron?.description?.toUpperCase() ?? 'Loading...'}{' '}
+							</Patron>
+						</Tooltip>
 					)}
 				</Flex>
 				<UpdateDate>
@@ -97,13 +99,12 @@ export const ProfileHeader = (props: Props): JSX.Element => {
 							</CustomButton>
 						)
 					) : (
-						<button
-							className="custom-button button-blocked"
-							title={`${Number(
+						<Tooltip
+							content={`${Number(
 								(3600000 - (Date.now() - lastUpdated)) / 60000,
 							)} minutes till you can update again`}>
-							Update
-						</button>
+							<button className="custom-button button-blocked">Update</button>
+						</Tooltip>
 					)}
 				</UpdateDate>
 				<Basic>

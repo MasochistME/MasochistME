@@ -3,7 +3,7 @@ import { Game, Tier } from '@masochistme/sdk/dist/v1/types';
 
 import { getGameThumbnail } from 'utils';
 import { useTiers } from 'sdk';
-import { Flex, Wrapper } from 'components';
+import { Flex, Wrapper, Tooltip } from 'components';
 import { Basic, Image } from './styles';
 
 type Props = {
@@ -36,9 +36,10 @@ export const GameHeader = (props: Props): JSX.Element => {
 						</a>
 					</h1>
 					<div>
-						<i
-							className={gameRating?.icon ?? 'far fa-question-circle'}
-							title={`This game is worth ${gameRating?.score ?? '?'} pts.`}></i>
+						<Tooltip
+							content={`This game is worth ${gameRating?.score ?? '?'} pts.`}>
+							<i className={gameRating?.icon ?? 'far fa-question-circle'} />
+						</Tooltip>
 					</div>
 				</Flex>
 				<Basic>
