@@ -9,7 +9,9 @@ import {
   getMembersList,
   getMemberById,
   updateMemberById,
+  getMemberAchievementList,
   getMemberBadgeList,
+  getMemberGameList,
   giveBadgeToMemberById,
   revokeBadgeFromMemberById,
 } from './members';
@@ -17,7 +19,12 @@ import {
 routerV1.post('/members/list', getMembersList);
 routerV1.get('/members/member/:memberId', getMemberById);
 routerV1.put('/members/member/:memberId', updateMemberById);
+routerV1.post(
+  '/members/member/:memberId/achievements/list',
+  getMemberAchievementList,
+);
 routerV1.post('/members/member/:memberId/badges/list', getMemberBadgeList);
+routerV1.post('/members/member/:memberId/games/list', getMemberGameList);
 routerV1.post(
   '/members/member/:memberId/badges/badge/:badgeId',
   giveBadgeToMemberById,
