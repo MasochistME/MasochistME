@@ -10,6 +10,7 @@ import {
   Tier,
   TierId,
 } from '@masochistme/sdk/dist/v1/types';
+import { LeaderboardsListParams } from '@masochistme/sdk/dist/v1/api/leaderboards';
 
 import { log } from 'helpers/log';
 import { connectToDb } from 'helpers/db';
@@ -18,10 +19,12 @@ import { connectToDb } from 'helpers/db';
  * Returns MasochistME leaderboards.
  */
 export const getLeaderboardsList = async (
-  _req: Request,
+  req: Request<any, any, LeaderboardsListParams>,
   res: Response,
 ): Promise<void> => {
   try {
+    const { filter = {}, sort, limit = 1000 } = req.body;
+    const { isMember, ...restFilter } = filter;
     const { client, db } = await connectToDb();
 
     const collectionMembers = db.collection<Member>('members');
@@ -35,7 +38,12 @@ export const getLeaderboardsList = async (
 
     // Get all members.
     const membersCursor = collectionMembers.find(
-      {},
+      {
+        ...restFilter,
+        ...(isMember !== undefined && {
+          $or: [{ isMember }, { isProtected: isMember }],
+        }),
+      },
       { projection: { steamId: 1, _id: 0 } },
     );
     const membersIds: string[] = [];
@@ -164,7 +172,29 @@ export const getLeaderboardsList = async (
     });
 
     const sortedLeaderboards = leaderboards
-      .sort((a: Leaderboards, b: Leaderboards) => b.sum - a.sum)
+      .sort((a: Leaderboards, b: Leaderboards) => {
+        if (sort?.gamesTotal) {
+          return sort.gamesTotal === 'desc' ? b.sum - a.sum : a.sum - b.sum;
+        }
+        if (sort?.badgesTotal) {
+          return sort.badgesTotal === 'desc'
+            ? b.badges.total - a.badges.total
+            : a.badges.total - b.badges.total;
+        }
+        if (sort?.gamePoints) {
+          return sort.gamePoints === 'desc' ? b.sum - a.sum : a.sum - b.sum;
+        }
+        if (sort?.badgePoints) {
+          return sort.badgePoints === 'desc'
+            ? b.badges.points - a.badges.points
+            : a.badges.points - b.badges.points;
+        }
+        if (sort?.position) {
+          return sort.position === 'desc' ? b.sum - a.sum : a.sum - b.sum;
+        }
+        return b.sum - a.sum;
+      })
+      .slice(0, limit - 1)
       .map((member: Leaderboards, index: number) => ({
         ...member,
         position: index + 1,

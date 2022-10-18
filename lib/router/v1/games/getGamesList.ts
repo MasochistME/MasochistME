@@ -24,7 +24,7 @@ export const getGamesList = async (
       .find({
         ...restFilter,
         ...(isCurated !== undefined && {
-          $or: [{ isCurated: true }, { isProtected: true }],
+          $or: [{ isCurated }, { isProtected: isCurated }],
         }),
       })
       .sort({
