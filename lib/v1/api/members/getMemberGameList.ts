@@ -66,10 +66,10 @@ export type MemberGameListParams = MemberIdEither & {
 	filter?: Partial<Pick<MemberGame, 'completionPercentage'>> &
 		Partial<Pick<Game, 'isCurated'>>;
 	sort?: {
-		[key in keyof Partial<
+		[key in keyof (Partial<
 			Pick<MemberGame, 'playTime' | 'completionPercentage'>
 		> &
-			keyof Partial<Pick<Game, 'tier' | 'achievementsTotal'>>]: Sort;
+			Partial<Pick<Game, 'tier' | 'achievementsTotal'>>)]: Sort;
 	};
 	limit?: number;
 };
