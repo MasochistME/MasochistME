@@ -59,7 +59,7 @@ export const getMemberAchievementList = async (
 };
 
 export type MemberAchievementListParams = MemberIdEither & {
-	filter?: Partial<Pick<MemberAchievement, 'gameId' | 'isEnabled'>>;
+	filter?: Partial<Pick<MemberAchievement, 'gameId'>>;
 	sort?: {
 		[key in keyof Partial<Pick<MemberAchievement, 'unlockTime'>>]: Sort;
 	};
