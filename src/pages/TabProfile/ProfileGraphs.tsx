@@ -6,7 +6,7 @@ import { Tier, Game, Member } from '@masochistme/sdk/dist/v1/types';
 
 import { DoughnutChart, LineChart, ChartWrapper } from 'containers';
 import { log } from 'utils';
-import { useGames, useTiers } from 'sdk';
+import { useCuratedGames, useTiers } from 'sdk';
 
 const GraphsWrapper = styled.div`
 	display: flex;
@@ -24,7 +24,7 @@ type Props = {
 export const ProfileGraphs = (props: Props): JSX.Element => {
 	const { member } = props;
 	const { tiersData: tiers } = useTiers();
-	const { gamesData: games } = useGames();
+	const { gamesData: games } = useCuratedGames();
 
 	return (
 		<GraphsWrapper>

@@ -7,7 +7,7 @@ import {
 } from '@masochistme/sdk/dist/v1/types';
 
 import logo from 'shared/images/logo.ico';
-import { useGames, useTiers } from 'sdk';
+import { useAllGames, useTiers } from 'sdk';
 import { getGameThumbnail, getTierIcon } from 'utils';
 import {
 	EventDescription,
@@ -24,7 +24,7 @@ export const TierChangeEvent = (props: Props): JSX.Element | null => {
 	const history = useHistory();
 
 	const { tiersData } = useTiers();
-	const { gamesData } = useGames();
+	const { gamesData } = useAllGames();
 
 	const game = gamesData.find((g: Game) => g.id === event.gameId);
 

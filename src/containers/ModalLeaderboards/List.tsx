@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { useMembers } from 'sdk';
+import { useCuratorMembers } from 'sdk';
 import { ProgressBar, Flex } from 'components';
 import {
 	User,
@@ -23,7 +23,7 @@ type Props = {
 export const List = (props: Props): JSX.Element => {
 	const { game, compact } = props;
 	const history = useHistory();
-	const { membersData } = useMembers();
+	const { membersData } = useCuratorMembers();
 
 	const assignDateIfFinished = (leaderboards: any): string | JSX.Element =>
 		leaderboards?.percentage === 100 ? (

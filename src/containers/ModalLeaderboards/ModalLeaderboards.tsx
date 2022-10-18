@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { Game } from '@masochistme/sdk/dist/v1/types';
 
 import { Flex, Spinner, CustomButton } from 'components';
-import { useGames } from 'sdk';
+import { useCuratedGames } from 'sdk';
 
 import { WrapperLeaderboards } from './components';
 import { List } from './List';
@@ -18,7 +18,7 @@ export const ModalLeaderboards = (props: Props): JSX.Element | null => {
 	const { gameId, compact } = props;
 	const history = useHistory();
 
-	const { gamesData, isFetched: isGameLoaded } = useGames();
+	const { gamesData, isFetched: isGameLoaded } = useCuratedGames();
 
 	const game = gamesData.find((g: Game) => g.id === gameId);
 

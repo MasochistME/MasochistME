@@ -1,14 +1,14 @@
 import React from 'react';
 import { Game, Tier } from '@masochistme/sdk/dist/v1/types';
 
-import { useTiers, useMembers, useGames } from 'sdk';
+import { useTiers, useCuratorMembers, useCuratedGames } from 'sdk';
 import { Spinner } from 'components';
 import { Section, SectionTitle } from 'containers/Sidebar/components';
 
 export const SectionTrivia = (): JSX.Element => {
 	const { tiersData } = useTiers();
-	const { membersData } = useMembers();
-	const { gamesData: games } = useGames();
+	const { membersData } = useCuratorMembers();
+	const { gamesData: games } = useCuratedGames();
 
 	const mapCurated = () => {
 		if (!games || !tiersData) return [];

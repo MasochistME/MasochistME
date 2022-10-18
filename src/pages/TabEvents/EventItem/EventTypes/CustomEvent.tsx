@@ -2,7 +2,7 @@ import React from 'react';
 import { EventCustom, Member } from '@masochistme/sdk/dist/v1/types';
 
 import logo from 'shared/images/logo.ico';
-import { useMembers } from 'sdk';
+import { useAllMembers } from 'sdk';
 import {
 	EventDescription,
 	EventSummary,
@@ -18,7 +18,7 @@ export const CustomEvent = (props: TCustomEvent): JSX.Element | null => {
 	const { event } = props;
 	const content = event.content;
 
-	const { membersData } = useMembers();
+	const { membersData } = useAllMembers();
 
 	if (!content) {
 		return null;

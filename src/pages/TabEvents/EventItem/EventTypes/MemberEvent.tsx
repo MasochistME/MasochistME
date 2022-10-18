@@ -6,7 +6,7 @@ import {
 	Member,
 } from '@masochistme/sdk/dist/v1/types';
 
-import { useMembers } from 'sdk';
+import { useAllMembers } from 'sdk';
 import logo from 'shared/images/logo.ico';
 import {
 	EventDescription,
@@ -25,7 +25,7 @@ export const MemberEvent = (props: Props): JSX.Element | null => {
 	const { event, action } = props;
 	const history = useHistory();
 
-	const { membersData } = useMembers();
+	const { membersData } = useAllMembers();
 	const member = membersData.find((m: Member) => m.steamId === event.memberId);
 
 	const onUserClick = () =>

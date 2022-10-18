@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Member } from '@masochistme/sdk/dist/v1/types';
 
-import { useMembers } from 'sdk';
+import { useCuratorMembers } from 'sdk';
 import { Flex, Wrapper, Spinner } from 'components';
 import { useActiveTab } from 'shared/hooks';
 
@@ -14,7 +14,7 @@ export const TabProfile = (): JSX.Element => {
 	useActiveTab(TabDict.PROFILE);
 
 	const { id } = useParams<{ id: string }>();
-	const { membersData, isLoading, isError, isFetched } = useMembers();
+	const { membersData, isLoading, isError, isFetched } = useCuratorMembers();
 
 	const member = membersData.find((m: Member) => m.steamId === id);
 

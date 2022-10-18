@@ -2,14 +2,14 @@ import React from 'react';
 import { Game, TierId } from '@masochistme/sdk/dist/v1/types';
 
 import { Spinner, Wrapper } from 'components';
-import { useGames } from 'sdk';
+import { useCuratedGames } from 'sdk';
 import { GameTile } from './GameTile';
 import { useAppContext } from 'shared/store/context';
 
 export const GameTiles = (): JSX.Element => {
 	const { visibleTiers, queryGame } = useAppContext();
 
-	const { gamesData: games, isFetched } = useGames();
+	const { gamesData: games, isFetched } = useCuratedGames();
 
 	return (
 		<Wrapper type="page">

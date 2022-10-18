@@ -19,7 +19,13 @@ import {
 	Member,
 } from '@masochistme/sdk/dist/v1/types';
 
-import { useBadges, useEvents, useTiers, useMembers, useGames } from 'sdk';
+import {
+	useBadges,
+	useEvents,
+	useTiers,
+	useAllMembers,
+	useAllGames,
+} from 'sdk';
 import { getTierIcon } from 'utils';
 import {
 	SmallEvent,
@@ -102,8 +108,8 @@ export const SectionHistory = (): JSX.Element => {
 const useEventComponents = () => {
 	const history = useHistory();
 
-	const { gamesData: games } = useGames();
-	const { membersData: members } = useMembers();
+	const { gamesData: games } = useAllGames();
+	const { membersData: members } = useAllMembers();
 	const { badgesData: badges } = useBadges();
 	const { tiersData } = useTiers();
 
@@ -142,7 +148,7 @@ const useEventComponents = () => {
 	};
 
 	const getEventGameAdd = (event: EventGameAdd) => {
-		const game = games.find((g: Game) => g.id === Number(event.gameId));
+		const game = games.find((g: Game) => g.id === event.gameId);
 		const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
 
 		return game ? (
@@ -158,7 +164,9 @@ const useEventComponents = () => {
 	};
 
 	const getEventGameRemove = (event: EventGameRemove) => {
-		const game = games.find((g: Game) => g.id === Number(event.gameId));
+		const game = games.find((g: Game) => g.id === event.gameId);
+		console.log(games);
+		console.log(event.gameId);
 
 		return game ? (
 			<SmallEvent key={`sidebar-event-${event._id}`}>
@@ -171,7 +179,7 @@ const useEventComponents = () => {
 
 	const getEventComplete = (event: EventComplete) => {
 		const member = members.find((m: Member) => m.steamId === event.memberId);
-		const game = games.find((g: Game) => g.id === Number(event.gameId));
+		const game = games.find((g: Game) => g.id === event.gameId);
 
 		const onUserClick = () =>
 			member?.steamId && history.push(`/profile/${member.steamId}`);
@@ -250,7 +258,7 @@ const useEventComponents = () => {
 	const getEventGameAchievementNumberChange = (
 		event: EventAchievementNumberChange,
 	) => {
-		const game = games.find((g: Game) => g.id === Number(event.gameId));
+		const game = games.find((g: Game) => g.id === event.gameId);
 		const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
 
 		return game ? (

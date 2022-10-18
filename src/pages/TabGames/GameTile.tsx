@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Game } from '@masochistme/sdk/dist/v1/types';
 
 import { getTierIcon, getGameThumbnail } from 'utils';
-import { useTiers, useGames } from 'sdk';
+import { useTiers, useCuratedGames } from 'sdk';
 import { colors } from 'shared/theme';
 import { ModalLeaderboards } from 'containers';
 import { Img, Desc, Info, Title, Rating } from './styles';
@@ -21,7 +21,7 @@ export const GameTile = (props: Props): JSX.Element => {
 	const [modalIsOpen, setModalIsOpen] = useState(false);
 
 	const { tiersData } = useTiers();
-	const { gamesData } = useGames();
+	const { gamesData } = useCuratedGames();
 
 	const game = gamesData.find((g: Game) => g.id === gameId);
 

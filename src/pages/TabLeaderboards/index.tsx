@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Member, Tier, Leaderboards } from '@masochistme/sdk/dist/v1/types';
 
-import { useTiers, useMembers, useLeaderboards } from 'sdk';
+import { useTiers, useCuratorMembers, useLeaderboards } from 'sdk';
 import { useAppContext } from 'shared/store/context';
 import { useActiveTab } from 'shared/hooks';
 import { TabDict } from 'shared/config/tabs';
@@ -17,7 +17,7 @@ export const TabLeaderboards = (): JSX.Element => {
 
 	const { leaderboardsData, isLoading, isError } = useLeaderboards();
 	const { tiersData } = useTiers();
-	const { membersData } = useMembers();
+	const { membersData } = useCuratorMembers();
 
 	const createRankingList = () => {
 		if (isError) return;

@@ -11,10 +11,10 @@ import {
 	SalePercentage,
 } from 'containers/Sidebar/components';
 import { Spinner } from 'components';
-import { useGames } from 'sdk';
+import { useCuratedGames } from 'sdk';
 
 export const SectionSale = (): JSX.Element => {
-	const { gamesData } = useGames();
+	const { gamesData } = useCuratedGames();
 
 	// TODO Use games sale endpoint here!!!
 	const gamesOnSale = gamesData

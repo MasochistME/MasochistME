@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { Game, TierId } from '@masochistme/sdk/dist/v1/types';
 
-import { useGames, useTiers } from 'sdk';
+import { useCuratedGames, useTiers } from 'sdk';
 import { useAppContext } from 'shared/store/context';
 import { getGameThumbnail, getTierIcon } from 'utils';
 import { Flex, Spinner, Wrapper, Table } from 'components';
@@ -26,7 +26,7 @@ export const GameList = (): JSX.Element => {
 	const { visibleTiers, queryGame } = useAppContext();
 
 	const { tiersData } = useTiers();
-	const { gamesData } = useGames();
+	const { gamesData } = useCuratedGames();
 
 	const games = gamesData.filter(
 		(game: Game) =>

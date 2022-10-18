@@ -8,7 +8,7 @@ import {
 } from '@masochistme/sdk/dist/v1/types';
 
 import { getGameThumbnail } from 'utils';
-import { useTiers, useMembers, useGames } from 'sdk';
+import { useTiers, useAllMembers, useAllGames } from 'sdk';
 import logo from 'shared/images/logo.ico';
 import {
 	EventDescription,
@@ -26,9 +26,9 @@ export const CompleteEvent = (props: Props): JSX.Element | null => {
 	const { event } = props;
 	const history = useHistory();
 
-	const { membersData } = useMembers();
+	const { membersData } = useAllMembers();
 	const { tiersData } = useTiers();
-	const { gamesData } = useGames();
+	const { gamesData } = useAllGames();
 
 	const member = membersData.find((m: Member) => m.steamId === event.memberId);
 	const game = gamesData.find((g: Game) => g.id === event.gameId);

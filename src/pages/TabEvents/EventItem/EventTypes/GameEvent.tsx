@@ -8,7 +8,7 @@ import {
 } from '@masochistme/sdk/dist/v1/types';
 
 import logo from 'shared/images/logo.ico';
-import { useGames, useTiers } from 'sdk';
+import { useAllGames, useTiers } from 'sdk';
 import {
 	EventDescription,
 	EventSummary,
@@ -28,7 +28,7 @@ export const GameEvent = (props: Props): JSX.Element | null => {
 	const history = useHistory();
 
 	const { tiersData } = useTiers();
-	const { gamesData: games } = useGames();
+	const { gamesData: games } = useAllGames();
 
 	const game = games.find((g: Game) => g.id === event.gameId);
 	const gameRating = tiersData.find((tier: Tier) => tier.id === game?.tier);

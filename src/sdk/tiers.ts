@@ -1,6 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import { useAppContext } from 'shared/store/context';
 
+/**
+ *
+ */
 export const useTiers = () => {
 	const { sdk } = useAppContext();
 

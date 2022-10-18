@@ -2,7 +2,7 @@ import React from 'react';
 import { orderBy } from 'lodash';
 import { Game, Member, Tier } from '@masochistme/sdk/dist/v1/types';
 
-import { useTiers, useMembers, useGames } from 'sdk';
+import { useTiers, useCuratorMembers, useCuratedGames } from 'sdk';
 import { getGameThumbnail } from 'utils/getGameUrl';
 import { Spinner } from 'components';
 
@@ -17,8 +17,8 @@ type Props = {
 export const UserDetails = (props: Props): JSX.Element => {
 	const { steamId, isVisible } = props;
 
-	const { membersData, isFetched } = useMembers();
-	const { gamesData } = useGames();
+	const { membersData, isFetched } = useCuratorMembers();
+	const { gamesData } = useCuratedGames();
 	const { tiersData } = useTiers();
 
 	const member = {

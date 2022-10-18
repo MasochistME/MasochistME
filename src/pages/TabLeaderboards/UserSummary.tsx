@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { Member, Tier } from '@masochistme/sdk/dist/v1/types';
-import { useTiers, useMembers, useMemberLeaderboards } from 'sdk';
+import { useTiers, useCuratorMembers, useMemberLeaderboards } from 'sdk';
 import { Flex } from 'components';
 import {
 	Info,
@@ -27,7 +27,7 @@ export const UserSummary = (props: Props): JSX.Element => {
 	const { steamId, position, onShowDetails } = props;
 	const [detailsVisible, setDetailsVisible] = useState(false);
 
-	const { membersData } = useMembers();
+	const { membersData } = useCuratorMembers();
 	const { tiersData } = useTiers();
 	const { leaderData } = useMemberLeaderboards(steamId);
 

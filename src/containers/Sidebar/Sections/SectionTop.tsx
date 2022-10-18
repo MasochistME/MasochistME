@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { useLeaderboards, useMembers } from 'sdk';
+import { useLeaderboards, useCuratorMembers } from 'sdk';
 import {
 	SmallMember,
 	EventLink,
@@ -14,7 +14,7 @@ import { Spinner } from 'components';
 export const SectionTop = (): JSX.Element => {
 	const history = useHistory();
 
-	const { membersData } = useMembers();
+	const { membersData } = useCuratorMembers();
 	const { leaderboardsData, isFetched, isLoading } = useLeaderboards(10);
 
 	const leaderboards = leaderboardsData.map(leader => ({

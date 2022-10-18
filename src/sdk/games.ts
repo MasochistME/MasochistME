@@ -1,7 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { useAppContext } from 'shared/store/context';
 
-export const useGames = () => {
+/**
+ *
+ */
+export const useAllGames = () => {
 	const { sdk } = useAppContext();
 
 	const {
@@ -9,13 +12,30 @@ export const useGames = () => {
 		isLoading,
 		isFetched,
 		isError,
-	} = useQuery(['masochist', 'games'], () =>
+	} = useQuery(['masochist', 'games', 'all'], () =>
+		sdk.getGamesList({
+			sort: { title: 'asc' },
+		}),
+	);
+
+	return { gamesData, isLoading, isFetched, isError };
+};
+
+/**
+ *
+ */
+export const useCuratedGames = () => {
+	const { sdk } = useAppContext();
+
+	const {
+		data: gamesData = [],
+		isLoading,
+		isFetched,
+		isError,
+	} = useQuery(['masochist', 'games', 'curated'], () =>
 		sdk.getGamesList({
 			filter: { isCurated: true },
-			sort: {
-				tier: 'desc',
-				title: 'asc',
-			},
+			sort: { title: 'asc' },
 		}),
 	);
 

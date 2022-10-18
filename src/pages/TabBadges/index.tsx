@@ -3,14 +3,14 @@ import { orderBy } from 'lodash';
 import { Badge, Game } from '@masochistme/sdk/dist/v1/types';
 
 import { useActiveTab } from 'shared/hooks';
-import { useBadges, useGames } from 'sdk';
+import { useBadges, useCuratedGames } from 'sdk';
 import { TabDict } from 'shared/config/tabs';
 import { Wrapper, Flex } from 'components';
 
 export const TabBadges = (): JSX.Element => {
 	useActiveTab(TabDict.BADGES);
 
-	const { gamesData: games } = useGames();
+	const { gamesData: games } = useCuratedGames();
 	const { badgesData } = useBadges();
 
 	const badges = orderBy(

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { Game } from '@masochistme/sdk/dist/v1/types';
 
-import { useGames, useGameBadges } from 'sdk';
+import { useCuratedGames, useGameBadges } from 'sdk';
 import { Flex, Spinner, Wrapper, Section } from 'components';
 import { StackedBarChart, List, Badges } from 'containers';
 import { media } from 'shared/theme';
@@ -18,7 +18,7 @@ export const TabGame = (): JSX.Element => {
 	const { id } = useParams<{ id: string }>();
 	const gameId = Number(id);
 
-	const { gamesData, isFetched: loaded } = useGames();
+	const { gamesData, isFetched: loaded } = useCuratedGames();
 	const { gameBadgesData = [] } = useGameBadges(gameId);
 
 	const game = gamesData.find((g: Game) => g.id === gameId);

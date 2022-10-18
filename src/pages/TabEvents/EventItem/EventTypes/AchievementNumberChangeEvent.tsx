@@ -8,7 +8,7 @@ import {
 
 import logo from 'shared/images/logo.ico';
 import { getGameThumbnail } from 'utils';
-import { useTiers, useGames } from 'sdk';
+import { useTiers, useAllGames } from 'sdk';
 import {
 	EventDescription,
 	EventSummary,
@@ -28,7 +28,7 @@ export const AchievementNumberChangeEvent = (
 	const history = useHistory();
 
 	const { tiersData } = useTiers();
-	const { gamesData: games } = useGames();
+	const { gamesData: games } = useAllGames();
 
 	const game = games.find((g: Game) => g.id === event.gameId);
 	const tier = tiersData.find((t: Tier) => t.id === game?.tier);

@@ -1,6 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { useAppContext } from 'shared/store/context';
 
+/**
+ *
+ * @param limit
+ * @returns
+ */
 export const useEvents = (limit?: number) => {
 	const { sdk } = useAppContext();
 

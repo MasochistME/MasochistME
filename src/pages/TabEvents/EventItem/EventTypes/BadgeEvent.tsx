@@ -9,7 +9,7 @@ import {
 } from '@masochistme/sdk/dist/v1/types';
 
 import { getGameThumbnail } from 'utils';
-import { useBadges, useGames, useMembers } from 'sdk';
+import { useBadges, useCuratedGames, useAllMembers } from 'sdk';
 import logo from 'shared/images/logo.ico';
 import {
 	EventDescription,
@@ -41,7 +41,7 @@ export const BadgeEvent = (props: Props): JSX.Element | null => {
 const BadgeAdded = ({ event }: { event: EventBadgeCreate }) => {
 	const history = useHistory();
 
-	const { gamesData } = useGames();
+	const { gamesData } = useCuratedGames();
 	const { badgesData } = useBadges();
 
 	const badge = badgesData.find((b: Badge) => String(b._id) === event.badgeId);
@@ -78,7 +78,7 @@ const BadgeAdded = ({ event }: { event: EventBadgeCreate }) => {
 const BadgeGiven = ({ event }: { event: EventBadgeGet }) => {
 	const history = useHistory();
 
-	const { membersData } = useMembers();
+	const { membersData } = useAllMembers();
 	const { badgesData } = useBadges();
 
 	const badge = badgesData.find((b: Badge) => String(b._id) === event.badgeId);

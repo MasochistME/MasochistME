@@ -1,6 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { useAppContext } from 'shared/store/context';
 
+/**
+ *
+ * @returns
+ */
 export const useBadges = () => {
 	const { sdk } = useAppContext();
 

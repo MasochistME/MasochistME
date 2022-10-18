@@ -7,7 +7,7 @@ import { Flex, Wrapper, Section, BigBadge } from 'components';
 import { useActiveTab } from 'shared/hooks';
 import {
 	useBadges,
-	useGames,
+	useCuratedGames,
 	useMemberBadges,
 	useMemberLeaderboards,
 } from 'sdk';
@@ -27,7 +27,7 @@ export const FullProfile = (props: Props): JSX.Element => {
 	useActiveTab(TabDict.PROFILE);
 
 	const { badgesData } = useBadges();
-	const { gamesData: games } = useGames();
+	const { gamesData: games } = useCuratedGames();
 	const { leaderData } = useMemberLeaderboards(member.steamId);
 	const { memberBadgeData = [] } = useMemberBadges(member.steamId);
 

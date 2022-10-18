@@ -3,9 +3,8 @@ import { useAppContext } from 'shared/store/context';
 
 /**
  *
- * @returns
  */
-export const useMembers = () => {
+export const useAllMembers = () => {
 	const { sdk } = useAppContext();
 
 	const {
@@ -13,7 +12,23 @@ export const useMembers = () => {
 		isLoading,
 		isFetched,
 		isError,
-	} = useQuery(['masochist', 'members'], () =>
+	} = useQuery(['masochist', 'members', 'all'], () => sdk.getMembersList({}));
+
+	return { membersData, isLoading, isFetched, isError };
+};
+
+/**
+ *
+ */
+export const useCuratorMembers = () => {
+	const { sdk } = useAppContext();
+
+	const {
+		data: membersData = [],
+		isLoading,
+		isFetched,
+		isError,
+	} = useQuery(['masochist', 'members', 'curator'], () =>
 		sdk.getMembersList({ filter: { isMember: true } }),
 	);
 
@@ -22,8 +37,6 @@ export const useMembers = () => {
 
 /**
  *
- * @param steamId
- * @returns
  */
 export const useMemberBadges = (steamId: string) => {
 	const { sdk } = useAppContext();
@@ -44,8 +57,6 @@ export const useMemberBadges = (steamId: string) => {
 
 /**
  *
- * @param steamId
- * @returns
  */
 // TODO
 // export const useMemberGames = (steamId: string) => {
@@ -62,45 +73,3 @@ export const useMemberBadges = (steamId: string) => {
 
 // 	return { memberGameData, isLoading, isFetched, isError };
 // };
-
-/**
- *
- * @param limit
- * @returns
- */
-export const useLeaderboards = (limit?: number) => {
-	const { sdk } = useAppContext();
-
-	const {
-		data: leaderboardsData = [],
-		isLoading,
-		isFetched,
-		isError,
-	} = useQuery(['masochist', 'leaderboards', `limit-${limit ?? 1000}`], () =>
-		sdk.getLeaderboardsList({ limit: limit ?? 1000 }),
-	);
-
-	return { leaderboardsData, isLoading, isFetched, isError };
-};
-
-/**
- *
- * @param limit
- * @returns
- */
-export const useMemberLeaderboards = (steamId?: string) => {
-	const { sdk } = useAppContext();
-
-	const {
-		data: leaderData,
-		isLoading,
-		isFetched,
-		isError,
-	} = useQuery(
-		['masochist', 'leaderboards', steamId],
-		() => sdk.getMemberLeaderboardsPositionById({ memberId: steamId! }),
-		{ enabled: !!steamId },
-	);
-
-	return { leaderData, isLoading, isFetched, isError };
-};
