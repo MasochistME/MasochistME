@@ -2,59 +2,23 @@ require('dotenv').config();
 
 import express from 'express';
 import cors from 'cors';
-// import passport from 'passport';
 import cookieParser from 'cookie-parser';
-// import session from 'express-session';
 
 import { tokenValidation } from 'helpers/validate';
 import { getDataFromDB } from 'helpers/db';
 import { log } from 'helpers/log';
 
 import { router } from 'router';
-import { routerAuth } from 'router/auth';
 import { initiateMainUpdate } from 'router/update';
 
 import config from '../config.json';
 
-// const SteamStrategy = require('passport-steam').Strategy;
 const app = express();
 
 // const rootPath =
 //   process.env.NODE_ENV === 'development'
 //     ? 'http://localhost'
 //     : 'http://89.47.165.141';
-
-// passport.serializeUser((user, done) => {
-//   done(null, user);
-// });
-
-// passport.deserializeUser((obj, done) => {
-//   done(null, obj);
-// });
-
-// passport.use(
-//   new SteamStrategy(
-//     {
-//       returnURL: `${rootPath}:3002/auth/steam/redirect`,
-//       realm: `${rootPath}:3002/`,
-//       apiKey: process.env.STEAM_KEY,
-//     },
-//     async (identifier, profile, done) => {
-//       process.nextTick(() => {
-//         const member = getDataFromDB('members', {
-//           id: profile?._json?.steamid ?? -1,
-//         });
-//         const userData = {
-//           name: profile?._json?.personaname ?? 'UNKNOWN ENTITY',
-//           id: Number(profile?._json?.steamid ?? -1),
-//           identifier,
-//           permissions: member?.groups ?? [],
-//         };
-//         return done(null, userData);
-//       });
-//     },
-//   ),
-// );
 
 app.use(express.json({ limit: '5mb' }));
 app.use(express.urlencoded({ limit: '5mb', extended: false }));
@@ -70,14 +34,6 @@ app.use(
 );
 app.use(cookieParser());
 app.set('trust proxy', 1);
-// app.use(
-//   session({
-//     secret: process.env.AUTH,
-//     cookie: { name: 'steam-session', maxAge: 360000, secure: false },
-//   }),
-// );
-// app.use(passport.initialize());
-// app.use(passport.session());
 
 // this is for prod env where req.user does not exist
 app.use((req: any, res: any, next) => {
@@ -91,7 +47,6 @@ app.post('*', tokenValidation);
 app.delete('*', tokenValidation);
 
 app.use('/api', router);
-app.use('/auth', routerAuth);
 
 app.listen(config.PORT, () => {
   log.INFO(`Server listening at port ${config.PORT}!`);

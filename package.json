@@ -7,7 +7,7 @@
     "dev": "env NODE_PATH=./src NODE_ENV=development ts-node src/dds.ts",
     "build": "env NODE_PATH=./src tsc -p .",
     "clean": "rm -rf node_modules && rm -rf dist",
-    "dds": "env NODE_ENV=production yarn run clean && yarn && yarn run build && env NODE_PATH=./src ts-node dist/src/dds.js",
+    "dds:prod": "env NODE_ENV=production NODE_PATH=./src ts-node dist/src/dds.js",
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint src --ext .jsx,.js,.tsx,.ts --fix --quiet"
   },
@@ -28,11 +28,8 @@
     "crypto-js": "^3.1.9-1",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "express-session": "^1.17.2",
     "mongo": "^0.1.0",
     "mongodb": "^3.2.7",
-    "passport": "^0.4.1",
-    "passport-steam": "^1.0.15",
     "tsc": "^1.20150623.0"
   },
   "devDependencies": {
