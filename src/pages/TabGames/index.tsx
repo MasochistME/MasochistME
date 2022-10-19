@@ -24,7 +24,8 @@ export const TabGames = (): JSX.Element => {
 				{gameListView === GameView.TABLE && <GameTableView />}
 			</StyledGames>
 			<Section
-				maxWidth="300px"
+				minWidth="450px"
+				maxWidth="450px"
 				title="MasochistME curations"
 				content={
 					<Flex column gap={8}>

@@ -2,30 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { fonts, colors, media } from 'shared/theme';
-import { Flex, IconButton } from 'components';
+import { Flex } from 'components';
+import { ButtonsSocialMedia } from 'containers';
 
 export const Header = (): JSX.Element => {
-	const onButtonCuratorClick = () => {
-		window.open('https://store.steampowered.com/curator/41289936', '_blank');
-	};
-	const onButtonPatreonClick = () => {
-		window.open('https://www.patreon.com/pointonepercent', '_blank');
-	};
-	const onButtonDiscordClick = () => {
-		window.open('https://discord.com/invite/cRNWDSam', '_blank');
-	};
-
 	return (
 		<StyledHeader align>
 			<span />
 			<StyledHeaderTitle>
 				Masochist.ME - games that masochists love
 			</StyledHeaderTitle>
-			<Flex>
-				<IconButton icon="fab fa-steam" onClick={onButtonCuratorClick} />
-				<IconButton icon="fab fa-discord" onClick={onButtonDiscordClick} />
-				<IconButton icon="fab fa-patreon" onClick={onButtonPatreonClick} />
-			</Flex>
+			<ButtonsSocialMedia />
 		</StyledHeader>
 	);
 };

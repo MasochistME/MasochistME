@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Game } from '@masochistme/sdk/dist/v1/types';
 
-import { Flex, Spinner, CustomButton } from 'components';
+import { Flex, Spinner, Button } from 'components';
 import { useCuratedGames } from 'sdk';
 
 import { WrapperLeaderboards } from './components';
@@ -46,7 +46,11 @@ export const ModalLeaderboards = (props: Props): JSX.Element | null => {
 						<i className="fab fa-steam" /> {game?.title ?? 'Loading...'}
 					</a>
 				</h2>
-				<CustomButton onClick={onShowGame}>Details</CustomButton>
+				<Button
+					label="Details"
+					icon="fas fa-info-circle"
+					onClick={onShowGame}
+				/>
 			</Flex>
 			{isGameLoaded && game ? (
 				<Flex column>

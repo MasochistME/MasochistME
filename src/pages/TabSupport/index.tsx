@@ -31,7 +31,8 @@ export const TabSupport = (): JSX.Element => {
 					))}
 			</StyledHallOfFame>
 			<Section
-				maxWidth="300px"
+				minWidth="450px"
+				maxWidth="450px"
 				title="Hall of Fame"
 				content={
 					<>

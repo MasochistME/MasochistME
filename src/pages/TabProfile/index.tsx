@@ -1,54 +1,57 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { Member } from '@masochistme/sdk/dist/v1/types';
+import styled from 'styled-components';
 
-import { useCuratorMembers } from 'sdk';
+import { useMemberById, useMemberLeaderboards } from 'sdk';
+import { Flex } from 'components';
 import { SubPage } from 'containers';
-import { Flex, Spinner } from 'components';
 import { useActiveTab } from 'shared/hooks';
 
-import { FullProfile } from './FullProfile';
-import { ProfileHeader } from './ProfileHeader';
+import { MemberProfileHeader } from './MemberProfileHeader';
+import { MemberProfileGraphs } from './MemberProfileGraphs';
 import { TabDict } from 'shared/config/tabs';
+import { MemberProfileBadges } from './MemberProfileBadges';
 
 export const TabProfile = (): JSX.Element => {
 	useActiveTab(TabDict.PROFILE);
 
 	const { id } = useParams<{ id: string }>();
-	const { membersData, isLoading, isError, isFetched } = useCuratorMembers();
-
-	const member = membersData.find((m: Member) => m.steamId === id);
+	const { memberData: member, isError } = useMemberById(id);
+	const { leaderData } = useMemberLeaderboards(id);
 
 	const isUserPrivate = member?.isPrivate;
 	const isUserNotAMember = member && !member.isMember && !member.isProtected;
 
 	return (
 		<SubPage>
-			{!isError && <ProfileHeader member={member} error={false} />}
-			{isLoading && <Spinner />}
-			{isUserPrivate && (
-				<ProfileWarning description="This user has their profile set to private." />
-			)}
-			{isUserNotAMember && (
-				<ProfileWarning description="This user is no longer a member of the curator." />
-			)}
-			{isError && (
-				<ProfileWarning description={`User with id ${id} does not exist.`} />
-			)}
-			{isFetched && member && <FullProfile member={member} />}
+			<StyledProfile column>
+				<MemberProfileHeader memberId={id} />
+				{isUserPrivate && (
+					<ProfileWarning description="This user has their profile set to private." />
+				)}
+				{isUserNotAMember && (
+					<ProfileWarning description="This user is no longer a member of the curator." />
+				)}
+				{isError && (
+					<ProfileWarning description={`User with id ${id} does not exist.`} />
+				)}
+				{leaderData?.sum ? <MemberProfileGraphs memberId={id} /> : null}
+			</StyledProfile>
+			<MemberProfileBadges memberId={id} />
 		</SubPage>
 	);
 };
 
-type ProfileWarningProps = {
-	description: string;
-};
-const ProfileWarning = (props: ProfileWarningProps): JSX.Element => {
+const StyledProfile = styled(Flex)`
+	flex: 1 1 100%;
+`;
+
+const ProfileWarning = (props: { description: string }): JSX.Element => {
 	const { description } = props;
 
 	return (
-		<SubPage>
-			<p style={{ fontWeight: 'bold', fontSize: '1.5em' }}>⚠️ {description}</p>
-		</SubPage>
+		<div style={{ fontWeight: 'bold', fontSize: '1.5em' }}>
+			⚠️ {description}
+		</div>
 	);
 };

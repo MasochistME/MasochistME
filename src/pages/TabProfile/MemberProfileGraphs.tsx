@@ -1,80 +1,107 @@
 import React from 'react';
 import { orderBy } from 'lodash';
-import styled from 'styled-components';
 import moment from 'moment';
 import { Tier, Game, Member } from '@masochistme/sdk/dist/v1/types';
 
-import { DoughnutChart, LineChart, ChartWrapper } from 'containers';
+import { useCuratedGames, useTiers, useMemberById } from 'sdk';
+import { DoughnutChart, LineChart, Section } from 'containers';
 import { log } from 'utils';
-import { useCuratedGames, useTiers } from 'sdk';
-
-const GraphsWrapper = styled.div`
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: space-between;
-	flex-wrap: wrap;
-	width: 100%;
-`;
+import { Flex, Spinner } from 'components';
 
 type Props = {
-	member: Member;
+	memberId: string;
 };
 
-export const ProfileGraphs = (props: Props): JSX.Element => {
-	const { member } = props;
+export const MemberProfileGraphs = (props: Props): JSX.Element | null => {
+	const { memberId } = props;
+
 	const { tiersData: tiers } = useTiers();
 	const { gamesData: games } = useCuratedGames();
+	const { memberData: member, isLoading, isFetched } = useMemberById(memberId);
 
-	return (
-		<GraphsWrapper>
-			<ChartWrapper title="HOURS PLAYED (TOTAL)">
-				<DoughnutChart
-					labels={summarizeTotalTimes('label', 'total', tiers, member, games)}
-					dataset={summarizeTotalTimes('sum', 'total', tiers, member, games)}
+	if (isLoading) return <Spinner />;
+	if (isFetched && member)
+		return (
+			<Flex justify flexWrap="wrap" width="100%" gap={16}>
+				<Section
+					minWidth="300px"
+					maxWidth="300px"
+					title="Hour played (total)"
+					content={
+						<DoughnutChart
+							labels={summarizeTotalTimes(
+								'label',
+								'total',
+								tiers,
+								member,
+								games,
+							)}
+							dataset={summarizeTotalTimes(
+								'sum',
+								'total',
+								tiers,
+								member,
+								games,
+							)}
+						/>
+					}
 				/>
-			</ChartWrapper>
-			<ChartWrapper title="HOURS PLAYED (COMPLETED)">
-				<DoughnutChart
-					labels={summarizeTotalTimes(
-						'label',
-						'completed',
-						tiers,
-						member,
-						games,
-					)}
-					dataset={summarizeTotalTimes(
-						'sum',
-						'completed',
-						tiers,
-						member,
-						games,
-					)}
+				<Section
+					title="Hours played (completed)"
+					minWidth="300px"
+					maxWidth="300px"
+					content={
+						<DoughnutChart
+							labels={summarizeTotalTimes(
+								'label',
+								'completed',
+								tiers,
+								member,
+								games,
+							)}
+							dataset={summarizeTotalTimes(
+								'sum',
+								'completed',
+								tiers,
+								member,
+								games,
+							)}
+						/>
+					}
 				/>
-			</ChartWrapper>
-			<ChartWrapper title="GAMES COMPLETED">
-				<DoughnutChart
-					labels={summarizeTotalGames('label', tiers, member, games)}
-					dataset={summarizeTotalGames('sum', tiers, member, games)}
+				<Section
+					minWidth="300px"
+					maxWidth="300px"
+					title="Games completed"
+					content={
+						<DoughnutChart
+							labels={summarizeTotalGames('label', tiers, member, games)}
+							dataset={summarizeTotalGames('sum', tiers, member, games)}
+						/>
+					}
 				/>
-			</ChartWrapper>
-			<ChartWrapper title="COMPLETION TIMELINE" width="100%">
-				<LineChart
-					labels={getTimelines('label', tiers, member, games)}
-					datasets={[
-						{
-							label: 'games',
-							data: getTimelines('games', tiers, member, games),
-						},
-						{
-							label: 'points',
-							data: getTimelines('points', tiers, member, games),
-						},
-					]}
+				<Section
+					fullWidth
+					title="Completion timeline"
+					content={
+						<LineChart
+							labels={getTimelines('label', tiers, member, games)}
+							datasets={[
+								{
+									label: 'games',
+									data: getTimelines('games', tiers, member, games),
+								},
+								{
+									label: 'points',
+									data: getTimelines('points', tiers, member, games),
+								},
+							]}
+						/>
+					}
 				/>
-			</ChartWrapper>
-		</GraphsWrapper>
-	);
+			</Flex>
+		);
+	return null;
 };
 
 /**

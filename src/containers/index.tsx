@@ -1,6 +1,7 @@
 export * from './BadgeThumbnail';
 export * from './BadgeTile';
 export * from './BadgeTooltip';
+export * from './ButtonsSocialMedia';
 export * from './Charts';
 export * from './Footer';
 export * from './Header';

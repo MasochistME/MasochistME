@@ -10,6 +10,7 @@ type Props = {
 };
 export const Tooltip = (props: Props) => {
 	const { content, children } = props;
+	if (!content) return children;
 	return (
 		<Tippy
 			render={attrs => (

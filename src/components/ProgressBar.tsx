@@ -5,7 +5,7 @@ import { colors, fonts, media } from 'shared/theme';
 type Props = {
 	percentage: number;
 	invert?: boolean;
-	style?: any;
+	style?: React.CSSProperties;
 };
 
 export const ProgressBar = (props: Props): JSX.Element => {
@@ -18,23 +18,20 @@ export const ProgressBar = (props: Props): JSX.Element => {
 	);
 };
 
-type TCompletion = {
-	invert?: boolean;
-	style?: any;
-};
-
-const Completion = styled.div.attrs((props: TCompletion) => {
-	const style: any = {
-		backgroundColor: `${colors.newDark}`,
-		border: `1px solid ${colors.newDark}`,
-		...props.style,
-	};
-	if (props.invert) {
-		style.backgroundColor = `${colors.newMediumGrey}`;
-		style.border = `1px solid ${colors.newMediumGrey}`;
-	}
-	return { style };
-})<{ invert?: boolean; style?: any }>`
+ProgressBar.Completion = styled.div.attrs(
+	(props: Omit<Props, 'percentage'>) => {
+		const style: React.CSSProperties = {
+			backgroundColor: `${colors.newDark}`,
+			border: `1px solid ${colors.newDark}`,
+			...props.style,
+		};
+		if (props.invert) {
+			style.backgroundColor = `${colors.newMediumGrey}`;
+			style.border = `1px solid ${colors.newMediumGrey}`;
+		}
+		return { style };
+	},
+)<Omit<Props, 'percentage'>>`
 	position: relative;
 	min-width: 150px;
 	height: 15px;
@@ -47,18 +44,16 @@ const Completion = styled.div.attrs((props: TCompletion) => {
 	}
 `;
 
-const Progress = styled.div.attrs(
-	({ percentage, invert }: { percentage: number; invert?: boolean }) => {
-		const style: any = {
-			width: `${percentage}%`,
-			backgroundColor: `${colors.newMediumGrey}`,
-		};
-		if (invert) {
-			style.backgroundColor = `${colors.newDark}`;
-		}
-		return { style };
-	},
-)<{ percentage: number; invert?: boolean }>`
+ProgressBar.Progress = styled.div.attrs((props: Omit<Props, 'style'>) => {
+	const style: React.CSSProperties = {
+		width: `${props.percentage}%`,
+		backgroundColor: `${colors.newMediumGrey}`,
+	};
+	if (props.invert) {
+		style.backgroundColor = `${colors.newDark}`;
+	}
+	return { style };
+})<Omit<Props, 'style'>>`
 	position: absolute;
 	height: 100%;
 	padding: 0 !important;
@@ -68,7 +63,7 @@ const Progress = styled.div.attrs(
 	}
 `;
 
-const Percentage = styled.div`
+ProgressBar.Percentage = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -80,7 +75,3 @@ const Percentage = styled.div`
 	letter-spacing: 0.1em;
 	color: ${colors.superLightGrey};
 `;
-
-ProgressBar.Completion = Completion;
-ProgressBar.Progress = Progress;
-ProgressBar.Percentage = Percentage;

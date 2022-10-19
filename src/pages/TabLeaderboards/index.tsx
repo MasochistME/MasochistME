@@ -56,7 +56,8 @@ export const TabLeaderboards = (): JSX.Element => {
 				{isFetched && <Flex column>{createRankingList()}</Flex>}
 			</StyledLeaderboards>
 			<Section
-				maxWidth="300px"
+				minWidth="450px"
+				maxWidth="450px"
 				title="Game ranking system"
 				content={
 					<Flex column gap={8}>

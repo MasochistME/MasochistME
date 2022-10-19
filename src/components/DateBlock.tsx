@@ -1,11 +1,8 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 import { Flex } from './Flex';
-
-dayjs.extend(customParseFormat);
 
 type Props = {
 	date?: Date | number;

@@ -4,11 +4,14 @@ import Chart from 'chart.js';
 type TDoughnutChart = {
 	labels: any;
 	dataset: any;
+	width?: number;
 };
 
 export const DoughnutChart = (props: TDoughnutChart): JSX.Element => {
-	const { labels, dataset } = props;
+	const { labels, dataset, width } = props;
 	const chartRef: React.RefObject<any> = React.createRef();
+
+	const sideWidth = `${width ?? 300}px`;
 
 	useEffect(() => {
 		const barChartRef = chartRef.current.getContext('2d');
@@ -46,7 +49,7 @@ export const DoughnutChart = (props: TDoughnutChart): JSX.Element => {
 
 	return (
 		<canvas
-			style={{ width: '300px', height: '300px' }}
+			style={{ width: sideWidth, height: sideWidth }}
 			id="myChart"
 			ref={chartRef}
 		/>

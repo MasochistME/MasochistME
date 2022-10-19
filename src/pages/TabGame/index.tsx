@@ -32,9 +32,10 @@ export const TabGame = (): JSX.Element => {
 	const gameDetails = {
 		...game,
 		badges: gameBadgesData,
-		completions: 'TODO!!!',
-		avgPlaytime: 'TODO!!!',
-		avgPlaytimeForTier: 'TODO!!!',
+		// TODO!!!!
+		completions: 0,
+		avgPlaytime: 0,
+		avgPlaytimeForTier: 0,
 	};
 
 	return (
@@ -51,24 +52,24 @@ export const TabGame = (): JSX.Element => {
 									gameDetails?.completions ?? 'unknown'
 								} - average completion time`}
 								content={
-									'Charts go here'
-									// <StackedBarChart
-									// 	labels={['hours']}
-									// 	datasets={[
-									// 		{
-									// 			label: 'this game',
-									// 			data: [gameDetails.avgPlaytime],
-									// 			colorNormal: '#e30000ff',
-									// 			colorTransparent: '#e3000033',
-									// 		},
-									// 		{
-									// 			label: 'games from this tier',
-									// 			data: [gameDetails?.avgPlaytimeForTier ?? 0],
-									// 			colorNormal: '#141620ff',
-									// 			colorTransparent: '#14162066',
-									// 		},
-									// 	]}
-									// />
+									// TODO
+									<StackedBarChart
+										labels={['hours']}
+										datasets={[
+											{
+												label: 'this game',
+												data: [gameDetails.avgPlaytime],
+												colorNormal: '#e30000ff',
+												colorTransparent: '#e3000033',
+											},
+											{
+												label: 'games from this tier',
+												data: [gameDetails?.avgPlaytimeForTier ?? 0],
+												colorNormal: '#141620ff',
+												colorTransparent: '#14162066',
+											},
+										]}
+									/>
 								}
 							/>
 						)}
@@ -78,7 +79,8 @@ export const TabGame = (): JSX.Element => {
 				</StyledGameStats>
 			</Flex>
 			<Section
-				maxWidth="300px"
+				minWidth="450px"
+				maxWidth="450px"
 				title="Badges"
 				content={
 					<Flex column gap={4}>
