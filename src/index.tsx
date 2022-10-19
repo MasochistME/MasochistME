@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+import Modal from 'react-modal';
 
 import GlobalStyle from 'styles/globalStyles';
 import store from 'shared/store/store';
@@ -12,6 +13,8 @@ import { App } from './App';
 import './shared/fonts/FontAwesome/css/all.css';
 import './styles/antStyles.css';
 import './index.css';
+
+Modal.setAppElement('#root');
 
 const queryClient = new QueryClient({
 	defaultOptions: {
