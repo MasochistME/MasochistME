@@ -22,10 +22,7 @@ export const GameHeader = (props: Props): JSX.Element => {
 			<div
 				className="page-description"
 				style={{ paddingBottom: '0', marginBottom: '0' }}>
-				<Flex
-					row
-					align
-					style={{ justifyContent: 'space-between', marginBottom: '10px' }}>
+				<Flex row align justifyContent="space-between" marginBottom="10px">
 					<h1 style={{ margin: '0' }}>
 						<a
 							href={`https://steamcommunity.com/app/${game?.id}`}

@@ -144,7 +144,8 @@ export const LeaderboardsMemberSummary = (props: Props): JSX.Element => {
 					row
 					justify
 					align
-					style={{ width: '64px', height: '64px' }}
+					width="64px"
+					height="64px"
 					onClick={onShowDetailsClick}>
 					<i
 						className={`fas fa-chevron-down icon-hover ${

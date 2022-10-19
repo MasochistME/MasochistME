@@ -1,4 +1,5 @@
 export * from './Charts';
+export * from './Footer';
 export * from './Header';
 export * from './ModalLeaderboards';
 export * from './Nav';

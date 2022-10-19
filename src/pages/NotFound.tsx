@@ -3,7 +3,7 @@ import { Flex, Wrapper } from 'components';
 
 export const NotFound = (): JSX.Element => {
 	return (
-		<Flex column style={{ width: '100%' }}>
+		<Flex column width="100%">
 			<Wrapper type="description">
 				<div
 					className="page-description"

@@ -34,11 +34,9 @@ export const ModalLeaderboards = (props: Props): JSX.Element | null => {
 			<Flex
 				row
 				align
-				style={{
-					justifyContent: 'space-between',
-					borderBottom: '1px solid #444',
-					marginBottom: '12px',
-				}}>
+				justifyContent="space-between"
+				borderBottom="1px solid #444"
+				marginBottom="12px">
 				<h2 style={{ borderBottom: 0 }}>
 					<a
 						href={`https://store.steampowered.com/app/${game?.id ?? ''}`}

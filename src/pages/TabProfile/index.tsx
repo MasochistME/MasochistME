@@ -22,7 +22,7 @@ export const TabProfile = (): JSX.Element => {
 	const isUserNotAMember = member && !member.isMember && !member.isProtected;
 
 	return (
-		<Flex column style={{ width: '100%' }}>
+		<Flex column width="100%">
 			{!isError && <ProfileHeader member={member} error={false} />}
 			{isLoading && <Spinner />}
 			{isUserPrivate && (

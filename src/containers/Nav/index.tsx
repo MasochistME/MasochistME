@@ -23,14 +23,13 @@ const NavBar = styled.ul.attrs(
 	display: flex;
 	flex-direction: row;
 	width: 100%;
-	height: 100px;
 	margin: 0;
 	padding: 0;
 	background-color: ${colors.superDarkGrey};
 	box-shadow: 0 0 30px ${colors.newDark};
 	color: ${colors.superLightGrey};
 	font-family: ${fonts.Raleway};
-	font-size: 0.8em;
+	font-size: 0.9em;
 	text-transform: uppercase;
 	letter-spacing: 2px;
 	position: sticky;

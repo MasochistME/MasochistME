@@ -31,7 +31,7 @@ export const TabGame = (): JSX.Element => {
 	};
 
 	return (
-		<Flex column style={{ width: '100%' }}>
+		<Flex column width="100%">
 			<GameHeader game={game} />
 			<Wrapper type="page">
 				{loaded && game ? (

@@ -29,9 +29,9 @@ export const tabs: Tab[] = [
 	},
 	{
 		id: TabDict.LEADERBOARDS,
-		text: 'ranking',
+		text: 'leaderboards',
 		icon: 'fas fa-medal',
-		link: 'ranking',
+		link: 'leaderboards',
 		visible: true,
 		external: false,
 	},

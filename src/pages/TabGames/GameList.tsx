@@ -42,7 +42,7 @@ export const GameList = (): JSX.Element => {
 			render: (game: GameData) => {
 				const icon = getTierIcon(game.tier, tiersData);
 				return (
-					<Flex style={{ margin: '0 8px 0 12px' }}>
+					<Flex margin="0 8px 0 12px">
 						<i className={icon} />
 					</Flex>
 				);

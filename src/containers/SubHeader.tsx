@@ -14,7 +14,7 @@ export const SubHeader = (): JSX.Element => {
 
 	return (
 		<StyledSubHeader row>
-			<StyledTitle row align style={{ height: '100%' }}>
+			<StyledTitle row align>
 				<StyledSubHeaderIcon
 					className={findTab()?.icon ?? 'fas fa-question-circle'}
 				/>

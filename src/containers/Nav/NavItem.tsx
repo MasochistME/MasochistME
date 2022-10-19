@@ -47,7 +47,8 @@ const TabItem = styled.li.attrs(({ active }: { active?: boolean }) => {
 	align-items: center;
 	border-right: 3px solid ${colors.newDark};
 	height: 100%;
-	width: 20%;
+	padding: 24px 0;
+	flex: 1 0 auto;
 	box-sizing: border-box;
 	&:hover {
 		background-color: ${colors.newDark};

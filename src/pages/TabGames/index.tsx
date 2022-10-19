@@ -24,7 +24,7 @@ export const TabGames = (): JSX.Element => {
 	};
 
 	return (
-		<Flex column style={{ width: '100%' }}>
+		<Flex column width="100%">
 			<Wrapper type="description">
 				<div className="page-description">
 					<p>
@@ -46,7 +46,7 @@ export const TabGames = (): JSX.Element => {
 				</div>
 
 				{tiersData ? (
-					<Flex row align style={{ justifyContent: 'space-between' }}>
+					<Flex row align justifyContent="space-between">
 						<div className="wrapper-choicebar">
 							{tiersData.map((tier: Tier) => (
 								<CheckBoxGameChoice

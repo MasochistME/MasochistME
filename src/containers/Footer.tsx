@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { fonts, colors, media } from 'shared/theme';
 import { Flex, IconButton } from 'components';
+import { colors, fonts } from 'shared/theme';
 
-export const Header = (): JSX.Element => {
+export const Footer = () => {
 	const onButtonCuratorClick = () => {
 		window.open('https://store.steampowered.com/curator/41289936', '_blank');
 	};
@@ -16,39 +16,25 @@ export const Header = (): JSX.Element => {
 	};
 
 	return (
-		<StyledHeader align>
-			<span />
-			<StyledHeaderTitle>
-				Masochist.ME - games that masochists love
-			</StyledHeaderTitle>
-			<Flex>
+		<StyledFooter align>
+			<StyledFooterText>Arcyvilk @ 2022</StyledFooterText>
+			<Flex gap={4}>
 				<IconButton icon="fab fa-steam" onClick={onButtonCuratorClick} />
 				<IconButton icon="fab fa-discord" onClick={onButtonDiscordClick} />
 				<IconButton icon="fab fa-patreon" onClick={onButtonPatreonClick} />
 			</Flex>
-		</StyledHeader>
+		</StyledFooter>
 	);
 };
 
-const StyledHeader = styled(Flex)`
-	min-width: 100%;
-	max-width: 100%;
-	height: 70px;
-	padding: 12px 32px;
+const StyledFooter = styled(Flex)`
+	justify-self: flex-end;
 	justify-content: space-between;
+	width: 100%;
+	padding: 0px 32px;
 	background-color: ${colors.newDark};
 	color: ${colors.lightGrey};
 	font-family: ${fonts.Raleway};
 `;
 
-const StyledHeaderTitle = styled.h1`
-	font-size: 1.2em;
-	font-weight: normal;
-	letter-spacing: 0.5em;
-	margin: 0 10px;
-	text-align: center;
-	text-transform: uppercase;
-	@media (max-width: ${media.tablets}) {
-		letter-spacing: 0em;
-	}
-`;
+const StyledFooterText = styled.h3``;

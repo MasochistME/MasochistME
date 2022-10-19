@@ -28,7 +28,7 @@ export const SectionNewGames = (): JSX.Element => {
 			fullWidth
 			title="Recent curations"
 			content={
-				<Flex justify style={{ gap: '8px' }}>
+				<Flex justify gap="8px">
 					{newestGames}
 				</Flex>
 			}

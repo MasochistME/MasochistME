@@ -29,7 +29,7 @@ export const List = (props: Props): JSX.Element => {
 		leaderboards?.percentage === 100 ? (
 			new Date(leaderboards?.lastUnlocked * 1000).toLocaleString()
 		) : (
-			<Flex justify align style={{ width: '100%' }}>
+			<Flex justify align width="100%">
 				—
 			</Flex>
 		);

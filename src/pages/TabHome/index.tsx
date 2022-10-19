@@ -54,7 +54,7 @@ export const TabHome = (): JSX.Element => {
 	});
 
 	return (
-		<Flex row style={{ gap: '16px', alignItems: 'flex-start', width: '100%' }}>
+		<Flex row gap={16} alignItems="flex-start" width="100%">
 			<StyledDashboard row justify>
 				{sections}
 			</StyledDashboard>

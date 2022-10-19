@@ -33,7 +33,7 @@ export const SectionNewMembers = (): JSX.Element => {
 		<Section
 			title="New members"
 			content={
-				<Flex justify style={{ gap: '8px' }}>
+				<Flex justify gap="8px">
 					{newestMembers}
 				</Flex>
 			}

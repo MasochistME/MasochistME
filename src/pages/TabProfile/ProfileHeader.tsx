@@ -62,7 +62,7 @@ export const ProfileHeader = (props: Props): JSX.Element => {
 			<div
 				className="page-description"
 				style={{ paddingBottom: '0', marginBottom: '0' }}>
-				<Flex row align style={{ justifyContent: 'space-between' }}>
+				<Flex row align justifyContent="space-between">
 					<h1 style={{ margin: '0' }}>
 						<a
 							href={`https://steamcommunity.com/profiles/${member?.steamId}`}

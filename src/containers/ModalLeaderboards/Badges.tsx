@@ -31,15 +31,15 @@ const BadgesSizeCompact = ({ badges }: { badges: Badge[] }) => {
 		<StyledBadges>
 			<Section>
 				<h3>Badges</h3>
-				<Flex row style={{ margin: '8px' }}>
-					{badges.map((badge: any, index: number) => (
+				<Flex row margin="8px">
+					{badges.map((badge: Badge) => (
 						<Tooltip
 							content={`${badge.points} pts - ${badge.name}\n"${badge.description}"`}>
 							<BadgeImg
 								style={{ margin: '5px 10px 5px 5px' }}
 								src={badge.img}
 								alt="badge"
-								key={`badge-${index}`}
+								key={`badge-${String(badge._id)}`}
 							/>
 						</Tooltip>
 					))}
@@ -56,25 +56,23 @@ const BadgesSizeStandard = ({ badges }: { badges: Badge[] }) => {
 				<h3>Badges</h3>
 				<Flex
 					column
-					style={{
-						width: '100%',
-						height: '100%',
-						padding: '0 10px 10px 10px',
-						boxSizing: 'border-box',
-					}}>
-					{badges.map((badge: any, index: number) => (
-						<Description key={`badge-${index}`}>
+					width="100%"
+					height="100%"
+					padding="0 10px 10px 10px"
+					boxSizing="border-box">
+					{badges.map((badge: Badge) => (
+						<Description key={`badge-description-${badge._id}`}>
 							<h4 style={{ margin: 0, textAlign: 'center' }}>
 								{badge.name?.toUpperCase()}
 							</h4>
-							<Flex row style={{ width: '100%' }}>
+							<Flex row width="100%">
 								<BadgeImg
 									style={{ margin: '5px 10px 5px 5px' }}
 									src={badge.img}
 									alt="badge"
-									key={`badge-${index}`}
+									key={`badge-image-${badge._id}`}
 								/>
-								<Flex column style={{ width: '100%' }}>
+								<Flex column width="100%">
 									<Field>Points: {badge.points} pts</Field>
 									<Field>Proof: {badge.requirements}</Field>
 									<Field>Description: {badge.description}</Field>
