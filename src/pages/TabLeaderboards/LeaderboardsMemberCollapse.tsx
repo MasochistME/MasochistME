@@ -88,7 +88,7 @@ export const StyledMemberGameList = styled(Flex)<SummaryProps>`
 	border-right: 1px solid ${colors.superDarkGrey};
 	background-color: ${({ isDisabled, isShekelmaster }) => {
 		if (isDisabled) return `${colors.darkRedTransparent}cc`;
-		if (isShekelmaster) return `${colors.tier4Transparent}`;
+		if (isShekelmaster) return `${colors.tier4Darkened}aa`;
 		return `${colors.superDarkGrey}cc`;
 	}};
 	&:first-child {

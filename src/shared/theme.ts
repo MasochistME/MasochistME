@@ -27,7 +27,7 @@ export const colors = {
 	tier1: '#32a042',
 
 	tier4Muted: '#a47b00',
-	tier4Transparent: '#261d01ee',
+	tier4Darkened: '#261d01',
 };
 
 export const media = {

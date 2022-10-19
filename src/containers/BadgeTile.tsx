@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Badge } from '@masochistme/sdk/dist/v1/types';
 
-import { colors } from 'shared/theme';
+import { colors, fonts } from 'shared/theme';
 import { BadgeThumbnail } from 'containers';
 import { Flex } from 'components';
 
@@ -15,17 +15,16 @@ export const BadgeTile = (props: Props) => {
 
 	return (
 		<StyledBadge>
-			<Flex column align justify gap={12}>
+			<Flex column align justify gap={8}>
 				<BadgeThumbnail badge={badge} key={`badge-image-${badge._id}`} />
 				<BadgePoints badge={badge} />
 			</Flex>
-			<Flex column gap={6} width="100%">
-				<h3 style={{ margin: 0 }}>{badge.name?.toUpperCase()}</h3>
+			<Flex column gap={2} width="100%">
+				<h3 style={{ margin: '0 0 4px 0' }}>{badge.name?.toUpperCase()}</h3>
 				<StyledBadgeField>
 					<span style={{ fontWeight: 'bold' }}>Requirements</span> -{' '}
 					{badge.requirements}
 				</StyledBadgeField>
-
 				<StyledBadgeField style={{ fontStyle: 'italic' }}>
 					{badge.description}
 				</StyledBadgeField>
@@ -38,9 +37,9 @@ export const BadgePoints = (props: Props) => {
 	const { badge } = props;
 
 	return (
-		<Flex gap={8} fontSize="18px">
-			<i className="fas fa-coins" />
+		<Flex align gap={4} fontSize="18px" fontFamily={fonts.Dosis}>
 			{badge.points}
+			<i className="fas fa-coins" />
 		</Flex>
 	);
 };

@@ -30,6 +30,7 @@ export const SearchBar = (props: Props): JSX.Element => {
 const SearchBarInput = styled.input`
 	flex: 1 1 auto;
 	height: 44px;
+	width: 350px;
 	max-width: 350px;
 	padding: 4px 12px;
 	font-size: 1.2em;

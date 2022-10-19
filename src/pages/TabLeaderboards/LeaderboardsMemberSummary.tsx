@@ -104,7 +104,7 @@ const StyledLeaderboardsMemberSummary = styled(Flex)<SummaryProps>`
 	}};
 	background-color: ${({ isDisabled, isShekelmaster }) => {
 		if (isDisabled) return colors.darkRedTransparent;
-		if (isShekelmaster) return colors.tier4Transparent;
+		if (isShekelmaster) return `${colors.tier4Darkened}dd`;
 		return `${colors.newDarkBlue}bb`;
 	}};
 	border-bottom: 1px solid

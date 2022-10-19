@@ -40,21 +40,23 @@ export const GameFilterBar = (): JSX.Element => {
 
 	return (
 		<FilterBar>
-			<SearchBar
-				placeholder="Search games"
-				query={queryGame}
-				setQuery={setQueryGame}
-			/>
-			<StyledFilterGameTiers>
-				{isTiersLoading && <Spinner />}
-				{isTiersFetched &&
-					tiersData.map((tier: Tier) => (
-						<GameTierCheckbox
-							tierId={tier.id}
-							key={`checkbox-game-${tier.id}`}
-						/>
-					))}
-			</StyledFilterGameTiers>
+			<Flex gap={16}>
+				<SearchBar
+					placeholder="Search games"
+					query={queryGame}
+					setQuery={setQueryGame}
+				/>
+				<StyledFilterGameTiers>
+					{isTiersLoading && <Spinner />}
+					{isTiersFetched &&
+						tiersData.map((tier: Tier) => (
+							<GameTierCheckbox
+								tierId={tier.id}
+								key={`checkbox-game-${tier.id}`}
+							/>
+						))}
+				</StyledFilterGameTiers>
+			</Flex>
 			<Button
 				onClick={onGameViewClick}
 				icon={gameViewButtonIcon}
@@ -66,5 +68,5 @@ export const GameFilterBar = (): JSX.Element => {
 
 const StyledFilterGameTiers = styled(Flex)`
 	justify-content: center;
-	gap: 12px;
+	gap: 24px;
 `;

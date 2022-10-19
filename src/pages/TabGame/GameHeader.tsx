@@ -1,10 +1,11 @@
 import React from 'react';
+import styled from 'styled-components';
 import { Game, Tier } from '@masochistme/sdk/dist/v1/types';
 
+import { colors, media } from 'shared/theme';
 import { getGameThumbnail } from 'utils';
 import { useTiers } from 'sdk';
 import { Flex, Tooltip } from 'components';
-import { Basic, Image } from './styles';
 
 type Props = {
 	game?: Game;
@@ -14,15 +15,14 @@ export const GameHeader = (props: Props): JSX.Element => {
 	const { game } = props;
 	const { tiersData } = useTiers();
 
-	const gameRating = tiersData.find((tier: Tier) => tier.id === game?.tier);
+	const gameTier = tiersData.find((tier: Tier) => tier.id === game?.tier);
 	const gameThumbnail = getGameThumbnail(game?.id);
 
 	return (
-		<div>
-			<div
-				className="page-description"
-				style={{ paddingBottom: '0', marginBottom: '0' }}>
-				<Flex row align justifyContent="space-between" marginBottom="10px">
+		<StyledGameHeader row>
+			<StyledGameHeaderThumbnail src={gameThumbnail} />
+			<StyledGameDetails column>
+				<Flex row align justifyContent="space-between">
 					<h1 style={{ margin: '0' }}>
 						<a
 							href={`https://steamcommunity.com/app/${game?.id}`}
@@ -32,21 +32,53 @@ export const GameHeader = (props: Props): JSX.Element => {
 							{game?.title ?? 'Loading...'}
 						</a>
 					</h1>
-					<div>
-						<Tooltip
-							content={`This game is worth ${gameRating?.score ?? '?'} pts.`}>
-							<i className={gameRating?.icon ?? 'far fa-question-circle'} />
-						</Tooltip>
-					</div>
+					<GameHeaderTier gameTier={gameTier} />
 				</Flex>
-				<Basic>
-					<Image src={gameThumbnail} />
-					<div style={{ fontSize: '1.3em', textAlign: 'center' }}>
-						{game?.description ?? 'Loading...'}
-					</div>
-					<div />
-				</Basic>
-			</div>
-		</div>
+				<div style={{ fontSize: '1.1em' }}>
+					{game?.description ?? 'Loading...'}
+				</div>
+			</StyledGameDetails>
+		</StyledGameHeader>
 	);
 };
+
+const GameHeaderTier = ({ gameTier }: { gameTier?: Tier }) => {
+	return (
+		<Tooltip content={`This game is worth ${gameTier?.score ?? '?'} pts.`}>
+			<i
+				className={gameTier?.icon ?? 'far fa-question-circle'}
+				style={{ fontSize: '2em' }}
+			/>
+		</Tooltip>
+	);
+};
+
+const StyledGameHeaderThumbnail = styled.img`
+	height: 128px;
+	min-height: 128px;
+	border-radius: 10px;
+	border: 3px solid ${colors.black};
+	box-sizing: border-box;
+	box-shadow: 0 0 10px ${colors.black};
+	@media (max-width: ${media.tablets}) {
+		display: none;
+	}
+`;
+
+const StyledGameHeader = styled(Flex)`
+	width: 100%;
+	margin-bottom: 10px;
+	padding: 8px;
+	gap: 16px;
+	justify-content: space-between;
+	align-items: flex-start;
+	background-color: ${colors.black}66;
+`;
+
+const StyledGameDetails = styled(Flex)`
+	flex: 1 1 100%;
+	gap: 12px;
+	@media (max-width: ${media.tablets}) {
+		display: none;
+	}
+`;
