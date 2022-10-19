@@ -28,9 +28,10 @@ const StyledSection = styled.div.attrs(
 	width: ${({ fullWidth }) => (fullWidth ? '100%' : 'auto')};
 	height: auto;
 	box-sizing: border-box;
-	box-shadow: 0 0 20px ${colors.newDark};
+	border: 1px solid ${colors.darkBlue};
+	border-radius: 16px;
 	color: ${colors.superLightGrey};
-	background-color: ${colors.darkBlue}cc;
+	background-color: ${colors.newDarkBlue}cc;
 `;
 
 Section.Title = styled.h3`
@@ -45,6 +46,7 @@ Section.Title = styled.h3`
 	text-transform: uppercase;
 	background-color: ${colors.newDark};
 	color: ${colors.superLightGrey};
+	border-radius: 16px 16px 0 0;
 `;
 
 Section.Content = styled.div`
