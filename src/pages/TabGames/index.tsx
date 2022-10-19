@@ -1,63 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Tier } from '@masochistme/sdk/dist/v1/types';
 
-import { useAppContext, GameView } from 'shared/store/context';
-import { SubPage, Section, SearchBar } from 'containers';
-import { Flex, HoverIcon, Spinner } from 'components';
 import { useActiveTab } from 'shared/hooks';
 import { TabDict } from 'shared/config/tabs';
-import { useCuratedGames, useTiers } from 'sdk';
+import { useAppContext, GameView } from 'shared/store/context';
+import { SubPage, Section } from 'containers';
+import { Flex } from 'components';
 
-import { CheckBoxGameChoice } from './CheckBoxGameChoice';
-import { GameTiles } from './GameTiles';
-import { GameList } from './GameList';
+import { GameTileView } from './GameTileView';
+import { GameTableView } from './GameTableView';
+import { GameFilterBar } from './GameFilterBar';
 
 export const TabGames = (): JSX.Element => {
 	useActiveTab(TabDict.GAMES);
-	const { gameListView, setGameListView } = useAppContext();
-	const { isLoading: isGamesLoading, isFetched: isGamesFetched } =
-		useCuratedGames();
-	const {
-		tiersData,
-		isLoading: isTiersLoading,
-		isFetched: isTiersFetched,
-	} = useTiers();
 
-	const isFetched = isGamesFetched && isTiersFetched;
-	const isLoading = isGamesLoading && isTiersLoading;
-
-	const onGameViewClick = () => {
-		if (gameListView === GameView.TILE) setGameListView(GameView.LIST);
-		if (gameListView === GameView.LIST) setGameListView(GameView.TILE);
-	};
+	const { gameListView } = useAppContext();
 
 	return (
 		<SubPage>
-			<StyledGames>
-				{isLoading && <Spinner />}
-				{isFetched && (
-					<>
-						<Flex row align justifyContent="space-between">
-							<div className="wrapper-choicebar">
-								{tiersData.map((tier: Tier) => (
-									<CheckBoxGameChoice
-										key={`checkbox-game-${tier.id}`}
-										tier={tier.id}
-									/>
-								))}
-							</div>
-							<SearchBar />
-							<HoverIcon
-								type="fas fa-th-list"
-								isActive={gameListView === GameView.LIST}
-								onClick={onGameViewClick}
-							/>
-						</Flex>
-						{gameListView === GameView.TILE && <GameTiles />}
-						{gameListView === GameView.LIST && <GameList />}
-					</>
-				)}
+			<StyledGames column>
+				<GameFilterBar />
+				{gameListView === GameView.TILE && <GameTileView />}
+				{gameListView === GameView.TABLE && <GameTableView />}
 			</StyledGames>
 			<Section
 				maxWidth="300px"
@@ -84,6 +48,6 @@ export const TabGames = (): JSX.Element => {
 	);
 };
 
-const StyledGames = styled.div`
+const StyledGames = styled(Flex)`
 	flex: 1 1 100%;
 `;

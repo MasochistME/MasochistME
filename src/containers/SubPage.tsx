@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Flex } from 'components';
 
 export const SubPage = styled(Flex)`
+	flex: 1 1 auto;
 	flex-direction: row;
 	align-items: flex-start;
 	padding: 16px;

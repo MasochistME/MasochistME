@@ -26,9 +26,10 @@ export const SubHeader = (): JSX.Element => {
 };
 
 const StyledSubHeader = styled(Flex)`
+	flex: 1 1 auto;
 	text-transform: uppercase;
+	width: 100%;
 	height: 100px;
-	min-width: 100%;
 	box-sizing: border-box;
 `;
 

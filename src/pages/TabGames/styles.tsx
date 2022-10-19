@@ -42,7 +42,6 @@ export const Img = styled.div.attrs(
 	display: block;
 	width: 300px;
 	height: 145px;
-	margin: 5px;
 	background-size: 300px;
 	background-position: center;
 	background-repeat: no-repeat;

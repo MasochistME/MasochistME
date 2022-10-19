@@ -12,7 +12,7 @@ import { Spinner } from 'components';
 import { LeaderboardsMember } from './LeaderboardsMember';
 
 export const TabLeaderboards = (): JSX.Element => {
-	const { queryMember } = useAppContext();
+	const { queryMember, setQueryMember } = useAppContext();
 	useActiveTab(TabDict.LEADERBOARDS);
 
 	const { leaderboardsData, isFetched, isLoading, isError } = useLeaderboards();
@@ -40,13 +40,13 @@ export const TabLeaderboards = (): JSX.Element => {
 	return (
 		<SubPage>
 			<StyledLeaderboards>
+				<SearchBar
+					placeholder="Search members"
+					query={queryMember}
+					setQuery={setQueryMember}
+				/>
 				{isLoading && <Spinner />}
-				{isFetched && (
-					<>
-						<SearchBar />
-						<RankingList>{createRankingList()}</RankingList>
-					</>
-				)}
+				{isFetched && <RankingList>{createRankingList()}</RankingList>}
 			</StyledLeaderboards>
 			<Section
 				maxWidth="300px"

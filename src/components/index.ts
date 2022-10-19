@@ -1,4 +1,6 @@
+export * from './Button';
 export * from './CustomButton';
+export * from './FilterBar';
 export * from './Flex';
 export * from './HoverIcon';
 export * from './IconButton';

@@ -108,17 +108,6 @@ const GlobalStyle = createGlobalStyle`
       justify-content: center;
     }
   }
-  .wrapper-choicebar {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 5px;
-  }
-  .game-choice-checkbox {
-    display: none;
-    &:not(:checked) + label {
-      color: ${colors.newMediumGrey}
-    }
-  }
   .checkbox-label {
     margin: 0px 30px;
     font-size: 1.4em;

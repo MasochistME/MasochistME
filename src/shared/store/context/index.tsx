@@ -6,8 +6,8 @@ import { TabDict } from 'shared/config/tabs';
 import config from 'config.json';
 
 export enum GameView {
-	LIST = 'list',
 	TILE = 'tiles',
+	TABLE = 'table',
 }
 
 type ContextType = {

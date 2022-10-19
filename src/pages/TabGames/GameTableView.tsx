@@ -20,7 +20,7 @@ type GameData = {
 	badgesPts?: number;
 };
 
-export const GameList = (): JSX.Element => {
+export const GameTableView = (): JSX.Element => {
 	const history = useHistory();
 	const { visibleTiers, queryGame } = useAppContext();
 

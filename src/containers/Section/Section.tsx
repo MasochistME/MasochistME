@@ -25,6 +25,7 @@ const StyledSection = styled.div.attrs(
 		return { style };
 	},
 )<{ fullWidth?: boolean }>`
+	flex: 0 0 auto;
 	min-width: 450px;
 	width: ${({ fullWidth }) => (fullWidth ? '100%' : 'auto')};
 	height: auto;
