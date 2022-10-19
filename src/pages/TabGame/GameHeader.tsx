@@ -3,7 +3,7 @@ import { Game, Tier } from '@masochistme/sdk/dist/v1/types';
 
 import { getGameThumbnail } from 'utils';
 import { useTiers } from 'sdk';
-import { Flex, Wrapper, Tooltip } from 'components';
+import { Flex, Tooltip } from 'components';
 import { Basic, Image } from './styles';
 
 type Props = {
@@ -18,7 +18,7 @@ export const GameHeader = (props: Props): JSX.Element => {
 	const gameThumbnail = getGameThumbnail(game?.id);
 
 	return (
-		<Wrapper type="description">
+		<div>
 			<div
 				className="page-description"
 				style={{ paddingBottom: '0', marginBottom: '0' }}>
@@ -47,6 +47,6 @@ export const GameHeader = (props: Props): JSX.Element => {
 					<div />
 				</Basic>
 			</div>
-		</Wrapper>
+		</div>
 	);
 };

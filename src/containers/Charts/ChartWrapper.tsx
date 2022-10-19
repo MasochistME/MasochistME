@@ -1,5 +1,4 @@
 import React from 'react';
-import { Section } from 'components';
 
 type TChartWrapper = {
 	children: React.ReactNode;
@@ -23,13 +22,13 @@ export const ChartWrapper = (props: TChartWrapper): JSX.Element => {
 	};
 
 	return (
-		<Section style={applyCustomStyle()}>
+		<div style={applyCustomStyle()}>
 			<h3>
 				{typeof title === 'object'
 					? title.map((t: any) => <p key={t}>{t}</p>)
 					: title}
 			</h3>
 			{children}
-		</Section>
+		</div>
 	);
 };

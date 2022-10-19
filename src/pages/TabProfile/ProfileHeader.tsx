@@ -5,7 +5,7 @@ import { Member } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'utils';
 import { AppContext } from 'shared/store/context';
-import { Wrapper, Flex, Spinner, CustomButton, Tooltip } from 'components';
+import { Flex, Spinner, CustomButton, Tooltip } from 'components';
 import {
 	Avatar,
 	EmptyAvatar,
@@ -58,7 +58,7 @@ export const ProfileHeader = (props: Props): JSX.Element => {
 	};
 
 	return (
-		<Wrapper type="description">
+		<Flex>
 			<div
 				className="page-description"
 				style={{ paddingBottom: '0', marginBottom: '0' }}>
@@ -122,6 +122,6 @@ export const ProfileHeader = (props: Props): JSX.Element => {
 					<div>{description}</div>
 				</Basic>
 			</div>
-		</Wrapper>
+		</Flex>
 	);
 };

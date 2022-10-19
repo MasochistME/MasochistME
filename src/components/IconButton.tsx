@@ -17,7 +17,6 @@ export const IconButton = (props: Props) => {
 
 const StyledIconButton = styled.button`
 	background-color: black;
-	color: ${colors.mediumGrey};
 	border: none;
 	font-family: ${fonts.Dosis};
 	font-size: 24px;

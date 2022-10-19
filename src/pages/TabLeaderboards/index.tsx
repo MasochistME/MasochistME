@@ -6,8 +6,8 @@ import { useTiers, useCuratorMembers, useLeaderboards } from 'sdk';
 import { useAppContext } from 'shared/store/context';
 import { useActiveTab } from 'shared/hooks';
 import { TabDict } from 'shared/config/tabs';
-import { SearchBar } from 'containers';
-import { Flex, Wrapper, Spinner } from 'components';
+import { SubPage, SearchBar, Section } from 'containers';
+import { Spinner } from 'components';
 
 import { LeaderboardsMember } from './LeaderboardsMember';
 
@@ -15,7 +15,7 @@ export const TabLeaderboards = (): JSX.Element => {
 	const { queryMember } = useAppContext();
 	useActiveTab(TabDict.LEADERBOARDS);
 
-	const { leaderboardsData, isLoading, isError } = useLeaderboards();
+	const { leaderboardsData, isFetched, isLoading, isError } = useLeaderboards();
 	const { tiersData } = useTiers();
 	const { membersData } = useCuratorMembers();
 
@@ -38,45 +38,52 @@ export const TabLeaderboards = (): JSX.Element => {
 	};
 
 	return (
-		<Flex column width="100%">
-			<Wrapper type="description">
-				<div className="page-description">
-					<p>
-						Ranking system utilizes the games&lsquo; score system. Depending on
-						the game&lsquo;s individual difficulty level, it is given one of{' '}
-						{tiersData?.length ?? 'X'} possible marks:
-					</p>
-					<ul>
-						{tiersData.map((tier: Tier) => (
-							<li key={`tier-${String(tier._id)}`}>
-								<i className={tier.icon} /> - worth {tier.score} pts -{' '}
-								{tier?.description}
-							</li>
-						))}
-					</ul>
-					<p>
-						Completing a game might mean earning its most demanding achievement,
-						or getting the in-game 100%; but for the sake of simplicity the
-						ranking system present here assumes that completing a game means
-						earning 100% of its Steam achievements. You are awarded points
-						depending on the completed game&lsquo;s difficulty level, which are
-						later summarized and used to determine your placement on the ranking
-						ladder.
-					</p>
-				</div>
-				<SearchBar />
-			</Wrapper>
-			<WrapperRanking>
-				<RankingList>
-					{isLoading ? <Spinner /> : createRankingList()}
-				</RankingList>
-			</WrapperRanking>
-		</Flex>
+		<SubPage>
+			<StyledLeaderboards>
+				{isLoading && <Spinner />}
+				{isFetched && (
+					<>
+						<SearchBar />
+						<RankingList>{createRankingList()}</RankingList>
+					</>
+				)}
+			</StyledLeaderboards>
+			<Section
+				maxWidth="300px"
+				title="Game ranking system"
+				content={
+					<div className="page-description">
+						<p>
+							Ranking system utilizes the games&lsquo; score system. Depending
+							on the game&lsquo;s individual difficulty level, it is given one
+							of {tiersData?.length ?? 'X'} possible marks:
+						</p>
+						<ul>
+							{tiersData.map((tier: Tier) => (
+								<li key={`tier-${String(tier._id)}`}>
+									<i className={tier.icon} /> - worth {tier.score} pts -{' '}
+									{tier?.description}
+								</li>
+							))}
+						</ul>
+						<p>
+							Completing a game might mean earning its most demanding
+							achievement, or getting the in-game 100%; but for the sake of
+							simplicity the ranking system present here assumes that completing
+							a game means earning 100% of its Steam achievements. You are
+							awarded points depending on the completed game&lsquo;s difficulty
+							level, which are later summarized and used to determine your
+							placement on the ranking ladder.
+						</p>
+					</div>
+				}
+			/>
+		</SubPage>
 	);
 };
 
-const WrapperRanking = styled.div`
-	width: 100%;
+const StyledLeaderboards = styled.div`
+	flex: 1 1 100%;
 `;
 
 const RankingList = styled.ul`

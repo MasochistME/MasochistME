@@ -3,7 +3,8 @@ import { useParams } from 'react-router-dom';
 import { Member } from '@masochistme/sdk/dist/v1/types';
 
 import { useCuratorMembers } from 'sdk';
-import { Flex, Wrapper, Spinner } from 'components';
+import { SubPage } from 'containers';
+import { Flex, Spinner } from 'components';
 import { useActiveTab } from 'shared/hooks';
 
 import { FullProfile } from './FullProfile';
@@ -22,7 +23,7 @@ export const TabProfile = (): JSX.Element => {
 	const isUserNotAMember = member && !member.isMember && !member.isProtected;
 
 	return (
-		<Flex column width="100%">
+		<SubPage>
 			{!isError && <ProfileHeader member={member} error={false} />}
 			{isLoading && <Spinner />}
 			{isUserPrivate && (
@@ -35,7 +36,7 @@ export const TabProfile = (): JSX.Element => {
 				<ProfileWarning description={`User with id ${id} does not exist.`} />
 			)}
 			{isFetched && member && <FullProfile member={member} />}
-		</Flex>
+		</SubPage>
 	);
 };
 
@@ -46,8 +47,8 @@ const ProfileWarning = (props: ProfileWarningProps): JSX.Element => {
 	const { description } = props;
 
 	return (
-		<Wrapper type="description">
+		<SubPage>
 			<p style={{ fontWeight: 'bold', fontSize: '1.5em' }}>⚠️ {description}</p>
-		</Wrapper>
+		</SubPage>
 	);
 };

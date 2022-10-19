@@ -4,15 +4,15 @@ import { colors, fonts } from 'shared/theme';
 
 type Props = {
 	fullWidth?: boolean;
-	style?: React.CSSProperties;
 	title?: string;
 	content: React.ReactNode;
-};
+	children?: never;
+} & Omit<React.CSSProperties, 'width' | 'height' | 'content' | 'translate'>;
 
 export const Section = (props: Props) => {
-	const { fullWidth, style, title, content } = props;
+	const { fullWidth, title, content, children: _, ...style } = props;
 	return (
-		<StyledSection fullWidth={fullWidth} style={style}>
+		<StyledSection fullWidth={fullWidth} {...style}>
 			{title && <Section.Title>{title}</Section.Title>}
 			<Section.Content>{content}</Section.Content>
 		</StyledSection>
@@ -20,15 +20,16 @@ export const Section = (props: Props) => {
 };
 
 const StyledSection = styled.div.attrs(
-	(props: Omit<Props, 'title' | 'content'>) => {
-		return { style: props.style ?? {} };
+	(props: Omit<Props, 'fullWidth' | 'children' | 'title' | 'content'>) => {
+		const { ...style } = props;
+		return { style };
 	},
 )<{ fullWidth?: boolean }>`
 	min-width: 450px;
 	width: ${({ fullWidth }) => (fullWidth ? '100%' : 'auto')};
 	height: auto;
 	box-sizing: border-box;
-	border: 1px solid ${colors.darkBlue};
+	border: 1px solid ${colors.newDark}88;
 	border-radius: 16px;
 	color: ${colors.superLightGrey};
 	background-color: ${colors.newDarkBlue}cc;

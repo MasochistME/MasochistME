@@ -33,7 +33,7 @@ const StyledFooter = styled(Flex)`
 	width: 100%;
 	padding: 0px 32px;
 	background-color: ${colors.newDark};
-	color: ${colors.lightGrey};
+	color: ${colors.mediumGrey};
 	font-family: ${fonts.Raleway};
 `;
 

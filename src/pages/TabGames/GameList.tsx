@@ -6,8 +6,7 @@ import { Game, TierId } from '@masochistme/sdk/dist/v1/types';
 import { useCuratedGames, useTiers } from 'sdk';
 import { useAppContext } from 'shared/store/context';
 import { getGameThumbnail, getTierIcon } from 'utils';
-import { Flex, Spinner, Wrapper, Table, Tooltip } from 'components';
-import { TableLink, defaultSort } from 'components/layout/Table';
+import { Flex, Spinner, Table, TableLink, defaultSort } from 'components';
 
 type GameData = {
 	id: any;
@@ -147,7 +146,7 @@ export const GameList = (): JSX.Element => {
 	}));
 
 	return (
-		<Wrapper type="page">
+		<div>
 			{games && games.length ? (
 				<Table
 					dataSource={gamesDataSource}
@@ -166,7 +165,7 @@ export const GameList = (): JSX.Element => {
 			) : (
 				<Spinner />
 			)}
-		</Wrapper>
+		</div>
 	);
 };
 

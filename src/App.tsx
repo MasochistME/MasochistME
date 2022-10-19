@@ -32,40 +32,38 @@ export const App = (): JSX.Element => {
 					<Nav />
 					<Content>
 						<SubHeader />
-						<SubPage>
-							<Switch>
-								<Route exact path="/">
-									<TabHome />
-								</Route>
-								<Route exact path="/home">
-									<TabHome />
-								</Route>
-								<Route exact path="/games">
-									<TabGames />
-								</Route>
-								<Route exact path="/leaderboards">
-									<TabLeaderboards />
-								</Route>
-								<Route exact path="/events">
-									<TabEvents />
-								</Route>
-								<Route exact path="/support">
-									<TabSupport />
-								</Route>
-								<Route exact path="/badges">
-									<TabBadges />
-								</Route>
-								<Route exact path="/profile/:id">
-									<TabProfile />
-								</Route>
-								<Route exact path="/game/:id">
-									<TabGame />
-								</Route>
-								<Route>
-									<NotFound />
-								</Route>
-							</Switch>
-						</SubPage>
+						<Switch>
+							<Route exact path="/">
+								<TabHome />
+							</Route>
+							<Route exact path="/home">
+								<TabHome />
+							</Route>
+							<Route exact path="/games">
+								<TabGames />
+							</Route>
+							<Route exact path="/leaderboards">
+								<TabLeaderboards />
+							</Route>
+							<Route exact path="/events">
+								<TabEvents />
+							</Route>
+							<Route exact path="/support">
+								<TabSupport />
+							</Route>
+							<Route exact path="/badges">
+								<TabBadges />
+							</Route>
+							<Route exact path="/profile/:id">
+								<TabProfile />
+							</Route>
+							<Route exact path="/game/:id">
+								<TabGame />
+							</Route>
+							<Route>
+								<NotFound />
+							</Route>
+						</Switch>
 					</Content>
 				</Flex>
 				<Footer />
@@ -90,8 +88,4 @@ const Content = styled.div`
 	@media (max-width: ${media.netbooks}) {
 		width: 100%;
 	}
-`;
-
-const SubPage = styled(Flex)`
-	margin-top: 32px;
 `;

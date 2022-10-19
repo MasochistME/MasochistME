@@ -6,23 +6,35 @@ import { orderBy } from 'lodash';
 import patreon_button from 'shared/images/patreon.png';
 import { useActiveTab } from 'shared/hooks';
 import { TabDict } from 'shared/config/tabs';
-import { Flex, Spinner, Wrapper } from 'components';
+import { Spinner } from 'components';
+import { Section, SubPage } from 'containers';
 
 import { SupportTier } from './SupportTier';
 
 export const TabSupport = (): JSX.Element => {
 	useActiveTab(TabDict.SUPPORT);
 
+	const isLoading = true; // TODO temporary fix
+	const isFetched = false; // TODO temporary fix
+
 	const patrons = useSelector((state: any) =>
 		orderBy(state.patrons, ['tier'], ['desc']),
 	);
 
 	return (
-		<Flex column width="100%">
-			<Wrapper type="description">
-				<div className="page-description">
-					<Flex column align>
-						<HallOfFame>Hall of Fame</HallOfFame>
+		<SubPage>
+			<StyledHallOfFame>
+				{isLoading && <Spinner />}
+				{isFetched &&
+					patrons.map((tier, index) => (
+						<SupportTier key={`tier-${index}`} tier={tier} />
+					))}
+			</StyledHallOfFame>
+			<Section
+				maxWidth="300px"
+				title="Hall of Fame"
+				content={
+					<>
 						<p>
 							...for all of those, who voluntarily donated their money to
 							support <span style={{ fontWeight: 'bold' }}>0.1%</span>. They are
@@ -39,21 +51,16 @@ export const TabSupport = (): JSX.Element => {
 								<PatreonButton src={patreon_button} alt="Patreon button" />
 							</a>
 						</p>
-					</Flex>
-				</div>
-			</Wrapper>
-			<Wrapper type="page">
-				{patrons.length !== 0 ? (
-					patrons.map((tier, index) => (
-						<SupportTier key={`tier-${index}`} tier={tier} />
-					))
-				) : (
-					<Spinner />
-				)}
-			</Wrapper>
-		</Flex>
+					</>
+				}
+			/>
+		</SubPage>
 	);
 };
+
+const StyledHallOfFame = styled.div`
+	flex: 1 1 100%;
+`;
 
 const PatreonButton = styled.img`
 	cursor: pointer;
@@ -61,10 +68,4 @@ const PatreonButton = styled.img`
 	margin: 0;
 	padding: 0;
 	width: 200px;
-`;
-
-const HallOfFame = styled.p`
-	font-size: 1.5em;
-	border-bottom: 2px solid #ccc;
-	padding: 10px 0 3px 0;
 `;

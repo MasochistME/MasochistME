@@ -5,6 +5,7 @@ import { useActiveTab } from 'shared/hooks';
 import { TabDict } from 'shared/config/tabs';
 import { Flex } from 'components';
 import {
+	SubPage,
 	SectionDiscord,
 	SectionHistory,
 	SectionSale,
@@ -54,12 +55,12 @@ export const TabHome = (): JSX.Element => {
 	});
 
 	return (
-		<Flex row gap={16} alignItems="flex-start" width="100%">
+		<SubPage>
 			<StyledDashboard row justify>
 				{sections}
 			</StyledDashboard>
 			{/* <SectionDiscord /> */}
-		</Flex>
+		</SubPage>
 	);
 };
 

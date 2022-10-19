@@ -5,7 +5,8 @@ import { Badge, Game } from '@masochistme/sdk/dist/v1/types';
 import { useActiveTab } from 'shared/hooks';
 import { useBadges, useCuratedGames } from 'sdk';
 import { TabDict } from 'shared/config/tabs';
-import { Wrapper, Flex, Tooltip } from 'components';
+import { Tooltip } from 'components';
+import { SubPage } from 'containers';
 
 export const TabBadges = (): JSX.Element => {
 	useActiveTab(TabDict.BADGES);
@@ -29,14 +30,14 @@ export const TabBadges = (): JSX.Element => {
 	);
 
 	return (
-		<Flex column width="100%">
-			<Wrapper type="description">
+		<SubPage>
+			<div>
 				<div className="page-description">
 					<p>This is the list showcasing the last 100 events.</p>
 					<p>There are six different types of events:</p>
 				</div>
-			</Wrapper>
-			<Wrapper type="page">
+			</div>
+			<div>
 				{badges.map(badge => (
 					<Tooltip
 						content={`${badge.gameTitle?.toUpperCase()} - ${badge.name} (${
@@ -50,7 +51,7 @@ export const TabBadges = (): JSX.Element => {
 						/>
 					</Tooltip>
 				))}
-			</Wrapper>
-		</Flex>
+			</div>
+		</SubPage>
 	);
 };

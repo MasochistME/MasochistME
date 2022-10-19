@@ -42,25 +42,6 @@ export const Description = styled.div`
 	margin-top: 10px;
 `;
 
-export const Field = styled.p`
-	margin: 1px !important;
-	width: 100%;
-	text-align: left;
-`;
-
-export const BadgeImg = styled.img`
-	border-radius: 10px;
-	border: 3px solid ${colors.superLightGrey};
-	box-sizing: border-box;
-	width: 64px;
-	height: 64px;
-	min-width: 64px;
-	min-height: 64px;
-	cursor: help;
-	box-shadow: 0 0 5px ${colors.superDarkGrey};
-	margin: 10px;
-`;
-
 export const User = styled.li`
 	display: flex;
 	flex-direction: row;

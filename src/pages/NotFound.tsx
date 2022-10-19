@@ -1,20 +1,10 @@
 import React from 'react';
-import { Flex, Wrapper } from 'components';
+import { SubPage } from 'containers';
 
 export const NotFound = (): JSX.Element => {
 	return (
-		<Flex column width="100%">
-			<Wrapper type="description">
-				<div
-					className="page-description"
-					style={{
-						display: 'flex',
-						justifyContent: 'center',
-						alignItems: 'center',
-					}}>
-					<img src="https://http.cat/404" alt="404" />
-				</div>
-			</Wrapper>
-		</Flex>
+		<SubPage>
+			<img src="https://http.cat/404" alt="404" />
+		</SubPage>
 	);
 };

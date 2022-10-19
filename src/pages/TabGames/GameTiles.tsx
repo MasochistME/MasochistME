@@ -1,7 +1,7 @@
 import React from 'react';
 import { Game, TierId } from '@masochistme/sdk/dist/v1/types';
 
-import { Spinner, Wrapper } from 'components';
+import { Spinner } from 'components';
 import { useCuratedGames } from 'sdk';
 import { GameTile } from './GameTile';
 import { useAppContext } from 'shared/store/context';
@@ -12,7 +12,7 @@ export const GameTiles = (): JSX.Element => {
 	const { gamesData: games, isFetched } = useCuratedGames();
 
 	return (
-		<Wrapper type="page">
+		<div>
 			{isFetched ? (
 				(games ?? []).map((game: Game) => {
 					return game?.title.toLowerCase().indexOf(queryGame.toLowerCase()) !==
@@ -23,6 +23,6 @@ export const GameTiles = (): JSX.Element => {
 			) : (
 				<Spinner />
 			)}
-		</Wrapper>
+		</div>
 	);
 };

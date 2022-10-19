@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import { Game } from '@masochistme/sdk/dist/v1/types';
 
 import { useCuratedGames, useGameBadges } from 'sdk';
-import { Flex, Spinner, Wrapper, Section } from 'components';
-import { StackedBarChart, List, Badges } from 'containers';
+import { Flex, Spinner } from 'components';
+import { SubPage, Section, StackedBarChart, List, Badges } from 'containers';
 import { media } from 'shared/theme';
 import { useActiveTab } from 'shared/hooks';
 import { TabDict } from 'shared/config/tabs';
@@ -18,8 +18,16 @@ export const TabGame = (): JSX.Element => {
 	const { id } = useParams<{ id: string }>();
 	const gameId = Number(id);
 
-	const { gamesData, isFetched: loaded } = useCuratedGames();
-	const { gameBadgesData = [] } = useGameBadges(gameId);
+	const {
+		gamesData,
+		isLoading: isGamesLoading,
+		isFetched: isGamesFetched,
+	} = useCuratedGames();
+	const {
+		gameBadgesData = [],
+		isLoading: isBadgesLoading,
+		isFetched: isBadgesFetched,
+	} = useGameBadges(gameId);
 
 	const game = gamesData.find((g: Game) => g.id === gameId);
 	const gameDetails = {
@@ -31,60 +39,65 @@ export const TabGame = (): JSX.Element => {
 	};
 
 	return (
-		<Flex column width="100%">
+		<SubPage flexDirection="column">
 			<GameHeader game={game} />
-			<Wrapper type="page">
-				{loaded && game ? (
-					<FlexibleFlex>
-						{gameDetails.badges?.length ? <Badges gameId={gameId} /> : null}
-						<FlexibleSection
-							style={{
-								height: '250px',
-								justifyContent: 'space-between',
-							}}>
-							<h3 style={{ textAlign: 'center' }}>
-								Completions: {gameDetails?.completions ?? 'unknown'}
-								<br />
-								Average completion time
-							</h3>
-							<StackedBarChart
-								labels={['hours']}
-								datasets={[
-									{
-										label: 'this game',
-										data: [gameDetails.avgPlaytime],
-										colorNormal: '#e30000ff',
-										colorTransparent: '#e3000033',
-									},
-									{
-										label: 'games from this tier',
-										data: [gameDetails?.avgPlaytimeForTier ?? 0],
-										colorNormal: '#141620ff',
-										colorTransparent: '#14162066',
-									},
-								]}
-							/>
-						</FlexibleSection>
-					</FlexibleFlex>
-				) : (
-					<Spinner />
-				)}
-				{game ? <List game={game} /> : <Spinner />}
-			</Wrapper>
-		</Flex>
+			<StyledGameStats>
+				<Flex row width="100%" gap={16} alignItems="flex-start">
+					{isBadgesLoading && <Spinner />}
+					{isBadgesFetched && gameDetails.badges?.length !== 0 && (
+						<Badges gameId={gameId} />
+					)}
+					{isGamesLoading && <Spinner />}
+					{isGamesFetched && (
+						<Section
+							fullWidth
+							title={`Completions: ${
+								gameDetails?.completions ?? 'unknown'
+							} - average completion time`}
+							content={
+								<StackedBarChart
+									labels={['hours']}
+									datasets={[
+										{
+											label: 'this game',
+											data: [gameDetails.avgPlaytime],
+											colorNormal: '#e30000ff',
+											colorTransparent: '#e3000033',
+										},
+										{
+											label: 'games from this tier',
+											data: [gameDetails?.avgPlaytimeForTier ?? 0],
+											colorNormal: '#141620ff',
+											colorTransparent: '#14162066',
+										},
+									]}
+								/>
+							}
+						/>
+					)}
+				</Flex>
+				{isGamesLoading && <Spinner />}
+				{isGamesFetched && <List game={game} />}
+			</StyledGameStats>
+		</SubPage>
 	);
 };
 
-const FlexibleFlex = styled(Flex)`
+const StyledGameStats = styled.div`
 	width: 100%;
-	margin-bottom: 16px;
-	@media (max-width: ${media.smallNetbooks}) {
-		flex-direction: column;
-	}
+	flex: 1 1 100%;
 `;
 
-const FlexibleSection = styled(Section)`
-	@media (min-width: ${media.smallNetbooks}) {
-		width: 100%;
-	}
-`;
+// const FlexibleFlex = styled(Flex)`
+// 	width: 100%;
+// 	margin-bottom: 16px;
+// 	@media (max-width: ${media.smallNetbooks}) {
+// 		flex-direction: column;
+// 	}
+// `;
+
+// const FlexibleSection = styled(Section)`
+// 	@media (min-width: ${media.smallNetbooks}) {
+// 		width: 100%;
+// 	}
+// `;

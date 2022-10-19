@@ -3,7 +3,8 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { Badge, Game, Member } from '@masochistme/sdk/dist/v1/types';
 
-import { Flex, Wrapper, Section, Tooltip, BigBadge } from 'components';
+import { Flex, Tooltip } from 'components';
+import { BadgeThumbnail } from 'containers';
 import { useActiveTab } from 'shared/hooks';
 import { TabDict } from 'shared/config/tabs';
 import {
@@ -53,9 +54,8 @@ export const FullProfile = (props: Props): JSX.Element => {
 							</span>
 						</Flex>
 					}>
-					<BigBadge
-						src={badge.img}
-						alt={`Badge`}
+					<BadgeThumbnail
+						badge={badge}
 						key={`member-badge-${String(badge._id)}`}
 						onClick={() => onBadgeClick(badge.gameId)}
 					/>
@@ -66,17 +66,17 @@ export const FullProfile = (props: Props): JSX.Element => {
 
 	return (
 		<Flex column>
-			<Wrapper type="page">
+			<div>
 				{memberBadgesData.length !== 0 && (
 					<Badges>
-						<Section style={{ width: '100%' }}>
+						<div style={{ width: '100%' }}>
 							<h3>Badges</h3>
 							<BadgeSection justify>{memberBadges}</BadgeSection>
-						</Section>
+						</div>
 					</Badges>
 				)}
 				{leaderData?.sum && <ProfileGraphs member={member} />}
-			</Wrapper>
+			</div>
 		</Flex>
 	);
 };

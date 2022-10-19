@@ -1,7 +1,8 @@
 import Tippy from '@tippyjs/react/headless';
-import { colors } from 'shared/theme';
 import styled from 'styled-components';
-import { Flex } from './layout';
+
+import { colors } from 'shared/theme';
+import { Flex } from 'components';
 
 type Props = {
 	content: React.ReactNode;
