@@ -3,9 +3,14 @@ import { orderBy } from 'lodash';
 import styled from 'styled-components';
 import { MemberGame } from '@masochistme/sdk/dist/v1/types';
 
-import { useCuratedGames, useMemberGames } from 'sdk';
+import {
+	useCuratedGames,
+	useMemberGames,
+	useMemberById,
+	useMemberLeaderboards,
+} from 'sdk';
 import { media, colors } from 'shared/theme';
-import { Spinner } from 'components';
+import { Flex, Spinner } from 'components';
 
 import { LeaderboardsMemberGame } from './LeaderboardsMemberGame';
 
@@ -16,11 +21,24 @@ type Props = {
 export const LeaderboardsMemberCollapse = (props: Props): JSX.Element => {
 	const { steamId } = props;
 
-	const { gamesData, isFetched: isGamesFetched } = useCuratedGames();
-	const { memberGamesData, isFetched: isMemberGamesFetched } =
-		useMemberGames(steamId);
+	const {
+		gamesData,
+		isLoading: isGamesLoading,
+		isFetched: isGamesFetched,
+	} = useCuratedGames();
+	const {
+		memberGamesData,
+		isLoading: isMemberGamesLoading,
+		isFetched: isMemberGamesFetched,
+	} = useMemberGames(steamId);
+	const { leaderData } = useMemberLeaderboards(steamId);
+	const { memberData } = useMemberById(steamId);
 
-	const isLoaded = isGamesFetched && isMemberGamesFetched;
+	const isFetched = isGamesFetched && isMemberGamesFetched;
+	const isLoading = isGamesLoading && isMemberGamesLoading;
+
+	const isDisabled = memberData?.isPrivate;
+	const isShekelmaster = leaderData?.patreonTier === 4;
 
 	const gameList = useMemo(() => {
 		const sortedMemberGames: MemberGame[] = orderBy(
@@ -36,9 +54,15 @@ export const LeaderboardsMemberCollapse = (props: Props): JSX.Element => {
 	}, [gamesData, memberGamesData]);
 
 	return (
-		<StyledMemberGameList>
-			{!isLoaded && <Spinner />}
-			{isLoaded &&
+		<StyledMemberGameList
+			isDisabled={isDisabled}
+			isShekelmaster={isShekelmaster}>
+			{isLoading && (
+				<Flex align justify padding={16}>
+					<Spinner />
+				</Flex>
+			)}
+			{isFetched &&
 				gameList.map(memberGame => (
 					<LeaderboardsMemberGame
 						key={`game-${memberGame.gameId}`}
@@ -50,15 +74,23 @@ export const LeaderboardsMemberCollapse = (props: Props): JSX.Element => {
 	);
 };
 
-export const StyledMemberGameList = styled.div`
-	display: flex;
+type SummaryProps = {
+	isDisabled?: boolean;
+	isShekelmaster?: boolean;
+};
+
+export const StyledMemberGameList = styled(Flex)<SummaryProps>`
 	flex-direction: column;
 	transition: height 1s;
 	width: 90%;
 	box-sizing: border-box;
 	border-left: 1px solid ${colors.superDarkGrey};
 	border-right: 1px solid ${colors.superDarkGrey};
-	background-color: ${colors.darkBlueTransparent};
+	background-color: ${({ isDisabled, isShekelmaster }) => {
+		if (isDisabled) return `${colors.darkRedTransparent}cc`;
+		if (isShekelmaster) return `${colors.tier4Transparent}`;
+		return `${colors.superDarkGrey}cc`;
+	}};
 	&:first-child {
 		border-top: none;
 	}

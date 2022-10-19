@@ -4,6 +4,7 @@ export * from './BadgeTooltip';
 export * from './Charts';
 export * from './Footer';
 export * from './Header';
+export * from './MemberAvatar';
 export * from './ModalLeaderboards';
 export * from './Nav';
 export * from './Section';

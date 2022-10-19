@@ -7,9 +7,9 @@ import {
 	Tier,
 } from '@masochistme/sdk/dist/v1/types';
 
-import { getGameThumbnail } from 'utils';
+import { getGameThumbnail, Size } from 'utils';
 import { useTiers, useAllMembers, useAllGames } from 'sdk';
-import logo from 'shared/images/logo.ico';
+import { MemberAvatar } from 'containers';
 import {
 	EventDescription,
 	EventSummary,
@@ -44,7 +44,7 @@ export const CompleteEvent = (props: Props): JSX.Element | null => {
 
 	return (
 		<EventInfo>
-			<EventImg src={member?.avatar ?? logo} alt="game-img" />
+			<MemberAvatar member={member} size={Size.SMALL} />
 			<EventDescription>
 				<EventLink className="bold" onClick={onUserClick}>
 					{member?.name ??

@@ -36,7 +36,9 @@ export const GameTile = (props: Props): JSX.Element => {
 					<StyledGameHiddenInfo column align>
 						<i className={getTierIcon(game.tier, tiersData)} />
 						<h3>{game.title}</h3>
-						<Desc>{game.description}</Desc>
+						<p style={{ margin: '0', fontSize: '0.85em' }}>
+							{game.description}
+						</p>
 					</StyledGameHiddenInfo>
 				</StyledGameThumbnail>
 			)}
@@ -84,8 +86,4 @@ const StyledGameHiddenInfo = styled(Flex)`
 		opacity: 1;
 		background-color: ${colors.black}dd;
 	}
-`;
-
-const Desc = styled.div`
-	font-size: 0.85em;
 `;

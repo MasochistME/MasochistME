@@ -8,7 +8,8 @@ import {
 	Game,
 } from '@masochistme/sdk/dist/v1/types';
 
-import { getGameThumbnail } from 'utils';
+import { getGameThumbnail, Size } from 'utils';
+import { MemberAvatar } from 'containers';
 import { useBadges, useCuratedGames, useAllMembers } from 'sdk';
 import logo from 'shared/images/logo.ico';
 import {
@@ -90,7 +91,7 @@ const BadgeGiven = ({ event }: { event: EventBadgeGet }) => {
 
 	return (
 		<EventInfo>
-			<EventImg src={member?.avatar ?? logo} alt="game-img" />
+			<MemberAvatar member={member} size={Size.SMALL} />
 			{badge && member ? (
 				<EventDescription>
 					<EventLink className="bold" onClick={onUserClick}>

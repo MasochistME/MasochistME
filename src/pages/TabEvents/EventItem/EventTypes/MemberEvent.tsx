@@ -15,6 +15,8 @@ import {
 	EventImg,
 	EventLink,
 } from './components';
+import { MemberAvatar } from 'containers';
+import { Size } from 'utils';
 
 type Props = {
 	event: EventMemberJoin | EventMemberLeave;
@@ -33,7 +35,7 @@ export const MemberEvent = (props: Props): JSX.Element | null => {
 
 	return (
 		<EventInfo>
-			<EventImg alt="avatar" src={member?.avatar ?? logo} />
+			<MemberAvatar member={member} size={Size.SMALL} />
 			{member ? (
 				<EventDescription>
 					<EventLink className="bold" onClick={onUserClick}>

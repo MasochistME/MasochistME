@@ -3,6 +3,8 @@ import { EventCustom, Member } from '@masochistme/sdk/dist/v1/types';
 
 import logo from 'shared/images/logo.ico';
 import { useAllMembers } from 'sdk';
+import { MemberAvatar } from 'containers';
+import { Size } from 'utils';
 import {
 	EventDescription,
 	EventSummary,
@@ -24,13 +26,13 @@ export const CustomEvent = (props: TCustomEvent): JSX.Element | null => {
 		return null;
 	}
 	const { text, icon, memberId } = content;
-	const memberData = membersData.find(
+	const member = membersData.find(
 		(m: Member) => Number(m.steamId) === Number(memberId),
 	);
 
 	return (
 		<EventInfo>
-			<EventImg alt="avatar" src={memberData?.avatar ?? logo} />
+			<MemberAvatar member={member} size={Size.SMALL} />
 			{
 				<EventDescription>
 					{text &&

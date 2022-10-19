@@ -15,7 +15,7 @@ export const TabEvents = (): JSX.Element => {
 	useActiveTab(TabDict.EVENTS);
 
 	const { eventsData, isLoading, isFetched } = useEvents();
-	const eventsDescriptions = eventsDict.map((event: any, index: number) => (
+	const eventsDescriptions = eventsDict.map((event, index: number) => (
 		<li key={`event-desc-${index}`}>
 			<i className={event.icon}></i> - {event.description}
 		</li>
@@ -23,21 +23,24 @@ export const TabEvents = (): JSX.Element => {
 
 	return (
 		<SubPage>
-			<EventsList>
+			<StyledEventsList>
 				{isLoading && <Spinner />}
 				{isFetched &&
 					eventsData.map((event: Event) => (
 						<EventItem event={event} key={`event-${event._id}`} />
 					))}
-			</EventsList>
+			</StyledEventsList>
 			<Section
 				maxWidth="300px"
 				title="Community events"
 				content={
-					<Flex column gap={4}>
+					<Flex column gap={8}>
 						<div>This is the list showcasing the last 100 events.</div>
 						<div>There are {eventsDict.length} different types of events:</div>
-						<EventTypes>{eventsDescriptions}</EventTypes>
+						{isLoading && <Spinner />}
+						{isFetched && (
+							<StyledEventTypes>{eventsDescriptions}</StyledEventTypes>
+						)}
 						<div>
 							In case of event relating to a no longer curated game or user no
 							longer being part of the group, the{' '}
@@ -50,13 +53,14 @@ export const TabEvents = (): JSX.Element => {
 	);
 };
 
-const EventTypes = styled.ul`
+const StyledEventTypes = styled.ul`
 	margin: 0;
 	li i {
 		width: 20px;
 	}
 `;
-const EventsList = styled.ul`
+
+const StyledEventsList = styled.ul`
 	margin: 0;
 	padding: 0;
 	width: 100%;

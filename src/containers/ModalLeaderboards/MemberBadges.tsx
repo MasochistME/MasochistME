@@ -2,18 +2,19 @@ import React from 'react';
 import styled from 'styled-components';
 import { Badge } from '@masochistme/sdk/dist/v1/types';
 
-import { useMemberBadges } from 'sdk';
+import { useMemberBadges, useBadges } from 'sdk';
 import { Flex } from 'components';
-import { BadgeThumbnail, BadgeTooltip } from 'containers';
-import { useBadges } from 'sdk';
+import { BadgeThumbnail } from 'containers';
+import { Size } from 'utils';
 
 type Props = {
+	size?: Size;
 	memberId: string;
 	gameId: number;
 };
 
 export const MemberBadges = (props: Props): JSX.Element => {
-	const { memberId, gameId } = props;
+	const { size = Size.MEDIUM, memberId, gameId } = props;
 
 	const { memberBadgesData } = useMemberBadges(memberId);
 	const { badgesData } = useBadges();
@@ -26,9 +27,11 @@ export const MemberBadges = (props: Props): JSX.Element => {
 
 	const mappedBadges = badges.map((badge: Badge) => {
 		return (
-			<BadgeTooltip badge={badge}>
-				<BadgeThumbnail badge={badge} key={`badge-tile-${badge._id}`} />
-			</BadgeTooltip>
+			<BadgeThumbnail
+				size={size}
+				badge={badge}
+				key={`badge-tile-${badge._id}`}
+			/>
 		);
 	});
 

@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
 
-import { Member, Tier } from '@masochistme/sdk/dist/v1/types';
-import { useTiers, useCuratorMembers, useMemberLeaderboards } from 'sdk';
-import { Flex, Tooltip } from 'components';
+import { useMemberById, useMemberLeaderboards } from 'sdk';
+import { colors, media } from 'shared/theme';
+import { Flex } from 'components';
+import { MemberAvatar } from 'containers';
+
+import { LeaderboardsMemberPoints } from './LeaderboardsMemberPoints';
 import {
-	Info,
-	Name,
-	Icons,
-	Avatar,
-	Summary,
-	Ranking,
-	Position,
-	PatronIcon,
-	RatingScore,
-} from './components';
+	LeaderboardsMemberIconPatron,
+	LeaderboardsMemberIconPrivate,
+	LeaderboardsMemberIconOutdated,
+	LeaderboardsMemberIconDummy,
+} from './LeaderboardsMemberIcons';
+import { Size } from 'utils';
 
 type Props = {
 	steamId: string;
@@ -25,92 +25,34 @@ type Props = {
 export const LeaderboardsMemberSummary = (props: Props): JSX.Element => {
 	const history = useHistory();
 	const { steamId, position, onShowDetails } = props;
-	const [detailsVisible, setDetailsVisible] = useState(false);
+	const [isExpanded, setIsExpanded] = useState(false);
 
-	const { membersData } = useCuratorMembers();
-	const { tiersData } = useTiers();
+	const { memberData } = useMemberById(steamId);
 	const { leaderData } = useMemberLeaderboards(steamId);
 
-	const {
-		name = 'UNKNOWN',
-		avatar = 'UNKNOWN',
-		isPrivate = true,
-		lastUpdated = 0,
-	} = membersData.find((m: Member) => m.steamId === steamId) ?? {};
+	const size = Size.BIG;
+	const isDisabled = memberData?.isPrivate;
+	const isShekelmaster = leaderData?.patreonTier === 4;
 
 	const member = {
 		...leaderData,
-		isPrivate,
-		name,
-		avatar,
-		lastUpdated,
-	};
-
-	const shekelmaster = member.patreonTier === 4;
-
-	const gameTierPoints = () => {
-		return tiersData.map((tier: Tier) => {
-			const tierPoints = member.games?.find(game => game.tier === tier.id);
-			return (
-				<Tooltip
-					content={
-						<>
-							<span>Sum of all games completed in tier {tier.id}</span>
-							<span>Points total: {tierPoints?.points}</span>
-						</>
-					}>
-					<RatingScore key={`member-rating-score-${tier.id}`}>
-						{tierPoints?.total}
-						<i className={tier.icon} style={{ paddingRight: '5px' }} />
-					</RatingScore>
-				</Tooltip>
-			);
-		});
+		name: memberData?.name ?? 'UNKNOWN',
+		avatar: memberData?.avatar ?? 'UNKNOWN',
+		isPrivate: memberData?.isPrivate ?? true,
+		lastUpdated: memberData?.lastUpdated ?? 0,
 	};
 
 	const infoIcon = () => {
-		if (member?.isPrivate) {
-			return (
-				<Tooltip content="This user has their profile set to private.">
-					<i
-						className="fas fa-exclamation-triangle"
-						style={{
-							color: '#ff0000',
-							marginLeft: '10px',
-							cursor: 'help',
-							opacity: '0.5',
-						}}
-					/>
-				</Tooltip>
-			);
-		}
-		// if (Date.now() - member?.lastUpdated > 2592000000) {
-		// 	return (
-		// 		<Tooltip content="This user wasn't updated in over a month - their data might be outdated.">
-		// 			<i
-		// 				className="fas fa-exclamation-circle"
-		// 				style={{
-		// 					color: '#fdc000',
-		// 					marginLeft: '10px',
-		// 					cursor: 'help',
-		// 					opacity: '0.5',
-		// 				}}
-		// 			/>
-		// 		</Tooltip>
-		// 	);
-		// }
-		return (
-			<i
-				className="fas fa-exclamation-circle"
-				style={{ color: 'transparent', marginLeft: '10px' }}
-			/>
-		);
+		if (member?.isPrivate) return <LeaderboardsMemberIconPrivate />;
+		if (Date.now() - new Date(member?.lastUpdated).getTime() > 2592000000)
+			return <LeaderboardsMemberIconOutdated />;
+		return <LeaderboardsMemberIconDummy />;
 	};
 
 	const onShowDetailsClick = (
 		event: React.MouseEvent<HTMLDivElement>,
 	): void => {
-		setDetailsVisible(!detailsVisible);
+		setIsExpanded(!isExpanded);
 		onShowDetails();
 		event.stopPropagation();
 	};
@@ -120,65 +62,112 @@ export const LeaderboardsMemberSummary = (props: Props): JSX.Element => {
 	};
 
 	return (
-		<Summary
-			shekelmaster={shekelmaster}
-			disabled={member.isPrivate}
+		<StyledLeaderboardsMemberSummary
+			isShekelmaster={isShekelmaster}
+			isDisabled={isDisabled}
 			onClick={onShowProfile}>
-			<Position>{position}</Position>
-			<Avatar src={member.avatar} alt="avatar" />
-			<Icons>
-				{member.patreonTier ? (
-					// <Tooltip content={patron.description.toUpperCase()}>
-					<PatronIcon tier={member.patreonTier} className="fas fa-donate" />
-				) : (
-					// </Tooltip>
-					<PatronIcon
-						className="fas fa-donate"
-						style={{ color: 'transparent' }}
-					/>
-				)}
+			<StyledMemberPosition align justify size={size}>
+				{position}
+			</StyledMemberPosition>
+			<MemberAvatar member={memberData!} size={size} />
+			<Flex column align justifyContent={'space-evenly'} margin="0 4px" gap={8}>
+				<LeaderboardsMemberIconPatron patreonTier={leaderData?.patreonTier} />
 				{infoIcon()}
-			</Icons>
-			<Info>
-				<Flex
-					row
-					justify
-					align
-					width="64px"
-					height="64px"
-					onClick={onShowDetailsClick}>
-					<i
-						className={`fas fa-chevron-down icon-hover ${
-							detailsVisible ? 'icon-active' : ''
-						}`}
-					/>
-				</Flex>
-				<Flex row>
-					<Name shekelmaster={shekelmaster}>{member.name}</Name>
-				</Flex>
-				<div className="dummy"></div>
-				<Ranking>
-					<Tooltip content="Sum of all points">
-						<RatingScore>
-							{member.sum ?? 0}
-							<span className="bold"> Σ</span>
-						</RatingScore>
-					</Tooltip>
-					{gameTierPoints()}
-					<Tooltip
-						content={
-							<>
-								<span>Sum of all badges earned</span>
-								<span>Points total: {member.badges?.points}</span>
-							</>
-						}>
-						<RatingScore>
-							{member.badges?.total}
-							<i className="fas fa-medal" style={{ paddingRight: '5px' }} />
-						</RatingScore>
-					</Tooltip>
-				</Ranking>
-			</Info>
-		</Summary>
+			</Flex>
+			<StyledLeaderboardsMemberDetails align>
+				<StyledLeaderboardsMemberExpandIcon onClick={onShowDetailsClick}>
+					<i className={`fas fa-chevron-${isExpanded ? 'down' : 'up'}`} />
+				</StyledLeaderboardsMemberExpandIcon>
+				<StyledLeaderboardsMemberUsername>
+					{member.name}
+				</StyledLeaderboardsMemberUsername>
+				<LeaderboardsMemberPoints steamId={steamId} />
+			</StyledLeaderboardsMemberDetails>
+		</StyledLeaderboardsMemberSummary>
 	);
 };
+
+type SummaryProps = {
+	isDisabled?: boolean;
+	isShekelmaster?: boolean;
+};
+
+const StyledLeaderboardsMemberSummary = styled(Flex)<SummaryProps>`
+	width: 100%;
+	padding: 2px 0;
+	gap: 4px;
+	cursor: pointer;
+	color: ${({ isDisabled, isShekelmaster }) => {
+		if (isDisabled) return colors.lightRed;
+		if (isShekelmaster) return colors.tier4;
+		return colors.superLightGrey;
+	}};
+	background-color: ${({ isDisabled, isShekelmaster }) => {
+		if (isDisabled) return colors.darkRedTransparent;
+		if (isShekelmaster) return colors.tier4Transparent;
+		return `${colors.newDarkBlue}bb`;
+	}};
+	border-bottom: 1px solid
+		${({ isDisabled: _d, isShekelmaster: _s }) => {
+			// if (isDisabled) return colors.darkRed;
+			// if (isShekelmaster) return colors.tier4Transparent;
+			return `${colors.black}88`;
+		}};
+	border-right: 1px solid
+		${({ isDisabled: _d, isShekelmaster: _s }) => {
+			// if (isDisabled) return colors.darkRed;
+			// if (isShekelmaster) return colors.tier4Transparent;
+			return `${colors.black}88`;
+		}};
+	border-top: 1px solid
+		${({ isDisabled, isShekelmaster }) => {
+			if (isDisabled) return colors.mediumRed;
+			if (isShekelmaster) return `${colors.tier4Muted}66`;
+			return `${colors.newMediumGrey}99`;
+		}};
+	border-left: 1px solid
+		${({ isDisabled, isShekelmaster }) => {
+			if (isDisabled) return colors.mediumRed;
+			if (isShekelmaster) return `${colors.tier4Muted}66`;
+			return `${colors.newMediumGrey}99`;
+		}};
+`;
+
+const StyledLeaderboardsMemberExpandIcon = styled(Flex)`
+	width: 24px;
+	height: 100%;
+	font-size: 1.5em;
+	justify-content: center;
+	align-items: center;
+	&:hover {
+		/* text-shadow: 0 0 10px ${colors.lightGrey}; */
+		font-size: 1.7em;
+	}
+`;
+
+const StyledMemberPosition = styled(Flex)<{ size: Size }>`
+	width: ${({ size }) => size}px;
+	max-width: 64px;
+	font-size: 1.5em;
+	@media (max-width: ${media.tablets}) {
+		display: none;
+	}
+`;
+
+const StyledLeaderboardsMemberUsername = styled(Flex)`
+	text-transform: uppercase;
+	&:hover {
+		color: ${colors.white};
+	}
+`;
+
+const StyledLeaderboardsMemberDetails = styled(Flex)`
+	justify-content: space-between;
+	margin: 0 10px;
+	width: 100%;
+	max-width: 90%;
+	@media (max-width: ${media.tablets}) {
+		max-width: 100%;
+		padding: 0 5px;
+	}
+`;

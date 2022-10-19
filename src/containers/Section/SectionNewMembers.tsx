@@ -7,8 +7,8 @@ import {
 
 import { useCuratorMembers, useEvents } from 'sdk';
 import { Flex } from 'components';
-import { Section } from 'containers';
-import { Avatar } from 'pages/TabLeaderboards/components';
+import { MemberAvatar, Section } from 'containers';
+import { Size } from 'utils';
 
 export const SectionNewMembers = (): JSX.Element => {
 	const { membersData } = useCuratorMembers();
@@ -26,7 +26,7 @@ export const SectionNewMembers = (): JSX.Element => {
 		const member = membersData.find(
 			member => member.steamId === event.memberId,
 		);
-		if (member) return <Avatar src={member.avatar} alt="avatar" />;
+		if (member) return <MemberAvatar member={member} size={Size.BIG} />;
 	});
 
 	return (

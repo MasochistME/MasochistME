@@ -27,22 +27,22 @@ export const TabGames = (): JSX.Element => {
 				maxWidth="300px"
 				title="MasochistME curations"
 				content={
-					<>
-						<p>
+					<Flex column gap={8}>
+						<div>
 							Here&lsquo;s the list of games that MasochistME curates, as well
 							as the percentage completion comparision between our users.
-						</p>
-						<p>
+						</div>
+						<div>
 							In the MasochistME community, we grade the ranks of our users by
 							how many curated games they&lsquo;ve completed, as well as the
 							difficulty of those games. Each game specifies their own
 							difficulty in the description.
-						</p>
-						<p>
+						</div>
+						<div>
 							The list also includes which three users completed the game first
 							(with a gold, silver and bronze medals, respectively).
-						</p>
-					</>
+						</div>
+					</Flex>
 				}></Section>
 		</SubPage>
 	);

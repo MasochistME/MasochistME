@@ -24,7 +24,7 @@ export const GameFilterBar = (): JSX.Element => {
 
 	const gameViewButtonIcon = useMemo(() => {
 		if (gameListView === GameView.TILE) return 'fas fa-table';
-		if (gameListView === GameView.TABLE) 'fas fa-grip-horizontal';
+		if (gameListView === GameView.TABLE) return 'fas fa-grip-horizontal';
 		return 'fas fa-circle-notch fa-spin';
 	}, [gameListView]);
 

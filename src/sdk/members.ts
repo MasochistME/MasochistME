@@ -38,6 +38,26 @@ export const useCuratorMembers = () => {
 /**
  *
  */
+export const useMemberById = (steamId: string) => {
+	const { sdk } = useAppContext();
+
+	const {
+		data: memberData,
+		isLoading,
+		isFetched,
+		isError,
+	} = useQuery(
+		['masochist', 'member', steamId],
+		() => sdk.getMemberById({ steamId }),
+		{ enabled: !!steamId },
+	);
+
+	return { memberData, isLoading, isFetched, isError };
+};
+
+/**
+ *
+ */
 export const useMemberBadges = (steamId: string) => {
 	const { sdk } = useAppContext();
 

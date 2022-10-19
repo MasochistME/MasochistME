@@ -6,8 +6,9 @@ import { Game, MemberGame, Tier } from '@masochistme/sdk/dist/v1/types';
 import { useTiers, useCuratedGames } from 'sdk';
 import { getGameThumbnail } from 'utils/getGameUrl';
 import { colors, fonts, media } from 'shared/theme';
-import { Flex, ProgressBar } from 'components';
+import { Flex, DateBlock, ProgressBar } from 'components';
 import { MemberBadges } from 'containers';
+import { Size } from 'utils';
 
 type Props = {
 	steamId: string;
@@ -37,11 +38,11 @@ export const LeaderboardsMemberGame = (props: Props): JSX.Element => {
 	return (
 		<StyledMemberGame align>
 			<StyledGameTimes align justify column>
-				{memberGame.completionPercentage === 100 && (
-					<StyledGameCompletionTime>
-						{gameCompletionDate}
-					</StyledGameCompletionTime>
-				)}
+				<StyledGameCompletionTime>
+					{memberGame.completionPercentage === 100 && (
+						<DateBlock date={gameCompletionDate} />
+					)}
+				</StyledGameCompletionTime>
 				<div style={{ display: 'none' }}>
 					{Math.round(Number(memberGame.playTime))}h
 				</div>
@@ -51,7 +52,11 @@ export const LeaderboardsMemberGame = (props: Props): JSX.Element => {
 				<i className={gameTierIcon} />
 				<StyledGameTitle onClick={onGameClick}>{gameTitle}</StyledGameTitle>
 			</StyledGameInfo>
-			<MemberBadges memberId={steamId} gameId={memberGame.gameId} />
+			<MemberBadges
+				size={Size.TINY}
+				memberId={steamId}
+				gameId={memberGame.gameId}
+			/>
 			<ProgressBar percentage={memberGame.completionPercentage} />
 		</StyledMemberGame>
 	);
@@ -103,6 +108,7 @@ const StyledGameCompletionTime = styled.div`
 
 const StyledGameTitle = styled.div`
 	margin-left: 5px;
+	cursor: pointer;
 	&:hover {
 		color: ${colors.white};
 	}

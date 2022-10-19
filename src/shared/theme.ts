@@ -15,9 +15,11 @@ export const colors = {
 	darkBlue: '#293251',
 	darkRed: '#1e1012',
 	newDarkBlue: '#282f44',
+	mediumRed: '#582e34',
+	lightRed: '#d38893',
 
-	darkBlueTransparent: '#293251bb',
-	darkRedTransparent: '#1e1012bb',
+	darkBlueTransparent: '#293251cc',
+	darkRedTransparent: '#1e1012cc',
 
 	tier4: '#fdc000',
 	tier3: '#f5f5f5',
@@ -25,7 +27,7 @@ export const colors = {
 	tier1: '#32a042',
 
 	tier4Muted: '#a47b00',
-	tier4Transparent: '#403000ad',
+	tier4Transparent: '#261d01ee',
 };
 
 export const media = {

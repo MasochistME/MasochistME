@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { UnmountClosed } from 'react-collapse';
+import { UnmountClosed as Collapse } from 'react-collapse';
 import styled from 'styled-components';
 
 import { Flex } from 'components';
@@ -19,34 +19,26 @@ export const LeaderboardsMember = (props: Props): JSX.Element => {
 	};
 
 	return (
-		<StyledLeaderboardsMember>
+		<StyledLeaderboardsMember column align justify>
 			<LeaderboardsMemberSummary
 				steamId={steamId}
 				position={position}
 				onShowDetails={changeDetailsVisibility}
 			/>
-			<UnmountClosed isOpened={isOpened} style={{ width: '100%' }}>
+			<Collapse isOpened={isOpened} style={{ width: '100%' }}>
 				<Flex align justify>
 					<LeaderboardsMemberCollapse
-						key={`details-${steamId}`}
 						steamId={steamId}
+						key={`details-${steamId}`}
 					/>
 				</Flex>
-			</UnmountClosed>
+			</Collapse>
 		</StyledLeaderboardsMember>
 	);
 };
 
-const StyledLeaderboardsMember = styled.li`
-	position: relative;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	margin: 0;
-	padding: 0;
+const StyledLeaderboardsMember = styled(Flex)`
 	width: 100%;
 	box-sizing: border-box;
-	cursor: pointer;
 	justify-content: space-between;
 `;
