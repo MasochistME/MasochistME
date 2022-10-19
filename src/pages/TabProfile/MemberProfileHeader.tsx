@@ -61,13 +61,13 @@ export const MemberProfileHeader = (props: Props): JSX.Element => {
 	};
 
 	return (
-		<StyledGameHeader row>
+		<StyledMemberProfileHeader row>
 			<MemberAvatar
 				member={member}
 				patronTier={leaderData?.patreonTier}
 				size={Size.LARGE}
 			/>
-			<StyledGameDetails column>
+			<StyledMemberProfileDetails column>
 				<Flex row align width="100%" justifyContent="space-between">
 					<h1 style={{ margin: '0' }}>
 						<a
@@ -101,14 +101,16 @@ export const MemberProfileHeader = (props: Props): JSX.Element => {
 						</Patron>
 					</Tooltip>
 				)}
-				<div style={{ fontSize: '1.1em' }}>{description ?? 'Loading...'}</div>
-			</StyledGameDetails>
-		</StyledGameHeader>
+				<StyledMemberProfileDescription>
+					{description ?? 'Loading...'}
+				</StyledMemberProfileDescription>
+			</StyledMemberProfileDetails>
+		</StyledMemberProfileHeader>
 	);
 };
 
-const StyledGameHeader = styled(Flex)`
-	width: 100%;
+const StyledMemberProfileHeader = styled(Flex)`
+	max-width: 100%;
 	margin-bottom: 10px;
 	padding: 8px;
 	gap: 16px;
@@ -117,13 +119,19 @@ const StyledGameHeader = styled(Flex)`
 	background-color: ${colors.black}66;
 `;
 
-const StyledGameDetails = styled(Flex)`
+const StyledMemberProfileDetails = styled(Flex)`
+	max-width: 100%;
 	flex: 1 1 100%;
 	gap: 4px;
 	align-items: flex-start;
 	@media (max-width: ${media.tablets}) {
 		display: none;
 	}
+`;
+
+const StyledMemberProfileDescription = styled.div`
+	max-width: 100%;
+	overflow: hidden;
 `;
 
 // 	return (

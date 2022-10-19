@@ -81,6 +81,7 @@ const PageWrapper = styled(Flex)`
 
 const Content = styled.div`
 	width: 1500px;
+	max-width: 100vw;
 	position: relative;
 	box-sizing: border-box;
 	background-color: ${colors.black}88;

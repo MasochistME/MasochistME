@@ -25,6 +25,7 @@ import {
 	TierChangeEvent,
 	BadgeEvent,
 } from './EventTypes';
+import { DateBlock } from 'components';
 
 type Props = {
 	event: Event;
@@ -70,7 +71,7 @@ export default function EventItem(props: Props): JSX.Element | null {
 
 	return relevantEvent ? (
 		<StyledEvent key={`event-${Date.now()}`}>
-			<EventDate> {new Date(event.date).toLocaleString()} </EventDate>
+			<DateBlock date={event.date} />
 			{relevantEvent}
 		</StyledEvent>
 	) : null;
@@ -82,23 +83,13 @@ const StyledEvent = styled.li`
 	justify-content: space-between;
 	align-content: center;
 	width: 100%;
-	height: 35px;
+	padding: 4px;
 	border-bottom: 1px solid ${colors.newDark};
-	border-top: 1px solid ${colors.newMediumGrey};
+	border-top: 1px solid ${colors.mediumGrey}66;
 	&:first-child {
 		border-top: none;
 	}
 	&:last-child {
 		border-bottom: none;
 	}
-`;
-const EventDate = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 100px;
-	max-width: 100px;
-	font-size: 0.7em;
-	font-family: ${fonts.Verdana};
-	text-align: center;
 `;

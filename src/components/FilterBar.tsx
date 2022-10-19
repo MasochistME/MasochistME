@@ -18,4 +18,5 @@ const StyledFilterGameBar = styled.div`
 	box-sizing: border-box;
 	padding: 16px 8px;
 	margin-bottom: 16px;
+	gap: 16px;
 `;

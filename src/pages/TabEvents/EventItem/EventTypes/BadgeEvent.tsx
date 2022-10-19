@@ -9,7 +9,7 @@ import {
 } from '@masochistme/sdk/dist/v1/types';
 
 import { getGameThumbnail, Size } from 'utils';
-import { MemberAvatar } from 'containers';
+import { BadgeThumbnail, MemberAvatar } from 'containers';
 import { useBadges, useCuratedGames, useAllMembers } from 'sdk';
 import logo from 'shared/images/logo.ico';
 import {
@@ -55,7 +55,7 @@ const BadgeAdded = ({ event }: { event: EventBadgeCreate }) => {
 
 	return (
 		<EventInfo>
-			<EventImg src={badge ? badge.img : logo} alt="game-img" />
+			<BadgeThumbnail size={Size.SMALL} badge={badge} />
 			{badge && game ? (
 				<EventDescription>
 					<EventLink className="bold" onClick={onGameClick}>
@@ -107,7 +107,7 @@ const BadgeGiven = ({ event }: { event: EventBadgeGet }) => {
 						member ? 'fas fa-check-square' : 'fas fa-exclamation-triangle'
 					}></i>
 				<i className="fas fa-medal"></i>
-				<EventImg src={badge ? badge.img : logo} alt="game-img" />
+				<BadgeThumbnail badge={badge} size={Size.SMALL} />
 			</EventSummary>
 		</EventInfo>
 	);

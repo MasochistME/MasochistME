@@ -44,6 +44,7 @@ export const TabProfile = (): JSX.Element => {
 
 const StyledProfile = styled(Flex)`
 	flex: 1 1 100%;
+	overflow: hidden;
 `;
 
 const ProfileWarning = (props: { description: string }): JSX.Element => {

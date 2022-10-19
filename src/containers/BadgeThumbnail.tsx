@@ -2,12 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import { Badge } from '@masochistme/sdk/dist/v1/types';
 
+import logo from 'shared/images/logo.ico';
 import { BadgeTooltip } from 'containers';
 import { Size } from 'utils';
 import { colors } from 'shared/theme';
 
 type Props = {
-	badge: Badge;
+	badge?: Badge;
 	size?: Size;
 	onClick?: () => void;
 };
@@ -19,7 +20,7 @@ export const BadgeThumbnail = (props: Props) => {
 			<StyledBadgeThumbnail
 				onClick={onClick}
 				size={size}
-				src={badge.img}
+				src={badge?.img ?? logo}
 				alt="Badge"
 			/>
 		</BadgeTooltip>
@@ -37,13 +38,14 @@ const StyledBadgeThumbnail = styled.img.attrs((props: { size: Size }) => {
 	return { style };
 })<{ size: Size }>`
 	box-sizing: border-box;
+	padding: 2px;
 	cursor: help;
 	border-radius: ${({ size }) =>
 		size === Size.SMALL || size === Size.TINY ? 4 : 8}px;
-	border: ${({ size }) => (size === Size.SMALL || size === Size.TINY ? 1 : 3)}px
+	border: ${({ size }) => (size === Size.SMALL || size === Size.TINY ? 2 : 3)}px
 		solid ${colors.superLightGrey};
 	opacity: ${({ size }) =>
-		size === Size.SMALL || size === Size.TINY ? '0.7' : '1'};
+		size === Size.SMALL || size === Size.TINY ? '0.85' : '1'};
 	&:hover {
 		opacity: 1;
 	}

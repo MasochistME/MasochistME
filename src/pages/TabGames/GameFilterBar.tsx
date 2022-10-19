@@ -40,7 +40,7 @@ export const GameFilterBar = (): JSX.Element => {
 
 	return (
 		<FilterBar>
-			<Flex gap={16}>
+			<Flex gap={16} flexWrap="wrap">
 				<SearchBar
 					placeholder="Search games"
 					query={queryGame}

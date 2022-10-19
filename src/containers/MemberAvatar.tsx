@@ -29,7 +29,8 @@ export const MemberAvatar = (props: Props) => {
 				onClick={onClick}
 				size={size}
 				patronTier={patronTier}
-				src={member.avatar}
+				isEmpty={!member.avatar}
+				src={member.avatar ?? logo}
 				alt="Member avatar"
 			/>
 		</Tooltip>
@@ -37,7 +38,7 @@ export const MemberAvatar = (props: Props) => {
 };
 
 const StyledMemberAvatar = styled.img.attrs(
-	(props: { size: Size; patronTier?: number | null }) => {
+	(props: { size: Size; isEmpty: boolean; patronTier?: number | null }) => {
 		const { size, patronTier } = props;
 		const style: React.CSSProperties = {
 			minWidth: size,
@@ -59,10 +60,19 @@ const StyledMemberAvatar = styled.img.attrs(
 		}
 		return { style };
 	},
-)<{ size: Size; patronTier?: number | null }>`
+)<{ size: Size; isEmpty: boolean; patronTier?: number | null }>`
 	box-sizing: border-box;
-	border: 2px solid ${colors.black};
-	border-radius: 8px;
 	padding: 2px;
 	cursor: help;
+	background-color: ${({ isEmpty }) =>
+		isEmpty ? colors.black : 'transparent'};
+	border-radius: ${({ size }) =>
+		size === Size.SMALL || size === Size.TINY ? 4 : 8}px;
+	border: ${({ size }) => (size === Size.SMALL || size === Size.TINY ? 2 : 3)}px
+		solid ${colors.newDark};
+	opacity: ${({ size }) =>
+		size === Size.SMALL || size === Size.TINY ? '0.85' : '1'};
+	&:hover {
+		opacity: 1;
+	}
 `;

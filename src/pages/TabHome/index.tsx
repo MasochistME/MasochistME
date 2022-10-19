@@ -30,13 +30,12 @@ export enum SectionMap {
 
 const sectionMap = [
 	// SectionMap.TRIVIA,
-	SectionMap.WELCOME,
+	// SectionMap.WELCOME,
 	SectionMap.NEW_GAMES,
 	SectionMap.NEW_MEMBERS,
 	SectionMap.TOP,
 	SectionMap.HISTORY,
-
-	SectionMap.SALES,
+	// SectionMap.SALES,
 	// SectionMap.DISCORD,
 ];
 

@@ -25,10 +25,10 @@ export const SectionNewGames = (): JSX.Element => {
 
 	return (
 		<Section
-			fullWidth
+			// fullWidth
 			title="Recent curations"
 			content={
-				<Flex justify gap="8px">
+				<Flex justify flexWrap="wrap" gap="8px">
 					{newestGames}
 				</Flex>
 			}
