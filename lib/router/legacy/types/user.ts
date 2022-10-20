@@ -9,7 +9,7 @@ export interface Member extends MongoID {
   updated: number;
 
   badges: MemberBadge[];
-  games: MemberGame;
+  games: MemberGame[];
   ranking: MemberRanking;
 
   member: boolean;

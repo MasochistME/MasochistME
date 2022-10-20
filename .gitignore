@@ -5,3 +5,5 @@ yarn-error.log
 
 .yalc
 yalc.lock
+
+/__migrate
