@@ -11,7 +11,7 @@ export const connectToDb: any = () =>
       }
       resolve({
         client,
-        db: client.db('masochist'),
+        db: client.db('legacy-masochist'),
       });
     });
   });
