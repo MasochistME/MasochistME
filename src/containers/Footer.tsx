@@ -8,7 +8,7 @@ import { ButtonsSocialMedia } from 'containers';
 export const Footer = () => {
 	return (
 		<StyledFooter align>
-			<StyledFooterText>Arcyvilk @ 2022</StyledFooterText>
+			<StyledFooterText>Arcyvilk @ 2016-2022</StyledFooterText>
 			<ButtonsSocialMedia />
 		</StyledFooter>
 	);

@@ -10,7 +10,7 @@ export const SectionTop = (): JSX.Element => {
 	const history = useHistory();
 
 	const { membersData } = useCuratorMembers();
-	const { leaderboardsData, isFetched, isLoading } = useLeaderboards(10);
+	const { leaderboardsData, isFetched, isLoading } = useLeaderboards(11);
 
 	const leaderboards = leaderboardsData.map(leader => ({
 		position: leader.position,

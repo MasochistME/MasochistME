@@ -20,7 +20,7 @@
     "test": "echo TODO"
   },
   "dependencies": {
-    "@masochistme/sdk": "^1.15.2",
+    "@masochistme/sdk": "^1.15.3",
     "@tanstack/react-query": "^4.12.0",
     "@tippyjs/react": "^4.2.6",
     "antd": "^4.12.3",

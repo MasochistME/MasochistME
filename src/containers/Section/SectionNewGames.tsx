@@ -28,7 +28,7 @@ export const SectionNewGames = (): JSX.Element => {
 			// fullWidth
 			title="Recent curations"
 			content={
-				<Flex justify flexWrap="wrap" gap="8px">
+				<Flex justify column flexWrap="wrap" gap="8px">
 					{newestGames}
 				</Flex>
 			}

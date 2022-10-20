@@ -49,36 +49,36 @@ export const SectionHistory = (): JSX.Element => {
 		const type: EventType = event.type;
 
 		switch (type) {
-			case 'memberJoined': {
+			case EventType.MEMBER_JOIN: {
 				return getEventMemberJoin(event as EventMemberJoin);
 			}
-			case 'memberLeft': {
+			case EventType.MEMBER_LEAVE: {
 				return getEventMemberLeave(event as EventMemberLeave);
 			}
-			case 'newGame': {
+			case EventType.GAME_ADD: {
 				return getEventGameAdd(event as EventGameAdd);
 			}
-			case 'gameRemoved': {
+			case EventType.GAME_REMOVE: {
 				return getEventGameRemove(event as EventGameRemove);
 			}
-			case 'complete': {
+			case EventType.COMPLETE: {
 				return getEventComplete(event as EventComplete);
 			}
-			case 'tierChange': {
+			case EventType.GAME_TIER_CHANGE: {
 				return getEventGameTierChange(event as EventGameTierChange);
 			}
-			case 'badgeAdded': {
+			case EventType.BADGE_CREATE: {
 				return getEventBadgeCreate(event as EventBadgeCreate);
 			}
-			case 'badgeGiven': {
+			case EventType.BADGE_GET: {
 				return getEventBadgeGiven(event as EventBadgeGet);
 			}
-			case 'achievementNumberChange': {
+			case EventType.ACHIEVEMENTS_CHANGE: {
 				return getEventGameAchievementNumberChange(
 					event as EventAchievementNumberChange,
 				);
 			}
-			case 'custom': {
+			case EventType.CUSTOM: {
 				return getEventCustom(event as EventCustom);
 			}
 			default:

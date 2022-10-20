@@ -28,35 +28,23 @@ export enum SectionMap {
 	DISCORD = 'discord',
 }
 
-const sectionMap = [
-	// SectionMap.TRIVIA,
-	// SectionMap.WELCOME,
-	SectionMap.NEW_GAMES,
-	SectionMap.NEW_MEMBERS,
-	SectionMap.TOP,
-	SectionMap.HISTORY,
-	// SectionMap.SALES,
-	// SectionMap.DISCORD,
-];
-
 export const TabHome = (): JSX.Element => {
 	useActiveTab(TabDict.HOME);
-
-	const sections = sectionMap.map((section: SectionMap) => {
-		if (section === SectionMap.WELCOME) return <SectionWelcome />;
-		if (section === SectionMap.TRIVIA) return <SectionTrivia />;
-		if (section === SectionMap.TOP) return <SectionTop />;
-		if (section === SectionMap.HISTORY) return <SectionHistory />;
-		if (section === SectionMap.NEW_GAMES) return <SectionNewGames />;
-		if (section === SectionMap.NEW_MEMBERS) return <SectionNewMembers />;
-		if (section === SectionMap.SALES) return <SectionSale />;
-		if (section === SectionMap.DISCORD) return <SectionDiscord />;
-	});
 
 	return (
 		<SubPage>
 			<StyledDashboard row justify>
-				{sections}
+				<Flex column gap={16}>
+					<SectionNewMembers />
+					<SectionNewGames />
+				</Flex>
+				<Flex column gap={16}>
+					<Flex row alignItems="flex-start" gap={16}>
+						<SectionHistory />
+						<SectionTop />
+					</Flex>
+					<SectionSale />
+				</Flex>
 			</StyledDashboard>
 			{/* <SectionDiscord /> */}
 		</SubPage>

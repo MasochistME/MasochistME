@@ -14,7 +14,7 @@ import EventItem from './EventItem';
 export const TabEvents = (): JSX.Element => {
 	useActiveTab(TabDict.EVENTS);
 
-	const { eventsData, isLoading, isFetched } = useEvents();
+	const { eventsData, isLoading, isFetched } = useEvents(50);
 	const eventsDescriptions = eventsDict.map((event, index: number) => (
 		<li key={`event-desc-${index}`}>
 			<i className={event.icon}></i> - {event.description}

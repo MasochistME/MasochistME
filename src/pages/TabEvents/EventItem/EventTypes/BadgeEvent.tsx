@@ -11,7 +11,6 @@ import {
 import { getGameThumbnail, Size } from 'utils';
 import { BadgeThumbnail, MemberAvatar } from 'containers';
 import { useBadges, useCuratedGames, useAllMembers } from 'sdk';
-import logo from 'shared/images/logo.ico';
 import {
 	EventDescription,
 	EventSummary,
@@ -46,6 +45,7 @@ const BadgeAdded = ({ event }: { event: EventBadgeCreate }) => {
 	const { badgesData } = useBadges();
 
 	const badge = badgesData.find((b: Badge) => String(b._id) === event.badgeId);
+
 	const game = gamesData.find((g: Game) => g.id === event.gameId);
 	const gameImg = getGameThumbnail(game?.id);
 

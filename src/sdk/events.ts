@@ -14,8 +14,8 @@ export const useEvents = (limit?: number) => {
 		isLoading,
 		isFetched,
 		isError,
-	} = useQuery(['masochist', 'events', `limit-${limit ?? 50}`], () =>
-		sdk.getEventsList({ filter: {}, limit: limit ?? 50 }),
+	} = useQuery(['masochist', 'events', `limit-${limit ?? 'none'}`], () =>
+		sdk.getEventsList({ sort: { date: 'desc' }, ...(limit && { limit }) }),
 	);
 
 	return { eventsData, isLoading, isFetched, isError };
