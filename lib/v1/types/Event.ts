@@ -7,14 +7,14 @@ import { WithId } from 'v1/types/__Helpers';
  * Enum describing various types of events.
  */
 export enum EventType {
-	COMPLETE = 'complete',
-	MEMBER_JOIN = 'memberJoined',
-	MEMBER_LEAVE = 'memberLeft',
-	GAME_TIER_CHANGE = 'tierChange',
-	GAME_ADD = 'newGame',
-	GAME_REMOVE = 'gameRemoved',
-	BADGE_CREATE = 'badgeAdded',
-	BADGE_GET = 'badgeGiven',
+	COMPLETE = 'hundo',
+	MEMBER_JOIN = 'memberJoin',
+	MEMBER_LEAVE = 'memberLeave',
+	GAME_TIER_CHANGE = 'gameTierChange',
+	GAME_ADD = 'gameCurate',
+	GAME_REMOVE = 'gameRemove',
+	BADGE_CREATE = 'badgeCreate',
+	BADGE_GET = 'badgeGrant',
 	ACHIEVEMENTS_CHANGE = 'achievementNumberChange',
 	CUSTOM = 'custom',
 }
