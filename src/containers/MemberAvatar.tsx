@@ -40,13 +40,18 @@ export const MemberAvatar = (props: Props) => {
 };
 
 const StyledMemberAvatar = styled.img.attrs(
-	(props: { size: Size; isEmpty: boolean; patronTier?: number | null }) => {
-		const { size, patronTier } = props;
+	(
+		props: Pick<Props, 'size' | 'patronTier' | 'onClick'> & {
+			isEmpty: boolean;
+		},
+	) => {
+		const { size, patronTier, onClick } = props;
 		const style: React.CSSProperties = {
 			minWidth: size,
 			minHeight: size,
 			maxWidth: size,
 			maxHeight: size,
+			cursor: onClick ? 'pointer' : 'help',
 		};
 		if (patronTier === 1) {
 			style.border = `5px solid ${colors.tier1}`;
@@ -62,10 +67,13 @@ const StyledMemberAvatar = styled.img.attrs(
 		}
 		return { style };
 	},
-)<{ size: Size; isEmpty: boolean; patronTier?: number | null }>`
+)<
+	Pick<Props, 'size' | 'patronTier' | 'onClick'> & {
+		isEmpty: boolean;
+	}
+>`
 	box-sizing: border-box;
 	padding: 2px;
-	cursor: help;
 	background-color: ${({ isEmpty }) =>
 		isEmpty ? colors.black : 'transparent'};
 	border-radius: ${({ size }) =>

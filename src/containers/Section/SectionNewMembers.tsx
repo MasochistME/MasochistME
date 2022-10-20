@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 import { EventMemberJoin, EventType } from '@masochistme/sdk/dist/v1/types';
@@ -9,12 +10,17 @@ import { Flex } from 'components';
 import { Size } from 'utils';
 
 export const SectionNewMembers = (): JSX.Element => {
+	const history = useHistory();
 	const { membersData } = useCuratorMembers();
 	const { eventsData } = useEvents({
 		limit: 10,
 		sort: { date: 'desc' },
 		filter: { type: EventType.MEMBER_JOIN },
 	});
+
+	const onMemberClick = (memberId?: string) => {
+		if (memberId) history.push(`/profile/${memberId}`);
+	};
 
 	const memberEvents = eventsData.filter(
 		event => event.type === EventType.MEMBER_JOIN,
@@ -29,6 +35,7 @@ export const SectionNewMembers = (): JSX.Element => {
 				<MemberAvatar
 					member={member}
 					size={Size.BIG}
+					onClick={() => onMemberClick(member.steamId)}
 					title={
 						<Flex column>
 							<span style={{ fontWeight: 'bold' }}>{member.name}</span>

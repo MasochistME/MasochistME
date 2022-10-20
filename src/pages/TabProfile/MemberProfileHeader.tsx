@@ -79,12 +79,17 @@ export const MemberProfileHeader = (props: Props): JSX.Element => {
 						</a>
 					</h1>
 					<Flex row align gap={12}>
-						<Flex column alignItems="flex-end" fontSize="0.8em">
-							<span>Last updated:</span>
-							<span style={{ fontStyle: 'italic' }}>
-								{dayjs(member?.lastUpdated).fromNow()}
-							</span>
-						</Flex>
+						<Tooltip
+							content={dayjs(member?.lastUpdated).format(
+								'D MMM YYYY, H:mm:ss',
+							)}>
+							<Flex column alignItems="flex-end" fontSize="0.8em">
+								<span>Last updated:</span>
+								<span style={{ fontStyle: 'italic' }}>
+									{dayjs(member?.lastUpdated).fromNow()}
+								</span>
+							</Flex>
+						</Tooltip>
 						<Button
 							label="Update"
 							icon="fas fa-refresh"

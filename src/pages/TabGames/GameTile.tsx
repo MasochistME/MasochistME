@@ -5,16 +5,17 @@ import { Game } from '@masochistme/sdk/dist/v1/types';
 import { getTierIcon, getGameThumbnail } from 'utils';
 import { useTiers, useCuratedGames } from 'sdk';
 import { colors } from 'shared/theme';
-import { Flex, Spinner } from 'components';
+import { Flex, Spinner, Tooltip } from 'components';
 
 import { GameTileModal } from './GameTileModal';
 
 type Props = {
 	gameId: number;
+	title?: React.ReactNode;
 };
 
 export const GameTile = (props: Props): JSX.Element => {
-	const { gameId } = props;
+	const { gameId, title } = props;
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const { tiersData } = useTiers();
@@ -27,32 +28,35 @@ export const GameTile = (props: Props): JSX.Element => {
 	};
 
 	return (
-		<StyledGameTile column align justify onClick={onShowModal}>
-			{!game && <Spinner />}
-			{game && (
-				<StyledGameThumbnail
-					className={`game-tier-${game.tier}`}
-					src={getGameThumbnail(game.id)}>
-					<StyledGameHiddenInfo column align>
-						<i className={getTierIcon(game.tier, tiersData)} />
-						<h3>{game.title}</h3>
-						<p style={{ margin: '0', fontSize: '0.85em' }}>
-							{game.description}
-						</p>
-					</StyledGameHiddenInfo>
-				</StyledGameThumbnail>
-			)}
-			<GameTileModal
-				gameId={gameId}
-				isOpen={isModalOpen}
-				setIsOpen={setIsModalOpen}
-			/>
-		</StyledGameTile>
+		<Tooltip content={title}>
+			<StyledGameTile column align justify onClick={onShowModal}>
+				{!game && <Spinner />}
+				{game && (
+					<StyledGameThumbnail
+						className={`game-tier-${game.tier}`}
+						src={getGameThumbnail(game.id)}>
+						<StyledGameHiddenInfo column align>
+							<i className={getTierIcon(game.tier, tiersData)} />
+							<h3>{game.title}</h3>
+							<p style={{ margin: '0', fontSize: '0.85em' }}>
+								{game.description}
+							</p>
+						</StyledGameHiddenInfo>
+					</StyledGameThumbnail>
+				)}
+				<GameTileModal
+					gameId={gameId}
+					isOpen={isModalOpen}
+					setIsOpen={setIsModalOpen}
+				/>
+			</StyledGameTile>
+		</Tooltip>
 	);
 };
 
 const StyledGameTile = styled(Flex)`
 	background-color: ${colors.newDark}dd;
+	max-width: 300px;
 `;
 
 const StyledGameThumbnail = styled.div<{ src: string }>`
