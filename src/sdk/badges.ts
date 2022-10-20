@@ -1,3 +1,4 @@
+import { BadgesListParams } from '@masochistme/sdk/dist/v1/api/badges';
 import { useQuery } from '@tanstack/react-query';
 import { useAppContext } from 'shared/store/context';
 
@@ -5,7 +6,7 @@ import { useAppContext } from 'shared/store/context';
  *
  * @returns
  */
-export const useBadges = () => {
+export const useBadges = (params?: BadgesListParams) => {
 	const { sdk } = useAppContext();
 
 	const {
@@ -13,7 +14,10 @@ export const useBadges = () => {
 		isLoading,
 		isFetched,
 		isError,
-	} = useQuery(['masochist', 'badges'], () => sdk.getBadgesList({}));
+	} = useQuery(
+		['masochist', 'badges', params ? JSON.stringify(params) : ''],
+		() => sdk.getBadgesList({ ...(params ?? {}) }),
+	);
 
 	return { badgesData, isLoading, isFetched, isError };
 };

@@ -1,5 +1,6 @@
 export * from './Button';
 export * from './DateBlock';
+export * from './Fallback';
 export * from './FilterBar';
 export * from './Flex';
 export * from './HoverIcon';

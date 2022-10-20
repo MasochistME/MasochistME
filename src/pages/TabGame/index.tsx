@@ -11,7 +11,7 @@ import { TabDict } from 'shared/config/tabs';
 
 import { GameHeader } from './GameHeader';
 
-export const TabGame = (): JSX.Element => {
+const TabGame = (): JSX.Element => {
 	useActiveTab(TabDict.GAME);
 
 	const { id } = useParams<{ id: string }>();
@@ -95,6 +95,8 @@ export const TabGame = (): JSX.Element => {
 		</SubPage>
 	);
 };
+
+export default TabGame;
 
 const StyledGameStats = styled.div`
 	width: 100%;

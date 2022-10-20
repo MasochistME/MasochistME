@@ -1,5 +1,25 @@
+import { MembersListParams } from '@masochistme/sdk/dist/v1/api/members';
 import { useQuery } from '@tanstack/react-query';
 import { useAppContext } from 'shared/store/context';
+
+/**
+ *
+ */
+export const useMembers = (params?: MembersListParams) => {
+	const { sdk } = useAppContext();
+
+	const {
+		data: membersData = [],
+		isLoading,
+		isFetched,
+		isError,
+	} = useQuery(
+		['masochist', 'members', params ? JSON.stringify(params) : ''],
+		() => sdk.getMembersList({ ...(params ?? {}) }),
+	);
+
+	return { membersData, isLoading, isFetched, isError };
+};
 
 /**
  *

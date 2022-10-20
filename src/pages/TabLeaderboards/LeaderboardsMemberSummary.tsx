@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { useMemberById, useMemberLeaderboards } from 'sdk';
+import { useCuratorMembers, useLeaderboards } from 'sdk';
 import { colors, media } from 'shared/theme';
 import { Flex } from 'components';
 import { MemberAvatar } from 'containers';
@@ -27,8 +27,11 @@ export const LeaderboardsMemberSummary = (props: Props): JSX.Element => {
 	const { steamId, position, onShowDetails } = props;
 	const [isExpanded, setIsExpanded] = useState(false);
 
-	const { memberData } = useMemberById(steamId);
-	const { leaderData } = useMemberLeaderboards(steamId);
+	const { leaderboardsData } = useLeaderboards();
+	const { membersData } = useCuratorMembers();
+
+	const leaderData = leaderboardsData.find(l => l.memberId === steamId);
+	const memberData = membersData.find(m => m.steamId === steamId);
 
 	const size = Size.BIG;
 	const isDisabled = memberData?.isPrivate;

@@ -1,5 +1,22 @@
+import { GamesListParams } from '@masochistme/sdk/dist/v1/api/games';
 import { useQuery } from '@tanstack/react-query';
 import { useAppContext } from 'shared/store/context';
+
+export const useGames = (params?: GamesListParams) => {
+	const { sdk } = useAppContext();
+
+	const {
+		data: gamesData = [],
+		isLoading,
+		isFetched,
+		isError,
+	} = useQuery(
+		['masochist', 'games', params ? JSON.stringify(params) : ''],
+		() => sdk.getGamesList({ ...(params ?? {}) }),
+	);
+
+	return { gamesData, isLoading, isFetched, isError };
+};
 
 /**
  *

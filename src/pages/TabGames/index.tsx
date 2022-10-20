@@ -11,7 +11,7 @@ import { GameTileView } from './GameTileView';
 import { GameTableView } from './GameTableView';
 import { GameFilterBar } from './GameFilterBar';
 
-export const TabGames = (): JSX.Element => {
+const TabGames = (): JSX.Element => {
 	useActiveTab(TabDict.GAMES);
 
 	const { gameListView } = useAppContext();
@@ -48,6 +48,8 @@ export const TabGames = (): JSX.Element => {
 		</SubPage>
 	);
 };
+
+export default TabGames;
 
 const StyledGames = styled(Flex)`
 	flex: 1 1 100%;

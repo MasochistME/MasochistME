@@ -11,7 +11,7 @@ import { Section, SubPage } from 'containers';
 
 import { SupportTier } from './SupportTier';
 
-export const TabSupport = (): JSX.Element => {
+const TabSupport = (): JSX.Element => {
 	useActiveTab(TabDict.SUPPORT);
 
 	const isLoading = true; // TODO temporary fix
@@ -58,6 +58,8 @@ export const TabSupport = (): JSX.Element => {
 		</SubPage>
 	);
 };
+
+export default TabSupport;
 
 const StyledHallOfFame = styled.div`
 	flex: 1 1 100%;

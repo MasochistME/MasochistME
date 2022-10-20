@@ -16,8 +16,9 @@ export const useEvents = (params?: EventsListParams) => {
 		isLoading,
 		isFetched,
 		isError,
-	} = useQuery(['masochist', 'events', JSON.stringify(params)], () =>
-		sdk.getEventsList({ ...(params ?? {}) }),
+	} = useQuery(
+		['masochist', 'events', params ? JSON.stringify(params) : ''],
+		() => sdk.getEventsList({ ...(params ?? {}) }),
 	);
 
 	return { eventsData, isLoading, isFetched, isError };

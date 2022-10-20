@@ -28,7 +28,7 @@ export enum SectionMap {
 	DISCORD = 'discord',
 }
 
-export const TabHome = (): JSX.Element => {
+const TabHome = (): JSX.Element => {
 	useActiveTab(TabDict.HOME);
 
 	return (
@@ -50,6 +50,8 @@ export const TabHome = (): JSX.Element => {
 		</SubPage>
 	);
 };
+
+export default TabHome;
 
 const SectionWelcome = () => {
 	return (

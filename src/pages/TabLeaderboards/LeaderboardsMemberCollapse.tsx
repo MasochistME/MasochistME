@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, Suspense } from 'react';
 import { orderBy } from 'lodash';
 import styled from 'styled-components';
 import { MemberGame } from '@masochistme/sdk/dist/v1/types';
@@ -57,19 +57,20 @@ export const LeaderboardsMemberCollapse = (props: Props): JSX.Element => {
 		<StyledMemberGameList
 			isDisabled={isDisabled}
 			isShekelmaster={isShekelmaster}>
-			{isLoading && (
-				<Flex align justify padding={16}>
-					<Spinner />
-				</Flex>
-			)}
-			{isFetched &&
-				gameList.map(memberGame => (
+			<Suspense
+				fallback={
+					<Flex align justify padding={16}>
+						<Spinner />
+					</Flex>
+				}>
+				{gameList.map(memberGame => (
 					<LeaderboardsMemberGame
 						key={`game-${memberGame.gameId}`}
 						steamId={steamId}
 						memberGame={memberGame}
 					/>
 				))}
+			</Suspense>
 		</StyledMemberGameList>
 	);
 };

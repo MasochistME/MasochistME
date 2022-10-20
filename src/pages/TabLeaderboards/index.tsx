@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import styled from 'styled-components';
 import { Member, Tier, Leaderboards } from '@masochistme/sdk/dist/v1/types';
 
@@ -12,7 +12,7 @@ import { Flex, Spinner } from 'components';
 import { LeaderboardsMember } from './LeaderboardsMember';
 import { LeaderboardsFilterBar } from './LeaderboardsFilterBar';
 
-export const TabLeaderboards = (): JSX.Element => {
+const TabLeaderboards = (): JSX.Element => {
 	useActiveTab(TabDict.LEADERBOARDS);
 
 	const { queryMember } = useAppContext();
@@ -87,6 +87,8 @@ export const TabLeaderboards = (): JSX.Element => {
 		</SubPage>
 	);
 };
+
+export default TabLeaderboards;
 
 const StyledTierTypes = styled.ul`
 	margin: 0;

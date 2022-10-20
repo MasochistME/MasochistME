@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Tier } from '@masochistme/sdk/dist/v1/types';
 
-import { useTiers, useMemberLeaderboards } from 'sdk';
+import { useTiers, useLeaderboards } from 'sdk';
 import { media } from 'shared/theme';
 import { Flex, Spinner, Tooltip } from 'components';
 
@@ -19,13 +19,15 @@ export const LeaderboardsMemberPoints = (props: Props): JSX.Element => {
 		isFetched: isTiersFetched,
 	} = useTiers();
 	const {
-		leaderData: member,
-		isLoading: isMemberLoading,
-		isFetched: isMemberFetched,
-	} = useMemberLeaderboards(steamId);
+		leaderboardsData,
+		isLoading: isLeaderboardsLoading,
+		isFetched: isLeaderboardsFetched,
+	} = useLeaderboards();
 
-	const isLoading = isMemberLoading && isTiersLoading;
-	const isFetched = isMemberFetched && isTiersFetched;
+	const member = leaderboardsData.find(l => l.memberId === steamId);
+
+	const isLoading = isLeaderboardsLoading && isTiersLoading;
+	const isFetched = isLeaderboardsFetched && isTiersFetched;
 
 	const tierPoints = tiersData.map((tier: Tier) => {
 		const tierPoints = member?.games?.find(game => game.tier === tier.id);

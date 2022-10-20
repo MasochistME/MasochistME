@@ -12,7 +12,7 @@ import { MemberProfileGraphs } from './MemberProfileGraphs';
 import { TabDict } from 'shared/config/tabs';
 import { MemberProfileBadges } from './MemberProfileBadges';
 
-export const TabProfile = (): JSX.Element => {
+const TabProfile = (): JSX.Element => {
 	useActiveTab(TabDict.PROFILE);
 
 	const { id } = useParams<{ id: string }>();
@@ -41,6 +41,8 @@ export const TabProfile = (): JSX.Element => {
 		</SubPage>
 	);
 };
+
+export default TabProfile;
 
 const StyledProfile = styled(Flex)`
 	flex: 1 1 100%;

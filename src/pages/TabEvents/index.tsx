@@ -11,7 +11,7 @@ import { TabDict } from 'shared/config/tabs';
 import { eventsDict } from './eventsDict';
 import EventItem from './EventItem';
 
-export const TabEvents = (): JSX.Element => {
+const TabEvents = (): JSX.Element => {
 	useActiveTab(TabDict.EVENTS);
 
 	const { eventsData, isLoading, isFetched } = useEvents({ limit: 50 });
@@ -53,6 +53,8 @@ export const TabEvents = (): JSX.Element => {
 		</SubPage>
 	);
 };
+
+export default TabEvents;
 
 const StyledEventTypes = styled.ul`
 	margin: 0;

@@ -8,7 +8,7 @@ import { TabDict } from 'shared/config/tabs';
 import { Tooltip } from 'components';
 import { SubPage } from 'containers';
 
-export const TabBadges = (): JSX.Element => {
+const TabBadges = (): JSX.Element => {
 	useActiveTab(TabDict.BADGES);
 
 	const { gamesData: games } = useCuratedGames();
@@ -55,3 +55,5 @@ export const TabBadges = (): JSX.Element => {
 		</SubPage>
 	);
 };
+
+export default TabBadges;

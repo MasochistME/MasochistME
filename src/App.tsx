@@ -1,22 +1,34 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { useLoadTiers, useInit } from 'shared/hooks';
 import { media, colors } from 'shared/theme';
-import { Flex } from 'components';
+import { Fallback, Flex } from 'components';
 import { Footer, Header, Nav, SubHeader } from 'containers';
-import {
-	TabBadges,
-	TabEvents,
-	TabGame,
-	TabGames,
-	TabHome,
-	TabLeaderboards,
-	TabProfile,
-	TabSupport,
-	NotFound,
-} from 'pages';
+
+import { NotFound } from 'pages';
+
+const TabBadges = React.lazy(() => import('./pages/TabBadges'));
+const TabEvents = React.lazy(() => import('./pages/TabEvents'));
+const TabGame = React.lazy(() => import('./pages/TabGame'));
+const TabGames = React.lazy(() => import('./pages/TabGames'));
+const TabHome = React.lazy(() => import('./pages/TabHome'));
+const TabLeaderboards = React.lazy(() => import('./pages/TabLeaderboards'));
+const TabProfile = React.lazy(() => import('./pages/TabProfile'));
+const TabSupport = React.lazy(() => import('./pages/TabSupport'));
+
+// import {
+// 	TabBadges,
+// 	TabEvents,
+// 	TabGame,
+// 	TabGames,
+// 	TabHome,
+// 	TabLeaderboards,
+// 	TabProfile,
+// 	TabSupport,
+// 	NotFound,
+// } from 'pages';
 
 export const App = (): JSX.Element => {
 	const loaded = useInit();
@@ -34,31 +46,49 @@ export const App = (): JSX.Element => {
 						<SubHeader />
 						<Switch>
 							<Route exact path="/">
-								<TabHome />
+								<Suspense fallback={<Fallback />}>
+									<TabHome />
+								</Suspense>
 							</Route>
 							<Route exact path="/home">
-								<TabHome />
+								<Suspense fallback={<Fallback />}>
+									<TabHome />
+								</Suspense>
 							</Route>
 							<Route exact path="/games">
-								<TabGames />
+								<Suspense fallback={<Fallback />}>
+									<TabGames />
+								</Suspense>
 							</Route>
 							<Route exact path="/leaderboards">
-								<TabLeaderboards />
+								<Suspense fallback={<Fallback />}>
+									<TabLeaderboards />
+								</Suspense>
 							</Route>
 							<Route exact path="/events">
-								<TabEvents />
+								<Suspense fallback={<Fallback />}>
+									<TabEvents />
+								</Suspense>
 							</Route>
 							<Route exact path="/support">
-								<TabSupport />
+								<Suspense fallback={<Fallback />}>
+									<TabSupport />
+								</Suspense>
 							</Route>
 							<Route exact path="/badges">
-								<TabBadges />
+								<Suspense fallback={<Fallback />}>
+									<TabBadges />
+								</Suspense>
 							</Route>
 							<Route exact path="/profile/:id">
-								<TabProfile />
+								<Suspense fallback={<Fallback />}>
+									<TabProfile />
+								</Suspense>
 							</Route>
 							<Route exact path="/game/:id">
-								<TabGame />
+								<Suspense fallback={<Fallback />}>
+									<TabGame />
+								</Suspense>
 							</Route>
 							<Route>
 								<NotFound />
