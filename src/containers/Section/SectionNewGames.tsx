@@ -8,15 +8,18 @@ import { GameTile } from 'pages/TabGames/GameTile';
 
 export const SectionNewGames = (): JSX.Element => {
 	const { gamesData } = useCuratedGames();
-	const { eventsData } = useEvents();
+	const { eventsData } = useEvents({
+		limit: 5,
+		sort: { date: 'desc' },
+		filter: { type: EventType.GAME_ADD },
+	});
 
 	const gameEvents = eventsData
 		.filter(event => event.type === EventType.GAME_ADD)
 		.sort(
 			(eventA: Event, eventB: Event) =>
 				new Date(eventA.date).getTime() - new Date(eventB.date).getTime(),
-		)
-		.slice(0, 3) as unknown as EventGameAdd[];
+		) as unknown as EventGameAdd[];
 
 	const newestGames = gameEvents.map(event => {
 		const game = gamesData.find(game => game.id === event.gameId);

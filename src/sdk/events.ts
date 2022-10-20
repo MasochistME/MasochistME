@@ -1,12 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 import { useAppContext } from 'shared/store/context';
 
+import { EventsListParams } from '@masochistme/sdk/dist/v1/api/events';
+
 /**
  *
  * @param limit
  * @returns
  */
-export const useEvents = (limit?: number) => {
+export const useEvents = (params?: EventsListParams) => {
 	const { sdk } = useAppContext();
 
 	const {
@@ -14,8 +16,8 @@ export const useEvents = (limit?: number) => {
 		isLoading,
 		isFetched,
 		isError,
-	} = useQuery(['masochist', 'events', `limit-${limit ?? 'none'}`], () =>
-		sdk.getEventsList({ sort: { date: 'desc' }, ...(limit && { limit }) }),
+	} = useQuery(['masochist', 'events', JSON.stringify(params)], () =>
+		sdk.getEventsList({ ...(params ?? {}) }),
 	);
 
 	return { eventsData, isLoading, isFetched, isError };

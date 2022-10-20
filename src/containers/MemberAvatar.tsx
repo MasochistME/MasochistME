@@ -10,6 +10,7 @@ type Props = {
 	member?: Member;
 	size?: Size;
 	patronTier?: number | null;
+	title?: React.ReactNode;
 	onClick?: () => void;
 };
 
@@ -18,13 +19,14 @@ export const MemberAvatar = (props: Props) => {
 		member = { name: 'UNKNOWN', avatar: logo },
 		size = Size.MEDIUM,
 		patronTier,
+		title,
 		onClick,
 	} = props;
 
 	// tier={Number(patron?.tier)}
 
 	return (
-		<Tooltip content={<Flex column>{member.name}</Flex>}>
+		<Tooltip content={title ?? <Flex column>{member.name}</Flex>}>
 			<StyledMemberAvatar
 				onClick={onClick}
 				size={size}
