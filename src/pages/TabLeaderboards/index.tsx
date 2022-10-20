@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Member, Tier, Leaderboards } from '@masochistme/sdk/dist/v1/types';
 
@@ -6,7 +6,7 @@ import { useTiers, useCuratorMembers, useLeaderboards } from 'sdk';
 import { useAppContext } from 'shared/store/context';
 import { useActiveTab } from 'shared/hooks';
 import { TabDict } from 'shared/config/tabs';
-import { SubPage, Section } from 'containers';
+import { HideOn, SubPage, Section } from 'containers';
 import { Flex, Spinner } from 'components';
 
 import { LeaderboardsMember } from './LeaderboardsMember';
@@ -55,35 +55,37 @@ const TabLeaderboards = (): JSX.Element => {
 				{isLoading && <Spinner />}
 				{isFetched && <Flex column>{createRankingList()}</Flex>}
 			</StyledLeaderboards>
-			<Section
-				minWidth="450px"
-				maxWidth="450px"
-				title="Game ranking system"
-				content={
-					<Flex column gap={8}>
-						<div>
-							Ranking system utilizes the games&lsquo; score system. Depending
-							on the game&lsquo;s individual difficulty level, it is given one
-							of {tiersData?.length ?? 'X'} possible marks:
-						</div>
-						{isTiersLoading && <Spinner />}
-						{isTiersFetched && (
-							<StyledTierTypes>{tiersDescriptions}</StyledTierTypes>
-						)}
-						<div>
-							Completing a game might mean earning its most demanding
-							achievement, or getting the in-game 100%; but for the sake of
-							simplicity the ranking system present here assumes that completing
-							a game means earning 100% of its Steam achievements.
-						</div>
-						<div>
-							You are awarded points depending on the completed game&lsquo;s
-							difficulty level, which are later summarized and used to determine
-							your placement on the ranking ladder.
-						</div>
-					</Flex>
-				}
-			/>
+			<HideOn media="netbooks">
+				<Section
+					minWidth="450px"
+					maxWidth="450px"
+					title="Game ranking system"
+					content={
+						<Flex column gap={8}>
+							<div>
+								Ranking system utilizes the games&lsquo; score system. Depending
+								on the game&lsquo;s individual difficulty level, it is given one
+								of {tiersData?.length ?? 'X'} possible marks:
+							</div>
+							{isTiersLoading && <Spinner />}
+							{isTiersFetched && (
+								<StyledTierTypes>{tiersDescriptions}</StyledTierTypes>
+							)}
+							<div>
+								Completing a game might mean earning its most demanding
+								achievement, or getting the in-game 100%; but for the sake of
+								simplicity the ranking system present here assumes that
+								completing a game means earning 100% of its Steam achievements.
+							</div>
+							<div>
+								You are awarded points depending on the completed game&lsquo;s
+								difficulty level, which are later summarized and used to
+								determine your placement on the ranking ladder.
+							</div>
+						</Flex>
+					}
+				/>
+			</HideOn>
 		</SubPage>
 	);
 };

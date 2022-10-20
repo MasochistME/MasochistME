@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { colors } from 'shared/theme';
 import { Flex, ProgressBar } from 'components';
+import { HideOn } from 'containers';
 
 export const UpdateStatus = (): JSX.Element => {
 	const status = useSelector((state: any) => state.status);
@@ -14,9 +15,11 @@ export const UpdateStatus = (): JSX.Element => {
 	return (
 		<StyledUpdateStatus column align justify>
 			{!status.percentage || status.percentage === 100 ? (
-				<StyledUpdateStatusText>
-					Next update: {nextUpdate}
-				</StyledUpdateStatusText>
+				<HideOn media="smallNetbooks">
+					<StyledUpdateStatusText>
+						Next update: {nextUpdate}
+					</StyledUpdateStatusText>
+				</HideOn>
 			) : (
 				<ProgressBar
 					percentage={status?.percentage ?? 100}

@@ -5,6 +5,7 @@ export * from './ButtonsSocialMedia';
 export * from './Charts';
 export * from './Footer';
 export * from './Header';
+export * from './HideOn';
 export * from './MemberAvatar';
 export * from './ModalLeaderboards';
 export * from './Nav';

@@ -10,7 +10,11 @@ export const Header = (): JSX.Element => {
 		<StyledHeader align>
 			<span />
 			<StyledHeaderTitle>
-				Masochist.ME - games that masochists love
+				<span>Masochist.ME</span>
+				<StyledHeaderSubTitle>
+					{' '}
+					- games that masochists love
+				</StyledHeaderSubTitle>
 			</StyledHeaderTitle>
 			<ButtonsSocialMedia />
 		</StyledHeader>
@@ -37,5 +41,11 @@ const StyledHeaderTitle = styled.h1`
 	text-transform: uppercase;
 	@media (max-width: ${media.tablets}) {
 		letter-spacing: 0em;
+	}
+`;
+
+const StyledHeaderSubTitle = styled.span`
+	@media (max-width: ${media.smallTablets}) {
+		display: none;
 	}
 `;
