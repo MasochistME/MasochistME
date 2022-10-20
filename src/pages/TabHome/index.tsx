@@ -36,7 +36,7 @@ const TabHome = (): JSX.Element => {
 	return (
 		<SubPage>
 			<StyledDashboard column justify align>
-				<Flex row justify align flexWrap="wrap" gap={16}>
+				<Flex row justify alignItems="flex-start" flexWrap="wrap" gap={16}>
 					<Flex column justify align flexWrap="wrap" gap={16}>
 						<SectionFeatured />
 						<Flex row flexWrap="wrap" alignItems="flex-start" gap={16}>
