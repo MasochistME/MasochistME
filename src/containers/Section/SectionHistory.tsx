@@ -31,7 +31,10 @@ import { SmallEvent, Section, EventLink } from 'containers';
 import { Spinner } from 'components';
 
 export const SectionHistory = (): JSX.Element => {
-	const { eventsData, isLoading } = useEvents({ limit: 10 });
+	const { eventsData, isLoading } = useEvents({
+		sort: { date: 'desc' },
+		limit: 10,
+	});
 	const {
 		getEventMemberJoin,
 		getEventMemberLeave,

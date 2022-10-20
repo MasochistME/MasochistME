@@ -13,7 +13,9 @@ import {
 	SectionTrivia,
 	SectionNewGames,
 	SectionNewMembers,
+	SectionNewBadges,
 	Section,
+	SectionFeatured,
 } from 'containers';
 
 export enum SectionMap {
@@ -33,18 +35,22 @@ const TabHome = (): JSX.Element => {
 
 	return (
 		<SubPage>
-			<StyledDashboard row justify>
-				<Flex column gap={16}>
-					<SectionNewMembers />
-					<SectionNewGames />
-				</Flex>
-				<Flex column gap={16}>
-					<Flex row alignItems="flex-start" gap={16}>
-						<SectionHistory />
-						<SectionTop />
+			<StyledDashboard column justify>
+				<Flex row gap={16}>
+					<Flex column gap={16}>
+						<SectionNewMembers />
+						<SectionNewBadges />
+						<SectionNewGames />
 					</Flex>
-					<SectionSale />
+					<Flex column gap={16}>
+						<SectionFeatured />
+						<Flex row alignItems="flex-start" gap={16}>
+							<SectionHistory />
+							<SectionTop />
+						</Flex>
+					</Flex>
 				</Flex>
+				<SectionSale />
 			</StyledDashboard>
 			{/* <SectionDiscord /> */}
 		</SubPage>
@@ -68,6 +74,7 @@ const SectionWelcome = () => {
 };
 
 const StyledDashboard = styled(Flex)`
+	width: 100%;
 	align-items: flex-start;
 	gap: 16px;
 	flex-wrap: wrap;

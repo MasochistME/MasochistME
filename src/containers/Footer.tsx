@@ -18,10 +18,12 @@ const StyledFooter = styled(Flex)`
 	justify-self: flex-end;
 	justify-content: space-between;
 	width: 100%;
-	padding: 0px 32px;
+	padding: 0px 24px;
 	background-color: ${colors.newDark};
 	color: ${colors.mediumGrey};
 	font-family: ${fonts.Raleway};
 `;
 
-const StyledFooterText = styled.h3``;
+const StyledFooterText = styled.h3`
+	margin: 0;
+`;

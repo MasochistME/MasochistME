@@ -45,13 +45,15 @@ export const EventLink = styled.span`
 	}
 `;
 
-export const SaleBrick = styled.li`
+export const SaleBrick = styled.div`
 	cursor: pointer;
-	background-size: contain;
+	background-size: cover;
+	background-repeat: no-repeat;
 	box-sizing: border-box;
-	width: 192px;
-	height: 92px;
-	margin: 5px;
+	min-width: 200px;
+	height: 96px;
+	box-sizing: border-box;
+	border: 3px solid ${colors.black};
 	&:hover {
 		box-shadow: 0 0 10px ${colors.superDarkGrey};
 	}

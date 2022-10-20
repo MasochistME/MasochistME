@@ -1,5 +1,7 @@
 export * from './SectionDiscord';
+export * from './SectionFeatured';
 export * from './SectionHistory';
+export * from './SectionNewBadges';
 export * from './SectionNewGames';
 export * from './SectionNewMembers';
 export * from './SectionSale';
