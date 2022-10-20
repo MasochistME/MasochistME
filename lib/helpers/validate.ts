@@ -15,7 +15,6 @@ export const tokenValidation = (req: any, res: any, next: any) => {
     log.CRITICAL(`-- Fake token: ${fakeToken}`);
     return res.sendStatus(401);
   }
-  log.INFO(`Authorized access to endpoint: ${url}`);
 
   next();
 };
