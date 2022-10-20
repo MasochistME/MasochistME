@@ -35,19 +35,19 @@ const TabHome = (): JSX.Element => {
 
 	return (
 		<SubPage>
-			<StyledDashboard column justify>
-				<Flex row gap={16}>
-					<Flex column gap={16}>
-						<SectionNewMembers />
-						<SectionNewBadges />
-						<SectionNewGames />
-					</Flex>
-					<Flex column gap={16}>
+			<StyledDashboard column justify align>
+				<Flex row justify align flexWrap="wrap" gap={16}>
+					<Flex column justify align flexWrap="wrap" gap={16}>
 						<SectionFeatured />
-						<Flex row alignItems="flex-start" gap={16}>
+						<Flex row flexWrap="wrap" alignItems="flex-start" gap={16}>
 							<SectionHistory />
 							<SectionTop />
 						</Flex>
+					</Flex>
+					<Flex column justify align flexWrap="wrap" gap={16}>
+						<SectionNewMembers />
+						<SectionNewBadges />
+						<SectionNewGames />
 					</Flex>
 				</Flex>
 				<SectionSale />
