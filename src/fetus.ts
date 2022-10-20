@@ -14,10 +14,11 @@ dotenv.config();
  *       DB CONFIG      *
  ************************/
 
-const botDb = process.env["ENV"] === "dev" ? "fetus-dev" : "fetus";
+const botDb = process.env["ENV"] === "dev" ? "fetus-dev" : "legacy-fetus";
+export const mmeDb = "legacy-masochist";
 const dbConfig = [
   { symbol: botDb, url: process.env["DB"] },
-  { symbol: "masochist", url: process.env["DB"] },
+  { symbol: mmeDb, url: process.env["DB"] },
 ];
 
 export const mongo = new Database(dbConfig);
