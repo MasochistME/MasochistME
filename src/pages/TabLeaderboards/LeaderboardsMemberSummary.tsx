@@ -94,6 +94,8 @@ type SummaryProps = {
 
 const StyledLeaderboardsMemberSummary = styled(Flex)<SummaryProps>`
 	width: 100%;
+	min-width: 0;
+	overflow: hidden;
 	padding: 2px 0;
 	gap: 4px;
 	cursor: pointer;
@@ -154,8 +156,11 @@ const StyledMemberPosition = styled(Flex)<{ size: Size }>`
 	}
 `;
 
-const StyledLeaderboardsMemberUsername = styled(Flex)`
+const StyledLeaderboardsMemberUsername = styled.h4`
 	text-transform: uppercase;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 	&:hover {
 		color: ${colors.white};
 	}
@@ -164,8 +169,9 @@ const StyledLeaderboardsMemberUsername = styled(Flex)`
 const StyledLeaderboardsMemberDetails = styled(Flex)`
 	justify-content: space-between;
 	margin: 0 10px;
-	width: 100%;
-	max-width: 90%;
+	width: 90%;
+	min-width: 0;
+	box-sizing: border-box;
 	@media (max-width: ${media.tablets}) {
 		max-width: 100%;
 		padding: 0 5px;

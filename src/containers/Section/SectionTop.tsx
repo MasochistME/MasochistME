@@ -35,10 +35,16 @@ export const SectionTop = (): JSX.Element => {
 				gap={16}
 				key={`leaderboards-${leader.memberId}`}>
 				<div>{leader.position}.</div>
-				<EventLink onClick={onUserClick}>
+				<EventLink
+					onClick={onUserClick}
+					style={{
+						overflow: 'hidden',
+						textOverflow: 'ellipsis',
+						whiteSpace: 'nowrap',
+					}}>
 					<span className="bold">{leader.name}</span>
 				</EventLink>
-				<div>{leader.sum} pts</div>
+				<div style={{ whiteSpace: 'nowrap' }}>{leader.sum} pts</div>
 			</StyledSectionTopMember>
 		);
 	};
@@ -47,6 +53,7 @@ export const SectionTop = (): JSX.Element => {
 		<Section
 			title="Top 10 users"
 			minWidth="300px"
+			maxWidth="450px"
 			content={
 				<Flex column align justify>
 					{isFetched && leaderboards?.map(leader => leaderboardRow(leader))}
