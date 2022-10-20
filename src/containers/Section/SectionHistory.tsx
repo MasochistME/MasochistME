@@ -1,6 +1,5 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { orderBy } from 'lodash';
 import {
 	Badge,
 	Event,
@@ -28,7 +27,7 @@ import {
 } from 'sdk';
 import { getTierIcon } from 'utils';
 import { SmallEvent, Section, EventLink } from 'containers';
-import { Spinner } from 'components';
+import { Flex, Spinner } from 'components';
 
 export const SectionHistory = (): JSX.Element => {
 	const { eventsData, isLoading } = useEvents({
@@ -92,11 +91,15 @@ export const SectionHistory = (): JSX.Element => {
 	return (
 		<Section
 			title="Last events"
+			minWidth="450px"
 			content={
 				<>
 					{isLoading && <Spinner />}
-					{!isLoading &&
-						eventsData.map((event: Event) => classifyEvents(event))}
+					{!isLoading && (
+						<Flex column gap={6}>
+							{eventsData.map((event: Event) => classifyEvents(event))}
+						</Flex>
+					)}
 				</>
 			}
 		/>

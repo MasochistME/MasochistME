@@ -33,7 +33,6 @@ export const UpdateProgressBarPercentage = styled.div`
 
 export const SmallEvent = styled.p`
 	width: 100%;
-	padding: 3px;
 	margin: 0px;
 	box-sizing: border-box;
 `;

@@ -29,11 +29,7 @@ export const SectionTop = (): JSX.Element => {
 	}) => {
 		const onUserClick = () => history.push(`/profile/${leader.memberId}`);
 		return (
-			<StyledSectionTopMember
-				row
-				align
-				gap={16}
-				key={`leaderboards-${leader.memberId}`}>
+			<StyledSectionTopMember row align key={`leaderboards-${leader.memberId}`}>
 				<div>{leader.position}.</div>
 				<EventLink
 					onClick={onUserClick}
@@ -52,10 +48,10 @@ export const SectionTop = (): JSX.Element => {
 	return (
 		<Section
 			title="Top 10 users"
-			minWidth="300px"
+			minWidth="400px"
 			maxWidth="450px"
 			content={
-				<Flex column align justify>
+				<Flex column align justify gap={5}>
 					{isFetched && leaderboards?.map(leader => leaderboardRow(leader))}
 					{isLoading && <Spinner />}
 				</Flex>
