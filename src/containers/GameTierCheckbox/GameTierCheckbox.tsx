@@ -3,19 +3,18 @@ import styled from 'styled-components';
 import { TierId } from '@masochistme/sdk/dist/v1/types';
 
 import { colors } from 'shared/theme';
-import { useAppContext } from 'shared/store/context';
 import { getTierIcon } from 'utils';
 import { useTiers } from 'sdk';
 import { Flex, Tooltip } from 'components';
 
 type Props = {
 	tierId: TierId;
+	visibleTiers: TierId[];
+	setVisibleTiers: (visibleTiers: TierId[]) => void;
 };
 
 export const GameTierCheckbox = (props: Props): JSX.Element => {
-	const { tierId } = props;
-
-	const { visibleTiers, setVisibleTiers } = useAppContext();
+	const { tierId, visibleTiers, setVisibleTiers } = props;
 	const { tiersData } = useTiers();
 
 	const icon = getTierIcon(tierId, tiersData);

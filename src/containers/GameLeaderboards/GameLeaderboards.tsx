@@ -28,7 +28,7 @@ export const GameLeaderboards = (props: Props) => {
 		filter: { gameId },
 		sort: {
 			completionPercentage: 'desc',
-			mostRecentAchievementDate: 'desc',
+			mostRecentAchievementDate: 'asc',
 		},
 	});
 
@@ -60,6 +60,7 @@ export const GameLeaderboards = (props: Props) => {
 		if (!memberCompletion) return null;
 		return (
 			<StyledGameLeaderboardsMember
+				isCompact={isCompact}
 				key={`leaderboards-member-${memberCompletion.member.steamId}`}>
 				{!isCompact && (
 					<StyledGameLeaderboardsMemberTime>
@@ -71,7 +72,7 @@ export const GameLeaderboards = (props: Props) => {
 					size={isCompact ? Size.SMALL : Size.MEDIUM}
 				/>
 				<StyledGameLeaderboardsMemberInfo align>
-					<StyledGameLeaderboardsMemberUsername>
+					<StyledGameLeaderboardsMemberUsername isCompact={isCompact}>
 						{memberCompletion.trophy}
 						<Link onClick={() => onUserClick(memberCompletion.member.steamId)}>
 							{memberCompletion.member.name}
@@ -102,12 +103,18 @@ export const GameLeaderboards = (props: Props) => {
 const StyledGameLeaderboards = styled(Flex)`
 	width: 100%;
 	box-sizing: border-box;
+	background-color: ${colors.superDarkGrey}cc;
 `;
 
-const StyledGameLeaderboardsMember = styled(Flex)`
+const StyledGameLeaderboardsMember = styled(Flex)<{ isCompact?: boolean }>`
 	align-items: center;
-	border-bottom: 1px solid ${colors.newDark};
-	border-top: 1px solid ${colors.newMediumGrey};
+	padding-left: ${({ isCompact }) => (isCompact ? '8px' : 0)};
+	&:not(:first-child) {
+		border-top: 1px solid ${colors.newMediumGrey};
+	}
+	&:not(:last-child) {
+		border-bottom: 1px solid ${colors.newDark};
+	}
 `;
 
 const StyledGameLeaderboardsMemberInfo = styled(Flex)`
@@ -116,7 +123,11 @@ const StyledGameLeaderboardsMemberInfo = styled(Flex)`
 	justify-content: space-between;
 `;
 
-const StyledGameLeaderboardsMemberUsername = styled.div`
+const StyledGameLeaderboardsMemberUsername = styled.div<{
+	isCompact?: boolean;
+}>`
+	font-weight: bold;
+	font-size: ${({ isCompact }) => (isCompact ? '1em' : '1.2em')};
 	@media (max-width: ${media.bigPhones}) {
 		display: none;
 	}

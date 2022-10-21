@@ -5,6 +5,7 @@ export * from './ButtonsSocialMedia';
 export * from './Charts';
 export * from './Footer';
 export * from './GameLeaderboards';
+export * from './GameTierCheckbox';
 export * from './GameTile';
 export * from './Header';
 export * from './HideOn';

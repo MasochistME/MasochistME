@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import { media } from 'shared/theme';
 import { Flex } from 'components';
 
 export const SubPage = styled(Flex)`
@@ -9,4 +10,8 @@ export const SubPage = styled(Flex)`
 	padding: 16px;
 	width: 100%;
 	gap: 16px;
+	@media (max-width: ${media.netbooks}) {
+		flex-direction: column;
+		align-items: center;
+	}
 `;

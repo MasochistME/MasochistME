@@ -78,6 +78,7 @@ const TabProfile = (): JSX.Element => {
 export default TabProfile;
 
 const StyledProfile = styled(Flex)`
+	width: 100%;
 	flex: 1 1 100%;
 	overflow: hidden;
 `;

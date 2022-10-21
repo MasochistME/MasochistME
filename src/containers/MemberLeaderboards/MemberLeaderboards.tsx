@@ -1,7 +1,7 @@
-import React, { useMemo, Suspense } from 'react';
+import { useMemo, Suspense } from 'react';
 import { orderBy } from 'lodash';
 import styled from 'styled-components';
-import { MemberGame } from '@masochistme/sdk/dist/v1/types';
+import { MemberGame, TierId } from '@masochistme/sdk/dist/v1/types';
 
 import {
 	useCuratedGames,
@@ -16,10 +16,15 @@ import { MemberLeaderboardsGame } from './MemberLeaderboardsGame';
 
 type Props = {
 	steamId: string;
+	filter?: {
+		tiers?: TierId[];
+		isHideCompleted?: boolean;
+		isHideUnfinished?: boolean;
+	};
 };
 
 export const MemberLeaderboards = (props: Props): JSX.Element => {
-	const { steamId } = props;
+	const { steamId, filter } = props;
 
 	const {
 		gamesData,
@@ -53,6 +58,23 @@ export const MemberLeaderboards = (props: Props): JSX.Element => {
 		return sortedMemberGames;
 	}, [gamesData, memberGamesData]);
 
+	const filteredGameList = filter
+		? gameList.filter(game => {
+				let shouldFilter = true;
+				if (filter?.tiers) {
+					const gameTier = gamesData.find(g => g.id === game.gameId)?.tier;
+					shouldFilter = gameTier ? filter.tiers.includes(gameTier) : false;
+				}
+				if (filter?.isHideCompleted) {
+					shouldFilter = shouldFilter && game.completionPercentage !== 100;
+				}
+				if (filter?.isHideUnfinished) {
+					shouldFilter = shouldFilter && game.completionPercentage === 100;
+				}
+				return shouldFilter;
+		  })
+		: gameList;
+
 	return (
 		<StyledMemberGameList
 			isDisabled={isDisabled}
@@ -63,7 +85,7 @@ export const MemberLeaderboards = (props: Props): JSX.Element => {
 						<Spinner />
 					</Flex>
 				}>
-				{gameList.map(memberGame => (
+				{filteredGameList.map(memberGame => (
 					<MemberLeaderboardsGame
 						key={`game-${memberGame.gameId}`}
 						steamId={steamId}

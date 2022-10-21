@@ -3,19 +3,23 @@ import styled from 'styled-components';
 import { Tier } from '@masochistme/sdk/dist/v1/types';
 
 import { useAppContext, GameView } from 'shared/store/context';
-import { SearchBar } from 'containers';
+import { GameTierCheckbox, SearchBar } from 'containers';
 import { Button, FilterBar, Flex, Spinner } from 'components';
 import { useActiveTab } from 'shared/hooks';
 import { TabDict } from 'shared/config/tabs';
 import { useTiers } from 'sdk';
 
-import { GameTierCheckbox } from './GameTierCheckbox';
-
 export const GameFilterBar = (): JSX.Element => {
 	useActiveTab(TabDict.GAMES);
 
-	const { queryGame, setQueryGame, gameListView, setGameListView } =
-		useAppContext();
+	const {
+		queryGame,
+		setQueryGame,
+		gameListView,
+		setGameListView,
+		visibleTiers,
+		setVisibleTiers,
+	} = useAppContext();
 	const {
 		tiersData,
 		isLoading: isTiersLoading,
@@ -51,8 +55,10 @@ export const GameFilterBar = (): JSX.Element => {
 					{isTiersFetched &&
 						tiersData.map((tier: Tier) => (
 							<GameTierCheckbox
-								tierId={tier.id}
 								key={`checkbox-game-${tier.id}`}
+								tierId={tier.id}
+								visibleTiers={visibleTiers}
+								setVisibleTiers={setVisibleTiers}
 							/>
 						))}
 				</StyledFilterGameTiers>

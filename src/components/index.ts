@@ -7,6 +7,7 @@ export * from './Loader';
 export * from './ProgressBar';
 export * from './Skeleton';
 export * from './Spinner';
+export * from './Switch';
 export * from './Table';
 export * from './Tooltip';
 export * from './Warning';

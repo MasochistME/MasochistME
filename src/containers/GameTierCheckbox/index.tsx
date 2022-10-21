@@ -1,0 +1,1 @@
+export { GameTierCheckbox } from './GameTierCheckbox';

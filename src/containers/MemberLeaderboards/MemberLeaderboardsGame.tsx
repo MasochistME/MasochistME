@@ -37,9 +37,13 @@ export const MemberLeaderboardsGame = (props: Props): JSX.Element => {
 
 	return (
 		<StyledMemberGame align>
-			{memberGame.completionPercentage === 100 && (
-				<DateBlock date={gameCompletionDate} />
-			)}
+			<DateBlock
+				date={
+					memberGame.completionPercentage === 100
+						? gameCompletionDate
+						: undefined
+				}
+			/>
 			<StyledGameInfo align gap={8}>
 				<StyledGameThumbnail src={gameThumbnail} alt="Game thumbnail" />
 				<i className={gameTierIcon} />
@@ -59,6 +63,7 @@ const StyledMemberGame = styled(Flex)`
 	width: 100%;
 	height: 37px;
 	gap: 4px;
+	text-align: left;
 	border-bottom: 1px solid ${colors.newDark};
 	border-top: 1px solid ${colors.newMediumGrey};
 	&:first-child {
