@@ -5,7 +5,7 @@ import { Game, MemberGame, Tier } from '@masochistme/sdk/dist/v1/types';
 
 import { useTiers, useCuratedGames } from 'sdk';
 import { getGameThumbnail } from 'utils/getGameUrl';
-import { colors, fonts, media } from 'shared/theme';
+import { colors, media } from 'shared/theme';
 import { Flex, DateBlock, ProgressBar } from 'components';
 import { MemberBadges } from 'containers';
 import { Size } from 'utils';
@@ -37,18 +37,11 @@ export const LeaderboardsMemberGame = (props: Props): JSX.Element => {
 
 	return (
 		<StyledMemberGame align>
-			<StyledGameTimes align justify column>
-				<StyledGameCompletionTime>
-					{memberGame.completionPercentage === 100 && (
-						<DateBlock date={gameCompletionDate} />
-					)}
-				</StyledGameCompletionTime>
-				<div style={{ display: 'none' }}>
-					{Math.round(Number(memberGame.playTime))}h
-				</div>
-			</StyledGameTimes>
-			<StyledGameThumbnail src={gameThumbnail} alt="Game thumbnail" />
-			<StyledGameInfo align>
+			{memberGame.completionPercentage === 100 && (
+				<DateBlock date={gameCompletionDate} />
+			)}
+			<StyledGameInfo align gap={8}>
+				<StyledGameThumbnail src={gameThumbnail} alt="Game thumbnail" />
 				<i className={gameTierIcon} />
 				<StyledGameTitle onClick={onGameClick}>{gameTitle}</StyledGameTitle>
 			</StyledGameInfo>
@@ -65,6 +58,7 @@ export const LeaderboardsMemberGame = (props: Props): JSX.Element => {
 const StyledMemberGame = styled(Flex)`
 	width: 100%;
 	height: 37px;
+	gap: 4px;
 	border-bottom: 1px solid ${colors.newDark};
 	border-top: 1px solid ${colors.newMediumGrey};
 	&:first-child {
@@ -76,8 +70,6 @@ const StyledMemberGame = styled(Flex)`
 `;
 
 const StyledGameThumbnail = styled.img`
-	margin: 0;
-	padding: 0;
 	min-height: 37px;
 	max-height: 37px;
 	@media (max-width: ${media.tablets}) {
@@ -88,26 +80,15 @@ const StyledGameThumbnail = styled.img`
 const StyledGameInfo = styled(Flex)`
 	width: 100%;
 	justify-content: flex-start;
-	margin: 0 10px;
-`;
-
-const StyledGameTimes = styled(Flex)`
-	font-size: 0.7em;
-	font-family: ${fonts.Verdana};
-	color: ${colors.superLightGrey};
-	width: 80px;
-	min-width: 80px;
-	margin-left: 6px;
-`;
-
-const StyledGameCompletionTime = styled.div`
 	@media (max-width: ${media.tablets}) {
-		display: none;
+		margin-left: 6px;
+	}
+	i {
+		width: 16px;
 	}
 `;
 
 const StyledGameTitle = styled.div`
-	margin-left: 5px;
 	cursor: pointer;
 	&:hover {
 		color: ${colors.white};

@@ -2,26 +2,11 @@ import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 
-import {
-	CACHE_USERS,
-	CACHE_PATRONS,
-	CACHE_STATUS,
-	CACHE_USER_DETAILS,
-} from './Cache';
+import { CACHE_PATRONS, CACHE_STATUS } from './Cache';
 
 // STORES
 type TStore = {
-	users: {
-		list: any[];
-		details: any[];
-	};
 	patrons: any[];
-	profile: {
-		username: string | undefined;
-		privilege: string | undefined;
-		banned: boolean;
-		logged: boolean;
-	};
 	status: {
 		lastUpdated: number | undefined;
 		percentage: number;
@@ -29,17 +14,7 @@ type TStore = {
 };
 
 const defaultState: TStore = {
-	users: {
-		list: [],
-		details: [],
-	},
 	patrons: [],
-	profile: {
-		username: undefined,
-		privilege: undefined,
-		banned: false,
-		logged: false,
-	},
 	status: {
 		lastUpdated: undefined,
 		percentage: 0,
@@ -48,14 +23,6 @@ const defaultState: TStore = {
 
 const reducer = (state = defaultState, action: any) => {
 	switch (action.type) {
-		case CACHE_USERS:
-			return {
-				...state,
-				users: {
-					...state.users,
-					list: action.data,
-				},
-			};
 		case CACHE_PATRONS:
 			return {
 				...state,
@@ -69,16 +36,6 @@ const reducer = (state = defaultState, action: any) => {
 					percentage: action.data.status,
 				},
 			};
-		case CACHE_USER_DETAILS: {
-			const details: any[] = [...state.users.details, action.data];
-			return {
-				...state,
-				users: {
-					...state.users,
-					details,
-				},
-			};
-		}
 		default:
 			return state;
 	}

@@ -40,8 +40,8 @@ export const LeaderboardsMemberPoints = (props: Props): JSX.Element => {
 					</>
 				}>
 				<StyledScore key={`member-score-${tier.id}`}>
+					<i className={tier.icon} />
 					{tierPoints?.total}
-					<i className={tier.icon} style={{ paddingRight: '5px' }} />
 				</StyledScore>
 			</Tooltip>
 		);
@@ -50,12 +50,6 @@ export const LeaderboardsMemberPoints = (props: Props): JSX.Element => {
 	if (isLoading) return <Spinner />;
 	return (
 		<StyledLeaderboardsMemberPoints>
-			<Tooltip content="Sum of all points">
-				<StyledScore>
-					{member?.sum ?? 0}
-					<i className="fas fa-sigma" />
-				</StyledScore>
-			</Tooltip>
 			{tierPoints}
 			<Tooltip
 				content={
@@ -65,8 +59,21 @@ export const LeaderboardsMemberPoints = (props: Props): JSX.Element => {
 					</>
 				}>
 				<StyledScore>
-					{member?.badges?.total}
 					<i className="fas fa-medal" />
+					{member?.badges?.total}
+				</StyledScore>
+			</Tooltip>
+			<Tooltip content="Sum of all points">
+				<StyledScore>
+					<span
+						style={{
+							fontWeight: 'bold',
+							fontSize: '18px',
+							lineHeight: '14px',
+						}}>
+						Σ
+					</span>
+					<span style={{ fontWeight: 'bold' }}>{member?.sum ?? 0}</span>
 				</StyledScore>
 			</Tooltip>
 		</StyledLeaderboardsMemberPoints>
@@ -74,15 +81,17 @@ export const LeaderboardsMemberPoints = (props: Props): JSX.Element => {
 };
 
 const StyledLeaderboardsMemberPoints = styled(Flex)`
-	justify-content: space-evenly;
+	gap: 16px;
 `;
 
 const StyledScore = styled(Flex)`
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	gap: 4px;
-	margin: 0 8px;
-	@media (max-width: ${media.tablets}) {
-		display: none !important;
+	width: 20px;
+	i {
+		margin: 0;
+		padding: 0;
 	}
 `;

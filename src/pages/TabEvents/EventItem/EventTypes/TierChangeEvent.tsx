@@ -9,13 +9,8 @@ import {
 import logo from 'shared/images/logo.ico';
 import { useAllGames, useTiers } from 'sdk';
 import { getGameThumbnail, getTierIcon } from 'utils';
-import {
-	EventDescription,
-	EventSummary,
-	EventInfo,
-	EventImg,
-	EventLink,
-} from './components';
+
+import { BaseEvent } from './BaseEvent';
 
 type Props = { event: EventGameTierChange };
 
@@ -37,28 +32,29 @@ export const TierChangeEvent = (props: Props): JSX.Element | null => {
 	const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
 
 	return (
-		<EventInfo>
-			<EventImg alt="game-img" src={logo} />
-			<EventDescription>
-				<EventLink className="bold" onClick={onGameClick}>
+		<BaseEvent>
+			<BaseEvent.Image alt="game-img" src={logo} />
+			<BaseEvent.Description>
+				<BaseEvent.Link className="bold" onClick={onGameClick}>
 					{game.title ?? '-'}
-				</EventLink>
+				</BaseEvent.Link>
 				{isDemoted ? ' demoted ' : ' promoted '}
 				from <i className={getTierIcon(event.oldTier, tiersData)}></i> to{' '}
 				<i className={getTierIcon(event.newTier, tiersData)}></i>!
-			</EventDescription>
-			<EventSummary>
-				{isDemoted ? (
-					<i className={'fas fa-caret-square-down'}></i>
-				) : (
-					<i className={'fas fa-caret-square-up'}></i>
-				)}
-				<i
-					className={
-						gameRating ? gameRating.icon : 'far fa-question-circle'
-					}></i>
-				<EventImg alt="game-img" src={gameImg} />
-			</EventSummary>
-		</EventInfo>
+			</BaseEvent.Description>
+			<BaseEvent.Summary>
+				<BaseEvent.Icons>
+					{isDemoted ? (
+						<i className="fas fa-caret-square-down" />
+					) : (
+						<i className="fas fa-caret-square-up" />
+					)}
+					<i
+						className={gameRating ? gameRating.icon : 'far fa-question-circle'}
+					/>
+				</BaseEvent.Icons>
+				<BaseEvent.Image alt="game-img" src={gameImg} />
+			</BaseEvent.Summary>
+		</BaseEvent>
 	);
 };

@@ -9,11 +9,13 @@ import { MemberAvatar, Section } from 'containers';
 import { Flex } from 'components';
 import { Size } from 'utils';
 
+const NUMBER_OF_MEMBERS = 10;
+
 export const SectionNewMembers = (): JSX.Element => {
 	const history = useHistory();
 	const { membersData } = useCuratorMembers();
-	const { eventsData } = useEvents({
-		limit: 10,
+	const { eventsData, isLoading, isFetched } = useEvents({
+		limit: NUMBER_OF_MEMBERS,
 		sort: { date: 'desc' },
 		filter: { type: EventType.MEMBER_JOIN },
 	});
@@ -33,6 +35,7 @@ export const SectionNewMembers = (): JSX.Element => {
 		if (member)
 			return (
 				<MemberAvatar
+					key={`new-member-${member.steamId}`}
 					member={member}
 					size={Size.BIG}
 					onClick={() => onMemberClick(member.steamId)}
@@ -46,10 +49,25 @@ export const SectionNewMembers = (): JSX.Element => {
 			);
 	});
 
+	const loadingMembers = new Array(NUMBER_OF_MEMBERS)
+		.fill(null)
+		.map((_, i: number) => (
+			<MemberAvatar
+				key={`new-member-${i}`}
+				isLoading={isLoading}
+				size={Size.BIG}
+			/>
+		));
+
 	return (
 		<Section
 			title="New members"
-			content={<StyledNewMembers>{newestMembers}</StyledNewMembers>}
+			content={
+				<StyledNewMembers>
+					{isLoading && loadingMembers}
+					{isFetched && newestMembers}
+				</StyledNewMembers>
+			}
 		/>
 	);
 };

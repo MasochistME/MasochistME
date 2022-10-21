@@ -7,13 +7,26 @@ import { Section } from 'containers';
 import { GameTile } from 'pages/TabGames/GameTile';
 import dayjs from 'dayjs';
 
+const NUMBER_OF_GAMES = 3;
+
 export const SectionNewGames = (): JSX.Element => {
-	const { gamesData } = useCuratedGames();
-	const { eventsData } = useEvents({
-		limit: 3,
+	const {
+		gamesData,
+		isLoading: isGamesLoading,
+		isFetched: isGamesFetched,
+	} = useCuratedGames();
+	const {
+		eventsData,
+		isLoading: isEventsLoading,
+		isFetched: isEventsFetched,
+	} = useEvents({
+		limit: NUMBER_OF_GAMES,
 		sort: { date: 'desc' },
 		filter: { type: EventType.GAME_ADD },
 	});
+
+	const isLoading = isEventsLoading && isGamesLoading;
+	const isFetched = isEventsFetched && isGamesFetched;
 
 	const gameEvents = eventsData.filter(
 		event => event.type === EventType.GAME_ADD,
@@ -24,19 +37,26 @@ export const SectionNewGames = (): JSX.Element => {
 		if (game)
 			return (
 				<GameTile
+					key={`new-game-${game.id}`}
 					gameId={game.id}
 					title={<div>Curated {dayjs(event.date).fromNow()}</div>}
 				/>
 			);
 	});
 
+	const loadingGames = new Array(NUMBER_OF_GAMES)
+		.fill(null)
+		.map((_, i: number) => (
+			<GameTile key={`new-game-${i}`} isLoading={isLoading} />
+		));
+
 	return (
 		<Section
-			// fullWidth
 			title="Recent curations"
 			content={
-				<Flex align column flexWrap="wrap" gap="8px">
-					{newestGames}
+				<Flex align column flexWrap="wrap" gap="12px">
+					{isLoading && loadingGames}
+					{isFetched && newestGames}
 				</Flex>
 			}
 		/>

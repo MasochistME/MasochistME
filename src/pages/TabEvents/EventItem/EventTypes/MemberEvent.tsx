@@ -8,15 +8,10 @@ import {
 
 import { useAllMembers } from 'sdk';
 import logo from 'shared/images/logo.ico';
-import {
-	EventDescription,
-	EventSummary,
-	EventInfo,
-	EventImg,
-	EventLink,
-} from './components';
 import { MemberAvatar } from 'containers';
 import { Size } from 'utils';
+
+import { BaseEvent } from './BaseEvent';
 
 type Props = {
 	event: EventMemberJoin | EventMemberLeave;
@@ -34,34 +29,36 @@ export const MemberEvent = (props: Props): JSX.Element | null => {
 		member?.steamId && history.push(`/profile/${member.steamId}`);
 
 	return (
-		<EventInfo>
+		<BaseEvent>
 			<MemberAvatar member={member} size={Size.SMALL} />
 			{member ? (
-				<EventDescription>
-					<EventLink className="bold" onClick={onUserClick}>
+				<BaseEvent.Description>
+					<BaseEvent.Link className="bold" onClick={onUserClick}>
 						{member?.name ?? `User ${event.memberId}`}
-					</EventLink>{' '}
+					</BaseEvent.Link>{' '}
 					has {action === 'join' ? 'joined' : 'left'} the group!
-				</EventDescription>
+				</BaseEvent.Description>
 			) : (
-				<EventDescription>
-					<EventLink className="bold" onClick={onUserClick}>
+				<BaseEvent.Description>
+					<BaseEvent.Link className="bold" onClick={onUserClick}>
 						{`User ${event.memberId}`}
-					</EventLink>{' '}
+					</BaseEvent.Link>{' '}
 					has {action === 'join' ? 'joined' : 'left'} the group!
-				</EventDescription>
+				</BaseEvent.Description>
 			)}
-			<EventSummary>
-				<i
-					className={
-						member
-							? action === 'join'
-								? 'fas fa-user-plus'
-								: 'fas fa-user-minus'
-							: 'fas fa-exclamation-triangle'
-					}></i>
-				<EventImg alt="game-img" src={logo} />
-			</EventSummary>
-		</EventInfo>
+			<BaseEvent.Summary>
+				<BaseEvent.Icons>
+					<i
+						className={
+							member
+								? action === 'join'
+									? 'fas fa-user-plus'
+									: 'fas fa-user-minus'
+								: 'fas fa-exclamation-triangle'
+						}></i>
+				</BaseEvent.Icons>
+				<BaseEvent.Image alt="game-img" src={logo} />
+			</BaseEvent.Summary>
+		</BaseEvent>
 	);
 };

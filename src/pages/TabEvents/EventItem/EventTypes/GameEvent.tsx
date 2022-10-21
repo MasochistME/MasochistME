@@ -9,14 +9,9 @@ import {
 
 import logo from 'shared/images/logo.ico';
 import { useAllGames, useTiers } from 'sdk';
-import {
-	EventDescription,
-	EventSummary,
-	EventInfo,
-	EventImg,
-	EventLink,
-} from './components';
 import { getGameThumbnail } from 'utils';
+
+import { BaseEvent } from './BaseEvent';
 
 type Props = {
 	event: EventGameAdd | EventGameRemove;
@@ -38,40 +33,41 @@ export const GameEvent = (props: Props): JSX.Element | null => {
 		action === 'added' && game?.id && history.push(`/game/${game.id}`);
 
 	return (
-		<EventInfo>
-			<EventImg alt="game-img" src={logo} />
+		<BaseEvent>
+			<BaseEvent.Image alt="game-img" src={logo} />
 			{game ? (
-				<EventDescription>
-					<EventLink className="bold" onClick={onGameClick}>
+				<BaseEvent.Description>
+					<BaseEvent.Link className="bold" onClick={onGameClick}>
 						{game ? game.title : `Game ${event.gameId}`}
-					</EventLink>{' '}
+					</BaseEvent.Link>{' '}
 					{action === 'added'
 						? 'has been curated!'
 						: 'has been removed from curator!'}
-				</EventDescription>
+				</BaseEvent.Description>
 			) : (
-				<EventDescription>
-					<EventLink className="bold" onClick={onGameClick}>
+				<BaseEvent.Description>
+					<BaseEvent.Link className="bold" onClick={onGameClick}>
 						Game {event.gameId}
-					</EventLink>{' '}
+					</BaseEvent.Link>{' '}
 					(no longer curated) has been{' '}
 					{action === 'added' ? 'curated!' : 'removed from curator!'}
-				</EventDescription>
+				</BaseEvent.Description>
 			)}
-
-			<EventSummary>
-				<i
-					className={
-						game
-							? `fas fa-${action === 'added' ? 'plus' : 'minus'}-square`
-							: 'fas fa-exclamation-triangle'
-					}></i>
-				<i
-					className={
-						gameRating ? gameRating.icon : 'far fa-question-circle'
-					}></i>
-				<EventImg alt="game-img" src={gameImg} />
-			</EventSummary>
-		</EventInfo>
+			<BaseEvent.Summary>
+				<BaseEvent.Icons>
+					<i
+						className={
+							game
+								? `fas fa-${action === 'added' ? 'plus' : 'minus'}-square`
+								: 'fas fa-exclamation-triangle'
+						}></i>
+					<i
+						className={
+							gameRating ? gameRating.icon : 'far fa-question-circle'
+						}></i>
+				</BaseEvent.Icons>
+				<BaseEvent.Image alt="game-img" src={gameImg} />
+			</BaseEvent.Summary>
+		</BaseEvent>
 	);
 };

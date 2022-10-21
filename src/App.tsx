@@ -1,10 +1,15 @@
 import React, { Suspense } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+	BrowserRouter as Router,
+	Switch,
+	Route,
+	Redirect,
+} from 'react-router-dom';
 import styled from 'styled-components';
 
 import { useLoadTiers, useInit } from 'shared/hooks';
 import { media, colors } from 'shared/theme';
-import { Fallback, Flex } from 'components';
+import { Loader, Flex } from 'components';
 import { Footer, Header, Nav, SubHeader } from 'containers';
 
 import { NotFound } from 'pages';
@@ -46,47 +51,45 @@ export const App = (): JSX.Element => {
 						<SubHeader />
 						<Switch>
 							<Route exact path="/">
-								<Suspense fallback={<Fallback />}>
+								<Suspense fallback={<Loader />}>
 									<TabHome />
 								</Suspense>
 							</Route>
 							<Route exact path="/home">
-								<Suspense fallback={<Fallback />}>
-									<TabHome />
-								</Suspense>
+								<Redirect to="/" />
 							</Route>
 							<Route exact path="/games">
-								<Suspense fallback={<Fallback />}>
+								<Suspense fallback={<Loader />}>
 									<TabGames />
 								</Suspense>
 							</Route>
 							<Route exact path="/leaderboards">
-								<Suspense fallback={<Fallback />}>
+								<Suspense fallback={<Loader />}>
 									<TabLeaderboards />
 								</Suspense>
 							</Route>
 							<Route exact path="/events">
-								<Suspense fallback={<Fallback />}>
+								<Suspense fallback={<Loader />}>
 									<TabEvents />
 								</Suspense>
 							</Route>
 							<Route exact path="/support">
-								<Suspense fallback={<Fallback />}>
+								<Suspense fallback={<Loader />}>
 									<TabSupport />
 								</Suspense>
 							</Route>
 							<Route exact path="/badges">
-								<Suspense fallback={<Fallback />}>
+								<Suspense fallback={<Loader />}>
 									<TabBadges />
 								</Suspense>
 							</Route>
 							<Route exact path="/profile/:id">
-								<Suspense fallback={<Fallback />}>
+								<Suspense fallback={<Loader />}>
 									<TabProfile />
 								</Suspense>
 							</Route>
 							<Route exact path="/game/:id">
-								<Suspense fallback={<Fallback />}>
+								<Suspense fallback={<Loader />}>
 									<TabGame />
 								</Suspense>
 							</Route>

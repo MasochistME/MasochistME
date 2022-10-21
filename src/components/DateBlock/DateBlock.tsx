@@ -2,8 +2,8 @@ import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 
-import { Flex } from './Flex';
-import { fonts } from 'shared/theme';
+import { fonts, media } from 'shared/theme';
+import { Flex } from '../Flex';
 
 type Props = {
 	date?: Date | number;
@@ -28,11 +28,14 @@ export const DateBlock = (props: Props) => {
 };
 
 const StyledDateBlock = styled(Flex)`
-	flex: 0 0 auto;
+	flex: 1 0 90px;
 	flex-wrap: nowrap;
 	flex-direction: column;
 	padding: 0 4px;
 	font-size: 14px;
 	font-family: ${fonts.Dosis};
 	line-height: 1.2em;
+	@media (max-width: ${media.tablets}) {
+		display: none !important;
+	}
 `;

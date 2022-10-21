@@ -10,6 +10,7 @@ import { TabDict } from 'shared/config/tabs';
 
 import { eventsDict } from './eventsDict';
 import EventItem from './EventItem';
+import { colors } from 'shared/theme';
 
 const TabEvents = (): JSX.Element => {
 	useActiveTab(TabDict.EVENTS);
@@ -26,7 +27,7 @@ const TabEvents = (): JSX.Element => {
 
 	return (
 		<SubPage>
-			<StyledEventsList>
+			<StyledEventsList column>
 				{isLoading && <Spinner />}
 				{isFetched &&
 					eventsData.map((event: Event) => (
@@ -63,16 +64,14 @@ const TabEvents = (): JSX.Element => {
 
 export default TabEvents;
 
+const StyledEventsList = styled(Flex)`
+	width: 100%;
+	background-color: ${colors.newDark}99;
+`;
+
 const StyledEventTypes = styled.ul`
 	margin: 0;
 	li i {
 		width: 20px;
 	}
-`;
-
-const StyledEventsList = styled.ul`
-	margin: 0;
-	padding: 0;
-	width: 100%;
-	list-style-type: none;
 `;

@@ -15,7 +15,7 @@ import {
 	EventType,
 } from '@masochistme/sdk/dist/v1/types';
 
-import { colors, fonts } from 'shared/theme';
+import { colors } from 'shared/theme';
 import {
 	AchievementNumberChangeEvent,
 	CompleteEvent,
@@ -25,7 +25,7 @@ import {
 	TierChangeEvent,
 	BadgeEvent,
 } from './EventTypes';
-import { DateBlock } from 'components';
+import { DateBlock, Flex } from 'components';
 
 type Props = {
 	event: Event;
@@ -69,19 +69,17 @@ export default function EventItem(props: Props): JSX.Element | null {
 
 	const relevantEvent = identifyEvent(event);
 
-	return relevantEvent ? (
-		<StyledEvent key={`event-${Date.now()}`}>
+	if (!relevantEvent) return null;
+	return (
+		<StyledEvent align key={`event-${Date.now()}`}>
 			<DateBlock date={event.date} />
 			{relevantEvent}
 		</StyledEvent>
-	) : null;
+	);
 }
 
-const StyledEvent = styled.li`
-	display: flex;
-	flex-direction: row;
+const StyledEvent = styled(Flex)`
 	justify-content: space-between;
-	align-content: center;
 	width: 100%;
 	padding: 4px;
 	border-bottom: 1px solid ${colors.newDark};

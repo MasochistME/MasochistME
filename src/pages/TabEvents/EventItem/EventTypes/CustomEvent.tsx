@@ -5,12 +5,8 @@ import logo from 'shared/images/logo.ico';
 import { useAllMembers } from 'sdk';
 import { MemberAvatar } from 'containers';
 import { Size } from 'utils';
-import {
-	EventDescription,
-	EventSummary,
-	EventInfo,
-	EventImg,
-} from './components';
+
+import { BaseEvent } from './BaseEvent';
 
 type TCustomEvent = {
 	event: EventCustom;
@@ -31,22 +27,22 @@ export const CustomEvent = (props: TCustomEvent): JSX.Element | null => {
 	);
 
 	return (
-		<EventInfo>
+		<BaseEvent>
 			<MemberAvatar member={member} size={Size.SMALL} />
-			{
-				<EventDescription>
-					{text &&
-						text
-							.split('#')
-							.map((str: string, index: number) =>
-								index % 2 === 1 ? <span className="bold">{str}</span> : str,
-							)}
-				</EventDescription>
-			}
-			<EventSummary>
-				<i className={icon ? icon : 'fas fa-birthday-cake'}></i>
-				<EventImg alt="custom-img" src={logo} />
-			</EventSummary>
-		</EventInfo>
+			<BaseEvent.Description>
+				{text &&
+					text
+						.split('#')
+						.map((str: string, index: number) =>
+							index % 2 === 1 ? <span className="bold">{str}</span> : str,
+						)}
+			</BaseEvent.Description>
+			<BaseEvent.Summary>
+				<BaseEvent.Icons>
+					<i className={icon ? icon : 'fas fa-birthday-cake'}></i>
+				</BaseEvent.Icons>
+				<BaseEvent.Image alt="custom-img" src={logo} />
+			</BaseEvent.Summary>
+		</BaseEvent>
 	);
 };

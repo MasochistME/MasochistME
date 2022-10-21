@@ -11,13 +11,8 @@ import {
 import { getGameThumbnail, Size } from 'utils';
 import { BadgeThumbnail, MemberAvatar } from 'containers';
 import { useBadges, useCuratedGames, useAllMembers } from 'sdk';
-import {
-	EventDescription,
-	EventSummary,
-	EventInfo,
-	EventImg,
-	EventLink,
-} from './components';
+
+import { BaseEvent } from './BaseEvent';
 
 type Props = {
 	event: EventBadgeCreate | EventBadgeGet;
@@ -54,22 +49,24 @@ const BadgeAdded = ({ event }: { event: EventBadgeCreate }) => {
 	};
 
 	return (
-		<EventInfo>
+		<BaseEvent>
 			<BadgeThumbnail size={Size.SMALL} badge={badge} />
 			{badge && game ? (
-				<EventDescription>
-					<EventLink className="bold" onClick={onGameClick}>
+				<BaseEvent.Description>
+					<BaseEvent.Link className="bold" onClick={onGameClick}>
 						{game?.title ?? `Game ${event.gameId}`}
-					</EventLink>{' '}
+					</BaseEvent.Link>{' '}
 					has gotten a new badge -{' '}
 					<span className="bold">{badge?.name ?? event.badgeId}</span>!
-				</EventDescription>
+				</BaseEvent.Description>
 			) : null}
-			<EventSummary>
-				<i className="fas fa-award"></i>
-				<EventImg src={gameImg} alt="game-img" />
-			</EventSummary>
-		</EventInfo>
+			<BaseEvent.Summary>
+				<BaseEvent.Icons>
+					<i className="fas fa-award"></i>
+				</BaseEvent.Icons>
+				<BaseEvent.Image src={gameImg} alt="game-img" />
+			</BaseEvent.Summary>
+		</BaseEvent>
 	);
 };
 
@@ -90,25 +87,27 @@ const BadgeGiven = ({ event }: { event: EventBadgeGet }) => {
 	};
 
 	return (
-		<EventInfo>
+		<BaseEvent>
 			<MemberAvatar member={member} size={Size.SMALL} />
 			{badge && member ? (
-				<EventDescription>
-					<EventLink className="bold" onClick={onUserClick}>
+				<BaseEvent.Description>
+					<BaseEvent.Link className="bold" onClick={onUserClick}>
 						{member?.name ?? `User ${event.memberId}`}
-					</EventLink>{' '}
+					</BaseEvent.Link>{' '}
 					has earned a new badge -{' '}
 					<span className="bold">{badge?.name ?? event.badgeId}</span>!
-				</EventDescription>
+				</BaseEvent.Description>
 			) : null}
-			<EventSummary>
-				<i
-					className={
-						member ? 'fas fa-check-square' : 'fas fa-exclamation-triangle'
-					}></i>
-				<i className="fas fa-medal"></i>
+			<BaseEvent.Summary>
+				<BaseEvent.Icons>
+					<i
+						className={
+							member ? 'fas fa-check-square' : 'fas fa-exclamation-triangle'
+						}></i>
+					<i className="fas fa-medal"></i>
+				</BaseEvent.Icons>
 				<BadgeThumbnail badge={badge} size={Size.SMALL} />
-			</EventSummary>
-		</EventInfo>
+			</BaseEvent.Summary>
+		</BaseEvent>
 	);
 };

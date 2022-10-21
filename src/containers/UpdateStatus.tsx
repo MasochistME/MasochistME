@@ -13,21 +13,21 @@ export const UpdateStatus = (): JSX.Element => {
 		: 'loading...';
 
 	return (
-		<StyledUpdateStatus column align justify>
-			{!status.percentage || status.percentage === 100 ? (
-				<HideOn media="smallNetbooks">
+		<HideOn media="smallNetbooks" flex="1 0 450px" display="flex">
+			<StyledUpdateStatus column align justify>
+				{!status.percentage || status.percentage === 100 ? (
 					<StyledUpdateStatusText>
 						Next update: {nextUpdate}
 					</StyledUpdateStatusText>
-				</HideOn>
-			) : (
-				<ProgressBar
-					percentage={status?.percentage ?? 100}
-					style={{ height: '30px', width: '100%' }}
-					invert
-				/>
-			)}
-		</StyledUpdateStatus>
+				) : (
+					<ProgressBar
+						percentage={status?.percentage ?? 100}
+						style={{ height: '30px', width: '100%' }}
+						invert
+					/>
+				)}
+			</StyledUpdateStatus>
+		</HideOn>
 	);
 };
 

@@ -33,7 +33,7 @@ export const colors = {
 export const media = {
 	netbooks: '1100px',
 	smallNetbooks: '850px',
-	tablets: '650px',
+	tablets: '700px',
 	smallTablets: '500px',
 	bigPhones: '400px',
 };

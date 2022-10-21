@@ -1,4 +1,7 @@
-import { GamesListParams } from '@masochistme/sdk/dist/v1/api/games';
+import {
+	GamesListParams,
+	GameCompletionListParams,
+} from '@masochistme/sdk/dist/v1/api/games';
 import { useQuery } from '@tanstack/react-query';
 import { useAppContext } from 'shared/store/context';
 
@@ -59,6 +62,9 @@ export const useCuratedGames = () => {
 	return { gamesData, isLoading, isFetched, isError };
 };
 
+/**
+ *
+ */
 export const useGameBadges = (gameId: number) => {
 	const { sdk } = useAppContext();
 
@@ -72,4 +78,23 @@ export const useGameBadges = (gameId: number) => {
 	);
 
 	return { gameBadgesData, isLoading, isFetched, isError };
+};
+
+/**
+ *
+ */
+export const useGameCompletions = (params?: GameCompletionListParams) => {
+	const { sdk } = useAppContext();
+
+	const {
+		data: completionsData = [],
+		isLoading,
+		isFetched,
+		isError,
+	} = useQuery(
+		['masochist', 'games', 'completions', params ? JSON.stringify(params) : ''],
+		() => sdk.getGameCompletionList({ ...(params ?? {}) }),
+	);
+
+	return { completionsData, isLoading, isFetched, isError };
 };

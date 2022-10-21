@@ -4,13 +4,26 @@ import styled from 'styled-components';
 
 import { useLeaderboards, useCuratorMembers } from 'sdk';
 import { EventLink, Section } from 'containers';
-import { Flex, Spinner } from 'components';
+import { Flex, Skeleton } from 'components';
+
+const NUMBER_OF_LEADERS = 10;
 
 export const SectionTop = (): JSX.Element => {
 	const history = useHistory();
 
-	const { membersData } = useCuratorMembers();
-	const { leaderboardsData, isFetched, isLoading } = useLeaderboards(11);
+	const {
+		membersData,
+		isLoading: isMembersLoading,
+		isFetched: isMembersFetched,
+	} = useCuratorMembers();
+	const {
+		leaderboardsData,
+		isLoading: isLeadersLoading,
+		isFetched: isLeadersFetched,
+	} = useLeaderboards(NUMBER_OF_LEADERS);
+
+	const isLoading = isMembersLoading && isLeadersLoading;
+	const isFetched = isMembersFetched && isLeadersFetched;
 
 	const leaderboards = leaderboardsData.map(leader => ({
 		position: leader.position,
@@ -45,6 +58,12 @@ export const SectionTop = (): JSX.Element => {
 		);
 	};
 
+	const loadingLeaders = new Array(NUMBER_OF_LEADERS)
+		.fill(null)
+		.map((_, i: number) => (
+			<Skeleton key={`badge-new-${i}`} height={22} width="100%" />
+		));
+
 	return (
 		<Section
 			title="Top 10 users"
@@ -52,8 +71,8 @@ export const SectionTop = (): JSX.Element => {
 			maxWidth="450px"
 			content={
 				<Flex column align justify gap={5}>
+					{isLoading && loadingLeaders}
 					{isFetched && leaderboards?.map(leader => leaderboardRow(leader))}
-					{isLoading && <Spinner />}
 				</Flex>
 			}
 		/>
@@ -64,5 +83,4 @@ export const StyledSectionTopMember = styled(Flex)`
 	width: 100%;
 	justify-content: space-between;
 	padding: 0 16px;
-	margin-bottom: 1px;
 `;

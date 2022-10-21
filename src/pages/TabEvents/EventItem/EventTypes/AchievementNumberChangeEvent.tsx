@@ -9,13 +9,8 @@ import {
 import logo from 'shared/images/logo.ico';
 import { getGameThumbnail } from 'utils';
 import { useTiers, useAllGames } from 'sdk';
-import {
-	EventDescription,
-	EventSummary,
-	EventInfo,
-	EventImg,
-	EventLink,
-} from './components';
+
+import { BaseEvent } from './BaseEvent';
 
 type Props = {
 	event: EventAchievementNumberChange;
@@ -40,22 +35,26 @@ export const AchievementNumberChangeEvent = (
 
 	if (!game || !tier) return null;
 	return (
-		<EventInfo>
-			<EventImg alt="game-img" src={logo} />
-			<EventDescription>
-				<EventLink className="bold" onClick={onGameClick}>
+		<BaseEvent>
+			<BaseEvent.Image alt="game-img" src={logo} />
+			<BaseEvent.Description>
+				<BaseEvent.Link className="bold" onClick={onGameClick}>
 					{game ? game.title : '-'}{' '}
-				</EventLink>
+				</BaseEvent.Link>
 				{event.oldNumber < event.newNumber
 					? `got ${event.newNumber - event.oldNumber} new achievements!`
 					: `had ${event.oldNumber - event.newNumber} achievements removed!`}
-			</EventDescription>
-			<EventSummary>
-				<i
-					className={game ? 'fas fa-tasks' : 'fas fa-exclamation-triangle'}></i>
-				<i className={tier?.icon ?? 'far fa-question-circle'}></i>
-				<EventImg alt="game-img" src={gameImg} />
-			</EventSummary>
-		</EventInfo>
+			</BaseEvent.Description>
+			<BaseEvent.Summary>
+				<BaseEvent.Icons>
+					<i
+						className={
+							game ? 'fas fa-tasks' : 'fas fa-exclamation-triangle'
+						}></i>
+					<i className={tier?.icon ?? 'far fa-question-circle'}></i>
+				</BaseEvent.Icons>
+				<BaseEvent.Image alt="game-img" src={gameImg} />
+			</BaseEvent.Summary>
+		</BaseEvent>
 	);
 };

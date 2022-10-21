@@ -1,61 +1,45 @@
 import React from 'react';
 import styled from 'styled-components';
-// import { Game } from '@masochistme/sdk/dist/v1/types';
 
+import { colors, fonts } from 'shared/theme';
+import { useGames } from 'sdk';
 import { getGameThumbnail } from 'utils';
-import { Section, SaleBrick, SaleLink, SalePercentage } from 'containers';
-import { Flex, Spinner } from 'components';
-import { useCuratedGames } from 'sdk';
+import { Section } from 'containers';
+import { Flex, Loader, Spinner } from 'components';
 
 export const SectionSale = (): JSX.Element => {
-	const { gamesData } = useCuratedGames();
-
-	const gamesOnSale = gamesData.slice(0, 10).map(game => {
-		const gameImg = getGameThumbnail(game.id);
-		return (
-			<SaleBrick
-				key={`sale-${game.id}`}
-				style={{ backgroundImage: `url(${gameImg})` }}>
-				<SaleLink
-					href={`https://store.steampowered.com/app/${game.id}`}
-					target="_blank"
-					rel="noopener noreferrer">
-					{/* <SalePercentage>-{game.sale.discount}%</SalePercentage> */}
-					<SalePercentage>-0%</SalePercentage>
-				</SaleLink>
-			</SaleBrick>
-		);
+	const { gamesData, isLoading, isFetched } = useGames({
+		filter: { isCurated: true, sale: true },
+		sort: { sale: 'desc' },
 	});
 
-	// TODO Use games sale endpoint here!!!
-	// const gamesOnSale = gamesData
-	// 	// .filter(game => game.sale.onSale)
-	// 	.filter(() => false)
-	// 	.map((game: Game, index) => {
-	// 		const gameImg = getGameThumbnail(game.id);
-	// 		return (
-	// 			<SaleBrick
-	// 				key={`sale-${index}`}
-	// 				style={{ backgroundImage: `url(${gameImg})` }}>
-	// 				<SaleLink
-	// 					href={`https://store.steampowered.com/app/${game.id}`}
-	// 					target="_blank"
-	// 					rel="noopener noreferrer">
-	// 					{/* <SalePercentage>-{game.sale.discount}%</SalePercentage> */}
-	// 					<SalePercentage>-0%</SalePercentage>
-	// 				</SaleLink>
-	// 			</SaleBrick>
-	// 		);
-	// 	});
+	const gamesOnSale = gamesData.map(game => {
+		const gameImg = getGameThumbnail(game.id);
+		return (
+			<StyledGameSaleTile
+				key={`sale-${game.id}`}
+				style={{ backgroundImage: `url(${gameImg})` }}
+				href={`https://store.steampowered.com/app/${game.id}`}
+				target="_blank"
+				rel="noopener noreferrer">
+				<SalePercentage>-{game.sale}%</SalePercentage>
+			</StyledGameSaleTile>
+		);
+	});
 
 	return (
 		<Section
 			fullWidth
 			title="Games on sale"
 			content={
-				<StyledSectionSale align justify>
-					{gamesOnSale.length ? gamesOnSale : <Spinner />}
-				</StyledSectionSale>
+				<>
+					{isLoading && <Loader />}
+					{isFetched && (
+						<StyledSectionSale align justify>
+							{gamesOnSale.length ? gamesOnSale : <Spinner />}
+						</StyledSectionSale>
+					)}
+				</>
 			}
 		/>
 	);
@@ -65,4 +49,34 @@ export const StyledSectionSale = styled(Flex)`
 	width: 100%;
 	flex-wrap: wrap;
 	gap: 8px;
+`;
+
+export const StyledGameSaleTile = styled.a`
+	display: flex;
+	justify-content: flex-end;
+	align-items: flex-start;
+	background-size: cover;
+	background-repeat: no-repeat;
+	box-sizing: border-box;
+	min-width: 200px;
+	height: 96px;
+	border: 3px solid ${colors.black};
+	&:hover {
+		box-shadow: 0 0 10px ${colors.superDarkGrey};
+	}
+`;
+
+export const SalePercentage = styled.span`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 35%;
+	height: 40%;
+	text-decoration: none;
+	font-family: ${fonts.Dosis};
+	font-weight: bold;
+	color: ${colors.superLightGrey};
+	background-color: ${colors.darkBlue};
+	box-shadow: -2px 2px 5px ${colors.superDarkGrey};
+	font-size: 1.2em;
 `;

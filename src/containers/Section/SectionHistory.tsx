@@ -27,12 +27,14 @@ import {
 } from 'sdk';
 import { getTierIcon } from 'utils';
 import { SmallEvent, Section, EventLink } from 'containers';
-import { Flex, Spinner } from 'components';
+import { Flex, Skeleton } from 'components';
+
+const NUMBER_OF_EVENTS = 10;
 
 export const SectionHistory = (): JSX.Element => {
-	const { eventsData, isLoading } = useEvents({
+	const { eventsData, isLoading, isFetched } = useEvents({
 		sort: { date: 'desc' },
-		limit: 10,
+		limit: NUMBER_OF_EVENTS,
 	});
 	const {
 		getEventMemberJoin,
@@ -88,19 +90,21 @@ export const SectionHistory = (): JSX.Element => {
 		}
 	};
 
+	const loadingEvents = new Array(NUMBER_OF_EVENTS)
+		.fill(null)
+		.map((_, i: number) => (
+			<Skeleton key={`badge-new-${i}`} height={22} width="100%" />
+		));
+
 	return (
 		<Section
 			title="Last events"
 			minWidth="450px"
 			content={
-				<>
-					{isLoading && <Spinner />}
-					{!isLoading && (
-						<Flex column gap={6}>
-							{eventsData.map((event: Event) => classifyEvents(event))}
-						</Flex>
-					)}
-				</>
+				<Flex column gap={5}>
+					{isLoading && loadingEvents}
+					{isFetched && eventsData.map((event: Event) => classifyEvents(event))}
+				</Flex>
 			}
 		/>
 	);

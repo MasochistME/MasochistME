@@ -4,12 +4,13 @@ import styled from 'styled-components';
 import { Game, Badge } from '@masochistme/sdk/dist/v1/types';
 
 import { useCuratedGames, useGameBadges } from 'sdk';
-import { Flex, Spinner } from 'components';
-import { SubPage, Section, StackedBarChart, List, BadgeTile } from 'containers';
+import { Flex, Spinner, Warning } from 'components';
+import { SubPage, Section, List, BadgeTile } from 'containers';
 import { useActiveTab } from 'shared/hooks';
 import { TabDict } from 'shared/config/tabs';
 
 import { GameHeader } from './GameHeader';
+import { GameChart } from './GameChart';
 
 const TabGame = (): JSX.Element => {
 	useActiveTab(TabDict.GAME);
@@ -29,15 +30,13 @@ const TabGame = (): JSX.Element => {
 	} = useGameBadges(gameId);
 
 	const game = gamesData.find((g: Game) => g.id === gameId);
-	const gameDetails = {
-		...game,
-		badges: gameBadgesData,
-		// TODO!!!!
-		completions: 0,
-		avgPlaytime: 0,
-		avgPlaytimeForTier: 0,
-	};
 
+	if (!game)
+		return (
+			<SubPage>
+				<Warning description={`Game with id ${id} does not exist.`} />
+			</SubPage>
+		);
 	return (
 		<SubPage>
 			<Flex column width="100%">
@@ -45,34 +44,7 @@ const TabGame = (): JSX.Element => {
 				<StyledGameStats>
 					<Flex row width="100%" gap={16} alignItems="flex-start">
 						{isGamesLoading && <Spinner />}
-						{isGamesFetched && (
-							<Section
-								fullWidth
-								title={`Completions: ${
-									gameDetails?.completions ?? 'unknown'
-								} - average completion time`}
-								content={
-									// TODO
-									<StackedBarChart
-										labels={['hours']}
-										datasets={[
-											{
-												label: 'this game',
-												data: [gameDetails.avgPlaytime],
-												colorNormal: '#e30000ff',
-												colorTransparent: '#e3000033',
-											},
-											{
-												label: 'games from this tier',
-												data: [gameDetails?.avgPlaytimeForTier ?? 0],
-												colorNormal: '#141620ff',
-												colorTransparent: '#14162066',
-											},
-										]}
-									/>
-								}
-							/>
-						)}
+						{isGamesFetched && <GameChart gameId={gameId} />}
 					</Flex>
 					{isGamesLoading && <Spinner />}
 					{isGamesFetched && <List game={game} />}
@@ -85,10 +57,11 @@ const TabGame = (): JSX.Element => {
 				content={
 					<Flex column gap={4}>
 						{isGameBadgesLoading && <Spinner />}
-						{isGameBadgesFetched &&
-							gameBadgesData.map((badge: Badge) => (
-								<BadgeTile badge={badge} key={`badge-${badge._id}`} />
-							))}
+						{isGameBadgesFetched && gameBadgesData.length
+							? gameBadgesData.map((badge: Badge) => (
+									<BadgeTile badge={badge} key={`badge-${badge._id}`} />
+							  ))
+							: 'This game has no badges yet.'}
 					</Flex>
 				}
 			/>

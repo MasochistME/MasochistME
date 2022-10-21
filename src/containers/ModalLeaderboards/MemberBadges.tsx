@@ -35,14 +35,5 @@ export const MemberBadges = (props: Props): JSX.Element => {
 		);
 	});
 
-	return <StyledFlex>{mappedBadges}</StyledFlex>;
+	return <Flex gap={4}>{mappedBadges}</Flex>;
 };
-
-const StyledFlex = styled(Flex)`
-	& > * {
-		margin-right: 4px;
-	}
-	&:first-child {
-		margin-left: 4px;
-	}
-`;

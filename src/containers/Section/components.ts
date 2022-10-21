@@ -44,46 +44,6 @@ export const EventLink = styled.span`
 	}
 `;
 
-export const SaleBrick = styled.div`
-	cursor: pointer;
-	background-size: cover;
-	background-repeat: no-repeat;
-	box-sizing: border-box;
-	min-width: 200px;
-	height: 96px;
-	box-sizing: border-box;
-	border: 3px solid ${colors.black};
-	&:hover {
-		box-shadow: 0 0 10px ${colors.superDarkGrey};
-	}
-`;
-
-export const SaleLink = styled.a`
-	display: flex;
-	justify-content: flex-end;
-	align-items: flex-start;
-	width: 100%;
-	height: 100%;
-	&:hover {
-		text-decoration: none;
-	}
-`;
-
-export const SalePercentage = styled.span`
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 35%;
-	height: 40%;
-	text-decoration: none;
-	font-family: ${fonts.Dosis};
-	font-weight: bold;
-	color: ${colors.superLightGrey};
-	background-color: ${colors.darkBlue};
-	box-shadow: -2px 2px 5px ${colors.superDarkGrey};
-	font-size: 1.2em;
-`;
-
 export const UpdateButton = styled.div`
 	width: 50%;
 `;

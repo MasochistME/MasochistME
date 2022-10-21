@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
 import {
-	cacheUsers,
 	cachePatrons,
 	// cacheStatus,
 } from 'shared/store/Cache';
@@ -14,17 +13,6 @@ export const useInit = (): boolean => {
 	const dispatch = useDispatch();
 	const { path } = useAppContext();
 	const [loaded, setLoaded] = useState(false);
-
-	const loadUsers = () => {
-		axios
-			.get(`${path}/api/users`)
-			.then(response => {
-				if (response?.status === 200) {
-					return dispatch(cacheUsers(response.data));
-				}
-			})
-			.catch(log.WARN);
-	};
 
 	const loadPatrons = () => {
 		axios
@@ -49,7 +37,6 @@ export const useInit = (): boolean => {
 	// };
 
 	const init = () => {
-		loadUsers();
 		loadPatrons();
 		// TODO disabled when dev/staging
 		// setInterval(() => {

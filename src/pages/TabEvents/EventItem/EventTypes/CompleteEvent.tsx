@@ -10,13 +10,8 @@ import {
 import { getGameThumbnail, Size } from 'utils';
 import { useTiers, useAllMembers, useAllGames } from 'sdk';
 import { MemberAvatar } from 'containers';
-import {
-	EventDescription,
-	EventSummary,
-	EventInfo,
-	EventImg,
-	EventLink,
-} from './components';
+
+import { BaseEvent } from './BaseEvent';
 
 type Props = {
 	event: EventComplete;
@@ -43,27 +38,29 @@ export const CompleteEvent = (props: Props): JSX.Element | null => {
 	};
 
 	return (
-		<EventInfo>
+		<BaseEvent>
 			<MemberAvatar member={member} size={Size.SMALL} />
-			<EventDescription>
-				<EventLink className="bold" onClick={onUserClick}>
+			<BaseEvent.Description>
+				<BaseEvent.Link className="bold" onClick={onUserClick}>
 					{member?.name ??
 						`User ${event.memberId} (no longer member of the group)`}
-				</EventLink>{' '}
+				</BaseEvent.Link>{' '}
 				completed{' '}
-				<EventLink className="bold" onClick={onGameClick}>
+				<BaseEvent.Link className="bold" onClick={onGameClick}>
 					{game?.title ?? `game ${event.gameId} (no longer curated)`}
-				</EventLink>
+				</BaseEvent.Link>
 				!
-			</EventDescription>
-			<EventSummary>
-				<i
-					className={
-						member ? 'fas fa-check-square' : 'fas fa-exclamation-triangle'
-					}></i>
-				<i className={gameRating?.icon ?? 'far fa-question-circle'}></i>
-				<EventImg src={gameImg} alt="game-img" />
-			</EventSummary>
-		</EventInfo>
+			</BaseEvent.Description>
+			<BaseEvent.Summary>
+				<BaseEvent.Icons>
+					<i
+						className={
+							member ? 'fas fa-check-square' : 'fas fa-exclamation-triangle'
+						}></i>
+					<i className={gameRating?.icon ?? 'far fa-question-circle'}></i>
+				</BaseEvent.Icons>
+				<BaseEvent.Image src={gameImg} alt="game-img" />
+			</BaseEvent.Summary>
+		</BaseEvent>
 	);
 };

@@ -21,9 +21,9 @@ export type Tab = {
 export const tabs: Tab[] = [
 	{
 		id: TabDict.HOME,
-		text: 'homepage',
+		text: 'home',
 		icon: 'fas fa-home',
-		link: 'home',
+		link: '',
 		visible: true,
 		external: false,
 	},
