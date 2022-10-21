@@ -9,7 +9,7 @@ type Props = {
 	isCompact?: boolean;
 };
 
-export const Badges = (props: Props): JSX.Element | null => {
+export const ModalLeaderboardsBadges = (props: Props): JSX.Element | null => {
 	const { gameId, isCompact = false } = props;
 
 	const { gameBadgesData: badges, isFetched: isBadgeListLoaded } =

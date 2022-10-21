@@ -1,20 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { Game, Badge } from '@masochistme/sdk/dist/v1/types';
 
 import { useCuratedGames, useGameBadges } from 'sdk';
 import { Flex, Spinner, Warning } from 'components';
-import { SubPage, Section, List, BadgeTile } from 'containers';
+import { SubPage, Section, BadgeTile, Tabs, Tab, TabPanel } from 'containers';
 import { useActiveTab } from 'shared/hooks';
 import { TabDict } from 'shared/config/tabs';
 
-import { GameHeader } from './GameHeader';
-import { GameChart } from './GameChart';
+import { GameProfileHeader } from './GameProfileHeader';
+import { GameProfileGraphs } from './GameProfileGraphs';
+import { GameProfileBadges } from './GameProfileBadges';
+import { GameProfileLeaderboards } from './GameProfileLeaderboards';
+
+enum TabsMap {
+	GRAPHS = 'graphs',
+	BADGES = 'badges',
+	MEMBERS = 'members',
+}
 
 const TabGame = (): JSX.Element => {
 	useActiveTab(TabDict.GAME);
-
+	const [activeTab, setActiveTab] = useState<string>(TabsMap.MEMBERS);
 	const { id } = useParams<{ id: string }>();
 	const gameId = Number(id);
 
@@ -31,23 +39,40 @@ const TabGame = (): JSX.Element => {
 
 	const game = gamesData.find((g: Game) => g.id === gameId);
 
+	const handleChangeTab = (_e: React.SyntheticEvent, newTab: TabsMap) => {
+		setActiveTab(newTab);
+	};
+
 	if (!game)
 		return (
 			<SubPage>
 				<Warning description={`Game with id ${id} does not exist.`} />
 			</SubPage>
 		);
+
 	return (
 		<SubPage>
 			<Flex column width="100%">
-				<GameHeader game={game} />
+				<GameProfileHeader game={game} />
 				<StyledGameStats>
-					<Flex row width="100%" gap={16} alignItems="flex-start">
-						{isGamesLoading && <Spinner />}
-						{isGamesFetched && <GameChart gameId={gameId} title={game.title} />}
-					</Flex>
-					{isGamesLoading && <Spinner />}
-					{isGamesFetched && <List game={game} />}
+					{isGamesFetched && (
+						<>
+							<Tabs value={activeTab} onChange={handleChangeTab}>
+								<Tab label="Leaderboards" value={TabsMap.MEMBERS} />
+								<Tab label="Badges" value={TabsMap.BADGES} />
+								<Tab label="Graphs" value={TabsMap.GRAPHS} />
+							</Tabs>
+							<TabPanel activeTab={activeTab} tabId={TabsMap.MEMBERS}>
+								<GameProfileLeaderboards gameId={gameId} />
+							</TabPanel>
+							<TabPanel activeTab={activeTab} tabId={TabsMap.BADGES}>
+								<GameProfileBadges gameId={gameId} />
+							</TabPanel>
+							<TabPanel activeTab={activeTab} tabId={TabsMap.GRAPHS}>
+								<GameProfileGraphs gameId={gameId} title={game.title} />
+							</TabPanel>
+						</>
+					)}
 				</StyledGameStats>
 			</Flex>
 			<Section

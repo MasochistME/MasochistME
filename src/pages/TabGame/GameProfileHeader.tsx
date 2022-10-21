@@ -11,7 +11,7 @@ type Props = {
 	game?: Game;
 };
 
-export const GameHeader = (props: Props): JSX.Element => {
+export const GameProfileHeader = (props: Props): JSX.Element => {
 	const { game } = props;
 	const { tiersData } = useTiers();
 

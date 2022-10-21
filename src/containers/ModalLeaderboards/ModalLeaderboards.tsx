@@ -1,65 +1,89 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import Modal from 'react-modal';
+import styled from 'styled-components';
 import { Game } from '@masochistme/sdk/dist/v1/types';
 
-import { Flex, Spinner, Button } from 'components';
 import { useCuratedGames } from 'sdk';
+import { colors, fonts } from 'shared/theme';
+import { Flex } from 'components';
+import { GameLeaderboards } from 'containers';
 
-import { WrapperLeaderboards } from './components';
-import { List } from './List';
-import { Badges } from './Badges';
+import { ModalLeaderboardsBadges } from './ModalLeaderboardsBadges';
+import { ModalLeaderboardsHeader } from './ModalLeaderboardsHeader';
 
 type Props = {
 	gameId: number;
-	compact?: boolean;
+	isModalOpen: boolean;
+	isCompact?: boolean;
 };
 
 export const ModalLeaderboards = (props: Props): JSX.Element | null => {
-	const { gameId, compact } = props;
-	const history = useHistory();
+	const { gameId, isModalOpen, isCompact } = props;
 
 	const { gamesData, isFetched: isGameLoaded } = useCuratedGames();
-
 	const game = gamesData.find((g: Game) => g.id === gameId);
 
-	const onShowGame = (
-		event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-	) => {
-		history.push(`/game/${gameId}`);
-		event.stopPropagation();
-	};
-
 	return (
-		<WrapperLeaderboards>
-			<Flex
-				row
-				align
-				justifyContent="space-between"
-				borderBottom="1px solid #444"
-				marginBottom="12px">
-				<h2 style={{ borderBottom: 0 }}>
-					<a
-						href={`https://store.steampowered.com/app/${game?.id ?? ''}`}
-						target="_blank"
-						rel="noopener noreferrer"
-						onClick={event => event.stopPropagation()}>
-						<i className="fab fa-steam" /> {game?.title ?? 'Loading...'}
-					</a>
-				</h2>
-				<Button
-					label="Details"
-					icon="fas fa-info-circle"
-					onClick={onShowGame}
-				/>
-			</Flex>
-			{isGameLoaded && game ? (
-				<Flex column>
-					<Badges gameId={gameId} isCompact />
-					<List game={game} compact={compact} />
-				</Flex>
-			) : (
-				<Spinner />
-			)}
-		</WrapperLeaderboards>
+		<Modal isOpen={isModalOpen} style={{ ...modalStyle }}>
+			<WrapperLeaderboards>
+				<ModalLeaderboardsHeader gameId={gameId} gameTitle={game?.title} />
+				{isGameLoaded && game && (
+					<Flex column>
+						<ModalLeaderboardsBadges gameId={gameId} isCompact />
+						<GameLeaderboards gameId={gameId} isCompact={isCompact} />
+					</Flex>
+				)}
+			</WrapperLeaderboards>
+		</Modal>
 	);
+};
+
+export const WrapperLeaderboards = styled.div`
+	display: block;
+	box-sizing: border-box;
+	text-align: center;
+	width: 100%;
+	width: 700px;
+	max-width: 90%;
+	height: auto;
+	max-height: 90%;
+	overflow-y: auto;
+	background-color: ${colors.darkBlueTransparent};
+	color: ${colors.superLightGrey};
+	font-family: ${fonts.Raleway};
+	h2 {
+		padding-bottom: 10px;
+		margin: 10px;
+	}
+	ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 10px;
+	}
+`;
+
+const modalStyle = {
+	overlay: {
+		zIndex: '9999',
+		top: 0,
+		left: 0,
+		right: 0,
+		bottom: 0,
+		backgroundColor: `${colors.newDark}cc`,
+		width: '100vw',
+		height: '100vh',
+	},
+	content: {
+		backgroundColor: '#00000000',
+		border: 'none',
+		inset: 0,
+		padding: 0,
+		borderRadius: 0,
+		width: '100%',
+		height: '100%',
+		// boxSizing: 'border-box',
+		display: 'flex',
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
 };

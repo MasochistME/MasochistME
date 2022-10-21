@@ -1,0 +1,1 @@
+export { GameTile } from './GameTile';

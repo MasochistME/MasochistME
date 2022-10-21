@@ -19,6 +19,12 @@ export const DateBlock = (props: Props) => {
 		return dayjs(date).format('H:mm');
 	}, []);
 
+	if (!date)
+		return (
+			<Flex justify align width="100%">
+				—
+			</Flex>
+		);
 	return (
 		<StyledDateBlock style={style}>
 			<span>{fixedDate}</span>

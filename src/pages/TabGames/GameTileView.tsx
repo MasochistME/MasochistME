@@ -4,8 +4,7 @@ import { Game, TierId } from '@masochistme/sdk/dist/v1/types';
 import { useCuratedGames, useTiers } from 'sdk';
 import { useAppContext } from 'shared/store/context';
 import { Flex, Spinner } from 'components';
-
-import { GameTile } from './GameTile';
+import { GameTile } from 'containers';
 
 export const GameTileView = (): JSX.Element => {
 	const { visibleTiers, queryGame } = useAppContext();

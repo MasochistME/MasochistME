@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { useMemberById, useMemberLeaderboards } from 'sdk';
+import { useMemberById } from 'sdk';
 import { Flex, Warning } from 'components';
 import { SubPage, Tabs, Tab, TabPanel } from 'containers';
 import { useActiveTab } from 'shared/hooks';
@@ -22,12 +22,9 @@ enum TabsMap {
 
 const TabProfile = (): JSX.Element => {
 	useActiveTab(TabDict.PROFILE);
-
 	const [activeTab, setActiveTab] = useState<string>(TabsMap.GAMES);
-
 	const { id } = useParams<{ id: string }>();
 	const { memberData: member, isError } = useMemberById(id);
-	const { leaderData } = useMemberLeaderboards(id);
 
 	const isUserPrivate = member?.isPrivate;
 	const isUserNotAMember = member && !member.isMember && !member.isProtected;

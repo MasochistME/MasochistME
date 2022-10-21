@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Game } from '@masochistme/sdk/dist/v1/types';
 
-import { getTierIcon, getGameThumbnail } from 'utils';
 import { useTiers, useCuratedGames } from 'sdk';
 import { colors } from 'shared/theme';
+import { getTierIcon, getGameThumbnail } from 'utils';
 import { Flex, Skeleton, Tooltip } from 'components';
-
-import { GameTileModal } from './GameTileModal';
+import { ModalLeaderboards } from 'containers';
 
 type Props = {
 	gameId?: number;
@@ -59,10 +58,10 @@ export const GameTile = (props: Props): JSX.Element => {
 						</StyledGameThumbnail>
 					))}
 				{gameId && (
-					<GameTileModal
+					<ModalLeaderboards
 						gameId={gameId}
-						isOpen={isModalOpen}
-						setIsOpen={setIsModalOpen}
+						isModalOpen={isModalOpen}
+						isCompact
 					/>
 				)}
 			</StyledGameTile>

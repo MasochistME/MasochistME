@@ -1,10 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
 import { Badge } from '@masochistme/sdk/dist/v1/types';
 
 import { useMemberBadges, useBadges } from 'sdk';
-import { Flex } from 'components';
 import { BadgeThumbnail } from 'containers';
+import { Flex } from 'components';
 import { Size } from 'utils';
 
 type Props = {

@@ -3,8 +3,7 @@ import { EventGameAdd, EventType } from '@masochistme/sdk/dist/v1/types';
 
 import { useCuratedGames, useEvents } from 'sdk';
 import { Flex } from 'components';
-import { Section } from 'containers';
-import { GameTile } from 'pages/TabGames/GameTile';
+import { Section, GameTile } from 'containers';
 import dayjs from 'dayjs';
 
 const NUMBER_OF_GAMES = 3;

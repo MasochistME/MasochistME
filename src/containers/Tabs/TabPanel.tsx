@@ -27,7 +27,7 @@ export const TabPanel = (props: Props) => {
 
 const StyledTab = styled(Flex)`
 	width: 100%;
-	padding: 16px 8px;
+	padding: 16px;
 	background-color: ${colors.newDark}99;
 	box-sizing: border-box;
 `;
