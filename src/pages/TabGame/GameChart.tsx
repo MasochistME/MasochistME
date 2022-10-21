@@ -1,15 +1,7 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
-import styled from 'styled-components';
-import { Game, Badge } from '@masochistme/sdk/dist/v1/types';
 
 import { useGameCompletions } from 'sdk';
-import { Flex, Spinner, Warning } from 'components';
-import { SubPage, Section, List, BadgeTile } from 'containers';
-import { useActiveTab } from 'shared/hooks';
-import { TabDict } from 'shared/config/tabs';
-
-import { BarChart } from 'containers/Charts/BarChart';
+import { Section, BarChart } from 'containers';
 
 type Props = {
 	gameId: number;
@@ -44,13 +36,10 @@ export const GameChart = (props: Props) => {
 			content={
 				<BarChart
 					datasetIdKey={`game-completions-${gameId}`}
+					axisOptions={{ stacked: true }}
 					options={{
 						indexAxis: 'y',
 						aspectRatio: 8,
-						scales: {
-							x: { stacked: true },
-							y: { stacked: true },
-						},
 					}}
 					data={{
 						labels: ['Average hours to completion'],

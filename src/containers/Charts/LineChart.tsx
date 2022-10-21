@@ -80,4 +80,56 @@
 // 	);
 // };
 
-export {};
+import { Chart } from 'react-chartjs-2';
+import {
+	Chart as ChartJS,
+	ChartData,
+	ChartOptions,
+	registerables,
+	ScaleOptionsByType,
+} from 'chart.js';
+import { colors } from 'shared/theme';
+
+ChartJS.register(...registerables);
+
+type Props = {
+	datasetIdKey: string;
+	data: ChartData;
+	options?: ChartOptions;
+	axisOptions?: ScaleOptionsByType<any>;
+};
+
+export const LineChart = (props: Props): JSX.Element => {
+	const { datasetIdKey, data, options = {} } = props;
+
+	const axisOptions = {
+		...props.axisOptions,
+		grid: {
+			color: colors.newMediumGrey,
+		},
+	};
+
+	const config: { options: ChartOptions } = {
+		options: {
+			scales: {
+				xAxis: axisOptions,
+				yAxis: axisOptions,
+			},
+			responsive: true,
+			elements: {
+				bar: {
+					borderWidth: 3,
+				},
+			},
+			...options,
+		},
+	};
+
+	ChartJS.defaults.color = 'white';
+	ChartJS.defaults.font.size = 14;
+	ChartJS.defaults.font.family = '"Raleway", "Verdana", sans-serif';
+
+	return (
+		<Chart type="line" datasetIdKey={datasetIdKey} data={data} {...config} />
+	);
+};

@@ -6,10 +6,10 @@ import { useMemberById, useMemberLeaderboards } from 'sdk';
 import { Flex, Warning } from 'components';
 import { SubPage } from 'containers';
 import { useActiveTab } from 'shared/hooks';
+import { TabDict } from 'shared/config/tabs';
 
 import { MemberProfileHeader } from './MemberProfileHeader';
-// import { MemberProfileGraphs } from './MemberProfileGraphs';
-import { TabDict } from 'shared/config/tabs';
+import { MemberProfileGraphs } from './MemberProfileGraphs';
 import { MemberProfileBadges } from './MemberProfileBadges';
 
 const TabProfile = (): JSX.Element => {
@@ -38,7 +38,7 @@ const TabProfile = (): JSX.Element => {
 				{isUserNotAMember && (
 					<Warning description="This user is no longer a member of the curator." />
 				)}
-				{/* {leaderData?.sum ? <MemberProfileGraphs memberId={id} /> : null} */}
+				{leaderData?.sum ? <MemberProfileGraphs memberId={id} /> : null}
 			</StyledProfile>
 			<MemberProfileBadges memberId={id} />
 		</SubPage>

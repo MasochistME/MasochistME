@@ -1,0 +1,75 @@
+import React from 'react';
+import { orderBy } from 'lodash';
+import moment from 'moment';
+import { Tier, Game, Member } from '@masochistme/sdk/dist/v1/types';
+
+import { useCuratedGames, useTiers, useMemberById, useMemberGames } from 'sdk';
+import { Section, DoughnutChart, LineChart } from 'containers';
+import { log } from 'utils';
+import { Flex, Spinner } from 'components';
+
+type Props = {
+	memberId: string;
+};
+
+export const GraphGamesCompleted = (props: Props) => {
+	const { memberId } = props;
+
+	const { tiersData: tiers } = useTiers();
+	const { gamesData: games } = useCuratedGames();
+	const { memberData: member, isLoading, isFetched } = useMemberById(memberId);
+	const {
+		memberGamesData,
+		isLoading: isMemberGamesLoading,
+		isFetched: isMemberGamesFetched,
+	} = useMemberGames(memberId);
+
+	return (
+		<DoughnutChart
+			datasetIdKey={`member-${memberId}-gamescompleted`}
+			data={{
+				labels: summarizeTotalGames('label', tiers, member, games),
+				datasets: summarizeTotalGames('sum', tiers, member, games),
+			}}
+		/>
+	);
+};
+
+/**
+ *
+ */
+const summarizeTotalGames = (
+	type: string,
+	tiers: Tier[],
+	_member: Member,
+	games: Game[],
+) => {
+	const data: any = [];
+	const memberGames: any[] = []; // TODO Replace with real member games data
+	// const memberGames = member?.games ?? [];
+
+	tiers.map((tier: Tier) =>
+		data.push({
+			sum: 0,
+			label: tier.symbol,
+			id: tier.id,
+		}),
+	);
+
+	memberGames
+		.filter(
+			(game: any) =>
+				game.percentage === 100 &&
+				games.find((g: any) => parseInt(g.id) === game.id),
+		)
+		.map((game: any) => {
+			game = {
+				...game,
+				tier: games.find((g: Game) => g.id === game.id)?.tier ?? 0,
+			};
+			const index = data.findIndex((d: any) => d.id === game.tier);
+			if (data[index]?.sum) data[index].sum += 1;
+			return game;
+		});
+	return data.map((d: any) => d[type]);
+};

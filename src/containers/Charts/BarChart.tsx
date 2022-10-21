@@ -78,71 +78,51 @@
 import { Chart } from 'react-chartjs-2';
 import {
 	Chart as ChartJS,
-	CategoryScale,
-	LinearScale,
-	BarElement,
-	Tooltip,
 	ChartData,
 	ChartOptions,
+	registerables,
+	ScaleOptionsByType,
 } from 'chart.js';
+import { colors } from 'shared/theme';
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip);
+ChartJS.register(...registerables);
 
 type Props = {
 	datasetIdKey: string;
 	data: ChartData;
 	options?: ChartOptions;
+	axisOptions?: ScaleOptionsByType<any>;
 };
 
 export const BarChart = (props: Props): JSX.Element => {
 	const { datasetIdKey, data, options = {} } = props;
 
 	const axisOptions = {
-		gridLines: {
-			color: '#242630',
-		},
-		ticks: {
-			beginAtZero: true,
-			barThickness: 10,
-			fontColor: '#BEC9E0',
-			fontFamily: '"Dosis", "Verdana", sans-serif',
-			fontSize: 16,
-		},
-		defaultFontColor: '#BEC9E0', // TODO
-		defaultFontFamily: '"Raleway", "Verdana", sans-serif',
-		defaultFontSize: '14',
-		defaultFontStyle: 'normal',
-		legend: {
-			labels: {
-				fontColor: 'white',
-				fontFamily: 'Georgia',
-				// textTransform: 'uppercase', // TODO
-			},
+		...props.axisOptions,
+		grid: {
+			color: colors.newMediumGrey,
 		},
 	};
 
-	const config = {
-		gridLineOptions: {
-			borderWidth: 10,
-		},
+	const config: { options: ChartOptions } = {
 		options: {
+			scales: {
+				xAxis: axisOptions,
+				yAxis: axisOptions,
+			},
 			responsive: true,
 			elements: {
-				grid: {
-					color: 'white',
-				},
 				bar: {
 					borderWidth: 3,
 				},
 			},
 			...options,
-			...axisOptions,
 		},
 	};
 
+	ChartJS.defaults.color = 'white';
 	ChartJS.defaults.font.size = 14;
 	ChartJS.defaults.font.family = '"Raleway", "Verdana", sans-serif';
-	ChartJS.defaults.color = '#BEC9E0';
 
 	return (
 		<Chart type="bar" datasetIdKey={datasetIdKey} data={data} {...config} />

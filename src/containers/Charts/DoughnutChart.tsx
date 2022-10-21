@@ -56,4 +56,54 @@
 // 	);
 // };
 
-export {};
+import { Chart } from 'react-chartjs-2';
+import {
+	Chart as ChartJS,
+	ChartData,
+	ChartOptions,
+	registerables,
+	ScaleOptionsByType,
+} from 'chart.js';
+import { colors } from 'shared/theme';
+
+ChartJS.register(...registerables);
+
+type Props = {
+	datasetIdKey: string;
+	data: ChartData;
+	options?: ChartOptions;
+	axisOptions?: ScaleOptionsByType<any>;
+};
+
+export const DoughnutChart = (props: Props): JSX.Element => {
+	const { datasetIdKey, data, options = {} } = props;
+	const { labels, datasets } = data;
+
+	const fixedDatasets = datasets.map(dataset => ({
+		backgroundColor: ['#BEC9E0', '#9e9db5', '#7b7a8d', '#242630', '#141620'],
+		borderColor: 'rgb(190, 201, 224)',
+		...dataset,
+	}));
+
+	const config: { options: ChartOptions } = {
+		options: {
+			responsive: true,
+			...options,
+		},
+	};
+
+	ChartJS.defaults.color = 'white';
+	ChartJS.defaults.font.size = 14;
+	ChartJS.defaults.font.family = '"Raleway", "Verdana", sans-serif';
+
+	console.log({ labels, datasets: fixedDatasets });
+
+	return (
+		<Chart
+			type="doughnut"
+			datasetIdKey={datasetIdKey}
+			data={{ labels, datasets: fixedDatasets }}
+			{...config}
+		/>
+	);
+};

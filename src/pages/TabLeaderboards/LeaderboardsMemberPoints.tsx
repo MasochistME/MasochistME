@@ -33,13 +33,14 @@ export const LeaderboardsMemberPoints = (props: Props): JSX.Element => {
 		const tierPoints = member?.games?.find(game => game.tier === tier.id);
 		return (
 			<Tooltip
+				key={`member-score-${tier.id}`}
 				content={
 					<>
 						<span>Sum of all games completed in tier {tier.id}</span>
 						<span>Points total: {tierPoints?.points}</span>
 					</>
 				}>
-				<StyledScore key={`member-score-${tier.id}`}>
+				<StyledScore>
 					<i className={tier.icon} />
 					{tierPoints?.total}
 				</StyledScore>
