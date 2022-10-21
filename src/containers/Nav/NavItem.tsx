@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 
-import { useAppContext } from 'shared/store/context';
+import { useAppContext } from 'context';
 import { colors, media } from 'shared/theme';
 import { Tab } from 'shared/config/tabs';
 import { Flex } from 'components';

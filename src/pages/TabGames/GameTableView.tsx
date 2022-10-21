@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Game, TierId } from '@masochistme/sdk/dist/v1/types';
 
 import { useCuratedGames, useTiers } from 'sdk';
-import { useAppContext } from 'shared/store/context';
+import { useAppContext } from 'context';
 import { getGameThumbnail, getTierIcon } from 'utils';
 import { Flex, Spinner, Table, TableLink, defaultSort } from 'components';
 

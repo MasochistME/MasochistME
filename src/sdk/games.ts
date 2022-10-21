@@ -3,7 +3,7 @@ import {
 	GameCompletionListParams,
 } from '@masochistme/sdk/dist/v1/api/games';
 import { useQuery } from '@tanstack/react-query';
-import { useAppContext } from 'shared/store/context';
+import { useAppContext } from 'context';
 
 export const useGames = (params?: GamesListParams) => {
 	const { sdk } = useAppContext();

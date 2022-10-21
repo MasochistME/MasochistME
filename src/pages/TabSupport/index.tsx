@@ -1,13 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
-import { orderBy } from 'lodash';
+import { Patron } from '@masochistme/sdk/dist/v1/types';
 
 import patreon_button from 'shared/images/patreon.png';
 import { useActiveTab } from 'shared/hooks';
 import { TabDict } from 'shared/config/tabs';
-import { Spinner } from 'components';
-import { HideOn, Section, SubPage } from 'containers';
+import { Flex, Spinner } from 'components';
+import { Section, SubPage } from 'containers';
 
 import { SupportTier } from './SupportTier';
 
@@ -17,47 +16,39 @@ const TabSupport = (): JSX.Element => {
 	const isLoading = true; // TODO temporary fix
 	const isFetched = false; // TODO temporary fix
 
-	const patrons = useSelector((state: any) =>
-		orderBy(state.patrons, ['tier'], ['desc']),
-	);
+	const patrons: Patron[] = [];
 
 	return (
 		<SubPage>
 			<StyledHallOfFame>
 				{isLoading && <Spinner />}
 				{isFetched &&
-					patrons.map((tier, index) => (
-						<SupportTier key={`tier-${index}`} tier={tier} />
+					patrons.map(patron => (
+						<SupportTier key={`tier-${patron.tier}`} tier={patron.tier} />
 					))}
 			</StyledHallOfFame>
-			<HideOn media="netbooks">
-				<Section
-					minWidth="450px"
-					maxWidth="450px"
-					title="Hall of Fame"
-					content={
-						<>
-							<p>
-								...for all of those, who voluntarily donated their money to
-								support <span style={{ fontWeight: 'bold' }}>0.1%</span>. They
-								are the ones funding the masochist.me domain and the hosting
-								server, as well as assisting websites development. Soon
-								we&lsquo;ll also commission pixel art to enrich the
-								website&lsquo;s graphics.
-							</p>
-							<p>If you also wish to participate:</p>
-							<p>
-								<a
-									href="https://www.patreon.com/pointonepercent"
-									rel="noopener noreferrer"
-									target="_blank">
-									<PatreonButton src={patreon_button} alt="Patreon button" />
-								</a>
-							</p>
-						</>
-					}
-				/>
-			</HideOn>
+			<Section
+				minWidth="450px"
+				maxWidth="450px"
+				title="Hall of Fame"
+				content={
+					<Flex column gap={8}>
+						<div>
+							...for all of those, who voluntarily donated their money to
+							support <span style={{ fontWeight: 'bold' }}>MasochistME</span>.
+							They are the ones funding the masochist.me domain and the hosting
+							server, as well as assisting websites development.
+						</div>
+						<div>If you also wish to participate:</div>
+						<a
+							href="https://www.patreon.com/pointonepercent"
+							rel="noopener noreferrer"
+							target="_blank">
+							<PatreonButton src={patreon_button} alt="Patreon button" />
+						</a>
+					</Flex>
+				}
+			/>
 		</SubPage>
 	);
 };

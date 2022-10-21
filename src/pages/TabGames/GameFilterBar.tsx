@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { Tier } from '@masochistme/sdk/dist/v1/types';
 
-import { useAppContext, GameView } from 'shared/store/context';
+import { useAppContext, GameView } from 'context';
 import { GameTierCheckbox, SearchBar } from 'containers';
 import { Button, FilterBar, Flex, Spinner } from 'components';
 import { useActiveTab } from 'shared/hooks';

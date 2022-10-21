@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import Modal from 'react-modal';
 import dayjs from 'dayjs';
@@ -8,8 +7,7 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
 import GlobalStyle from 'styles/globalStyles';
-import store from 'shared/store/store';
-import { AppContextProvider } from 'shared/store/context';
+import { AppContextProvider } from 'context';
 
 import { App } from './App';
 
@@ -36,10 +34,8 @@ class Root extends React.Component {
 		return (
 			<AppContextProvider>
 				<QueryClientProvider client={queryClient}>
-					<Provider store={store}>
-						<GlobalStyle />
-						<App />
-					</Provider>
+					<GlobalStyle />
+					<App />
 				</QueryClientProvider>
 			</AppContextProvider>
 		);

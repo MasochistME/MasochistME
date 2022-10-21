@@ -76,7 +76,8 @@ export const SalePercentage = styled.span`
 	font-family: ${fonts.Dosis};
 	font-weight: bold;
 	color: ${colors.superLightGrey};
-	background-color: ${colors.darkBlue};
-	box-shadow: -2px 2px 5px ${colors.superDarkGrey};
-	font-size: 1.2em;
+	background-color: ${colors.superDarkGrey};
+	border-left: 3px solid ${colors.black};
+	border-bottom: 3px solid ${colors.black};
+	font-size: 1.5em;
 `;

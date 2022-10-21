@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { useAppContext } from 'shared/store/context';
+import { useAppContext } from 'context';
 
 /**
  *

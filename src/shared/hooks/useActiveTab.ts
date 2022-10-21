@@ -1,4 +1,4 @@
-import { useAppContext } from 'shared/store/context';
+import { useAppContext } from 'context';
 import { TabDict } from 'shared/config/tabs';
 import { useEffect } from 'react';
 

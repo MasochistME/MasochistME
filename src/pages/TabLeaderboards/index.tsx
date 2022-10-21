@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Member, Tier, Leaderboards } from '@masochistme/sdk/dist/v1/types';
 
 import { useTiers, useCuratorMembers, useLeaderboards } from 'sdk';
-import { useAppContext } from 'shared/store/context';
+import { useAppContext } from 'context';
 import { useActiveTab } from 'shared/hooks';
 import { TabDict } from 'shared/config/tabs';
 import { HideOn, SubPage, Section } from 'containers';

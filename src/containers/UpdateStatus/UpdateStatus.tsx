@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import { colors } from 'shared/theme';
@@ -7,7 +6,7 @@ import { Flex, ProgressBar } from 'components';
 import { HideOn } from 'containers';
 
 export const UpdateStatus = (): JSX.Element => {
-	const status = useSelector((state: any) => state.status);
+	const status = { lastUpdated: 1, percentage: 0 }; // TODO this is a mock
 	const nextUpdate = status?.lastUpdated
 		? new Date(status.lastUpdated + 43200000).toLocaleString()
 		: 'loading...';

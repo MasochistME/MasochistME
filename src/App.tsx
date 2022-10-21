@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { useLoadTiers, useInit } from 'shared/hooks';
+import { useLoadTiers } from 'shared/hooks';
 import { media, colors } from 'shared/theme';
 import { Loader, Flex } from 'components';
 import { Footer, Header, Nav, SubHeader } from 'containers';
@@ -23,23 +23,8 @@ const TabLeaderboards = React.lazy(() => import('./pages/TabLeaderboards'));
 const TabProfile = React.lazy(() => import('./pages/TabProfile'));
 const TabSupport = React.lazy(() => import('./pages/TabSupport'));
 
-// import {
-// 	TabBadges,
-// 	TabEvents,
-// 	TabGame,
-// 	TabGames,
-// 	TabHome,
-// 	TabLeaderboards,
-// 	TabProfile,
-// 	TabSupport,
-// 	NotFound,
-// } from 'pages';
-
 export const App = (): JSX.Element => {
-	const loaded = useInit();
 	useLoadTiers();
-
-	if (!loaded) return <div>Loading...</div>;
 
 	return (
 		<Router>

@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useMemberById, useMemberLeaderboards } from 'sdk';
 import { log, Size } from 'utils';
 import { colors, media } from 'shared/theme';
-import { AppContext } from 'shared/store/context';
+import { AppContext } from 'context';
 import { Flex, Spinner, Tooltip, Button } from 'components';
 import { MemberAvatar } from 'containers';
 import {

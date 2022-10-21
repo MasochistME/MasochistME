@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { Game, TierId } from '@masochistme/sdk/dist/v1/types';
 
 import { useCuratedGames, useTiers } from 'sdk';
-import { useAppContext } from 'shared/store/context';
+import { useAppContext } from 'context';
 import { Flex, Spinner } from 'components';
 import { GameTile } from 'containers';
 

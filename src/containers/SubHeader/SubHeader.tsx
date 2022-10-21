@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import headerImg from 'shared/images/miniheader.png';
 import { colors, fonts, media } from 'shared/theme';
 import { Tab, tabs } from 'shared/config/tabs';
-import { useAppContext } from 'shared/store/context';
+import { useAppContext } from 'context';
 import { Flex } from 'components';
 import { UpdateStatus } from 'containers';
 

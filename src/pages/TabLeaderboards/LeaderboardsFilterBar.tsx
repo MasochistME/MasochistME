@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useAppContext } from 'shared/store/context';
+import { useAppContext } from 'context';
 import { SearchBar } from 'containers';
 import { FilterBar } from 'components';
 import { useCuratorMembers } from 'sdk';

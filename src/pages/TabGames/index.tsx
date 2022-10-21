@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { useActiveTab } from 'shared/hooks';
 import { TabDict } from 'shared/config/tabs';
-import { useAppContext, GameView } from 'shared/store/context';
+import { useAppContext, GameView } from 'context';
 import { HideOn, SubPage, Section } from 'containers';
 import { Flex } from 'components';
 

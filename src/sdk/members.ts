@@ -1,6 +1,6 @@
 import { MembersListParams } from '@masochistme/sdk/dist/v1/api/members';
 import { useQuery } from '@tanstack/react-query';
-import { useAppContext } from 'shared/store/context';
+import { useAppContext } from 'context';
 
 /**
  *

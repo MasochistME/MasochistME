@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useTiers } from 'sdk';
-import { useAppContext } from 'shared/store/context';
+import { useAppContext } from 'context';
 
 export const useLoadTiers = () => {
 	const { setVisibleTiers } = useAppContext();
