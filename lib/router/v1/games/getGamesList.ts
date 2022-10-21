@@ -14,7 +14,7 @@ export const getGamesList = async (
 ): Promise<void> => {
   try {
     const { filter = {}, sort = {}, limit = 1000 } = req.body;
-    const { isCurated, ...restFilter } = filter;
+    const { isCurated, sale, ...restFilter } = filter;
 
     const { client, db } = await connectToDb();
     const collection = db.collection<Game>('games');
@@ -23,6 +23,7 @@ export const getGamesList = async (
     const cursor = collection
       .find({
         ...restFilter,
+        ...(sale && { sale: { $gt: 0, $ne: null } }),
         ...(isCurated !== undefined && {
           $or: [{ isCurated }, { isProtected: isCurated }],
         }),
@@ -30,6 +31,7 @@ export const getGamesList = async (
       .sort({
         ...(sort.title && { title: sortCollection(sort.title) }),
         ...(sort.tier && { tier: sortCollection(sort.tier) }),
+        ...(sort.sale && { sale: sortCollection(sort.sale) }),
         ...(sort.achievementsTotal && {
           achievementsTotal: sortCollection(sort.achievementsTotal),
         }),

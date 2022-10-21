@@ -194,7 +194,7 @@ export const getLeaderboardsList = async (
         }
         return b.sum - a.sum;
       })
-      .slice(0, limit - 1)
+      .slice(0, limit)
       .map((member: Leaderboards, index: number) => ({
         ...member,
         position: index + 1,
