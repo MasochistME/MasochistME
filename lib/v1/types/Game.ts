@@ -41,6 +41,10 @@ export interface Game extends WithId {
 	 */
 	achievementsTotal: number;
 	/**
+	 * When the game is on sale, this field shows the % discount.
+	 */
+	sale: number | null;
+	/**
 	 * Indicates if the game is currently being curated on Masochist.ME Steam curator.
 	 */
 	isCurated: boolean;

@@ -47,10 +47,10 @@ export const getGamesList = async (
 };
 
 export type GamesListParams = {
-	filter?: Partial<Pick<Game, 'tier' | 'isCurated'>>;
+	filter?: Partial<Pick<Game, 'tier' | 'isCurated' | 'sale'>>;
 	sort?: {
 		[key in keyof Partial<
-			Pick<Game, 'title' | 'tier' | 'achievementsTotal'>
+			Pick<Game, 'title' | 'tier' | 'achievementsTotal' | 'sale'>
 		>]: Sort;
 	};
 	limit?: number;

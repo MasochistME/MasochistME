@@ -7,7 +7,6 @@ export * from './__Helpers';
 export * from './Badge';
 export * from './Event';
 export * from './Game';
-export * from './GameSale';
 export * from './Leaderboards';
 export * from './Member';
 export * from './MemberAchievement';
