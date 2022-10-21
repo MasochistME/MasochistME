@@ -54,6 +54,7 @@ const TabGame = (): JSX.Element => {
 		<SubPage>
 			<Flex column width="100%">
 				<GameProfileHeader game={game} />
+				<Warning description="TODO: Add some stats about % of completion, average completion time etc. here" />
 				<StyledGameStats>
 					{isGamesFetched && (
 						<>

@@ -45,6 +45,7 @@ const TabProfile = (): JSX.Element => {
 		<SubPage>
 			<StyledProfile column>
 				<MemberProfileHeader memberId={id} />
+				<Warning description="TODO: Add some kind of points summary here" />
 				{isUserPrivate && (
 					<Warning description="This user has their profile set to private." />
 				)}

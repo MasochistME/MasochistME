@@ -4,7 +4,7 @@ import { Event } from '@masochistme/sdk/dist/v1/types';
 
 import { useEvents } from 'sdk';
 import { HideOn, SubPage, Section } from 'containers';
-import { Flex, Spinner } from 'components';
+import { Flex, Spinner, Warning } from 'components';
 import { useActiveTab } from 'shared/hooks';
 import { TabDict } from 'shared/config/tabs';
 
@@ -28,6 +28,7 @@ const TabEvents = (): JSX.Element => {
 	return (
 		<SubPage>
 			<StyledEventsList column>
+				<Warning description="TODO: Add some kind of sorting/filtering of events here" />
 				{isLoading && <Spinner />}
 				{isFetched &&
 					eventsData.map((event: Event) => (

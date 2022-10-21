@@ -1,7 +1,8 @@
 import styled from 'styled-components';
+import dayjs from 'dayjs';
 
 import { colors } from 'shared/theme';
-import { Tooltip } from 'components';
+import { Flex, Tooltip } from 'components';
 
 const ICON_SIZE = '1em';
 
@@ -40,16 +41,27 @@ export const LeaderboardsMemberIconPrivate = () => {
 	);
 };
 
-export const LeaderboardsMemberIconOutdated = () => {
+export const LeaderboardsMemberIconOutdated = ({
+	lastUpdated,
+}: {
+	lastUpdated?: number | Date;
+}) => {
 	const style = {
 		color: '#fdc000',
 		cursor: 'help',
 		opacity: '0.8',
 		fontSize: ICON_SIZE,
 	};
+	const date = dayjs(lastUpdated).fromNow();
 
 	return (
-		<Tooltip content="This user wasn't updated in over a month - their data might be outdated.">
+		<Tooltip
+			content={
+				<Flex column>
+					<span>This member was last updated {date}.</span>
+					<span>Their data is most likely outdated.</span>
+				</Flex>
+			}>
 			<i className="fas fa-exclamation-circle" style={style} />
 		</Tooltip>
 	);

@@ -5,7 +5,7 @@ import { Tier, TierId } from '@masochistme/sdk/dist/v1/types';
 import { useTiers } from 'sdk';
 import { MemberLeaderboards, GameTierCheckbox } from 'containers';
 import { Flex, Spinner, Switch } from 'components';
-import { colors, fonts } from 'shared/theme';
+import { colors, fonts, media } from 'shared/theme';
 
 type Props = { memberId: string };
 
@@ -33,9 +33,9 @@ export const MemberProfileGames = (props: Props) => {
 
 	return (
 		<Flex column width="100%">
-			<StyledFilterGameTiers>
+			<StyledFilterGame>
 				<Flex row align gap={24} width="100%">
-					<span style={{ fontSize: '1.5em' }}>Filter games</span>
+					<StyledFilterGameText>Filter games</StyledFilterGameText>
 					{isLoading && <Spinner />}
 					{isFetched &&
 						tiersData.map((tier: Tier) => (
@@ -60,7 +60,7 @@ export const MemberProfileGames = (props: Props) => {
 						/>
 					</Flex>
 				</StyledFilterGameSwitches>
-			</StyledFilterGameTiers>
+			</StyledFilterGame>
 			<MemberLeaderboards
 				steamId={memberId}
 				filter={{ tiers: visibleTiers, isHideCompleted, isHideUnfinished }}
@@ -69,7 +69,8 @@ export const MemberProfileGames = (props: Props) => {
 	);
 };
 
-const StyledFilterGameTiers = styled(Flex)`
+const StyledFilterGame = styled(Flex)`
+	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
 	font-family: ${fonts.Dosis};
@@ -79,6 +80,13 @@ const StyledFilterGameTiers = styled(Flex)`
 	text-transform: uppercase;
 	span {
 		color: ${colors.newMediumGrey};
+	}
+`;
+
+const StyledFilterGameText = styled.span`
+	font-size: 1.5em;
+	@media (max-width: ${media.tablets}) {
+		display: none;
 	}
 `;
 

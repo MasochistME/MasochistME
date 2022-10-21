@@ -48,7 +48,9 @@ export const LeaderboardsMemberSummary = (props: Props): JSX.Element => {
 	const infoIcon = () => {
 		if (member?.isPrivate) return <LeaderboardsMemberIconPrivate />;
 		if (Date.now() - new Date(member?.lastUpdated).getTime() > 2592000000)
-			return <LeaderboardsMemberIconOutdated />;
+			return (
+				<LeaderboardsMemberIconOutdated lastUpdated={member?.lastUpdated} />
+			);
 		return <LeaderboardsMemberIconDummy />;
 	};
 
