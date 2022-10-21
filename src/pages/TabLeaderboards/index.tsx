@@ -94,8 +94,11 @@ export default TabLeaderboards;
 
 const StyledTierTypes = styled.ul`
 	margin: 0;
-	li i {
-		width: 20px;
+	li {
+		text-align: left;
+		i {
+			width: 16px;
+		}
 	}
 `;
 

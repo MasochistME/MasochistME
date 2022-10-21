@@ -1,0 +1,1 @@
+export { BadgeThumbnail } from './BadgeThumbnail';
