@@ -96,8 +96,6 @@ export const DoughnutChart = (props: Props): JSX.Element => {
 	ChartJS.defaults.font.size = 14;
 	ChartJS.defaults.font.family = '"Raleway", "Verdana", sans-serif';
 
-	console.log({ labels, datasets: fixedDatasets });
-
 	return (
 		<Chart
 			type="doughnut"

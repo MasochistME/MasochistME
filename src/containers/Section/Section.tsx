@@ -4,7 +4,7 @@ import { colors, fonts } from 'shared/theme';
 
 type Props = {
 	fullWidth?: boolean;
-	title?: string;
+	title?: React.ReactNode;
 	content: React.ReactNode;
 	children?: never;
 } & Omit<React.CSSProperties, 'width' | 'height' | 'content' | 'translate'>;
@@ -46,6 +46,7 @@ Section.Title = styled.h3`
 	font-size: 1.3em;
 	font-family: ${fonts.Dosis};
 	text-transform: uppercase;
+	text-align: center;
 	background-color: ${colors.newDark};
 	color: ${colors.superLightGrey};
 	border-radius: 16px 16px 0 0;

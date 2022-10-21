@@ -83,7 +83,7 @@ type SummaryProps = {
 export const StyledMemberGameList = styled(Flex)<SummaryProps>`
 	flex-direction: column;
 	transition: height 1s;
-	width: 90%;
+	width: 100%;
 	box-sizing: border-box;
 	border-left: 1px solid ${colors.superDarkGrey};
 	border-right: 1px solid ${colors.superDarkGrey};

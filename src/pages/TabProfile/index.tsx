@@ -1,19 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { useMemberById, useMemberLeaderboards } from 'sdk';
 import { Flex, Warning } from 'components';
-import { SubPage } from 'containers';
+import { SubPage, Tabs, Tab, TabPanel } from 'containers';
 import { useActiveTab } from 'shared/hooks';
 import { TabDict } from 'shared/config/tabs';
 
+import { MemberProfileBadgesSection } from './MemberProfileBadgesSection';
 import { MemberProfileHeader } from './MemberProfileHeader';
-import { MemberProfileGraphs } from './MemberProfileGraphs';
 import { MemberProfileBadges } from './MemberProfileBadges';
+import { MemberProfileGraphs } from './MemberProfileGraphs';
+import { MemberProfileGames } from './MemberProfileGames';
+
+enum TabsMap {
+	GRAPHS = 'graphs',
+	BADGES = 'badges',
+	GAMES = 'games',
+}
 
 const TabProfile = (): JSX.Element => {
 	useActiveTab(TabDict.PROFILE);
+
+	const [activeTab, setActiveTab] = useState<string>(TabsMap.GAMES);
 
 	const { id } = useParams<{ id: string }>();
 	const { memberData: member, isError } = useMemberById(id);
@@ -21,6 +31,11 @@ const TabProfile = (): JSX.Element => {
 
 	const isUserPrivate = member?.isPrivate;
 	const isUserNotAMember = member && !member.isMember && !member.isProtected;
+	const canNotShowUser = isUserPrivate || isUserNotAMember;
+
+	const handleChangeTab = (_e: React.SyntheticEvent, newTab: TabsMap) => {
+		setActiveTab(newTab);
+	};
 
 	if (isError)
 		return (
@@ -28,6 +43,7 @@ const TabProfile = (): JSX.Element => {
 				<Warning description={`User with id ${id} does not exist.`} />
 			</SubPage>
 		);
+
 	return (
 		<SubPage>
 			<StyledProfile column>
@@ -38,9 +54,26 @@ const TabProfile = (): JSX.Element => {
 				{isUserNotAMember && (
 					<Warning description="This user is no longer a member of the curator." />
 				)}
-				{leaderData?.sum ? <MemberProfileGraphs memberId={id} /> : null}
+				{!canNotShowUser && (
+					<>
+						<Tabs value={activeTab} onChange={handleChangeTab}>
+							<Tab label="Games" value={TabsMap.GAMES} />
+							<Tab label="Badges" value={TabsMap.BADGES} />
+							<Tab label="Graphs" value={TabsMap.GRAPHS} />
+						</Tabs>
+						<TabPanel activeTab={activeTab} tabId={TabsMap.GAMES}>
+							<MemberProfileGames memberId={id} />
+						</TabPanel>
+						<TabPanel activeTab={activeTab} tabId={TabsMap.BADGES}>
+							<MemberProfileBadges memberId={id} />
+						</TabPanel>
+						<TabPanel activeTab={activeTab} tabId={TabsMap.GRAPHS}>
+							<MemberProfileGraphs memberId={id} />
+						</TabPanel>
+					</>
+				)}
 			</StyledProfile>
-			<MemberProfileBadges memberId={id} />
+			<MemberProfileBadgesSection memberId={id} />
 		</SubPage>
 	);
 };

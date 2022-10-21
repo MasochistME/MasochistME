@@ -1,13 +1,18 @@
 import React from 'react';
+import { orderBy } from 'lodash';
+import moment from 'moment';
+import { Tier, Game, Member } from '@masochistme/sdk/dist/v1/types';
 
-import { useCuratedGames, useTiers, useMemberGames } from 'sdk';
-import { DoughnutChart } from 'containers';
+import { useCuratedGames, useTiers, useMemberById, useMemberGames } from 'sdk';
+import { Section, DoughnutChart, LineChart } from 'containers';
+import { log } from 'utils';
+import { Flex, Spinner } from 'components';
 
 type Props = {
 	memberId: string;
 };
 
-export const GraphHoursPlayedCompleted = (props: Props) => {
+export const GraphGamesCompleted = (props: Props) => {
 	const { memberId } = props;
 
 	const { tiersData } = useTiers();
@@ -18,42 +23,38 @@ export const GraphHoursPlayedCompleted = (props: Props) => {
 		isFetched: isMemberGamesFetched,
 	} = useMemberGames(memberId);
 
-	const memberGamesWithTiers = memberGamesData
+	const memberCompletedGames = memberGamesData
 		.filter(memberGame => memberGame.completionPercentage === 100)
 		.map(memberGame => {
 			const gameTier =
 				gamesData.find(g => g.id === memberGame.gameId)?.tier ?? null;
-			if (!gameTier) return undefined;
-			const tier = tiersData.find(t => t.id === gameTier)?.id ?? null;
-			if (!tier) return undefined;
-			return { ...memberGame, tier };
+			return gameTier;
 		})
 		.filter(Boolean);
 
-	const memberGamesReducedToTiers = memberGamesWithTiers.reduce(
-		(tiersSum, game) => {
-			if (!game) return tiersSum;
-			const gameTier = game.tier;
-			if (tiersSum[gameTier]) {
+	const memberCompletedGamesReducedToTiers = memberCompletedGames.reduce(
+		(tiersSum, tier) => {
+			if (!tier) return tiersSum;
+			if (tiersSum[tier]) {
 				return {
 					...tiersSum,
-					[gameTier]: tiersSum[gameTier] + Math.round(game.playTime),
+					[tier]: tiersSum[tier] + 1,
 				};
 			} else {
 				return {
 					...tiersSum,
-					[gameTier]: Math.round(game.playTime),
+					[tier]: 1,
 				};
 			}
 		},
 		{} as any,
 	);
 
-	const labels: string[] = Object.keys(memberGamesReducedToTiers);
-	const data: number[] = Object.values(memberGamesReducedToTiers);
+	const labels: string[] = Object.keys(memberCompletedGamesReducedToTiers);
+	const data: number[] = Object.values(memberCompletedGamesReducedToTiers);
 	const datasets = [
 		{
-			label: 'Hours played total',
+			label: 'Completed games',
 			data,
 		},
 	];

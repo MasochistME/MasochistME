@@ -46,6 +46,7 @@ export const BadgePoints = (props: Props) => {
 
 const StyledBadge = styled(Flex)`
 	width: 100%;
+	max-width: 450px;
 	padding: 12px;
 	gap: 12px;
 	align-items: flex-start;

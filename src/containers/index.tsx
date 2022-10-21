@@ -13,4 +13,5 @@ export * from './Section';
 export * from './SearchBar';
 export * from './SubHeader';
 export * from './SubPage';
+export * from './Tabs';
 export * from './UpdateStatus';

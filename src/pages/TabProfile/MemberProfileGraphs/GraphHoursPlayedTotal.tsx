@@ -61,6 +61,13 @@ export const GraphHoursPlayedTotal = (props: Props) => {
 		<DoughnutChart
 			datasetIdKey={`member-${memberId}-hourstotal`}
 			axisOptions={{ stacked: true }}
+			options={{
+				plugins: {
+					legend: {
+						display: false,
+					},
+				},
+			}}
 			data={{
 				labels,
 				datasets,
