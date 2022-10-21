@@ -9,60 +9,63 @@ import { SubPage, Section, List, BadgeTile } from 'containers';
 import { useActiveTab } from 'shared/hooks';
 import { TabDict } from 'shared/config/tabs';
 
-import { Bar } from 'react-chartjs-2';
+import { BarChart } from 'containers/Charts/BarChart';
 
 type Props = {
 	gameId: number;
+	title: string;
 };
 
 export const GameChart = (props: Props) => {
-	const { gameId } = props;
+	const { gameId, title } = props;
 
 	const { completionsData } = useGameCompletions({
 		filter: { gameId },
 		sort: { completionPercentage: 'desc' },
 	});
 
-	console.log(completionsData);
-
-	const completions = completionsData.filter(
+	const gameCompletions = completionsData.filter(
 		c => c.completionPercentage === 100,
 	);
-	const avgPlaytime =
-		completions.reduce((acc, curr) => (acc += curr.playTime), 0) /
-		completions.length;
 
-	const gameDetails = {
-		completions: completions.length,
-		avgPlaytime,
-		avgPlaytimeForTier: 0,
-	};
+	const gameAvgPlaytime = Math.round(
+		gameCompletions.reduce((acc, curr) => (acc += curr.playTime), 0) /
+			gameCompletions.length,
+	);
 
-	console.log(gameDetails);
+	const tierAvgPlaytime = 100; // TODO fake data
 
 	return (
 		<Section
 			fullWidth
 			title={`Completions: ${
-				gameDetails.completions ?? 'unknown'
-			} - average completion time`}
+				gameCompletions?.length ?? 'unknown'
+			} • Average completion time: ${gameAvgPlaytime} h`}
 			content={
-				<Bar
+				<BarChart
 					datasetIdKey={`game-completions-${gameId}`}
+					options={{
+						indexAxis: 'y',
+						aspectRatio: 8,
+						scales: {
+							x: { stacked: true },
+							y: { stacked: true },
+						},
+					}}
 					data={{
-						labels: ['hours'],
+						labels: ['Average hours to completion'],
 						datasets: [
 							{
-								label: 'this game',
-								data: [gameDetails.avgPlaytime],
-								colorNormal: '#e30000ff',
-								colorTransparent: '#e3000033',
+								label: title,
+								data: [gameAvgPlaytime],
+								borderColor: '#9e1919',
+								backgroundColor: '#9e191986',
 							},
 							{
-								label: 'games from this tier',
-								data: [gameDetails.avgPlaytimeForTier ?? 0],
-								colorNormal: '#141620ff',
-								colorTransparent: '#14162066',
+								label: 'Other games from this tier',
+								data: [tierAvgPlaytime],
+								borderColor: '#37458a',
+								backgroundColor: '#1a2047b8',
 							},
 						],
 					}}

@@ -44,7 +44,7 @@ const TabGame = (): JSX.Element => {
 				<StyledGameStats>
 					<Flex row width="100%" gap={16} alignItems="flex-start">
 						{isGamesLoading && <Spinner />}
-						{isGamesFetched && <GameChart gameId={gameId} />}
+						{isGamesFetched && <GameChart gameId={gameId} title={game.title} />}
 					</Flex>
 					{isGamesLoading && <Spinner />}
 					{isGamesFetched && <List game={game} />}

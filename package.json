@@ -22,7 +22,6 @@
   "dependencies": {
     "@masochistme/sdk": "^1.16.0",
     "@mui/material": "^5.10.10",
-    "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest",
     "@mui/styled-engine-sc": "^5.10.6",
     "@tanstack/react-query": "^4.12.0",
     "@tippyjs/react": "^4.2.6",
@@ -68,9 +67,6 @@
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.7.1",
     "react-app-rewired": "^2.2.1"
-  },
-  "resolutions": {
-    "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest"
   },
   "browserslist": [
     ">0.2%",
