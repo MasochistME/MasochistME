@@ -1,8 +1,8 @@
-import { LeaderboardsMemberCollapse } from 'pages/TabLeaderboards/LeaderboardsMemberCollapse';
+import { MemberLeaderboards } from 'containers';
 
 type Props = { memberId: string };
 
 export const MemberProfileGames = (props: Props) => {
 	const { memberId } = props;
-	return <LeaderboardsMemberCollapse steamId={memberId} />;
+	return <MemberLeaderboards steamId={memberId} />;
 };

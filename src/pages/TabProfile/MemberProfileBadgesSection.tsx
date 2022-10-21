@@ -58,7 +58,7 @@ export const MemberProfileBadgesSection = (props: Props): JSX.Element => {
 			minWidth="450px"
 			maxWidth="450px"
 			content={
-				<StyledMemberProfileBadges justify gap={8}>
+				<StyledMemberProfileBadges justify>
 					{memberBadges.length !== 0
 						? memberBadges
 						: 'This member unlocked no badges yet.'}
@@ -69,6 +69,7 @@ export const MemberProfileBadgesSection = (props: Props): JSX.Element => {
 };
 
 const StyledMemberProfileBadges = styled(Flex)`
+	gap: 8px;
 	width: 100%;
 	flex-flow: row wrap;
 `;

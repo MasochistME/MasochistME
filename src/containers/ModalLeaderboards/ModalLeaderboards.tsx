@@ -25,10 +25,10 @@ export const ModalLeaderboards = (props: Props): JSX.Element | null => {
 
 	return (
 		<Modal isOpen={isModalOpen} style={{ ...modalStyle }}>
-			<WrapperLeaderboards>
+			<WrapperLeaderboards column>
 				<ModalLeaderboardsHeader gameId={gameId} gameTitle={game?.title} />
 				{isGameLoaded && game && (
-					<Flex column>
+					<Flex column gap={16}>
 						<ModalLeaderboardsBadges gameId={gameId} isCompact />
 						<GameLeaderboards gameId={gameId} isCompact={isCompact} />
 					</Flex>
@@ -38,8 +38,7 @@ export const ModalLeaderboards = (props: Props): JSX.Element | null => {
 	);
 };
 
-export const WrapperLeaderboards = styled.div`
-	display: block;
+export const WrapperLeaderboards = styled(Flex)`
 	box-sizing: border-box;
 	text-align: center;
 	width: 100%;
@@ -47,19 +46,11 @@ export const WrapperLeaderboards = styled.div`
 	max-width: 90%;
 	height: auto;
 	max-height: 90%;
+	gap: 16px;
 	overflow-y: auto;
 	background-color: ${colors.darkBlueTransparent};
 	color: ${colors.superLightGrey};
 	font-family: ${fonts.Raleway};
-	h2 {
-		padding-bottom: 10px;
-		margin: 10px;
-	}
-	ul {
-		list-style-type: none;
-		margin: 0;
-		padding: 10px;
-	}
 `;
 
 const modalStyle = {

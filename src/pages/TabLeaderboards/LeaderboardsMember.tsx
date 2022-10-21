@@ -3,8 +3,8 @@ import { UnmountClosed as Collapse } from 'react-collapse';
 import styled from 'styled-components';
 
 import { Flex } from 'components';
+import { MemberLeaderboards } from 'containers';
 import { LeaderboardsMemberSummary } from './LeaderboardsMemberSummary';
-import { LeaderboardsMemberCollapse } from './LeaderboardsMemberCollapse';
 
 type Props = {
 	steamId: string;
@@ -27,10 +27,7 @@ export const LeaderboardsMember = (props: Props): JSX.Element => {
 			/>
 			<Collapse isOpened={isOpened} style={{ width: '100%' }}>
 				<Flex align justify>
-					<LeaderboardsMemberCollapse
-						steamId={steamId}
-						key={`details-${steamId}`}
-					/>
+					<MemberLeaderboards steamId={steamId} key={`details-${steamId}`} />
 				</Flex>
 			</Collapse>
 		</StyledLeaderboardsMember>

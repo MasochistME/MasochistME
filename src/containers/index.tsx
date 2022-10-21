@@ -10,6 +10,7 @@ export * from './Header';
 export * from './HideOn';
 export * from './MemberAvatar';
 export * from './MemberBadges';
+export * from './MemberLeaderboards';
 export * from './ModalLeaderboards';
 export * from './Nav';
 export * from './Section';

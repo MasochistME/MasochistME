@@ -38,5 +38,10 @@ export const ModalLeaderboardsHeader = (props: Props) => {
 
 const StyledModalLeaderboardsHeader = styled(Flex)`
 	justify-content: space-between;
-	padding: 0 8px;
+	padding: 0 16px;
+	margin-top: 16px;
+	h2 {
+		margin: 0;
+		padding: 0;
+	}
 `;

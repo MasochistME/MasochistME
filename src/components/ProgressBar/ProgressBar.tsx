@@ -33,11 +33,12 @@ ProgressBar.Completion = styled.div.attrs(
 	},
 )<Omit<Props, 'percentage'>>`
 	position: relative;
-	min-width: 150px;
-	height: 15px;
+	min-width: 200px;
+	height: 20px;
 	margin-right: 7px;
 	padding: 0 !important;
 	box-sizing: border-box;
+	border-radius: 8px;
 	@media (max-width: ${media.smallTablets}) {
 		border: none;
 		min-width: 100px;
@@ -45,9 +46,12 @@ ProgressBar.Completion = styled.div.attrs(
 `;
 
 ProgressBar.Progress = styled.div.attrs((props: Omit<Props, 'style'>) => {
+	const isDone = props.percentage === 100;
 	const style: React.CSSProperties = {
 		width: `${props.percentage}%`,
-		backgroundColor: `${colors.newMediumGrey}`,
+		backgroundColor: isDone
+			? colors.newMediumGrey
+			: `${colors.newMediumGrey}aa`,
 	};
 	if (props.invert) {
 		style.backgroundColor = `${colors.newDark}`;
@@ -57,7 +61,7 @@ ProgressBar.Progress = styled.div.attrs((props: Omit<Props, 'style'>) => {
 	position: absolute;
 	height: 100%;
 	padding: 0 !important;
-
+	border-radius: 8px;
 	@media (max-width: ${media.smallTablets}) {
 		display: none;
 	}
@@ -70,8 +74,10 @@ ProgressBar.Percentage = styled.div`
 	position: absolute;
 	width: 100%;
 	height: 100%;
-	font-size: 0.77em;
-	font-family: ${fonts.Verdana};
+	font-size: 0.9em;
+	font-family: ${fonts.Raleway};
+	font-weight: bold;
 	letter-spacing: 0.1em;
 	color: ${colors.superLightGrey};
+	border-radius: 8px;
 `;

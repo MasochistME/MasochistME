@@ -15,7 +15,7 @@ type Props = {
 	memberGame: MemberGame;
 };
 
-export const LeaderboardsMemberGame = (props: Props): JSX.Element => {
+export const MemberLeaderboardsGame = (props: Props): JSX.Element => {
 	const { steamId, memberGame } = props;
 	const history = useHistory();
 

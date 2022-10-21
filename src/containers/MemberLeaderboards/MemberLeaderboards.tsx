@@ -12,13 +12,13 @@ import {
 import { media, colors } from 'shared/theme';
 import { Flex, Spinner } from 'components';
 
-import { LeaderboardsMemberGame } from './LeaderboardsMemberGame';
+import { MemberLeaderboardsGame } from './MemberLeaderboardsGame';
 
 type Props = {
 	steamId: string;
 };
 
-export const LeaderboardsMemberCollapse = (props: Props): JSX.Element => {
+export const MemberLeaderboards = (props: Props): JSX.Element => {
 	const { steamId } = props;
 
 	const {
@@ -64,7 +64,7 @@ export const LeaderboardsMemberCollapse = (props: Props): JSX.Element => {
 					</Flex>
 				}>
 				{gameList.map(memberGame => (
-					<LeaderboardsMemberGame
+					<MemberLeaderboardsGame
 						key={`game-${memberGame.gameId}`}
 						steamId={steamId}
 						memberGame={memberGame}
