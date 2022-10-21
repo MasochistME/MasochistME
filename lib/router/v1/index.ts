@@ -53,10 +53,15 @@ routerV1.get(
  *         GAMES         *
  *************************/
 
-import { getGamesList, getBadgesByGameIdList } from './games';
+import {
+  getGamesList,
+  getBadgesByGameIdList,
+  getGameCompletionList,
+} from './games';
 
 routerV1.post('/games/list', getGamesList);
 routerV1.post('/games/game/:gameId/badges/list', getBadgesByGameIdList);
+routerV1.post('/games/completion/list', getGameCompletionList);
 
 /**************************
  *         BADGES         *
