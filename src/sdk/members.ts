@@ -108,7 +108,11 @@ export const useMemberGames = (steamId: string) => {
 		isError,
 	} = useQuery(
 		['masochist', 'member', steamId, 'games'],
-		() => sdk.getMemberGameList({ steamId }),
+		() =>
+			sdk.getMemberGameList({
+				steamId,
+				sort: { completionPercentage: 'desc' },
+			}),
 		{ enabled: !!steamId },
 	);
 

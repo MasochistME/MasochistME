@@ -3,9 +3,11 @@ import React from 'react';
 import { useAppContext } from 'shared/store/context';
 import { SearchBar } from 'containers';
 import { FilterBar } from 'components';
+import { useCuratorMembers } from 'sdk';
 
 export const LeaderboardsFilterBar = (): JSX.Element => {
 	const { queryMember, setQueryMember } = useAppContext();
+	const { membersData } = useCuratorMembers();
 
 	return (
 		<FilterBar>
@@ -14,6 +16,9 @@ export const LeaderboardsFilterBar = (): JSX.Element => {
 				query={queryMember}
 				setQuery={setQueryMember}
 			/>
+			<span style={{ fontStyle: 'italic' }}>
+				Members total: {membersData?.length ?? '?'}
+			</span>
 		</FilterBar>
 	);
 };

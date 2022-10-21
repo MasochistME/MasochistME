@@ -42,14 +42,14 @@ export const LeaderboardsMemberCollapse = (props: Props): JSX.Element => {
 
 	const gameList = useMemo(() => {
 		const sortedMemberGames: MemberGame[] = orderBy(
-			memberGamesData,
-			['completionPercentage', 'lastUnlocked'],
+			memberGamesData.filter(memberGame => {
+				const game = gamesData.find(g => g.id === memberGame.gameId);
+				if (game && (game.isCurated || game.isProtected)) return true;
+				return false;
+			}),
+			['completionPercentage', 'mostRecentAchievementDate'],
 			['desc', 'desc'],
-		).filter(memberGame => {
-			const game = gamesData.find(g => g.id === memberGame.gameId);
-			if (game && (game.isCurated || game.isProtected)) return true;
-			return false;
-		});
+		);
 		return sortedMemberGames;
 	}, [gamesData, memberGamesData]);
 

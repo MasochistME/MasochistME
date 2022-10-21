@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import { Badge, Game } from '@masochistme/sdk/dist/v1/types';
+import { MemberBadge, Badge, Game } from '@masochistme/sdk/dist/v1/types';
 
 import { Flex } from 'components';
 import { BadgeThumbnail, Section } from 'containers';
@@ -21,20 +21,21 @@ export const MemberProfileBadgesSection = (props: Props): JSX.Element => {
 	useActiveTab(TabDict.PROFILE);
 
 	const { gamesData: games } = useAllGames();
-	const { badgesData } = useBadges();
 	const { memberBadgesData = [] } = useMemberBadges(memberId);
+	const { badgesData } = useBadges({
+		sort: { points: 'desc' },
+	});
 
 	const onBadgeClick = (gameId: number | null) => {
 		if (gameId) history.push(`/game/${gameId}`);
 	};
 
-	const memberBadges = memberBadgesData
-		.map(memberBadge => {
-			return badgesData.find(
-				(b: Badge) => String(b._id) === memberBadge.badgeId,
+	const memberBadges = badgesData
+		.filter(badge => {
+			return memberBadgesData.find(
+				(mb: MemberBadge) => mb.badgeId === String(badge._id),
 			);
 		})
-		.filter(Boolean)
 		.map(badge => {
 			if (!badge) return;
 			const game = games.find((g: Game) => g.id === badge.gameId);
