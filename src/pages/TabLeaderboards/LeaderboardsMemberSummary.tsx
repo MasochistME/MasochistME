@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import { PatronTier } from '@masochistme/sdk/dist/v1/types';
 
 import { useCuratorMembers, useLeaderboards } from 'sdk';
 import { colors, media } from 'shared/theme';
-import { Flex } from 'components';
 import { MemberAvatar } from 'containers';
+import { Flex } from 'components';
+import { Size } from 'utils';
 
 import { LeaderboardsMemberPoints } from './LeaderboardsMemberPoints';
 import {
@@ -14,7 +16,6 @@ import {
 	LeaderboardsMemberIconOutdated,
 	LeaderboardsMemberIconDummy,
 } from './LeaderboardsMemberIcons';
-import { Size } from 'utils';
 
 type Props = {
 	steamId: string;
@@ -35,7 +36,7 @@ export const LeaderboardsMemberSummary = (props: Props): JSX.Element => {
 
 	const size = Size.BIG;
 	const isDisabled = memberData?.isPrivate;
-	const isShekelmaster = leaderData?.patreonTier === 4;
+	const isHighestPatronTier = leaderData?.patreonTier === PatronTier.TIER4;
 
 	const member = {
 		...leaderData,
@@ -68,7 +69,7 @@ export const LeaderboardsMemberSummary = (props: Props): JSX.Element => {
 
 	return (
 		<StyledLeaderboardsMemberSummary
-			isShekelmaster={isShekelmaster}
+			isHighestPatronTier={isHighestPatronTier}
 			isDisabled={isDisabled}
 			onClick={onShowProfile}>
 			<StyledMemberPosition align justify size={size}>
@@ -76,7 +77,7 @@ export const LeaderboardsMemberSummary = (props: Props): JSX.Element => {
 			</StyledMemberPosition>
 			<MemberAvatar member={memberData!} size={size} />
 			<Flex column align justifyContent={'space-evenly'} margin="0 4px" gap={8}>
-				<LeaderboardsMemberIconPatron patreonTier={leaderData?.patreonTier} />
+				<LeaderboardsMemberIconPatron patronTier={leaderData?.patreonTier} />
 				{infoIcon()}
 			</Flex>
 			<StyledLeaderboardsMemberDetails align>
@@ -94,7 +95,7 @@ export const LeaderboardsMemberSummary = (props: Props): JSX.Element => {
 
 type SummaryProps = {
 	isDisabled?: boolean;
-	isShekelmaster?: boolean;
+	isHighestPatronTier?: boolean;
 };
 
 const StyledLeaderboardsMemberSummary = styled(Flex)<SummaryProps>`
@@ -104,38 +105,38 @@ const StyledLeaderboardsMemberSummary = styled(Flex)<SummaryProps>`
 	padding: 2px 0;
 	gap: 4px;
 	cursor: pointer;
-	color: ${({ isDisabled, isShekelmaster }) => {
+	color: ${({ isDisabled, isHighestPatronTier }) => {
 		if (isDisabled) return colors.lightRed;
-		if (isShekelmaster) return colors.tier4;
+		if (isHighestPatronTier) return colors.tier4;
 		return colors.superLightGrey;
 	}};
-	background-color: ${({ isDisabled, isShekelmaster }) => {
+	background-color: ${({ isDisabled, isHighestPatronTier }) => {
 		if (isDisabled) return colors.darkRedTransparent;
-		if (isShekelmaster) return `${colors.tier4Darkened}dd`;
+		if (isHighestPatronTier) return `${colors.tier4Darkened}dd`;
 		return `${colors.newDarkBlue}bb`;
 	}};
 	border-bottom: 1px solid
-		${({ isDisabled: _d, isShekelmaster: _s }) => {
+		${({ isDisabled: _d, isHighestPatronTier: _s }) => {
 			// if (isDisabled) return colors.darkRed;
-			// if (isShekelmaster) return colors.tier4Transparent;
+			// if (isHighestPatronTier) return colors.tier4Transparent;
 			return `${colors.black}88`;
 		}};
 	border-right: 1px solid
-		${({ isDisabled: _d, isShekelmaster: _s }) => {
+		${({ isDisabled: _d, isHighestPatronTier: _s }) => {
 			// if (isDisabled) return colors.darkRed;
-			// if (isShekelmaster) return colors.tier4Transparent;
+			// if (isHighestPatronTier) return colors.tier4Transparent;
 			return `${colors.black}88`;
 		}};
 	border-top: 1px solid
-		${({ isDisabled, isShekelmaster }) => {
+		${({ isDisabled, isHighestPatronTier }) => {
 			if (isDisabled) return colors.mediumRed;
-			if (isShekelmaster) return `${colors.tier4Muted}66`;
+			if (isHighestPatronTier) return `${colors.tier4Muted}66`;
 			return `${colors.newMediumGrey}99`;
 		}};
 	border-left: 1px solid
-		${({ isDisabled, isShekelmaster }) => {
+		${({ isDisabled, isHighestPatronTier }) => {
 			if (isDisabled) return colors.mediumRed;
-			if (isShekelmaster) return `${colors.tier4Muted}66`;
+			if (isHighestPatronTier) return `${colors.tier4Muted}66`;
 			return `${colors.newMediumGrey}99`;
 		}};
 `;

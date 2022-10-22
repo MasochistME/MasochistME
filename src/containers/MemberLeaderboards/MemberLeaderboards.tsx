@@ -1,7 +1,7 @@
 import { useMemo, Suspense } from 'react';
 import { orderBy } from 'lodash';
 import styled from 'styled-components';
-import { MemberGame, TierId } from '@masochistme/sdk/dist/v1/types';
+import { MemberGame, PatronTier, TierId } from '@masochistme/sdk/dist/v1/types';
 
 import {
 	useCuratedGames,
@@ -43,7 +43,7 @@ export const MemberLeaderboards = (props: Props): JSX.Element => {
 	const isLoading = isGamesLoading && isMemberGamesLoading;
 
 	const isDisabled = memberData?.isPrivate;
-	const isShekelmaster = leaderData?.patreonTier === 4;
+	const isHighestPatronTier = leaderData?.patreonTier === PatronTier.TIER4;
 
 	const gameList = useMemo(() => {
 		const sortedMemberGames: MemberGame[] = orderBy(
@@ -78,7 +78,7 @@ export const MemberLeaderboards = (props: Props): JSX.Element => {
 	return (
 		<StyledMemberGameList
 			isDisabled={isDisabled}
-			isShekelmaster={isShekelmaster}>
+			isHighestPatronTier={isHighestPatronTier}>
 			<Suspense
 				fallback={
 					<Flex align justify padding={16}>
@@ -99,7 +99,7 @@ export const MemberLeaderboards = (props: Props): JSX.Element => {
 
 type SummaryProps = {
 	isDisabled?: boolean;
-	isShekelmaster?: boolean;
+	isHighestPatronTier?: boolean;
 };
 
 export const StyledMemberGameList = styled(Flex)<SummaryProps>`
@@ -109,9 +109,9 @@ export const StyledMemberGameList = styled(Flex)<SummaryProps>`
 	box-sizing: border-box;
 	border-left: 1px solid ${colors.superDarkGrey};
 	border-right: 1px solid ${colors.superDarkGrey};
-	background-color: ${({ isDisabled, isShekelmaster }) => {
-		if (isDisabled) return `${colors.darkRedTransparent}cc`;
-		if (isShekelmaster) return `${colors.tier4Darkened}aa`;
+	background-color: ${({ isDisabled, isHighestPatronTier }) => {
+		if (isDisabled) return `${colors.darkRed}aa`;
+		if (isHighestPatronTier) return `${colors.tier4Darkened}aa`;
 		return `${colors.superDarkGrey}cc`;
 	}};
 	&:first-child {

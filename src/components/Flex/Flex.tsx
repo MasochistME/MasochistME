@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Size } from 'utils';
 
 type PropsIgnore = {
 	children?: React.ReactNode;
@@ -9,8 +10,8 @@ type Props = {
 	column?: boolean;
 	justify?: boolean;
 	align?: boolean;
-	width?: string;
-	height?: string;
+	width?: string | Size;
+	height?: string | Size;
 } & PropsIgnore &
 	Omit<React.CSSProperties, 'width' | 'height'>;
 

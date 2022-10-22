@@ -1,17 +1,18 @@
 import styled from 'styled-components';
-import { Member } from '@masochistme/sdk/dist/v1/types';
+import { Member, PatronTier } from '@masochistme/sdk/dist/v1/types';
 
 import logo from 'shared/images/logo.ico';
 import { Size } from 'utils';
 import { colors } from 'shared/theme';
-import { Flex, Skeleton, Tooltip } from 'components';
+import { BrokenImage, Flex, Skeleton, Tooltip } from 'components';
 
 type Props = {
 	member?: Member;
-	patronTier?: number | null;
+	patronTier?: PatronTier | null;
 	size?: Size;
 	title?: React.ReactNode;
 	isLoading?: boolean;
+	isError?: boolean;
 	onClick?: () => void;
 };
 
@@ -22,10 +23,9 @@ export const MemberAvatar = (props: Props) => {
 		size = Size.MEDIUM,
 		title,
 		isLoading,
+		isError,
 		onClick,
 	} = props;
-
-	// tier={Number(patron?.tier)}
 
 	return (
 		<Tooltip content={title ?? <Flex column>{member.name}</Flex>}>
@@ -34,9 +34,11 @@ export const MemberAvatar = (props: Props) => {
 				size={size}
 				patronTier={patronTier}
 				isEmpty={!member.avatar}>
-				{isLoading ? (
-					<Skeleton size={size} />
-				) : (
+				{isLoading && <Skeleton size={size} />}
+				{isError && (
+					<BrokenImage size={size} title="Could not load the avatar." />
+				)}
+				{!isLoading && !isError && (
 					<img src={member.avatar ?? logo} alt="Member avatar" />
 				)}
 			</StyledMemberAvatar>
@@ -58,16 +60,16 @@ const StyledMemberAvatar = styled.div.attrs(
 			maxHeight: size,
 			cursor: onClick ? 'pointer' : 'help',
 		};
-		if (patronTier === 1) {
+		if (patronTier === PatronTier.TIER1) {
 			style.border = `5px solid ${colors.tier1}`;
 		}
-		if (patronTier === 2) {
+		if (patronTier === PatronTier.TIER2) {
 			style.border = `5px solid ${colors.tier2}`;
 		}
-		if (patronTier === 3) {
+		if (patronTier === PatronTier.TIER3) {
 			style.border = `5px solid ${colors.tier3}`;
 		}
-		if (patronTier === 4) {
+		if (patronTier === PatronTier.TIER4) {
 			style.border = `5px solid ${colors.tier4}`;
 		}
 		return { style };
@@ -89,7 +91,7 @@ const StyledMemberAvatar = styled.div.attrs(
 	border: ${({ size }) => (size === Size.SMALL || size === Size.TINY ? 2 : 3)}px
 		solid ${colors.newDark};
 
-	img {
+	& > * {
 		width: 100%;
 		height: 100%;
 		opacity: ${({ size }) =>

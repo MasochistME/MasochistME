@@ -1,22 +1,12 @@
-import React, { useState, useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
-import axios from 'axios';
 
-import { useMemberById, useMemberLeaderboards } from 'sdk';
-import { log, Size } from 'utils';
+import { useMemberById, useMemberLeaderboards, usePatreonTiers } from 'sdk';
+import { Size } from 'utils';
 import { colors, media } from 'shared/theme';
-import { AppContext } from 'context';
-import { Flex, Spinner, Tooltip, Button } from 'components';
+import { Flex, Tooltip, Button } from 'components';
 import { MemberAvatar } from 'containers';
-import {
-	Avatar,
-	EmptyAvatar,
-	Basic,
-	Patron,
-	UpdateDate,
-	UpdateMsg,
-} from './components';
 
 type Props = {
 	memberId: string;
@@ -24,40 +14,23 @@ type Props = {
 
 export const MemberProfileHeader = (props: Props): JSX.Element => {
 	const { memberId } = props;
-	const { path } = useContext(AppContext);
 
-	const {
-		memberData: member,
-		isLoading: isMemberLoading,
-		isFetched: isMemberFetched,
-	} = useMemberById(memberId);
+	const { memberData: member, isLoading, isError } = useMemberById(memberId);
 	const { leaderData } = useMemberLeaderboards(memberId);
+	const { patreonTiersData } = usePatreonTiers();
 
-	const [updating, setUpdating] = useState(false);
-	const [message, setMessage] = useState('');
-
-	const isDisabled = false; // TODO disable when updated recently
 	const description: string =
 		member?.description ??
 		'Currently there is no info provided about this user.';
-	const patron = {
-		description: 'SHEKELMASTER', // TODO get real patreon tier
+	const patron = patreonTiersData.find(
+		tier => tier.tier === leaderData?.patreonTier,
+	) ?? {
+		description: 'Unknown',
 	};
 
-	// TODO isDisabled is temporary for the dev environment, remove in prod
 	const handleMemberUpdate = () => {
-		if (!memberId || isDisabled) return;
-
-		setMessage('Updating... refresh in a few minutes');
-		setUpdating(true);
-
-		const url = `${path}/api/users/user/${memberId}/update`;
-		axios
-			.get(url)
-			.then(res => {
-				res.data && setMessage(res.data);
-			})
-			.catch(log.WARN);
+		// TODO
+		alert('This is not implemented yet :(');
 	};
 
 	return (
@@ -66,6 +39,8 @@ export const MemberProfileHeader = (props: Props): JSX.Element => {
 				member={member}
 				patronTier={leaderData?.patreonTier}
 				size={Size.LARGE}
+				isLoading={isLoading}
+				isError={isError}
 			/>
 			<StyledMemberProfileDetails column>
 				<Flex row align width="100%" justifyContent="space-between">
@@ -93,7 +68,6 @@ export const MemberProfileHeader = (props: Props): JSX.Element => {
 						<Button
 							label="Update"
 							icon="fas fa-refresh"
-							disabled={updating}
 							onClick={() => handleMemberUpdate()}
 						/>
 					</Flex>
@@ -103,10 +77,10 @@ export const MemberProfileHeader = (props: Props): JSX.Element => {
 						content={`This user is a tier ${
 							patron?.description?.toUpperCase() ?? 'Loading...'
 						} supporter`}>
-						<Patron>
+						<StyledMemberProfilePatron>
 							<i className="fas fa-medal" />{' '}
 							{patron?.description?.toUpperCase() ?? 'Loading...'}{' '}
-						</Patron>
+						</StyledMemberProfilePatron>
 					</Tooltip>
 				)}
 				<StyledMemberProfileDescription>
@@ -142,71 +116,6 @@ const StyledMemberProfileDescription = styled.div`
 	overflow: hidden;
 `;
 
-// 	return (
-// 		<Flex>
-// 			<div
-// 				className="page-description"
-// 				style={{ paddingBottom: '0', marginBottom: '0' }}>
-// 				<Flex row align justifyContent="space-between">
-// 					<h1 style={{ margin: '0' }}>
-// 						<a
-// 							href={`https://steamcommunity.com/profiles/${member?.steamId}`}
-// 							target="_blank"
-// 							rel="noopener noreferrer">
-// 							<i className="fab fa-steam" style={{ marginRight: '10px' }} />
-// 							{member?.name ?? 'Loading...'}
-// 						</a>
-// 					</h1>
-// 					{patron && (
-// 						<Tooltip
-// 							content={`This user is a tier ${
-// 								patron?.description?.toUpperCase() ?? 'Loading...'
-// 							} supporter`}>
-// 							<Patron>
-// 								<i className="fas fa-medal" />{' '}
-// 								{patron?.description?.toUpperCase() ?? 'Loading...'}{' '}
-// 							</Patron>
-// 						</Tooltip>
-// 					)}
-// 				</Flex>
-// 				<UpdateDate>
-// 					Last updated:{' '}
-// 					{member?.lastUpdated
-// 						? new Date(member?.lastUpdated).toLocaleString()
-// 						: 'Loading...'}
-// 					{Date.now() - lastUpdated > 3600000 ? (
-// 						updating ? (
-// 							<UpdateMsg>{message}</UpdateMsg>
-// 						) : (
-// 							<CustomButton
-// 								onClick={() => sendUpdateRequest(member?.steamId, true)}>
-// 								Update
-// 							</CustomButton>
-// 						)
-// 					) : (
-// 						<Tooltip
-// 							content={`${Number(
-// 								(3600000 - (Date.now() - lastUpdated)) / 60000,
-// 							)} minutes till you can update again`}>
-// 							<button className="custom-button button-blocked">Update</button>
-// 						</Tooltip>
-// 					)}
-// 				</UpdateDate>
-// 				<Basic>
-// 					{member?.avatar ? (
-// 						<Avatar
-// 							src={member?.avatar}
-// 							tier={Number(patron?.tier)}
-// 							alt="avatar"
-// 						/>
-// 					) : (
-// 						<EmptyAvatar>
-// 							<Spinner />
-// 						</EmptyAvatar>
-// 					)}
-// 					<div>{description}</div>
-// 				</Basic>
-// 			</div>
-// 		</Flex>
-// 	);
-// };
+const StyledMemberProfilePatron = styled.div`
+	cursor: help;
+`;

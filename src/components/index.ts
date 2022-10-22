@@ -1,3 +1,4 @@
+export * from './BrokenImage';
 export * from './Button';
 export * from './DateBlock';
 export * from './Loader';

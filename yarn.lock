@@ -116,14 +116,14 @@
     "@aws-sdk/types" "3.193.0"
     tslib "^2.3.1"
 
-"@aws-sdk/client-cognito-identity@3.193.0":
-  version "3.193.0"
-  resolved "https://registry.yarnpkg.com/@aws-sdk/client-cognito-identity/-/client-cognito-identity-3.193.0.tgz#99e9651b673148100760e5cad7988ca9eec7a721"
-  integrity sha512-ptFdODKaJTR8BoTlSNfK+bpiGa9m3USx7W15KYJLcXV4czhhNP76dmYK8f4ucllMKMlWbtihOLxXhF6ZHd6lsQ==
+"@aws-sdk/client-cognito-identity@3.194.0":
+  version "3.194.0"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/client-cognito-identity/-/client-cognito-identity-3.194.0.tgz#be6c49ad0317d37c4f412aec2f862a97ff65e306"
+  integrity sha512-khDgkrrSC/2PFN7Sb8sUsvt6QTsU3s9vcizFULWc8H5OO58tTdzkoKuAa5XMVbSRQnnl6iQ4uv6bBglCC+OfSw==
   dependencies:
     "@aws-crypto/sha256-browser" "2.0.0"
     "@aws-crypto/sha256-js" "2.0.0"
-    "@aws-sdk/client-sts" "3.193.0"
+    "@aws-sdk/client-sts" "3.194.0"
     "@aws-sdk/config-resolver" "3.193.0"
     "@aws-sdk/credential-provider-node" "3.193.0"
     "@aws-sdk/fetch-http-handler" "3.193.0"
@@ -193,10 +193,10 @@
     "@aws-sdk/util-utf8-node" "3.188.0"
     tslib "^2.3.1"
 
-"@aws-sdk/client-sts@3.193.0":
-  version "3.193.0"
-  resolved "https://registry.yarnpkg.com/@aws-sdk/client-sts/-/client-sts-3.193.0.tgz#e1205db3ebfa46544655397bd22d54e0bde945ef"
-  integrity sha512-IZiJR13pvubHXibpFq7ACDZLrP6WFtKDC/mxhyTSAsehyJq0IaRj7ApMdOIfySo6dUJv64Q+6E+ScR0Mx7+/aA==
+"@aws-sdk/client-sts@3.194.0":
+  version "3.194.0"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/client-sts/-/client-sts-3.194.0.tgz#ea4295346f9039cfcab5c73ed04808a9935bb060"
+  integrity sha512-duolI7KLvRLMrL0ZpiVvmhaC5stKcNp5tfJ7gUW24tyf+7ImAmk2odSMIgcq54EWQ3XppTKBhEGCjOJ9th7+Qg==
   dependencies:
     "@aws-crypto/sha256-browser" "2.0.0"
     "@aws-crypto/sha256-js" "2.0.0"
@@ -206,6 +206,7 @@
     "@aws-sdk/hash-node" "3.193.0"
     "@aws-sdk/invalid-dependency" "3.193.0"
     "@aws-sdk/middleware-content-length" "3.193.0"
+    "@aws-sdk/middleware-endpoint" "3.193.0"
     "@aws-sdk/middleware-host-header" "3.193.0"
     "@aws-sdk/middleware-logger" "3.193.0"
     "@aws-sdk/middleware-recursion-detection" "3.193.0"
@@ -227,6 +228,7 @@
     "@aws-sdk/util-body-length-node" "3.188.0"
     "@aws-sdk/util-defaults-mode-browser" "3.193.0"
     "@aws-sdk/util-defaults-mode-node" "3.193.0"
+    "@aws-sdk/util-endpoints" "3.194.0"
     "@aws-sdk/util-user-agent-browser" "3.193.0"
     "@aws-sdk/util-user-agent-node" "3.193.0"
     "@aws-sdk/util-utf8-browser" "3.188.0"
@@ -245,12 +247,12 @@
     "@aws-sdk/util-middleware" "3.193.0"
     tslib "^2.3.1"
 
-"@aws-sdk/credential-provider-cognito-identity@3.193.0":
-  version "3.193.0"
-  resolved "https://registry.yarnpkg.com/@aws-sdk/credential-provider-cognito-identity/-/credential-provider-cognito-identity-3.193.0.tgz#30e9bd56aec3b08c4ef9700499e0038db7dad673"
-  integrity sha512-+T+bML7qYpJNq8oCuF07m0Q1bDfQ3Cji5fMbngJywHwD4PHPohiJiY3naDKji9JxajoJpz+xfBRBVePwyazhTw==
+"@aws-sdk/credential-provider-cognito-identity@3.194.0":
+  version "3.194.0"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/credential-provider-cognito-identity/-/credential-provider-cognito-identity-3.194.0.tgz#a3f98b2381b95f372d5cd88a2cbcfe991b3bcc62"
+  integrity sha512-AAtnTap4SS0aDuLB8NsWuvAkbaCX8kh6QG+S4+hziPq3+OZtYq34QM8j52ojGyB99VU4dhJmxoExMayLOSTIJg==
   dependencies:
-    "@aws-sdk/client-cognito-identity" "3.193.0"
+    "@aws-sdk/client-cognito-identity" "3.194.0"
     "@aws-sdk/property-provider" "3.193.0"
     "@aws-sdk/types" "3.193.0"
     tslib "^2.3.1"
@@ -336,14 +338,14 @@
     tslib "^2.3.1"
 
 "@aws-sdk/credential-providers@^3.186.0":
-  version "3.193.0"
-  resolved "https://registry.yarnpkg.com/@aws-sdk/credential-providers/-/credential-providers-3.193.0.tgz#878d480442c83fc76742b7d9decf7d876440bb9c"
-  integrity sha512-q7ObPn7uTVhCM7rWYj4tuXkyJJ+sBG0EtS4hUT1NpD/AL6Ty1iKHKFLh97pAHiQ0inmq/gRumcnUQjULpf3TJg==
+  version "3.194.0"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/credential-providers/-/credential-providers-3.194.0.tgz#2bbbe264133731708906bf6e93740f397b54d501"
+  integrity sha512-pEwhG/W5Y/sEItXu3ulpuq3+nl9M3PDHzgtDfKbtvO8Mfhd8EucmHbTGHIcHdUow44E94tGIbxsnt239e9m/yg==
   dependencies:
-    "@aws-sdk/client-cognito-identity" "3.193.0"
+    "@aws-sdk/client-cognito-identity" "3.194.0"
     "@aws-sdk/client-sso" "3.193.0"
-    "@aws-sdk/client-sts" "3.193.0"
-    "@aws-sdk/credential-provider-cognito-identity" "3.193.0"
+    "@aws-sdk/client-sts" "3.194.0"
+    "@aws-sdk/credential-provider-cognito-identity" "3.194.0"
     "@aws-sdk/credential-provider-env" "3.193.0"
     "@aws-sdk/credential-provider-imds" "3.193.0"
     "@aws-sdk/credential-provider-ini" "3.193.0"
@@ -398,6 +400,20 @@
   dependencies:
     "@aws-sdk/protocol-http" "3.193.0"
     "@aws-sdk/types" "3.193.0"
+    tslib "^2.3.1"
+
+"@aws-sdk/middleware-endpoint@3.193.0":
+  version "3.193.0"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/middleware-endpoint/-/middleware-endpoint-3.193.0.tgz#9f79b42f828e8f8d281d4d3629acf2ceeca3636c"
+  integrity sha512-Inbpt7jcHGvzF7UOJOCxx9wih0+eAQYERikokidWJa7M405EJpVYq1mGbeOcQUPANU3uWF1AObmUUFhbkriHQw==
+  dependencies:
+    "@aws-sdk/middleware-serde" "3.193.0"
+    "@aws-sdk/protocol-http" "3.193.0"
+    "@aws-sdk/signature-v4" "3.193.0"
+    "@aws-sdk/types" "3.193.0"
+    "@aws-sdk/url-parser" "3.193.0"
+    "@aws-sdk/util-config-provider" "3.188.0"
+    "@aws-sdk/util-middleware" "3.193.0"
     tslib "^2.3.1"
 
 "@aws-sdk/middleware-host-header@3.193.0":
@@ -651,6 +667,14 @@
     "@aws-sdk/credential-provider-imds" "3.193.0"
     "@aws-sdk/node-config-provider" "3.193.0"
     "@aws-sdk/property-provider" "3.193.0"
+    "@aws-sdk/types" "3.193.0"
+    tslib "^2.3.1"
+
+"@aws-sdk/util-endpoints@3.194.0":
+  version "3.194.0"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/util-endpoints/-/util-endpoints-3.194.0.tgz#0cd08a96eebf85e7d250d7dfea19dd0e79a7848a"
+  integrity sha512-G+DGC3Zx0GnQpt4DpRmVcCfliNxf3nwBtZ3JIdCptkUZgDEpLYzOfjbf3bUyPTQh+oGHeqfnVAF+rFjTnYql3A==
+  dependencies:
     "@aws-sdk/types" "3.193.0"
     tslib "^2.3.1"
 
@@ -2283,10 +2307,10 @@
   resolved "https://registry.yarnpkg.com/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz#b2ac626d6cb9c8718ab459166d4bb405b8ffa78b"
   integrity sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==
 
-"@masochistme/sdk@^1.18.1":
-  version "1.18.1"
-  resolved "https://registry.yarnpkg.com/@masochistme/sdk/-/sdk-1.18.1.tgz#85e119ae722eef89cd217850c109db1473650947"
-  integrity sha512-dRd3I2LjDB+sCRKzyUjKX7Rz0QUQ+jTvDvubsD3hJ7LihkcKAqSdO9giWO1TBav/3e36TLL+ur4gs+ZBSOC0SA==
+"@masochistme/sdk@^1.18.4":
+  version "1.18.4"
+  resolved "https://registry.yarnpkg.com/@masochistme/sdk/-/sdk-1.18.4.tgz#f2e49fbefcd069078d6d81100dbf9becaba8c636"
+  integrity sha512-2FNpMc8LRBHyzANdvHQ8tnS+fAgoJf6jUtHTcLvv6OUUMtdmaPMK0bnHyBahzdaI23ljX5ueytWD3NitFW8eSQ==
   dependencies:
     axios "1.1.2"
     discord.js "^14.3.0"
@@ -2340,7 +2364,6 @@
     prop-types "^15.8.1"
 
 "@mui/styled-engine-sc@^5.10.6":
-  name "@mui/styled-engine"
   version "5.10.6"
   resolved "https://registry.yarnpkg.com/@mui/styled-engine-sc/-/styled-engine-sc-5.10.6.tgz#e1c1f1e6a80f2bcd11f83e33c9925753cf61bf23"
   integrity sha512-AQIa478w3UI8gmlht7orp96tEJbEN26FiEs9Aee6E+iVTnoyT3b6V/JapgKlITo6rn7tYTSX9iJYwnDTMhbzTg==

@@ -1,25 +1,30 @@
 import styled from 'styled-components';
 import dayjs from 'dayjs';
+import { PatreonTier, PatronTier } from '@masochistme/sdk/dist/v1/types';
 
+import { usePatreonTiers } from 'sdk';
 import { colors } from 'shared/theme';
 import { Flex, Tooltip } from 'components';
 
 const ICON_SIZE = '1em';
 
-export const LeaderboardsMemberIconPatron = ({
-	patreonTier,
-}: {
-	patreonTier: any;
-}) => {
-	const patron = {
-		description: 'Patreon tier: TODO - this must be taken from SDK',
+type Props = {
+	patronTier?: PatronTier | null;
+};
+export const LeaderboardsMemberIconPatron = (props: Props) => {
+	const { patronTier } = props;
+	const { patreonTiersData } = usePatreonTiers();
+
+	const patron = patreonTiersData.find(tier => tier.tier === patronTier) ?? {
+		description: 'Unknown',
 	};
 
-	if (patreonTier) {
+	if (patronTier) {
 		// @ts-ignore:next-line
-		const color = `${colors[`tier${patreonTier}`] ?? colors.superDarkGrey}77`;
+		const color = `${colors[`tier${patronTier}`] ?? colors.superDarkGrey}77`;
 		return (
-			<Tooltip content={patron.description.toUpperCase()}>
+			<Tooltip
+				content={`This member is ${patron?.description.toUpperCase()} tier supporter.`}>
 				<PatronIcon className="fas fa-heart" style={{ color }} />
 			</Tooltip>
 		);
@@ -47,7 +52,7 @@ export const LeaderboardsMemberIconOutdated = ({
 	lastUpdated?: number | Date;
 }) => {
 	const style = {
-		color: '#fdc000',
+		color: '#cec25a',
 		cursor: 'help',
 		opacity: '0.8',
 		fontSize: ICON_SIZE,
