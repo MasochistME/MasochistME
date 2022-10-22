@@ -29,7 +29,7 @@ import { getTierIcon } from 'utils';
 import { SmallEvent, Section, EventLink } from 'containers';
 import { Flex, Skeleton } from 'components';
 
-const NUMBER_OF_EVENTS = 10;
+const NUMBER_OF_EVENTS = 13;
 
 export const SectionHistory = (): JSX.Element => {
 	const { eventsData, isLoading, isFetched } = useEvents({
@@ -99,9 +99,8 @@ export const SectionHistory = (): JSX.Element => {
 	return (
 		<Section
 			title="Last events"
-			minWidth="450px"
 			content={
-				<Flex column gap={5}>
+				<Flex column gap={11}>
 					{isLoading && loadingEvents}
 					{isFetched && eventsData.map((event: Event) => classifyEvents(event))}
 				</Flex>

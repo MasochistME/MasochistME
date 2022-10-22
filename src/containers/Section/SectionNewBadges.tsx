@@ -55,6 +55,7 @@ export const SectionNewBadges = (): JSX.Element => {
 
 	return (
 		<Section
+			minWidth="450px"
 			title="New badges"
 			content={
 				<StyledNewMembers>
@@ -69,5 +70,5 @@ export const SectionNewBadges = (): JSX.Element => {
 const StyledNewMembers = styled.div`
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
-	gap: 4px;
+	gap: 16px;
 `;

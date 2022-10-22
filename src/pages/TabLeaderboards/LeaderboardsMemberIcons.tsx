@@ -6,7 +6,7 @@ import { usePatreonTiers } from 'sdk';
 import { colors } from 'shared/theme';
 import { Flex, Tooltip } from 'components';
 
-const ICON_SIZE = '1em';
+const ICON_SIZE = '1.2em';
 
 type Props = {
 	patronTier?: PatronTier | null;
@@ -21,16 +21,26 @@ export const LeaderboardsMemberIconPatron = (props: Props) => {
 
 	if (patronTier) {
 		// @ts-ignore:next-line
-		const color = `${colors[`tier${patronTier}`] ?? colors.superDarkGrey}77`;
+		const color = `${colors[`tier${patronTier}`] ?? colors.superDarkGrey}`;
 		return (
 			<Tooltip
 				content={`This member is ${patron?.description.toUpperCase()} tier supporter.`}>
-				<PatronIcon className="fas fa-heart" style={{ color }} />
+				<PatronIcon
+					className="fa-solid fa-circle-dollar-to-slot"
+					patronTierColor={color}
+				/>
 			</Tooltip>
 		);
 	}
 	return <LeaderboardsMemberIconDummy />;
 };
+
+const PatronIcon = styled.i<{ patronTierColor: string }>`
+	cursor: help;
+	color: ${colors.black};
+	text-shadow: ${({ patronTierColor }) => patronTierColor} 0 0 10px;
+	font-size: ${ICON_SIZE};
+`;
 
 export const LeaderboardsMemberIconPrivate = () => {
 	const style = {
@@ -52,7 +62,7 @@ export const LeaderboardsMemberIconOutdated = ({
 	lastUpdated?: number | Date;
 }) => {
 	const style = {
-		color: '#cec25a',
+		color: '#a39969',
 		cursor: 'help',
 		opacity: '0.8',
 		fontSize: ICON_SIZE,
@@ -76,8 +86,3 @@ export const LeaderboardsMemberIconDummy = () => {
 	const style = { color: 'transparent', fontSize: ICON_SIZE };
 	return <i className="fas fa-exclamation-circle" style={style} />;
 };
-
-const PatronIcon = styled.i`
-	cursor: help;
-	font-size: ${ICON_SIZE};
-`;

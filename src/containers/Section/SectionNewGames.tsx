@@ -53,7 +53,7 @@ export const SectionNewGames = (): JSX.Element => {
 		<Section
 			title="Recent curations"
 			content={
-				<Flex align column flexWrap="wrap" gap="12px">
+				<Flex align row flexWrap="wrap" justifyContent="space-between">
 					{isLoading && loadingGames}
 					{isFetched && newestGames}
 				</Flex>
