@@ -41,7 +41,7 @@ export const AppContextProvider = ({
 	const path = config.API;
 	const sdk = new SDK({
 		host: config.API,
-		authToken: config.ACCESS_TOKEN,
+		authToken: 'masochist',
 	});
 
 	const value = {

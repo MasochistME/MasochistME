@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { Section } from 'containers';
 
+const FEATURED = ['https://www.youtube.com/embed/9Lz7VeVDmV4'];
+
 export const SectionFeatured = (): JSX.Element => {
+	const [activeVideo, setActiveVideo] = useState(FEATURED[0]);
+
 	return (
 		<Section
 			title="Featured"
@@ -13,7 +17,7 @@ export const SectionFeatured = (): JSX.Element => {
 					<iframe
 						width="840"
 						height="440"
-						src={`https://www.youtube.com/embed/9Lz7VeVDmV4`}
+						src={activeVideo}
 						frameBorder="0"
 						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 						allowFullScreen
