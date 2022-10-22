@@ -8,6 +8,8 @@ type Props = {
 	isCentered?: boolean;
 	content: React.ReactNode;
 	children?: never;
+	width?: string;
+	height?: string;
 } & Omit<React.CSSProperties, 'width' | 'height' | 'content' | 'translate'>;
 
 export const Section = (props: Props) => {

@@ -60,9 +60,6 @@ const StyledGameHeaderThumbnail = styled.img`
 	border: 3px solid ${colors.black};
 	box-sizing: border-box;
 	box-shadow: 0 0 10px ${colors.black};
-	@media (max-width: ${media.tablets}) {
-		display: none;
-	}
 `;
 
 const StyledGameHeader = styled(Flex)`

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { colors, fonts } from 'shared/theme';
+import { colors, fonts, media } from 'shared/theme';
 import { Flex, Tooltip } from 'components';
 
 type Props = {
@@ -52,4 +52,7 @@ const StyledStatBlockSublabel = styled.span`
 	font-size: 1em;
 	font-weight: bold;
 	color: ${colors.yellow}bb;
+	@media (max-width: ${media.smallNetbooks}) {
+		display: none;
+	}
 `;

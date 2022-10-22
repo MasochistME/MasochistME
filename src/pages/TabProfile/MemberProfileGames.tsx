@@ -81,6 +81,9 @@ const StyledFilterGame = styled(Flex)`
 	span {
 		color: ${colors.newMediumGrey};
 	}
+	@media (max-width: ${media.tablets}) {
+		flex-wrap: wrap;
+	}
 `;
 
 const StyledFilterGameText = styled.span`

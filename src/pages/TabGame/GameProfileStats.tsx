@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Game, MemberGame } from '@masochistme/sdk/dist/v1/types';
 
-import { colors } from 'shared/theme';
+import { colors, media } from 'shared/theme';
 import { getPercentage } from 'utils';
 import { Flex, Skeleton } from 'components';
 import { StatBlock } from 'containers';
@@ -83,4 +83,7 @@ const StyledGameProfileStats = styled(Flex)`
 	background-color: ${colors.black}66;
 	gap: 16px;
 	padding: 24px 0 32px 0;
+	@media (max-width: ${media.tablets}) {
+		flex-wrap: wrap;
+	}
 `;

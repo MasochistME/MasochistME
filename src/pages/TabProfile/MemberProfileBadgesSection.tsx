@@ -55,7 +55,7 @@ export const MemberProfileBadgesSection = (props: Props): JSX.Element => {
 	return (
 		<Section
 			title="Badges"
-			minWidth="450px"
+			width="100%"
 			maxWidth="450px"
 			content={
 				<StyledMemberProfileBadges justify>

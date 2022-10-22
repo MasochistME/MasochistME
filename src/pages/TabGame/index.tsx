@@ -63,8 +63,8 @@ const TabGame = (): JSX.Element => {
 						<>
 							<Tabs value={activeTab} onChange={handleChangeTab}>
 								<Tab label="Leaderboards" value={TabsMap.MEMBERS} />
-								<Tab label="Badges" value={TabsMap.BADGES} />
-								<Tab label="Graphs" value={TabsMap.GRAPHS} />
+								{/* <Tab label="Badges" value={TabsMap.BADGES} /> */}
+								{/* <Tab label="Graphs" value={TabsMap.GRAPHS} /> */}
 							</Tabs>
 							<TabPanel activeTab={activeTab} tabId={TabsMap.MEMBERS}>
 								<GameProfileLeaderboards gameId={gameId} />
@@ -80,7 +80,7 @@ const TabGame = (): JSX.Element => {
 				</StyledGameStats>
 			</Flex>
 			<Section
-				minWidth="450px"
+				width="100%"
 				maxWidth="450px"
 				title="Badges"
 				content={
