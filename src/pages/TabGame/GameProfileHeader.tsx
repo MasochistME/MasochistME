@@ -67,7 +67,6 @@ const StyledGameHeaderThumbnail = styled.img`
 
 const StyledGameHeader = styled(Flex)`
 	width: 100%;
-	margin-bottom: 10px;
 	padding: 8px;
 	gap: 16px;
 	justify-content: space-between;

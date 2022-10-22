@@ -10,6 +10,7 @@ export const SubPage = styled(Flex)`
 	padding: 16px;
 	width: 100%;
 	gap: 16px;
+	box-sizing: border-box;
 	@media (max-width: ${media.netbooks}) {
 		flex-direction: column;
 		align-items: center;

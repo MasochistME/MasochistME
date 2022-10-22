@@ -13,6 +13,7 @@ import { MemberProfileHeader } from './MemberProfileHeader';
 import { MemberProfileBadges } from './MemberProfileBadges';
 import { MemberProfileGraphs } from './MemberProfileGraphs';
 import { MemberProfileGames } from './MemberProfileGames';
+import { MemberProfileStats } from './MemberProfileStats';
 
 enum TabsMap {
 	GRAPHS = 'graphs',
@@ -43,34 +44,38 @@ const TabProfile = (): JSX.Element => {
 
 	return (
 		<SubPage>
-			<StyledProfile column>
-				<MemberProfileHeader memberId={id} />
-				<Warning description="TODO: Add some kind of points summary here" />
+			<Flex column width="100%" gap={16}>
+				<Flex column>
+					<MemberProfileHeader memberId={id} />
+					<MemberProfileStats memberId={id} />
+				</Flex>
 				{isUserPrivate && (
 					<Warning description="This user has their profile set to private." />
 				)}
 				{isUserNotAMember && (
 					<Warning description="This user is no longer a member of the curator." />
 				)}
-				{!canNotShowUser && (
-					<>
-						<Tabs value={activeTab} onChange={handleChangeTab}>
-							<Tab label="Games" value={TabsMap.GAMES} />
-							<Tab label="Badges" value={TabsMap.BADGES} />
-							<Tab label="Graphs" value={TabsMap.GRAPHS} />
-						</Tabs>
-						<TabPanel activeTab={activeTab} tabId={TabsMap.GAMES}>
-							<MemberProfileGames memberId={id} />
-						</TabPanel>
-						<TabPanel activeTab={activeTab} tabId={TabsMap.BADGES}>
-							<MemberProfileBadges memberId={id} />
-						</TabPanel>
-						<TabPanel activeTab={activeTab} tabId={TabsMap.GRAPHS}>
-							<MemberProfileGraphs memberId={id} />
-						</TabPanel>
-					</>
-				)}
-			</StyledProfile>
+				<StyledProfile column>
+					{!canNotShowUser && (
+						<>
+							<Tabs value={activeTab} onChange={handleChangeTab}>
+								<Tab label="Games" value={TabsMap.GAMES} />
+								<Tab label="Badges" value={TabsMap.BADGES} />
+								<Tab label="Graphs" value={TabsMap.GRAPHS} />
+							</Tabs>
+							<TabPanel activeTab={activeTab} tabId={TabsMap.GAMES}>
+								<MemberProfileGames memberId={id} />
+							</TabPanel>
+							<TabPanel activeTab={activeTab} tabId={TabsMap.BADGES}>
+								<MemberProfileBadges memberId={id} />
+							</TabPanel>
+							<TabPanel activeTab={activeTab} tabId={TabsMap.GRAPHS}>
+								<MemberProfileGraphs memberId={id} />
+							</TabPanel>
+						</>
+					)}
+				</StyledProfile>
+			</Flex>
 			<MemberProfileBadgesSection memberId={id} />
 		</SubPage>
 	);

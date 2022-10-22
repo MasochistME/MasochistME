@@ -16,6 +16,7 @@ export * from './ModalLeaderboards';
 export * from './Nav';
 export * from './Section';
 export * from './SearchBar';
+export * from './StatBlock';
 export * from './SubHeader';
 export * from './SubPage';
 export * from './Tabs';

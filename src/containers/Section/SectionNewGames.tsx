@@ -1,10 +1,11 @@
 import React from 'react';
+import styled from 'styled-components';
+import dayjs from 'dayjs';
 import { EventGameAdd, EventType } from '@masochistme/sdk/dist/v1/types';
 
 import { useCuratedGames, useEvents } from 'sdk';
-import { Flex } from 'components';
 import { Section, GameTile } from 'containers';
-import dayjs from 'dayjs';
+import { Flex } from 'components';
 
 const NUMBER_OF_GAMES = 3;
 
@@ -52,12 +53,21 @@ export const SectionNewGames = (): JSX.Element => {
 	return (
 		<Section
 			title="Recent curations"
+			maxWidth="100%"
 			content={
-				<Flex align row flexWrap="wrap" justifyContent="space-between">
+				<StyledNewGammes>
 					{isLoading && loadingGames}
 					{isFetched && newestGames}
-				</Flex>
+				</StyledNewGammes>
 			}
 		/>
 	);
 };
+
+const StyledNewGammes = styled(Flex)`
+	align-items: center;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+	gap: 16px;
+`;

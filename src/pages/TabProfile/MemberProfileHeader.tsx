@@ -93,7 +93,6 @@ export const MemberProfileHeader = (props: Props): JSX.Element => {
 
 const StyledMemberProfileHeader = styled(Flex)`
 	max-width: 100%;
-	margin-bottom: 10px;
 	padding: 8px;
 	gap: 16px;
 	justify-content: space-between;

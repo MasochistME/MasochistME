@@ -13,6 +13,7 @@ import { GameProfileHeader } from './GameProfileHeader';
 import { GameProfileGraphs } from './GameProfileGraphs';
 import { GameProfileBadges } from './GameProfileBadges';
 import { GameProfileLeaderboards } from './GameProfileLeaderboards';
+import { GameProfileStats } from './GameProfileStats';
 
 enum TabsMap {
 	GRAPHS = 'graphs',
@@ -52,11 +53,13 @@ const TabGame = (): JSX.Element => {
 
 	return (
 		<SubPage>
-			<Flex column width="100%">
-				<GameProfileHeader game={game} />
-				<Warning description="TODO: Add some stats about % of completion, average completion time etc. here" />
+			<Flex column width="100%" gap={16}>
+				<Flex column>
+					<GameProfileHeader game={game} />
+					<GameProfileStats game={game} />
+				</Flex>
 				<StyledGameStats>
-					{isGamesFetched && (
+					{!isGamesLoading && isGamesFetched && (
 						<>
 							<Tabs value={activeTab} onChange={handleChangeTab}>
 								<Tab label="Leaderboards" value={TabsMap.MEMBERS} />

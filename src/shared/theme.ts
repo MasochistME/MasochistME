@@ -1,5 +1,6 @@
 export const colors = {
 	lightYellow: '#b4b59d',
+	yellow: '#fdc000',
 
 	lightestGreyEver: '#E9E9F5',
 	superLightGrey: '#BEC9E0',
@@ -31,7 +32,8 @@ export const colors = {
 };
 
 export const media = {
-	netbooks: '1100px',
+	smallDesktop: '1500px',
+	netbooks: '1150px',
 	smallNetbooks: '850px',
 	tablets: '700px',
 	smallTablets: '500px',

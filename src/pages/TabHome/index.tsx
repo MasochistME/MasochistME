@@ -1,20 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { media } from 'shared/theme';
 import { useActiveTab } from 'shared/hooks';
 import { TabDict } from 'shared/config/tabs';
 import { Flex } from 'components';
 import {
 	SubPage,
-	SectionDiscord,
 	SectionHistory,
 	SectionSale,
-	SectionTop,
-	SectionTrivia,
 	SectionNewGames,
 	SectionNewMembers,
 	SectionNewBadges,
-	Section,
 	SectionFeatured,
 } from 'containers';
 
@@ -36,27 +33,19 @@ const TabHome = (): JSX.Element => {
 	return (
 		<SubPage>
 			<StyledDashboard column justify align>
-				<Flex
-					row
-					flexWrap="wrap"
-					justifyContent="space-between"
-					width="100%"
-					gap={16}>
-					<Flex
-						column
-						flexWrap="wrap"
-						flexGrow={1}
-						maxWidth="450px"
-						justifyContent={'space-between'}>
+				<StyledSectionTop>
+					<StyledColumnLeft>
 						<SectionHistory />
-						<SectionNewBadges />
-						<SectionNewMembers />
-					</Flex>
-					<Flex column justify flexGrow={1} flexWrap="wrap" gap={16}>
+						<StyledNewStuff>
+							<SectionNewBadges />
+							<SectionNewMembers />
+						</StyledNewStuff>
+					</StyledColumnLeft>
+					<StyledColumnRight>
 						<SectionNewGames />
 						<SectionFeatured />
-					</Flex>
-				</Flex>
+					</StyledColumnRight>
+				</StyledSectionTop>
 				<SectionSale />
 			</StyledDashboard>
 			{/* <SectionTop /> */}
@@ -67,23 +56,53 @@ const TabHome = (): JSX.Element => {
 
 export default TabHome;
 
-const SectionWelcome = () => {
-	return (
-		<Section
-			fullWidth
-			title="Development environment"
-			content={
-				<p style={{ padding: '0 20px' }}>
-					Congratulations, you found the development environment!
-				</p>
-			}
-		/>
-	);
-};
-
 const StyledDashboard = styled(Flex)`
 	width: 100%;
 	align-items: flex-start;
 	gap: 16px;
 	flex-wrap: wrap;
+`;
+
+const StyledSectionTop = styled(Flex)`
+	flex-direction: row;
+	justify-content: space-between;
+	width: 100%;
+	gap: 16px;
+	@media (max-width: ${media.netbooks}) {
+		flex-wrap: wrap;
+	}
+`;
+
+const StyledNewStuff = styled(Flex)`
+	flex-direction: column;
+	gap: 16px;
+	justify-content: space-evenly;
+`;
+
+const StyledColumnLeft = styled(Flex)`
+	flex-direction: column;
+	flex-wrap: wrap;
+	max-width: 450px;
+	gap: 16px;
+	justify-content: space-between;
+	@media (max-width: ${media.netbooks}) {
+		flex-direction: row;
+		width: 100%;
+		max-width: 100%;
+		justify-content: space-evenly;
+	}
+`;
+
+const StyledColumnRight = styled(Flex)`
+	max-width: 1000px;
+	flex-direction: column;
+	justify-content: center;
+	flex-grow: 1;
+	flex-wrap: wrap;
+	gap: 16px;
+	@media (max-width: ${media.netbooks}) {
+		justify-content: space-evenly;
+		max-width: 100%;
+		width: 100%;
+	}
 `;
