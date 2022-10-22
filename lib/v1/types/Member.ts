@@ -28,7 +28,7 @@ export interface Member extends WithId {
 	/**
 	 * Member's Discord ID (if their account was registered).
 	 */
-	discordId: string;
+	discordId: string | null;
 	/**
 	 * Member's MasochistME profile description.
 	 */
