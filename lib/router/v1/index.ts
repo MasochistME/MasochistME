@@ -1,4 +1,6 @@
 import express from 'express';
+import { apiV1Auth } from 'helpers/validate';
+
 export const routerV1 = express.Router();
 
 /***************************
@@ -18,7 +20,7 @@ import {
 
 routerV1.post('/members/list', getMembersList);
 routerV1.get('/members/member/:memberId', getMemberById);
-routerV1.put('/members/member/:memberId', updateMemberById);
+routerV1.put('/members/member/:memberId', apiV1Auth, updateMemberById);
 routerV1.post(
   '/members/member/:memberId/achievements/list',
   getMemberAchievementList,
@@ -27,10 +29,12 @@ routerV1.post('/members/member/:memberId/badges/list', getMemberBadgeList);
 routerV1.post('/members/member/:memberId/games/list', getMemberGameList);
 routerV1.post(
   '/members/member/:memberId/badges/badge/:badgeId',
+  apiV1Auth,
   giveBadgeToMemberById,
 );
 routerV1.delete(
   '/members/member/:memberId/badges/badge/:badgeId',
+  apiV1Auth,
   revokeBadgeFromMemberById,
 );
 
@@ -76,10 +80,10 @@ import {
 } from './badges';
 
 routerV1.post('/badges/list', getBadgesList);
-routerV1.post('/badges', createBadge);
+routerV1.post('/badges', apiV1Auth, createBadge);
 routerV1.get('/badges/badge/:badgeId', getBadgeById);
-routerV1.put('/badges/badge/:badgeId', updateBadgeById);
-routerV1.delete('/badges/badge/:badgeId', deleteBadgeById);
+routerV1.put('/badges/badge/:badgeId', apiV1Auth, updateBadgeById);
+routerV1.delete('/badges/badge/:badgeId', apiV1Auth, deleteBadgeById);
 
 /*************************
  *         EVENTS         *
@@ -88,7 +92,7 @@ routerV1.delete('/badges/badge/:badgeId', deleteBadgeById);
 import { getEventsList, createEvent } from './events';
 
 routerV1.post('/events/list', getEventsList);
-routerV1.post('/events', createEvent);
+routerV1.post('/events', apiV1Auth, createEvent);
 
 /*************************
  *         TIERS         *
@@ -111,10 +115,10 @@ import {
   getActiveRace,
 } from './race';
 
-routerV1.post('/races', createRace);
+routerV1.post('/races', apiV1Auth, createRace);
 routerV1.get('/races/race/:raceId', getRaceById);
-routerV1.put('/races/race/:raceId', updateRaceById);
-routerV1.delete('/races/race/:raceId', deleteRaceById);
+routerV1.put('/races/race/:raceId', apiV1Auth, updateRaceById);
+routerV1.delete('/races/race/:raceId', apiV1Auth, deleteRaceById);
 routerV1.post('/races/list', getRaceList);
 routerV1.get('/races/active', getActiveRace);
 
@@ -135,10 +139,12 @@ routerV1.get(
 );
 routerV1.post(
   '/races/race/:raceId/participants/participant/:participantId',
+  apiV1Auth,
   joinRaceByParticipantId,
 );
 routerV1.put(
   '/races/race/:raceId/participants/participant/:participantId',
+  apiV1Auth,
   updateRaceByParticipantId,
 );
 routerV1.post('/races/race/:raceId/participants/list', getRaceParticipantsList);
@@ -149,6 +155,32 @@ routerV1.post('/races/race/:raceId/participants/list', getRaceParticipantsList);
 
 import { createSeason, updateSeasonById, getSeasonsList } from './seasons';
 
-routerV1.post('/seasons', createSeason);
-routerV1.put('/seasons/season/:seasonId', updateSeasonById);
+routerV1.post('/seasons', apiV1Auth, createSeason);
+routerV1.put('/seasons/season/:seasonId', apiV1Auth, updateSeasonById);
 routerV1.post('/seasons/list', getSeasonsList);
+
+/****************************
+ *         FEATURED         *
+ ****************************/
+
+import {
+  createFeatured,
+  getFeaturedList,
+  updateFeaturedById,
+  deleteFeaturedById,
+} from './featured';
+
+routerV1.post('/featured', apiV1Auth, createFeatured);
+routerV1.post('/featured/list', getFeaturedList);
+routerV1.put('/featured/:featuredId', apiV1Auth, updateFeaturedById);
+routerV1.delete('/featured/:featuredId', apiV1Auth, deleteFeaturedById);
+
+/****************************
+ *         PATRONS         *
+ ****************************/
+
+import { createPatron, getPatronsList, updatePatronById } from './patrons';
+
+routerV1.post('/patrons', apiV1Auth, createPatron);
+routerV1.post('/patrons/list', getPatronsList);
+routerV1.put('/patrons/patron/:patronId', apiV1Auth, updatePatronById);
