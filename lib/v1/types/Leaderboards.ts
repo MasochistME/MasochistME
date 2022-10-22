@@ -2,6 +2,7 @@
  * @module Leaderboards
  */
 
+import { PatronTier } from 'v1/types/PatreonTier';
 import { TierId } from './Tier';
 
 /**
@@ -19,7 +20,7 @@ export interface Leaderboards {
 	/**
 	 * Patreon tier of the member.
 	 */
-	patreonTier: number | null;
+	patreonTier: PatronTier | null;
 	/**
 	 * Statistics about the member's unlocked badges.
 	 */
