@@ -4,7 +4,6 @@ dotenv.config();
 import express from 'express';
 import cors from 'cors';
 
-import { tokenValidation } from 'helpers/validate';
 import { getDataFromDB } from 'helpers/db';
 import { log } from 'helpers/log';
 
@@ -30,11 +29,6 @@ app.use((req: any, res: any, next) => {
   res.locals.user = req.user;
   next();
 });
-
-// this is temp fix for token check
-app.put('*', tokenValidation);
-app.post('*', tokenValidation);
-app.delete('*', tokenValidation);
 
 app.use('/api', routerLegacy);
 app.use('/api/v1', routerV1);
