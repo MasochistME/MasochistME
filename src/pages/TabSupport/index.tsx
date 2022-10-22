@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Patron } from '@masochistme/sdk/dist/v1/types';
+import { orderBy } from 'lodash';
+import { PatreonTier } from '@masochistme/sdk/dist/v1/types';
 
 import patreon_button from 'shared/images/patreon.png';
+import { usePatreonTiers } from 'sdk';
 import { useActiveTab } from 'shared/hooks';
 import { TabDict } from 'shared/config/tabs';
 import { Flex, Spinner } from 'components';
@@ -13,18 +15,20 @@ import { SupportTier } from './SupportTier';
 const TabSupport = (): JSX.Element => {
 	useActiveTab(TabDict.SUPPORT);
 
-	const isLoading = true; // TODO temporary fix
-	const isFetched = false; // TODO temporary fix
+	const { patreonTiersData, isLoading, isFetched } = usePatreonTiers();
 
-	const patrons: Patron[] = [];
+	const sortedPatreonTiers = orderBy(patreonTiersData, ['tier'], ['desc']);
 
 	return (
 		<SubPage>
 			<StyledHallOfFame>
 				{isLoading && <Spinner />}
 				{isFetched &&
-					patrons.map(patron => (
-						<SupportTier key={`tier-${patron.tier}`} tier={patron.tier} />
+					sortedPatreonTiers.map((patreonTier: PatreonTier) => (
+						<SupportTier
+							key={`tier-${patreonTier.tier}`}
+							patreonTier={patreonTier}
+						/>
 					))}
 			</StyledHallOfFame>
 			<Section
@@ -55,8 +59,10 @@ const TabSupport = (): JSX.Element => {
 
 export default TabSupport;
 
-const StyledHallOfFame = styled.div`
+const StyledHallOfFame = styled(Flex)`
+	flex-direction: column;
 	flex: 1 1 100%;
+	gap: 16px;
 `;
 
 const PatreonButton = styled.img`

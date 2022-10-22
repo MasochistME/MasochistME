@@ -7,7 +7,7 @@ import { colors } from 'shared/theme';
 import { BrokenImage, Flex, Skeleton, Tooltip } from 'components';
 
 type Props = {
-	member?: Member;
+	member?: Partial<Member>;
 	patronTier?: PatronTier | null;
 	size?: Size;
 	title?: React.ReactNode;

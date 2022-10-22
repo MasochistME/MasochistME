@@ -5,15 +5,23 @@ import { colors, fonts } from 'shared/theme';
 type Props = {
 	fullWidth?: boolean;
 	title?: React.ReactNode;
+	isCentered?: boolean;
 	content: React.ReactNode;
 	children?: never;
 } & Omit<React.CSSProperties, 'width' | 'height' | 'content' | 'translate'>;
 
 export const Section = (props: Props) => {
-	const { fullWidth, title, content, children: _, ...style } = props;
+	const {
+		fullWidth,
+		title,
+		content,
+		isCentered = true,
+		children: _,
+		...style
+	} = props;
 	return (
 		<StyledSection fullWidth={fullWidth} {...style}>
-			{title && <Section.Title>{title}</Section.Title>}
+			{title && <Section.Title isCentered={isCentered}>{title}</Section.Title>}
 			<Section.Content>{content}</Section.Content>
 		</StyledSection>
 	);
@@ -36,10 +44,11 @@ const StyledSection = styled.div.attrs(
 	background-color: ${colors.newDarkBlue}cc;
 `;
 
-Section.Title = styled.h3`
+Section.Title = styled.h3<{ isCentered: boolean }>`
 	display: flex;
-	justify-content: center;
 	align-items: center;
+	justify-content: ${({ isCentered }) =>
+		isCentered ? 'center' : 'flex-start'};
 	width: 100%;
 	padding: 4px;
 	margin: 0;

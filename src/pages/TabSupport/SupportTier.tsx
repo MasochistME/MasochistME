@@ -1,54 +1,71 @@
 import React from 'react';
+import { useHistory } from 'react-router';
 import styled from 'styled-components';
-import { orderBy } from 'lodash';
+import { Member, PatreonTier } from '@masochistme/sdk/dist/v1/types';
 
-import { colors } from 'shared/theme';
-import { SupportPatron } from './SupportPatron';
+import { useMembers, usePatrons } from 'sdk';
+import { Flex } from 'components';
+import { MemberAvatar, Section } from 'containers';
+import { Size } from 'utils';
 
-type TSupportTier = {
-	tier: any;
+type Props = {
+	patreonTier: PatreonTier;
 };
 
-export const SupportTier = (props: TSupportTier): JSX.Element => {
-	const { tier } = props;
-	const patrons = orderBy(
-		tier.list,
-		[patron => patron.name.toLowerCase()],
-		['asc'],
-	);
+export const SupportTier = (props: Props): JSX.Element => {
+	const history = useHistory();
+	const { patreonTier } = props;
+
+	const { membersData } = useMembers();
+	const { patronsData, isLoading, isFetched } = usePatrons();
+
+	console.log(patronsData.length);
+
+	const patronsList = patronsData
+		.filter(patron => patron.tier === patreonTier.tier)
+		.map(patron => {
+			const member = membersData.find(
+				m => m.steamId === patron.memberId || m.discordId === patron.memberId,
+			) ?? {
+				name: patron.username ?? undefined,
+				avatar: patron.avatar ?? undefined,
+			};
+			return (
+				<MemberAvatar
+					key={`patron-${String(patron._id)}`}
+					member={member}
+					patronTier={patreonTier.tier}
+					size={Size.LARGE}
+					onClick={() => handlePatronClick(member)}
+				/>
+			);
+		});
+
+	const handlePatronClick = (member: Partial<Member>) => {
+		if (member.steamId) history.push(`/profile/${member.steamId}`);
+	};
 
 	return (
-		<Tier>
-			<h2>
-				<i className={tier.symbol} /> - {tier.description}
-			</h2>
-			<Patrons>
-				{patrons.map((patron, index) => (
-					<SupportPatron
-						key={`patron-${index}`}
-						patron={patron}
-						tier={tier.tier}
-					/>
-				))}
-			</Patrons>
-		</Tier>
+		<Section
+			isCentered={false}
+			title={
+				<>
+					<i className={patreonTier.symbol} /> - {patreonTier.description}
+				</>
+			}
+			content={
+				<StyledSupportTierPatrons>{patronsList}</StyledSupportTierPatrons>
+			}
+		/>
 	);
 };
 
-const Tier = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+const StyledSupportTier = styled(Flex)`
 	width: 100%;
-	h2 {
-		border-bottom: 2px solid ${colors.lightGrey};
-		padding-bottom: 10px;
-	}
 `;
-const Patrons = styled.div`
+
+const StyledSupportTierPatrons = styled(Flex)`
 	width: 100%;
-	display: flex;
-	flex-direction: row;
 	flex-wrap: wrap;
-	justify-content: center;
+	gap: 16px;
 `;
