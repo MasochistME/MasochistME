@@ -55,7 +55,12 @@ import {
 	updateFeaturedById,
 	deleteFeaturedById,
 } from './api/featured';
-import { createPatron, getPatronsList, updatePatronById } from './api/patrons';
+import {
+	createPatron,
+	getPatronsList,
+	updatePatronById,
+	getPatreonTierList,
+} from './api/patrons';
 
 export type Config = {
 	host: string; // for example localhost:3000
@@ -248,4 +253,5 @@ export class SDK {
 	public updatePatronById = <T extends typeof updatePatronById>(
 		args: Head<T>,
 	) => updatePatronById(args, this.BASE_URL);
+	public getPatreonTierList = () => getPatreonTierList(this.BASE_URL);
 }
