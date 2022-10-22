@@ -11,13 +11,26 @@ export enum FeaturedType {
 	VIDEO = 'video',
 	IMAGE = 'image',
 	NEWS = 'news',
+	STREAM = 'stream',
+	CUSTOM = 'custom',
+}
+
+export enum StreamPlatform {
+	TWITCH = 'twitch',
+	YOUTUBE = 'youtube',
+	BILIBILI = 'bilibili',
 }
 
 /**
  * This is a type of a single object within the collection "featured".
  * A single object describes a single featured object.
  */
-export type Featured = FeaturedVideo | FeaturedImage;
+export type Featured =
+	| FeaturedVideo
+	| FeaturedImage
+	| FeaturedNews
+	| FeaturedStream
+	| FeaturedCustom;
 
 /**
  * Fields which are common for all types of featured objects.
@@ -39,20 +52,6 @@ export interface BaseFeatured extends WithId {
 	 * Description of the featured object.
 	 */
 	description: string | null;
-}
-
-/**
- * Featured object of type video - usually a YouTube link.
- */
-export interface FeaturedVideo extends Omit<BaseFeatured, 'type'> {
-	/**
-	 * Featured type: video.
-	 */
-	type: FeaturedType.VIDEO;
-	/**
-	 * Link to the featured video.
-	 */
-	link: string;
 	/**
 	 * ID of the game in the featured video (if it's a Steam game).
 	 */
@@ -68,7 +67,21 @@ export interface FeaturedVideo extends Omit<BaseFeatured, 'type'> {
 }
 
 /**
- * Featured object of type image - for example artwork, screenshot etc.
+ * Featured object of type VIDEO (usually a YouTube link).
+ */
+export interface FeaturedVideo extends Omit<BaseFeatured, 'type'> {
+	/**
+	 * Featured type: video.
+	 */
+	type: FeaturedType.VIDEO;
+	/**
+	 * Link to the featured video.
+	 */
+	link: string;
+}
+
+/**
+ * Featured object of type IMAGE (for example artwork, screenshot etc.)
  */
 export interface FeaturedImage extends Omit<BaseFeatured, 'type'> {
 	/**
@@ -83,38 +96,50 @@ export interface FeaturedImage extends Omit<BaseFeatured, 'type'> {
 	 * Link to the social media where the image is posted.
 	 */
 	socialMediaLink: string | null;
-	/**
-	 * ID of the game in the featured image (if it's a Steam game).
-	 */
-	gameId: number | null;
-	/**
-	 * Title of the game in the featured image (used for non-Steam/non curated games).
-	 */
-	gameTitle: string | null;
-	/**
-	 * Link to the game page (used for non-Steam games).
-	 */
-	gameLink: string | null;
 }
 
 /**
- * Featured object of type news.
+ * Featured object of type NEWS.
  */
 export interface FeaturedNews extends Omit<BaseFeatured, 'type'> {
 	/**
 	 * Featured type: video.
 	 */
 	type: FeaturedType.NEWS;
+}
+
+/**
+ * Featured object of type STREAM.
+ */
+export interface FeaturedStream extends Omit<BaseFeatured, 'type'> {
 	/**
-	 * ID of the game in the featured video (if it's a Steam game).
+	 * Featured type: stream.
 	 */
-	gameId: number | null;
+	type: FeaturedType.STREAM;
 	/**
-	 * Title of the game in the featured video (used for non-Steam/non curated games).
+	 * Link to the stream.
 	 */
-	gameTitle: string | null;
+	link: string;
 	/**
-	 * Link to the game page (used for non-Steam games).
+	 * Information about the streaming platform.
 	 */
-	gameLink: string | null;
+	platform: StreamPlatform | string | null;
+}
+
+/**
+ * Featured object of type CUSTOM.
+ */
+export interface FeaturedCustom extends Omit<BaseFeatured, 'type'> {
+	/**
+	 * Featured type: custom.
+	 */
+	type: FeaturedType.CUSTOM;
+	/**
+	 * Title of the featured custom.
+	 */
+	title: string;
+	/**
+	 * Optional link.
+	 */
+	link: string | null;
 }

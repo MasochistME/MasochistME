@@ -3,6 +3,7 @@
  */
 
 import { WithId } from 'v1/types/__Helpers';
+import { PatronTier } from 'v1/types/PatreonTier';
 
 /**
  * This is a type of a single object within the collection "patrons".
@@ -16,7 +17,7 @@ export interface Patron extends WithId {
 	/**
 	 * Patron tier.
 	 */
-	tier: number;
+	tier: PatronTier;
 	/**
 	 * Username of the patron (used when a patron is not curator member).
 	 */

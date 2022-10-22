@@ -49,6 +49,13 @@ import {
 	getLeaderboardsList,
 	getMemberLeaderboardsPositionById,
 } from './api/leaderboards';
+import {
+	createFeatured,
+	getFeaturedList,
+	updateFeaturedById,
+	deleteFeaturedById,
+} from './api/featured';
+import { createPatron, getPatronsList, updatePatronById } from './api/patrons';
 
 export type Config = {
 	host: string; // for example localhost:3000
@@ -214,4 +221,31 @@ export class SDK {
 	>(
 		args: Head<T>,
 	) => getMemberLeaderboardsPositionById(args, this.BASE_URL);
+
+	/************************
+	 *       FEATURED       *
+	 ************************/
+
+	public createFeatured = <T extends typeof createFeatured>(args: Head<T>) =>
+		createFeatured(args, this.BASE_URL);
+	public getFeaturedList = <T extends typeof getFeaturedList>(args: Head<T>) =>
+		getFeaturedList(args, this.BASE_URL);
+	public updateFeaturedById = <T extends typeof updateFeaturedById>(
+		args: Head<T>,
+	) => updateFeaturedById(args, this.BASE_URL);
+	public deleteFeaturedById = <T extends typeof deleteFeaturedById>(
+		args: Head<T>,
+	) => deleteFeaturedById(args, this.BASE_URL);
+
+	/***********************
+	 *       PATRONS       *
+	 ***********************/
+
+	public createPatron = <T extends typeof createPatron>(args: Head<T>) =>
+		createPatron(args, this.BASE_URL);
+	public getPatronsList = <T extends typeof getPatronsList>(args: Head<T>) =>
+		getPatronsList(args, this.BASE_URL);
+	public updatePatronById = <T extends typeof updatePatronById>(
+		args: Head<T>,
+	) => updatePatronById(args, this.BASE_URL);
 }
