@@ -179,8 +179,14 @@ routerV1.delete('/featured/:featuredId', apiV1Auth, deleteFeaturedById);
  *         PATRONS         *
  ****************************/
 
-import { createPatron, getPatronsList, updatePatronById } from './patrons';
+import {
+  createPatron,
+  getPatronsList,
+  getPatreonTierList,
+  updatePatronById,
+} from './patrons';
 
 routerV1.post('/patrons', apiV1Auth, createPatron);
 routerV1.post('/patrons/list', getPatronsList);
+routerV1.get('/patrons/tiers/list', getPatreonTierList);
 routerV1.put('/patrons/patron/:patronId', apiV1Auth, updatePatronById);
