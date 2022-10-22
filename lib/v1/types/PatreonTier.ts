@@ -20,19 +20,19 @@ export enum PatronTier {
  */
 export interface PatreonTier extends WithId {
 	/**
-	 * Steam ID of the patron.
-	 */
-	memberId: string;
-	/**
-	 * Patron tier.
+	 * ID of the Patreon tier.
 	 */
 	tier: PatronTier;
 	/**
-	 * Username of the patron (used when a patron is not curator member).
+	 * A Font Awesome icon representing the Patreon tier.
 	 */
-	username: string | null;
+	symbol: string;
 	/**
-	 * Link to the avatar of the patron (used when a patron is not curator member).
+	 * Short and concise description of the Patreon tier.
 	 */
-	avatar: string | null;
+	description: string;
+	/**
+	 * Basic color of the Patreon tier.
+	 */
+	color: string;
 }
