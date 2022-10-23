@@ -32,7 +32,7 @@ const TabSupport = (): JSX.Element => {
 					))}
 			</StyledHallOfFame>
 			<Section
-				minWidth="450px"
+				width="100%"
 				maxWidth="450px"
 				title="Hall of Fame"
 				content={

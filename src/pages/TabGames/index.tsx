@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useActiveTab } from 'shared/hooks';
 import { TabDict } from 'shared/config/tabs';
 import { useAppContext, GameView } from 'context';
-import { HideOn, SubPage, Section } from 'containers';
+import { SubPage, Section } from 'containers';
 import { Flex } from 'components';
 
 import { GameTileView } from './GameTileView';
@@ -23,30 +23,28 @@ const TabGames = (): JSX.Element => {
 				{gameListView === GameView.TILE && <GameTileView />}
 				{gameListView === GameView.TABLE && <GameTableView />}
 			</StyledGames>
-			<HideOn media="netbooks">
-				<Section
-					minWidth="450px"
-					maxWidth="450px"
-					title="MasochistME curations"
-					content={
-						<Flex column gap={8}>
-							<div>
-								Here&lsquo;s the list of games that MasochistME curates, as well
-								as the percentage completion comparision between our users.
-							</div>
-							<div>
-								In the MasochistME community, we grade the ranks of our users by
-								how many curated games they&lsquo;ve completed, as well as the
-								difficulty of those games. Each game specifies their own
-								difficulty in the description.
-							</div>
-							<div>
-								The list also includes which three users completed the game
-								first (with a gold, silver and bronze medals, respectively).
-							</div>
-						</Flex>
-					}></Section>
-			</HideOn>
+			<Section
+				width="100%"
+				maxWidth="450px"
+				title="MasochistME curations"
+				content={
+					<Flex column gap={8}>
+						<div>
+							Here&lsquo;s the list of games that MasochistME curates, as well
+							as the percentage completion comparision between our users.
+						</div>
+						<div>
+							In the MasochistME community, we grade the ranks of our users by
+							how many curated games they&lsquo;ve completed, as well as the
+							difficulty of those games. Each game specifies their own
+							difficulty in the description.
+						</div>
+						<div>
+							The list also includes which three users completed the game first
+							(with a gold, silver and bronze medals, respectively).
+						</div>
+					</Flex>
+				}></Section>
 		</SubPage>
 	);
 };

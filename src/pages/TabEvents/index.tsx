@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Event } from '@masochistme/sdk/dist/v1/types';
 
 import { useEvents } from 'sdk';
-import { HideOn, SubPage, Section } from 'containers';
+import { SubPage, Section } from 'containers';
 import { Flex, Spinner, Warning } from 'components';
 import { useActiveTab } from 'shared/hooks';
 import { TabDict } from 'shared/config/tabs';
@@ -35,30 +35,26 @@ const TabEvents = (): JSX.Element => {
 						<EventItem event={event} key={`event-${event._id}`} />
 					))}
 			</StyledEventsList>
-			<HideOn media="netbooks">
-				<Section
-					minWidth="450px"
-					maxWidth="450px"
-					title="Community events"
-					content={
-						<Flex column gap={8}>
-							<div>This is the list showcasing the last 100 events.</div>
-							<div>
-								There are {eventsDict.length} different types of events:
-							</div>
-							{isLoading && <Spinner />}
-							{isFetched && (
-								<StyledEventTypes>{eventsDescriptions}</StyledEventTypes>
-							)}
-							<div>
-								In case of event relating to a no longer curated game or user no
-								longer being part of the group, the{' '}
-								<i className="fas fa-exclamation-triangle"></i> icon is used.
-							</div>
-						</Flex>
-					}
-				/>
-			</HideOn>
+			<Section
+				width="100%"
+				maxWidth="450px"
+				title="Community events"
+				content={
+					<Flex column gap={8}>
+						<div>This is the list showcasing the last 100 events.</div>
+						<div>There are {eventsDict.length} different types of events:</div>
+						{isLoading && <Spinner />}
+						{isFetched && (
+							<StyledEventTypes>{eventsDescriptions}</StyledEventTypes>
+						)}
+						<div>
+							In case of event relating to a no longer curated game or user no
+							longer being part of the group, the{' '}
+							<i className="fas fa-exclamation-triangle"></i> icon is used.
+						</div>
+					</Flex>
+				}
+			/>
 		</SubPage>
 	);
 };
