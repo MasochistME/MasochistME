@@ -72,17 +72,20 @@ export const CellAvgPlaytime = (props: Props) => {
 			completion.gameId === game?.id && completion.completionPercentage === 100,
 	);
 
-	const avgPlaytime = (
+	const avgPlaytime =
 		gameCompletions.reduce(
 			(sum: number, completion: MemberGame) => sum + completion.playTime,
 			0,
-		) / gameCompletions.length
-	).toFixed(2);
+		) / gameCompletions.length;
+
+	const fixedAvgPlaytime = Number.isNaN(avgPlaytime)
+		? '—'
+		: `${avgPlaytime.toFixed(2)} h`;
 
 	return (
 		<Flex row align justify>
 			{isLoading && <Skeleton size={Size.SMALL} />}
-			{isFetched && (avgPlaytime ?? 0)} h
+			{isFetched && (fixedAvgPlaytime ?? 0)}
 		</Flex>
 	);
 };

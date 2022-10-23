@@ -49,12 +49,15 @@ export const GameProfileStats = (props: Props) => {
 	/**
 	 * Average time needed to finish the game.
 	 */
-	const avgPlaytime = (
+	const avgPlaytime =
 		membersCompletedGame.reduce(
 			(sum: number, completion: MemberGame) => sum + completion.playTime,
 			0,
-		) / membersCompletedGame.length
-	).toFixed(2);
+		) / membersCompletedGame.length;
+	console.log(avgPlaytime);
+	const fixedAvgPlaytime = Number.isNaN(avgPlaytime)
+		? '—'
+		: `${avgPlaytime.toFixed(2)} h`;
 
 	/**
 	 * Longest and shortest time needed to complete the game.
@@ -62,8 +65,12 @@ export const GameProfileStats = (props: Props) => {
 	const gameCompletionTimes = membersCompletedGame.map(
 		completion => completion.playTime,
 	);
-	const completionTimeShortest = Math.min(...gameCompletionTimes);
-	const completionTimeLongest = Math.max(...gameCompletionTimes);
+	const completionTimeShortest = gameCompletionTimes.length
+		? `${Math.min(...gameCompletionTimes)} h`
+		: '—';
+	const completionTimeLongest = gameCompletionTimes.length
+		? `${Math.max(...gameCompletionTimes)} h`
+		: '—';
 
 	return (
 		<StyledGameProfileStats>
@@ -130,18 +137,18 @@ export const GameProfileStats = (props: Props) => {
 								<StatBlock.Subtitle>
 									Shortest completion time:{' '}
 									<span style={{ fontWeight: 'bold' }}>
-										{completionTimeShortest} h
+										{completionTimeShortest}
 									</span>
 								</StatBlock.Subtitle>
 								<StatBlock.Subtitle>
 									Longest completion time:{' '}
 									<span style={{ fontWeight: 'bold' }}>
-										{completionTimeLongest} h
+										{completionTimeLongest}
 									</span>
 								</StatBlock.Subtitle>
 							</Flex>
 						}
-						label={`${avgPlaytime} h`}
+						label={fixedAvgPlaytime}
 						sublabel="avg completion time"
 						icon="fa-solid fa-clock"
 					/>

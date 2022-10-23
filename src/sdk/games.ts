@@ -55,7 +55,7 @@ export const useCuratedGames = () => {
 	} = useQuery(['masochist', 'games', 'curated'], () =>
 		sdk.getGamesList({
 			filter: { isCurated: true },
-			sort: { title: 'asc' },
+			sort: { title: 'asc', tier: 'desc' },
 		}),
 	);
 
