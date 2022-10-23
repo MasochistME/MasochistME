@@ -39,8 +39,7 @@ const GlobalStyle = createGlobalStyle`
     -o-user-select: none;
   }
   a {
-    text-decoration: none;
-    color: ${colors.superLightGrey};
+    color: ${colors.white};
     &:hover {
       text-decoration: underline;
     }

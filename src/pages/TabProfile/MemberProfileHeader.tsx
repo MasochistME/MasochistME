@@ -1,12 +1,13 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
-import dayjs from 'dayjs';
 
 import { useMemberById, useMemberLeaderboards, usePatreonTiers } from 'sdk';
 import { Size } from 'utils';
 import { colors, media } from 'shared/theme';
-import { Flex, Tooltip, Button } from 'components';
+import { Flex, Tooltip } from 'components';
 import { MemberAvatar } from 'containers';
+
+import { MemberProfileUpdate } from './MemberProfileUpdate';
 
 type Props = {
 	memberId: string;
@@ -37,11 +38,6 @@ export const MemberProfileHeader = (props: Props): JSX.Element => {
 		return originalName;
 	}, [member]);
 
-	const handleMemberUpdate = () => {
-		// TODO
-		alert('This is not implemented yet :(');
-	};
-
 	return (
 		<StyledMemberProfileHeader row>
 			<StyledMemberProfileHeaderAvatar>
@@ -64,24 +60,7 @@ export const MemberProfileHeader = (props: Props): JSX.Element => {
 							{memberName}
 						</a>
 					</StyledMemberProfileUsername>
-					<StyledMemberProfileUpdate>
-						<Tooltip
-							content={dayjs(member?.lastUpdated).format(
-								'D MMM YYYY, H:mm:ss',
-							)}>
-							<Flex column alignItems="flex-end" fontSize="0.8em">
-								<span>Last updated:</span>
-								<span style={{ fontStyle: 'italic' }}>
-									{dayjs(member?.lastUpdated).fromNow()}
-								</span>
-							</Flex>
-						</Tooltip>
-						<Button
-							label="Update"
-							icon="fas fa-refresh"
-							onClick={() => handleMemberUpdate()}
-						/>
-					</StyledMemberProfileUpdate>
+					<MemberProfileUpdate member={member} />
 				</StyledMemberProfileTopRow>
 				{leaderData?.patreonTier && (
 					<Tooltip
@@ -129,14 +108,6 @@ const StyledMemberProfileUsername = styled.h2`
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-`;
-
-const StyledMemberProfileUpdate = styled(Flex)`
-	align-items: center;
-	gap: 12px;
-	@media (max-width: ${media.tablets}) {
-		display: none;
-	}
 `;
 
 const StyledMemberProfileDetails = styled(Flex)`

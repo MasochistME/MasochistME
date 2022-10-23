@@ -74,7 +74,7 @@ export const useGameBadges = (gameId: number) => {
 		isFetched,
 		isError,
 	} = useQuery(['masochist', 'games', gameId, 'badges'], () =>
-		sdk.getBadgesByGameIdList({ gameId }),
+		sdk.getBadgesByGameIdList({ gameId, sort: { points: 'desc' } }),
 	);
 
 	return { gameBadgesData, isLoading, isFetched, isError };

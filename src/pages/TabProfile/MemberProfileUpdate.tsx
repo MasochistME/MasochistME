@@ -1,7 +1,65 @@
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import dayjs from 'dayjs';
+
+import { Member } from '@masochistme/sdk/dist/v1/types';
+
+import { useUpdateMemberMutation } from 'sdk';
+import { media } from 'shared/theme';
+import { Alert, Flex, Tooltip, Button } from 'components';
+
 type Props = {
-	//
+	member?: Member;
 };
 
 export const MemberProfileUpdate = (props: Props) => {
-	return <>{props}</>;
+	const { member } = props;
+	const [isOpen, setIsOpen] = useState<boolean>(false);
+	const [message, setMessage] = useState<string>('');
+	const handleMemberUpdate = () => {
+		mutate({ shouldUpdate: true });
+		setIsOpen(true);
+	};
+
+	const { mutate, data: memberUpdateData } = useUpdateMemberMutation(
+		member?.steamId,
+	);
+
+	useEffect(() => {
+		const response = memberUpdateData?.message;
+		if (response) setMessage(response);
+	}, [memberUpdateData]);
+
+	return (
+		<StyledMemberProfileUpdate>
+			<Tooltip
+				content={dayjs(member?.lastUpdated).format('D MMM YYYY, H:mm:ss')}>
+				<Flex column alignItems="flex-end" fontSize="0.8em">
+					<span>Last updated:</span>
+					<span style={{ fontStyle: 'italic' }}>
+						{dayjs(member?.lastUpdated).fromNow()}
+					</span>
+				</Flex>
+			</Tooltip>
+			<Button
+				label="Update"
+				icon="fas fa-refresh"
+				onClick={handleMemberUpdate}
+			/>
+			<Alert
+				message={message}
+				severity="info"
+				isOpen={isOpen}
+				setIsOpen={setIsOpen}
+			/>
+		</StyledMemberProfileUpdate>
+	);
 };
+
+const StyledMemberProfileUpdate = styled(Flex)`
+	align-items: center;
+	gap: 12px;
+	@media (max-width: ${media.tablets}) {
+		display: none;
+	}
+`;
