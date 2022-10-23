@@ -37,13 +37,19 @@ const TabSupport = (): JSX.Element => {
 				title="Hall of Fame"
 				content={
 					<Flex column gap={8}>
+						<div>Thank you for using MasochistME website!</div>
 						<div>
-							...for all of those, who voluntarily donated their money to
-							support <span style={{ fontWeight: 'bold' }}>MasochistME</span>.
-							They are the ones funding the masochist.me domain and the hosting
-							server, as well as assisting websites development.
+							MasochistME is able to exist and thrive thanks to your donations.
+							It's the community's effort that makes this place alive.
 						</div>
-						<div>If you also wish to participate:</div>
+						<div>Donations cover the cost of:</div>
+						<ul>
+							<li>MasochistME server and domain,</li>
+							<li>Dr. Fetus Bot' server,</li>
+							<li>Arcyvilk's coffee for the long coding nights.</li>
+						</ul>
+						<div>If you also want to contribute:</div>
+						{/** TODO add ko-fi and Patreon link */}
 						<a
 							href="https://www.patreon.com/pointonepercent"
 							rel="noopener noreferrer"
