@@ -64,12 +64,12 @@ export const MemberProfileStats = (props: Props) => {
 	/**
 	 * Member completions by tier.
 	 */
-	const completionsByTier = memberLeaderData?.games.map(game => {
+	const completionsByTier = memberLeaderData?.games.map((game, index) => {
 		const tierIcon =
 			tiersData.find(tier => tier.id === game.tier)?.icon ??
 			'fa-solid fa-circle-question';
 		return (
-			<StatBlock.Subtitle>
+			<StatBlock.Subtitle key={`statblock-completions-${index}`}>
 				<i className={tierIcon} /> -{' '}
 				<span style={{ fontWeight: 'bold' }}>{game.total}</span>
 			</StatBlock.Subtitle>
@@ -85,12 +85,12 @@ export const MemberProfileStats = (props: Props) => {
 				</span>{' '}
 				pts
 			</StatBlock.Subtitle>
-			{memberLeaderData?.games.map(game => {
+			{memberLeaderData?.games.map((game, index) => {
 				const tierIcon =
 					tiersData.find(tier => tier.id === game.tier)?.icon ??
 					'fa-solid fa-circle-question';
 				return (
-					<StatBlock.Subtitle>
+					<StatBlock.Subtitle key={`statblock-points-${index}`}>
 						<i className={tierIcon} /> -{' '}
 						<span style={{ fontWeight: 'bold' }}>{game.points}</span> pts
 					</StatBlock.Subtitle>

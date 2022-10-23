@@ -92,6 +92,7 @@ const StyledMemberAvatar = styled.div.attrs(
 	justify-content: center;
 	box-sizing: border-box;
 	padding: 2px;
+	overflow: hidden;
 	background-color: ${({ isEmpty }) =>
 		isEmpty ? colors.black : 'transparent'};
 	border-radius: ${({ size }) =>

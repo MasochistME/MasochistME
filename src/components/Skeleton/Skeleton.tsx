@@ -12,7 +12,7 @@ export const Skeleton = (props: Props) => {
 	const { width, height, size = Size.MEDIUM } = props;
 	return (
 		<MUISkeleton
-			sx={{ bgcolor: colors.newMediumGrey }}
+			sx={{ bgcolor: colors.newDarkBlue }}
 			variant="rounded"
 			width={width ?? size}
 			height={height ?? size}

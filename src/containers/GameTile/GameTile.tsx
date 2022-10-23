@@ -42,7 +42,7 @@ export const GameTile = (props: Props): JSX.Element => {
 		<Tooltip content={title}>
 			<StyledGameTile column align justify onClick={onShowModal}>
 				{game &&
-					(isDataLoading && isLoading ? (
+					(isDataLoading || isLoading ? (
 						<Skeleton width={300} height={145} />
 					) : (
 						<StyledGameThumbnail

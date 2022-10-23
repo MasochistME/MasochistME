@@ -36,15 +36,6 @@ export const GameProfileStats = (props: Props) => {
 	const membersCompletedGame = membersHavingGame.filter(
 		c => c.completionPercentage === 100,
 	);
-	console.log(
-		membersCompletedGame
-			.map(completion => ({
-				completionPercentage: completion.completionPercentage,
-				playTime: completion.playTime,
-				memberId: completion.memberId,
-			}))
-			.sort((a, b) => a.playTime - b.playTime),
-	);
 
 	/**
 	 * Average time needed to finish the game.
@@ -54,7 +45,6 @@ export const GameProfileStats = (props: Props) => {
 			(sum: number, completion: MemberGame) => sum + completion.playTime,
 			0,
 		) / membersCompletedGame.length;
-	console.log(avgPlaytime);
 	const fixedAvgPlaytime = Number.isNaN(avgPlaytime)
 		? '—'
 		: `${avgPlaytime.toFixed(2)} h`;

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Member, PatreonTier } from '@masochistme/sdk/dist/v1/types';
 
 import { useMembers, usePatrons } from 'sdk';
-import { Flex } from 'components';
+import { Flex, Spinner } from 'components';
 import { MemberAvatar, Section } from 'containers';
 import { Size } from 'utils';
 
@@ -18,8 +18,6 @@ export const SupportTier = (props: Props): JSX.Element => {
 
 	const { membersData } = useMembers();
 	const { patronsData, isLoading, isFetched } = usePatrons();
-
-	console.log(patronsData.length);
 
 	const patronsList = patronsData
 		.filter(patron => patron.tier === patreonTier.tier)
@@ -45,19 +43,22 @@ export const SupportTier = (props: Props): JSX.Element => {
 		if (member.steamId) history.push(`/profile/${member.steamId}`);
 	};
 
-	return (
-		<Section
-			isCentered={false}
-			title={
-				<>
-					<i className={patreonTier.symbol} /> - {patreonTier.description}
-				</>
-			}
-			content={
-				<StyledSupportTierPatrons>{patronsList}</StyledSupportTierPatrons>
-			}
-		/>
-	);
+	if (isLoading) return <Spinner />;
+	if (isFetched)
+		return (
+			<Section
+				isCentered={false}
+				title={
+					<>
+						<i className={patreonTier.symbol} /> - {patreonTier.description}
+					</>
+				}
+				content={
+					<StyledSupportTierPatrons>{patronsList}</StyledSupportTierPatrons>
+				}
+			/>
+		);
+	return <Spinner />;
 };
 
 const StyledSupportTierPatrons = styled(Flex)`

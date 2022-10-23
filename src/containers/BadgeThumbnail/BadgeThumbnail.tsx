@@ -58,6 +58,7 @@ const StyledBadgeThumbnail = styled.div.attrs(
 	align-items: center;
 	justify-content: center;
 	box-sizing: border-box;
+	overflow: hidden;
 	/* padding: 2px; */
 	border-radius: ${({ size }) =>
 		size === Size.SMALL || size === Size.TINY ? 4 : 8}px;
