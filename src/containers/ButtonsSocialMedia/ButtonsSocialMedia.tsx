@@ -13,7 +13,7 @@ export const ButtonsSocialMedia = (): JSX.Element => {
 		window.open('https://www.patreon.com/pointonepercent', '_blank');
 	};
 	const onButtonDiscordClick = () => {
-		window.open('https://discord.com/invite/cRNWDSam', '_blank');
+		window.open('https://discord.gg/NjAeT53kVb', '_blank');
 	};
 
 	return (
