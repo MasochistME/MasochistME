@@ -225,7 +225,7 @@ const getCuratorGameDetails = async (
     achievementsTotal: details.achievements.total,
     sale: details.price_overview.discount_percent ?? 0,
     isCurated: true,
-    isProtected: true,
+    isProtected: false,
   };
   return finalGame;
 };

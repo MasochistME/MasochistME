@@ -100,25 +100,6 @@ export const updateMember = async (
     }
 
     /**
-     * Try to update the most basic member info.
-     */
-    const responseUpdateMemberBasic = await collectionMembers.updateOne(
-      { steamId: memberId },
-      {
-        $set: {
-          name: memberSteam.personaname,
-          avatar: memberSteam.avatar,
-          isPrivate: memberSteam.communityvisibilitystate === 1,
-          lastUpdated: new Date(),
-          // lastUpdated: new Date(),
-        },
-      },
-    );
-    if (!responseUpdateMemberBasic.acknowledged) {
-      throw new Error(`Could not update member's basic data.`);
-    }
-
-    /**
      * Get a list of current curator games to compare with member's game list.
      */
     const collectionGames = db.collection<Game>('games');
@@ -288,6 +269,27 @@ export const updateMember = async (
     }
 
     /**
+     * Try to update the most basic member info.
+     * We leave it for the very last so the lastUpdated date gets bumped
+     * only when the entire update actually goes through.
+     */
+    const responseUpdateMemberBasic = await collectionMembers.updateOne(
+      { steamId: memberId },
+      {
+        $set: {
+          name: memberSteam.personaname,
+          avatar: memberSteam.avatar,
+          isPrivate: memberSteam.communityvisibilitystate === 1,
+          lastUpdated: new Date(),
+          // lastUpdated: new Date(),
+        },
+      },
+    );
+    if (!responseUpdateMemberBasic.acknowledged) {
+      throw new Error(`Could not update member's basic data.`);
+    }
+
+    /**
      * Fin!
      */
     queueMember.QUEUE = queueMember.QUEUE.filter(queue => queue !== memberId);
@@ -408,15 +410,16 @@ const getMemberSteamAchievements = async (
        * Get an object with all achievements from the specified game
        * that the requested member had already completed.
        */
-      const memberAchievementsMap: Omit<MemberAchievement, '_id'>[] =
-        memberPlayerStatsData.playerstats.achievements
-          .filter(achievement => achievement.achieved === 1)
-          .map(achievement => ({
-            memberId,
-            gameId: game.gameId,
-            achievementName: achievement.apiname,
-            unlockTime: new Date(achievement.unlocktime * 1000),
-          }));
+      const memberAchievementsMap: Omit<MemberAchievement, '_id'>[] = (
+        memberPlayerStatsData.playerstats?.achievements ?? []
+      )
+        .filter(achievement => achievement.achieved === 1)
+        .map(achievement => ({
+          memberId,
+          gameId: game.gameId,
+          achievementName: achievement.apiname,
+          unlockTime: new Date(achievement.unlocktime * 1000),
+        }));
       /**
        * Using achievements data, calculate the game's completion percentage
        * as well as get the date of the game's completion
