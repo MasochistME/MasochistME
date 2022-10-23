@@ -61,6 +61,7 @@ import {
 	updatePatronById,
 	getPatreonTierList,
 } from './api/patrons';
+import { updateMember } from './api/update';
 
 export type Config = {
 	host: string; // for example localhost:3000
@@ -115,6 +116,8 @@ export class SDK {
 	public getMemberAchievementList = <T extends typeof getMemberAchievementList>(
 		args: Head<T>,
 	) => getMemberAchievementList(args, this.BASE_URL);
+	public updateMember = <T extends typeof updateMember>(args: Head<T>) =>
+		updateMember(args, this.BASE_URL);
 
 	/*********************************
 	 *         TIERS         *
