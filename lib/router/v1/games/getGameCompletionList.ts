@@ -15,7 +15,6 @@ export const getGameCompletionList = async (
   try {
     const { filter = {}, sort = {}, limit = 1000 } = req.body;
     const { completed, ...restFilter } = filter;
-    const { gameId } = req.params;
     const { client, db } = await connectToDb();
 
     /**
@@ -25,7 +24,6 @@ export const getGameCompletionList = async (
     const games: MemberGame[] = [];
     const cursorMemberGames = collectionMemberGames
       .find({
-        gameId: Number(gameId),
         ...restFilter,
         ...(completed !== undefined && { completionPercentage: 100 }),
       })
