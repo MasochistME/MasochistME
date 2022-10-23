@@ -279,9 +279,9 @@ export const updateMember = async (
         $set: {
           name: memberSteam.personaname,
           avatar: memberSteam.avatar,
+          avatarHash: memberSteam.avatarhash,
           isPrivate: memberSteam.communityvisibilitystate === 1,
           lastUpdated: new Date(),
-          // lastUpdated: new Date(),
         },
       },
     );
