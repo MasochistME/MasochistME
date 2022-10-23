@@ -56,3 +56,15 @@ const StyledStatBlockSublabel = styled.span`
 		display: none;
 	}
 `;
+
+StatBlock.Title = styled(Flex)`
+	font-weight: bold;
+`;
+StatBlock.Subtitle = styled(Flex)`
+	font-style: italic;
+	align-items: center;
+	gap: 8px;
+	i {
+		width: 16px;
+	}
+`;

@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import { MemberGame } from '@masochistme/sdk/dist/v1/types';
 
+import { useLeaderboards, useMemberGames, useTiers } from 'sdk';
 import { colors, media } from 'shared/theme';
 import { getPercentage } from 'utils';
 import { Flex, Skeleton } from 'components';
 import { StatBlock } from 'containers';
-import { useLeaderboards, useMemberGames } from 'sdk';
 
 type Props = {
 	memberId: string;
@@ -14,6 +14,11 @@ type Props = {
 export const MemberProfileStats = (props: Props) => {
 	const { memberId } = props;
 
+	const {
+		tiersData,
+		isLoading: isTiersLoading,
+		isFetched: isTiersFetched,
+	} = useTiers();
 	const {
 		memberGamesData,
 		isLoading: isMemberGamesLoading,
@@ -25,15 +30,21 @@ export const MemberProfileStats = (props: Props) => {
 		isFetched: isLeaderboardsFetched,
 	} = useLeaderboards();
 
-	const isLoading = isMemberGamesLoading && isLeaderboardsLoading;
-	const isFetched = isMemberGamesFetched && isLeaderboardsFetched;
+	const isLoading =
+		isMemberGamesLoading && isLeaderboardsLoading && isTiersLoading;
+	const isFetched =
+		isMemberGamesFetched && isLeaderboardsFetched && isTiersFetched;
 
-	const memberLeaderboardsPosition =
-		leaderboardsData.find(leader => leader.memberId === memberId)?.position ??
-		'?';
+	const memberLeaderData = leaderboardsData.find(
+		leader => leader.memberId === memberId,
+	);
 	const memberCompletions = memberGamesData.filter(
 		c => c.completionPercentage === 100,
 	);
+
+	/**
+	 * Average time needed to finish the game.
+	 */
 	const avgPlaytime = (
 		memberCompletions.reduce(
 			(sum: number, completion: MemberGame) => sum + completion.playTime,
@@ -41,24 +52,99 @@ export const MemberProfileStats = (props: Props) => {
 		) / memberCompletions.length
 	).toFixed(2);
 
+	/**
+	 * Longest and shortest completion times.
+	 */
+	const gameCompletionTimes = memberCompletions.map(
+		completion => completion.playTime,
+	);
+	const completionTimeShortest = Math.min(...gameCompletionTimes);
+	const completionTimeLongest = Math.max(...gameCompletionTimes);
+
+	/**
+	 * Member completions by tier.
+	 */
+	const completionsByTier = memberLeaderData?.games.map(game => {
+		const tierIcon =
+			tiersData.find(tier => tier.id === game.tier)?.icon ??
+			'fa-solid fa-circle-question';
+		return (
+			<StatBlock.Subtitle>
+				<i className={tierIcon} /> -{' '}
+				<span style={{ fontWeight: 'bold' }}>{game.total}</span>
+			</StatBlock.Subtitle>
+		);
+	});
+
+	const pointsTotal = (
+		<>
+			<StatBlock.Subtitle>
+				<i className="fas fa-medal" /> -{' '}
+				<span style={{ fontWeight: 'bold' }}>
+					{memberLeaderData?.badges.points}
+				</span>{' '}
+				pts
+			</StatBlock.Subtitle>
+			{memberLeaderData?.games.map(game => {
+				const tierIcon =
+					tiersData.find(tier => tier.id === game.tier)?.icon ??
+					'fa-solid fa-circle-question';
+				return (
+					<StatBlock.Subtitle>
+						<i className={tierIcon} /> -{' '}
+						<span style={{ fontWeight: 'bold' }}>{game.points}</span> pts
+					</StatBlock.Subtitle>
+				);
+			})}
+		</>
+	);
+
 	return (
 		<StyledGameProfileStats>
 			{isLoading && <Skeleton width="100%" height="120px" />}
 			{isFetched && (
 				<>
 					<StatBlock
-						title="Position in the MasochistME leaderboards."
-						label={memberLeaderboardsPosition}
+						title={
+							<Flex column>
+								<StatBlock.Title>
+									Position in the MasochistME leaderboards
+								</StatBlock.Title>
+							</Flex>
+						}
+						label={memberLeaderData?.position ?? '?'}
 						icon="fa-solid fa-hashtag"
 					/>
 					<StatBlock
-						title="Number of curated games that this member completed."
+						title={
+							<Flex column>
+								<StatBlock.Title>Points total</StatBlock.Title>
+								{pointsTotal}
+							</Flex>
+						}
+						label={memberLeaderData?.sum ?? '?'}
+						sublabel="points total"
+						icon="fa-solid fa-coins"
+					/>
+					<StatBlock
+						title={
+							<Flex column>
+								<StatBlock.Title>Curated games completed</StatBlock.Title>
+								{completionsByTier}
+							</Flex>
+						}
 						label={memberCompletions.length}
 						sublabel="completions"
 						icon="fa-solid fa-trophy"
 					/>
 					<StatBlock
-						title="Average curated game completion percentage."
+						title={
+							<Flex column>
+								<StatBlock.Title>
+									Average curated game completion percentage
+								</StatBlock.Title>
+							</Flex>
+						}
 						label={getPercentage(
 							memberCompletions.length,
 							memberGamesData.length,
@@ -67,7 +153,25 @@ export const MemberProfileStats = (props: Props) => {
 						icon="fa-solid fa-percent"
 					/>
 					<StatBlock
-						title="Member's average curated game completion time."
+						title={
+							<Flex column>
+								<StatBlock.Title>
+									Member's average curated game completion time
+								</StatBlock.Title>
+								<StatBlock.Subtitle>
+									Shortest completion time:{' '}
+									<span style={{ fontWeight: 'bold' }}>
+										{completionTimeShortest} h
+									</span>
+								</StatBlock.Subtitle>
+								<StatBlock.Subtitle>
+									Longest completion time:{' '}
+									<span style={{ fontWeight: 'bold' }}>
+										{completionTimeLongest} h
+									</span>
+								</StatBlock.Subtitle>
+							</Flex>
+						}
 						label={`${avgPlaytime} h`}
 						sublabel="avg completion time"
 						icon="fa-solid fa-clock"

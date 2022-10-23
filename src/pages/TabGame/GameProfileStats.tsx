@@ -30,9 +30,25 @@ export const GameProfileStats = (props: Props) => {
 	const isLoading = isMembersLoading && isCompletionsLoading;
 	const isFetched = isMembersFetched && isCompletionsFetched;
 
+	/**
+	 * List of members that have completed the game.
+	 */
 	const membersCompletedGame = membersHavingGame.filter(
 		c => c.completionPercentage === 100,
 	);
+	console.log(
+		membersCompletedGame
+			.map(completion => ({
+				completionPercentage: completion.completionPercentage,
+				playTime: completion.playTime,
+				memberId: completion.memberId,
+			}))
+			.sort((a, b) => a.playTime - b.playTime),
+	);
+
+	/**
+	 * Average time needed to finish the game.
+	 */
 	const avgPlaytime = (
 		membersCompletedGame.reduce(
 			(sum: number, completion: MemberGame) => sum + completion.playTime,
@@ -40,25 +56,64 @@ export const GameProfileStats = (props: Props) => {
 		) / membersCompletedGame.length
 	).toFixed(2);
 
+	/**
+	 * Longest and shortest time needed to complete the game.
+	 */
+	const gameCompletionTimes = membersCompletedGame.map(
+		completion => completion.playTime,
+	);
+	const completionTimeShortest = Math.min(...gameCompletionTimes);
+	const completionTimeLongest = Math.max(...gameCompletionTimes);
+
 	return (
 		<StyledGameProfileStats>
 			{isLoading && <Skeleton width="100%" height="120px" />}
 			{isFetched && (
 				<>
 					<StatBlock
-						title="Number of members that finished the game."
+						title={
+							<StatBlock.Title>
+								Number of members that finished the game
+							</StatBlock.Title>
+						}
 						label={membersCompletedGame.length}
 						sublabel="completions"
 						icon="fa-solid fa-trophy"
 					/>
 					<StatBlock
-						title="Percentage of members that have the game in their library."
+						title={
+							<Flex column>
+								<StatBlock.Title>
+									% of members that have the game in their library
+								</StatBlock.Title>
+								<StatBlock.Subtitle>
+									Owned by:{' '}
+									<span style={{ fontWeight: 'bold' }}>
+										{membersHavingGame.length}
+									</span>{' '}
+									members
+								</StatBlock.Subtitle>
+							</Flex>
+						}
 						label={getPercentage(membersHavingGame.length, membersAll.length)}
 						sublabel="owned by"
 						icon="fa-solid fa-user-check"
 					/>
 					<StatBlock
-						title="Percentage of members that have this game and finished it."
+						title={
+							<Flex column>
+								<StatBlock.Title>
+									% of members that have this game and finished it
+								</StatBlock.Title>
+								<StatBlock.Subtitle>
+									Completed by:{' '}
+									<span style={{ fontWeight: 'bold' }}>
+										{membersCompletedGame.length}
+									</span>{' '}
+									members
+								</StatBlock.Subtitle>
+							</Flex>
+						}
 						label={getPercentage(
 							membersCompletedGame.length,
 							membersHavingGame.length,
@@ -67,7 +122,25 @@ export const GameProfileStats = (props: Props) => {
 						icon="fa-solid fa-percent"
 					/>
 					<StatBlock
-						title="Average playtime for finishing the game."
+						title={
+							<Flex column>
+								<StatBlock.Title>
+									Average playtime for finishing the game
+								</StatBlock.Title>
+								<StatBlock.Subtitle>
+									Shortest completion time:{' '}
+									<span style={{ fontWeight: 'bold' }}>
+										{completionTimeShortest} h
+									</span>
+								</StatBlock.Subtitle>
+								<StatBlock.Subtitle>
+									Longest completion time:{' '}
+									<span style={{ fontWeight: 'bold' }}>
+										{completionTimeLongest} h
+									</span>
+								</StatBlock.Subtitle>
+							</Flex>
+						}
 						label={`${avgPlaytime} h`}
 						sublabel="avg completion time"
 						icon="fa-solid fa-clock"

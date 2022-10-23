@@ -29,6 +29,9 @@ export const LeaderboardsMemberPoints = (props: Props): JSX.Element => {
 	const isLoading = isLeaderboardsLoading && isTiersLoading;
 	const isFetched = isLeaderboardsFetched && isTiersFetched;
 
+	/**
+	 * All of the member's points, grouped by game tier.
+	 */
 	const tierPoints = tiersData.map((tier: Tier) => {
 		const tierPoints = member?.games?.find(game => game.tier === tier.id);
 		return (
@@ -65,7 +68,7 @@ export const LeaderboardsMemberPoints = (props: Props): JSX.Element => {
 				</StyledScore>
 			</Tooltip>
 			<Tooltip content="Sum of all points">
-				<StyledScore>
+				<StyledScore style={{ marginLeft: '16px' }}>
 					<span
 						style={{
 							fontWeight: 'bold',
