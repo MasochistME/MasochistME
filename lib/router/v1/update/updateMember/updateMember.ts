@@ -392,71 +392,88 @@ const getMemberSteamAchievements = async (
     const memberAchievements: TempMemberStats[] = [];
 
     const getRecurrentAchievementData = async (gameIndex: number) => {
-      const game = memberGames[gameIndex];
-      log.INFO(`---> [UPDATE] achievements for game ${game.gameId}...`);
-      const memberPlayerStatsUrl = `http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v1`;
-      const memberPlayerStatsData: MemberSteamPlayerStats =
-        (
-          await axios.get(memberPlayerStatsUrl, {
-            params: {
-              key: process.env.STEAM_KEY,
-              steamid: memberId,
-              appid: game.gameId,
-              format: 'json',
-            },
-          })
-        )?.data ?? [];
-      /**
-       * Get an object with all achievements from the specified game
-       * that the requested member had already completed.
-       */
-      const memberAchievementsMap: Omit<MemberAchievement, '_id'>[] = (
-        memberPlayerStatsData.playerstats?.achievements ?? []
-      )
-        .filter(achievement => achievement.achieved === 1)
-        .map(achievement => ({
+      try {
+        const game = memberGames[gameIndex];
+        log.INFO(`---> [UPDATE] achievements for game ${game.gameId}...`);
+        const memberPlayerStatsUrl = `http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v1`;
+        const memberPlayerStatsData: MemberSteamPlayerStats =
+          (
+            await axios.get(memberPlayerStatsUrl, {
+              params: {
+                key: process.env.STEAM_KEY,
+                steamid: memberId,
+                appid: game.gameId,
+                format: 'json',
+              },
+            })
+          )?.data ?? [];
+        /**
+         * Get an object with all achievements from the specified game
+         * that the requested member had already completed.
+         */
+        const memberAchievementsMap: Omit<MemberAchievement, '_id'>[] = (
+          memberPlayerStatsData.playerstats?.achievements ?? []
+        )
+          .filter(achievement => achievement.achieved === 1)
+          .map(achievement => ({
+            memberId,
+            gameId: game.gameId,
+            achievementName: achievement.apiname,
+            unlockTime: new Date(achievement.unlocktime * 1000),
+          }));
+        /**
+         * Using achievements data, calculate the game's completion percentage
+         * as well as get the date of the game's completion
+         * (so when user unlocked the last achievement).
+         */
+        const completionPercentage =
+          100 *
+          ((memberAchievementsMap.length ?? 0) /
+            (memberPlayerStatsData.playerstats.achievements.length ?? 0));
+
+        let mostRecentAchievementDate = 0;
+        memberAchievementsMap.forEach(achievement =>
+          achievement.unlockTime.getTime() > mostRecentAchievementDate
+            ? (mostRecentAchievementDate = achievement.unlockTime.getTime())
+            : null,
+        );
+        /**
+         * Create an object which aggregated the game achievements'
+         * and game completion data.
+         */
+        memberAchievements.push({
           memberId,
           gameId: game.gameId,
-          achievementName: achievement.apiname,
-          unlockTime: new Date(achievement.unlocktime * 1000),
-        }));
-      /**
-       * Using achievements data, calculate the game's completion percentage
-       * as well as get the date of the game's completion
-       * (so when user unlocked the last achievement).
-       */
-      const completionPercentage =
-        100 *
-        ((memberAchievementsMap.length ?? 0) /
-          (memberPlayerStatsData.playerstats.achievements.length ?? 0));
-
-      let mostRecentAchievementDate = 0;
-      memberAchievementsMap.forEach(achievement =>
-        achievement.unlockTime.getTime() > mostRecentAchievementDate
-          ? (mostRecentAchievementDate = achievement.unlockTime.getTime())
-          : null,
-      );
-      /**
-       * Create an object which aggregated the game achievements'
-       * and game completion data.
-       */
-      memberAchievements.push({
-        memberId,
-        gameId: game.gameId,
-        achievements: memberAchievementsMap,
-        game: {
-          completionPercentage,
-          mostRecentAchievementDate: new Date(mostRecentAchievementDate),
-        },
-      });
-      if (memberGames[gameIndex + 1]) {
-        setTimeout(
-          () => getRecurrentAchievementData(gameIndex + 1),
-          Number(process.env.DELAY),
-        );
-      } else {
-        log.INFO(`--> [UPDATE] achievements for member ${memberId} [DONE]`);
-        resolve(memberAchievements);
+          achievements: memberAchievementsMap,
+          game: {
+            completionPercentage,
+            mostRecentAchievementDate: new Date(mostRecentAchievementDate),
+          },
+        });
+        if (memberGames[gameIndex + 1]) {
+          setTimeout(
+            () => getRecurrentAchievementData(gameIndex + 1),
+            Number(process.env.DELAY),
+          );
+        } else {
+          log.INFO(`--> [UPDATE] achievements for member ${memberId} [DONE]`);
+          resolve(memberAchievements);
+        }
+      } catch (err: any) {
+        /**
+         * Axios request fails when the game has no achievements.
+         * Here we ignore that error and procees.
+         */
+        log.WARN(err.message ?? err);
+        if (memberGames[gameIndex + 1]) {
+          setTimeout(
+            () => getRecurrentAchievementData(gameIndex + 1),
+            Number(process.env.DELAY),
+          );
+        } else {
+          log.INFO(`--> [UPDATE] achievements for member ${memberId} [DONE]`);
+          resolve(memberAchievements);
+        }
       }
     };
 
