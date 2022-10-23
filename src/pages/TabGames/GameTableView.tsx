@@ -5,152 +5,173 @@ import { Game, TierId } from '@masochistme/sdk/dist/v1/types';
 
 import { useCuratedGames, useTiers } from 'sdk';
 import { useAppContext } from 'context';
-import { getGameThumbnail, getTierIcon } from 'utils';
-import { Flex, Spinner, Table, TableLink, defaultSort } from 'components';
+import { getTierIcon, Size } from 'utils';
+import {
+	Flex,
+	Spinner,
+	Table,
+	TableLink,
+	Tooltip,
+	defaultSort,
+} from 'components';
+import { GameThumbnail } from 'containers';
 
-type GameData = {
-	id: any;
-	image: string;
-	title: string;
-	tier: string;
-	completions?: number;
-	avgPlaytime?: number;
-	achievementsNr?: number;
-	badgesNr?: number;
-	badgesPts?: number;
-};
+import {
+	CellTotalPoints,
+	CellCompletions,
+	CellAvgPlaytime,
+	CellBadges,
+	CellAchievements,
+} from './GameTableViewCells';
 
 export const GameTableView = (): JSX.Element => {
 	const history = useHistory();
 	const { visibleTiers, queryGame } = useAppContext();
 
-	const { tiersData } = useTiers();
-	const { gamesData } = useCuratedGames();
+	const {
+		tiersData,
+		isLoading: isTiersLoading,
+		isFetched: isTiersFetched,
+	} = useTiers();
+	const {
+		gamesData,
+		isLoading: isGamesLoading,
+		isFetched: isGamesFetched,
+	} = useCuratedGames();
+
+	const isLoading = isTiersLoading && isGamesLoading;
+	const isFetched = isTiersFetched && isGamesFetched;
 
 	const games = gamesData.filter(
 		(game: Game) =>
 			game?.title.toLowerCase().includes(queryGame.toLowerCase()) &&
 			visibleTiers.find((tier: TierId) => tier === game.tier),
 	);
-	const onGameClick = (game: GameData) =>
-		game?.id && history.push(`/game/${game.id}`);
+	const onGameClick = (game: Game) => {
+		if (game?.id) history.push(`/game/${game.id}`);
+	};
 
-	// TODO Fix game list with the new game completion details endpoint or something
-	const gamesColumns = [
-		{
-			render: (game: GameData) => {
-				const icon = getTierIcon(game.tier, tiersData);
-				return (
-					<Flex margin="0 8px 0 12px">
-						<i className={icon} />
-					</Flex>
-				);
-			},
-			sorter: (a: GameData, b: GameData) => defaultSort(a.tier, b.tier),
+	const columnTier = {
+		render: (game: Game) => {
+			const icon = getTierIcon(game.tier, tiersData);
+			return (
+				<Flex margin="0 8px 0 12px">
+					<i className={icon} />
+				</Flex>
+			);
 		},
-		{
-			render: (game: GameData) => <GameImg src={game.image} />,
+		sorter: (a: Game, b: Game) => {
+			return defaultSort(a.tier, b.tier);
 		},
-		{
-			title: 'Title',
-			width: '30%',
-			render: (game: GameData) => (
+	};
+
+	const columnThumbnail = {
+		render: (game: Game) => {
+			return <GameThumbnail game={game} size={Size.BIG} />;
+		},
+	};
+
+	const columnTitle = {
+		title: 'Title',
+		width: '30%',
+		render: (game: Game) => {
+			return (
 				<TableLink className="bold" onClick={() => onGameClick(game)}>
 					{game.title}
 				</TableLink>
-			),
-			sorter: (a: GameData, b: GameData) => defaultSort(a.title, b.title),
+			);
 		},
-		// TODO fix the ones below
-		// {
-		// 	title: () => (
-		// 		<Tooltip content="The total sum of base points and all the game badges (excluding negative ones)">
-		// 			<Flex row align justify>
-		// 				Points{' '}
-		// 				<i
-		// 					className="fas fa-question-circle"
-		// 					style={{ fontSize: '12px', marginLeft: '6px' }}></i>
-		// 			</Flex>
-		// 		</Tooltip>
-		// 	),
-		// 	render: (game: GameData) => {
+		sorter: (a: Game, b: Game) => {
+			return defaultSort(a.title, b.title);
+		},
+	};
+
+	const columnPoints = {
+		title: () => {
+			return (
+				<Tooltip content="Sum of base points and all the game badges (excluding negative ones)">
+					<Flex row align justify>
+						Points{' '}
+						<i
+							className="fas fa-question-circle"
+							style={{ fontSize: '12px', marginLeft: '6px' }}></i>
+					</Flex>
+				</Tooltip>
+			);
+		},
+		render: (game: Game) => {
+			return <CellTotalPoints game={game} />;
+		},
+		// sorter: (a: Game, b: Game) => {
+		// 	const points = (game: Game) => {
 		// 		const tierPoints =
 		// 			tiersData.find((tier: Tier) => tier.id === game.tier)?.score ?? 0;
-		// 		const points = game?.badgesPts + tierPoints;
+		// 		return game?.badgesPts + tierPoints;
+		// 	};
+		// 	return defaultSort(points(a), points(b));
+		// },
+	};
 
-		// 		return <div>{points}</div>;
-		// 	},
-		// 	sorter: (a: GameData, b: GameData) => {
-		// 		const points = (game: GameData) => {
-		// 			const tierPoints =
-		// 				tiersData.find((tier: Tier) => tier.id === game.tier)?.score ?? 0;
-		// 			return game?.badgesPts + tierPoints;
-		// 		};
-		// 		return defaultSort(points(a), points(b));
-		// 	},
-		// },
-		// {
-		// 	title: 'Completions',
-		// 	render: (game: GameData) => <div>{game.completions}</div>,
-		// 	sorter: (a: GameData, b: GameData) =>
-		// 		defaultSort(a?.completions, b?.completions),
-		// },
-		// {
-		// 	title: () => (
-		// 		<Tooltip content="Average time needed to complete 100% of the Steam achievements">
-		// 			<Flex row align justify>
-		// 				Avg playtime{' '}
-		// 				<i
-		// 					className="fas fa-question-circle"
-		// 					style={{ fontSize: '12px', marginLeft: '6px' }}></i>
-		// 			</Flex>
-		// 		</Tooltip>
-		// 	),
-		// 	render: (game: GameData) => <div>{`${game.avgPlaytime} h`}</div>,
-		// 	sorter: (a: GameData, b: GameData) =>
-		// 		defaultSort(a?.avgPlaytime, b?.avgPlaytime),
-		// },
-		// {
-		// 	title: 'Badges',
-		// 	render: (game: GameData) => <div>{game.badgesNr}</div>,
-		// 	sorter: (a: GameData, b: GameData) =>
-		// 		defaultSort(a?.badgesNr, b?.badgesNr),
-		// },
-		// {
-		// 	title: 'Achievements',
-		// 	render: (game: GameData) => <div>{game.achievementsNr}</div>,
-		// 	sorter: (a: GameData, b: GameData) =>
-		// 		defaultSort(a?.achievementsNr, b?.achievementsNr),
-		// },
-		// {
-		// 	title: 'Sale',
-		// 	render: (game: GameData) => {
-		// 		const sale = game.sale.onSale ? `${game.sale.discount}%` : '—';
-		// 		return <div>{sale}</div>;
-		// 	},
-		// 	sorter: (a: GameData, b: GameData) =>
-		// 		defaultSort(a.sale.discount ?? 0, b.sale.discount ?? 0),
-		// },
+	const columnCompletions = {
+		title: 'Completions',
+		render: (game: Game) => <CellCompletions game={game} />,
+		// sorter: (a: Game, b: Game) => defaultSort(a?.completions, b?.completions),
+	};
+
+	const columnAvgPlaytime = {
+		title: () => (
+			<Tooltip content="Average time needed to complete 100% of the Steam achievements">
+				<Flex row align justify>
+					Avg playtime{' '}
+					<i
+						className="fas fa-question-circle"
+						style={{ fontSize: '12px', marginLeft: '6px' }}></i>
+				</Flex>
+			</Tooltip>
+		),
+		render: (game: Game) => <CellAvgPlaytime game={game} />,
+		// sorter: (a: Game, b: Game) => defaultSort(a?.avgPlaytime, b?.avgPlaytime),
+	};
+
+	const columnBadges = {
+		title: 'Badges',
+		render: (game: Game) => <CellBadges game={game} />,
+		// sorter: (a: Game, b: Game) => defaultSort(a?.badgesNr, b?.badgesNr),
+	};
+
+	const columnAchievements = {
+		title: 'Achievements',
+		render: (game: Game) => <CellAchievements game={game} />,
+		// sorter: (a: Game, b: Game) => defaultSort(a?.achievementsNr, b?.achievementsNr),
+	};
+
+	const columnSale = {
+		title: 'Sale',
+		render: (game: Game) => {
+			const sale = game.sale ? `${game.sale}%` : '—';
+			return <div>{sale}</div>;
+		},
+		sorter: (a: Game, b: Game) => defaultSort(a.sale ?? 0, b.sale ?? 0),
+	};
+
+	const gamesColumns = [
+		columnTier,
+		columnThumbnail,
+		columnTitle,
+		columnPoints,
+		columnCompletions,
+		columnAvgPlaytime,
+		columnBadges,
+		columnAchievements,
+		columnSale,
 	];
 
-	const gamesDataSource: GameData[] = games.map((game: Game) => ({
-		id: game.id,
-		image: getGameThumbnail(game.id),
-		title: game.title,
-		tier: game.tier,
-		// completions: game.stats.completions,
-		// avgPlaytime: Math.round(game.stats.avgPlaytime),
-		// achievementsNr: game.stats.achievementsNr,
-		// badgesNr: game.stats.badgesNr,
-		// badgesPts: game.stats.badgesPts,
-	}));
-
 	return (
-		<div>
-			{games && games.length ? (
+		<Flex width="100%">
+			{isLoading && <Spinner />}
+			{isFetched && (
 				<Table
-					dataSource={gamesDataSource}
-					// @ts-ignore
+					dataSource={games}
 					columns={gamesColumns}
 					showSorterTooltip={false}
 					pagination={{
@@ -162,18 +183,7 @@ export const GameTableView = (): JSX.Element => {
 						showSizeChanger: false,
 					}}
 				/>
-			) : (
-				<Spinner />
 			)}
-		</div>
+		</Flex>
 	);
 };
-
-const GameImg = styled.img.attrs(({ src }: { src: string }) => {
-	return {
-		src,
-	};
-})<{ src: string }>`
-	height: 48px;
-	width: auto;
-`;

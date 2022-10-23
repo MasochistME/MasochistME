@@ -68,6 +68,8 @@ const StyledGameThumbnail = styled.div.attrs(
 	img {
 		width: 100%;
 		height: 100%;
+		border-radius: ${({ size }) =>
+			size === Size.SMALL || size === Size.TINY ? 4 : 8}px;
 		opacity: ${({ size }) =>
 			size === Size.SMALL || size === Size.TINY ? '0.85' : '1'};
 		&:hover {
