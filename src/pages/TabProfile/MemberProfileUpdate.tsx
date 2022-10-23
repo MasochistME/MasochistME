@@ -26,7 +26,9 @@ export const MemberProfileUpdate = (props: Props) => {
 	);
 
 	useEffect(() => {
-		const response = memberUpdateData?.message;
+		const response =
+			memberUpdateData?.message ??
+			'Something went wrong. Please try again later.';
 		if (response) setMessage(response);
 	}, [memberUpdateData]);
 
