@@ -5,6 +5,8 @@ import {
   Member,
   MemberAchievement,
   MemberGame,
+  EventType,
+  EventComplete,
 } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
@@ -36,9 +38,9 @@ export const updateMember = async (
      * If yes, do not proceed.
      */
     if (queueMember.QUEUE.length >= queueMember.MAX_UPDATE_QUEUE) {
-      res
-        .status(202)
-        .send('Too many users are updating now - retry in a few minutes.');
+      res.status(202).send({
+        message: 'Too many users are updating now - retry in a few minutes.',
+      });
       log.INFO(`--> [UPDATE] updating user ${memberId} [QUEUE OVERFLOW]`);
       return;
     }
@@ -48,7 +50,7 @@ export const updateMember = async (
      * If yes, do not proceed.
      */
     if (queueMember.QUEUE.includes(memberId)) {
-      res.status(202).send('This user is already being updated.');
+      res.status(202).send({ message: 'This user is already being updated.' });
       log.INFO(`--> [UPDATE] updating user ${memberId} [ALREADY UPDATING]`);
       return;
     }
@@ -63,7 +65,9 @@ export const updateMember = async (
       member?.lastUpdated &&
       Date.now() - new Date(member.lastUpdated).getTime() < 3600000
     ) {
-      res.status(202).send('This user had been updated less than an hour ago.');
+      res
+        .status(202)
+        .send({ message: 'This user had been updated less than an hour ago.' });
       log.INFO(`--> [UPDATE] user ${memberId} [TOO EARLY]`);
       return;
     }
@@ -71,7 +75,10 @@ export const updateMember = async (
     /**
      * If user can be updated, send a status update and then continue.
      */
-    res.status(202).send('Updating... refresh in a few minutes');
+    res.status(202).send({
+      message:
+        'Member update successfully started! Refresh in a couple of minutes.',
+    });
     queueMember.QUEUE = [...queueMember.QUEUE, memberId];
 
     /**
@@ -101,10 +108,9 @@ export const updateMember = async (
         $set: {
           name: memberSteam.personaname,
           avatar: memberSteam.avatar,
-          isPrivate: memberSteam.communityvisibilitystate === 3,
-          lastUpdated: new Date(0), // this is temp
+          isPrivate: memberSteam.communityvisibilitystate === 1,
+          lastUpdated: new Date(),
           // lastUpdated: new Date(),
-          // isMember: member?.isMember, // TODO this needs to be updated later with curator data
         },
       },
     );
@@ -113,64 +119,43 @@ export const updateMember = async (
     }
 
     /**
-     * Get cursors for all relevant collections.
+     * Get a list of current curator games to compare with member's game list.
      */
-    log.INFO(`--> [UPDATE] user ${memberId} --> fetching current data...`);
-    const collectionMemberGames = db.collection<MemberGame>('memberGames');
     const collectionGames = db.collection<Game>('games');
-    const collectionMemberAchievements =
-      db.collection<MemberAchievement>('memberAchievements');
-
     const gamesCursor = await collectionGames.find();
-    const memberGamesCursor = await collectionMemberGames.find({ memberId });
-    const memberAchievementsCursor = await collectionMemberAchievements.find({
-      memberId,
-    });
-
-    /**
-     * Prepare arrays for all the collections.
-     */
     const games: Game[] = [];
-    const oldMemberGames: MemberGame[] = [];
-    const oldMemberAchievements: MemberAchievement[] = [];
 
-    /**
-     * Iterate through all the cursors.
-     */
     await gamesCursor.forEach((el: Game) => {
       games.push(el);
-    });
-    await memberGamesCursor.forEach((el: MemberGame) => {
-      oldMemberGames.push(el);
-    });
-    await memberAchievementsCursor.forEach((el: MemberAchievement) => {
-      oldMemberAchievements.push(el);
     });
 
     /**
      * Get info about member's Curator games.
      * If the first endpoint fails, use a fallback one.
      */
-    let memberSteamGames = await getMemberSteamGames(memberId, games);
-    if (!memberSteamGames)
-      memberSteamGames = await getMemberSteamGamesFallback(memberId, games);
+    let newMemberSteamGames = await getMemberSteamGamesFallback(
+      memberId,
+      games,
+    );
+    if (!newMemberSteamGames)
+      newMemberSteamGames = await getMemberSteamGames(memberId, games);
 
     /**
      * Get info about member's achievements.
      * Achievements also give us info about game's completion ratio.
      */
-    const memberSteamAchievements = await getMemberSteamAchievements(
+    const newMemberSteamAchievements = await getMemberSteamAchievements(
       memberId,
-      memberSteamGames,
+      newMemberSteamGames,
     );
 
     /**
      * Aggregate the Steam game data with its achievement data.
      * This allows us to populate both MemberGames and MemberAchievements databases.
      */
-    const memberGames: Omit<MemberGame, '_id'>[] = memberSteamGames.map(
+    const memberGames: Omit<MemberGame, '_id'>[] = newMemberSteamGames.map(
       game => {
-        const gameStats = memberSteamAchievements.find(
+        const gameStats = newMemberSteamAchievements.find(
           g => g.gameId === game.gameId,
         );
         return {
@@ -181,28 +166,132 @@ export const updateMember = async (
         };
       },
     );
+
+    /**
+     * We will now compare that with what we have in the database
+     * and if needed, upsert it.
+     */
+    log.INFO(
+      `--> [UPDATE] user ${memberId} --> injecting updated data into database...`,
+    );
+
     const finalMemberData = {
       memberGames,
-      memberAchievements: memberSteamAchievements
+      memberAchievements: newMemberSteamAchievements
         .map(mA => mA.achievements)
         .flat(),
     };
 
     /**
-     * Now compare that with what we have in the database
-     * and if needed, upsert it.
+     * Update member games in the database.
      */
-    console.log(finalMemberData);
+    const collectionMemberGames = db.collection<MemberGame>('memberGames');
+    const memberGamesCursor = await collectionMemberGames.find({ memberId });
+    const oldMemberGames: MemberGame[] = [];
+    await memberGamesCursor.forEach((el: MemberGame) => {
+      oldMemberGames.push(el);
+    });
+
+    const memberGamesToUpdate = finalMemberData.memberGames.filter(
+      (memberGame: Omit<MemberGame, '_id'>) => {
+        const memberGameOld = oldMemberGames.find(
+          old =>
+            old.gameId === memberGame.gameId &&
+            old.memberId === memberGame.memberId,
+        );
+        if (!memberGameOld) {
+          // This game is not registered in DB - add it
+          return true;
+        }
+        if (
+          memberGameOld.completionPercentage !==
+            memberGame.completionPercentage ||
+          memberGameOld.playTime !== memberGame.playTime ||
+          memberGameOld.mostRecentAchievementDate !==
+            memberGame.mostRecentAchievementDate
+        ) {
+          // This game is registered in DB and nothing changed - ignore
+          return false;
+        }
+        // This game is registered in DB and changed - proceed
+        return true;
+      },
+    );
+
+    memberGamesToUpdate.forEach(async memberGame => {
+      await collectionMemberGames.updateOne(
+        { memberId: memberGame.memberId, gameId: memberGame.gameId },
+        { $set: memberGame },
+        { upsert: true },
+      );
+    });
+
+    /**
+     * Update member achievements in the database.
+     */
+    const collectionMemberAchievements =
+      db.collection<MemberAchievement>('memberAchievements');
+    const memberAchievementsCursor = await collectionMemberAchievements.find({
+      memberId,
+    });
+    const oldMemberAchievements: MemberAchievement[] = [];
+    await memberAchievementsCursor.forEach((el: MemberAchievement) => {
+      oldMemberAchievements.push(el);
+    });
+
+    const memberAchievementsToUpdate =
+      finalMemberData.memberAchievements.filter(
+        (memberAchievement: Omit<MemberAchievement, '_id'>) => {
+          const memberAchievementOld = oldMemberAchievements.find(
+            old =>
+              old.gameId === memberAchievement.gameId &&
+              old.memberId === memberAchievement.memberId,
+          );
+          // This achievement is not registered in DB - add it
+          if (!memberAchievementOld) return true;
+          // This game is registered in DB and changed - proceed
+          return true;
+        },
+      );
+
+    memberAchievementsToUpdate.forEach(async memberAchievement => {
+      await collectionMemberAchievements.updateOne(
+        {
+          memberId: memberAchievement.memberId,
+          gameId: memberAchievement.gameId,
+        },
+        { $set: memberAchievement },
+        { upsert: true },
+      );
+    });
 
     /**
      * Add event when member completed a new game.
      */
-    console.log('TODO');
+    const newlyCompletedGames = memberGamesToUpdate.filter(
+      game => game.completionPercentage === 100,
+    );
+    if (newlyCompletedGames.length) {
+      const collectionEvents =
+        db.collection<Omit<EventComplete, '_id'>>('events');
+      newlyCompletedGames.forEach(async newCompletion => {
+        log.INFO(
+          `--> [UPDATE] user ${memberId} --> new hundo detected - ${newCompletion.gameId}`,
+        );
+        await collectionEvents.insertOne({
+          type: EventType.COMPLETE,
+          memberId: newCompletion.memberId,
+          gameId: newCompletion.gameId,
+          date: newCompletion.mostRecentAchievementDate,
+        });
+      });
+    }
 
     /**
      * Fin!
      */
-    client.close();
+    queueMember.QUEUE = queueMember.QUEUE.filter(queue => queue !== memberId);
+    // client.close();
     log.INFO(`--> [UPDATE] user ${memberId} [END]`);
   } catch (err: any) {
     log.INFO(`--> [UPDATE] user ${memberId} [ERROR]`);
@@ -215,44 +304,11 @@ export const updateMember = async (
 };
 
 /**
- * Get member's games from the proper Steam API endpoint.
+ * Get member's games from scrapping the Steam page.
+ * The reason this is used before the proper endpoint is that it shows all games,
+ * including the free ones and restricted ones.
  */
 const getMemberSteamGames = async (memberId: string, curatedGames: Game[]) => {
-  log.INFO(`--> [UPDATE] user ${memberId} --> fetching games data...`);
-  const memberSteamUrl = `http://api.steampowered.com/IPlayerService/GetOwnedGames/v1/`;
-  const memberSteamGamesData = await axios.get(memberSteamUrl, {
-    params: {
-      key: process.env.STEAM_KEY,
-      steamid: memberId,
-      include_played_free_games: true,
-    },
-  });
-  const memberSteamGames: MemberSteamGame[] =
-    memberSteamGamesData?.data?.response?.games;
-  if (!memberSteamGames) return null;
-
-  const memberSteamGamesFixed = memberSteamGames
-    .filter(game => {
-      const isCurated = curatedGames.find(g => g.id === game.appid);
-      return !!isCurated;
-    })
-    .map(game => ({
-      memberId,
-      gameId: game.appid,
-      playTime: game.playtime_forever / 60, // this is in minutes
-    }));
-
-  return memberSteamGamesFixed;
-};
-
-/**
- * This is a fallback function - it will execute when getNewMemberGames does not return any data.
- * You should avoid using it as it scrapes Steam's HTML page and has potential to break.
- */
-const getMemberSteamGamesFallback = async (
-  memberId: string,
-  curatedGames: Game[],
-) => {
   log.INFO(
     `--> [UPDATE] user ${memberId} --> fetching games data - fallback...`,
   );
@@ -282,12 +338,47 @@ const getMemberSteamGamesFallback = async (
 };
 
 /**
+ * This is a fallback function - it will execute when getNewMemberGames does not return any data.
+ * It does not return restricted games data, so it is used exclusively as fallback.
+ */
+const getMemberSteamGamesFallback = async (
+  memberId: string,
+  curatedGames: Game[],
+) => {
+  log.INFO(`--> [UPDATE] user ${memberId} --> fetching games data...`);
+  const memberSteamUrl = `http://api.steampowered.com/IPlayerService/GetOwnedGames/v1/`;
+  const memberSteamGamesData = await axios.get(memberSteamUrl, {
+    params: {
+      key: process.env.STEAM_KEY,
+      steamid: memberId,
+      include_played_free_games: true,
+    },
+  });
+  const memberSteamGames: MemberSteamGame[] =
+    memberSteamGamesData?.data?.response?.games;
+  if (!memberSteamGames) return [];
+
+  const memberSteamGamesFixed = memberSteamGames
+    .filter(game => {
+      const isCurated = curatedGames.find(g => g.id === game.appid);
+      return !!isCurated;
+    })
+    .map(game => ({
+      memberId,
+      gameId: game.appid,
+      playTime: game.playtime_forever / 60, // this is in minutes
+    }));
+
+  return memberSteamGamesFixed;
+};
+
+/**
  * Get member's achievements from all their curated games.
  */
 type TempMemberStats = {
   memberId: string;
   gameId: number;
-  achievements: Pick<MemberAchievement, 'achievementName' | 'unlockTime'>[];
+  achievements: Omit<MemberAchievement, '_id'>[];
   game: Pick<MemberGame, 'completionPercentage' | 'mostRecentAchievementDate'>;
 };
 const getMemberSteamAchievements = async (
@@ -317,17 +408,15 @@ const getMemberSteamAchievements = async (
        * Get an object with all achievements from the specified game
        * that the requested member had already completed.
        */
-      const memberAchievementsMap: Pick<
-        MemberAchievement,
-        'achievementName' | 'unlockTime'
-      >[] = memberPlayerStatsData.playerstats.achievements
-        .filter(achievement => achievement.achieved === 1)
-        .map(achievement => ({
-          memberId,
-          gameId: game.gameId,
-          achievementName: achievement.apiname,
-          unlockTime: new Date(achievement.unlocktime * 1000),
-        }));
+      const memberAchievementsMap: Omit<MemberAchievement, '_id'>[] =
+        memberPlayerStatsData.playerstats.achievements
+          .filter(achievement => achievement.achieved === 1)
+          .map(achievement => ({
+            memberId,
+            gameId: game.gameId,
+            achievementName: achievement.apiname,
+            unlockTime: new Date(achievement.unlocktime * 1000),
+          }));
       /**
        * Using achievements data, calculate the game's completion percentage
        * as well as get the date of the game's completion
@@ -357,9 +446,7 @@ const getMemberSteamAchievements = async (
           mostRecentAchievementDate: new Date(mostRecentAchievementDate),
         },
       });
-      if (gameIndex < 3) {
-        // TODO // This is temp, change to:
-        // if (memberGames[gameIndex + 1]) {
+      if (memberGames[gameIndex + 1]) {
         setTimeout(
           () => getRecurrentAchievementData(gameIndex + 1),
           Number(process.env.DELAY),
