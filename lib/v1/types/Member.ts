@@ -38,6 +38,10 @@ export interface Member extends WithId {
 	 */
 	avatar: string;
 	/**
+	 * Hash of the member's Steam avatar (used to generate avatars of various sizes).
+	 */
+	avatarHash?: string;
+	/**
 	 * Date of the last update of the member's MasochistME profile.
 	 */
 	lastUpdated: Date;
