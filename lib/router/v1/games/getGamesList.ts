@@ -29,8 +29,8 @@ export const getGamesList = async (
         }),
       })
       .sort({
-        ...(sort.title && { title: sortCollection(sort.title) }),
         ...(sort.tier && { tier: sortCollection(sort.tier) }),
+        ...(sort.title && { title: sortCollection(sort.title) }),
         ...(sort.sale && { sale: sortCollection(sort.sale) }),
         ...(sort.achievementsTotal && {
           achievementsTotal: sortCollection(sort.achievementsTotal),
