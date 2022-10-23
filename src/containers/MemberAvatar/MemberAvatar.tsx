@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import styled from 'styled-components';
 import { Member, PatronTier } from '@masochistme/sdk/dist/v1/types';
 
@@ -18,7 +19,7 @@ type Props = {
 
 export const MemberAvatar = (props: Props) => {
 	const {
-		member = { name: 'Loading...', avatar: logo },
+		member = { name: 'Loading...' },
 		patronTier,
 		size = Size.MEDIUM,
 		title,
@@ -27,19 +28,26 @@ export const MemberAvatar = (props: Props) => {
 		onClick,
 	} = props;
 
+	const avatarSize = useMemo(() => {
+		if (size === Size.BIG || size === Size.LARGE) return '_full';
+		if (size === Size.MEDIUM) return '_medium';
+		return '';
+	}, [size]);
+	const avatarUrl = `https://avatars.akamai.steamstatic.com/${member.avatarHash}${avatarSize}.jpg`;
+
 	return (
 		<Tooltip content={title ?? <Flex column>{member.name}</Flex>}>
 			<StyledMemberAvatar
 				onClick={onClick}
 				size={size}
 				patronTier={patronTier}
-				isEmpty={!member.avatar}>
+				isEmpty={!member.avatarHash}>
 				{isLoading && <Skeleton size={size} />}
 				{isError && (
 					<BrokenImage size={size} title="Could not load the avatar." />
 				)}
 				{!isLoading && !isError && (
-					<img src={member.avatar ?? logo} alt="Member avatar" />
+					<img src={avatarUrl ?? logo} alt="Member avatar" />
 				)}
 			</StyledMemberAvatar>
 		</Tooltip>

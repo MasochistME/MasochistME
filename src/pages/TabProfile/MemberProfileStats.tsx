@@ -52,13 +52,13 @@ export const MemberProfileStats = (props: Props) => {
 						icon="fa-solid fa-hashtag"
 					/>
 					<StatBlock
-						title="Number of games that this member completed."
+						title="Number of curated games that this member completed."
 						label={memberCompletions.length}
 						sublabel="completions"
 						icon="fa-solid fa-trophy"
 					/>
 					<StatBlock
-						title="Average game completion percentage."
+						title="Average curated game completion percentage."
 						label={getPercentage(
 							memberCompletions.length,
 							memberGamesData.length,
@@ -67,7 +67,7 @@ export const MemberProfileStats = (props: Props) => {
 						icon="fa-solid fa-percent"
 					/>
 					<StatBlock
-						title="Member's average game completion time."
+						title="Member's average curated game completion time."
 						label={`${avgPlaytime} h`}
 						sublabel="avg completion time"
 						icon="fa-solid fa-clock"
