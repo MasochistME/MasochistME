@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
 import {
 	Badge,
 	Event,
@@ -25,6 +26,7 @@ import {
 	useAllMembers,
 	useAllGames,
 } from 'sdk';
+import { media } from 'shared/theme';
 import { getTierIcon } from 'utils';
 import { SmallEvent, Section, EventLink } from 'containers';
 import { Flex, Skeleton } from 'components';
@@ -100,14 +102,22 @@ export const SectionHistory = (): JSX.Element => {
 		<Section
 			title="Last events"
 			content={
-				<Flex column gap={11}>
+				<StyledSectionHistory>
 					{isLoading && loadingEvents}
 					{isFetched && eventsData.map((event: Event) => classifyEvents(event))}
-				</Flex>
+				</StyledSectionHistory>
 			}
 		/>
 	);
 };
+
+const StyledSectionHistory = styled(Flex)`
+	flex-direction: column;
+	gap: 11px;
+	@media (max-width: ${media.smallNetbooks}) {
+		gap: 4px;
+	}
+`;
 
 const useEventComponents = () => {
 	const history = useHistory();

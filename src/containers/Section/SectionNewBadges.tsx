@@ -2,8 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { EventBadgeCreate, EventType } from '@masochistme/sdk/dist/v1/types';
 
+import { media } from 'shared/theme';
 import { useBadges, useEvents } from 'sdk';
 import { BadgeThumbnail, Section } from 'containers';
+import { Flex } from 'components';
 import { Size } from 'utils';
 
 const NUMBER_OF_BADGES = 5;
@@ -55,20 +57,24 @@ export const SectionNewBadges = (): JSX.Element => {
 
 	return (
 		<Section
-			minWidth="450px"
+			width="100%"
+			maxWidth="450px"
 			title="New badges"
 			content={
-				<StyledNewMembers>
+				<StyledNewBadges>
 					{isLoading && loadingBadges}
 					{isFetched && newestBadges}
-				</StyledNewMembers>
+				</StyledNewBadges>
 			}
 		/>
 	);
 };
 
-const StyledNewMembers = styled.div`
-	display: grid;
-	grid-template-columns: repeat(5, 1fr);
+const StyledNewBadges = styled(Flex)`
+	justify-content: center;
 	gap: 16px;
+	@media (max-width: ${media.smallNetbooks}) {
+		gap: 4px;
+		flex-wrap: wrap;
+	}
 `;

@@ -1,5 +1,7 @@
 import React from 'react';
+import styled from 'styled-components';
 
+import { media } from 'shared/theme';
 import { Flex, Button } from 'components';
 import { Size } from 'utils';
 
@@ -15,7 +17,7 @@ export const ButtonsSocialMedia = (): JSX.Element => {
 	};
 
 	return (
-		<Flex gap={4}>
+		<StyledButtonsSocialMedia>
 			<Button
 				size={Size.BIG}
 				icon="fab fa-steam"
@@ -34,6 +36,12 @@ export const ButtonsSocialMedia = (): JSX.Element => {
 				tooltip="Support us!"
 				onClick={onButtonPatreonClick}
 			/>
-		</Flex>
+		</StyledButtonsSocialMedia>
 	);
 };
+
+const StyledButtonsSocialMedia = styled(Flex)`
+	@media (min-width: ${media.bigPhones}) {
+		gap: 4px;
+	}
+`;

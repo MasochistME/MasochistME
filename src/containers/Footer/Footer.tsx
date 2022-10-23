@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Flex } from 'components';
-import { colors, fonts } from 'shared/theme';
+import { colors, fonts, media } from 'shared/theme';
 import { ButtonsSocialMedia } from 'containers';
 
 export const Footer = () => {
@@ -26,4 +26,7 @@ const StyledFooter = styled(Flex)`
 
 const StyledFooterText = styled.h3`
 	margin: 0;
+	@media (max-width: ${media.bigPhones}) {
+		font-size: 1em;
+	}
 `;

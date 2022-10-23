@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import dayjs from 'dayjs';
 import { EventMemberJoin, EventType } from '@masochistme/sdk/dist/v1/types';
 
+import { media } from 'shared/theme';
 import { useCuratorMembers, useEvents } from 'sdk';
 import { MemberAvatar, Section } from 'containers';
 import { Flex } from 'components';
@@ -61,7 +62,8 @@ export const SectionNewMembers = (): JSX.Element => {
 
 	return (
 		<Section
-			minWidth="450px"
+			width="100%"
+			maxWidth="450px"
 			title="New members"
 			content={
 				<StyledNewMembers>
@@ -73,8 +75,16 @@ export const SectionNewMembers = (): JSX.Element => {
 	);
 };
 
-const StyledNewMembers = styled.div`
+const StyledNewMembers = styled(Flex)`
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
+	justify-content: center;
 	gap: 16px;
+	flex-wrap: wrap;
+	@media (max-width: ${media.smallNetbooks}) {
+		gap: 4px;
+	}
+	@media (max-width: ${media.bigPhones}) {
+		display: flex;
+	}
 `;

@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { Tier } from '@masochistme/sdk/dist/v1/types';
 
+import { media } from 'shared/theme';
 import { useAppContext, GameView } from 'context';
 import { GameTierCheckbox, SearchBar } from 'containers';
 import { Button, FilterBar, Flex, Spinner } from 'components';
@@ -44,13 +45,13 @@ export const GameFilterBar = (): JSX.Element => {
 
 	return (
 		<FilterBar>
-			<Flex gap={16} flexWrap="wrap">
+			<StyledGameFilterBar>
 				<SearchBar
 					placeholder="Search games"
 					query={queryGame}
 					setQuery={setQueryGame}
 				/>
-				<StyledFilterGameTiers>
+				<StyledGameFilterBarTiers>
 					{isTiersLoading && <Spinner />}
 					{isTiersFetched &&
 						tiersData.map((tier: Tier) => (
@@ -61,8 +62,8 @@ export const GameFilterBar = (): JSX.Element => {
 								setVisibleTiers={setVisibleTiers}
 							/>
 						))}
-				</StyledFilterGameTiers>
-			</Flex>
+				</StyledGameFilterBarTiers>
+			</StyledGameFilterBar>
 			<Button
 				onClick={onGameViewClick}
 				icon={gameViewButtonIcon}
@@ -72,7 +73,15 @@ export const GameFilterBar = (): JSX.Element => {
 	);
 };
 
-const StyledFilterGameTiers = styled(Flex)`
+const StyledGameFilterBar = styled(Flex)`
+	gap: 16px;
+	flex-wrap: wrap;
+	@media (max-width: ${media.smallNetbooks}) {
+		justify-content: center;
+	}
+`;
+
+const StyledGameFilterBarTiers = styled(Flex)`
 	justify-content: center;
 	gap: 24px;
 `;
