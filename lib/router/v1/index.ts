@@ -4,6 +4,22 @@ import { apiV1Auth } from 'helpers/validate';
 export const routerV1 = express.Router();
 
 /***************************
+ *         UPDATE         *
+ ***************************/
+
+import {
+  getUpdateMemberStatus,
+  updateMember,
+  getUpdateCuratorStatus,
+  updateCurator,
+} from './update';
+
+routerV1.get('/update', getUpdateCuratorStatus);
+routerV1.put('/update', apiV1Auth, updateCurator);
+routerV1.get('/members/member/:memberId/update', getUpdateMemberStatus);
+routerV1.put('/members/member/:memberId/update', apiV1Auth, updateMember);
+
+/***************************
  *         MEMBERS         *
  ***************************/
 

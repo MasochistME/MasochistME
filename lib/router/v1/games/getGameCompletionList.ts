@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { MemberGame } from '@masochistme/sdk/dist/v1/types';
+import { Member, MemberGame } from '@masochistme/sdk/dist/v1/types';
 import { GameCompletionListParams } from '@masochistme/sdk/dist/v1/api/games';
 
 import { log } from 'helpers/log';
@@ -16,12 +16,14 @@ export const getGameCompletionList = async (
     const { filter = {}, sort = {}, limit = 1000 } = req.body;
     const { completed, ...restFilter } = filter;
     const { gameId } = req.params;
-
     const { client, db } = await connectToDb();
-    const collection = db.collection<MemberGame>('memberGames');
-    const games: MemberGame[] = [];
 
-    const cursor = collection
+    /**
+     * Get all completions of the specified game.
+     */
+    const collectionMemberGames = db.collection<MemberGame>('memberGames');
+    const games: MemberGame[] = [];
+    const cursorMemberGames = collectionMemberGames
       .find({
         gameId: Number(gameId),
         ...restFilter,
@@ -40,8 +42,23 @@ export const getGameCompletionList = async (
       })
       .limit(limit);
 
-    await cursor.forEach((el: MemberGame) => {
-      games.push(el);
+    /**
+     * Get a list of curator members' IDs.
+     */
+    const collectionMembers = db.collection<Member>('members');
+    const curatorMembers: string[] = [];
+    const cursorMembers = collectionMembers.find({
+      $or: [{ isMember: true }, { isProtected: true }],
+    });
+    await cursorMembers.forEach((el: Member) => {
+      curatorMembers.push(el.steamId);
+    });
+
+    /**
+     * Filter completions by curator members only.
+     */
+    await cursorMemberGames.forEach((el: MemberGame) => {
+      if (curatorMembers.includes(el.memberId)) games.push(el);
     });
 
     client.close();

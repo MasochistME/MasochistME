@@ -12,7 +12,7 @@ export const getActiveRace = async (
     const { client, db } = await connectToDb();
     const collection = db.collection<Race>('races');
     const cursor = collection
-      .find({ endDate: { $gt: new Date() } })
+      .find({ endDate: { $gte: new Date() } })
       .sort({ startDate: 1 });
     const futureRaces: Race[] = [];
 

@@ -22,8 +22,8 @@ export const getFeaturedList = async (
 
     const cursor = collection
       .find({
-        ...(from !== undefined && { date: { $gt: from } }),
-        ...(to !== undefined && { date: { $lt: to } }),
+        ...(from !== undefined && { date: { $gte: new Date(from) } }),
+        ...(to !== undefined && { date: { $lte: new Date(to) } }),
         ...restFilter,
       })
       .sort({
