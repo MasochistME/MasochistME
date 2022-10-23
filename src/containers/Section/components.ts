@@ -40,7 +40,7 @@ export const SmallEvent = styled.p`
 export const EventLink = styled.span`
 	cursor: pointer;
 	&:hover {
-		color: ${colors.newMediumGrey};
+		color: ${colors.white};
 	}
 `;
 
