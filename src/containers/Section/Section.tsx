@@ -44,6 +44,7 @@ const StyledSection = styled.div.attrs(
 	border-radius: 16px;
 	color: ${colors.superLightGrey};
 	background-color: ${colors.newDarkBlue}cc;
+	box-shadow: 0 0 15px ${colors.black};
 `;
 
 Section.Title = styled.h3<{ isCentered: boolean }>`

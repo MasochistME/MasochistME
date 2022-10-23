@@ -53,7 +53,7 @@ const TabProfile = (): JSX.Element => {
 					<Warning description="This user has their profile set to private." />
 				)}
 				{isUserNotAMember && (
-					<Warning description="This user is no longer a member of the curator." />
+					<Warning description="This user is not a member of the curator." />
 				)}
 				<StyledProfile column>
 					{!canNotShowUser && (
