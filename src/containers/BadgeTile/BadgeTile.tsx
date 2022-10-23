@@ -39,7 +39,7 @@ export const BadgePoints = (props: Props) => {
 	return (
 		<Flex align gap={4} fontSize="18px" fontFamily={fonts.Dosis}>
 			{badge.points}
-			<i className="fas fa-coins" />
+			<i className="fas fa-plus-circle" />
 		</Flex>
 	);
 };

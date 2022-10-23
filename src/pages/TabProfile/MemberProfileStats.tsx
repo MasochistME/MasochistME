@@ -124,7 +124,7 @@ export const MemberProfileStats = (props: Props) => {
 						}
 						label={memberLeaderData?.sum ?? '?'}
 						sublabel="points total"
-						icon="fa-solid fa-coins"
+						icon="fa-solid fa-plus-circle"
 					/>
 					<StatBlock
 						title={
