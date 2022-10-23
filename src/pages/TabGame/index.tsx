@@ -84,14 +84,14 @@ const TabGame = (): JSX.Element => {
 				maxWidth="450px"
 				title="Badges"
 				content={
-					<Flex column gap={4}>
+					<StyledGameProfileBadges>
 						{isGameBadgesLoading && <Spinner />}
 						{isGameBadgesFetched && gameBadgesData.length
 							? gameBadgesData.map((badge: Badge) => (
 									<BadgeTile badge={badge} key={`badge-${badge._id}`} />
 							  ))
 							: 'This game has no badges yet.'}
-					</Flex>
+					</StyledGameProfileBadges>
 				}
 			/>
 		</SubPage>
@@ -101,6 +101,14 @@ const TabGame = (): JSX.Element => {
 export default TabGame;
 
 const StyledGameStats = styled.div`
+	max-width: 1000px;
 	width: 100%;
 	flex: 1 1 100%;
+	overflow: hidden;
+`;
+
+const StyledGameProfileBadges = styled(Flex)`
+	gap: 8px;
+	width: 100%;
+	flex-flow: row wrap;
 `;

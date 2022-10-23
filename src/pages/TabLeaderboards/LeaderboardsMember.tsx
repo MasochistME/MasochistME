@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { UnmountClosed as Collapse } from 'react-collapse';
 import styled from 'styled-components';
 
+import { media } from 'shared/theme';
 import { Flex } from 'components';
 import { MemberLeaderboards } from 'containers';
 import { LeaderboardsMemberSummary } from './LeaderboardsMemberSummary';
@@ -35,7 +36,11 @@ export const LeaderboardsMember = (props: Props): JSX.Element => {
 };
 
 const StyledLeaderboardsMember = styled(Flex)`
-	width: 100%;
+	width: 1000px;
+	max-width: 100%;
 	box-sizing: border-box;
 	justify-content: space-between;
+	@media (max-width: ${media.smallNetbooks}) {
+		flex-wrap: wrap;
+	}
 `;

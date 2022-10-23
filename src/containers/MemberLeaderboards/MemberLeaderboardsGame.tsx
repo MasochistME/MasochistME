@@ -4,10 +4,9 @@ import styled from 'styled-components';
 import { Game, MemberGame, Tier } from '@masochistme/sdk/dist/v1/types';
 
 import { useTiers, useCuratedGames } from 'sdk';
-import { getGameThumbnail } from 'utils/getGameUrl';
 import { colors, media } from 'shared/theme';
 import { Flex, DateBlock, ProgressBar } from 'components';
-import { MemberBadges } from 'containers';
+import { MemberBadges, GameThumbnail } from 'containers';
 import { Size } from 'utils';
 
 type Props = {
@@ -26,7 +25,6 @@ export const MemberLeaderboardsGame = (props: Props): JSX.Element => {
 
 	const gameCompletionDate = memberGame?.mostRecentAchievementDate;
 	const gameTitle = gameData?.title ?? 'unknown';
-	const gameThumbnail = getGameThumbnail(gameData?.id);
 	const gameTierIcon =
 		tiersData.find((tier: Tier) => tier.id === gameData?.tier)?.icon ??
 		'fas fa-spinner';
@@ -45,7 +43,7 @@ export const MemberLeaderboardsGame = (props: Props): JSX.Element => {
 				}
 			/>
 			<StyledGameInfo align gap={8}>
-				<StyledGameThumbnail src={gameThumbnail} alt="Game thumbnail" />
+				<GameThumbnail game={gameData} size={Size.BIG} />
 				<i className={gameTierIcon} />
 				<StyledGameTitle onClick={onGameClick}>{gameTitle}</StyledGameTitle>
 			</StyledGameInfo>
@@ -74,14 +72,6 @@ const StyledMemberGame = styled(Flex)`
 	}
 `;
 
-const StyledGameThumbnail = styled.img`
-	min-height: 37px;
-	max-height: 37px;
-	@media (max-width: ${media.tablets}) {
-		display: none;
-	}
-`;
-
 const StyledGameInfo = styled(Flex)`
 	width: 100%;
 	justify-content: flex-start;
@@ -95,6 +85,9 @@ const StyledGameInfo = styled(Flex)`
 
 const StyledGameTitle = styled.div`
 	cursor: pointer;
+	@media (max-width: ${media.smallTablets}) {
+		display: none;
+	}
 	&:hover {
 		color: ${colors.white};
 	}

@@ -107,6 +107,7 @@ const StyledGameLeaderboards = styled(Flex)`
 `;
 
 const StyledGameLeaderboardsMember = styled(Flex)<{ isCompact?: boolean }>`
+	max-width: 100%;
 	align-items: center;
 	padding-left: ${({ isCompact }) => (isCompact ? '8px' : 0)};
 	&:not(:first-child) {
@@ -121,16 +122,17 @@ const StyledGameLeaderboardsMemberInfo = styled(Flex)`
 	width: 100%;
 	padding: 0 10px;
 	justify-content: space-between;
+	overflow: hidden;
 `;
 
 const StyledGameLeaderboardsMemberUsername = styled.div<{
 	isCompact?: boolean;
 }>`
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 	font-weight: bold;
 	font-size: ${({ isCompact }) => (isCompact ? '1em' : '1.2em')};
-	@media (max-width: ${media.bigPhones}) {
-		display: none;
-	}
 `;
 
 const StyledGameLeaderboardsMemberTime = styled.div`

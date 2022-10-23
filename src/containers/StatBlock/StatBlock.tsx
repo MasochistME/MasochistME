@@ -40,18 +40,29 @@ const StyledStatBlock = styled(Flex)`
 	i {
 		font-size: 1.8em;
 	}
+	@media (max-width: ${media.tablets}) {
+		padding: 4px 8px;
+		i {
+			font-size: 1.5em;
+		}
+	}
 `;
 
 const StyledStatBlockLabel = styled.span`
 	font-size: 2em;
 	font-weight: bold;
 	line-height: 0.8em;
+	white-space: nowrap;
+	@media (max-width: ${media.tablets}) {
+		font-size: 1.3em;
+	}
 `;
 
 const StyledStatBlockSublabel = styled.span`
 	font-size: 1em;
 	font-weight: bold;
 	color: ${colors.yellow}bb;
+	white-space: nowrap;
 	@media (max-width: ${media.smallNetbooks}) {
 		display: none;
 	}
@@ -60,6 +71,7 @@ const StyledStatBlockSublabel = styled.span`
 StatBlock.Title = styled(Flex)`
 	font-weight: bold;
 `;
+
 StatBlock.Subtitle = styled(Flex)`
 	font-style: italic;
 	align-items: center;

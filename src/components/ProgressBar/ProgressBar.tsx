@@ -39,7 +39,7 @@ ProgressBar.Completion = styled.div.attrs(
 	padding: 0 !important;
 	box-sizing: border-box;
 	border-radius: 8px;
-	@media (max-width: ${media.smallTablets}) {
+	@media (max-width: ${media.tablets}) {
 		border: none;
 		min-width: 100px;
 	}
@@ -62,9 +62,6 @@ ProgressBar.Progress = styled.div.attrs((props: Omit<Props, 'style'>) => {
 	height: 100%;
 	padding: 0 !important;
 	border-radius: 8px;
-	@media (max-width: ${media.smallTablets}) {
-		display: none;
-	}
 `;
 
 ProgressBar.Percentage = styled.div`

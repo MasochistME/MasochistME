@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 
@@ -28,6 +28,14 @@ export const MemberProfileHeader = (props: Props): JSX.Element => {
 		description: 'Unknown',
 	};
 
+	const memberName = useMemo(() => {
+		const originalName = member?.name ?? 'Loading...';
+		const shortenedName = originalName.slice(0, 27);
+		if (shortenedName.length < originalName.length)
+			return shortenedName + '...';
+		return originalName;
+	}, [member]);
+
 	const handleMemberUpdate = () => {
 		// TODO
 		alert('This is not implemented yet :(');
@@ -35,25 +43,27 @@ export const MemberProfileHeader = (props: Props): JSX.Element => {
 
 	return (
 		<StyledMemberProfileHeader row>
-			<MemberAvatar
-				member={member}
-				patronTier={leaderData?.patreonTier}
-				size={Size.LARGE}
-				isLoading={isLoading}
-				isError={isError}
-			/>
+			<StyledMemberProfileHeaderAvatar>
+				<MemberAvatar
+					member={member}
+					patronTier={leaderData?.patreonTier}
+					size={Size.LARGE}
+					isLoading={isLoading}
+					isError={isError}
+				/>
+			</StyledMemberProfileHeaderAvatar>
 			<StyledMemberProfileDetails column>
-				<Flex row align width="100%" justifyContent="space-between">
-					<h1 style={{ margin: '0' }}>
+				<StyledMemberProfileTopRow>
+					<StyledMemberProfileUsername>
 						<a
 							href={`https://steamcommunity.com/profiles/${member?.steamId}`}
 							target="_blank"
 							rel="noopener noreferrer">
 							<i className="fab fa-steam" style={{ marginRight: '10px' }} />
-							{member?.name ?? 'Loading...'}
+							{memberName}
 						</a>
-					</h1>
-					<Flex row align gap={12}>
+					</StyledMemberProfileUsername>
+					<StyledMemberProfileUpdate>
 						<Tooltip
 							content={dayjs(member?.lastUpdated).format(
 								'D MMM YYYY, H:mm:ss',
@@ -70,8 +80,8 @@ export const MemberProfileHeader = (props: Props): JSX.Element => {
 							icon="fas fa-refresh"
 							onClick={() => handleMemberUpdate()}
 						/>
-					</Flex>
-				</Flex>
+					</StyledMemberProfileUpdate>
+				</StyledMemberProfileTopRow>
 				{leaderData?.patreonTier && (
 					<Tooltip
 						content={`This user is a tier ${
@@ -100,14 +110,38 @@ const StyledMemberProfileHeader = styled(Flex)`
 	background-color: ${colors.black}66;
 `;
 
-const StyledMemberProfileDetails = styled(Flex)`
-	max-width: 100%;
-	flex: 1 1 100%;
-	gap: 4px;
-	align-items: flex-start;
+const StyledMemberProfileHeaderAvatar = styled.div`
 	@media (max-width: ${media.tablets}) {
 		display: none;
 	}
+`;
+
+const StyledMemberProfileTopRow = styled(Flex)`
+	width: 100%;
+	justify-content: space-between;
+	align-items: center;
+`;
+
+const StyledMemberProfileUsername = styled.h2`
+	margin: 0;
+	max-width: 600px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+`;
+
+const StyledMemberProfileUpdate = styled(Flex)`
+	align-items: center;
+	gap: 12px;
+	@media (max-width: ${media.tablets}) {
+		display: none;
+	}
+`;
+
+const StyledMemberProfileDetails = styled(Flex)`
+	width: 100%;
+	gap: 4px;
+	align-items: flex-start;
 `;
 
 const StyledMemberProfileDescription = styled.div`

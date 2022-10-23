@@ -85,7 +85,13 @@ export const LeaderboardsMemberPoints = (props: Props): JSX.Element => {
 };
 
 const StyledLeaderboardsMemberPoints = styled(Flex)`
-	gap: 16px;
+	@media (min-width: ${media.smallTablets}) {
+		width: 260px;
+		gap: 16px;
+	}
+	@media (max-width: ${media.smallTablets}) {
+		gap: 2px;
+	}
 `;
 
 const StyledScore = styled(Flex)`
@@ -94,6 +100,7 @@ const StyledScore = styled(Flex)`
 	align-items: center;
 	gap: 4px;
 	width: 20px;
+
 	i {
 		margin: 0;
 		padding: 0;

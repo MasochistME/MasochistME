@@ -72,20 +72,24 @@ export const LeaderboardsMemberSummary = (props: Props): JSX.Element => {
 			isHighestPatronTier={isHighestPatronTier}
 			isDisabled={isDisabled}
 			onClick={onShowProfile}>
-			<StyledMemberPosition align justify size={size}>
-				{position}
-			</StyledMemberPosition>
-			<MemberAvatar member={memberData!} size={size} />
-			<Flex column align justifyContent={'space-evenly'} margin="0 4px" gap={8}>
-				<LeaderboardsMemberIconPatron patronTier={leaderData?.patreonTier} />
-				{infoIcon()}
-			</Flex>
+			<StyledLeaderboardsMemberDetailsImages>
+				<Flex>
+					<StyledMemberPosition align justify size={size}>
+						{position}
+					</StyledMemberPosition>
+					<MemberAvatar member={memberData!} size={size} />
+				</Flex>
+				<StyledLeaderboardsMemberIcons>
+					<LeaderboardsMemberIconPatron patronTier={leaderData?.patreonTier} />
+					{infoIcon()}
+				</StyledLeaderboardsMemberIcons>
+			</StyledLeaderboardsMemberDetailsImages>
 			<StyledLeaderboardsMemberDetails align>
 				<StyledLeaderboardsMemberExpandIcon onClick={onShowDetailsClick}>
 					<i className={`fas fa-chevron-${isExpanded ? 'down' : 'up'}`} />
 				</StyledLeaderboardsMemberExpandIcon>
 				<StyledLeaderboardsMemberUsername>
-					{member.name}
+					<h4>{member.name}</h4>
 				</StyledLeaderboardsMemberUsername>
 				<LeaderboardsMemberPoints steamId={steamId} />
 			</StyledLeaderboardsMemberDetails>
@@ -99,10 +103,9 @@ type SummaryProps = {
 };
 
 const StyledLeaderboardsMemberSummary = styled(Flex)<SummaryProps>`
-	width: 100%;
-	min-width: 0;
-	overflow: hidden;
-	padding: 2px 0;
+	justify-content: space-between;
+	width: 1000px;
+	max-width: 100%;
 	gap: 4px;
 	cursor: pointer;
 	color: ${({ isDisabled, isHighestPatronTier }) => {
@@ -141,6 +144,11 @@ const StyledLeaderboardsMemberSummary = styled(Flex)<SummaryProps>`
 		}};
 `;
 
+const StyledLeaderboardsMemberDetailsImages = styled(Flex)`
+	flex-direction: row;
+	gap: 8px;
+`;
+
 const StyledLeaderboardsMemberExpandIcon = styled(Flex)`
 	width: 24px;
 	height: 100%;
@@ -154,32 +162,60 @@ const StyledLeaderboardsMemberExpandIcon = styled(Flex)`
 `;
 
 const StyledMemberPosition = styled(Flex)<{ size: Size }>`
-	width: ${({ size }) => size}px;
+	width: ${({ size }) => size - 8}px;
 	max-width: 64px;
 	font-size: 1.5em;
+	@media (max-width: ${media.tablets}) {
+		width: 32px;
+	}
+	@media (max-width: ${media.bigPhones}) {
+		display: none;
+	}
+`;
+
+const StyledLeaderboardsMemberIcons = styled(Flex)`
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-evenly;
+	gap: 8px;
 	@media (max-width: ${media.tablets}) {
 		display: none;
 	}
 `;
 
-const StyledLeaderboardsMemberUsername = styled.h4`
-	text-transform: uppercase;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	&:hover {
-		color: ${colors.white};
-	}
-`;
-
 const StyledLeaderboardsMemberDetails = styled(Flex)`
 	justify-content: space-between;
-	margin: 0 10px;
-	width: 90%;
-	min-width: 0;
 	box-sizing: border-box;
+	overflow: hidden;
+	margin: 0 10px;
+	width: 100%;
+	gap: 8px;
 	@media (max-width: ${media.tablets}) {
 		max-width: 100%;
 		padding: 0 5px;
+	}
+`;
+
+const StyledLeaderboardsMemberUsername = styled(Flex)`
+	align-items: center;
+	justify-content: center;
+	max-width: 500px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+
+	@media (max-width: ${media.tablets}) {
+		display: none;
+	}
+
+	h4 {
+		flex: 1; /* ADJUSTED */
+		text-overflow: ellipsis;
+		overflow: hidden;
+		min-width: 0;
+		text-transform: uppercase;
+		&:hover {
+			color: ${colors.white};
+		}
 	}
 `;

@@ -4,6 +4,7 @@ import { Member, Tier, Leaderboards } from '@masochistme/sdk/dist/v1/types';
 
 import { useTiers, useCuratorMembers, useLeaderboards } from 'sdk';
 import { useAppContext } from 'context';
+import { media } from 'shared/theme';
 import { useActiveTab } from 'shared/hooks';
 import { TabDict } from 'shared/config/tabs';
 import { SubPage, Section } from 'containers';
@@ -55,9 +56,7 @@ const TabLeaderboards = (): JSX.Element => {
 				{isLoading && <Spinner />}
 				{isFetched && <Flex column>{createRankingList()}</Flex>}
 			</StyledLeaderboards>
-			<Section
-				width="100%"
-				maxWidth="450px"
+			<StyledSectionGameRanking
 				title="Game ranking system"
 				content={
 					<Flex column gap={8}>
@@ -90,6 +89,22 @@ const TabLeaderboards = (): JSX.Element => {
 
 export default TabLeaderboards;
 
+const StyledLeaderboards = styled(Flex)`
+	flex-direction: column;
+	width: 1000px;
+	max-width: 100%;
+`;
+
+const StyledSectionGameRanking = styled(Section)`
+	min-width: 450px;
+	max-width: 450px;
+	@media (max-width: ${media.smallNetbooks}) {
+		min-width: 0;
+		width: 100%;
+		max-width: 450px;
+	}
+`;
+
 const StyledTierTypes = styled.ul`
 	margin: 0;
 	li {
@@ -98,8 +113,4 @@ const StyledTierTypes = styled.ul`
 			width: 16px;
 		}
 	}
-`;
-
-const StyledLeaderboards = styled.div`
-	flex: 1 1 100%;
 `;

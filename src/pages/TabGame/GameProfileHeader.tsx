@@ -53,6 +53,15 @@ const GameHeaderTier = ({ gameTier }: { gameTier?: Tier }) => {
 	);
 };
 
+const StyledGameHeader = styled(Flex)`
+	max-width: 100%;
+	padding: 8px;
+	gap: 16px;
+	justify-content: space-between;
+	align-items: flex-start;
+	background-color: ${colors.black}66;
+`;
+
 const StyledGameHeaderThumbnail = styled.img`
 	height: 128px;
 	min-height: 128px;
@@ -60,15 +69,6 @@ const StyledGameHeaderThumbnail = styled.img`
 	border: 3px solid ${colors.black};
 	box-sizing: border-box;
 	box-shadow: 0 0 10px ${colors.black};
-`;
-
-const StyledGameHeader = styled(Flex)`
-	width: 100%;
-	padding: 8px;
-	gap: 16px;
-	justify-content: space-between;
-	align-items: flex-start;
-	background-color: ${colors.black}66;
 `;
 
 const StyledGameDetails = styled(Flex)`
