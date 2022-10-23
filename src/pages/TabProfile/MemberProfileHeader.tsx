@@ -26,6 +26,7 @@ export const MemberProfileHeader = (props: Props): JSX.Element => {
 		tier => tier.tier === leaderData?.patreonTier,
 	) ?? {
 		description: 'Unknown',
+		symbol: 'fas fa-medal',
 	};
 
 	const memberName = useMemo(() => {
@@ -88,7 +89,7 @@ export const MemberProfileHeader = (props: Props): JSX.Element => {
 							patron?.description?.toUpperCase() ?? 'Loading...'
 						} supporter`}>
 						<StyledMemberProfilePatron>
-							<i className="fas fa-medal" />{' '}
+							<i className={patron?.symbol} />{' '}
 							{patron?.description?.toUpperCase() ?? 'Loading...'}{' '}
 						</StyledMemberProfilePatron>
 					</Tooltip>
