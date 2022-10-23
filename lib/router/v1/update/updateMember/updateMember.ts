@@ -17,7 +17,7 @@ import {
   MemberSteamGame,
   MemberSteamGameFallback,
   MemberSteamPlayerStats,
-} from './types';
+} from '../types';
 
 import { queueMember } from '.';
 

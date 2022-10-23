@@ -77,3 +77,52 @@ export type MemberSteamAchievement = {
   achieved: 0 | 1; // If the member unlocked this achievement
   unlocktime: number; // Timestamp in seconds
 };
+
+/**
+ * Detailed data about a Steam game.
+ * Endpoint: http://store.steampowered.com/api/appdetails,
+ * params: {
+ *  appids,
+ *  filters: 'price_overview,basic,achievements',
+ * }
+ */
+export type SteamGameDetails = {
+  [key: string]: {
+    success: boolean;
+    data: SteamGameDetailsData;
+  };
+};
+
+export type SteamGameDetailsData = {
+  type: string; // 'game' for games
+  name: string;
+  steam_appid: number;
+  required_age: number; // 0 if no restrictions
+  is_free: boolean;
+  controller_support: string;
+  detailed_description: string;
+  about_the_game: string;
+  short_description: string;
+  supported_languages: string;
+  header_image: string; // URL of the avatar
+  website: string | null;
+  pc_requirements: { minimum: string; recommended: string };
+  mac_requirements: { minimum: string; recommended: string };
+  linux_requirements: { minimum: string; recommended: string };
+  price_overview: SteamGameDetailsPrice;
+  achievements: SteamGameDetailsAchievements;
+};
+
+export type SteamGameDetailsPrice = {
+  currency: string;
+  initial: number;
+  final: number;
+  discount_percent: number;
+  initial_formatted: string;
+  final_formatted: string;
+};
+
+export type SteamGameDetailsAchievements = {
+  total: number;
+  highlighted: { name: string; path: string }[];
+};

@@ -7,16 +7,10 @@ export const routerV1 = express.Router();
  *         UPDATE         *
  ***************************/
 
-import {
-  getUpdateMemberStatus,
-  updateMember,
-  getUpdateCuratorStatus,
-  updateCurator,
-} from './update';
+import { updateMember, getUpdateCuratorStatus, updateCurator } from './update';
 
 routerV1.get('/update', getUpdateCuratorStatus);
-routerV1.put('/update', apiV1Auth, updateCurator);
-routerV1.get('/members/member/:memberId/update', getUpdateMemberStatus);
+routerV1.put('/update', updateCurator);
 routerV1.put('/members/member/:memberId/update', updateMember);
 
 /***************************

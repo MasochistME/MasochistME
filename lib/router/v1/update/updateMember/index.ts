@@ -1,5 +1,4 @@
 export { updateMember } from './updateMember';
-export * from './types';
 
 class QueueMember {
   public MAX_UPDATE_QUEUE = 4;
