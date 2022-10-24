@@ -4,7 +4,7 @@ import { getFilteredChoices } from "commands/_utils";
 /**
  * Filter the badge choice list based on the user provided autocomplete value.
  * @param focused string - user provided autocomplete value
- * @returns ApplicationCommandOptionChoiceData[]
+ * @return ApplicationCommandOptionChoiceData[]
  */
 export const getBadgeChoices = (focused: string) => {
   const choices = cache.badges.map(badge => {
@@ -13,7 +13,7 @@ export const getBadgeChoices = (focused: string) => {
       name: `${(game?.name ?? "UNKNOWN GAME").toUpperCase()} - ${badge.name} (${
         badge.description
       })`,
-      value: badge.id,
+      value: String(badge._id),
     };
   });
 
@@ -23,12 +23,12 @@ export const getBadgeChoices = (focused: string) => {
 /**
  * Filter the game choice list based on the user provided autocomplete value.
  * @param focused string - user provided autocomplete value
- * @returns ApplicationCommandOptionChoiceData[]
+ * @return ApplicationCommandOptionChoiceData[]
  */
 export const getGameChoices = (focused: string) => {
   const choices = cache.games.map(game => ({
     name: game.name,
-    value: game.id,
+    value: String(game.id),
   }));
 
   return getFilteredChoices(choices, focused);
@@ -37,12 +37,12 @@ export const getGameChoices = (focused: string) => {
 /**
  * Filter the member choice list based on the user provided autocomplete value.
  * @param focused string - user provided autocomplete value
- * @returns ApplicationCommandOptionChoiceData[]
+ * @return ApplicationCommandOptionChoiceData[]
  */
 export const getMemberChoices = (focused: string) => {
   const choices = cache.members.map(member => ({
     name: member.name,
-    value: member.id,
+    value: String(member.id),
   }));
 
   return getFilteredChoices(choices, focused);

@@ -1,28 +1,36 @@
-import {
-  getSuccessEmbed,
-  getErrorEmbed,
-  DiscordInteraction,
-  log,
-} from "arcybot";
+import { getSuccessEmbed, DiscordInteraction } from "arcybot";
+// @ts-ignore:next-line
+import { createError, ErrorAction } from "utils";
+
+import { Options } from "./builder";
 
 /**
  * Describe your "template" command here.
  * @param interaction DiscordInteraction
- * @returns void
+ * @return void
  */
 export const template = async (
   interaction: DiscordInteraction,
 ): Promise<void> => {
   await interaction.deferReply();
 
-  const stringoption = interaction.options.getString("stringoption", true);
+  const stringoption = interaction.options.getString(
+    Options.STRING_OPTION,
+    true,
+  );
+  const numberoption = interaction.options.getNumber(
+    Options.NUMBER_OPTION,
+    true,
+  );
 
   try {
     interaction.editReply(
-      getSuccessEmbed("Success", `Your command worked! ${stringoption}`),
+      getSuccessEmbed(
+        "Success",
+        `Your command worked! ${stringoption} + ${numberoption}`,
+      ),
     );
   } catch (err: any) {
-    interaction.editReply(getErrorEmbed("Error", "Your command did not work!"));
-    log.WARN(err);
+    createError(interaction, err, ErrorAction.EDIT);
   }
 };

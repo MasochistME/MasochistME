@@ -8,7 +8,7 @@ import { getFilteredChoices } from "commands/_utils";
 /**
  * Handles autocompletion for the "template" command.
  * @param interaction
- * @returns void
+ * @return void
  */
 export const templateAutocomplete = async (
   interaction: AutocompleteInteraction,

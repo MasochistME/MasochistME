@@ -1,12 +1,13 @@
-import axios from "axios";
-import { getErrorEmbed, DiscordInteraction, log } from "arcybot";
+import { DiscordInteraction } from "arcybot";
 
-import { API_URL } from "consts";
+import { sdk } from "fetus";
+import { Badge } from "@masochistme/sdk/dist/v1/types";
+import { createError, ErrorAction } from "utils";
 
 /**
  * Creates a new badge.
  * @param interaction DiscordInteraction
- * @returns void
+ * @return void
  */
 export const badgecreate = async (
   interaction: DiscordInteraction,
@@ -15,27 +16,25 @@ export const badgecreate = async (
 
   const gameId = interaction.options.getString("game", true);
   const thumbnail = interaction.options.getAttachment("image", true);
-  const isNonSteamGame = isNaN(parseInt(gameId));
+  const isSteamGame = !isNaN(parseInt(gameId));
 
-  const data = {
+  const badge: Omit<Badge, "_id"> = {
     name: interaction.options.getString("name", true),
-    gameId: isNonSteamGame ? null : gameId,
+    gameId: isSteamGame ? Number(gameId) : null,
     requirements: interaction.options.getString("requirements", true),
     points: interaction.options.getNumber("points", true),
     description: interaction.options.getString("description", true),
-    game: isNonSteamGame ? gameId : null,
+    title: isSteamGame ? null : gameId,
     img: thumbnail.url,
-    enabled: true,
-    legacy: false,
-    isNonSteamGame,
+    isEnabled: true,
+    isLegacy: false,
+    isSteamGame,
   };
-  const url = `${API_URL}/badges`;
 
   try {
-    const addBadge = await axios.post(url, data);
-    if (addBadge.status !== 201) {
-      throw addBadge.data;
-    }
+    const response = await sdk.createBadge({ badge });
+    if (!response.acknowledged)
+      throw new Error("Could not create a badge, please try again later.");
     const disabledFields = [
       "game",
       "img",
@@ -47,7 +46,7 @@ export const badgecreate = async (
       title: "🥇 Badge created!",
       thumbnail: { url: thumbnail.url },
       fields: [
-        ...Object.entries(data)
+        ...Object.entries(badge)
           .filter(entry => !disabledFields.includes(entry[0]))
           .map(entry => ({
             name: entry[0],
@@ -56,13 +55,12 @@ export const badgecreate = async (
           })),
         {
           name: "---",
-          value: `You have added a new badge! Its ID is ${addBadge.data.insertedId}.`,
+          value: `You have added a new badge! Its ID is ${response.insertedId}.`,
         },
       ],
     };
     interaction.editReply({ embeds: [embed] });
   } catch (err: any) {
-    log.WARN(err);
-    interaction.editReply(getErrorEmbed("Error saving badge", err, true));
+    createError(interaction, err, ErrorAction.EDIT);
   }
 };

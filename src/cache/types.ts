@@ -1,4 +1,8 @@
-import { ObjectId } from "mongodb";
+import { ObjectId, WithId } from "mongodb";
+
+export type Meme = WithId<{
+  meme: string;
+}>;
 
 export type CacheItem = {
   name: string;
@@ -6,11 +10,6 @@ export type CacheItem = {
 };
 
 export type CacheMember = CacheItem;
-
-export interface CacheBadge extends CacheItem {
-  gameId: string;
-  description: string;
-}
 
 export interface CacheGame extends CacheItem {
   description: string;

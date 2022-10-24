@@ -1,11 +1,12 @@
-import { DiscordInteraction, getErrorEmbed, getSuccessEmbed } from "arcybot";
+import { DiscordInteraction, getSuccessEmbed } from "arcybot";
 
 import { addMemeToAPI } from "api";
+import { createError, ErrorAction } from "utils";
 
 /**
  * Adds a new meme to the database.
  * @param interaction DiscordInteraction
- * @returns void
+ * @return void
  */
 export const memeadd = async (
   interaction: DiscordInteraction,
@@ -15,10 +16,7 @@ export const memeadd = async (
     if (!meme) throw new Error("You did not provide a meme.");
     await addMemeToAPI(meme);
     interaction.reply(getSuccessEmbed("Meme added!", meme));
-  } catch (e) {
-    interaction.reply(
-      getErrorEmbed("Something went wrong :C", "Try again later.", true),
-    );
-    console.log(e);
+  } catch (err: any) {
+    createError(interaction, err, ErrorAction.REPLY);
   }
 };

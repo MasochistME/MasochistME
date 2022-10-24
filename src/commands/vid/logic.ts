@@ -1,11 +1,17 @@
 import { DiscordInteraction, getErrorEmbed, getSuccessEmbed } from "arcybot";
 
-import { getChannelById, getOption, isLink } from "utils";
+import {
+  createError,
+  ErrorAction,
+  getChannelById,
+  getOption,
+  isLink,
+} from "utils";
 
 /**
  * Sends a video to the designated channel.
  * @param interaction DiscordInteraction
- * @returns void
+ * @return void
  */
 export const vid = async (interaction: DiscordInteraction): Promise<void> => {
   const link = interaction.options.getString("link", true);
@@ -48,7 +54,7 @@ export const vid = async (interaction: DiscordInteraction): Promise<void> => {
   }
 
   try {
-    channel?.send(`${link} - ${interaction.member?.user.username}`);
+    channel?.send(`${link} - <@${interaction.user.id}>`);
     interaction.reply(
       getSuccessEmbed(
         "Video sent!",
@@ -57,8 +63,6 @@ export const vid = async (interaction: DiscordInteraction): Promise<void> => {
       ),
     );
   } catch (err: any) {
-    interaction.reply(
-      getErrorEmbed("Something fucked up", err.message ?? err, true),
-    );
+    createError(interaction, err, ErrorAction.REPLY);
   }
 };

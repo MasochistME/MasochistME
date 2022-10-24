@@ -1,13 +1,14 @@
 import { DiscordInteraction } from "arcybot";
 
-import { cache } from "fetus";
+import { bot, cache } from "fetus";
 import { UNKNOWN_NAME } from "consts";
+import { ButtonInteraction } from "discord.js";
 
 export const getOption = (key: string) =>
   cache.options.find(option => option.option === key)?.value;
 
 export const getChannelById = (
-  interaction: DiscordInteraction,
+  interaction: DiscordInteraction | ButtonInteraction,
   channelId?: string,
 ) => {
   const channel = interaction.guild?.channels.cache.find(
@@ -17,9 +18,16 @@ export const getChannelById = (
   return null;
 };
 
-export const getBadgeNameById = (id?: string | null): string => {
-  if (!id) return UNKNOWN_NAME;
-  const badge = cache.badges.find(b => b.id === id);
+export const getModChannel = () => {
+  const modRoom = getOption("room_mod");
+  const channel = bot.botClient.channels.cache.find(ch => ch.id === modRoom);
+  if (channel?.isTextBased()) return channel;
+  return null;
+};
+
+export const getBadgeNameById = (badgeId?: string | null): string => {
+  if (!badgeId) return UNKNOWN_NAME;
+  const badge = cache.badges.find(b => String(b._id) === badgeId);
   return badge?.name ?? UNKNOWN_NAME;
 };
 

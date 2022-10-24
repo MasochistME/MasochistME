@@ -1,11 +1,12 @@
 import { DiscordInteraction, getErrorEmbed, getSuccessEmbed } from "arcybot";
 
 import { getMemesFromAPI, deleteMemeFromAPI } from "api";
+import { createError, ErrorAction } from "utils";
 
 /**
  * Deletes a meme permanently from the database.
  * @param interaction DiscordInteraction
- * @returns void
+ * @return void
  */
 export const memedelete = async (
   interaction: DiscordInteraction,
@@ -43,10 +44,7 @@ export const memedelete = async (
         `In case it was by mistake, the deleted meme was:\n\n${memeToDelete.meme}`,
       ),
     );
-  } catch (e) {
-    interaction.reply(
-      getErrorEmbed("Something went wrong :C", "Try again later.", true),
-    );
-    console.log(e);
+  } catch (err: any) {
+    createError(interaction, err, ErrorAction.REPLY);
   }
 };

@@ -1,48 +1,32 @@
-import axios from "axios";
-import {
-  getErrorEmbed,
-  getSuccessEmbed,
-  DiscordInteraction,
-  log,
-} from "arcybot";
+import { getSuccessEmbed, DiscordInteraction } from "arcybot";
 
-import { getBadgeNameById } from "utils";
-import { API_URL } from "consts";
+import { sdk } from "fetus";
+import { createError, ErrorAction, getBadgeNameById } from "utils";
 
 /**
  * Removes an existing badge.
  * @param interaction DiscordInteraction
- * @returns void
+ * @return void
  */
 export const badgedelete = async (
   interaction: DiscordInteraction,
 ): Promise<void> => {
   await interaction.deferReply();
 
-  const badgeId = interaction.options.getString("badge", true);
-
-  const url = `${API_URL}/badges/${badgeId}`;
   try {
-    const deleteBadge = await axios.delete(url);
-    if (deleteBadge.status !== 204) {
-      throw deleteBadge.data;
-    }
+    const badgeId = interaction.options.getString("badge", true);
+    const response = await sdk.deleteBadgeById({ badgeId });
+    if (!response.acknowledged)
+      throw new Error("Could not delete the badge, please try again later.");
     interaction.editReply(
       getSuccessEmbed(
         "Badge deleted",
         `Done, fucker.\nBadge **${getBadgeNameById(
           badgeId,
-        ).toUpperCase()}** permanently deleted.\n**Important**: If any user had this badge assigned, they will still have it, but it won't display on their profile anymore. `,
+        ).toUpperCase()}** permanently deleted.\nEvery member which had this badge also had it removed.`,
       ),
     );
   } catch (err: any) {
-    log.WARN(err);
-    interaction.editReply(
-      getErrorEmbed(
-        `Error deleting badge **${getBadgeNameById(badgeId).toUpperCase()}**`,
-        err,
-        true,
-      ),
-    );
+    createError(interaction, err, ErrorAction.EDIT);
   }
 };

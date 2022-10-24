@@ -1,9 +1,11 @@
-import * as dotenv from "dotenv";
 import axios from "axios";
+import * as dotenv from "dotenv";
 import { Arcybot } from "arcybot";
+import { SDK } from "@masochistme/sdk/dist/v1/sdk";
 
 import { getOption, Database } from "utils";
 import { Cache } from "cache";
+import { handleRaceTimer } from "commands/_utils/race";
 
 import { commandsFunctions, customCommands } from "commands";
 import { handleAutocomplete, handleButtons } from "interactions";
@@ -11,24 +13,29 @@ import { handleAutocomplete, handleButtons } from "interactions";
 dotenv.config();
 
 /************************
- *       DB CONFIG      *
+ *        CONFIG        *
  ************************/
 
-const botDb = process.env["ENV"] === "dev" ? "fetus-dev" : "legacy-fetus";
-export const mmeDb = "legacy-masochist";
-const dbConfig = [
-  { symbol: botDb, url: process.env["DB"] },
-  { symbol: mmeDb, url: process.env["DB"] },
-];
+const botDb = process.env["ENV"] === "dev" ? "fetus-dev" : "fetus";
+export const mmeDb =
+  process.env["ENV"] === "dev" ? "masochist-dev" : "masochist";
 
-export const mongo = new Database(dbConfig);
+const host =
+  process.env["ENV"] === "dev"
+    ? "http://localhost:3081"
+    : "http://65.108.214.190:3002";
 
-/************************
- *         CACHE        *
- ************************/
+export const mongo = new Database([{ symbol: botDb, url: process.env["DB"] }]);
 
-const cacheConfig = { botDb };
-export const cache = new Cache(cacheConfig);
+export const sdk = new SDK({
+  host,
+  authToken: process.env.ACCESS_TOKEN,
+});
+
+export const cache = new Cache({ botDb });
+
+if (process.env.ACCESS_TOKEN)
+  axios.defaults.headers.common["Authorization"] = process.env.ACCESS_TOKEN;
 
 /************************
  *      BOT CONFIG      *
@@ -61,22 +68,10 @@ const init = async () => {
     if (interaction.isAutocomplete()) handleAutocomplete(interaction);
     if (interaction.isButton()) handleButtons(interaction);
   });
+
+  // Race timer checks every minute if any race should start.
+  // TODO reenable when needed
+  // handleRaceTimer();
 };
 
 init();
-
-// const init = bot => {
-//   bot.on("message", classifyMessage);
-//   bot.on("messageUpdate", msgEdit);
-//   bot.on("messageDelete", msgDelete);
-//   bot.on("guildMemberAdd", userJoin);
-//   bot.on("guildMemberRemove", userLeave);
-
-//   cache.bot = bot;
-//   log.INFO(
-//     `${new Date().toLocaleString()} - Dr. Fetus reporting for destruction!`,
-//   );
-// };
-
-if (process.env.ACCESS_TOKEN)
-  axios.defaults.headers.common["Authorization"] = process.env.ACCESS_TOKEN;

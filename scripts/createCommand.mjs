@@ -59,7 +59,7 @@ const createCommand = name => {
   fs.appendFileSync(
     "./src/commands/builders.ts",
     `\r\n
-    // TODO don't forget to edit this!
+    // TODO Don't forget to edit this!
     //
     // import { ${command}Builder } from "./${command}/builder";
     // export const customCommands = [${command}Builder];`,
@@ -67,7 +67,7 @@ const createCommand = name => {
   fs.appendFileSync(
     "./src/commands/logic.ts",
     `\r\n
-    // TODO don't forget to edit this!
+    // TODO Don't forget to edit this!
     //
     // import { ${command} } from "./${command}/logic";
     // export const commandsFunctions: CommandFn[] = [${command}];`,
@@ -77,7 +77,7 @@ const createCommand = name => {
   fs.appendFileSync(
     "./src/interactions/autocomplete.ts",
     `\r\n
-    // TODO don't forget to edit this!
+    // TODO Don't forget to edit this!
     // 
     // import { ${command}Autocomplete } from "commands/${command}/interactions";
     //

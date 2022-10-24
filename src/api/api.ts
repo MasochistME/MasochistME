@@ -1,6 +1,6 @@
 import { CommandObject } from "arcybot";
 
-import { CacheOption } from "types";
+import { CacheOption } from "cache";
 import { mongo, cache } from "fetus";
 
 export const getCommandsFromAPI = async () => {
@@ -9,7 +9,7 @@ export const getCommandsFromAPI = async () => {
     .find();
   const commands: CommandObject[] = [];
   await cursor.forEach(el => {
-    if (!el.legacy) commands.push(el);
+    if (!el.isDisabled) commands.push(el);
   });
   return commands;
 };

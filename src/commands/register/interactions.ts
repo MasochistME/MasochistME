@@ -8,7 +8,7 @@ import { API_URL, REGISTRATION_REVIEW } from "consts";
 /**
  * Handles autocompletion for the create badge command
  * @param interaction
- * @returns void
+ * @return void
  */
 export const registrationReview = async (
   interaction: ButtonInteraction,
@@ -17,7 +17,7 @@ export const registrationReview = async (
   if (!isMod(interaction)) {
     interaction.channel?.send(
       getErrorEmbed(
-        "Error",
+        "You can't do that",
         `User <@${interaction.user.id}> doesn't have role allowing them to review registration application.`,
       ),
     );
@@ -89,7 +89,7 @@ const connectDiscordUserToSteam = async (
  * @param interaction ButtonInteraction
  * @param user string - user's Discord mention string
  * @param steamId string - user's Steam ID
- * @returns APIEmbed
+ * @return APIEmbed
  */
 const getApplicationReviewedEmbed = (
   interaction: ButtonInteraction,

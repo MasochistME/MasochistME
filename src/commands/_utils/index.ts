@@ -4,7 +4,7 @@ import { ApplicationCommandOptionChoiceData } from "discord.js";
  * Filter the choice list based on the user provided autocomplete value.
  * @param choices ApplicationCommandOptionChoiceData[],
  * @param focused string
- * @returns ApplicationCommandOptionChoiceData[]
+ * @return ApplicationCommandOptionChoiceData[]
  */
 export const getFilteredChoices = (
   choices: ApplicationCommandOptionChoiceData[],

@@ -6,7 +6,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "create-command": "node ./scripts/createCommand.mjs && yarn lint",
+    "create-command": "node ./scripts/createCommand.mjs && yarn lint --fix",
     "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
     "fetus:dev": "env ENV=dev npx tsx src/fetus.ts",
     "fetus:dev:watch": "env ENV=dev nodemon --exec npx tsx src/fetus.ts",
@@ -33,9 +33,11 @@
     "dist/**/*"
   ],
   "dependencies": {
+    "@masochistme/sdk": "^2.0.1",
     "arcybot": "^1.4.4",
     "axios": "^0.27.2",
     "compromise": "^12.2.1",
+    "dayjs": "^1.11.5",
     "discord.js": "^14.5.0",
     "dotenv": "^16.0.3",
     "mongodb": "^4.10.0"

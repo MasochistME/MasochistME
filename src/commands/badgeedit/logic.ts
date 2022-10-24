@@ -1,13 +1,12 @@
-import axios from "axios";
-import { getErrorEmbed, DiscordInteraction } from "arcybot";
+import { DiscordInteraction } from "arcybot";
 
-import { getBadgeNameById } from "utils";
-import { API_URL } from "consts";
+import { createError, ErrorAction, getBadgeNameById } from "utils";
+import { sdk } from "fetus";
 
 /**
  * Edits an existing badge.
  * @param interaction DiscordInteraction
- * @returns void
+ * @return void
  */
 export const badgeedit = async (
   interaction: DiscordInteraction,
@@ -21,24 +20,23 @@ export const badgeedit = async (
   const requirements = interaction.options.getString("requirements", false);
   const image = interaction.options.getAttachment("image", false);
 
-  const url = `${API_URL}/badges/${badgeId}`;
-
   try {
-    const getBadge = await axios.get(url);
-    if (getBadge.status !== 200) throw getBadge.data;
+    const existingBadge = await sdk.getBadgeById({ badgeId });
+    if (!existingBadge)
+      throw new Error("Cannot edit a badge which does not exist.");
 
     const newBadge = {
-      ...getBadge.data,
       ...(name && { name }),
       ...(description && { description }),
       ...(points && { points }),
       ...(requirements && { requirements }),
       ...(image && { img: image.url }),
     };
-    delete newBadge._id;
 
-    const updateBadge = await axios.put(url, newBadge);
-    if (updateBadge.status !== 200) throw updateBadge.data;
+    const response = await sdk.updateBadgeById({ badgeId, badge: newBadge });
+
+    if (!response.acknowledged)
+      throw new Error("Could not update the badge, please try again later.");
 
     const disabledFields = [
       "game",
@@ -49,7 +47,7 @@ export const badgeedit = async (
     ];
     const embed = {
       title: "🥇 Badge updated!",
-      thumbnail: { url: newBadge.img },
+      ...(newBadge.img && { thumbnail: { url: newBadge.img } }),
       fields: [
         ...Object.entries(newBadge)
           .filter(entry => !disabledFields.includes(entry[0]))
@@ -62,21 +60,12 @@ export const badgeedit = async (
           name: "---",
           value: `You have updated a **${getBadgeNameById(
             badgeId,
-          )?.toUpperCase()}** badge!`,
+          ).toUpperCase()}** badge!`,
         },
       ],
     };
     interaction.editReply({ embeds: [embed] });
   } catch (err: any) {
-    console.trace(err);
-    interaction.editReply(
-      getErrorEmbed(
-        `Error updating the badge **${getBadgeNameById(
-          badgeId,
-        ).toUpperCase()}**`,
-        err,
-        true,
-      ),
-    );
+    createError(interaction, err, ErrorAction.REPLY);
   }
 };
