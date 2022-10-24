@@ -28,5 +28,4 @@ const StyledBrokenImg = styled(Flex)`
 	box-sizing: border-box;
 	align-items: center;
 	justify-content: center;
-	background-color: ${colors.superDarkGrey};
 `;

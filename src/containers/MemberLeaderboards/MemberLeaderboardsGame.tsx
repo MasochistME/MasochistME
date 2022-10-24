@@ -43,7 +43,11 @@ export const MemberLeaderboardsGame = (props: Props): JSX.Element => {
 				}
 			/>
 			<StyledGameInfo align gap={8}>
-				<GameThumbnail game={gameData} size={Size.BIG} />
+				<GameThumbnail
+					game={gameData}
+					size={Size.SMALL}
+					onClick={onGameClick}
+				/>
 				<i className={gameTierIcon} />
 				<StyledGameTitle onClick={onGameClick}>{gameTitle}</StyledGameTitle>
 			</StyledGameInfo>

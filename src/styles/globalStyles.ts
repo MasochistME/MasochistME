@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
-import { colors, fonts, media } from 'shared/theme';
+import { colors } from 'shared/theme';
 import backgroundImg from 'shared/images/bg.jpg';
 
 const GlobalStyle = createGlobalStyle`
@@ -43,10 +43,6 @@ const GlobalStyle = createGlobalStyle`
     &:hover {
       text-decoration: underline;
     }
-  }
-  .bold {
-    font-weight: bold;
-  }
   }
 `;
 

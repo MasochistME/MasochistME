@@ -1,7 +1,7 @@
 import Tippy from '@tippyjs/react/headless';
 import styled from 'styled-components';
 
-import { colors } from 'shared/theme';
+import { colors, media } from 'shared/theme';
 import { Flex } from '../Flex';
 
 type Props = {
@@ -29,4 +29,6 @@ const StyledTooltip = styled(Flex)`
 	background-color: ${colors.superDarkGrey};
 	border-radius: 8px;
 	border: 1px solid ${colors.lightGrey};
+	text-align: left;
+	max-width: ${media.bigPhones};
 `;

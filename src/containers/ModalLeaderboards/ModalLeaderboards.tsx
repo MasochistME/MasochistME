@@ -26,12 +26,17 @@ export const ModalLeaderboards = (props: Props): JSX.Element | null => {
 	return (
 		<Modal isOpen={isModalOpen} style={{ ...modalStyle }}>
 			<WrapperLeaderboards column>
-				<ModalLeaderboardsHeader gameId={gameId} gameTitle={game?.title} />
 				{isGameLoaded && game && (
-					<Flex column gap={16}>
-						<ModalLeaderboardsBadges gameId={gameId} isCompact />
+					<>
+						<Flex column gap={16} padding="16px">
+							<ModalLeaderboardsHeader
+								gameId={gameId}
+								gameTitle={game?.title}
+							/>
+							<ModalLeaderboardsBadges gameId={gameId} isCompact />
+						</Flex>
 						<GameLeaderboards gameId={gameId} isCompact={isCompact} />
-					</Flex>
+					</>
 				)}
 			</WrapperLeaderboards>
 		</Modal>

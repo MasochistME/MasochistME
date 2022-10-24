@@ -39,6 +39,7 @@ export const SmallEvent = styled.p`
 
 export const EventLink = styled.span`
 	cursor: pointer;
+	font-weight: bold;
 	&:hover {
 		color: ${colors.white};
 	}

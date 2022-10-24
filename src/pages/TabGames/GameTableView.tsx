@@ -76,9 +76,7 @@ export const GameTableView = (): JSX.Element => {
 		width: '30%',
 		render: (game: Game) => {
 			return (
-				<TableLink className="bold" onClick={() => onGameClick(game)}>
-					{game.title}
-				</TableLink>
+				<TableLink onClick={() => onGameClick(game)}>{game.title}</TableLink>
 			);
 		},
 		sorter: (a: Game, b: Game) => {

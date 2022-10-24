@@ -4,8 +4,8 @@ import { Tier } from '@masochistme/sdk/dist/v1/types';
 
 import { media } from 'shared/theme';
 import { useAppContext, GameView } from 'context';
-import { GameTierCheckbox, SearchBar } from 'containers';
-import { Button, FilterBar, Flex, Spinner } from 'components';
+import { SearchBar } from 'containers';
+import { Button, Checkbox, FilterBar, Flex, Spinner } from 'components';
 import { useActiveTab } from 'shared/hooks';
 import { TabDict } from 'shared/config/tabs';
 import { useTiers } from 'sdk';
@@ -55,11 +55,11 @@ export const GameFilterBar = (): JSX.Element => {
 					{isTiersLoading && <Spinner />}
 					{isTiersFetched &&
 						tiersData.map((tier: Tier) => (
-							<GameTierCheckbox
-								key={`checkbox-game-${tier.id}`}
-								tierId={tier.id}
-								visibleTiers={visibleTiers}
-								setVisibleTiers={setVisibleTiers}
+							<Checkbox
+								icon={tier.icon}
+								itemType={tier.id}
+								visibleItems={visibleTiers}
+								setVisibleItems={setVisibleTiers}
 							/>
 						))}
 				</StyledGameFilterBarTiers>

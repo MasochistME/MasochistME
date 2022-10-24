@@ -3,17 +3,17 @@ import styled from 'styled-components';
 
 import { media, fonts, colors } from 'shared/theme';
 
-type Props = {
-	query: string;
-	setQuery: (query: string) => void;
+type Props<T extends string> = {
+	query: T;
+	setQuery: (query: T) => void;
 	placeholder?: string;
 };
 
-export const SearchBar = (props: Props): JSX.Element => {
+export const SearchBar = <T extends string>(props: Props<T>): JSX.Element => {
 	const { placeholder, query, setQuery } = props;
 
 	const onSearch = (event: React.ChangeEvent<HTMLInputElement>): void => {
-		const searchQuery = event.target.value;
+		const searchQuery = event.target.value as T;
 		setQuery(searchQuery);
 	};
 

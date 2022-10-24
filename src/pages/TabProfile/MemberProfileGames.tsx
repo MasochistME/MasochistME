@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { Tier, TierId } from '@masochistme/sdk/dist/v1/types';
 
 import { useTiers } from 'sdk';
-import { MemberLeaderboards, GameTierCheckbox } from 'containers';
-import { Flex, Spinner, Switch } from 'components';
+import { MemberLeaderboards } from 'containers';
+import { Checkbox, Flex, Spinner, Switch } from 'components';
 import { colors, fonts, media } from 'shared/theme';
 
 type Props = { memberId: string };
@@ -39,11 +39,11 @@ export const MemberProfileGames = (props: Props) => {
 					{isLoading && <Spinner />}
 					{isFetched &&
 						tiersData.map((tier: Tier) => (
-							<GameTierCheckbox
-								key={`checkbox-game-${tier.id}`}
-								tierId={tier.id}
-								visibleTiers={visibleTiers}
-								setVisibleTiers={setVisibleTiers}
+							<Checkbox
+								icon={tier.icon}
+								itemType={tier.id}
+								visibleItems={visibleTiers}
+								setVisibleItems={setVisibleTiers}
 							/>
 						))}
 				</Flex>

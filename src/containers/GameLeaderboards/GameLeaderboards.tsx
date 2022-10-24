@@ -54,7 +54,7 @@ export const GameLeaderboards = (props: Props) => {
 		else return <DateBlock date={undefined} />;
 	};
 
-	const onUserClick = (id?: string) => id && history.push(`/profile/${id}`);
+	const onMemberClick = (id?: string) => id && history.push(`/profile/${id}`);
 
 	const leaderboardsList = leaderboards.map(memberCompletion => {
 		if (!memberCompletion) return null;
@@ -70,11 +70,13 @@ export const GameLeaderboards = (props: Props) => {
 				<MemberAvatar
 					member={memberCompletion.member}
 					size={isCompact ? Size.SMALL : Size.MEDIUM}
+					onClick={() => onMemberClick(memberCompletion.member.steamId)}
 				/>
 				<StyledGameLeaderboardsMemberInfo align>
 					<StyledGameLeaderboardsMemberUsername isCompact={isCompact}>
 						{memberCompletion.trophy}
-						<Link onClick={() => onUserClick(memberCompletion.member.steamId)}>
+						<Link
+							onClick={() => onMemberClick(memberCompletion.member.steamId)}>
 							{memberCompletion.member.name}
 						</Link>
 					</StyledGameLeaderboardsMemberUsername>
@@ -109,7 +111,6 @@ const StyledGameLeaderboards = styled(Flex)`
 const StyledGameLeaderboardsMember = styled(Flex)<{ isCompact?: boolean }>`
 	max-width: 100%;
 	align-items: center;
-	padding-left: ${({ isCompact }) => (isCompact ? '8px' : 0)};
 	&:not(:first-child) {
 		border-top: 1px solid ${colors.newMediumGrey};
 	}
@@ -123,6 +124,9 @@ const StyledGameLeaderboardsMemberInfo = styled(Flex)`
 	padding: 0 10px;
 	justify-content: space-between;
 	overflow: hidden;
+	@media (max-width: ${media.smallTablets}) {
+		justify-content: flex-end;
+	}
 `;
 
 const StyledGameLeaderboardsMemberUsername = styled.div<{
@@ -133,6 +137,9 @@ const StyledGameLeaderboardsMemberUsername = styled.div<{
 	white-space: nowrap;
 	font-weight: bold;
 	font-size: ${({ isCompact }) => (isCompact ? '1em' : '1.2em')};
+	@media (max-width: ${media.smallTablets}) {
+		display: none;
+	}
 `;
 
 const StyledGameLeaderboardsMemberTime = styled.div`

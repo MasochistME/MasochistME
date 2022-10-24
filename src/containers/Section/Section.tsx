@@ -1,40 +1,53 @@
 import styled from 'styled-components';
 
-import { colors, fonts } from 'shared/theme';
+import { colors, fonts, media } from 'shared/theme';
 
-type Props = {
+export type SectionProps = {
+	isMobileOnly?: boolean;
+	isDesktopOnly?: boolean;
 	fullWidth?: boolean;
 	title?: React.ReactNode;
 	isCentered?: boolean;
 	content: React.ReactNode;
-	children?: never;
 	width?: string;
 	height?: string;
 } & Omit<React.CSSProperties, 'width' | 'height' | 'content' | 'translate'>;
 
-export const Section = (props: Props) => {
+export const Section = (props: SectionProps) => {
 	const {
+		isMobileOnly = false,
+		isDesktopOnly = false,
 		fullWidth,
 		title,
 		content,
 		isCentered = true,
-		children: _,
 		...style
 	} = props;
 	return (
-		<StyledSection fullWidth={fullWidth} {...style}>
+		<StyledSection
+			fullWidth={fullWidth}
+			isMobileOnly={isMobileOnly}
+			isDesktopOnly={isDesktopOnly}
+			{...style}>
 			{title && <Section.Title isCentered={isCentered}>{title}</Section.Title>}
 			<Section.Content>{content}</Section.Content>
 		</StyledSection>
 	);
 };
 
-const StyledSection = styled.div.attrs(
-	(props: Omit<Props, 'fullWidth' | 'children' | 'title' | 'content'>) => {
-		const { ...style } = props;
-		return { style };
-	},
-)<{ fullWidth?: boolean }>`
+type StyledProps = Omit<SectionProps, 'title' | 'content'>;
+
+const StyledSection = styled.div.attrs((props: StyledProps) => {
+	const {
+		fullWidth: _1,
+		isMobileOnly: _2,
+		isDesktopOnly: _3,
+		...style
+	} = props;
+	return {
+		style,
+	};
+})<StyledProps>`
 	flex: 0 1 auto;
 	width: 450px;
 	width: ${({ fullWidth }) => (fullWidth ? '100%' : 'auto')};
@@ -45,6 +58,16 @@ const StyledSection = styled.div.attrs(
 	color: ${colors.superLightGrey};
 	background-color: ${colors.newDarkBlue}cc;
 	box-shadow: 0 0 15px ${colors.black};
+	${({ isMobileOnly, isDesktopOnly }) => {
+		if (isMobileOnly)
+			return `@media (min-width: ${media.netbooks}) {
+			display:none;
+		}`;
+		if (isDesktopOnly)
+			return `@media (max-width: ${media.netbooks}) {
+			display:none;
+		}`;
+	}}
 `;
 
 Section.Title = styled.h3<{ isCentered: boolean }>`

@@ -1,60 +1,69 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Event } from '@masochistme/sdk/dist/v1/types';
 
 import { useEvents } from 'sdk';
-import { SubPage, Section } from 'containers';
+import { SubPage, Section, SectionProps } from 'containers';
 import { Flex, Spinner } from 'components';
-import { useActiveTab } from 'shared/hooks';
-import { TabDict } from 'shared/config/tabs';
-
-import { eventsDict } from './eventsDict';
-import EventItem from './EventItem';
 import { colors } from 'shared/theme';
+import { useActiveTab } from 'shared/hooks';
+import { TabDict, EventsDict } from 'shared/config';
+
+import { EventsList } from './EventsList';
+import { EventsFilterBar } from './EventsFilterBar';
 
 const TabEvents = (): JSX.Element => {
 	useActiveTab(TabDict.EVENTS);
 
-	const { eventsData, isLoading, isFetched } = useEvents({
+	const { isLoading, isFetched } = useEvents({
 		sort: { date: 'desc' },
 		limit: 50,
 	});
-	const eventsDescriptions = eventsDict.map((event, index: number) => (
+
+	return (
+		<SubPage>
+			<StyledEventsList column>
+				<TabEventsInfo isMobileOnly />
+				<EventsFilterBar />
+				{isLoading && <Spinner />}
+				{isFetched && <EventsList />}
+			</StyledEventsList>
+			<TabEventsInfo isDesktopOnly width="100%" maxWidth="450px" />
+		</SubPage>
+	);
+};
+
+const TabEventsInfo = (props: Partial<SectionProps>): JSX.Element => {
+	const { isLoading, isFetched } = useEvents({
+		sort: { date: 'desc' },
+		limit: 50,
+	});
+
+	const eventsDescriptions = EventsDict.map((event, index: number) => (
 		<li key={`event-desc-${index}`}>
 			<i className={event.icon}></i> - {event.description}
 		</li>
 	));
 
 	return (
-		<SubPage>
-			<StyledEventsList column>
-				{isLoading && <Spinner />}
-				{isFetched &&
-					eventsData.map((event: Event) => (
-						<EventItem event={event} key={`event-${event._id}`} />
-					))}
-			</StyledEventsList>
-			<Section
-				width="100%"
-				maxWidth="450px"
-				title="Community events"
-				content={
-					<Flex column gap={8}>
-						<div>This is the list showcasing the last 100 events.</div>
-						<div>There are {eventsDict.length} different types of events:</div>
-						{isLoading && <Spinner />}
-						{isFetched && (
-							<StyledEventTypes>{eventsDescriptions}</StyledEventTypes>
-						)}
-						<div>
-							In case of event relating to a no longer curated game or user no
-							longer being part of the group, the{' '}
-							<i className="fas fa-exclamation-triangle"></i> icon is used.
-						</div>
-					</Flex>
-				}
-			/>
-		</SubPage>
+		<Section
+			{...props}
+			title="Community events"
+			content={
+				<Flex column gap={8}>
+					<div>This is the list showcasing the last 100 events.</div>
+					<div>There are {EventsDict.length} different types of events:</div>
+					{isLoading && <Spinner />}
+					{isFetched && (
+						<StyledEventTypes>{eventsDescriptions}</StyledEventTypes>
+					)}
+					<div>
+						In case of event relating to a no longer curated game or user no
+						longer being part of the group, the{' '}
+						<i className="fas fa-exclamation-triangle"></i> icon is used.
+					</div>
+				</Flex>
+			}
+		/>
 	);
 };
 

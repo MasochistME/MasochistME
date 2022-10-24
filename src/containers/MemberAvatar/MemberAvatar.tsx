@@ -33,7 +33,13 @@ export const MemberAvatar = (props: Props) => {
 		if (size === Size.MEDIUM) return '_medium';
 		return '';
 	}, [size]);
-	const avatarUrl = `https://avatars.akamai.steamstatic.com/${member.avatarHash}${avatarSize}.jpg`;
+
+	const avatarUrl = useMemo(() => {
+		if (member.avatarHash)
+			return `https://avatars.akamai.steamstatic.com/${member.avatarHash}${avatarSize}.jpg`;
+		if (member.avatar) return member.avatar;
+		return null;
+	}, [member]);
 
 	return (
 		<Tooltip content={title ?? <Flex column>{member.name}</Flex>}>
@@ -41,12 +47,12 @@ export const MemberAvatar = (props: Props) => {
 				onClick={onClick}
 				size={size}
 				patronTier={patronTier}
-				isEmpty={!member.avatarHash}>
+				isEmpty={!avatarUrl}>
 				{isLoading && <Skeleton size={size} />}
-				{isError && (
+				{(isError || !avatarUrl) && (
 					<BrokenImage size={size} title="Could not load the avatar." />
 				)}
-				{!isLoading && !isError && (
+				{!isLoading && !isError && avatarUrl && (
 					<img src={avatarUrl ?? logo} alt="Member avatar" />
 				)}
 			</StyledMemberAvatar>

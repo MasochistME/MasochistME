@@ -1,5 +1,6 @@
 import { Table as AntdTable } from 'antd';
 import styled from 'styled-components';
+
 import { colors, fonts } from 'shared/theme';
 
 export const Table: any = styled(AntdTable)`
@@ -18,7 +19,8 @@ export const Table: any = styled(AntdTable)`
 		}
 	}
 	.ant-table-row {
-		background: ${colors.superLightGrey}22;
+		background-color: ${colors.newDark}99;
+		border-bottom: 5px solid ${colors.black};
 		padding: 4px 8px;
 		cursor: ${({ clickable }: { clickable?: boolean }) =>
 			clickable ? 'pointer' : 'default'};
@@ -123,6 +125,7 @@ export const Table: any = styled(AntdTable)`
 `;
 
 export const TableLink = styled.span`
+	font-weight: bold;
 	cursor: pointer;
 	&:hover {
 		color: ${colors.white};

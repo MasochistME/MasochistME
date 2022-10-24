@@ -21,9 +21,9 @@ export const ModalLeaderboardsBadges = (props: Props): JSX.Element | null => {
 
 	return (
 		<Section
-			minWidth="400px"
+			fullWidth
+			boxSizing="border-box"
 			title="Badges"
-			margin={'8px'}
 			content={
 				<StyledModalLeaderboardsBadges justify>
 					{badges.map((badge: Badge) => {

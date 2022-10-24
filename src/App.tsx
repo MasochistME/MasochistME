@@ -10,7 +10,7 @@ import styled from 'styled-components';
 import { useLoadTiers } from 'shared/hooks';
 import { media, colors } from 'shared/theme';
 import { Loader, Flex } from 'components';
-import { Footer, Header, Nav, SubHeader } from 'containers';
+import { Footer, Header, Navigation, SubHeader } from 'containers';
 
 import { NotFound } from 'pages';
 
@@ -31,7 +31,7 @@ export const App = (): JSX.Element => {
 			<PageWrapper column align>
 				<Flex column align width="100vw">
 					<Header />
-					<Nav />
+					<Navigation />
 					<Content>
 						<SubHeader />
 						<Switch>

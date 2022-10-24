@@ -5,15 +5,7 @@ import { media } from 'shared/theme';
 import { useActiveTab } from 'shared/hooks';
 import { TabDict } from 'shared/config/tabs';
 import { Flex } from 'components';
-import {
-	SubPage,
-	SectionHistory,
-	SectionSale,
-	SectionNewGames,
-	SectionNewMembers,
-	SectionNewBadges,
-	SectionFeatured,
-} from 'containers';
+import { SubPage, DashboardTile } from 'containers';
 
 export enum SectionMap {
 	WELCOME = 'welcome',
@@ -33,23 +25,24 @@ const TabHome = (): JSX.Element => {
 	return (
 		<SubPage>
 			<StyledDashboard column justify align>
+				<DashboardTile.Featured fullWidth isMobileOnly />
 				<StyledSectionTop>
 					<StyledColumnLeft>
-						<SectionHistory />
+						<DashboardTile.History />
 						<StyledNewStuff>
-							<SectionNewBadges />
-							<SectionNewMembers />
+							<DashboardTile.Badges />
+							<DashboardTile.Members />
 						</StyledNewStuff>
 					</StyledColumnLeft>
 					<StyledColumnRight>
-						<SectionNewGames />
-						<SectionFeatured />
+						<DashboardTile.Games />
+						<DashboardTile.Featured isDesktopOnly />
 					</StyledColumnRight>
 				</StyledSectionTop>
-				<SectionSale />
+				<DashboardTile.Sale />
 			</StyledDashboard>
-			{/* <SectionTop /> */}
-			{/* <SectionDiscord /> */}
+			{/* <DashboardTile.Top /> */}
+			{/* <DashboardTile.Discord /> */}
 		</SubPage>
 	);
 };

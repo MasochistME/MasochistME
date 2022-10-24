@@ -78,13 +78,6 @@ export const MemberProfileStats = (props: Props) => {
 
 	const pointsTotal = (
 		<>
-			<StatBlock.Subtitle>
-				<i className="fas fa-medal" /> -{' '}
-				<span style={{ fontWeight: 'bold' }}>
-					{memberLeaderData?.badges.points}
-				</span>{' '}
-				pts
-			</StatBlock.Subtitle>
 			{memberLeaderData?.games.map((game, index) => {
 				const tierIcon =
 					tiersData.find(tier => tier.id === game.tier)?.icon ??
@@ -96,7 +89,23 @@ export const MemberProfileStats = (props: Props) => {
 					</StatBlock.Subtitle>
 				);
 			})}
+			<StatBlock.Subtitle>
+				<i className="fas fa-medal" /> -{' '}
+				<span style={{ fontWeight: 'bold' }}>
+					{memberLeaderData?.badges.points}
+				</span>{' '}
+				pts
+			</StatBlock.Subtitle>
 		</>
+	);
+
+	const badgesUnlocked = (
+		<StatBlock.Subtitle>
+			<i className="fas fa-medal" /> -{' '}
+			<span style={{ fontWeight: 'bold' }}>
+				{memberLeaderData?.badges.total}
+			</span>
+		</StatBlock.Subtitle>
 	);
 
 	return (
@@ -131,6 +140,8 @@ export const MemberProfileStats = (props: Props) => {
 							<Flex column>
 								<StatBlock.Title>Curated games completed</StatBlock.Title>
 								{completionsByTier}
+								<StatBlock.Title>Badges unlocked</StatBlock.Title>
+								{badgesUnlocked}
 							</Flex>
 						}
 						label={memberCompletions.length}
