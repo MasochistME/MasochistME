@@ -1,0 +1,1 @@
+export { ModalLeaderboards } from './ModalLeaderboards';

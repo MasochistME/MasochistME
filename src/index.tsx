@@ -1,25 +1,40 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
-import App from 'components/App';
-import GlobalStyle from 'shared/styles/globalStyles';
-import AppContextProvider from 'shared/store/context';
-import store from 'shared/store/store';
+import GlobalStyle from 'styles/globalStyles';
+import { AppContextProvider } from 'context';
 
-import './fonts/FontAwesome/css/all.css';
-import './shared/styles/antStyles.css';
+import { App } from './App';
+
+import './shared/fonts/FontAwesome/css/all.min.css';
+import './styles/antStyles.css';
 import './index.css';
+
+dayjs.extend(customParseFormat);
+dayjs.extend(relativeTime);
+
+const queryClient = new QueryClient({
+	defaultOptions: {
+		queries: {
+			retry: false,
+			staleTime: 10 * 60 * 1000, // 10 minutes
+		},
+	},
+});
 
 class Root extends React.Component {
 	render() {
 		return (
-			<Provider store={store}>
-				<GlobalStyle />
-				<AppContextProvider>
+			<AppContextProvider>
+				<QueryClientProvider client={queryClient}>
+					<GlobalStyle />
 					<App />
-				</AppContextProvider>
-			</Provider>
+				</QueryClientProvider>
+			</AppContextProvider>
 		);
 	}
 }

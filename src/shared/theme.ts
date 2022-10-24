@@ -1,5 +1,6 @@
 export const colors = {
 	lightYellow: '#b4b59d',
+	yellow: '#fdc000',
 
 	lightestGreyEver: '#E9E9F5',
 	superLightGrey: '#BEC9E0',
@@ -14,9 +15,12 @@ export const colors = {
 	newMediumGrey: '#545281',
 	darkBlue: '#293251',
 	darkRed: '#1e1012',
+	newDarkBlue: '#282f44',
+	mediumRed: '#582e34',
+	lightRed: '#d38893',
 
-	darkBlueTransparent: '#293251bb',
-	darkRedTransparent: '#1e1012bb',
+	darkBlueTransparent: '#293251cc',
+	darkRedTransparent: '#1e1012cc',
 
 	tier4: '#fdc000',
 	tier3: '#f5f5f5',
@@ -24,13 +28,14 @@ export const colors = {
 	tier1: '#32a042',
 
 	tier4Muted: '#a47b00',
-	tier4Transparent: '#403000ad',
+	tier4Darkened: '#261d01',
 };
 
 export const media = {
-	netbooks: '1100px',
+	smallDesktop: '1500px',
+	netbooks: '1150px',
 	smallNetbooks: '850px',
-	tablets: '650px',
+	tablets: '700px',
 	smallTablets: '500px',
 	bigPhones: '400px',
 };
