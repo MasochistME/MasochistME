@@ -16,6 +16,10 @@ export enum UpdateStatus {
  */
 export type Update = {
 	/**
+	 * Date of the last update.
+	 */
+	lastUpdate: Date;
+	/**
 	 * Flag indicating if the update is currently ongoing.
 	 */
 	isUpdating: boolean;
