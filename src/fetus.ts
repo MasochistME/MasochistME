@@ -17,10 +17,13 @@ dotenv.config();
  ************************/
 
 const botDb = process.env["ENV"] === "dev" ? "fetus-dev" : "fetus";
+export const mmeDb =
+  process.env["ENV"] === "dev" ? "masochist-dev" : "masochist";
+
 const host =
   process.env["ENV"] === "dev"
     ? "http://localhost:3081"
-    : "http://65.108.214.190:3081";
+    : "http://65.108.214.190:3002";
 
 export const mongo = new Database([{ symbol: botDb, url: process.env["DB"] }]);
 
