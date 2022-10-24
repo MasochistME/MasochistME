@@ -67,7 +67,8 @@ const init = async () => {
   });
 
   // Race timer checks every minute if any race should start.
-  handleRaceTimer();
+  // TODO reenable when needed
+  // handleRaceTimer();
 };
 
 init();
