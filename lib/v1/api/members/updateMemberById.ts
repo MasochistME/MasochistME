@@ -3,7 +3,7 @@ import { UpdateResult } from 'mongodb';
 
 import { Member, ResponseError } from 'v1/types';
 
-type MemberUpdate = Partial<Pick<Member, 'description'>>;
+type MemberUpdate = Partial<Pick<Member, 'description' | 'discordId'>>;
 
 /**
  * Updates a member by given member ID.
