@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
-import Modal from 'react-modal';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -17,8 +16,6 @@ import './index.css';
 
 dayjs.extend(customParseFormat);
 dayjs.extend(relativeTime);
-
-Modal.setAppElement('#root');
 
 const queryClient = new QueryClient({
 	defaultOptions: {
