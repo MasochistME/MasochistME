@@ -11,7 +11,9 @@ import { getModChannel } from "utils";
 export const raceResults = async (raceId: string): Promise<void> => {
   try {
     const race = await sdk.getRaceById({ raceId });
-    const participants = await sdk.getRaceParticipantsList({ raceId });
+    const participants = await sdk.getRaceParticipantsList({
+      raceId: Number(raceId), // TODO temp fix! change back to string
+    });
 
     const participated = participants.length;
     const finished = participants.filter(p => !p.dnf).length;

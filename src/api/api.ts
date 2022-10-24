@@ -9,7 +9,7 @@ export const getCommandsFromAPI = async () => {
     .find();
   const commands: CommandObject[] = [];
   await cursor.forEach(el => {
-    if (!el.legacy) commands.push(el);
+    if (!el.isDisabled) commands.push(el);
   });
   return commands;
 };

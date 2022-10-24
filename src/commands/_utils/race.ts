@@ -15,7 +15,7 @@ import { raceResults } from "commands/racesetup/interactions/raceResults";
  */
 export const handleRaceTimer = async () => {
   try {
-    const activeRaces = await sdk.getRaceList();
+    const activeRaces = await sdk.getRaceList({});
     activeRaces.forEach(async (race: Race) => {
       await handleRaceStart(race);
       await handleRaceFinish(race);

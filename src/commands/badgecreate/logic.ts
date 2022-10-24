@@ -26,8 +26,8 @@ export const badgecreate = async (
     description: interaction.options.getString("description", true),
     title: isSteamGame ? null : gameId,
     img: thumbnail.url,
-    enabled: true,
-    legacy: false,
+    isEnabled: true,
+    isLegacy: false,
     isSteamGame,
   };
 

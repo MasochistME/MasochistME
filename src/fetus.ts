@@ -19,12 +19,10 @@ dotenv.config();
 const botDb = process.env["ENV"] === "dev" ? "fetus-dev" : "fetus";
 const host =
   process.env["ENV"] === "dev"
-    ? "http://localhost:3002"
-    : "http://65.108.214.190:3002";
+    ? "http://localhost:3081"
+    : "http://65.108.214.190:3081";
 
-export const mongo = new Database([
-  { symbol: botDb, url: process.env["DB_FETUS"] },
-]);
+export const mongo = new Database([{ symbol: botDb, url: process.env["DB"] }]);
 
 export const sdk = new SDK({
   host,

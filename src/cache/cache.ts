@@ -34,13 +34,13 @@ export class Cache {
   }
 
   async updateMasochist() {
-    this.tiers = await sdk.getTiersList();
-    this.badges = await sdk.getBadgesList();
+    this.tiers = await sdk.getTiersList({});
+    this.badges = await sdk.getBadgesList({});
     this.seasons = await sdk.getSeasonsList({ filter: {} });
-    this.members = (await sdk.getMembersList())
+    this.members = (await sdk.getMembersList({}))
       .map(m => ({ name: m.name, id: m.steamId }))
       .sort();
-    this.games = (await sdk.getGamesList())
+    this.games = (await sdk.getGamesList({}))
       .map(g => ({ name: g.title, description: g.description, id: g.id }))
       .sort();
   }

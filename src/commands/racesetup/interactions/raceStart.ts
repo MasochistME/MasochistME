@@ -27,7 +27,9 @@ import {
 export const raceReadyToGo = async (raceId: string): Promise<void> => {
   try {
     const race = await sdk.getRaceById({ raceId });
-    const participants = await sdk.getRaceParticipantsList({ raceId });
+    const participants = await sdk.getRaceParticipantsList({
+      raceId: Number(raceId), // TODO temp fix! change back to string
+    });
     const participantsDiscordIds = participants.map(
       participant => participant.discordId,
     );

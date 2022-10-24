@@ -10,8 +10,9 @@ import { API_URL, UNKNOWN, USER_NO_DESCRIPTION } from "consts";
 
 type PartialMember = Pick<
   Member,
-  "name" | "avatar" | "description" | "url" | "steamId"
+  "name" | "avatar" | "description" | "steamId"
 > & {
+  url: string;
   tierCompletion: string;
   badges: string;
   rank: string;
@@ -39,9 +40,9 @@ export const profile = async (
       steamId: member.steamId,
       name: member.name,
       avatar: member.avatar,
-      url: member.url,
+      url: `https://steamcommunity.com/profiles/${member.steamId}`,
       description: member.description,
-      tierCompletion: getMemberTierCompletion(member),
+      tierCompletion: "", // getMemberTierCompletion(member),
       badges: getMemberBadges(member, fullRanking),
       rank: getMemberRank(member, fullRanking),
     };
@@ -122,15 +123,16 @@ const getMemberRank = (member: Member, fullRanking: any) => {
  * @param member Member
  * @return string
  */
-const getMemberTierCompletion = (member: Member) => {
-  const memberTierCompletionSummary = cache.tiers
-    .map(tier => {
-      const memberTierCompletion = member.ranking[tier.id] ?? "0";
-      return `\`\`Tier ${tier.id} - ${memberTierCompletion}\`\``;
-    })
-    .join("\n");
-  return memberTierCompletionSummary;
-};
+// TODO FIX!
+// const getMemberTierCompletion = (member: Member) => {
+//   const memberTierCompletionSummary = cache.tiers
+//     .map(tier => {
+//       const memberTierCompletion = member[tier.id] ?? "0";
+//       return `\`\`Tier ${tier.id} - ${memberTierCompletion}\`\``;
+//     })
+//     .join("\n");
+//   return memberTierCompletionSummary;
+// };
 
 /**
  * Returns a number of badges that the member earned.
