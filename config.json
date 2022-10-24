@@ -1,6 +1,0 @@
-{
-  "PORT" : 3002,
-  "CORS": "http://masochist.me",
-  "DELAY": 3000,
-  "BIG_DELAY": 43200000
-}
