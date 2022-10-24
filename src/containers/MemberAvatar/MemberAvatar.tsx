@@ -49,7 +49,7 @@ export const MemberAvatar = (props: Props) => {
 				patronTier={patronTier}
 				isEmpty={!avatarUrl}>
 				{isLoading && <Skeleton size={size} />}
-				{(isError || !avatarUrl) && (
+				{!isLoading && (isError || !avatarUrl) && (
 					<BrokenImage size={size} title="Could not load the avatar." />
 				)}
 				{!isLoading && !isError && avatarUrl && (
