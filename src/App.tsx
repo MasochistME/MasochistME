@@ -102,7 +102,7 @@ const Content = styled.div`
 	max-width: 100vw;
 	position: relative;
 	box-sizing: border-box;
-	background-color: ${colors.black}88;
+	background-color: ${colors.newDark}cc;
 	color: ${colors.superLightGrey};
 	@media (max-width: ${media.netbooks}) {
 		width: 100%;

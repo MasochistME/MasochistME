@@ -25,7 +25,11 @@ export const Button = (props: Props) => {
 	} = props;
 	return (
 		<Tooltip content={tooltip}>
-			<StyledButton size={size} disabled={disabled} onClick={onClick}>
+			<StyledButton
+				iconOnly={!label}
+				size={size}
+				disabled={disabled}
+				onClick={onClick}>
 				{icon && iconPlacement === 'left' && <i className={icon} />}
 				{label && <span>{label}</span>}
 				{icon && iconPlacement === 'right' && <i className={icon} />}
@@ -34,13 +38,15 @@ export const Button = (props: Props) => {
 	);
 };
 
-const StyledButton = styled.button<{ size: Size }>`
+const StyledButton = styled.button<{ size: Size; iconOnly: boolean }>`
 	margin: 0;
 	padding: 0;
 	border: none;
 	gap: 8px;
 	padding: 4px 12px;
 	border-radius: 4px;
+	border: ${({ iconOnly }) =>
+		iconOnly ? 0 : `1px solid ${colors.newMediumGrey}`};
 	font-size: ${({ size }) => {
 		if (size === Size.TINY) return '8px';
 		if (size === Size.SMALL) return '12px';

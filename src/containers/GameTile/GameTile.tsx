@@ -61,6 +61,7 @@ export const GameTile = (props: Props): JSX.Element => {
 					<ModalLeaderboards
 						gameId={gameId}
 						isModalOpen={isModalOpen}
+						setIsModalOpen={setIsModalOpen}
 						isCompact
 					/>
 				)}

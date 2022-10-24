@@ -14,30 +14,24 @@ export const EventsFilterBar = (): JSX.Element => {
 	return (
 		<FilterBar>
 			<StyledEventFilterBar>
-				<StyledEventFilterBarCheckboxes>
-					{EventsDict.map((event: EventDict) => (
-						<EventsFilterCheckbox
-							key={`checkbox-event-${event.type}`}
-							event={event}
-							visibleEvents={visibleEvents}
-							setVisibleEvents={setVisibleEvents}
-						/>
-					))}
-				</StyledEventFilterBarCheckboxes>
+				{EventsDict.map((event: EventDict) => (
+					<EventsFilterCheckbox
+						key={`checkbox-event-${event.type}`}
+						event={event}
+						visibleEvents={visibleEvents}
+						setVisibleEvents={setVisibleEvents}
+					/>
+				))}
 			</StyledEventFilterBar>
 		</FilterBar>
 	);
 };
 
 const StyledEventFilterBar = styled(Flex)`
+	width: 100%;
 	gap: 16px;
 	flex-wrap: wrap;
 	@media (max-width: ${media.smallNetbooks}) {
 		justify-content: center;
 	}
-`;
-
-const StyledEventFilterBarCheckboxes = styled(Flex)`
-	justify-content: center;
-	gap: 24px;
 `;

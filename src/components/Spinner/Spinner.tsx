@@ -15,5 +15,5 @@ export const Spinner = (): JSX.Element => {
 const StyledSpinner = styled(Flex)`
 	box-sizing: border-box;
 	font-size: 32px;
-	color: ${colors.lightGrey};
+	color: ${colors.newMediumGrey};
 `;

@@ -71,7 +71,6 @@ export default TabEvents;
 
 const StyledEventsList = styled(Flex)`
 	width: 100%;
-	background-color: ${colors.newDark}99;
 `;
 
 const StyledEventTypes = styled.ul`

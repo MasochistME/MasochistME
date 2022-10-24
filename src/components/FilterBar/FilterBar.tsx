@@ -8,10 +8,10 @@ type Props = {
 };
 export const FilterBar = (props: Props): JSX.Element => {
 	const { children } = props;
-	return <StyledFilterGameBar>{children}</StyledFilterGameBar>;
+	return <StyledFilterBar>{children}</StyledFilterBar>;
 };
 
-const StyledFilterGameBar = styled.div`
+const StyledFilterBar = styled.div`
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
@@ -22,7 +22,7 @@ const StyledFilterGameBar = styled.div`
 	margin-bottom: 16px;
 	gap: 16px;
 	@media (max-width: ${media.smallNetbooks}) {
-		background-color: ${colors.superDarkGrey}aa;
+		background-color: ${colors.newDark}99;
 		align-items: center;
 		justify-content: center;
 	}

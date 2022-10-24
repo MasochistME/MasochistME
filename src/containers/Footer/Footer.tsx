@@ -8,7 +8,11 @@ import { ButtonsSocialMedia } from 'containers';
 export const Footer = () => {
 	return (
 		<StyledFooter align>
-			<StyledFooterText>Arcyvilk @ 2016-2022</StyledFooterText>
+			<StyledFooterText>
+				<a href="http://arcyvilk.com/" target="_blank">
+					Copyright &copy; Arcyvilk 2016-2022. All rights reserved
+				</a>
+			</StyledFooterText>
 			<ButtonsSocialMedia />
 		</StyledFooter>
 	);
@@ -24,8 +28,9 @@ const StyledFooter = styled(Flex)`
 	font-family: ${fonts.Raleway};
 `;
 
-const StyledFooterText = styled.h3`
+const StyledFooterText = styled.footer`
 	margin: 0;
+	text-align: left;
 	@media (max-width: ${media.bigPhones}) {
 		font-size: 1em;
 	}
