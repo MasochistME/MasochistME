@@ -80,17 +80,17 @@ const getMemberEmbed = (member: PartialMember) => {
       },
       {
         name: "Rank:",
-        value: member.rank,
+        value: member.rank ?? "-",
         inline: true,
       },
       {
         name: "Badges unlocked:",
-        value: member.badges,
+        value: member.badges ?? "-",
         inline: true,
       },
       {
         name: "Tier completion:",
-        value: member.tierCompletion,
+        value: member.tierCompletion ?? "-",
         inline: true,
       },
     ],
