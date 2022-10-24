@@ -459,17 +459,18 @@ export const updateCuratorLogic = async (
             });
           }
           // Create GAME TIER CHANGE event
-          if (gamePrev?.tier !== game.tier) {
-            const collectionEventsTierChange =
-              db.collection<Omit<EventGameTierChange, '_id'>>('events');
-            await collectionEventsTierChange.insertOne({
-              type: EventType.GAME_TIER_CHANGE,
-              gameId: game.id,
-              oldTier: gamePrev?.tier ?? 'UNKNOWN',
-              newTier: game?.tier ?? 'UNKNOWN',
-              date: new Date(),
-            });
-          }
+          // TODO temporarily disabled
+          // if (gamePrev?.tier !== game.tier) {
+          //   const collectionEventsTierChange =
+          //     db.collection<Omit<EventGameTierChange, '_id'>>('events');
+          //   await collectionEventsTierChange.insertOne({
+          //     type: EventType.GAME_TIER_CHANGE,
+          //     gameId: game.id,
+          //     oldTier: gamePrev?.tier ?? 'UNKNOWN',
+          //     newTier: game?.tier ?? 'UNKNOWN',
+          //     date: new Date(),
+          //   });
+          // }
         });
       });
       log.INFO(
