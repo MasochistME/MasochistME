@@ -10,6 +10,7 @@ import { log } from 'helpers/log';
 import { routerLegacy } from 'router/legacy';
 import { routerV1 } from 'router/v1';
 import { initiateMainUpdate } from 'router/legacy/update';
+import { updateCurator } from 'router/v1/update';
 
 const app = express();
 
@@ -40,10 +41,14 @@ app.listen(process.env.PORT, () => {
 // ------------
 
 const update = async () => {
-  const lastUpdated = await getDataFromDB('update', { id: 'lastUpdated' });
+  const lastUpdated = await getDataFromDB('update', { id: 'status' });
 
-  if (Date.now() - lastUpdated[0].timestamp > Number(process.env.BIG_DELAY)) {
-    initiateMainUpdate();
+  if (
+    Date.now() - new Date(lastUpdated.lastUpdate).getTime() >
+    Number(process.env.BIG_DELAY)
+  ) {
+    console.log('Updating...');
+    updateCurator();
   }
 };
 

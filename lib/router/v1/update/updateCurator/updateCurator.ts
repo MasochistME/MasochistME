@@ -5,12 +5,12 @@ import { hash } from 'helpers/hash';
 import { updateCuratorLogic } from './logic';
 
 export const updateCurator = async (
-  req: Request,
-  res: Response,
+  req?: Request,
+  res?: Response,
 ): Promise<void> => {
   try {
-    const authorizationHeader = req.headers.authorization;
-    const forceUpdate = req.headers.forceupdate;
+    const authorizationHeader = req?.headers?.authorization;
+    const forceUpdate = req?.headers?.forceupdate;
     const canForceUpdate =
       forceUpdate &&
       authorizationHeader &&
@@ -24,6 +24,6 @@ export const updateCurator = async (
   } catch (err: any) {
     log.INFO(`--> [UPDATE] curator update [ERROR]`);
     log.WARN(err.message ?? err);
-    res.sendStatus(500);
+    if (res) res?.sendStatus(500);
   }
 };
