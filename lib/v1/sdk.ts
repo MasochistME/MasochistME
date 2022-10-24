@@ -61,7 +61,7 @@ import {
 	updatePatronById,
 	getPatreonTierList,
 } from './api/patrons';
-import { updateMember } from './api/update';
+import { updateMember, getUpdateStatus } from './api/update';
 
 export type Config = {
 	host: string; // for example localhost:3000
@@ -85,6 +85,8 @@ export class SDK {
 			throw new Error('Authorization token is required.');
 		}
 	}
+
+	public getUpdateStatus = () => getUpdateStatus(this.BASE_URL);
 
 	/*************************
 	 *         GAMES         *
