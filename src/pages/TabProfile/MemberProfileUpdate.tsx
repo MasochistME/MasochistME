@@ -30,15 +30,22 @@ export const MemberProfileUpdate = (props: Props) => {
 		if (response) setMessage(response);
 	}, [memberUpdateData]);
 
+	const lastUpdate =
+		new Date(member?.lastUpdated ?? 0).getTime() === 0
+			? 'never'
+			: dayjs(member?.lastUpdated).fromNow();
+
+	const lastUpdateDetails =
+		new Date(member?.lastUpdated ?? 0).getTime() === 0
+			? 'This member was never updated.'
+			: dayjs(member?.lastUpdated).format('D MMM YYYY, H:mm:ss');
+
 	return (
 		<StyledMemberProfileUpdate>
-			<Tooltip
-				content={dayjs(member?.lastUpdated).format('D MMM YYYY, H:mm:ss')}>
+			<Tooltip content={lastUpdateDetails}>
 				<Flex column alignItems="flex-end" fontSize="0.8em">
 					<span>Last updated:</span>
-					<span style={{ fontStyle: 'italic' }}>
-						{dayjs(member?.lastUpdated).fromNow()}
-					</span>
+					<span style={{ fontStyle: 'italic' }}>{lastUpdate}</span>
 				</Flex>
 			</Tooltip>
 			<Button

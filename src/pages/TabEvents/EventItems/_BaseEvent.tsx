@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import { Flex } from 'components';
 import { Size } from 'utils';
 import { media, colors } from 'shared/theme';
-import logo from 'shared/images/logo.ico';
+
+const LOGO = 'http://cdn.masochist.me/mme_logo.png';
 
 type Props = {
 	children: React.ReactNode;
@@ -59,4 +60,4 @@ BaseEvent.Icons = styled(Flex)`
 	gap: 8px;
 `;
 
-BaseEvent.Logo = () => <BaseEvent.Image alt="masochistme-logo" src={logo} />;
+BaseEvent.Logo = () => <BaseEvent.Image alt="masochistme-logo" src={LOGO} />;

@@ -1,7 +1,6 @@
 import React from 'react';
 import { EventCustom, Member } from '@masochistme/sdk/dist/v1/types';
 
-import logo from 'shared/images/logo.ico';
 import { useAllMembers } from 'sdk';
 import { MemberAvatar } from 'containers';
 import { Size } from 'utils';
@@ -12,6 +11,8 @@ import ReactMarkdown from 'react-markdown';
 type Props = {
 	event: EventCustom;
 };
+
+const LOGO = 'http://cdn.masochist.me/mme_logo.png';
 
 export const CustomEvent = (props: Props): JSX.Element | null => {
 	const { event } = props;
@@ -35,7 +36,7 @@ export const CustomEvent = (props: Props): JSX.Element | null => {
 				<BaseEvent.Icons>
 					<i className={icon ? icon : 'fas fa-birthday-cake'}></i>
 				</BaseEvent.Icons>
-				<BaseEvent.Image alt="custom-img" src={logo} />
+				<BaseEvent.Image alt="custom-img" src={LOGO} />
 			</BaseEvent.Summary>
 		</BaseEvent>
 	);

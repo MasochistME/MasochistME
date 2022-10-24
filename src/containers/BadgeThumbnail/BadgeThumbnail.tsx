@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { Badge } from '@masochistme/sdk/dist/v1/types';
 
-import logo from 'shared/images/logo.ico';
 import { BadgeTooltip } from 'containers';
 import { Size } from 'utils';
 import { colors } from 'shared/theme';
@@ -16,6 +15,8 @@ type Props = {
 	onClick?: () => void;
 };
 
+const LOGO = 'http://cdn.masochist.me/mme_logo.png';
+
 export const BadgeThumbnail = (props: Props) => {
 	const { badge, size = Size.MEDIUM, title, isLoading, onClick } = props;
 	return title ? (
@@ -24,7 +25,7 @@ export const BadgeThumbnail = (props: Props) => {
 				{isLoading ? (
 					<Skeleton size={size} />
 				) : (
-					<img src={badge?.img ?? logo} alt="Badge" />
+					<img src={badge?.img ?? LOGO} alt="Badge" />
 				)}
 			</StyledBadgeThumbnail>
 		</Tooltip>
@@ -34,7 +35,7 @@ export const BadgeThumbnail = (props: Props) => {
 				{isLoading ? (
 					<Skeleton size={size} />
 				) : (
-					<img src={badge?.img ?? logo} alt="Badge" />
+					<img src={badge?.img ?? LOGO} alt="Badge" />
 				)}
 			</StyledBadgeThumbnail>
 		</BadgeTooltip>

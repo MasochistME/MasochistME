@@ -1,26 +1,31 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { useUpdateStatus } from 'sdk';
 import { colors } from 'shared/theme';
 import { Flex, ProgressBar } from 'components';
 import { HideOn } from 'containers';
 
 export const UpdateStatus = (): JSX.Element => {
-	const status = { lastUpdated: 1, percentage: 0 }; // TODO this is a mock
-	const nextUpdate = status?.lastUpdated
-		? new Date(status.lastUpdated + 43200000).toLocaleString()
+	const { updateData: status } = useUpdateStatus();
+	console.log(status);
+
+	const nextUpdate = status?.lastUpdate
+		? new Date(
+				new Date(status.lastUpdate).getTime() + 43200000,
+		  ).toLocaleString()
 		: 'loading...';
 
 	return (
 		<HideOn media="smallNetbooks" flex="1 0 450px" display="flex">
 			<StyledUpdateStatus column align justify>
-				{!status.percentage || status.percentage === 100 ? (
+				{!status?.isUpdating || status.updateStatus === 'idle' ? (
 					<StyledUpdateStatusText>
 						Next update: {nextUpdate}
 					</StyledUpdateStatusText>
 				) : (
 					<ProgressBar
-						percentage={status?.percentage ?? 100}
+						percentage={status?.updateProgress ?? 100}
 						style={{ height: '30px', width: '100%' }}
 						invert
 					/>

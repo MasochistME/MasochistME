@@ -2,7 +2,6 @@ import { useMemo } from 'react';
 import styled from 'styled-components';
 import { Member, PatronTier } from '@masochistme/sdk/dist/v1/types';
 
-import logo from 'shared/images/logo.ico';
 import { Size } from 'utils';
 import { colors } from 'shared/theme';
 import { BrokenImage, Flex, Skeleton, Tooltip } from 'components';
@@ -16,6 +15,8 @@ type Props = {
 	isError?: boolean;
 	onClick?: () => void;
 };
+
+const LOGO = 'http://cdn.masochist.me/mme_logo.png';
 
 export const MemberAvatar = (props: Props) => {
 	const {
@@ -53,7 +54,7 @@ export const MemberAvatar = (props: Props) => {
 					<BrokenImage size={size} title="Could not load the avatar." />
 				)}
 				{!isLoading && !isError && avatarUrl && (
-					<img src={avatarUrl ?? logo} alt="Member avatar" />
+					<img src={avatarUrl ?? LOGO} alt="Member avatar" />
 				)}
 			</StyledMemberAvatar>
 		</Tooltip>

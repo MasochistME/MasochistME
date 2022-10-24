@@ -67,14 +67,17 @@ export const LeaderboardsMemberIconOutdated = ({
 		opacity: '0.8',
 		fontSize: ICON_SIZE,
 	};
-	const date = dayjs(lastUpdated).fromNow();
+
+	const lastUpdate =
+		new Date(lastUpdated ?? 0).getTime() === 0
+			? 'never'
+			: dayjs(lastUpdated).fromNow();
 
 	return (
 		<Tooltip
 			content={
 				<Flex column>
-					<span>This member was last updated {date}.</span>
-					<span>Their data is most likely outdated.</span>
+					<span>This member was last updated {lastUpdate}.</span>
 				</Flex>
 			}>
 			<i className="fas fa-exclamation-circle" style={style} />
