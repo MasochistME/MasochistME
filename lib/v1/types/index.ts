@@ -19,3 +19,4 @@ export * from './Race';
 export * from './RacePlayer';
 export * from './Season';
 export * from './Tier';
+export * from './Update';
