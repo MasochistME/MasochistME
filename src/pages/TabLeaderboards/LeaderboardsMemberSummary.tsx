@@ -81,15 +81,15 @@ export const LeaderboardsMemberSummary = (props: Props): JSX.Element => {
 				</Flex>
 				<StyledLeaderboardsMemberIcons>
 					<LeaderboardsMemberIconPatron patronTier={leaderData?.patreonTier} />
-					{infoIcon()}
 				</StyledLeaderboardsMemberIcons>
 			</StyledLeaderboardsMemberDetailsImages>
 			<StyledLeaderboardsMemberDetails align>
 				<StyledLeaderboardsMemberExpandIcon onClick={onShowDetailsClick}>
 					<i className={`fas fa-chevron-${isExpanded ? 'down' : 'up'}`} />
 				</StyledLeaderboardsMemberExpandIcon>
-				<StyledLeaderboardsMemberUsername>
+				<StyledLeaderboardsMemberUsername style={{ gap: 8 }}>
 					<h4>{member.name}</h4>
+					{infoIcon()}
 				</StyledLeaderboardsMemberUsername>
 				<LeaderboardsMemberPoints steamId={steamId} />
 			</StyledLeaderboardsMemberDetails>
