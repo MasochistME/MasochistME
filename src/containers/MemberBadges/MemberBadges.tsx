@@ -1,7 +1,7 @@
 import React from 'react';
 import { Badge } from '@masochistme/sdk/dist/v1/types';
 
-import { useMemberBadges, useBadges } from 'sdk';
+import { useMemberBadges, useGameBadges } from 'sdk';
 import { BadgeThumbnail } from 'containers';
 import { Flex } from 'components';
 import { Size } from 'utils';
@@ -16,19 +16,17 @@ export const MemberBadges = (props: Props): JSX.Element => {
 	const { size = Size.MEDIUM, memberId, gameId } = props;
 
 	const { memberBadgesData } = useMemberBadges(memberId);
-	const { badgesData } = useBadges();
+	const { gameBadgesData } = useGameBadges(gameId);
 
-	const badges = badgesData.filter(
-		(badge: Badge) =>
-			badge.gameId === gameId &&
-			memberBadgesData.find(b => b.badgeId === String(badge._id)),
-	);
-
-	const mappedBadges = badges.map((badge: Badge) => {
+	const mappedBadges = gameBadgesData.map((badge: Badge) => {
+		const memberHasBadge = !!memberBadgesData.find(
+			b => b.badgeId === String(badge._id),
+		);
 		return (
 			<BadgeThumbnail
 				size={size}
 				badge={badge}
+				disabled={!memberHasBadge}
 				key={`badge-tile-${badge._id}`}
 			/>
 		);

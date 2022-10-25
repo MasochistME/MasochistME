@@ -10,7 +10,7 @@ import {
 	useMemberLeaderboards,
 } from 'sdk';
 import { media, colors } from 'shared/theme';
-import { Flex, Spinner } from 'components';
+import { Flex, Loader, Spinner } from 'components';
 
 import { MemberLeaderboardsGame } from './MemberLeaderboardsGame';
 
@@ -79,6 +79,7 @@ export const MemberLeaderboards = (props: Props): JSX.Element => {
 		<StyledMemberGameList
 			isDisabled={isDisabled}
 			isHighestPatronTier={isHighestPatronTier}>
+			{isLoading && !isFetched && <Loader />}
 			<Suspense
 				fallback={
 					<Flex align justify padding={16}>
