@@ -17,7 +17,7 @@ export const getPatronsList = async (
 
     const { client, db } = await connectToDb();
     const collection = db.collection<Patron>('patrons');
-    const patrons: Patron[] = [];
+    const patrons: Omit<Patron, 'patronId'>[] = [];
     const fixedSort = {
       ...(sort.tier && { tier: sortCollection(sort.tier) }),
     };
@@ -25,7 +25,8 @@ export const getPatronsList = async (
     const cursor = collection.find(filter).sort(fixedSort).limit(limit);
 
     await cursor.forEach((el: Patron) => {
-      patrons.push(el);
+      const { patronId: _, ...rest } = el;
+      patrons.push(rest);
     });
 
     client.close();
