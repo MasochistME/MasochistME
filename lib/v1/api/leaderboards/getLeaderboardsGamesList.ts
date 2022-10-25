@@ -3,27 +3,9 @@ import axios, { AxiosResponse } from 'axios';
 import { Leaderboards, Sort, ResponseError } from 'v1/types';
 
 /**
- * Returns MasochistME leaderboards.
+ * Returns MasochistME games leaderboards.
  *
- * ### Filter options
- *
- * - `patreonTier` - filters by member's Patreon status,
- * - `isMember` - filters by user's member status in the MasochistME curator.
- *
- * ### Sort options
- *
- * - `position` - sorts by member's position on leaderboards,
- * - `gamesTotal` - sorts by member's number of all completed games,
- * - `badgesTotal` - sorts by member's number of all collected badges,
- * - `gamePoints` - sorts by member's amount of poins for all games,
- * - `badgePoints` - sorts by member's amount of points for all badges.
- *
- * ## Usage
- *
- * ```ts
- * const leaderboards: Leaderboards[] = await sdk.getGamesList({ });
- * const leaderboardsByBadges: Game[] = await sdk.getGamesList({ sort: { badgePoints: 'asc' }});
- * ```
+ * TODO description
  *
  * @param params.filter - Filter to apply to leaderboards list.
  * @param params.sort - Fields to sort leaderboards by.
@@ -35,7 +17,7 @@ export const getLeaderboardsGamesList = async (
 	BASE_URL: string,
 ): Promise<Leaderboards[]> => {
 	const { filter, sort, limit } = params;
-	const url = `${BASE_URL}/leaderboards/list`;
+	const url = `${BASE_URL}/leaderboards/games/list`;
 
 	const leaderboardsResponse = await axios.post<
 		Leaderboards[] | ResponseError,
