@@ -98,7 +98,15 @@ export interface GameLeaderboards {
 		 */
 		badges: number | null;
 	};
-	dates: {
+	times: {
+		/**
+		 * The shortest time that a curator member needed to finish the game.
+		 */
+		shortestCompletion: number | null;
+		/**
+		 * The longest time that a curator member needed to finish the game.
+		 */
+		longestCompletion: number | null;
 		/**
 		 * Date of the newest base game completion.
 		 */
