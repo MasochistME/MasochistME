@@ -12,16 +12,14 @@ export const Table: any = styled(AntdTable)`
 	}
 	.ant-table-thead {
 		background: ${colors.superDarkGrey};
-		tr {
-			.ant-table-cell {
-				border-top: none;
-			}
+		height: 50px;
+		tr .ant-table-cell {
+			border-top: none;
 		}
 	}
 	.ant-table-row {
 		background-color: ${colors.newDark}99;
 		border-bottom: 5px solid ${colors.black};
-		padding: 4px 8px;
 		cursor: ${({ clickable }: { clickable?: boolean }) =>
 			clickable ? 'pointer' : 'default'};
 		&:last-child {
@@ -31,14 +29,11 @@ export const Table: any = styled(AntdTable)`
 		}
 		&:hover {
 			background-color: ${({ clickable }: { clickable?: boolean }) =>
-				clickable
-					? `${colors.superLightGrey}44`
-					: `${colors.superLightGrey}22`};
+				clickable ? `${colors.newMediumGrey}99` : `${colors.newMediumGrey}77`};
 		}
 	}
 	.ant-table-cell {
 		margin: 0;
-		padding: 4px 8px;
 		text-align: center;
 		border-top: 1px solid ${colors.newMediumGrey};
 		border-bottom: 1px solid ${colors.newDark};

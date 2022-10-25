@@ -6,7 +6,7 @@ import { media } from 'shared/theme';
 import { useAppContext, GameView } from 'context';
 import { SearchBar } from 'containers';
 import { Button, Checkbox, FilterBar, Flex, Spinner } from 'components';
-import { useActiveTab } from 'shared/hooks';
+import { useActiveTab } from 'hooks';
 import { TabDict } from 'shared/config/tabs';
 import { useTiers } from 'sdk';
 

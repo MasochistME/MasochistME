@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { PatronTier } from '@masochistme/sdk/dist/v1/types';
 
-import { useCuratorMembers, useLeaderboards } from 'sdk';
+import { useCuratorMembers, useLeaderboardsMembers } from 'sdk';
 import { colors, media } from 'shared/theme';
 import { MemberAvatar } from 'containers';
 import { Flex } from 'components';
@@ -28,7 +28,7 @@ export const LeaderboardsMemberSummary = (props: Props): JSX.Element => {
 	const { steamId, position, onShowDetails } = props;
 	const [isExpanded, setIsExpanded] = useState(false);
 
-	const { leaderboardsData } = useLeaderboards();
+	const { leaderboardsData } = useLeaderboardsMembers();
 	const { membersData } = useCuratorMembers();
 
 	const leaderData = leaderboardsData.find(l => l.memberId === steamId);

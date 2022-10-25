@@ -5,7 +5,7 @@ import { useEvents } from 'sdk';
 import { SubPage, Section, SectionProps } from 'containers';
 import { Flex, Spinner } from 'components';
 import { colors } from 'shared/theme';
-import { useActiveTab } from 'shared/hooks';
+import { useActiveTab } from 'hooks';
 import { TabDict, EventsDict } from 'shared/config';
 
 import { EventsList } from './EventsList';

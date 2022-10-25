@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { useLoadTiers } from 'shared/hooks';
+import { useLoadTiers } from 'hooks';
 import { media, colors } from 'shared/theme';
 import { Loader, Flex } from 'components';
 import { Footer, Header, Navigation, SubHeader } from 'containers';

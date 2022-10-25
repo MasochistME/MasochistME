@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { MemberGame } from '@masochistme/sdk/dist/v1/types';
 
-import { useLeaderboards, useMemberGames, useTiers } from 'sdk';
-import { useMemberBadgesFilter } from 'shared/hooks';
+import { useLeaderboardsMembers, useMemberGames, useTiers } from 'sdk';
+import { useMemberBadgesFilter } from 'hooks';
 import { colors, media } from 'shared/theme';
 import { getPercentage } from 'utils';
 import { Flex, Skeleton } from 'components';
@@ -29,7 +29,7 @@ export const MemberProfileStats = (props: Props) => {
 		leaderboardsData,
 		isLoading: isLeaderboardsLoading,
 		isFetched: isLeaderboardsFetched,
-	} = useLeaderboards();
+	} = useLeaderboardsMembers();
 
 	const memberBadgesData = useMemberBadgesFilter(memberId);
 

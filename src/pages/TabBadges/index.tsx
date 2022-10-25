@@ -2,7 +2,7 @@ import React from 'react';
 import { orderBy } from 'lodash';
 import { Badge, Game } from '@masochistme/sdk/dist/v1/types';
 
-import { useActiveTab } from 'shared/hooks';
+import { useActiveTab } from 'hooks';
 import { useBadges, useCuratedGames } from 'sdk';
 import { TabDict } from 'shared/config/tabs';
 import { Tooltip } from 'components';

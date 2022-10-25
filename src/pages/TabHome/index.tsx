@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { media } from 'shared/theme';
-import { useActiveTab } from 'shared/hooks';
+import { useActiveTab } from 'hooks';
 import { TabDict } from 'shared/config/tabs';
 import { Flex } from 'components';
 import { SubPage, DashboardTile } from 'containers';

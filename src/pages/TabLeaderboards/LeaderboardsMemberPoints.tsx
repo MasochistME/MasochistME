@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Tier } from '@masochistme/sdk/dist/v1/types';
 
-import { useTiers, useLeaderboards } from 'sdk';
+import { useTiers, useLeaderboardsMembers } from 'sdk';
 import { media } from 'shared/theme';
 import { Flex, Spinner, Tooltip } from 'components';
 
@@ -22,7 +22,7 @@ export const LeaderboardsMemberPoints = (props: Props): JSX.Element => {
 		leaderboardsData,
 		isLoading: isLeaderboardsLoading,
 		isFetched: isLeaderboardsFetched,
-	} = useLeaderboards();
+	} = useLeaderboardsMembers();
 
 	const member = leaderboardsData.find(l => l.memberId === steamId);
 
