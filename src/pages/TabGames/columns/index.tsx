@@ -4,7 +4,7 @@ import { Game } from '@masochistme/sdk/dist/v1/types';
 
 import { useTiers } from 'sdk';
 import { getTierIcon, Size } from 'utils';
-import { TableLink, defaultSort } from 'components';
+import { Flex, TableLink, defaultSort } from 'components';
 import { GameThumbnail } from 'containers';
 
 import { useGamesColumnTotalPoints } from './useGameColumnTotalPoints';
@@ -33,7 +33,11 @@ export const useGamesColumns = () => {
 	};
 
 	const columnTier = {
-		render: (game: Game) => <i className={getTierIcon(game.tier, tiersData)} />,
+		render: (game: Game) => (
+			<Flex width="40px" align justify>
+				<i className={getTierIcon(game.tier, tiersData)} />
+			</Flex>
+		),
 		sorter: (a: Game, b: Game) => defaultSort(a.tier, b.tier),
 	};
 

@@ -3,7 +3,7 @@ import { Game } from '@masochistme/sdk/dist/v1/types';
 
 import { useLeaderboardsGames } from 'sdk';
 import { Size } from 'utils';
-import { Flex, IconInfo, Skeleton, defaultSort } from 'components';
+import { Flex, Skeleton, defaultSort } from 'components';
 
 export const useGameColumnOwners = () => {
 	const { leaderboardsData, isLoading, isFetched } = useLeaderboardsGames();
@@ -17,7 +17,6 @@ export const useGameColumnOwners = () => {
 		title: () => (
 			<Flex row align justify gap={4}>
 				Owners
-				<IconInfo hoverText="How many members have this game" />
 			</Flex>
 		),
 		render: (game: Game) => (

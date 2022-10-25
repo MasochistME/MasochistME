@@ -22,7 +22,7 @@ export const useGameColumnAvgPlaytime = () => {
 		title: () => (
 			<Flex row align justify gap={4}>
 				Avg playtime
-				<IconInfo hoverText="Average time needed to complete 100% of the Steam achievements" />
+				<IconInfo hoverText="Average time (in hours) needed to complete 100% of the Steam achievements" />
 			</Flex>
 		),
 		render: (game: Game) => (

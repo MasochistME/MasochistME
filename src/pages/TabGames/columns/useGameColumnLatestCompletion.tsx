@@ -15,17 +15,22 @@ export const useGameColumnLatestCompletion = () => {
 		return new Date(gameLatestCompletion ?? 0).getTime();
 	};
 
+	const getLatestGameCompletionLocale = (game: Game) => {
+		const date = getLatestGameCompletion(game);
+		if (!date) return 'never';
+		return new Date(date).toLocaleDateString();
+	};
+
 	const columnLatestCompletion = {
 		title: () => (
 			<Flex row align justify gap={4}>
-				Oldest completion
-				<IconInfo hoverText="Last time when the game got completed by a curator member" />
+				Latest completion
 			</Flex>
 		),
 		render: (game: Game) => (
 			<Flex row align justify>
 				{isLoading && <Skeleton size={Size.SMALL} />}
-				{isFetched && new Date(getLatestGameCompletion(game))}
+				{isFetched && getLatestGameCompletionLocale(game)}
 			</Flex>
 		),
 		sorter: (a: Game, b: Game) =>
