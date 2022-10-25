@@ -75,7 +75,7 @@ export const LeaderboardsMemberSummary = (props: Props): JSX.Element => {
 			<StyledLeaderboardsMemberDetailsImages>
 				<Flex>
 					<StyledMemberPosition align justify size={size}>
-						{position}
+						{position}.
 					</StyledMemberPosition>
 					<MemberAvatar member={memberData!} size={size} />
 				</Flex>
