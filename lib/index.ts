@@ -1,17 +1,15 @@
 import * as dotenv from 'dotenv';
-dotenv.config();
-
 import express from 'express';
 import cors from 'cors';
 
-import { getDataFromDB } from 'helpers/db';
+import { connectToDb } from 'helpers/db';
 import { log } from 'helpers/log';
 
-import { routerLegacy } from 'router/legacy';
+// import { routerLegacy } from 'router/legacy';
 import { routerV1 } from 'router/v1';
-import { initiateMainUpdate } from 'router/legacy/update';
 import { updateCurator } from 'router/v1/update';
 
+dotenv.config();
 const app = express();
 
 app.use(express.json({ limit: '5mb' }));
@@ -31,7 +29,7 @@ app.use((req: any, res: any, next) => {
   next();
 });
 
-app.use('/api', routerLegacy);
+// app.use('/api', routerLegacy);
 app.use('/api/v1', routerV1);
 
 app.listen(process.env.PORT, () => {
@@ -41,15 +39,17 @@ app.listen(process.env.PORT, () => {
 // ------------
 
 const update = async () => {
-  const lastUpdated = await getDataFromDB('update', { id: 'status' });
-
+  const { client, db } = await connectToDb();
+  const collection = db.collection('update');
+  //@ts-ignore
+  const { lastUpdate = 0 } = await collection.findOne({ id: 'status' });
+  client.close();
   if (
-    Date.now() - new Date(lastUpdated.lastUpdate).getTime() >
+    Date.now() - new Date(lastUpdate).getTime() >
     Number(process.env.BIG_DELAY)
   ) {
-    console.log('Updating...');
     updateCurator();
   }
 };
 
-if (process.env?.ENV === 'prod') setInterval(update, 60000); // TODO Change update cadence from 60000 to 600000
+if (process.env?.ENV === 'dev') setInterval(update, 1000); // TODO Change update cadence from 60000 to 600000
