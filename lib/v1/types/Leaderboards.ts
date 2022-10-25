@@ -55,3 +55,57 @@ export interface LeaderboardsCategory {
 export interface LeaderboardsCategoryGame extends LeaderboardsCategory {
 	tier: TierId;
 }
+
+/**
+ * Information about a single game on leaderboards.
+ */
+export interface GameLeaderboards {
+	/**
+	 * Steam ID of the game.
+	 */
+	gameId: number;
+	/**
+	 * Number of curator members that own this game.
+	 */
+	owners: number | null;
+	/**
+	 * Average playtime needed to complete the game by curator members.
+	 */
+	avgPlaytime: number | null;
+	/**
+	 * Information about game badges.
+	 */
+	badges: {
+		/**
+		 * Total points that badges of this game give.
+		 */
+		points: number | null;
+		/**
+		 * Total number of badges that this game has.
+		 */
+		total: number | null;
+	};
+	/**
+	 * Information about game completions.
+	 */
+	completions: {
+		/**
+		 * Number of curator members that completed the base game.
+		 */
+		base: number | null;
+		/**
+		 * Number of curator members that unlocked all game badges.
+		 */
+		badges: number | null;
+	};
+	dates: {
+		/**
+		 * Date of the newest base game completion.
+		 */
+		newestCompletion: Date | null;
+		/**
+		 * Date of the oldest base game completion.
+		 */
+		oldestCompletion: Date | null;
+	};
+}
