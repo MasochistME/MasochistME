@@ -7,7 +7,6 @@ import {
   MemberBadge,
   MemberGame,
   Tier,
-  TierId,
 } from '@masochistme/sdk/dist/v1/types';
 import { LeaderboardsGamesListParams } from '@masochistme/sdk/dist/v1/api/leaderboards';
 
@@ -22,7 +21,7 @@ export const getLeaderboardsGamesList = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const { filter = {}, sort = {}, limit = 1000 } = req.body;
+    const { limit = 1000 } = req.body;
     const { client, db } = await connectToDb();
 
     const collectionMembers = db.collection<Member>('members');
@@ -89,7 +88,8 @@ export const getLeaderboardsGamesList = async (
       const completions =
         owners.filter(owner => owner.completionPercentage === 100) ?? [];
       const avgPlaytime =
-        completions.reduce((sum, owner) => (sum += owner.playTime), 0) ?? 0;
+        (completions.reduce((sum, owner) => (sum += owner.playTime), 0) ?? 0) /
+        completions.length;
       const newestCompletion =
         Math.max(
           ...completions.map(completion =>
@@ -115,7 +115,9 @@ export const getLeaderboardsGamesList = async (
           base: completions.length,
           badges: -1,
         },
-        dates: {
+        times: {
+          shortestCompletion: Math.min(...completions.map(c => c.playTime)),
+          longestCompletion: Math.max(...completions.map(c => c.playTime)),
           newestCompletion: new Date(newestCompletion),
           oldestCompletion: new Date(oldestCompletion),
         },
