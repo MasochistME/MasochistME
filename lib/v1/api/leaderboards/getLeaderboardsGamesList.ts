@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 
-import { Leaderboards, Sort, ResponseError } from 'v1/types';
+import { GameLeaderboards, Sort, ResponseError } from 'v1/types';
 
 /**
  * Returns MasochistME games leaderboards.
@@ -15,30 +15,25 @@ export const getLeaderboardsGamesList = async (
 	params: LeaderboardsGamesListParams,
 	/** @ignore */
 	BASE_URL: string,
-): Promise<Leaderboards[]> => {
+): Promise<GameLeaderboards[]> => {
 	const { filter, sort, limit } = params;
 	const url = `${BASE_URL}/leaderboards/games/list`;
 
 	const leaderboardsResponse = await axios.post<
-		Leaderboards[] | ResponseError,
-		AxiosResponse<Leaderboards[] | ResponseError>
+		GameLeaderboards[] | ResponseError,
+		AxiosResponse<GameLeaderboards[] | ResponseError>
 	>(url, { filter, sort, limit }, { validateStatus: () => true });
 
 	const { status, data } = leaderboardsResponse;
 
 	if (status !== 200) throw new Error((data as ResponseError).error);
-	return data as Leaderboards[];
+	return data as GameLeaderboards[];
 };
 
 export type LeaderboardsGamesListParams = {
 	filter?: { patreonTier?: number; isMember?: boolean };
 	sort?: {
-		[key in
-			| 'position'
-			| 'gamesTotal'
-			| 'badgesTotal'
-			| 'gamePoints'
-			| 'badgePoints']: Sort;
+		[key in 'owners' | 'avgPlaytime']: Sort;
 	};
 	limit?: number;
 };
