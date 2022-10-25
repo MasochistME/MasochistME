@@ -24,3 +24,5 @@ export * from './SubHeader';
 export * from './SubPage';
 export * from './Tabs';
 export * from './UpdateStatus';
+
+export * from './CommonProps';

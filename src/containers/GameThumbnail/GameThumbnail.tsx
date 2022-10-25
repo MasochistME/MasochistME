@@ -5,14 +5,10 @@ import { Game } from '@masochistme/sdk/dist/v1/types';
 import { Size, getGameThumbnail } from 'utils';
 import { colors } from 'shared/theme';
 import { Skeleton, Tooltip } from 'components';
-import { GameTooltip } from 'containers/GameTooltip';
+import { GameTooltip, CommonProps } from 'containers';
 
-type Props = {
+type Props = CommonProps & {
 	game?: Game;
-	size?: Size;
-	title?: React.ReactNode;
-	isLoading?: boolean;
-	onClick?: () => void;
 };
 
 export const GameThumbnail = (props: Props) => {
