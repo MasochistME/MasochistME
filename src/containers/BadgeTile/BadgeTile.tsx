@@ -2,19 +2,22 @@ import React from 'react';
 import styled from 'styled-components';
 import { Badge } from '@masochistme/sdk/dist/v1/types';
 
-import { colors, fonts } from 'shared/theme';
+import { fonts } from 'shared/theme';
 import { BadgeThumbnail } from 'containers';
 import { Flex } from 'components';
+import { ColorTokens } from 'styles/colors';
+import { useAppContext } from 'context';
 
 type Props = {
 	badge: Badge;
 };
 
 export const BadgeTile = (props: Props) => {
+	const { colorTokens } = useAppContext();
 	const { badge } = props;
 
 	return (
-		<StyledBadge>
+		<StyledBadge colorTokens={colorTokens}>
 			<Flex column align justify gap={8}>
 				<BadgeThumbnail badge={badge} key={`badge-image-${badge._id}`} />
 				<BadgePoints badge={badge} />
@@ -44,14 +47,14 @@ export const BadgePoints = (props: Props) => {
 	);
 };
 
-const StyledBadge = styled(Flex)`
+const StyledBadge = styled(Flex)<{ colorTokens: ColorTokens }>`
 	width: 100%;
 	max-width: 450px;
 	padding: 12px;
 	gap: 12px;
 	align-items: flex-start;
 	box-sizing: border-box;
-	background-color: ${colors.superDarkGrey}cc;
+	background-color: ${({ colorTokens }) => colorTokens['core-secondary-bg']}cc;
 `;
 
 const StyledBadgeField = styled.p`

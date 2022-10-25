@@ -5,12 +5,15 @@ import { Tier, TierId } from '@masochistme/sdk/dist/v1/types';
 import { useTiers } from 'sdk';
 import { MemberLeaderboards } from 'containers';
 import { Checkbox, Flex, Spinner, Switch } from 'components';
-import { colors, fonts, media } from 'shared/theme';
+import { fonts, media } from 'shared/theme';
+import { ColorTokens } from 'styles/colors';
+import { useAppContext } from 'context';
 
 type Props = { memberId: string };
 
 export const MemberProfileGames = (props: Props) => {
 	const { memberId } = props;
+	const { colorTokens } = useAppContext();
 	const [visibleTiers, setVisibleTiers] = useState<TierId[]>([]);
 	const [isHideCompleted, setIsHideCompleted] = useState<boolean>(false);
 	const [isHideUnfinished, setIsHideUnfinished] = useState<boolean>(false);
@@ -33,7 +36,7 @@ export const MemberProfileGames = (props: Props) => {
 
 	return (
 		<Flex column width="100%">
-			<StyledFilterGame>
+			<StyledFilterGame colorTokens={colorTokens}>
 				<Flex row align gap={24} width="100%">
 					<StyledFilterGameText>Filter games</StyledFilterGameText>
 					{isLoading && <Spinner />}
@@ -69,7 +72,7 @@ export const MemberProfileGames = (props: Props) => {
 	);
 };
 
-const StyledFilterGame = styled(Flex)`
+const StyledFilterGame = styled(Flex)<{ colorTokens: ColorTokens }>`
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
@@ -79,7 +82,7 @@ const StyledFilterGame = styled(Flex)`
 	padding-bottom: 16px;
 	text-transform: uppercase;
 	span {
-		color: ${colors.newMediumGrey};
+		color: ${({ colorTokens }) => colorTokens['semantic-color-interactive']};
 	}
 	@media (max-width: ${media.tablets}) {
 		flex-wrap: wrap;

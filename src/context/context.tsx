@@ -1,10 +1,13 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useMemo } from 'react';
 import { SDK } from '@masochistme/sdk/dist/v1/sdk';
 import { TierId, EventType } from '@masochistme/sdk/dist/v1/types';
 
 import { TabDict } from 'shared/config/tabs';
 import { EventsDict } from 'shared/config/events';
+
 import config from 'config.json';
+
+import { colors, ColorTokens, Theme } from 'styles/colors';
 
 export enum GameView {
 	TILE = 'tiles',
@@ -14,6 +17,10 @@ export enum GameView {
 type ContextType = {
 	sdk: SDK;
 	path: string;
+
+	activeTheme: Theme;
+	setActiveTheme: (activeTheme: Theme) => void;
+	colorTokens: ColorTokens;
 
 	activeTab: TabDict;
 	setActiveTab: (activeTab: TabDict) => void;
@@ -35,6 +42,7 @@ export const AppContextProvider = ({
 }: {
 	children: React.ReactNode;
 }): JSX.Element => {
+	const [activeTheme, setActiveTheme] = useState<Theme>(Theme.ASH);
 	const [activeTab, setActiveTab] = useState<TabDict>(TabDict.HOME);
 	const [gameListView, setGameListView] = useState<GameView>(GameView.TILE);
 	const [visibleTiers, setVisibleTiers] = useState<TierId[]>([]);
@@ -43,6 +51,10 @@ export const AppContextProvider = ({
 	);
 	const [queryGame, setQueryGame] = useState<string>('');
 	const [queryMember, setQueryMember] = useState<string>('');
+
+	const colorTokens = useMemo(() => {
+		return colors[activeTheme];
+	}, [activeTheme]);
 
 	const path = config.API;
 	const sdk = new SDK({
@@ -53,6 +65,10 @@ export const AppContextProvider = ({
 	const value = {
 		path,
 		sdk,
+
+		activeTheme,
+		setActiveTheme,
+		colorTokens,
 
 		activeTab,
 		setActiveTab,

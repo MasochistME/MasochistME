@@ -67,7 +67,7 @@ export const WrapperLeaderboards = styled(Flex)`
 	max-width: 100%;
 	height: auto;
 	gap: 16px;
-	background-color: ${colors.darkBlueTransparent};
+	background-color: ${colors.darkBlue}cc;
 	color: ${colors.superLightGrey};
 	font-family: ${fonts.Raleway};
 `;

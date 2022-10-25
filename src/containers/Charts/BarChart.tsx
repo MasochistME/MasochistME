@@ -84,6 +84,7 @@ import {
 	ScaleOptionsByType,
 } from 'chart.js';
 import { colors } from 'shared/theme';
+import { useAppContext } from 'context';
 
 ChartJS.register(...registerables);
 
@@ -95,12 +96,13 @@ type Props = {
 };
 
 export const BarChart = (props: Props): JSX.Element => {
+	const { colorTokens } = useAppContext();
 	const { datasetIdKey, data, options = {} } = props;
 
 	const axisOptions = {
 		...props.axisOptions,
 		grid: {
-			color: colors.newMediumGrey,
+			color: colorTokens['semantic-color-interactive'],
 		},
 	};
 

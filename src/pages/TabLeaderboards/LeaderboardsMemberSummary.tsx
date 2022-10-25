@@ -114,7 +114,7 @@ const StyledLeaderboardsMemberSummary = styled(Flex)<SummaryProps>`
 		return colors.superLightGrey;
 	}};
 	background-color: ${({ isDisabled, isHighestPatronTier }) => {
-		if (isDisabled) return colors.darkRedTransparent;
+		if (isDisabled) return `${colors.darkRed}cc`;
 		if (isHighestPatronTier) return `${colors.tier4Darkened}dd`;
 		return `${colors.newDarkBlue}bb`;
 	}};

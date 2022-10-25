@@ -38,6 +38,7 @@ const GlobalStyle = createGlobalStyle`
     -webkit-user-select: none;
     -o-user-select: none;
   }
+  
   a {
     color: ${colors.white};
     &:hover {

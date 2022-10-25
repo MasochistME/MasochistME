@@ -4,10 +4,12 @@ import styled from 'styled-components';
 import { Game, MemberGame, Tier } from '@masochistme/sdk/dist/v1/types';
 
 import { useTiers, useCuratedGames } from 'sdk';
-import { colors, media } from 'shared/theme';
+import { media } from 'shared/theme';
 import { Flex, DateBlock, ProgressBar } from 'components';
 import { MemberBadges, GameThumbnail } from 'containers';
 import { Size } from 'utils';
+import { ColorTokens } from 'styles/colors';
+import { useAppContext } from 'context';
 
 type Props = {
 	steamId: string;
@@ -15,6 +17,7 @@ type Props = {
 };
 
 export const MemberLeaderboardsGame = (props: Props): JSX.Element => {
+	const { colorTokens } = useAppContext();
 	const { steamId, memberGame } = props;
 	const history = useHistory();
 
@@ -34,7 +37,7 @@ export const MemberLeaderboardsGame = (props: Props): JSX.Element => {
 	};
 
 	return (
-		<StyledMemberGame align>
+		<StyledMemberGame align colorTokens={colorTokens}>
 			<DateBlock
 				date={
 					memberGame.completionPercentage === 100
@@ -49,7 +52,9 @@ export const MemberLeaderboardsGame = (props: Props): JSX.Element => {
 					onClick={onGameClick}
 				/>
 				<i className={gameTierIcon} />
-				<StyledGameTitle onClick={onGameClick}>{gameTitle}</StyledGameTitle>
+				<StyledGameTitle onClick={onGameClick} colorTokens={colorTokens}>
+					{gameTitle}
+				</StyledGameTitle>
 			</StyledGameInfo>
 			<MemberBadges
 				size={Size.TINY}
@@ -61,13 +66,15 @@ export const MemberLeaderboardsGame = (props: Props): JSX.Element => {
 	);
 };
 
-const StyledMemberGame = styled(Flex)`
+const StyledMemberGame = styled(Flex)<{ colorTokens: ColorTokens }>`
 	width: 100%;
 	height: 37px;
 	gap: 4px;
 	text-align: left;
-	border-bottom: 1px solid ${colors.newDark};
-	border-top: 1px solid ${colors.newMediumGrey};
+	border-bottom: 1px solid
+		${({ colorTokens }) => colorTokens['core-primary-bg']};
+	border-top: 1px solid
+		${({ colorTokens }) => colorTokens['semantic-color-interactive']};
 	&:first-child {
 		border-top: none;
 	}
@@ -87,12 +94,12 @@ const StyledGameInfo = styled(Flex)`
 	}
 `;
 
-const StyledGameTitle = styled.div`
+const StyledGameTitle = styled.div<{ colorTokens: ColorTokens }>`
 	cursor: pointer;
 	@media (max-width: ${media.smallTablets}) {
 		display: none;
 	}
 	&:hover {
-		color: ${colors.white};
+		color: ${({ colorTokens }) => colorTokens['core-tertiary-text']};
 	}
 `;

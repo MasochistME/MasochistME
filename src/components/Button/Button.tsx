@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { colors, fonts } from 'shared/theme';
 import { Tooltip } from 'components';
 import { Size } from 'utils';
+import { useAppContext } from 'context';
+import { ColorTokens } from 'styles/colors';
 
 type Props = {
 	label?: string;
@@ -23,12 +25,14 @@ export const Button = (props: Props) => {
 		size = Size.MEDIUM,
 		onClick,
 	} = props;
+	const { colorTokens } = useAppContext();
 	return (
 		<Tooltip content={tooltip}>
 			<StyledButton
 				iconOnly={!label}
 				size={size}
 				disabled={disabled}
+				colorTokens={colorTokens}
 				onClick={onClick}>
 				{icon && iconPlacement === 'left' && <i className={icon} />}
 				{label && <span>{label}</span>}
@@ -38,15 +42,19 @@ export const Button = (props: Props) => {
 	);
 };
 
-const StyledButton = styled.button<{ size: Size; iconOnly: boolean }>`
+const StyledButton = styled.button<{
+	size: Size;
+	iconOnly: boolean;
+	colorTokens: ColorTokens;
+}>`
 	margin: 0;
 	padding: 0;
 	border: none;
 	gap: 8px;
 	padding: 4px 12px;
 	border-radius: 4px;
-	border: ${({ iconOnly }) =>
-		iconOnly ? 0 : `1px solid ${colors.newMediumGrey}`};
+	border: ${({ iconOnly, colorTokens }) =>
+		iconOnly ? 0 : `1px solid ${colorTokens['semantic-color-interactive']}`};
 	font-size: ${({ size }) => {
 		if (size === Size.TINY) return '8px';
 		if (size === Size.SMALL) return '12px';
@@ -56,11 +64,11 @@ const StyledButton = styled.button<{ size: Size; iconOnly: boolean }>`
 		return '18px';
 	}};
 	font-family: ${fonts.Raleway};
-	background-color: black;
-	color: ${colors.lightGrey};
+	background-color: ${({ colorTokens }) => colorTokens['core-tertiary-bg']};
+	color: ${({ colorTokens }) => colorTokens['core-secondary-text']};
 	cursor: pointer;
 	&:hover {
-		color: ${colors.superLightGrey};
+		color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	}
 	& > *:not(:last-child) {
 		margin-right: 8px;

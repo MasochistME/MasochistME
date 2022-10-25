@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 import { colors, fonts, media } from 'shared/theme';
 import { Flex, Tooltip, Skeleton } from 'components';
+import { ColorTokens } from 'styles/colors';
+import { useAppContext } from 'context';
 
 type Props = {
 	label: React.ReactNode;
@@ -11,10 +13,12 @@ type Props = {
 	isLoading?: boolean;
 };
 export const StatBlock = (props: Props) => {
+	const { colorTokens } = useAppContext();
 	const { label, sublabel, icon, title, isLoading } = props;
+
 	return (
 		<Tooltip content={title}>
-			<StyledStatBlock>
+			<StyledStatBlock colorTokens={colorTokens}>
 				{icon && <i className={icon} />}
 				{isLoading && <Skeleton width="100px" />}
 				{!isLoading && (
@@ -30,13 +34,13 @@ export const StatBlock = (props: Props) => {
 	);
 };
 
-const StyledStatBlock = styled(Flex)`
+const StyledStatBlock = styled(Flex)<{ colorTokens: ColorTokens }>`
 	gap: 8px;
 	flex-direction: row;
 	align-items: center;
 	padding: 8px 16px;
 	border-radius: 64px;
-	background-color: ${colors.newDark}99;
+	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']}99;
 	border: 2px solid ${colors.yellow}66;
 	color: ${colors.yellow};
 	font-family: ${fonts.Dosis};

@@ -1,13 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { fonts, colors, media } from 'shared/theme';
+import { fonts, media } from 'shared/theme';
 import { Flex } from 'components';
 import { ButtonsSocialMedia, Logo } from 'containers';
+import { useAppContext } from 'context';
+import { ColorTokens } from 'styles/colors';
 
 export const Header = (): JSX.Element => {
+	const { colorTokens } = useAppContext();
 	return (
-		<StyledHeader align>
+		<StyledHeader align colorTokens={colorTokens}>
 			<Logo />
 			<StyledHeaderTitle>
 				<span>Masochist.ME</span>
@@ -21,14 +24,14 @@ export const Header = (): JSX.Element => {
 	);
 };
 
-const StyledHeader = styled(Flex)`
+const StyledHeader = styled(Flex)<{ colorTokens: ColorTokens }>`
 	min-width: 100%;
 	max-width: 100%;
 	height: 70px;
 	padding: 12px 32px;
 	justify-content: space-between;
-	background-color: ${colors.newDark};
-	color: ${colors.lightGrey};
+	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']};
+	color: ${({ colorTokens }) => colorTokens['core-secondary-text']};
 	font-family: ${fonts.Raleway};
 `;
 

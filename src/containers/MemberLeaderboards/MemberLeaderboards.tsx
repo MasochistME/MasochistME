@@ -13,6 +13,8 @@ import { media, colors } from 'shared/theme';
 import { Flex, Loader, Spinner } from 'components';
 
 import { MemberLeaderboardsGame } from './MemberLeaderboardsGame';
+import { ColorTokens } from 'styles/colors';
+import { useAppContext } from 'context';
 
 type Props = {
 	steamId: string;
@@ -24,6 +26,7 @@ type Props = {
 };
 
 export const MemberLeaderboards = (props: Props): JSX.Element => {
+	const { colorTokens } = useAppContext();
 	const { steamId, filter } = props;
 
 	const {
@@ -78,7 +81,8 @@ export const MemberLeaderboards = (props: Props): JSX.Element => {
 	return (
 		<StyledMemberGameList
 			isDisabled={isDisabled}
-			isHighestPatronTier={isHighestPatronTier}>
+			isHighestPatronTier={isHighestPatronTier}
+			colorTokens={colorTokens}>
 			{isLoading && !isFetched && <Loader />}
 			<Suspense
 				fallback={
@@ -101,6 +105,7 @@ export const MemberLeaderboards = (props: Props): JSX.Element => {
 type SummaryProps = {
 	isDisabled?: boolean;
 	isHighestPatronTier?: boolean;
+	colorTokens: ColorTokens;
 };
 
 export const StyledMemberGameList = styled(Flex)<SummaryProps>`
@@ -108,12 +113,14 @@ export const StyledMemberGameList = styled(Flex)<SummaryProps>`
 	transition: height 1s;
 	width: 100%;
 	box-sizing: border-box;
-	border-left: 1px solid ${colors.superDarkGrey};
-	border-right: 1px solid ${colors.superDarkGrey};
-	background-color: ${({ isDisabled, isHighestPatronTier }) => {
-		if (isDisabled) return `${colors.darkRed}aa`;
+	border-left: 1px solid
+		${({ colorTokens }) => colorTokens['core-secondary-bg']};
+	border-right: 1px solid
+		${({ colorTokens }) => colorTokens['core-secondary-bg']};
+	background-color: ${({ isDisabled, isHighestPatronTier, colorTokens }) => {
+		if (isDisabled) return `${colorTokens['semantic-color-error-muted']}aa`;
 		if (isHighestPatronTier) return `${colors.tier4Darkened}aa`;
-		return `${colors.superDarkGrey}cc`;
+		return `${colorTokens['core-secondary-bg']}cc`;
 	}};
 	&:first-child {
 		border-top: none;

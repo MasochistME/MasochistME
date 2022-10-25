@@ -3,17 +3,20 @@ import styled from 'styled-components';
 
 import { useMemberById, useMemberLeaderboards, usePatreonTiers } from 'sdk';
 import { Size } from 'utils';
-import { colors, media } from 'shared/theme';
+import { media } from 'shared/theme';
 import { Flex, Tooltip } from 'components';
 import { MemberAvatar } from 'containers';
 
 import { MemberProfileUpdate } from './MemberProfileUpdate';
+import { ColorTokens } from 'styles/colors';
+import { useAppContext } from 'context';
 
 type Props = {
 	memberId: string;
 };
 
 export const MemberProfileHeader = (props: Props): JSX.Element => {
+	const { colorTokens } = useAppContext();
 	const { memberId } = props;
 
 	const { memberData: member, isLoading, isError } = useMemberById(memberId);
@@ -39,7 +42,7 @@ export const MemberProfileHeader = (props: Props): JSX.Element => {
 	}, [member]);
 
 	return (
-		<StyledMemberProfileHeader row>
+		<StyledMemberProfileHeader row colorTokens={colorTokens}>
 			<StyledMemberProfileHeaderAvatar>
 				<MemberAvatar
 					member={member}
@@ -81,13 +84,13 @@ export const MemberProfileHeader = (props: Props): JSX.Element => {
 	);
 };
 
-const StyledMemberProfileHeader = styled(Flex)`
+const StyledMemberProfileHeader = styled(Flex)<{ colorTokens: ColorTokens }>`
 	max-width: 100%;
 	padding: 8px;
 	gap: 16px;
 	justify-content: space-between;
 	align-items: flex-start;
-	background-color: ${colors.black}66;
+	background-color: ${({ colorTokens }) => colorTokens['core-tertiary-bg']}66;
 `;
 
 const StyledMemberProfileHeaderAvatar = styled.div`

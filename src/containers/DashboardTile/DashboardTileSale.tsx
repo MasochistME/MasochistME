@@ -1,15 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { colors, fonts } from 'shared/theme';
+import { fonts } from 'shared/theme';
 import { useGames } from 'sdk';
 import { getGameThumbnail } from 'utils';
 import { Section, SectionProps } from 'containers';
 import { Flex, Loader, Spinner } from 'components';
+import { ColorTokens } from 'styles/colors';
+import { useAppContext } from 'context';
 
 export const DashboardTileSale = (
 	props: Omit<SectionProps, 'content' | 'title'>,
 ): JSX.Element => {
+	const { colorTokens } = useAppContext();
 	const { gamesData, isLoading, isFetched } = useGames({
 		filter: { isCurated: true, sale: true },
 		sort: { sale: 'desc' },
@@ -23,8 +26,9 @@ export const DashboardTileSale = (
 				style={{ backgroundImage: `url(${gameImg})` }}
 				href={`https://store.steampowered.com/app/${game.id}`}
 				target="_blank"
-				rel="noopener noreferrer">
-				<SalePercentage>-{game.sale}%</SalePercentage>
+				rel="noopener noreferrer"
+				colorTokens={colorTokens}>
+				<SalePercentage colorTokens={colorTokens}>-{game.sale}%</SalePercentage>
 			</StyledGameSaleTile>
 		);
 	});
@@ -54,7 +58,7 @@ export const StyledSectionSale = styled(Flex)`
 	gap: 8px;
 `;
 
-export const StyledGameSaleTile = styled.a`
+export const StyledGameSaleTile = styled.a<{ colorTokens: ColorTokens }>`
 	display: flex;
 	justify-content: flex-end;
 	align-items: flex-start;
@@ -63,13 +67,14 @@ export const StyledGameSaleTile = styled.a`
 	box-sizing: border-box;
 	min-width: 200px;
 	height: 96px;
-	border: 3px solid ${colors.black};
+	border: 3px solid ${({ colorTokens }) => colorTokens['core-tertiary-bg']};
 	&:hover {
-		box-shadow: 0 0 10px ${colors.superDarkGrey};
+		box-shadow: 0 0 10px
+			${({ colorTokens }) => colorTokens['core-secondary-bg']};
 	}
 `;
 
-export const SalePercentage = styled.span`
+export const SalePercentage = styled.span<{ colorTokens: ColorTokens }>`
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -77,9 +82,10 @@ export const SalePercentage = styled.span`
 	height: 40%;
 	font-family: ${fonts.Dosis};
 	font-weight: bold;
-	color: ${colors.superLightGrey};
-	background-color: ${colors.superDarkGrey};
-	border-left: 3px solid ${colors.black};
-	border-bottom: 3px solid ${colors.black};
+	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
+	background-color: ${({ colorTokens }) => colorTokens['core-secondary-bg']};
+	border-left: 3px solid ${({ colorTokens }) => colorTokens['core-tertiary-bg']};
+	border-bottom: 3px solid
+		${({ colorTokens }) => colorTokens['core-tertiary-bg']};
 	font-size: 1.5em;
 `;

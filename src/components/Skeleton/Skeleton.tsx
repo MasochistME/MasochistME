@@ -1,5 +1,5 @@
 import MUISkeleton from '@mui/material/Skeleton';
-import { colors } from 'shared/theme';
+import { useAppContext } from 'context';
 import { Size } from 'utils';
 
 type Props = {
@@ -9,10 +9,12 @@ type Props = {
 };
 
 export const Skeleton = (props: Props) => {
+	const { colorTokens } = useAppContext();
 	const { width, height, size = Size.MEDIUM } = props;
+
 	return (
 		<MUISkeleton
-			sx={{ bgcolor: colors.newDarkBlue }}
+			sx={{ bgcolor: colorTokens['semantic-color-idle'] }}
 			variant="rounded"
 			width={width ?? size}
 			height={height ?? size}

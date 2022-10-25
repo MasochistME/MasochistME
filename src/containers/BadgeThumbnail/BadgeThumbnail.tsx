@@ -5,14 +5,16 @@ import { Badge } from '@masochistme/sdk/dist/v1/types';
 import { BadgeTooltip, CommonProps } from 'containers';
 import { Size } from 'utils';
 import { LOGO } from 'shared/consts';
-import { colors } from 'shared/theme';
+import { ColorTokens } from 'styles/colors';
 import { Skeleton, Tooltip } from 'components';
+import { useAppContext } from 'context';
 
 type Props = CommonProps & {
 	badge?: Badge;
 };
 
 export const BadgeThumbnail = (props: Props) => {
+	const { colorTokens } = useAppContext();
 	const {
 		badge,
 		disabled,
@@ -23,7 +25,11 @@ export const BadgeThumbnail = (props: Props) => {
 	} = props;
 
 	const badgeComponent = (
-		<StyledBadgeThumbnail size={size} disabled={disabled} onClick={onClick}>
+		<StyledBadgeThumbnail
+			size={size}
+			disabled={disabled}
+			colorTokens={colorTokens}
+			onClick={onClick}>
 			{isLoading ? (
 				<Skeleton size={size} />
 			) : (
@@ -39,7 +45,11 @@ export const BadgeThumbnail = (props: Props) => {
 };
 
 const StyledBadgeThumbnail = styled.div.attrs(
-	(props: Pick<Props, 'size' | 'onClick' | 'disabled'>) => {
+	(
+		props: Pick<Props, 'size' | 'onClick' | 'disabled'> & {
+			colorTokens: ColorTokens;
+		},
+	) => {
 		const { size, onClick } = props;
 		const style: React.CSSProperties = {
 			minWidth: size,
@@ -50,7 +60,7 @@ const StyledBadgeThumbnail = styled.div.attrs(
 		};
 		return { style };
 	},
-)<Pick<Props, 'size' | 'onClick' | 'disabled'>>`
+)<Pick<Props, 'size' | 'onClick' | 'disabled'> & { colorTokens: ColorTokens }>`
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -59,11 +69,11 @@ const StyledBadgeThumbnail = styled.div.attrs(
 	/* padding: 2px; */
 	border-radius: ${({ size }) =>
 		size === Size.SMALL || size === Size.TINY ? 4 : 8}px;
-	border: ${({ size, disabled }) => {
+	border: ${({ size, disabled, colorTokens }) => {
 		const borderSize = size === Size.SMALL || size === Size.TINY ? 2 : 3;
 		const borderColor = disabled
-			? `${colors.superLightGrey}66`
-			: colors.superLightGrey;
+			? `${colorTokens['core-primary-text']}66`
+			: colorTokens['core-primary-text'];
 		return `${borderSize}px solid ${borderColor}`;
 	}};
 

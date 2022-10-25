@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Game } from '@masochistme/sdk/dist/v1/types';
 
-import { colors, media } from 'shared/theme';
+import { media } from 'shared/theme';
 import { getPercentage } from 'utils';
 import { Flex } from 'components';
 import { StatBlock } from 'containers';
@@ -10,12 +10,15 @@ import {
 	useCuratorMembers,
 	useLeaderboardsGames,
 } from 'sdk';
+import { ColorTokens } from 'styles/colors';
+import { useAppContext } from 'context';
 
 type Props = {
 	game: Game;
 };
 
 export const GameProfileStats = (props: Props) => {
+	const { colorTokens } = useAppContext();
 	const { game } = props;
 
 	const { leaderboardsData, isLoading } = useLeaderboardsGames();
@@ -42,7 +45,7 @@ export const GameProfileStats = (props: Props) => {
 		: '—';
 
 	return (
-		<StyledGameProfileStats>
+		<StyledGameProfileStats colorTokens={colorTokens}>
 			<StatBlock
 				title={
 					<StatBlock.Title>
@@ -126,9 +129,9 @@ export const GameProfileStats = (props: Props) => {
 	);
 };
 
-const StyledGameProfileStats = styled(Flex)`
+const StyledGameProfileStats = styled(Flex)<{ colorTokens: ColorTokens }>`
 	justify-content: space-evenly;
-	background-color: ${colors.black}66;
+	background-color: ${({ colorTokens }) => colorTokens['core-tertiary-bg']}66;
 	gap: 16px;
 	padding: 24px 0 32px 0;
 	@media (max-width: ${media.tablets}) {

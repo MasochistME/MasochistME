@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { colors } from 'shared/theme';
 import { Flex } from '../Flex';
 import { Tooltip } from '../Tooltip';
+import { useAppContext } from 'context';
+import { ColorTokens } from 'styles/colors';
 
 type Props<T extends string> = {
 	icon: string;
@@ -14,6 +16,7 @@ type Props<T extends string> = {
 };
 
 export const Checkbox = <T extends string>(props: Props<T>): JSX.Element => {
+	const { colorTokens } = useAppContext();
 	const { icon, itemDescription, itemType, visibleItems, setVisibleItems } =
 		props;
 
@@ -43,7 +46,7 @@ export const Checkbox = <T extends string>(props: Props<T>): JSX.Element => {
 					{itemDescription && <span>({itemDescription})</span>}
 				</Flex>
 			}>
-			<StyledCheckbox align justify>
+			<StyledCheckbox align justify colorTokens={colorTokens}>
 				<input
 					type="checkbox"
 					name={`checkbox-${itemType}`}
@@ -60,14 +63,14 @@ export const Checkbox = <T extends string>(props: Props<T>): JSX.Element => {
 	);
 };
 
-const StyledCheckbox = styled(Flex)`
+const StyledCheckbox = styled(Flex)<{ colorTokens: ColorTokens }>`
 	padding: 4px;
 	box-sizing: border-box;
 	max-height: 44px;
 	input {
 		display: none;
 		&:not(:checked) + label {
-			color: ${colors.newMediumGrey};
+			color: ${({ colorTokens }) => colorTokens['semantic-color-interactive']};
 		}
 	}
 	label {
@@ -79,6 +82,6 @@ const StyledCheckbox = styled(Flex)`
 		cursor: pointer;
 	}
 	&:hover {
-		color: ${colors.white};
+		color: ${({ colorTokens }) => colorTokens['semantic-color-active']};
 	}
 `;
