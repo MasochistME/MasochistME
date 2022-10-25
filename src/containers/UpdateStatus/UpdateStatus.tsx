@@ -8,7 +8,6 @@ import { HideOn } from 'containers';
 
 export const UpdateStatus = (): JSX.Element => {
 	const { updateData: status } = useUpdateStatus();
-	console.log(status);
 
 	const nextUpdate = status?.lastUpdate
 		? new Date(

@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { useLeaderboards, useCuratorMembers } from 'sdk';
+import { useLeaderboardsMembers, useCuratorMembers } from 'sdk';
 import { EventLink, Section, SectionProps } from 'containers';
 import { Flex, Skeleton } from 'components';
 
@@ -22,7 +22,7 @@ export const DashboardTileTop = (
 		leaderboardsData,
 		isLoading: isLeadersLoading,
 		isFetched: isLeadersFetched,
-	} = useLeaderboards(NUMBER_OF_LEADERS);
+	} = useLeaderboardsMembers(NUMBER_OF_LEADERS);
 
 	const isLoading = isMembersLoading && isLeadersLoading;
 	const isFetched = isMembersFetched && isLeadersFetched;

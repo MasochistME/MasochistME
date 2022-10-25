@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import { MemberGame } from '@masochistme/sdk/dist/v1/types';
 
-import { useLeaderboards, useMemberGames, useTiers } from 'sdk';
+import { useLeaderboardsMembers, useMemberGames, useTiers } from 'sdk';
+import { useMemberBadgesFilter } from 'hooks';
 import { colors, media } from 'shared/theme';
 import { getPercentage } from 'utils';
 import { Flex, Skeleton } from 'components';
@@ -28,7 +29,9 @@ export const MemberProfileStats = (props: Props) => {
 		leaderboardsData,
 		isLoading: isLeaderboardsLoading,
 		isFetched: isLeaderboardsFetched,
-	} = useLeaderboards();
+	} = useLeaderboardsMembers();
+
+	const memberBadgesData = useMemberBadgesFilter(memberId);
 
 	const isLoading =
 		isMemberGamesLoading && isLeaderboardsLoading && isTiersLoading;
@@ -40,6 +43,9 @@ export const MemberProfileStats = (props: Props) => {
 	);
 	const memberCompletions = memberGamesData.filter(
 		c => c.completionPercentage === 100,
+	);
+	const memberGamesStarted = memberGamesData.filter(
+		c => c.completionPercentage !== 0,
 	);
 
 	/**
@@ -76,35 +82,32 @@ export const MemberProfileStats = (props: Props) => {
 		);
 	});
 
-	const pointsTotal = (
-		<>
-			{memberLeaderData?.games.map((game, index) => {
-				const tierIcon =
-					tiersData.find(tier => tier.id === game.tier)?.icon ??
-					'fa-solid fa-circle-question';
-				return (
-					<StatBlock.Subtitle key={`statblock-points-${index}`}>
-						<i className={tierIcon} /> -{' '}
-						<span style={{ fontWeight: 'bold' }}>{game.points}</span> pts
-					</StatBlock.Subtitle>
-				);
-			})}
-			<StatBlock.Subtitle>
-				<i className="fas fa-medal" /> -{' '}
-				<span style={{ fontWeight: 'bold' }}>
-					{memberLeaderData?.badges.points}
-				</span>{' '}
-				pts
+	const pointsTotal = memberLeaderData?.games.map((game, index) => {
+		const tierIcon =
+			tiersData.find(tier => tier.id === game.tier)?.icon ??
+			'fa-solid fa-circle-question';
+		return (
+			<StatBlock.Subtitle key={`statblock-points-${index}`}>
+				<i className={tierIcon} /> -{' '}
+				<span style={{ fontWeight: 'bold' }}>{game.points}</span> pts
 			</StatBlock.Subtitle>
-		</>
+		);
+	});
+
+	const badgesTotal = (
+		<StatBlock.Subtitle>
+			<i className="fas fa-medal" /> -{' '}
+			<span style={{ fontWeight: 'bold' }}>
+				{memberLeaderData?.badges.points}
+			</span>{' '}
+			pts
+		</StatBlock.Subtitle>
 	);
 
 	const badgesUnlocked = (
 		<StatBlock.Subtitle>
 			<i className="fas fa-medal" /> -{' '}
-			<span style={{ fontWeight: 'bold' }}>
-				{memberLeaderData?.badges.total}
-			</span>
+			<span style={{ fontWeight: 'bold' }}>{memberBadgesData.length}</span>
 		</StatBlock.Subtitle>
 	);
 
@@ -129,6 +132,8 @@ export const MemberProfileStats = (props: Props) => {
 							<Flex column>
 								<StatBlock.Title>Points total</StatBlock.Title>
 								{pointsTotal}
+								<StatBlock.Title>Badge points</StatBlock.Title>
+								{badgesTotal}
 							</Flex>
 						}
 						label={memberLeaderData?.sum ?? '?'}
@@ -158,7 +163,7 @@ export const MemberProfileStats = (props: Props) => {
 						}
 						label={getPercentage(
 							memberCompletions.length,
-							memberGamesData.length,
+							memberGamesStarted.length,
 						)}
 						sublabel="completion rate"
 						icon="fa-solid fa-percent"

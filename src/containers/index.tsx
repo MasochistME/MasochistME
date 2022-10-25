@@ -11,6 +11,7 @@ export * from './GameTile';
 export * from './GameTooltip';
 export * from './Header';
 export * from './HideOn';
+export * from './Logo';
 export * from './MemberAvatar';
 export * from './MemberBadges';
 export * from './MemberLeaderboards';
@@ -23,3 +24,5 @@ export * from './SubHeader';
 export * from './SubPage';
 export * from './Tabs';
 export * from './UpdateStatus';
+
+export * from './CommonProps';

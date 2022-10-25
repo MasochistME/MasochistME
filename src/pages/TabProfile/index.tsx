@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { useMemberById } from 'sdk';
 import { Flex, Warning } from 'components';
 import { SubPage, Tabs, Tab, TabPanel } from 'containers';
-import { useActiveTab } from 'shared/hooks';
+import { useActiveTab } from 'hooks';
 import { TabDict } from 'shared/config/tabs';
 
 import { MemberProfileBadgesSection } from './MemberProfileBadgesSection';

@@ -36,7 +36,7 @@ export const GameTileView = (): JSX.Element => {
 	const isLoading = isGamesLoading && isTiersLoading;
 
 	return (
-		<Flex gap={16} align justify flexWrap="wrap">
+		<Flex gap={32} align justify flexWrap="wrap">
 			{isLoading && <Spinner />}
 			{isFetched && filteredGames}
 			{filteredGames?.length === 0 && 'No results.'}

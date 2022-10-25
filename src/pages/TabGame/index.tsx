@@ -6,7 +6,7 @@ import { Game, Badge } from '@masochistme/sdk/dist/v1/types';
 import { useCuratedGames, useGameBadges } from 'sdk';
 import { Flex, Spinner, Warning } from 'components';
 import { SubPage, Section, BadgeTile, Tabs, Tab, TabPanel } from 'containers';
-import { useActiveTab } from 'shared/hooks';
+import { useActiveTab } from 'hooks';
 import { TabDict } from 'shared/config/tabs';
 
 import { GameProfileHeader } from './GameProfileHeader';

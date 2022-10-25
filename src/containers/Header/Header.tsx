@@ -3,12 +3,12 @@ import styled from 'styled-components';
 
 import { fonts, colors, media } from 'shared/theme';
 import { Flex } from 'components';
-import { ButtonsSocialMedia } from 'containers';
+import { ButtonsSocialMedia, Logo } from 'containers';
 
 export const Header = (): JSX.Element => {
 	return (
 		<StyledHeader align>
-			<span />
+			<Logo />
 			<StyledHeaderTitle>
 				<span>Masochist.ME</span>
 				<StyledHeaderSubTitle>
@@ -39,6 +39,7 @@ const StyledHeaderTitle = styled.h1`
 	margin: 0 10px;
 	text-align: center;
 	text-transform: uppercase;
+
 	@media (max-width: ${media.tablets}) {
 		letter-spacing: 0em;
 	}

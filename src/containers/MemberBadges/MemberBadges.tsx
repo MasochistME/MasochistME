@@ -24,11 +24,12 @@ export const MemberBadges = (props: Props): JSX.Element => {
 			memberBadgesData.find(b => b.badgeId === String(badge._id)),
 	);
 
-	const mappedBadges = badges.map((badge: Badge) => {
+	const mappedBadges = badges.map((badge: Badge, i: number) => {
 		return (
 			<BadgeThumbnail
 				size={size}
 				badge={badge}
+				disabled={i % 2 === 0}
 				key={`badge-tile-${badge._id}`}
 			/>
 		);

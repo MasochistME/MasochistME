@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { Member, Tier, Leaderboards } from '@masochistme/sdk/dist/v1/types';
 
-import { useTiers, useCuratorMembers, useLeaderboards } from 'sdk';
+import { useTiers, useCuratorMembers, useLeaderboardsMembers } from 'sdk';
 import { useAppContext } from 'context';
-import { useActiveTab } from 'shared/hooks';
+import { useActiveTab } from 'hooks';
 import { TabDict } from 'shared/config/tabs';
 import { SubPage, Section, SectionProps } from 'containers';
 import { Flex, Spinner } from 'components';
@@ -16,7 +16,8 @@ const TabLeaderboards = (): JSX.Element => {
 	useActiveTab(TabDict.LEADERBOARDS);
 
 	const { queryMember } = useAppContext();
-	const { leaderboardsData, isFetched, isLoading, isError } = useLeaderboards();
+	const { leaderboardsData, isFetched, isLoading, isError } =
+		useLeaderboardsMembers();
 	const { membersData } = useCuratorMembers();
 
 	const createRankingList = () => {

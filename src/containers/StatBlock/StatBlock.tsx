@@ -1,26 +1,30 @@
 import styled from 'styled-components';
 
 import { colors, fonts, media } from 'shared/theme';
-import { Flex, Tooltip } from 'components';
+import { Flex, Tooltip, Skeleton } from 'components';
 
 type Props = {
 	label: React.ReactNode;
 	sublabel?: React.ReactNode;
 	title?: React.ReactNode;
 	icon?: string;
+	isLoading?: boolean;
 };
 export const StatBlock = (props: Props) => {
-	const { label, sublabel, icon, title } = props;
+	const { label, sublabel, icon, title, isLoading } = props;
 	return (
 		<Tooltip content={title}>
 			<StyledStatBlock>
 				{icon && <i className={icon} />}
-				<Flex column align>
-					<StyledStatBlockLabel>{label}</StyledStatBlockLabel>
-					{sublabel && (
-						<StyledStatBlockSublabel>{sublabel}</StyledStatBlockSublabel>
-					)}
-				</Flex>
+				{isLoading && <Skeleton width="100px" />}
+				{!isLoading && (
+					<Flex column align>
+						<StyledStatBlockLabel>{label}</StyledStatBlockLabel>
+						{sublabel && (
+							<StyledStatBlockSublabel>{sublabel}</StyledStatBlockSublabel>
+						)}
+					</Flex>
+				)}
 			</StyledStatBlock>
 		</Tooltip>
 	);

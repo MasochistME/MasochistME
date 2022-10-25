@@ -4,7 +4,7 @@ import { useAppContext } from 'context';
 /**
  *
  */
-export const useLeaderboards = (limit?: number) => {
+export const useLeaderboardsMembers = (limit?: number) => {
 	const { sdk } = useAppContext();
 
 	const {
@@ -12,11 +12,32 @@ export const useLeaderboards = (limit?: number) => {
 		isLoading,
 		isFetched,
 		isError,
-	} = useQuery(['masochist', 'leaderboards', `limit-${limit ?? 1000}`], () =>
-		sdk.getLeaderboardsList({
-			filter: { isMember: true },
-			limit: limit ?? 1000,
-		}),
+	} = useQuery(
+		['masochist', 'leaderboards', 'members', `limit-${limit ?? 1000}`],
+		() =>
+			sdk.getLeaderboardsMembersList({
+				filter: { isMember: true },
+				limit: limit ?? 1000,
+			}),
+	);
+
+	return { leaderboardsData, isLoading, isFetched, isError };
+};
+
+/**
+ *
+ */
+export const useLeaderboardsGames = (limit?: number) => {
+	const { sdk } = useAppContext();
+
+	const {
+		data: leaderboardsData = [],
+		isLoading,
+		isFetched,
+		isError,
+	} = useQuery(
+		['masochist', 'leaderboards', 'games', `limit-${limit ?? 1000}`],
+		() => sdk.getLeaderboardsGamesList({}),
 	);
 
 	return { leaderboardsData, isLoading, isFetched, isError };

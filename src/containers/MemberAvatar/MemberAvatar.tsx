@@ -3,20 +3,15 @@ import styled from 'styled-components';
 import { Member, PatronTier } from '@masochistme/sdk/dist/v1/types';
 
 import { Size } from 'utils';
+import { LOGO } from 'shared/consts';
 import { colors } from 'shared/theme';
+import { CommonProps } from 'containers';
 import { BrokenImage, Flex, Skeleton, Tooltip } from 'components';
 
-type Props = {
+type Props = CommonProps & {
 	member?: Partial<Member>;
 	patronTier?: PatronTier | null;
-	size?: Size;
-	title?: React.ReactNode;
-	isLoading?: boolean;
-	isError?: boolean;
-	onClick?: () => void;
 };
-
-const LOGO = 'http://cdn.masochist.me/mme_logo.png';
 
 export const MemberAvatar = (props: Props) => {
 	const {
