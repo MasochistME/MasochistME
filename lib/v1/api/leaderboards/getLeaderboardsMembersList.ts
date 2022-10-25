@@ -21,21 +21,21 @@ import { Leaderboards, Sort, ResponseError } from 'v1/types';
  * ## Usage
  *
  * ```ts
- * const leaderboards: Leaderboards[] = await sdk.getGamesList({ });
- * const leaderboardsByBadges: Game[] = await sdk.getGamesList({ sort: { badgePoints: 'asc' }});
+ * const leaderboards: Leaderboards[] = await sdk.getLeaderboardsMembersList({ });
+ * const leaderboardsByBadges: Game[] = await sdk.getLeaderboardsMembersList({ sort: { badgePoints: 'asc' }});
  * ```
  *
  * @param params.filter - Filter to apply to leaderboards list.
  * @param params.sort - Fields to sort leaderboards by.
  * @param params.limit - How many leaderboard entries will get returned.
  */
-export const getLeaderboardsList = async (
-	params: LeaderboardsListParams,
+export const getLeaderboardsMembersList = async (
+	params: LeaderboardsMembersListParams,
 	/** @ignore */
 	BASE_URL: string,
 ): Promise<Leaderboards[]> => {
 	const { filter, sort, limit } = params;
-	const url = `${BASE_URL}/leaderboards/list`;
+	const url = `${BASE_URL}/leaderboards/members/list`;
 
 	const leaderboardsResponse = await axios.post<
 		Leaderboards[] | ResponseError,
@@ -48,7 +48,7 @@ export const getLeaderboardsList = async (
 	return data as Leaderboards[];
 };
 
-export type LeaderboardsListParams = {
+export type LeaderboardsMembersListParams = {
 	filter?: { patreonTier?: number; isMember?: boolean };
 	sort?: {
 		[key in

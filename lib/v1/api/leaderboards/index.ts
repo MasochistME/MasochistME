@@ -3,7 +3,11 @@
  */
 
 export {
-	getLeaderboardsList,
-	LeaderboardsListParams,
-} from './getLeaderboardsList';
+	getLeaderboardsMembersList,
+	LeaderboardsMembersListParams,
+} from './getLeaderboardsMembersList';
+export {
+	getLeaderboardsGamesList,
+	LeaderboardsGamesListParams,
+} from './getLeaderboardsGamesList';
 export { getMemberLeaderboardsPositionById } from './getMemberLeaderboardsPositionById';

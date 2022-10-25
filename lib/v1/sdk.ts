@@ -46,7 +46,8 @@ import {
 	getSeasonsList,
 } from 'v1/api/seasons';
 import {
-	getLeaderboardsList,
+	getLeaderboardsMembersList,
+	getLeaderboardsGamesList,
 	getMemberLeaderboardsPositionById,
 } from './api/leaderboards';
 import {
@@ -223,9 +224,15 @@ export class SDK {
 	 *       LEADERBOARDS       *
 	 ****************************/
 
-	public getLeaderboardsList = <T extends typeof getLeaderboardsList>(
+	public getLeaderboardsMembersList = <
+		T extends typeof getLeaderboardsMembersList,
+	>(
 		args: Head<T>,
-	) => getLeaderboardsList(args, this.BASE_URL);
+	) => getLeaderboardsMembersList(args, this.BASE_URL);
+	public getLeaderboardsGamesList = <T extends typeof getLeaderboardsGamesList>(
+		args: Head<T>,
+	) => getLeaderboardsGamesList(args, this.BASE_URL);
+
 	public getMemberLeaderboardsPositionById = <
 		T extends typeof getMemberLeaderboardsPositionById,
 	>(
