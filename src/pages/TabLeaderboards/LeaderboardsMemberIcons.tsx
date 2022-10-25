@@ -19,11 +19,12 @@ export const LeaderboardsMemberIconPatron = (props: Props) => {
 		patreonTier => patreonTier.id === patronTier,
 	) ?? {
 		description: 'Unknown',
+		tier: null,
 	};
 
 	if (patronTier) {
 		// @ts-ignore:next-line
-		const color = `${colors[`tier${patronTier}`] ?? colors.superDarkGrey}`;
+		const color = `${colors[`tier${patron.tier}`] ?? colors.superDarkGrey}`;
 		return (
 			<Tooltip
 				content={`This member is ${patron?.description.toUpperCase()} tier supporter.`}>
