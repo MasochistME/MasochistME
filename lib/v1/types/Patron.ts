@@ -26,4 +26,8 @@ export interface Patron extends WithId {
 	 * Link to the avatar of the patron (used when a patron is not curator member).
 	 */
 	avatar: string | null;
+	/**
+	 * Patron identifier of a user.
+	 */
+	patronId: string | null;
 }
