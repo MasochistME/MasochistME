@@ -611,6 +611,6 @@ const getCuratorGameDetails = async (
 
 const getGameTier = (description: string, tiers: Tier[]) => {
   const gameTier =
-    tiers.find(tier => description.includes(tier.symbol))?.id ?? null;
+    tiers.find(tier => description.includes(tier.symbol))?.id ?? '1';
   return gameTier;
 };
