@@ -53,11 +53,13 @@ routerV1.delete(
  ********************************/
 
 import {
-  getLeaderboardsList,
+  getLeaderboardsMembersList,
+  getLeaderboardsGamesList,
   getMemberLeaderboardsPositionById,
 } from './leaderboards';
 
-routerV1.post('/leaderboards/list', getLeaderboardsList);
+routerV1.post('/leaderboards/members/list', getLeaderboardsMembersList);
+routerV1.post('/leaderboards/games/list', getLeaderboardsGamesList);
 routerV1.get(
   '/leaderboards/member/:memberId',
   getMemberLeaderboardsPositionById,
