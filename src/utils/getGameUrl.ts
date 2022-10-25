@@ -1,4 +1,4 @@
-const LOGO = 'http://cdn.masochist.me/mme_logo.png';
+import { LOGO } from 'shared/consts';
 
 export const getGameThumbnail = (gameId?: number) => {
 	if (gameId)

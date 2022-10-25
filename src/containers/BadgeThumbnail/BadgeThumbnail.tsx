@@ -4,6 +4,7 @@ import { Badge } from '@masochistme/sdk/dist/v1/types';
 
 import { BadgeTooltip } from 'containers';
 import { Size } from 'utils';
+import { LOGO } from 'shared/consts';
 import { colors } from 'shared/theme';
 import { Skeleton, Tooltip } from 'components';
 
@@ -14,8 +15,6 @@ type Props = {
 	isLoading?: boolean;
 	onClick?: () => void;
 };
-
-const LOGO = 'http://cdn.masochist.me/mme_logo.png';
 
 export const BadgeThumbnail = (props: Props) => {
 	const { badge, size = Size.MEDIUM, title, isLoading, onClick } = props;

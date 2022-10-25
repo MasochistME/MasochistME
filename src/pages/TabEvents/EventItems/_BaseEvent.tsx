@@ -2,9 +2,8 @@ import styled from 'styled-components';
 
 import { Flex } from 'components';
 import { Size } from 'utils';
+import { LOGO } from 'shared/consts';
 import { media, colors } from 'shared/theme';
-
-const LOGO = 'http://cdn.masochist.me/mme_logo.png';
 
 type Props = {
 	children: React.ReactNode;

@@ -11,6 +11,7 @@ export * from './GameTile';
 export * from './GameTooltip';
 export * from './Header';
 export * from './HideOn';
+export * from './Logo';
 export * from './MemberAvatar';
 export * from './MemberBadges';
 export * from './MemberLeaderboards';

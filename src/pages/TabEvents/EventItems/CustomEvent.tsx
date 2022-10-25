@@ -1,18 +1,17 @@
 import React from 'react';
+import ReactMarkdown from 'react-markdown';
 import { EventCustom, Member } from '@masochistme/sdk/dist/v1/types';
 
 import { useAllMembers } from 'sdk';
 import { MemberAvatar } from 'containers';
+import { LOGO } from 'shared/consts';
 import { Size } from 'utils';
 
 import { BaseEvent } from './_BaseEvent';
-import ReactMarkdown from 'react-markdown';
 
 type Props = {
 	event: EventCustom;
 };
-
-const LOGO = 'http://cdn.masochist.me/mme_logo.png';
 
 export const CustomEvent = (props: Props): JSX.Element | null => {
 	const { event } = props;
