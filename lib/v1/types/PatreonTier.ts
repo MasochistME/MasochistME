@@ -8,10 +8,10 @@ import { WithId } from 'v1/types/__Helpers';
  * Map of the patron tiers.
  */
 export enum PatronTier {
-	TIER1 = '1',
-	TIER2 = '2',
-	TIER3 = '3',
-	TIER4 = '4',
+	TIER1 = '50D',
+	TIER2 = '20D',
+	TIER3 = '10D',
+	TIER4 = '5D',
 }
 
 /**
@@ -22,7 +22,11 @@ export interface PatreonTier extends WithId {
 	/**
 	 * ID of the Patreon tier.
 	 */
-	tier: PatronTier;
+	id: PatronTier;
+	/**
+	 * Position of the tier (higher pledge = lower tier. Position 1 is the highest)
+	 */
+	tier: number;
 	/**
 	 * A Font Awesome icon representing the Patreon tier.
 	 */
