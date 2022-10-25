@@ -10,7 +10,7 @@ import {
   Tier,
   TierId,
 } from '@masochistme/sdk/dist/v1/types';
-import { LeaderboardsListParams } from '@masochistme/sdk/dist/v1/api/leaderboards';
+import { LeaderboardsMembersListParams } from '@masochistme/sdk/dist/v1/api/leaderboards';
 
 import { log } from 'helpers/log';
 import { connectToDb } from 'helpers/db';
@@ -18,8 +18,8 @@ import { connectToDb } from 'helpers/db';
 /**
  * Returns MasochistME leaderboards.
  */
-export const getLeaderboardsList = async (
-  req: Request<any, any, LeaderboardsListParams>,
+export const getLeaderboardsMembersList = async (
+  req: Request<any, any, LeaderboardsMembersListParams>,
   res: Response,
 ): Promise<void> => {
   try {
