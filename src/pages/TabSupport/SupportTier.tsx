@@ -20,7 +20,7 @@ export const SupportTier = (props: Props): JSX.Element => {
 	const { patronsData, isLoading, isFetched } = usePatrons();
 
 	const patronsList = patronsData
-		.filter(patron => patron.tier === patreonTier.tier)
+		.filter(patron => patron.tier === patreonTier.id)
 		.map(patron => {
 			const member = membersData.find(
 				m => m.steamId === patron.memberId || m.discordId === patron.memberId,
@@ -32,7 +32,7 @@ export const SupportTier = (props: Props): JSX.Element => {
 				<MemberAvatar
 					key={`patron-${String(patron._id)}`}
 					member={member}
-					patronTier={patreonTier.tier}
+					patronTier={patreonTier.id}
 					size={Size.LARGE}
 					onClick={() => handlePatronClick(member)}
 				/>
