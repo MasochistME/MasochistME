@@ -24,7 +24,7 @@ export const MemberBadges = (props: Props): JSX.Element => {
 			memberBadgesData.find(b => b.badgeId === String(badge._id)),
 	);
 
-	const mappedBadges = badges.map((badge: Badge, i: number) => {
+	const mappedBadges = badges.map((badge: Badge) => {
 		return (
 			<BadgeThumbnail
 				size={size}
