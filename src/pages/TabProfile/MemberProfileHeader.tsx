@@ -24,7 +24,7 @@ export const MemberProfileHeader = (props: Props): JSX.Element => {
 		member?.description ??
 		'Currently there is no info provided about this user.';
 	const patron = patreonTiersData.find(
-		tier => tier.tier === leaderData?.patreonTier,
+		patreonTier => patreonTier.id === leaderData?.patreonTier,
 	) ?? {
 		description: 'Unknown',
 		symbol: 'fas fa-medal',

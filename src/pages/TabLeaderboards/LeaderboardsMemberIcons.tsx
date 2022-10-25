@@ -15,7 +15,9 @@ export const LeaderboardsMemberIconPatron = (props: Props) => {
 	const { patronTier } = props;
 	const { patreonTiersData } = usePatreonTiers();
 
-	const patron = patreonTiersData.find(tier => tier.tier === patronTier) ?? {
+	const patron = patreonTiersData.find(
+		patreonTier => patreonTier.id === patronTier,
+	) ?? {
 		description: 'Unknown',
 	};
 
