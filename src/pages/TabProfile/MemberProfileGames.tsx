@@ -35,9 +35,11 @@ export const MemberProfileGames = (props: Props) => {
 
 	return (
 		<Flex column width="100%">
-			<StyledFilterGame colorTokens={colorTokens}>
-				<Flex row align gap={24} width="100%">
-					<StyledFilterGameText>Filter games</StyledFilterGameText>
+			<StyledFilterGame>
+				<StyledFilterBar>
+					<StyledFilterGameText colorTokens={colorTokens}>
+						Filter games
+					</StyledFilterGameText>
 					{isLoading && <Spinner />}
 					{isFetched &&
 						tiersData.map((tier: Tier) => (
@@ -48,7 +50,7 @@ export const MemberProfileGames = (props: Props) => {
 								setVisibleItems={setVisibleTiers}
 							/>
 						))}
-				</Flex>
+				</StyledFilterBar>
 				<StyledFilterGameSwitches column gap={8}>
 					<Flex row align gap={16}>
 						Hide completed{' '}
@@ -71,7 +73,13 @@ export const MemberProfileGames = (props: Props) => {
 	);
 };
 
-const StyledFilterGame = styled(Flex)<{ colorTokens: ColorTokens }>`
+const StyledFilterBar = styled(Flex)`
+	align-items: center;
+	gap: 24px;
+	width: 100%;
+`;
+
+const StyledFilterGame = styled(Flex)`
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
@@ -80,16 +88,14 @@ const StyledFilterGame = styled(Flex)<{ colorTokens: ColorTokens }>`
 	width: 100%;
 	padding-bottom: 16px;
 	text-transform: uppercase;
-	span {
-		color: ${({ colorTokens }) => colorTokens['semantic-color-interactive']};
-	}
 	@media (max-width: ${media.tablets}) {
 		flex-wrap: wrap;
 	}
 `;
 
-const StyledFilterGameText = styled.span`
+const StyledFilterGameText = styled.span<{ colorTokens: ColorTokens }>`
 	font-size: 1.5em;
+	color: ${({ colorTokens }) => colorTokens['semantic-color-interactive']};
 	@media (max-width: ${media.tablets}) {
 		display: none;
 	}

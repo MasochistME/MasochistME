@@ -12,6 +12,7 @@ type Props = {
 	disabled?: boolean;
 	tooltip?: React.ReactNode;
 	size?: Size;
+	isGolden?: boolean;
 	onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 };
 
@@ -22,6 +23,7 @@ export const Button = (props: Props) => {
 		iconPlacement = 'left',
 		disabled = false,
 		tooltip,
+		isGolden = false,
 		size = Size.MEDIUM,
 		onClick,
 	} = props;
@@ -33,6 +35,7 @@ export const Button = (props: Props) => {
 				size={size}
 				disabled={disabled}
 				colorTokens={colorTokens}
+				isGolden={isGolden}
 				onClick={onClick}>
 				{icon && iconPlacement === 'left' && (
 					<Icon icon={icon} size={size / 3} />
@@ -49,6 +52,7 @@ export const Button = (props: Props) => {
 const StyledButton = styled.button<{
 	size: Size;
 	iconOnly: boolean;
+	isGolden: boolean;
 	colorTokens: ColorTokens;
 }>`
 	display: flex;
@@ -59,8 +63,11 @@ const StyledButton = styled.button<{
 	gap: 4px;
 	padding: 4px 12px;
 	border-radius: 4px;
-	border: ${({ iconOnly, colorTokens }) =>
-		iconOnly ? 0 : `1px solid ${colorTokens['semantic-color-interactive']}`};
+	border: ${({ iconOnly, isGolden, colorTokens }) => {
+		if (iconOnly) return 0;
+		if (isGolden) return `1px solid ${colorTokens['semantic-color--tier-4']}`;
+		return `1px solid ${colorTokens['semantic-color-interactive']}`;
+	}};
 	font-size: ${({ size }) => {
 		if (size === Size.TINY) return '8px';
 		if (size === Size.SMALL) return '12px';
@@ -70,12 +77,21 @@ const StyledButton = styled.button<{
 		return '18px';
 	}};
 	font-family: ${fonts.Raleway};
-	background-color: ${({ iconOnly, colorTokens }) =>
-		iconOnly ? 'transparent' : colorTokens['core-tertiary-bg']};
-	color: ${({ colorTokens }) => colorTokens['core-secondary-text']};
+	background-color: ${({ iconOnly, isGolden, colorTokens }) => {
+		if (iconOnly) return 'transparent';
+		if (isGolden) return `${colorTokens['core-primary-bg']}99`;
+		return colorTokens['core-tertiary-bg'];
+	}};
+	color: ${({ colorTokens, isGolden }) =>
+		isGolden
+			? colorTokens['semantic-color--tier-4']
+			: colorTokens['core-secondary-text']};
 	cursor: pointer;
 	&:hover {
-		color: ${({ colorTokens }) => colorTokens['core-primary-text']};
+		color: ${({ colorTokens, isGolden }) =>
+			isGolden
+				? colorTokens['core-tertiary-text']
+				: colorTokens['core-primary-text']};
 	}
 	& > *:not(:last-child) {
 		margin-right: 8px;

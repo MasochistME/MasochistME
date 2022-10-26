@@ -23,6 +23,11 @@ export type ColorTokens = {
 	'semantic-color-link-visited': string;
 	'semantic-color-section-update--bg': string; // Color of the "Last updated" section in Subheader.
 	'semantic-color-section-update--text': string; // Color of the "Last updated" section in Subheader.
+
+	'semantic-color--tier-4': string;
+	'semantic-color--tier-3': string;
+	'semantic-color--tier-2': string;
+	'semantic-color--tier-1': string;
 };
 
 export const colors: Record<Theme, ColorTokens> = {
@@ -36,7 +41,7 @@ export const colors: Record<Theme, ColorTokens> = {
 
 		'semantic-color-idle': '#282f44',
 		'semantic-color-interactive': '#545281',
-		'semantic-color-active': '#f0f0f0',
+		'semantic-color-active': '#9895db',
 		'semantic-color-disabled': '#7b7a8d',
 
 		'semantic-color-warning-strong': '#fdc000',
@@ -49,6 +54,11 @@ export const colors: Record<Theme, ColorTokens> = {
 		'semantic-color-link-visited': 'c0c0c0',
 		'semantic-color-section-update--bg': '#040404',
 		'semantic-color-section-update--text': '#f0f0f0',
+
+		'semantic-color--tier-4': '#fdc000',
+		'semantic-color--tier-3': '#f5f5f5',
+		'semantic-color--tier-2': '#ff6b1f',
+		'semantic-color--tier-1': '#32a042',
 	},
 	[Theme.MEAT]: {
 		'core-primary-text': '#f0f0f0',
@@ -73,6 +83,11 @@ export const colors: Record<Theme, ColorTokens> = {
 		'semantic-color-link-visited': 'c0c0c0',
 		'semantic-color-section-update--bg': '#c91745',
 		'semantic-color-section-update--text': '#f0f0f0',
+
+		'semantic-color--tier-4': '#fdc000',
+		'semantic-color--tier-3': '#f5f5f5',
+		'semantic-color--tier-2': '#ff6b1f',
+		'semantic-color--tier-1': '#32a042',
 	},
 	[Theme.DUST]: {
 		'core-primary-text': '#040404',
@@ -97,6 +112,11 @@ export const colors: Record<Theme, ColorTokens> = {
 		'semantic-color-link-visited': 'c0c0c0',
 		'semantic-color-section-update--bg': '#040404',
 		'semantic-color-section-update--text': '#f0f0f0',
+
+		'semantic-color--tier-4': '#fdc000',
+		'semantic-color--tier-3': '#f5f5f5',
+		'semantic-color--tier-2': '#ff6b1f',
+		'semantic-color--tier-1': '#32a042',
 	},
 };
 

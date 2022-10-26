@@ -1,36 +1,29 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
+import { PatreonTier } from '@masochistme/sdk/dist/v1/types';
 
-import { useMemberById, useMemberLeaderboards, usePatreonTiers } from 'sdk';
+import { useMemberById, useMemberLeaderboards } from 'sdk';
 import { Size } from 'components';
 import { media } from 'styles/theme/themeOld';
 import { Flex, Icon, IconType, Tooltip } from 'components';
 import { MemberAvatar } from 'containers';
 
 import { MemberProfileUpdate } from './MemberProfileUpdate';
-import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
 	memberId: string;
+	patron: Partial<PatreonTier>;
 };
 
 export const MemberProfileHeader = (props: Props): JSX.Element => {
-	const { colorTokens } = useTheme();
-	const { memberId } = props;
+	const { memberId, patron } = props;
 
 	const { memberData: member, isLoading, isError } = useMemberById(memberId);
 	const { leaderData } = useMemberLeaderboards(memberId);
-	const { patreonTiersData } = usePatreonTiers();
 
 	const description: string =
 		member?.description ??
 		'Currently there is no info provided about this user.';
-	const patron = patreonTiersData.find(
-		patreonTier => patreonTier.id === leaderData?.patreonTier,
-	) ?? {
-		description: 'Unknown',
-		symbol: 'Medal',
-	};
 
 	const memberName = useMemo(() => {
 		const originalName = member?.name ?? 'Loading...';
@@ -41,7 +34,7 @@ export const MemberProfileHeader = (props: Props): JSX.Element => {
 	}, [member]);
 
 	return (
-		<StyledMemberProfileHeader row colorTokens={colorTokens}>
+		<StyledMemberProfileHeader row>
 			<StyledMemberProfileHeaderAvatar>
 				<MemberAvatar
 					member={member}
@@ -83,13 +76,12 @@ export const MemberProfileHeader = (props: Props): JSX.Element => {
 	);
 };
 
-const StyledMemberProfileHeader = styled(Flex)<{ colorTokens: ColorTokens }>`
+const StyledMemberProfileHeader = styled(Flex)`
 	max-width: 100%;
 	padding: 8px;
 	gap: 16px;
 	justify-content: space-between;
 	align-items: flex-start;
-	background-color: ${({ colorTokens }) => colorTokens['core-tertiary-bg']}66;
 `;
 
 const StyledMemberProfileHeaderAvatar = styled.div`

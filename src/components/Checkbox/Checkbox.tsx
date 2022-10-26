@@ -69,6 +69,7 @@ const StyledCheckbox = styled(Flex)<{ colorTokens: ColorTokens }>`
 	padding: 4px;
 	box-sizing: border-box;
 	max-height: 44px;
+
 	input {
 		display: none;
 		&:not(:checked) + label {
@@ -84,6 +85,6 @@ const StyledCheckbox = styled(Flex)<{ colorTokens: ColorTokens }>`
 		cursor: pointer;
 	}
 	&:hover {
-		color: ${({ colorTokens }) => colorTokens['semantic-color-active']};
+		color: ${({ colorTokens }) => colorTokens['semantic-color-link-normal']};
 	}
 `;

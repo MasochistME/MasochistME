@@ -13,7 +13,6 @@ export const useRankingList = () => {
 	const rankingList = useMemo(() => {
 		if (isError) return;
 		return leaderboardsData.filter((leader: Leaderboards) => {
-			console.count('dupa');
 			const memberName =
 				membersData.find((m: Member) => m.steamId === leader.memberId)?.name ??
 				'UNKNOWN';

@@ -1,15 +1,10 @@
 import React, { Suspense } from 'react';
 import { orderBy } from 'lodash';
 import styled from 'styled-components';
-import { MemberGame, PatronTier, TierId } from '@masochistme/sdk/dist/v1/types';
+import { MemberGame, TierId } from '@masochistme/sdk/dist/v1/types';
 
-import {
-	useCuratedGames,
-	useMemberGames,
-	useMemberById,
-	useMemberLeaderboards,
-} from 'sdk';
-import { media, colors } from 'styles/theme/themeOld';
+import { useCuratedGames, useMemberGames, useMemberById } from 'sdk';
+import { media } from 'styles/theme/themeOld';
 import { useTheme, ColorTokens } from 'styles';
 import { Flex, Loader, Skeleton } from 'components';
 
@@ -34,11 +29,9 @@ export const MemberLeaderboards = (props: Props): JSX.Element => {
 
 	const { gamesData } = useCuratedGames();
 	const { memberGamesData, isLoading, isFetched } = useMemberGames(steamId);
-	const { leaderData } = useMemberLeaderboards(steamId);
 	const { memberData } = useMemberById(steamId);
 
 	const isDisabled = memberData?.isPrivate;
-	const isHighestPatronTier = leaderData?.patreonTier === PatronTier.TIER4;
 
 	const lazyGameList: MemberGame[] = orderBy(
 		memberGamesData.filter(memberGame => {
@@ -64,10 +57,7 @@ export const MemberLeaderboards = (props: Props): JSX.Element => {
 	});
 
 	return (
-		<StyledMemberGameList
-			isDisabled={isDisabled}
-			isHighestPatronTier={isHighestPatronTier}
-			colorTokens={colorTokens}>
+		<StyledMemberGameList isDisabled={isDisabled} colorTokens={colorTokens}>
 			{isLoading && <Loader />}
 			{isFetched &&
 				lazyGameList.map(memberGame => (
@@ -89,7 +79,6 @@ export const MemberLeaderboards = (props: Props): JSX.Element => {
 
 type SummaryProps = {
 	isDisabled?: boolean;
-	isHighestPatronTier?: boolean;
 	colorTokens: ColorTokens;
 };
 
@@ -102,9 +91,8 @@ export const StyledMemberGameList = styled(Flex)<SummaryProps>`
 		${({ colorTokens }) => colorTokens['core-secondary-bg']};
 	border-right: 1px solid
 		${({ colorTokens }) => colorTokens['core-secondary-bg']};
-	background-color: ${({ isDisabled, isHighestPatronTier, colorTokens }) => {
+	background-color: ${({ isDisabled, colorTokens }) => {
 		if (isDisabled) return `${colorTokens['semantic-color-error-muted']}aa`;
-		if (isHighestPatronTier) return `${colors.tier4Darkened}aa`;
 		return `${colorTokens['core-secondary-bg']}cc`;
 	}};
 	&:first-child {

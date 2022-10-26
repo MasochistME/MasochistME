@@ -1,19 +1,24 @@
 import styled from 'styled-components';
-import { MemberGame } from '@masochistme/sdk/dist/v1/types';
+import {
+	MemberGame,
+	PatreonTier,
+	PatronTier,
+} from '@masochistme/sdk/dist/v1/types';
 
 import { useLeaderboardsMembers, useMemberGames, useTiers } from 'sdk';
 import { useMemberBadgesFilter } from 'hooks';
-import { colors, media } from 'styles/theme/themeOld';
-import { getPercentage } from 'utils';
+import { media } from 'styles/theme/themeOld';
+import { getPercentage, ColorMap } from 'utils';
 import { Flex, Icon, IconType, Skeleton } from 'components';
 import { StatBlock } from 'containers';
 
 type Props = {
 	memberId: string;
+	patron?: Partial<PatreonTier>;
 };
 
 export const MemberProfileStats = (props: Props) => {
-	const { memberId } = props;
+	const { memberId, patron } = props;
 
 	const {
 		tiersData,
@@ -30,6 +35,11 @@ export const MemberProfileStats = (props: Props) => {
 		isLoading: isLeaderboardsLoading,
 		isFetched: isLeaderboardsFetched,
 	} = useLeaderboardsMembers();
+
+	const getStatTier = () => {
+		if (patron?.id === PatronTier.TIER4) return ColorMap.GOLD;
+		return ColorMap.DEFAULT;
+	};
 
 	const { memberBadges } = useMemberBadgesFilter(memberId);
 
@@ -123,6 +133,7 @@ export const MemberProfileStats = (props: Props) => {
 							</Flex>
 						}
 						label={memberLeaderData?.position ?? '?'}
+						tier={getStatTier()}
 						icon="Hashtag"
 					/>
 					<StatBlock
@@ -135,6 +146,7 @@ export const MemberProfileStats = (props: Props) => {
 							</Flex>
 						}
 						label={memberLeaderData?.sum ?? '?'}
+						tier={getStatTier()}
 						sublabel="points total"
 						icon="CirclePlus"
 					/>
@@ -148,6 +160,7 @@ export const MemberProfileStats = (props: Props) => {
 							</Flex>
 						}
 						label={memberCompletions.length}
+						tier={getStatTier()}
 						sublabel="completions"
 						icon="Trophy"
 					/>
@@ -163,6 +176,7 @@ export const MemberProfileStats = (props: Props) => {
 							memberCompletions.length,
 							memberGamesStarted.length,
 						)}
+						tier={getStatTier()}
 						sublabel="completion rate"
 						icon="Percent"
 					/>
@@ -186,6 +200,7 @@ export const MemberProfileStats = (props: Props) => {
 								</StatBlock.Subtitle>
 							</Flex>
 						}
+						tier={getStatTier()}
 						label={`${avgPlaytime} h`}
 						sublabel="avg completion time"
 						icon="Clock"
@@ -198,7 +213,6 @@ export const MemberProfileStats = (props: Props) => {
 
 const StyledGameProfileStats = styled(Flex)`
 	justify-content: space-evenly;
-	background-color: ${colors.black}66;
 	gap: 16px;
 	padding: 24px 0 32px 0;
 	@media (max-width: ${media.tablets}) {

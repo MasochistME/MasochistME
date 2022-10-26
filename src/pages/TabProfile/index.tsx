@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { useMemberById } from 'sdk';
+import { useMemberById, usePatreonTiers, useMemberLeaderboards } from 'sdk';
 import { Flex, Warning } from 'components';
 import { SubPage, Tabs, Tab, TabPanel } from 'containers';
 import { useActiveTab } from 'hooks';
 import { TabDict } from 'configuration/tabs';
+import { useTheme, ColorTokens } from 'styles';
 
 import { MemberProfileBadgesSection } from './MemberProfileBadgesSection';
 import { MemberProfileHeader } from './MemberProfileHeader';
@@ -14,6 +15,7 @@ import { MemberProfileBadges } from './MemberProfileBadges';
 import { MemberProfileGraphs } from './MemberProfileGraphs';
 import { MemberProfileGames } from './MemberProfileGames';
 import { MemberProfileStats } from './MemberProfileStats';
+import { PatreonTier, PatronTier } from '@masochistme/sdk/dist/v1/types';
 
 enum TabsMap {
 	GRAPHS = 'graphs',
@@ -23,9 +25,27 @@ enum TabsMap {
 
 const TabProfile = (): JSX.Element => {
 	useActiveTab(TabDict.PROFILE);
+	const { colorTokens } = useTheme();
 	const [activeTab, setActiveTab] = useState<string>(TabsMap.GAMES);
 	const { id } = useParams<{ id: string }>();
+
+	const { leaderData } = useMemberLeaderboards(id);
 	const { memberData: member, isError } = useMemberById(id);
+	const { patreonTiersData } = usePatreonTiers();
+
+	const patron = (patreonTiersData.find(
+		patreonTier => patreonTier.id === leaderData?.patreonTier,
+	) ?? {
+		description: 'Unknown',
+		symbol: 'Medal',
+	}) as Partial<PatreonTier>;
+
+	const isHighestPatronTier = leaderData?.patreonTier === PatronTier.TIER4;
+	const getTierColor = () => {
+		if (patron?.id === PatronTier.TIER4)
+			return colorTokens['semantic-color--tier-4'];
+		return null;
+	};
 
 	const isUserPrivate = member?.isPrivate;
 	const isUserNotAMember = member && !member.isMember && !member.isProtected;
@@ -45,10 +65,13 @@ const TabProfile = (): JSX.Element => {
 	return (
 		<SubPage>
 			<Flex column width="100%" gap={16}>
-				<Flex column>
-					<MemberProfileHeader memberId={id} />
-					<MemberProfileStats memberId={id} />
-				</Flex>
+				<StyledMemberProfileTop
+					colorTokens={colorTokens}
+					isHighestPatronTier={isHighestPatronTier}
+					tierColor={getTierColor()}>
+					<MemberProfileHeader memberId={id} patron={patron} />
+					<MemberProfileStats memberId={id} patron={patron} />
+				</StyledMemberProfileTop>
 				{isUserPrivate && (
 					<Warning description="This user has their profile set to private." />
 				)}
@@ -87,4 +110,19 @@ const StyledProfile = styled(Flex)`
 	width: 100%;
 	flex: 1 1 100%;
 	overflow: hidden;
+`;
+
+const StyledMemberProfileTop = styled(Flex)<{
+	colorTokens: ColorTokens;
+	isHighestPatronTier?: boolean;
+	tierColor: string | null;
+}>`
+	flex-direction: column;
+	background-color: ${({ colorTokens, isHighestPatronTier }) => {
+		if (isHighestPatronTier)
+			return `${colorTokens['semantic-color--tier-4']}33`;
+		return `${colorTokens['core-tertiary-bg']}}66`;
+	}};
+	border-radius: 16px;
+	${({ tierColor }) => `border: 2px solid ${tierColor}`};
 `;

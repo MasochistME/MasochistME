@@ -45,7 +45,7 @@ const GlobalStyle = createGlobalStyle<{
   
   a {
     text-decoration: underline dotted;
-    color: ${({ colorTokens }) => colorTokens['semantic-color-active']};
+    color: ${({ colorTokens }) => colorTokens['semantic-color-link-normal']};
     &:hover {
       text-decoration: underline dotted;
       color: ${({ colorTokens }) => colorTokens['semantic-color-link-hover']}
