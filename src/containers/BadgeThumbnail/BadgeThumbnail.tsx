@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Badge } from '@masochistme/sdk/dist/v1/types';
 
 import { BadgeTooltip, CommonProps } from 'containers';
-import { Size } from 'utils';
+import { Size } from 'components';
 import { ColorTokens, useTheme } from 'styles';
 import { Skeleton, Tooltip } from 'components';
 

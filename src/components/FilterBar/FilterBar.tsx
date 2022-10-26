@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { media } from 'shared/theme';
+import { media } from 'styles/theme/themeOld';
 import { useTheme, ColorTokens } from 'styles';
 
 type Props = {

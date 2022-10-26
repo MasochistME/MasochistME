@@ -4,9 +4,9 @@ import styled from 'styled-components';
 import { Member, PatreonTier } from '@masochistme/sdk/dist/v1/types';
 
 import { useMembers, usePatrons } from 'sdk';
-import { Flex, Spinner } from 'components';
+import { Flex, Icon, IconType, Spinner } from 'components';
 import { MemberAvatar, Section } from 'containers';
-import { Size } from 'utils';
+import { Size } from 'components';
 
 type Props = {
 	patreonTier: PatreonTier;
@@ -50,7 +50,8 @@ export const SupportTier = (props: Props): JSX.Element => {
 				isCentered={false}
 				title={
 					<>
-						<i className={patreonTier.symbol} /> - {patreonTier.description}
+						<Icon icon={patreonTier.symbol as IconType} /> -{' '}
+						{patreonTier.description}
 					</>
 				}
 				content={

@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
-import { colors } from 'shared/theme';
+import { colors } from 'styles/theme/themeOld';
 import { ColorTokens, AssetTokens } from './theme';
 
 const GlobalStyle = createGlobalStyle<{

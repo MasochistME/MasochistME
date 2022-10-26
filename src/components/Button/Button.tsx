@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
-import { fonts } from 'shared/theme';
-import { Tooltip } from 'components';
-import { Size } from 'utils';
+import { fonts } from 'styles/theme/themeOld';
+import { Icon, IconType, Tooltip } from 'components';
+import { Size } from 'components';
 import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
 	label?: string;
-	icon?: string;
+	icon?: IconType;
 	iconPlacement?: 'left' | 'right';
 	disabled?: boolean;
 	tooltip?: React.ReactNode;
@@ -34,9 +34,9 @@ export const Button = (props: Props) => {
 				disabled={disabled}
 				colorTokens={colorTokens}
 				onClick={onClick}>
-				{icon && iconPlacement === 'left' && <i className={icon} />}
+				{icon && iconPlacement === 'left' && <Icon icon={icon} />}
 				{label && <span>{label}</span>}
-				{icon && iconPlacement === 'right' && <i className={icon} />}
+				{icon && iconPlacement === 'right' && <Icon icon={icon} />}
 			</StyledButton>
 		</Tooltip>
 	);

@@ -2,7 +2,7 @@ import React from 'react';
 import { Game, Tier } from '@masochistme/sdk/dist/v1/types';
 
 import { useTiers, useCuratorMembers, useCuratedGames } from 'sdk';
-import { Spinner } from 'components';
+import { Spinner, Icon, IconType } from 'components';
 import { Section, SectionProps } from 'containers';
 
 export const DashboardTileTrivia = (
@@ -21,7 +21,7 @@ export const DashboardTileTrivia = (
 			<li
 				style={{ marginLeft: '30px' }}
 				key={`tier-${tier.score}-${String(tier._id)}`}>
-				<i className={tier.icon} />
+				<Icon icon={tier.icon as IconType} />
 				<span>{` : ${
 					games.filter((game: Game) => game.tier === tier.id).length
 				}`}</span>

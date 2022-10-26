@@ -2,7 +2,7 @@ import Tippy from '@tippyjs/react/headless';
 import styled from 'styled-components';
 
 import { Flex } from '../Flex';
-import { media } from 'shared/theme';
+import { media } from 'styles/theme/themeOld';
 import { useTheme, ColorTokens } from 'styles';
 
 type Props = {

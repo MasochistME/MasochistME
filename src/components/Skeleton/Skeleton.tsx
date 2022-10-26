@@ -1,6 +1,6 @@
 import MUISkeleton from '@mui/material/Skeleton';
 import { useTheme } from 'styles';
-import { Size } from 'utils';
+import { Size } from 'components';
 
 type Props = {
 	size?: Size;

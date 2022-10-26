@@ -1,13 +1,13 @@
-import React, { useContext, useState, useMemo } from 'react';
+import React, { useContext, useState } from 'react';
 import { SDK } from '@masochistme/sdk/dist/v1/sdk';
 import { TierId, EventType } from '@masochistme/sdk/dist/v1/types';
 
-import { TabDict } from 'shared/config/tabs';
-import { EventsDict } from 'shared/config/events';
+import { TabDict } from 'configuration/tabs';
+import { EventsDict } from 'configuration/events';
+
+import { Theme } from 'styles';
 
 import config from 'config.json';
-
-import { colors, ColorTokens, Theme } from 'styles';
 
 export enum GameView {
 	TILE = 'tiles',

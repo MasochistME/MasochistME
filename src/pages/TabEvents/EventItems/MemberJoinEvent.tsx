@@ -4,7 +4,8 @@ import { EventMemberJoin, Member } from '@masochistme/sdk/dist/v1/types';
 
 import { useAllMembers } from 'sdk';
 import { MemberAvatar } from 'containers';
-import { Size } from 'utils';
+import { Icon } from 'components';
+import { Size } from 'components';
 
 import { BaseEvent } from './_BaseEvent';
 
@@ -18,10 +19,6 @@ export const MemberJoinEvent = (props: Props): JSX.Element | null => {
 
 	const { membersData } = useAllMembers();
 	const member = membersData.find((m: Member) => m.steamId === event.memberId);
-
-	const iconMemberJoin = member
-		? 'fas fa-user-plus'
-		: 'fas fa-exclamation-triangle';
 
 	const onMemberClick = () => {
 		member?.steamId && history.push(`/profile/${member.steamId}`);
@@ -38,7 +35,7 @@ export const MemberJoinEvent = (props: Props): JSX.Element | null => {
 			</BaseEvent.Description>
 			<BaseEvent.Summary>
 				<BaseEvent.Icons>
-					<i className={iconMemberJoin} />
+					<Icon icon={member ? 'UserPlus' : 'WarningTriangle'} />
 				</BaseEvent.Icons>
 				<BaseEvent.Logo />
 			</BaseEvent.Summary>

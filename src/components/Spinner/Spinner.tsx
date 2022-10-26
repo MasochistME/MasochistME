@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { Flex } from 'components';
+import { Flex, Icon } from 'components';
 import { useTheme, ColorTokens } from 'styles';
 
 export const Spinner = (): JSX.Element => {
@@ -9,7 +9,7 @@ export const Spinner = (): JSX.Element => {
 
 	return (
 		<StyledSpinner align justify colorTokens={colorTokens}>
-			<i className="fas fa-circle-notch fa-spin" />
+			<Icon icon="Spin" />
 		</StyledSpinner>
 	);
 };

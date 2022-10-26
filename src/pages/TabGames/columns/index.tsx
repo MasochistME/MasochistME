@@ -3,8 +3,8 @@ import { useHistory } from 'react-router-dom';
 import { Game } from '@masochistme/sdk/dist/v1/types';
 
 import { useTiers } from 'sdk';
-import { getTierIcon, Size } from 'utils';
-import { Flex, TableLink, defaultSort } from 'components';
+import { getTierIcon } from 'utils';
+import { Flex, Icon, TableLink, Size, defaultSort } from 'components';
 import { GameThumbnail } from 'containers';
 
 import { useGamesColumnTotalPoints } from './useGameColumnTotalPoints';
@@ -35,7 +35,7 @@ export const useGamesColumns = () => {
 	const columnTier = {
 		render: (game: Game) => (
 			<Flex width="40px" align justify>
-				<i className={getTierIcon(game.tier, tiersData)} />
+				<Icon icon={getTierIcon(game.tier, tiersData)} />
 			</Flex>
 		),
 		sorter: (a: Game, b: Game) => defaultSort(a.tier, b.tier),

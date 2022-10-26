@@ -2,7 +2,7 @@ import React from 'react';
 import { Game, Tier } from '@masochistme/sdk/dist/v1/types';
 
 import { useLeaderboardsGames, useTiers } from 'sdk';
-import { Size } from 'utils';
+import { Size } from 'components';
 import { Flex, IconInfo, Skeleton, defaultSort } from 'components';
 
 export const useGamesColumnTotalPoints = () => {

@@ -5,7 +5,7 @@ import { PatreonTier } from '@masochistme/sdk/dist/v1/types';
 
 import { usePatreonTiers } from 'sdk';
 import { useActiveTab } from 'hooks';
-import { TabDict } from 'shared/config/tabs';
+import { TabDict } from 'configuration/tabs';
 import { Flex, Spinner } from 'components';
 import { Section, SectionProps, SubPage } from 'containers';
 

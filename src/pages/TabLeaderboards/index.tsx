@@ -4,11 +4,13 @@ import { Tier } from '@masochistme/sdk/dist/v1/types';
 
 import { useTiers } from 'sdk';
 import { useActiveTab, useRankingList } from 'hooks';
-import { TabDict } from 'shared/config/tabs';
+import { TabDict } from 'configuration/tabs';
 import { SubPage, Section, SectionProps } from 'containers';
-import { Flex, Skeleton, Spinner } from 'components';
+import { Flex, Icon, Skeleton, Spinner, IconType } from 'components';
+import { Size } from 'components';
 
 import { LeaderboardsFilterBar } from './LeaderboardsFilterBar';
+
 const LeaderboardsMember = React.lazy(() =>
 	import('./LeaderboardsMember').then(module => ({
 		default: module.LeaderboardsMember,
@@ -55,7 +57,8 @@ const TabLeaderboardsInfo = (props: Partial<SectionProps>): JSX.Element => {
 
 	const tiersDescriptions = tiersData.map((tier: Tier) => (
 		<li key={`tier-${String(tier._id)}`}>
-			<i className={tier.icon} /> - worth {tier.score} pts - {tier?.description}
+			<Icon icon={tier.icon as IconType} size={Size.MICRO} /> - worth{' '}
+			{tier.score} pts - {tier?.description}
 		</li>
 	));
 

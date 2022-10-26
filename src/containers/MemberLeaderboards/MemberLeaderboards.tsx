@@ -9,7 +9,7 @@ import {
 	useMemberById,
 	useMemberLeaderboards,
 } from 'sdk';
-import { media, colors } from 'shared/theme';
+import { media, colors } from 'styles/theme/themeOld';
 import { useTheme, ColorTokens } from 'styles';
 import { Flex, Loader, Skeleton } from 'components';
 

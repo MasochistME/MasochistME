@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 import { Flex } from 'components';
-import { Size } from 'utils';
-import { media, colors } from 'shared/theme';
+import { Size } from 'components';
+import { media, colors } from 'styles/theme/themeOld';
 import { useTheme } from 'styles';
 
 type Props = {

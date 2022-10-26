@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { Game, Tier } from '@masochistme/sdk/dist/v1/types';
 
-import { media } from 'shared/theme';
+import { media } from 'styles/theme/themeOld';
 import { getGameThumbnail } from 'utils';
 import { useTiers } from 'sdk';
-import { Flex, Tooltip } from 'components';
+import { Flex, Icon, IconType, Tooltip } from 'components';
 import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
@@ -33,7 +33,7 @@ export const GameProfileHeader = (props: Props): JSX.Element => {
 							href={`https://steamcommunity.com/app/${game?.id}`}
 							target="_blank"
 							rel="noopener noreferrer">
-							<i className="fab fa-steam" style={{ marginRight: '10px' }} />
+							<Icon icon="Steam" marginRight="10px" />
 							{game?.title ?? 'Loading...'}
 						</a>
 					</h1>
@@ -50,9 +50,9 @@ export const GameProfileHeader = (props: Props): JSX.Element => {
 const GameHeaderTier = ({ gameTier }: { gameTier?: Tier }) => {
 	return (
 		<Tooltip content={`This game is worth ${gameTier?.score ?? '?'} pts.`}>
-			<i
-				className={gameTier?.icon ?? 'far fa-question-circle'}
-				style={{ fontSize: '2em' }}
+			<Icon
+				icon={(gameTier?.icon as IconType) ?? 'QuestionCircle'}
+				fontSize="2em"
 			/>
 		</Tooltip>
 	);

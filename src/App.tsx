@@ -8,7 +8,7 @@ import {
 import styled from 'styled-components';
 
 import { useLoadTiers } from 'hooks';
-import { media } from 'shared/theme';
+import { media } from 'styles/theme/themeOld';
 import { Loader, Flex } from 'components';
 import { Footer, Header, Navigation, SubHeader } from 'containers';
 

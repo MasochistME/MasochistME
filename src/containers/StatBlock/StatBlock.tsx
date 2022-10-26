@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 
-import { colors, fonts, media } from 'shared/theme';
-import { Flex, Tooltip, Skeleton } from 'components';
+import { colors, fonts, media } from 'styles/theme/themeOld';
+import { Flex, Icon, IconType, Tooltip, Skeleton } from 'components';
 import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
 	label: React.ReactNode;
 	sublabel?: React.ReactNode;
 	title?: React.ReactNode;
-	icon?: string;
+	icon?: IconType;
 	isLoading?: boolean;
 };
 export const StatBlock = (props: Props) => {
@@ -18,7 +18,7 @@ export const StatBlock = (props: Props) => {
 	return (
 		<Tooltip content={title}>
 			<StyledStatBlock colorTokens={colorTokens}>
-				{icon && <i className={icon} />}
+				{icon && <Icon icon={icon} />}
 				{isLoading && <Skeleton width="100px" />}
 				{!isLoading && (
 					<Flex column align>

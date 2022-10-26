@@ -4,7 +4,7 @@ import { Box, Modal } from '@mui/material';
 import { Game } from '@masochistme/sdk/dist/v1/types';
 
 import { useCuratedGames } from 'sdk';
-import { colors, fonts } from 'shared/theme';
+import { colors, fonts } from 'styles/theme/themeOld';
 import { Flex } from 'components';
 import { GameLeaderboards } from 'containers';
 

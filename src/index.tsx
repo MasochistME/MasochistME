@@ -11,7 +11,6 @@ import { AppContextProvider } from 'context';
 
 import { App } from './App';
 
-import './shared/fonts/FontAwesome/css/all.min.css';
 import './styles/antStyles.css';
 import './index.css';
 

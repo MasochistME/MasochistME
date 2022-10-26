@@ -1,7 +1,7 @@
 import React from 'react';
 import { EventType } from '@masochistme/sdk/dist/v1/types';
 
-import { EventDict } from 'shared/config';
+import { EventDict } from 'configuration';
 import { Checkbox } from 'components';
 
 type Props = {

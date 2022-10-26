@@ -2,9 +2,9 @@ import React, { useMemo } from 'react';
 import styled from 'styled-components';
 
 import { useMemberById, useMemberLeaderboards, usePatreonTiers } from 'sdk';
-import { Size } from 'utils';
-import { media } from 'shared/theme';
-import { Flex, Tooltip } from 'components';
+import { Size } from 'components';
+import { media } from 'styles/theme/themeOld';
+import { Flex, Icon, IconType, Tooltip } from 'components';
 import { MemberAvatar } from 'containers';
 
 import { MemberProfileUpdate } from './MemberProfileUpdate';
@@ -29,7 +29,7 @@ export const MemberProfileHeader = (props: Props): JSX.Element => {
 		patreonTier => patreonTier.id === leaderData?.patreonTier,
 	) ?? {
 		description: 'Unknown',
-		symbol: 'fas fa-medal',
+		symbol: 'Medal',
 	};
 
 	const memberName = useMemo(() => {
@@ -58,7 +58,7 @@ export const MemberProfileHeader = (props: Props): JSX.Element => {
 							href={`https://steamcommunity.com/profiles/${member?.steamId}`}
 							target="_blank"
 							rel="noopener noreferrer">
-							<i className="fab fa-steam" style={{ marginRight: '10px' }} />
+							<Icon icon="Steam" marginRight="4px" />
 							{memberName}
 						</a>
 					</StyledMemberProfileUsername>
@@ -70,8 +70,8 @@ export const MemberProfileHeader = (props: Props): JSX.Element => {
 							patron?.description?.toUpperCase() ?? 'Loading...'
 						} supporter`}>
 						<StyledMemberProfilePatron>
-							<i className={patron?.symbol} />{' '}
-							{patron?.description?.toUpperCase() ?? 'Loading...'}{' '}
+							<Icon icon={patron?.symbol as IconType} />
+							{patron?.description?.toUpperCase() ?? 'Loading...'}
 						</StyledMemberProfilePatron>
 					</Tooltip>
 				)}

@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import { Member } from '@masochistme/sdk/dist/v1/types';
 
 import { useUpdateMemberMutation } from 'sdk';
-import { media } from 'shared/theme';
+import { media } from 'styles/theme/themeOld';
 import { Alert, Flex, Tooltip, Button } from 'components';
 
 type Props = {
@@ -48,11 +48,7 @@ export const MemberProfileUpdate = (props: Props) => {
 					<span style={{ fontStyle: 'italic' }}>{lastUpdate}</span>
 				</Flex>
 			</Tooltip>
-			<Button
-				label="Update"
-				icon="fas fa-refresh"
-				onClick={handleMemberUpdate}
-			/>
+			<Button label="Update" icon="Refresh" onClick={handleMemberUpdate} />
 			<Alert
 				message={message}
 				severity="info"

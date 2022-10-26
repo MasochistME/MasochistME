@@ -2,8 +2,8 @@ import { useMemo } from 'react';
 import styled from 'styled-components';
 import { Member, PatronTier } from '@masochistme/sdk/dist/v1/types';
 
-import { Size } from 'utils';
-import { colors } from 'shared/theme';
+import { Size } from 'components';
+import { colors } from 'styles/theme/themeOld';
 import { CommonProps } from 'containers';
 import { BrokenImage, Flex, Skeleton, Tooltip } from 'components';
 import { useTheme, ColorTokens } from 'styles';

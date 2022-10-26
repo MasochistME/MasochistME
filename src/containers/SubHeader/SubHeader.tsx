@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { colors, fonts, media } from 'shared/theme';
-import { Tab, tabs } from 'shared/config/tabs';
+import { colors, fonts, media } from 'styles/theme/themeOld';
+import { Tab, tabs } from 'configuration/tabs';
 import { useAppContext } from 'context';
-import { Flex } from 'components';
+import { Flex, Icon, Size } from 'components';
 import { UpdateStatus } from 'containers';
 import { useTheme, ColorTokens } from 'styles';
 
@@ -17,7 +17,8 @@ export const SubHeader = (): JSX.Element => {
 		<StyledSubHeader row>
 			<StyledTitle row align colorTokens={colorTokens} shUrl={SH_URL}>
 				<StyledSubHeaderIcon
-					className={findTab()?.icon ?? 'fas fa-question-circle'}
+					icon={findTab()?.icon ?? 'QuestionCircle'}
+					size={Size.BIG}
 				/>
 				<h2>{findTab()?.text ?? '404'}</h2>
 			</StyledTitle>
@@ -34,7 +35,7 @@ const StyledSubHeader = styled(Flex)`
 	box-sizing: border-box;
 `;
 
-const StyledSubHeaderIcon = styled.i`
+const StyledSubHeaderIcon = styled(Icon)`
 	margin-right: 20px;
 	font-size: 2.3em;
 	@media (max-width: ${media.tablets}) {

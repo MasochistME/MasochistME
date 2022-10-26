@@ -4,10 +4,10 @@ import styled from 'styled-components';
 import { Game, MemberGame, Tier } from '@masochistme/sdk/dist/v1/types';
 
 import { useTiers, useCuratedGames } from 'sdk';
-import { media } from 'shared/theme';
-import { Flex, DateBlock, ProgressBar } from 'components';
+import { media } from 'styles/theme/themeOld';
+import { Flex, Icon, IconType, DateBlock, ProgressBar } from 'components';
 import { MemberBadges, GameThumbnail } from 'containers';
-import { Size } from 'utils';
+import { Size } from 'components';
 import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
@@ -27,9 +27,9 @@ export const MemberLeaderboardsGame = (props: Props): JSX.Element => {
 
 	const gameCompletionDate = memberGame?.mostRecentAchievementDate;
 	const gameTitle = gameData?.title ?? 'unknown';
-	const gameTierIcon =
-		tiersData.find((tier: Tier) => tier.id === gameData?.tier)?.icon ??
-		'fas fa-spinner';
+	const gameTierIcon = (tiersData.find(
+		(tier: Tier) => tier.id === gameData?.tier,
+	)?.icon ?? 'Spin') as IconType;
 
 	const onGameClick = () => {
 		history.push(`/game/${memberGame.gameId}`);
@@ -50,7 +50,7 @@ export const MemberLeaderboardsGame = (props: Props): JSX.Element => {
 					size={Size.SMALL}
 					onClick={onGameClick}
 				/>
-				<i className={gameTierIcon} />
+				<Icon icon={gameTierIcon} />
 				<StyledGameTitle onClick={onGameClick} colorTokens={colorTokens}>
 					{gameTitle}
 				</StyledGameTitle>

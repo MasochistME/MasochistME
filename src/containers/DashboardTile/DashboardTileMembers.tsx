@@ -4,11 +4,11 @@ import styled from 'styled-components';
 import dayjs from 'dayjs';
 import { EventMemberJoin, EventType } from '@masochistme/sdk/dist/v1/types';
 
-import { media } from 'shared/theme';
+import { media } from 'styles/theme/themeOld';
 import { useCuratorMembers, useEvents } from 'sdk';
 import { MemberAvatar, Section, SectionProps } from 'containers';
 import { Flex } from 'components';
-import { Size } from 'utils';
+import { Size } from 'components';
 
 const NUMBER_OF_MEMBERS = 10;
 

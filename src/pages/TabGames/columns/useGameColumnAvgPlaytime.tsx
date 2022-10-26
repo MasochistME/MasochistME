@@ -3,7 +3,7 @@ import { Game } from '@masochistme/sdk/dist/v1/types';
 
 import { useLeaderboardsGames } from 'sdk';
 import { Flex, IconInfo, Skeleton, defaultSort } from 'components';
-import { Size } from 'utils';
+import { Size } from 'components';
 
 export const useGameColumnAvgPlaytime = () => {
 	const { leaderboardsData, isLoading, isFetched } = useLeaderboardsGames();

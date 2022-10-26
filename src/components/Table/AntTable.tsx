@@ -1,7 +1,7 @@
 import { Table as AntdTable } from 'antd';
 import styled from 'styled-components';
 
-import { colors, fonts } from 'shared/theme';
+import { colors, fonts } from 'styles/theme/themeOld';
 
 export const Table: any = styled(AntdTable)`
 	width: 100%;

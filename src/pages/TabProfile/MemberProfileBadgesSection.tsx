@@ -5,8 +5,8 @@ import styled from 'styled-components';
 import { Flex, Loader } from 'components';
 import { BadgeThumbnail, Section } from 'containers';
 import { useActiveTab, useMemberBadgesFilter } from 'hooks';
-import { TabDict } from 'shared/config/tabs';
-import { Size } from 'utils';
+import { TabDict } from 'configuration/tabs';
+import { Size } from 'components';
 
 type Props = {
 	memberId: string;

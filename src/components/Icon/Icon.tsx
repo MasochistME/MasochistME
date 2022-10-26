@@ -1,18 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import icons, { IconType } from 'assets/icons';
-import { Size } from 'utils';
+import icons, { IconType as AssetIconType } from 'assets/icons';
+import { Size } from 'components';
 
 type Props = {
 	className?: string;
-	icon: IconType;
+	icon: AssetIconType;
 	size?: Size;
-	style?: React.CSSProperties;
-};
+} & Omit<React.CSSProperties, 'width' | 'height'>;
 
 export const Icon = (props: Props): JSX.Element => {
-	const { className, size = Size.TINY, icon, style = {} } = props;
+	const { className, size = Size.TINY, icon, ...style } = props;
 	const SVG = icons[icon];
 
 	return (
@@ -24,8 +23,8 @@ export const Icon = (props: Props): JSX.Element => {
 
 const StyledSVG = styled.span<{ size: Size }>`
 	svg {
-		min-width: ${({ size }) => size}px;
-		max-width: ${({ size }) => size}px;
+		display: block;
+		margin: 0 auto;
 		min-height: ${({ size }) => size}px;
 		max-height: ${({ size }) => size}px;
 		path {
@@ -33,3 +32,5 @@ const StyledSVG = styled.span<{ size: Size }>`
 		}
 	}
 `;
+
+export type IconType = AssetIconType;

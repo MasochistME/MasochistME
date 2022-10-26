@@ -3,9 +3,9 @@ import { MemberGame } from '@masochistme/sdk/dist/v1/types';
 
 import { useLeaderboardsMembers, useMemberGames, useTiers } from 'sdk';
 import { useMemberBadgesFilter } from 'hooks';
-import { colors, media } from 'shared/theme';
+import { colors, media } from 'styles/theme/themeOld';
 import { getPercentage } from 'utils';
-import { Flex, Skeleton } from 'components';
+import { Flex, Icon, IconType, Skeleton } from 'components';
 import { StatBlock } from 'containers';
 
 type Props = {
@@ -71,24 +71,22 @@ export const MemberProfileStats = (props: Props) => {
 	 * Member completions by tier.
 	 */
 	const completionsByTier = memberLeaderData?.games.map((game, index) => {
-		const tierIcon =
-			tiersData.find(tier => tier.id === game.tier)?.icon ??
-			'fa-solid fa-circle-question';
+		const tierIcon = (tiersData.find(tier => tier.id === game.tier)?.icon ??
+			'QuestionCircle') as IconType;
 		return (
 			<StatBlock.Subtitle key={`statblock-completions-${index}`}>
-				<i className={tierIcon} /> -{' '}
+				<Icon icon={tierIcon} /> -{' '}
 				<span style={{ fontWeight: 'bold' }}>{game.total}</span>
 			</StatBlock.Subtitle>
 		);
 	});
 
 	const pointsTotal = memberLeaderData?.games.map((game, index) => {
-		const tierIcon =
-			tiersData.find(tier => tier.id === game.tier)?.icon ??
-			'fa-solid fa-circle-question';
+		const tierIcon = (tiersData.find(tier => tier.id === game.tier)?.icon ??
+			'QuestionCircle') as IconType;
 		return (
 			<StatBlock.Subtitle key={`statblock-points-${index}`}>
-				<i className={tierIcon} /> -{' '}
+				<Icon icon={tierIcon} /> -{' '}
 				<span style={{ fontWeight: 'bold' }}>{game.points}</span> pts
 			</StatBlock.Subtitle>
 		);
@@ -96,7 +94,7 @@ export const MemberProfileStats = (props: Props) => {
 
 	const badgesTotal = (
 		<StatBlock.Subtitle>
-			<i className="fas fa-medal" /> -{' '}
+			<Icon icon="Medal" /> -{' '}
 			<span style={{ fontWeight: 'bold' }}>
 				{memberLeaderData?.badges.points}
 			</span>{' '}
@@ -106,7 +104,7 @@ export const MemberProfileStats = (props: Props) => {
 
 	const badgesUnlocked = (
 		<StatBlock.Subtitle>
-			<i className="fas fa-medal" /> -{' '}
+			<Icon icon="Medal" /> -{' '}
 			<span style={{ fontWeight: 'bold' }}>{memberBadges.length}</span>
 		</StatBlock.Subtitle>
 	);
@@ -125,7 +123,7 @@ export const MemberProfileStats = (props: Props) => {
 							</Flex>
 						}
 						label={memberLeaderData?.position ?? '?'}
-						icon="fa-solid fa-hashtag"
+						icon="Hashtag"
 					/>
 					<StatBlock
 						title={
@@ -138,7 +136,7 @@ export const MemberProfileStats = (props: Props) => {
 						}
 						label={memberLeaderData?.sum ?? '?'}
 						sublabel="points total"
-						icon="fa-solid fa-plus-circle"
+						icon="CirclePlus"
 					/>
 					<StatBlock
 						title={
@@ -151,7 +149,7 @@ export const MemberProfileStats = (props: Props) => {
 						}
 						label={memberCompletions.length}
 						sublabel="completions"
-						icon="fa-solid fa-trophy"
+						icon="Trophy"
 					/>
 					<StatBlock
 						title={
@@ -166,7 +164,7 @@ export const MemberProfileStats = (props: Props) => {
 							memberGamesStarted.length,
 						)}
 						sublabel="completion rate"
-						icon="fa-solid fa-percent"
+						icon="Percent"
 					/>
 					<StatBlock
 						title={
@@ -190,7 +188,7 @@ export const MemberProfileStats = (props: Props) => {
 						}
 						label={`${avgPlaytime} h`}
 						sublabel="avg completion time"
-						icon="fa-solid fa-clock"
+						icon="Clock"
 					/>
 				</>
 			)}

@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { Game } from '@masochistme/sdk/dist/v1/types';
 
-import { Size, getGameThumbnail } from 'utils';
-import { Skeleton, Tooltip } from 'components';
+import { getGameThumbnail } from 'utils';
+import { Size, Skeleton, Tooltip } from 'components';
 import { GameTooltip, CommonProps } from 'containers';
 import { useTheme, ColorTokens } from 'styles';
 

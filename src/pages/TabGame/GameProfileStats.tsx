@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Game } from '@masochistme/sdk/dist/v1/types';
 
-import { media } from 'shared/theme';
+import { media } from 'styles/theme/themeOld';
 import { getPercentage } from 'utils';
 import { Flex } from 'components';
 import { StatBlock } from 'containers';
@@ -53,7 +53,7 @@ export const GameProfileStats = (props: Props) => {
 				}
 				label={gameLeaderboards?.completions?.base ?? '—'}
 				sublabel="completions"
-				icon="fa-solid fa-trophy"
+				icon="Trophy"
 				isLoading={isLoading}
 			/>
 			<StatBlock
@@ -73,7 +73,7 @@ export const GameProfileStats = (props: Props) => {
 				}
 				label={getPercentage(gameLeaderboards?.owners ?? 0, membersAll.length)}
 				sublabel="owned by"
-				icon="fa-solid fa-user-check"
+				icon="UserCheck"
 				isLoading={isLoading}
 			/>
 			<StatBlock
@@ -96,7 +96,7 @@ export const GameProfileStats = (props: Props) => {
 					membersHavingGame.length,
 				)}
 				sublabel="completion rate"
-				icon="fa-solid fa-percent"
+				icon="Percent"
 				isLoading={isLoading}
 			/>
 			<StatBlock
@@ -121,7 +121,7 @@ export const GameProfileStats = (props: Props) => {
 				}
 				label={avgPlaytime}
 				sublabel="avg completion time"
-				icon="fa-solid fa-clock"
+				icon="Clock"
 				isLoading={isLoading}
 			/>
 		</StyledGameProfileStats>

@@ -1,59 +1,60 @@
 import { EventType } from '@masochistme/sdk/dist/v1/types';
+import { IconType } from 'components';
 
 export type EventDict = {
 	type: EventType;
-	icon: string;
+	icon: IconType;
 	description: string;
 };
 
 export const EventsDict: EventDict[] = [
 	{
-		icon: 'fas fa-user-plus',
+		icon: 'UserPlus',
 		description: 'new member joining the community',
 		type: EventType.MEMBER_JOIN,
 	},
 	{
-		icon: 'fas fa-user-minus',
+		icon: 'UserMinus',
 		description: 'member leaving the community',
 		type: EventType.MEMBER_LEAVE,
 	},
 	{
-		icon: 'fas fa-check-square',
+		icon: 'Finish',
 		description: 'member completing a curated game',
 		type: EventType.COMPLETE,
 	},
 	{
-		icon: 'fas fa-plus-square',
+		icon: 'SquarePlus',
 		description: 'new game being curated',
 		type: EventType.GAME_ADD,
 	},
 	{
-		icon: 'fas fa-minus-square',
+		icon: 'SquareMinus',
 		description: 'game being removed from curator',
 		type: EventType.GAME_REMOVE,
 	},
 	{
-		icon: 'fas fa-bolt',
+		icon: 'Bolt',
 		description: 'game changing its tier',
 		type: EventType.GAME_TIER_CHANGE,
 	},
 	{
-		icon: 'fas fa-award',
+		icon: 'Badge',
 		description: 'game getting a new badge',
 		type: EventType.BADGE_CREATE,
 	},
 	{
-		icon: 'fas fa-medal',
+		icon: 'Medal',
 		description: 'member earning a new badge',
 		type: EventType.BADGE_GET,
 	},
 	{
-		icon: 'fas fa-tasks',
+		icon: 'Checklist',
 		description: 'game having achievements added or removed',
 		type: EventType.ACHIEVEMENTS_CHANGE,
 	},
 	{
-		icon: 'fas fa-heart',
+		icon: 'Heart',
 		description: 'custom event',
 		type: EventType.CUSTOM,
 	},

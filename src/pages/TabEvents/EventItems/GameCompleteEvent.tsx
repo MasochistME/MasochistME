@@ -9,7 +9,8 @@ import {
 
 import { useTiers, useAllMembers, useAllGames } from 'sdk';
 import { MemberAvatar, GameThumbnail } from 'containers';
-import { Size } from 'utils';
+import { Icon, IconType } from 'components';
+import { Size } from 'components';
 
 import { BaseEvent } from './_BaseEvent';
 
@@ -29,10 +30,8 @@ export const GameCompleteEvent = (props: Props): JSX.Element | null => {
 	const game = gamesData.find((g: Game) => g.id === event.gameId);
 	const gameRating = tiersData.find((tier: Tier) => tier.id === game?.tier);
 
-	const iconMemberComplete = member
-		? 'fas fa-check-square'
-		: 'fas fa-exclamation-triangle';
-	const iconGameRating = gameRating?.icon ?? 'far fa-question-circle';
+	const iconMemberComplete = member ? 'SquareCheck' : 'WarningTriangle';
+	const iconGameRating = (gameRating?.icon ?? 'QuestionCircle') as IconType;
 
 	const onMemberClick = () => {
 		if (member?.steamId) history.push(`/profile/${member.steamId}`);
@@ -55,8 +54,8 @@ export const GameCompleteEvent = (props: Props): JSX.Element | null => {
 			</BaseEvent.Description>
 			<BaseEvent.Summary>
 				<BaseEvent.Icons>
-					<i className={iconMemberComplete} />
-					<i className={iconGameRating} />
+					<Icon icon={iconMemberComplete} />
+					<Icon icon={iconGameRating} />
 				</BaseEvent.Icons>
 				<GameThumbnail game={game} size={Size.SMALL} onClick={onGameClick} />
 			</BaseEvent.Summary>

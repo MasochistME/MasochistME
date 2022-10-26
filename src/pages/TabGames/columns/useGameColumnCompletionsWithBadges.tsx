@@ -2,7 +2,7 @@ import React from 'react';
 import { Game } from '@masochistme/sdk/dist/v1/types';
 
 import { useLeaderboardsGames } from 'sdk';
-import { Size } from 'utils';
+import { Size } from 'components';
 import { Flex, Skeleton, defaultSort } from 'components';
 
 export const useGameColumnCompletionsWithBadges = () => {

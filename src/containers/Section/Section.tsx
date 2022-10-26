@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { fonts, media } from 'shared/theme';
+import { fonts, media } from 'styles/theme/themeOld';
 import { useTheme, ColorTokens } from 'styles';
 
 export type SectionProps = {

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Section } from 'containers';
-import { Flex, Tooltip } from 'components';
+import { Flex, Icon, Tooltip } from 'components';
 
 import { GraphHoursPlayedTotal } from './GraphHoursPlayedTotal';
 import { GraphHoursPlayedCompleted } from './GraphHoursPlayedCompleted';
@@ -25,7 +25,7 @@ export const MemberProfileGraphs = (props: Props): JSX.Element | null => {
 						content={`Total number of hours this member spent playing games from specified tiers`}>
 						<Flex align gap={8}>
 							<span>Playtime total [h]</span>
-							<i className="fas fa-info-circle" />
+							<Icon icon="CircleInfo" />
 						</Flex>
 					</Tooltip>
 				}
@@ -39,7 +39,7 @@ export const MemberProfileGraphs = (props: Props): JSX.Element | null => {
 						content={`Total number of hours this member spent completing games from specified tiers`}>
 						<Flex align gap={8}>
 							<span>Playtime completed [h]</span>
-							<i className="fas fa-info-circle" />
+							<Icon icon="CircleInfo" />
 						</Flex>
 					</Tooltip>
 				}
@@ -53,7 +53,7 @@ export const MemberProfileGraphs = (props: Props): JSX.Element | null => {
 						content={`Total number of games from specified tiers that this member completed`}>
 						<Flex align gap={8}>
 							<span>Games completed</span>
-							<i className="fas fa-info-circle" />
+							<Icon icon="CircleInfo" />
 						</Flex>
 					</Tooltip>
 				}

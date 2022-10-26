@@ -2,12 +2,19 @@ import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { Tier } from '@masochistme/sdk/dist/v1/types';
 
-import { media } from 'shared/theme';
+import { media } from 'styles/theme/themeOld';
 import { useAppContext, GameView } from 'context';
 import { SearchBar } from 'containers';
-import { Button, Checkbox, FilterBar, Flex, Spinner } from 'components';
+import {
+	Button,
+	Checkbox,
+	FilterBar,
+	Flex,
+	Spinner,
+	IconType,
+} from 'components';
 import { useActiveTab } from 'hooks';
-import { TabDict } from 'shared/config/tabs';
+import { TabDict } from 'configuration/tabs';
 import { useTiers } from 'sdk';
 
 export const GameFilterBar = (): JSX.Element => {
@@ -28,9 +35,9 @@ export const GameFilterBar = (): JSX.Element => {
 	} = useTiers();
 
 	const gameViewButtonIcon = useMemo(() => {
-		if (gameListView === GameView.TILE) return 'fas fa-table';
-		if (gameListView === GameView.TABLE) return 'fas fa-grip-horizontal';
-		return 'fas fa-circle-notch fa-spin';
+		if (gameListView === GameView.TILE) return 'Table';
+		if (gameListView === GameView.TABLE) return 'Grid';
+		return 'Spin';
 	}, [gameListView]);
 
 	const gameViewButtonLabel = useMemo(() => {
@@ -57,7 +64,7 @@ export const GameFilterBar = (): JSX.Element => {
 						tiersData.map((tier: Tier) => (
 							<Checkbox
 								key={`checkbox-filter-${tier.id}`}
-								icon={tier.icon}
+								icon={tier.icon as IconType}
 								itemType={tier.id}
 								visibleItems={visibleTiers}
 								setVisibleItems={setVisibleTiers}

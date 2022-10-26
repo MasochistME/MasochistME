@@ -6,7 +6,7 @@ import { useMemberById } from 'sdk';
 import { Flex, Warning } from 'components';
 import { SubPage, Tabs, Tab, TabPanel } from 'containers';
 import { useActiveTab } from 'hooks';
-import { TabDict } from 'shared/config/tabs';
+import { TabDict } from 'configuration/tabs';
 
 import { MemberProfileBadgesSection } from './MemberProfileBadgesSection';
 import { MemberProfileHeader } from './MemberProfileHeader';

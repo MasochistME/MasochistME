@@ -3,11 +3,13 @@ import styled from 'styled-components';
 
 import { useTheme, ColorTokens } from 'styles';
 
-import { Flex } from '../Flex';
-import { Tooltip } from '../Tooltip';
+import { Size } from 'components/__utils';
+import { Icon, IconType } from 'components/Icon';
+import { Flex } from 'components/Flex';
+import { Tooltip } from 'components/Tooltip';
 
 type Props<T extends string> = {
-	icon: string;
+	icon: IconType;
 	itemDescription?: string;
 	itemType: T;
 	visibleItems: T[];
@@ -39,9 +41,10 @@ export const Checkbox = <T extends string>(props: Props<T>): JSX.Element => {
 		<Tooltip
 			content={
 				<Flex column>
-					<span>
-						{isChecked ? 'Hide' : 'Show'} items of type {<i className={icon} />}
-					</span>
+					<Flex align gap={4}>
+						{isChecked ? 'Hide' : 'Show'} items of type{' '}
+						{<Icon icon={icon} size={Size.MICRO} />}
+					</Flex>
 					{itemDescription && <span>({itemDescription})</span>}
 				</Flex>
 			}>
@@ -55,7 +58,7 @@ export const Checkbox = <T extends string>(props: Props<T>): JSX.Element => {
 					onChange={changeItemVisibility}
 				/>
 				<label className="checkbox-label" htmlFor={`item-checkbox-${itemType}`}>
-					<i className={icon} />
+					<Icon icon={icon} size={Size.SMALL} />
 				</label>
 			</StyledCheckbox>
 		</Tooltip>

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Tooltip } from 'components';
+import { Tooltip, Icon } from 'components';
 
 type Props = {
 	hoverText: string;
@@ -9,12 +9,12 @@ export const IconInfo = (props: Props) => {
 
 	return (
 		<Tooltip content={hoverText}>
-			<StyledIconInfo className="fas fa-question-circle" />
+			<StyledIconInfo icon="QuestionCircle" />
 		</Tooltip>
 	);
 };
 
-const StyledIconInfo = styled.i`
+const StyledIconInfo = styled(Icon)`
 	font-size: 12px;
 	margin-left: 6px;
 `;

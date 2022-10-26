@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { media } from 'shared/theme';
+import { media } from 'styles/theme/themeOld';
 import { useActiveTab } from 'hooks';
-import { TabDict } from 'shared/config/tabs';
+import { TabDict } from 'configuration/tabs';
 import { Flex } from 'components';
 import { SubPage, DashboardTile } from 'containers';
 

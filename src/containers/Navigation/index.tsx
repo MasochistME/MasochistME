@@ -2,9 +2,10 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { Icon } from 'components';
 import { useAppContext } from 'context';
-import { fonts, media } from 'shared/theme';
-import { tabs, Tab } from 'shared/config/tabs';
+import { fonts, media } from 'styles/theme/themeOld';
+import { tabs, Tab } from 'configuration/tabs';
 import { useTheme, ColorTokens } from 'styles';
 
 export const Navigation = (): JSX.Element => {
@@ -42,7 +43,7 @@ const NavigationItem = (props: Props): JSX.Element => {
 			onClick={onTabOpen}
 			active={isActive}
 			colorTokens={colorTokens}>
-			<StyledTabIcon className={tab.icon} />
+			<Icon icon={tab.icon} />
 			<StyledTabLabel>{tab.text}</StyledTabLabel>
 		</StyledTabItem>
 	);
@@ -93,10 +94,6 @@ const StyledTabItem = styled.div.attrs((props: NavItemProps) => {
 	@media (max-width: ${media.tablets}) {
 		padding: 12px 0;
 	}
-`;
-
-const StyledTabIcon = styled.i`
-	font-size: 1.4em;
 `;
 
 const StyledTabLabel = styled.div`

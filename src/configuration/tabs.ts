@@ -1,3 +1,5 @@
+import { IconType } from 'components';
+
 export enum TabDict {
 	HOME = 'home',
 	LEADERBOARDS = 'leaderboards',
@@ -12,7 +14,7 @@ export enum TabDict {
 export type Tab = {
 	id: TabDict;
 	text: string;
-	icon: string;
+	icon: IconType;
 	link: string;
 	visible: boolean;
 	external: boolean;
@@ -22,7 +24,7 @@ export const tabs: Tab[] = [
 	{
 		id: TabDict.HOME,
 		text: 'home',
-		icon: 'fas fa-home',
+		icon: 'Home',
 		link: '',
 		visible: true,
 		external: false,
@@ -30,7 +32,7 @@ export const tabs: Tab[] = [
 	{
 		id: TabDict.LEADERBOARDS,
 		text: 'leaderboards',
-		icon: 'fas fa-medal',
+		icon: 'Medal',
 		link: 'leaderboards',
 		visible: true,
 		external: false,
@@ -38,7 +40,7 @@ export const tabs: Tab[] = [
 	{
 		id: TabDict.GAMES,
 		text: 'game list',
-		icon: 'fas fa-gamepad',
+		icon: 'Gamepad',
 		link: 'games',
 		visible: true,
 		external: false,
@@ -46,7 +48,7 @@ export const tabs: Tab[] = [
 	{
 		id: TabDict.EVENTS,
 		text: 'event log',
-		icon: 'fas fa-history',
+		icon: 'History',
 		link: 'events',
 		visible: true,
 		external: false,
@@ -54,7 +56,7 @@ export const tabs: Tab[] = [
 	{
 		id: TabDict.PROFILE,
 		text: 'profile',
-		icon: 'fas fa-address-card',
+		icon: 'IDCard',
 		link: 'profile',
 		visible: false,
 		external: false,
@@ -62,7 +64,7 @@ export const tabs: Tab[] = [
 	{
 		id: TabDict.GAME,
 		text: 'game',
-		icon: 'fas fa-puzzle-piece',
+		icon: 'Puzzle',
 		link: 'game',
 		visible: false,
 		external: false,
@@ -70,7 +72,7 @@ export const tabs: Tab[] = [
 	{
 		id: TabDict.BADGES,
 		text: 'badges',
-		icon: 'fas fa-ribbon',
+		icon: 'Badge',
 		link: 'badges',
 		visible: false,
 		external: false,
@@ -78,7 +80,7 @@ export const tabs: Tab[] = [
 	{
 		id: TabDict.SUPPORT,
 		text: 'support',
-		icon: 'fas fa-heart',
+		icon: 'Heart',
 		link: 'support',
 		visible: true,
 		external: false,

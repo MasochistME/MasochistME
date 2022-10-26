@@ -3,7 +3,7 @@ import React from 'react';
 import { useMemberBadges, useBadges } from 'sdk';
 import { BadgeThumbnail } from 'containers';
 import { Flex } from 'components';
-import { Size } from 'utils';
+import { Size } from 'components';
 
 type Props = {
 	size?: Size;

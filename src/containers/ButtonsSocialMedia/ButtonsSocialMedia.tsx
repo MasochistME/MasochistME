@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { media } from 'shared/theme';
-import { Flex, Button, Icon } from 'components';
-import { Size } from 'utils';
+import { media } from 'styles/theme/themeOld';
+import { Flex, Button } from 'components';
+import { Size } from 'components';
 
 type Props = {
 	size?: Size;
@@ -25,20 +25,19 @@ export const ButtonsSocialMedia = (props: Props): JSX.Element => {
 		<StyledButtonsSocialMedia>
 			<Button
 				size={size}
-				icon="fab fa-steam"
+				icon="Steam"
 				tooltip="Our Steam curator"
 				onClick={onButtonCuratorClick}
 			/>
-			<Icon icon="Discord" />
 			<Button
 				size={size}
-				icon="fab fa-discord"
+				icon="Discord"
 				tooltip="Our Discord server"
 				onClick={onButtonDiscordClick}
 			/>
 			<Button
 				size={size}
-				icon="fab fa-patreon"
+				icon="Patreon"
 				tooltip="Support us!"
 				onClick={onButtonPatreonClick}
 			/>

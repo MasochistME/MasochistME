@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { Badge } from '@masochistme/sdk/dist/v1/types';
 
-import { fonts } from 'shared/theme';
+import { fonts } from 'styles/theme/themeOld';
 import { BadgeThumbnail } from 'containers';
-import { Flex } from 'components';
+import { Flex, Icon } from 'components';
 import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
@@ -41,7 +41,7 @@ export const BadgePoints = (props: Props) => {
 	return (
 		<Flex align gap={4} fontSize="18px" fontFamily={fonts.Dosis}>
 			{badge.points}
-			<i className="fas fa-plus-circle" />
+			<Icon icon="CirclePlus" />
 		</Flex>
 	);
 };

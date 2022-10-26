@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import styled from 'styled-components';
 
 import { useActiveTab } from 'hooks';
-import { TabDict } from 'shared/config/tabs';
+import { TabDict } from 'configuration/tabs';
 import { useAppContext, GameView } from 'context';
 import { SubPage } from 'containers';
 import { Flex, Loader } from 'components';
