@@ -214,9 +214,8 @@ const useEventComponents = () => {
 					</EventCompact.Link>
 					completed
 					<EventCompact.Link onClick={onGameClick}>
-						{game.title}
+						{game.title}!
 					</EventCompact.Link>
-					!
 				</EventCompact>
 			);
 	};
@@ -233,7 +232,7 @@ const useEventComponents = () => {
 					<EventCompact.Link onClick={onGameClick}>
 						{game.title}
 					</EventCompact.Link>
-					changed its tier to{' '}
+					changed its tier to
 					<Icon size={Size.TINY} icon={getTierIcon(game.tier, tiersData)} />!
 				</EventCompact>
 			);
@@ -271,7 +270,7 @@ const useEventComponents = () => {
 					<EventCompact.Link onClick={onUserClick}>
 						{member.name}
 					</EventCompact.Link>
-					got a new badge - <span>{badge.name}</span>!
+					got a new badge - <span>{badge.name}!</span>
 				</EventCompact>
 			);
 	};

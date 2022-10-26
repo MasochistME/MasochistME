@@ -14,6 +14,7 @@ export const EventCompact = (props: Props) => {
 };
 
 const StyledEventCompact = styled(Flex)`
+	align-items: center;
 	gap: 4px;
 	width: 100%;
 	margin: 0px;
@@ -24,7 +25,7 @@ const StyledEventCompact = styled(Flex)`
 `;
 
 const EventIcon = (props: React.ComponentProps<typeof Icon>) => (
-	<Icon size={Size.TINY} {...props} />
+	<Icon size={Size.MICRO} {...props} />
 );
 
 EventCompact.Icon = EventIcon;
