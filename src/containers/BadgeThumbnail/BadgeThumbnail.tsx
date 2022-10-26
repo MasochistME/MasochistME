@@ -3,19 +3,19 @@ import styled from 'styled-components';
 import { Badge } from '@masochistme/sdk/dist/v1/types';
 
 import { BadgeTooltip, CommonProps } from 'containers';
-import { Size } from 'utils';
-import { LOGO } from 'shared/consts';
-import { colors } from 'shared/theme';
-import { Skeleton, Tooltip } from 'components';
+import { Size } from 'components';
+import { ColorTokens, useTheme } from 'styles';
+import { Tooltip } from 'components';
 
 type Props = CommonProps & {
 	badge?: Badge;
 };
 
 export const BadgeThumbnail = (props: Props) => {
+	const { colorTokens, LOGO_URL } = useTheme();
 	const {
 		badge,
-		disabled,
+		isDisabled,
 		size = Size.MEDIUM,
 		title,
 		isLoading,
@@ -23,23 +23,25 @@ export const BadgeThumbnail = (props: Props) => {
 	} = props;
 
 	const badgeComponent = (
-		<StyledBadgeThumbnail size={size} disabled={disabled} onClick={onClick}>
-			{isLoading ? (
-				<Skeleton size={size} />
-			) : (
-				<img src={badge?.img ?? LOGO} alt="Badge" />
-			)}
+		<StyledBadgeThumbnail
+			size={size}
+			isDisabled={isDisabled}
+			colorTokens={colorTokens}
+			onClick={onClick}>
+			<img src={badge?.img ?? LOGO_URL} alt="Badge" loading="lazy" />
 		</StyledBadgeThumbnail>
 	);
-	return title ? (
-		<Tooltip content={title}>{badgeComponent}</Tooltip>
-	) : (
-		<BadgeTooltip badge={badge}>{badgeComponent}</BadgeTooltip>
-	);
+
+	if (title) return <Tooltip content={title}>{badgeComponent}</Tooltip>;
+	return <BadgeTooltip badge={badge}>{badgeComponent}</BadgeTooltip>;
 };
 
 const StyledBadgeThumbnail = styled.div.attrs(
-	(props: Pick<Props, 'size' | 'onClick' | 'disabled'>) => {
+	(
+		props: Pick<Props, 'size' | 'onClick' | 'isDisabled'> & {
+			colorTokens: ColorTokens;
+		},
+	) => {
 		const { size, onClick } = props;
 		const style: React.CSSProperties = {
 			minWidth: size,
@@ -50,7 +52,9 @@ const StyledBadgeThumbnail = styled.div.attrs(
 		};
 		return { style };
 	},
-)<Pick<Props, 'size' | 'onClick' | 'disabled'>>`
+)<
+	Pick<Props, 'size' | 'onClick' | 'isDisabled'> & { colorTokens: ColorTokens }
+>`
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -59,24 +63,25 @@ const StyledBadgeThumbnail = styled.div.attrs(
 	/* padding: 2px; */
 	border-radius: ${({ size }) =>
 		size === Size.SMALL || size === Size.TINY ? 4 : 8}px;
-	border: ${({ size, disabled }) => {
+	border: ${({ size, isDisabled, colorTokens }) => {
 		const borderSize = size === Size.SMALL || size === Size.TINY ? 2 : 3;
-		const borderColor = disabled
-			? `${colors.superLightGrey}66`
-			: colors.superLightGrey;
+		const borderColor = isDisabled
+			? `${colorTokens['core-primary-text']}66`
+			: colorTokens['core-primary-text'];
 		return `${borderSize}px solid ${borderColor}`;
 	}};
 
 	img {
 		width: 100%;
 		height: 100%;
-		opacity: ${({ size, disabled }) => {
-			if (disabled) return 0.4;
+		opacity: ${({ size, isDisabled }) => {
+			if (isDisabled) return 0.4;
 			return size === Size.SMALL || size === Size.TINY ? 0.85 : 1;
 		}};
-		filter: ${({ disabled }) => (disabled ? 'grayscale(1)' : 'grayscale(0)')};
+		filter: ${({ isDisabled }) =>
+			isDisabled ? 'grayscale(1)' : 'grayscale(0)'};
 		&:hover {
-			opacity: ${({ disabled }) => (disabled ? 0.7 : 1)};
+			opacity: ${({ isDisabled }) => (isDisabled ? 0.7 : 1)};
 		}
 	}
 `;

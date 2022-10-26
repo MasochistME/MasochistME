@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { UnmountClosed as Collapse } from 'react-collapse';
+import Collapse from '@mui/material/Collapse';
 import styled from 'styled-components';
 
-import { media } from 'shared/theme';
+import { media } from 'styles/theme/themeOld';
 import { Flex } from 'components';
 import { MemberLeaderboards } from 'containers';
+
 import { LeaderboardsMemberSummary } from './LeaderboardsMemberSummary';
 
 type Props = {
@@ -26,7 +27,7 @@ export const LeaderboardsMember = (props: Props): JSX.Element => {
 				position={position}
 				onShowDetails={changeDetailsVisibility}
 			/>
-			<Collapse isOpened={isOpened} style={{ width: '100%' }}>
+			<Collapse unmountOnExit={true} in={isOpened} style={{ width: '100%' }}>
 				<Flex align justify>
 					<MemberLeaderboards steamId={steamId} key={`details-${steamId}`} />
 				</Flex>

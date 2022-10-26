@@ -4,10 +4,9 @@ import styled from 'styled-components';
 import { PatronTier } from '@masochistme/sdk/dist/v1/types';
 
 import { useCuratorMembers, useLeaderboardsMembers } from 'sdk';
-import { colors, media } from 'shared/theme';
+import { colors, media } from 'styles/theme/themeOld';
 import { MemberAvatar } from 'containers';
-import { Flex } from 'components';
-import { Size } from 'utils';
+import { Flex, Icon, Size } from 'components';
 
 import { LeaderboardsMemberPoints } from './LeaderboardsMemberPoints';
 import {
@@ -85,7 +84,10 @@ export const LeaderboardsMemberSummary = (props: Props): JSX.Element => {
 			</StyledLeaderboardsMemberDetailsImages>
 			<StyledLeaderboardsMemberDetails align>
 				<StyledLeaderboardsMemberExpandIcon onClick={onShowDetailsClick}>
-					<i className={`fas fa-chevron-${isExpanded ? 'down' : 'up'}`} />
+					<Icon
+						icon={isExpanded ? 'ChevronDown' : 'ChevronUp'}
+						size={Size.TINY}
+					/>
 				</StyledLeaderboardsMemberExpandIcon>
 				<StyledLeaderboardsMemberUsername style={{ gap: 8 }}>
 					<h4>{member.name}</h4>
@@ -114,7 +116,7 @@ const StyledLeaderboardsMemberSummary = styled(Flex)<SummaryProps>`
 		return colors.superLightGrey;
 	}};
 	background-color: ${({ isDisabled, isHighestPatronTier }) => {
-		if (isDisabled) return colors.darkRedTransparent;
+		if (isDisabled) return `${colors.darkRed}cc`;
 		if (isHighestPatronTier) return `${colors.tier4Darkened}dd`;
 		return `${colors.newDarkBlue}bb`;
 	}};

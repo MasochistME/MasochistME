@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import dayjs from 'dayjs';
-import { PatreonTier, PatronTier } from '@masochistme/sdk/dist/v1/types';
+import { PatronTier } from '@masochistme/sdk/dist/v1/types';
 
 import { usePatreonTiers } from 'sdk';
-import { colors } from 'shared/theme';
-import { Flex, Tooltip } from 'components';
+import { colors } from 'styles/theme/themeOld';
+import { Flex, Icon, Tooltip } from 'components';
 
 const ICON_SIZE = '1.2em';
 
@@ -28,17 +28,14 @@ export const LeaderboardsMemberIconPatron = (props: Props) => {
 		return (
 			<Tooltip
 				content={`This member is ${patron?.description.toUpperCase()} tier supporter.`}>
-				<PatronIcon
-					className="fa-solid fa-circle-dollar-to-slot"
-					patronTierColor={color}
-				/>
+				<PatronIcon icon="Donation" patronTierColor={color} />
 			</Tooltip>
 		);
 	}
 	return <LeaderboardsMemberIconDummy />;
 };
 
-const PatronIcon = styled.i<{ patronTierColor: string }>`
+const PatronIcon = styled(Icon)<{ patronTierColor: string }>`
 	cursor: help;
 	color: ${colors.black};
 	text-shadow: ${({ patronTierColor }) => patronTierColor} 0 0 10px;
@@ -54,7 +51,7 @@ export const LeaderboardsMemberIconPrivate = () => {
 	};
 	return (
 		<Tooltip content="This user has their profile set to private.">
-			<i className="fas fa-exclamation-triangle" style={style} />
+			<Icon icon="WarningTriangle" {...style} />
 		</Tooltip>
 	);
 };
@@ -83,12 +80,12 @@ export const LeaderboardsMemberIconOutdated = ({
 					<span>This member was last updated {lastUpdate}.</span>
 				</Flex>
 			}>
-			<i className="fas fa-exclamation-circle" style={style} />
+			<Icon icon="WarningCircle" {...style} />
 		</Tooltip>
 	);
 };
 
 export const LeaderboardsMemberIconDummy = () => {
 	const style = { color: 'transparent', fontSize: ICON_SIZE };
-	return <i className="fas fa-exclamation-circle" style={style} />;
+	return <Icon icon="WarningCircle" {...style} />;
 };

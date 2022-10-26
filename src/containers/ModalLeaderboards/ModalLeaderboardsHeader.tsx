@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { Flex, Button } from 'components';
+import { Flex, Icon, Button } from 'components';
 
 type Props = {
 	gameId: number;
@@ -28,10 +28,10 @@ export const ModalLeaderboardsHeader = (props: Props) => {
 					target="_blank"
 					rel="noopener noreferrer"
 					onClick={event => event.stopPropagation()}>
-					<i className="fab fa-steam" /> {gameTitle}
+					<Icon icon="Steam" /> {gameTitle}
 				</a>
 			</h2>
-			<Button label="Details" icon="fas fa-info-circle" onClick={onShowGame} />
+			<Button label="Details" icon="CircleInfo" onClick={onShowGame} />
 		</StyledModalLeaderboardsHeader>
 	);
 };

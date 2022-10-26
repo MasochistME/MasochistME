@@ -8,9 +8,10 @@ import {
 
 import { useTiers, useAllGames } from 'sdk';
 import { GameThumbnail } from 'containers';
+import { Icon, IconType } from 'components';
 
 import { BaseEvent } from './_BaseEvent';
-import { Size } from 'utils';
+import { Size } from 'components';
 
 type Props = {
 	event: EventAchievementNumberChange;
@@ -28,10 +29,8 @@ export const AchievementNumberChangeEvent = (
 	const game = games.find((g: Game) => g.id === event.gameId);
 	const tier = tiersData.find((t: Tier) => t.id === game?.tier);
 
-	const iconTier = tier?.icon ?? 'far fa-question-circle';
-	const iconAchievementChange = game
-		? 'fas fa-tasks'
-		: 'fas fa-exclamation-triangle';
+	const iconTier = tier?.icon ?? 'QuestionCircle'; // TODO this wont be compatible
+	const iconAchievementChange = game ? 'Checklist' : 'WarningTriangle'; // TODO this won't be compatible
 
 	const onGameClick = () => {
 		if (game?.id) history.push(`/game/${game.id}`);
@@ -52,8 +51,8 @@ export const AchievementNumberChangeEvent = (
 			</BaseEvent.Description>
 			<BaseEvent.Summary>
 				<BaseEvent.Icons>
-					<i className={iconAchievementChange} />
-					<i className={iconTier} />
+					<Icon icon={iconAchievementChange as IconType} />
+					<Icon icon={iconTier as IconType} />
 				</BaseEvent.Icons>
 				<GameThumbnail game={game} size={Size.SMALL} onClick={onGameClick} />
 			</BaseEvent.Summary>

@@ -1,12 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { colors } from 'shared/theme';
-import { Flex } from '../Flex';
-import { Tooltip } from '../Tooltip';
+import { useTheme, ColorTokens } from 'styles';
+
+import { Size } from 'components/__utils';
+import { Icon, IconType } from 'components/Icon';
+import { Flex } from 'components/Flex';
+import { Tooltip } from 'components/Tooltip';
 
 type Props<T extends string> = {
-	icon: string;
+	icon: IconType;
 	itemDescription?: string;
 	itemType: T;
 	visibleItems: T[];
@@ -14,6 +17,7 @@ type Props<T extends string> = {
 };
 
 export const Checkbox = <T extends string>(props: Props<T>): JSX.Element => {
+	const { colorTokens } = useTheme();
 	const { icon, itemDescription, itemType, visibleItems, setVisibleItems } =
 		props;
 
@@ -37,13 +41,14 @@ export const Checkbox = <T extends string>(props: Props<T>): JSX.Element => {
 		<Tooltip
 			content={
 				<Flex column>
-					<span>
-						{isChecked ? 'Hide' : 'Show'} items of type {<i className={icon} />}
-					</span>
+					<Flex align gap={4}>
+						{isChecked ? 'Hide' : 'Show'} items of type{' '}
+						{<Icon icon={icon} size={Size.MICRO} />}
+					</Flex>
 					{itemDescription && <span>({itemDescription})</span>}
 				</Flex>
 			}>
-			<StyledCheckbox align justify>
+			<StyledCheckbox align justify colorTokens={colorTokens}>
 				<input
 					type="checkbox"
 					name={`checkbox-${itemType}`}
@@ -53,21 +58,22 @@ export const Checkbox = <T extends string>(props: Props<T>): JSX.Element => {
 					onChange={changeItemVisibility}
 				/>
 				<label className="checkbox-label" htmlFor={`item-checkbox-${itemType}`}>
-					<i className={icon} />
+					<Icon icon={icon} size={Size.SMALL} />
 				</label>
 			</StyledCheckbox>
 		</Tooltip>
 	);
 };
 
-const StyledCheckbox = styled(Flex)`
+const StyledCheckbox = styled(Flex)<{ colorTokens: ColorTokens }>`
 	padding: 4px;
 	box-sizing: border-box;
 	max-height: 44px;
+
 	input {
 		display: none;
 		&:not(:checked) + label {
-			color: ${colors.newMediumGrey};
+			color: ${({ colorTokens }) => colorTokens['semantic-color-interactive']};
 		}
 	}
 	label {
@@ -79,6 +85,6 @@ const StyledCheckbox = styled(Flex)`
 		cursor: pointer;
 	}
 	&:hover {
-		color: ${colors.white};
+		color: ${({ colorTokens }) => colorTokens['semantic-color-link-normal']};
 	}
 `;

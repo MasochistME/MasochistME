@@ -107,7 +107,7 @@ export const useMemberGames = (steamId: string) => {
 		isFetched,
 		isError,
 	} = useQuery(
-		['masochist', 'member', steamId, 'games'],
+		['masochist', 'member', 'games', steamId],
 		() =>
 			sdk.getMemberGameList({
 				steamId,
@@ -117,24 +117,4 @@ export const useMemberGames = (steamId: string) => {
 	);
 
 	return { memberGamesData, isLoading, isFetched, isError };
-};
-
-/**
- *
- */
-export const useMemberAchievements = (steamId: string) => {
-	const { sdk } = useAppContext();
-
-	const {
-		data: memberAchievementsData = [],
-		isLoading,
-		isFetched,
-		isError,
-	} = useQuery(
-		['masochist', 'member', steamId, 'achievements'],
-		() => sdk.getMemberAchievementList({ steamId }),
-		{ enabled: !!steamId },
-	);
-
-	return { memberAchievementsData, isLoading, isFetched, isError };
 };

@@ -1,5 +1,5 @@
 import { Tab as MUITab, Tabs as MUITabs } from '@mui/material';
-import { colors, fonts } from 'shared/theme';
+import { colors, fonts } from 'styles/theme/themeOld';
 import styled from 'styled-components';
 
 type StyledTabProps = {

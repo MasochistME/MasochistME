@@ -3,8 +3,9 @@ import { useHistory } from 'react-router-dom';
 import { EventMemberLeave, Member } from '@masochistme/sdk/dist/v1/types';
 
 import { useAllMembers } from 'sdk';
+import { Icon } from 'components';
 import { MemberAvatar } from 'containers';
-import { Size } from 'utils';
+import { Size } from 'components';
 
 import { BaseEvent } from './_BaseEvent';
 
@@ -18,10 +19,6 @@ export const MemberLeaveEvent = (props: Props): JSX.Element | null => {
 
 	const { membersData } = useAllMembers();
 	const member = membersData.find((m: Member) => m.steamId === event.memberId);
-
-	const iconMemberLeave = member
-		? 'fas fa-user-minus'
-		: 'fas fa-exclamation-triangle';
 
 	const onMemberClick = () => {
 		if (member?.steamId) history.push(`/profile/${member.steamId}`);
@@ -38,7 +35,7 @@ export const MemberLeaveEvent = (props: Props): JSX.Element | null => {
 			</BaseEvent.Description>
 			<BaseEvent.Summary>
 				<BaseEvent.Icons>
-					<i className={iconMemberLeave} />
+					<Icon icon={member ? 'UserMinus' : 'WarningTriangle'} />
 				</BaseEvent.Icons>
 				<BaseEvent.Logo />
 			</BaseEvent.Summary>

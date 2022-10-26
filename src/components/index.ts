@@ -1,3 +1,5 @@
+export * from './__utils';
+
 export * from './Alert';
 export * from './BrokenImage';
 export * from './Button';
@@ -6,7 +8,7 @@ export * from './DateBlock';
 export * from './Loader';
 export * from './FilterBar';
 export * from './Flex';
-export * from './IconInfo';
+export * from './Icon';
 export * from './Loader';
 export * from './ProgressBar';
 export * from './Skeleton';

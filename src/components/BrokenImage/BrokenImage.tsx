@@ -1,7 +1,8 @@
-import { colors } from 'shared/theme';
 import styled from 'styled-components';
 
-import { Size } from 'utils';
+import { Size } from 'components';
+
+import { Icon } from '../Icon';
 import { Flex } from '../Flex';
 import { Tooltip } from '../Tooltip';
 
@@ -18,7 +19,7 @@ export const BrokenImage = (props: Props) => {
 	return (
 		<Tooltip content={title ?? 'I could not load :('}>
 			<StyledBrokenImg fontSize={size ? size / 2 : '16px'}>
-				<i className="fas fa-exclamation-triangle" />
+				<Icon icon="WarningTriangle" size={size} />
 			</StyledBrokenImg>
 		</Tooltip>
 	);

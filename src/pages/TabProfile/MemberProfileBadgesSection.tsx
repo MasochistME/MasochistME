@@ -2,11 +2,11 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { Flex } from 'components';
+import { Flex, Loader } from 'components';
 import { BadgeThumbnail, Section } from 'containers';
 import { useActiveTab, useMemberBadgesFilter } from 'hooks';
-import { TabDict } from 'shared/config/tabs';
-import { Size } from 'utils';
+import { TabDict } from 'configuration/tabs';
+import { Size } from 'components';
 
 type Props = {
 	memberId: string;
@@ -18,13 +18,14 @@ export const MemberProfileBadgesSection = (props: Props): JSX.Element => {
 
 	useActiveTab(TabDict.PROFILE);
 
-	const memberBadgesData = useMemberBadgesFilter(memberId);
+	const { memberBadges, isLoading, isFetched } =
+		useMemberBadgesFilter(memberId);
 
 	const onBadgeClick = (gameId: number | null) => {
 		if (gameId) history.push(`/game/${gameId}`);
 	};
 
-	const memberBadges = memberBadgesData.map(badge => (
+	const badges = memberBadges.map(badge => (
 		<BadgeThumbnail
 			badge={badge}
 			size={Size.BIG}
@@ -40,9 +41,10 @@ export const MemberProfileBadgesSection = (props: Props): JSX.Element => {
 			maxWidth="450px"
 			content={
 				<StyledMemberProfileBadges justify>
-					{memberBadges.length !== 0
-						? memberBadges
-						: 'This member unlocked no badges yet.'}
+					{isLoading && <Loader />}
+					{isFetched && memberBadges.length === 0
+						? 'This member unlocked no badges yet.'
+						: badges}
 				</StyledMemberProfileBadges>
 			}
 		/>

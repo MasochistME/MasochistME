@@ -1,34 +1,29 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
+import { PatreonTier } from '@masochistme/sdk/dist/v1/types';
 
-import { useMemberById, useMemberLeaderboards, usePatreonTiers } from 'sdk';
-import { Size } from 'utils';
-import { colors, media } from 'shared/theme';
-import { Flex, Tooltip } from 'components';
+import { useMemberById, useMemberLeaderboards } from 'sdk';
+import { Size } from 'components';
+import { media } from 'styles/theme/themeOld';
+import { Flex, Icon, IconType, Tooltip } from 'components';
 import { MemberAvatar } from 'containers';
 
 import { MemberProfileUpdate } from './MemberProfileUpdate';
 
 type Props = {
 	memberId: string;
+	patron: Partial<PatreonTier>;
 };
 
 export const MemberProfileHeader = (props: Props): JSX.Element => {
-	const { memberId } = props;
+	const { memberId, patron } = props;
 
 	const { memberData: member, isLoading, isError } = useMemberById(memberId);
 	const { leaderData } = useMemberLeaderboards(memberId);
-	const { patreonTiersData } = usePatreonTiers();
 
 	const description: string =
 		member?.description ??
 		'Currently there is no info provided about this user.';
-	const patron = patreonTiersData.find(
-		patreonTier => patreonTier.id === leaderData?.patreonTier,
-	) ?? {
-		description: 'Unknown',
-		symbol: 'fas fa-medal',
-	};
 
 	const memberName = useMemo(() => {
 		const originalName = member?.name ?? 'Loading...';
@@ -51,15 +46,15 @@ export const MemberProfileHeader = (props: Props): JSX.Element => {
 			</StyledMemberProfileHeaderAvatar>
 			<StyledMemberProfileDetails column>
 				<StyledMemberProfileTopRow>
-					<StyledMemberProfileUsername>
-						<a
-							href={`https://steamcommunity.com/profiles/${member?.steamId}`}
-							target="_blank"
-							rel="noopener noreferrer">
-							<i className="fab fa-steam" style={{ marginRight: '10px' }} />
+					<a
+						href={`https://steamcommunity.com/profiles/${member?.steamId}`}
+						target="_blank"
+						rel="noopener noreferrer">
+						<StyledMemberProfileUsername>
+							<Icon icon="Steam" marginRight="10px" />
 							{memberName}
-						</a>
-					</StyledMemberProfileUsername>
+						</StyledMemberProfileUsername>
+					</a>
 					<MemberProfileUpdate member={member} />
 				</StyledMemberProfileTopRow>
 				{leaderData?.patreonTier && (
@@ -68,8 +63,8 @@ export const MemberProfileHeader = (props: Props): JSX.Element => {
 							patron?.description?.toUpperCase() ?? 'Loading...'
 						} supporter`}>
 						<StyledMemberProfilePatron>
-							<i className={patron?.symbol} />{' '}
-							{patron?.description?.toUpperCase() ?? 'Loading...'}{' '}
+							<Icon icon={patron?.symbol as IconType} />
+							<span>{patron?.description?.toUpperCase() ?? 'Loading...'}</span>
 						</StyledMemberProfilePatron>
 					</Tooltip>
 				)}
@@ -87,7 +82,6 @@ const StyledMemberProfileHeader = styled(Flex)`
 	gap: 16px;
 	justify-content: space-between;
 	align-items: flex-start;
-	background-color: ${colors.black}66;
 `;
 
 const StyledMemberProfileHeaderAvatar = styled.div`
@@ -103,11 +97,14 @@ const StyledMemberProfileTopRow = styled(Flex)`
 `;
 
 const StyledMemberProfileUsername = styled.h2`
+	display: flex;
+	align-items: center;
 	margin: 0;
 	max-width: 600px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+	font-size: 24px;
 `;
 
 const StyledMemberProfileDetails = styled(Flex)`
@@ -121,6 +118,8 @@ const StyledMemberProfileDescription = styled.div`
 	overflow: hidden;
 `;
 
-const StyledMemberProfilePatron = styled.div`
+const StyledMemberProfilePatron = styled(Flex)`
 	cursor: help;
+	align-items: center;
+	gap: 6px;
 `;

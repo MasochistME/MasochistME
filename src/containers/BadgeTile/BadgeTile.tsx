@@ -2,19 +2,21 @@ import React from 'react';
 import styled from 'styled-components';
 import { Badge } from '@masochistme/sdk/dist/v1/types';
 
-import { colors, fonts } from 'shared/theme';
+import { fonts } from 'styles/theme/themeOld';
 import { BadgeThumbnail } from 'containers';
-import { Flex } from 'components';
+import { Flex, Icon, Size } from 'components';
+import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
 	badge: Badge;
 };
 
 export const BadgeTile = (props: Props) => {
+	const { colorTokens } = useTheme();
 	const { badge } = props;
 
 	return (
-		<StyledBadge>
+		<StyledBadge colorTokens={colorTokens}>
 			<Flex column align justify gap={8}>
 				<BadgeThumbnail badge={badge} key={`badge-image-${badge._id}`} />
 				<BadgePoints badge={badge} />
@@ -39,19 +41,19 @@ export const BadgePoints = (props: Props) => {
 	return (
 		<Flex align gap={4} fontSize="18px" fontFamily={fonts.Dosis}>
 			{badge.points}
-			<i className="fas fa-plus-circle" />
+			<Icon icon="CirclePlus" size={Size.MICRO} />
 		</Flex>
 	);
 };
 
-const StyledBadge = styled(Flex)`
+const StyledBadge = styled(Flex)<{ colorTokens: ColorTokens }>`
 	width: 100%;
 	max-width: 450px;
 	padding: 12px;
 	gap: 12px;
 	align-items: flex-start;
 	box-sizing: border-box;
-	background-color: ${colors.superDarkGrey}cc;
+	background-color: ${({ colorTokens }) => colorTokens['core-secondary-bg']}cc;
 `;
 
 const StyledBadgeField = styled.p`

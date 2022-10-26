@@ -4,7 +4,8 @@ import { Game, Tier, EventGameAdd } from '@masochistme/sdk/dist/v1/types';
 
 import { useAllGames, useTiers } from 'sdk';
 import { GameThumbnail } from 'containers';
-import { Size } from 'utils';
+import { Icon, IconType } from 'components';
+import { Size } from 'components';
 
 import { BaseEvent } from './_BaseEvent';
 
@@ -22,12 +23,10 @@ export const GameAddEvent = (props: Props): JSX.Element | null => {
 	const game = games.find((g: Game) => g.id === event.gameId);
 	const gameRating = tiersData.find((tier: Tier) => tier.id === game?.tier);
 
-	const iconGameAdd = game
-		? 'fas fa-plus-square'
-		: 'fas fa-exclamation-triangle';
-	const iconGameRating = gameRating
-		? gameRating.icon
-		: 'far fa-question-circle';
+	const iconGameAdd = game ? 'SquarePlus' : 'WarningTriangle';
+	const iconGameRating = (
+		gameRating ? gameRating.icon : 'QuestionCircle'
+	) as IconType;
 
 	const onGameClick = () => {
 		if (game?.id) history.push(`/game/${game.id}`);
@@ -44,8 +43,8 @@ export const GameAddEvent = (props: Props): JSX.Element | null => {
 			</BaseEvent.Description>
 			<BaseEvent.Summary>
 				<BaseEvent.Icons>
-					<i className={iconGameAdd} />
-					<i className={iconGameRating} />
+					<Icon icon={iconGameAdd} />
+					<Icon icon={iconGameRating} />
 				</BaseEvent.Icons>
 				<GameThumbnail game={game} size={Size.SMALL} onClick={onGameClick} />
 			</BaseEvent.Summary>

@@ -3,8 +3,10 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { useLeaderboardsMembers, useCuratorMembers } from 'sdk';
-import { EventLink, Section, SectionProps } from 'containers';
+import { Section, SectionProps } from 'containers';
 import { Flex, Skeleton } from 'components';
+
+import { EventCompact } from './components';
 
 const NUMBER_OF_LEADERS = 10;
 
@@ -46,7 +48,7 @@ export const DashboardTileTop = (
 		return (
 			<StyledSectionTopMember row align key={`leaderboards-${leader.memberId}`}>
 				<div>{leader.position}.</div>
-				<EventLink
+				<EventCompact.Link
 					onClick={onUserClick}
 					style={{
 						overflow: 'hidden',
@@ -54,7 +56,7 @@ export const DashboardTileTop = (
 						whiteSpace: 'nowrap',
 					}}>
 					<span>{leader.name}</span>
-				</EventLink>
+				</EventCompact.Link>
 				<div style={{ whiteSpace: 'nowrap' }}>{leader.sum} pts</div>
 			</StyledSectionTopMember>
 		);

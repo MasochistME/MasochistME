@@ -1,27 +1,46 @@
 import styled from 'styled-components';
 
-import { colors, fonts, media } from 'shared/theme';
-import { Flex, Tooltip, Skeleton } from 'components';
+import { fonts, media } from 'styles/theme/themeOld';
+import { Flex, Icon, IconType, Tooltip, Skeleton, Size } from 'components';
+import { useTheme, ColorTokens } from 'styles';
+import { ColorMap } from 'utils';
 
 type Props = {
 	label: React.ReactNode;
 	sublabel?: React.ReactNode;
 	title?: React.ReactNode;
-	icon?: string;
+	icon?: IconType;
 	isLoading?: boolean;
+	tier?: ColorMap;
 };
 export const StatBlock = (props: Props) => {
-	const { label, sublabel, icon, title, isLoading } = props;
+	const { colorTokens } = useTheme();
+	const {
+		label,
+		sublabel,
+		icon,
+		title,
+		isLoading,
+		tier = ColorMap.DEFAULT,
+	} = props;
+
+	const getTierColor = () => {
+		if (tier === ColorMap.GOLD) return colorTokens['semantic-color--tier-4'];
+		return colorTokens['semantic-color-active']; // Normal, default color
+	};
+
 	return (
 		<Tooltip content={title}>
-			<StyledStatBlock>
-				{icon && <i className={icon} />}
+			<StyledStatBlock colorTokens={colorTokens} tierColor={getTierColor()}>
+				{icon && <Icon icon={icon} size={Size.TINY} />}
 				{isLoading && <Skeleton width="100px" />}
 				{!isLoading && (
 					<Flex column align>
 						<StyledStatBlockLabel>{label}</StyledStatBlockLabel>
 						{sublabel && (
-							<StyledStatBlockSublabel>{sublabel}</StyledStatBlockSublabel>
+							<StyledStatBlockSublabel tierColor={getTierColor()}>
+								{sublabel}
+							</StyledStatBlockSublabel>
 						)}
 					</Flex>
 				)}
@@ -30,20 +49,20 @@ export const StatBlock = (props: Props) => {
 	);
 };
 
-const StyledStatBlock = styled(Flex)`
+const StyledStatBlock = styled(Flex)<{
+	colorTokens: ColorTokens;
+	tierColor: string;
+}>`
 	gap: 8px;
 	flex-direction: row;
 	align-items: center;
 	padding: 8px 16px;
 	border-radius: 64px;
-	background-color: ${colors.newDark}99;
-	border: 2px solid ${colors.yellow}66;
-	color: ${colors.yellow};
+	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']}99;
+	border: 2px solid ${({ tierColor }) => tierColor}66;
+	color: ${({ tierColor }) => tierColor};
 	font-family: ${fonts.Dosis};
 	cursor: help;
-	i {
-		font-size: 1.8em;
-	}
 	@media (max-width: ${media.tablets}) {
 		padding: 4px 8px;
 		i {
@@ -62,10 +81,10 @@ const StyledStatBlockLabel = styled.span`
 	}
 `;
 
-const StyledStatBlockSublabel = styled.span`
+const StyledStatBlockSublabel = styled.span<{ tierColor: string }>`
 	font-size: 1em;
 	font-weight: bold;
-	color: ${colors.yellow}bb;
+	color: ${({ tierColor }) => tierColor}bb;
 	white-space: nowrap;
 	@media (max-width: ${media.smallNetbooks}) {
 		display: none;

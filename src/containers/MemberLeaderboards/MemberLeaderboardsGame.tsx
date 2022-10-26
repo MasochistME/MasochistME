@@ -4,10 +4,10 @@ import styled from 'styled-components';
 import { Game, MemberGame, Tier } from '@masochistme/sdk/dist/v1/types';
 
 import { useTiers, useCuratedGames } from 'sdk';
-import { colors, media } from 'shared/theme';
-import { Flex, DateBlock, ProgressBar } from 'components';
+import { media } from 'styles/theme/themeOld';
+import { Flex, Icon, IconType, DateBlock, ProgressBar, Size } from 'components';
 import { MemberBadges, GameThumbnail } from 'containers';
-import { Size } from 'utils';
+import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
 	steamId: string;
@@ -15,6 +15,7 @@ type Props = {
 };
 
 export const MemberLeaderboardsGame = (props: Props): JSX.Element => {
+	const { colorTokens } = useTheme();
 	const { steamId, memberGame } = props;
 	const history = useHistory();
 
@@ -25,16 +26,16 @@ export const MemberLeaderboardsGame = (props: Props): JSX.Element => {
 
 	const gameCompletionDate = memberGame?.mostRecentAchievementDate;
 	const gameTitle = gameData?.title ?? 'unknown';
-	const gameTierIcon =
-		tiersData.find((tier: Tier) => tier.id === gameData?.tier)?.icon ??
-		'fas fa-spinner';
+	const gameTierIcon = (tiersData.find(
+		(tier: Tier) => tier.id === gameData?.tier,
+	)?.icon ?? 'Spin') as IconType;
 
 	const onGameClick = () => {
 		history.push(`/game/${memberGame.gameId}`);
 	};
 
 	return (
-		<StyledMemberGame align>
+		<StyledMemberGame align colorTokens={colorTokens}>
 			<DateBlock
 				date={
 					memberGame.completionPercentage === 100
@@ -48,8 +49,10 @@ export const MemberLeaderboardsGame = (props: Props): JSX.Element => {
 					size={Size.SMALL}
 					onClick={onGameClick}
 				/>
-				<i className={gameTierIcon} />
-				<StyledGameTitle onClick={onGameClick}>{gameTitle}</StyledGameTitle>
+				<Icon icon={gameTierIcon} size={Size.MICRO} />
+				<StyledGameTitle onClick={onGameClick} colorTokens={colorTokens}>
+					{gameTitle}
+				</StyledGameTitle>
 			</StyledGameInfo>
 			<MemberBadges
 				size={Size.TINY}
@@ -61,13 +64,15 @@ export const MemberLeaderboardsGame = (props: Props): JSX.Element => {
 	);
 };
 
-const StyledMemberGame = styled(Flex)`
+const StyledMemberGame = styled(Flex)<{ colorTokens: ColorTokens }>`
 	width: 100%;
 	height: 37px;
 	gap: 4px;
 	text-align: left;
-	border-bottom: 1px solid ${colors.newDark};
-	border-top: 1px solid ${colors.newMediumGrey};
+	border-bottom: 1px solid
+		${({ colorTokens }) => colorTokens['core-primary-bg']};
+	border-top: 1px solid
+		${({ colorTokens }) => colorTokens['semantic-color-interactive']};
 	&:first-child {
 		border-top: none;
 	}
@@ -87,12 +92,12 @@ const StyledGameInfo = styled(Flex)`
 	}
 `;
 
-const StyledGameTitle = styled.div`
+const StyledGameTitle = styled.div<{ colorTokens: ColorTokens }>`
 	cursor: pointer;
 	@media (max-width: ${media.smallTablets}) {
 		display: none;
 	}
 	&:hover {
-		color: ${colors.white};
+		color: ${({ colorTokens }) => colorTokens['core-tertiary-text']};
 	}
 `;

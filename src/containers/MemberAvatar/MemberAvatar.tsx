@@ -2,11 +2,11 @@ import { useMemo } from 'react';
 import styled from 'styled-components';
 import { Member, PatronTier } from '@masochistme/sdk/dist/v1/types';
 
-import { Size } from 'utils';
-import { LOGO } from 'shared/consts';
-import { colors } from 'shared/theme';
+import { Size } from 'components';
+import { colors } from 'styles/theme/themeOld';
 import { CommonProps } from 'containers';
 import { BrokenImage, Flex, Skeleton, Tooltip } from 'components';
+import { useTheme, ColorTokens } from 'styles';
 
 type Props = CommonProps & {
 	member?: Partial<Member>;
@@ -14,6 +14,7 @@ type Props = CommonProps & {
 };
 
 export const MemberAvatar = (props: Props) => {
+	const { colorTokens, LOGO_URL } = useTheme();
 	const {
 		member = { name: 'Loading...' },
 		patronTier,
@@ -43,13 +44,14 @@ export const MemberAvatar = (props: Props) => {
 				onClick={onClick}
 				size={size}
 				patronTier={patronTier}
-				isEmpty={!avatarUrl}>
+				isEmpty={!avatarUrl}
+				colorTokens={colorTokens}>
 				{isLoading && <Skeleton size={size} />}
 				{!isLoading && (isError || !avatarUrl) && (
 					<BrokenImage size={size} title="Could not load the avatar." />
 				)}
 				{!isLoading && !isError && avatarUrl && (
-					<img src={avatarUrl ?? LOGO} alt="Member avatar" />
+					<img src={avatarUrl ?? LOGO_URL} alt="Member avatar" loading="lazy" />
 				)}
 			</StyledMemberAvatar>
 		</Tooltip>
@@ -87,6 +89,7 @@ const StyledMemberAvatar = styled.div.attrs(
 )<
 	Pick<Props, 'size' | 'patronTier' | 'onClick'> & {
 		isEmpty: boolean;
+		colorTokens: ColorTokens;
 	}
 >`
 	display: flex;
@@ -95,12 +98,13 @@ const StyledMemberAvatar = styled.div.attrs(
 	box-sizing: border-box;
 	padding: 2px;
 	overflow: hidden;
-	background-color: ${({ isEmpty }) =>
-		isEmpty ? colors.black : 'transparent'};
+	background-color: ${({ isEmpty, colorTokens }) =>
+		isEmpty ? colorTokens['core-tertiary-bg'] : 'transparent'};
 	border-radius: ${({ size }) =>
 		size === Size.SMALL || size === Size.TINY ? 4 : 8}px;
-	border: ${({ size }) => (size === Size.SMALL || size === Size.TINY ? 2 : 3)}px
-		solid ${colors.newDark};
+	border: ${({ size, colorTokens }) =>
+		`${size === Size.SMALL || size === Size.TINY ? 2 : 3}px
+		solid ${colorTokens['core-primary-bg']}`};
 
 	& > * {
 		width: 100%;

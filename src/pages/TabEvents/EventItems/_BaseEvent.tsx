@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 import { Flex } from 'components';
-import { Size } from 'utils';
-import { LOGO } from 'shared/consts';
-import { media, colors } from 'shared/theme';
+import { Size } from 'components';
+import { media, colors } from 'styles/theme/themeOld';
+import { useTheme } from 'styles';
 
 type Props = {
 	children: React.ReactNode;
@@ -17,6 +17,11 @@ export const BaseEvent = (props: Props) => {
 	);
 };
 
+BaseEvent.Logo = () => {
+	const { LOGO_URL } = useTheme();
+	return <BaseEvent.Image alt="masochistme-logo" src={LOGO_URL} />;
+};
+
 BaseEvent.Image = styled.img`
 	height: ${Size.SMALL}px;
 	max-height: ${Size.SMALL}px;
@@ -24,6 +29,7 @@ BaseEvent.Image = styled.img`
 
 BaseEvent.Description = styled(Flex)`
 	width: 100%;
+	align-items: center;
 	text-align: left;
 	gap: 4px;
 	@media (max-width: ${media.bigPhones}) {
@@ -58,5 +64,3 @@ BaseEvent.Summary = styled(Flex)`
 BaseEvent.Icons = styled(Flex)`
 	gap: 8px;
 `;
-
-BaseEvent.Logo = () => <BaseEvent.Image alt="masochistme-logo" src={LOGO} />;

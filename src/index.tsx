@@ -5,14 +5,16 @@ import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
+import { useTheme } from 'styles';
 import GlobalStyle from 'styles/globalStyles';
 import { AppContextProvider } from 'context';
 
 import { App } from './App';
 
-import './shared/fonts/FontAwesome/css/all.min.css';
 import './styles/antStyles.css';
 import './index.css';
+
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 dayjs.extend(customParseFormat);
 dayjs.extend(relativeTime);
@@ -26,17 +28,23 @@ const queryClient = new QueryClient({
 	},
 });
 
-class Root extends React.Component {
-	render() {
-		return (
-			<AppContextProvider>
-				<QueryClientProvider client={queryClient}>
-					<GlobalStyle />
-					<App />
-				</QueryClientProvider>
-			</AppContextProvider>
-		);
-	}
-}
+const RootApp = () => {
+	return (
+		<AppContextProvider>
+			<Root />
+		</AppContextProvider>
+	);
+};
 
-ReactDOM.render(<Root />, document.getElementById('root'));
+const Root = () => {
+	const { assetTokens, colorTokens } = useTheme();
+	return (
+		<QueryClientProvider client={queryClient}>
+			{/* <ReactQueryDevtools initialIsOpen={false} /> */}
+			<GlobalStyle assetTokens={assetTokens} colorTokens={colorTokens} />
+			<App />
+		</QueryClientProvider>
+	);
+};
+
+ReactDOM.render(<RootApp />, document.getElementById('root'));

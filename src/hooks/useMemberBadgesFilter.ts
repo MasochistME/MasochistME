@@ -5,7 +5,7 @@ import { useAllGames, useBadges, useMemberBadges } from 'sdk';
 export const useMemberBadgesFilter = (memberId: string) => {
 	const { gamesData: games } = useAllGames();
 	const { memberBadgesData = [] } = useMemberBadges(memberId);
-	const { badgesData } = useBadges({
+	const { badgesData, isLoading, isFetched } = useBadges({
 		sort: { points: 'desc' },
 	});
 
@@ -19,5 +19,5 @@ export const useMemberBadgesFilter = (memberId: string) => {
 		return false;
 	});
 
-	return memberBadges;
+	return { memberBadges, isLoading, isFetched };
 };

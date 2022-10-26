@@ -1,17 +1,16 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { LOGO } from 'shared/consts';
+import { useTheme } from 'styles/theme';
 
 export const Logo = () => {
-	const history = useHistory();
+	const { /**changeTheme,**/ LOGO_URL } = useTheme();
 
-	const onLogoClick = () => {
-		history.push('/');
-	};
+	// const onLogoClick = () => {
+	// 	changeTheme();
+	// };
 
-	return <StyledLogo onClick={onLogoClick} src={LOGO} alt="Logo" />;
+	return <StyledLogo src={LOGO_URL} alt="Logo" /** onClick={onLogoClick} **/ />;
 };
 
 const StyledLogo = styled.img`

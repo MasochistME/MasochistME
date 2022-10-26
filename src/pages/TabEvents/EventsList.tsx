@@ -18,13 +18,14 @@ import {
 import { useAppContext } from 'context';
 import { useEvents } from 'sdk';
 import { DateBlock, Flex } from 'components';
-import { colors } from 'shared/theme';
 
 import EventItem from './EventItems';
+import { useTheme, ColorTokens } from 'styles';
 
 export const EventsList = () => {
 	const { visibleEvents } = useAppContext();
-	const { eventsData, isLoading, isFetched } = useEvents({
+	const { colorTokens } = useTheme();
+	const { eventsData } = useEvents({
 		sort: { date: 'desc' },
 		// @ts-ignore
 		filter: { type: { $in: visibleEvents } },
@@ -69,7 +70,10 @@ export const EventsList = () => {
 	return (
 		<StyledEventList>
 			{eventsData.map((event: Event) => (
-				<StyledEventItem align key={`event-${String(event._id)}`}>
+				<StyledEventItem
+					align
+					colorTokens={colorTokens}
+					key={`event-${String(event._id)}`}>
 					<DateBlock date={event.date} />
 					{identifyEvent(event)}
 				</StyledEventItem>
@@ -84,12 +88,14 @@ const StyledEventList = styled(Flex)`
 	width: 100%;
 `;
 
-const StyledEventItem = styled(Flex)`
+const StyledEventItem = styled(Flex)<{ colorTokens: ColorTokens }>`
 	justify-content: space-between;
 	width: 100%;
 	padding: 4px;
-	border-bottom: 1px solid ${colors.newDark};
-	border-top: 1px solid ${colors.mediumGrey}66;
+	border-bottom: 1px solid
+		${({ colorTokens }) => colorTokens['core-primary-bg']};
+	border-top: 1px solid
+		${({ colorTokens }) => colorTokens['semantic-color-disabled']}66;
 	&:first-child {
 		border-top: none;
 	}

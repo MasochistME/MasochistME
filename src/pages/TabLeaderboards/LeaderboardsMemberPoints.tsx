@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import { Tier } from '@masochistme/sdk/dist/v1/types';
 
 import { useTiers, useLeaderboardsMembers } from 'sdk';
-import { media } from 'shared/theme';
-import { Flex, Spinner, Tooltip } from 'components';
+import { media } from 'styles/theme/themeOld';
+import { Size } from 'components';
+import { Flex, Icon, IconType, Spinner, Tooltip } from 'components';
 
 type Props = {
 	steamId: string;
@@ -44,7 +45,7 @@ export const LeaderboardsMemberPoints = (props: Props): JSX.Element => {
 					</>
 				}>
 				<StyledScore>
-					<i className={tier.icon} />
+					<Icon icon={tier.icon as IconType} size={Size.MICRO} />
 					{tierPoints?.total}
 				</StyledScore>
 			</Tooltip>
@@ -63,7 +64,7 @@ export const LeaderboardsMemberPoints = (props: Props): JSX.Element => {
 					</>
 				}>
 				<StyledScore>
-					<i className="fas fa-medal" />
+					<Icon icon="Medal" size={Size.MICRO} />
 					{member?.badges?.total}
 				</StyledScore>
 			</Tooltip>

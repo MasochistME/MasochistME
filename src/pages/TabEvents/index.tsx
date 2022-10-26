@@ -3,10 +3,9 @@ import styled from 'styled-components';
 
 import { useEvents } from 'sdk';
 import { SubPage, Section, SectionProps } from 'containers';
-import { Flex, Spinner } from 'components';
-import { colors } from 'shared/theme';
+import { Flex, Icon, Spinner } from 'components';
 import { useActiveTab } from 'hooks';
-import { TabDict, EventsDict } from 'shared/config';
+import { TabDict, EventsDict } from 'configuration';
 
 import { EventsList } from './EventsList';
 import { EventsFilterBar } from './EventsFilterBar';
@@ -39,9 +38,9 @@ const TabEventsInfo = (props: Partial<SectionProps>): JSX.Element => {
 	});
 
 	const eventsDescriptions = EventsDict.map((event, index: number) => (
-		<li key={`event-desc-${index}`}>
-			<i className={event.icon}></i> - {event.description}
-		</li>
+		<Flex key={`event-desc-${index}`} gap={4}>
+			<Icon icon={event.icon} /> - {event.description},
+		</Flex>
 	));
 
 	return (
@@ -56,11 +55,6 @@ const TabEventsInfo = (props: Partial<SectionProps>): JSX.Element => {
 					{isFetched && (
 						<StyledEventTypes>{eventsDescriptions}</StyledEventTypes>
 					)}
-					<div>
-						In case of event relating to a no longer curated game or user no
-						longer being part of the group, the{' '}
-						<i className="fas fa-exclamation-triangle"></i> icon is used.
-					</div>
 				</Flex>
 			}
 		/>
@@ -73,12 +67,11 @@ const StyledEventsList = styled(Flex)`
 	width: 100%;
 `;
 
-const StyledEventTypes = styled.ul`
-	margin: 0;
-	li {
-		text-align: left;
-		i {
-			width: 16px;
-		}
-	}
+const StyledEventTypes = styled(Flex)`
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 8px;
+	margin-left: 12px;
+	line-height: 1.5em;
+	text-align: left;
 `;

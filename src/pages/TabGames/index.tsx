@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import styled from 'styled-components';
 
 import { useActiveTab } from 'hooks';
-import { TabDict } from 'shared/config/tabs';
+import { TabDict } from 'configuration/tabs';
 import { useAppContext, GameView } from 'context';
-import { SubPage, Section, SectionProps } from 'containers';
-import { Flex } from 'components';
+import { SubPage } from 'containers';
+import { Flex, Loader } from 'components';
 
-import { GameTileView } from './GameTileView';
 import { GameTableView } from './GameTableView';
 import { GameFilterBar } from './GameFilterBar';
+
+const GameTileView = React.lazy(() =>
+	import('./GameTileView').then(module => ({
+		default: module.GameTileView,
+	})),
+);
 
 const TabGames = (): JSX.Element => {
 	useActiveTab(TabDict.GAMES);
@@ -20,7 +25,11 @@ const TabGames = (): JSX.Element => {
 		<SubPage>
 			<StyledGames column>
 				<GameFilterBar />
-				{gameListView === GameView.TILE && <GameTileView />}
+				{gameListView === GameView.TILE && (
+					<Suspense fallback={<Loader />}>
+						<GameTileView />
+					</Suspense>
+				)}
 				{gameListView === GameView.TABLE && <GameTableView />}
 			</StyledGames>
 		</SubPage>

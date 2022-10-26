@@ -1,11 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { media } from 'shared/theme';
+import { media } from 'styles/theme/themeOld';
 import { Flex, Button } from 'components';
-import { Size } from 'utils';
+import { Size } from 'components';
 
-export const ButtonsSocialMedia = (): JSX.Element => {
+type Props = {
+	size?: Size;
+};
+
+export const ButtonsSocialMedia = (props: Props): JSX.Element => {
+	const { size = Size.BIG } = props;
 	const onButtonCuratorClick = () => {
 		window.open('https://store.steampowered.com/curator/41289936', '_blank');
 	};
@@ -19,20 +24,20 @@ export const ButtonsSocialMedia = (): JSX.Element => {
 	return (
 		<StyledButtonsSocialMedia>
 			<Button
-				size={Size.BIG}
-				icon="fab fa-steam"
+				size={size}
+				icon="Steam"
 				tooltip="Our Steam curator"
 				onClick={onButtonCuratorClick}
 			/>
 			<Button
-				size={Size.BIG}
-				icon="fab fa-discord"
+				size={size}
+				icon="Discord"
 				tooltip="Our Discord server"
 				onClick={onButtonDiscordClick}
 			/>
 			<Button
-				size={Size.BIG}
-				icon="fab fa-patreon"
+				size={size}
+				icon="Patreon"
 				tooltip="Support us!"
 				onClick={onButtonPatreonClick}
 			/>

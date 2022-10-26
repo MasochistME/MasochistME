@@ -2,9 +2,10 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { EventBadgeGet, Badge, Member } from '@masochistme/sdk/dist/v1/types';
 
+import { Icon } from 'components';
 import { BadgeThumbnail, MemberAvatar } from 'containers';
 import { useBadges, useAllMembers } from 'sdk';
-import { Size } from 'utils';
+import { Size } from 'components';
 
 import { BaseEvent } from './_BaseEvent';
 
@@ -16,11 +17,6 @@ export const BadgeGrantEvent = ({ event }: { event: EventBadgeGet }) => {
 
 	const badge = badgesData.find((b: Badge) => String(b._id) === event.badgeId);
 	const member = membersData.find((m: Member) => m.steamId === event.memberId);
-
-	const iconBadge = 'fas fa-medal';
-	const iconBadgeGrant = member
-		? 'fas fa-check-square'
-		: 'fas fa-exclamation-triangle';
 
 	const onMemberClick = () => {
 		if (member?.steamId) history.push(`/profile/${member.steamId}`);
@@ -40,8 +36,8 @@ export const BadgeGrantEvent = ({ event }: { event: EventBadgeGet }) => {
 			</BaseEvent.Description>
 			<BaseEvent.Summary>
 				<BaseEvent.Icons>
-					<i className={iconBadgeGrant} />
-					<i className={iconBadge} />
+					<Icon icon={member ? 'SquareCheck' : 'WarningTriangle'} />
+					<Icon icon="Badge" />
 				</BaseEvent.Icons>
 				<BadgeThumbnail badge={badge} size={Size.SMALL} />
 			</BaseEvent.Summary>

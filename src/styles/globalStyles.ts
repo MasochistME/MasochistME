@@ -1,9 +1,12 @@
 import { createGlobalStyle } from 'styled-components';
 
-import { colors } from 'shared/theme';
-import backgroundImg from 'shared/images/bg.jpg';
+import { colors } from 'styles/theme/themeOld';
+import { ColorTokens, AssetTokens } from './theme';
 
-const GlobalStyle = createGlobalStyle`
+const GlobalStyle = createGlobalStyle<{
+	colorTokens: ColorTokens;
+	assetTokens: AssetTokens;
+}>`
   .ReactCollapse--collapse {
     width: 100%;
   }
@@ -19,7 +22,8 @@ const GlobalStyle = createGlobalStyle`
     width: 100%;
     height: auto;
     min-height: 100vh;
-    background-image: url(${backgroundImg});
+    background-image: url(${({ assetTokens }) =>
+			assetTokens['core-background']});
     background-attachment: fixed;
     background-position: center;
     background-size: cover;
@@ -38,11 +42,18 @@ const GlobalStyle = createGlobalStyle`
     -webkit-user-select: none;
     -o-user-select: none;
   }
+  
   a {
-    color: ${colors.white};
+    text-decoration: underline dotted;
+    color: ${({ colorTokens }) => colorTokens['semantic-color-link-normal']};
     &:hover {
-      text-decoration: underline;
+      text-decoration: underline dotted;
+      color: ${({ colorTokens }) => colorTokens['semantic-color-link-hover']}
     }
+  }
+
+  .rotate {
+    animation: rotation 8s infinite linear;
   }
 `;
 

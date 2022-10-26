@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { media as mapMedia } from 'shared/theme';
+import { media as mapMedia } from 'styles/theme/themeOld';
 
 type Props = {
 	media: keyof typeof mapMedia;

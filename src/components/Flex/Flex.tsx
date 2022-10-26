@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Size } from 'utils';
+import { Size } from 'components';
 
 type PropsIgnore = {
 	children?: React.ReactNode;

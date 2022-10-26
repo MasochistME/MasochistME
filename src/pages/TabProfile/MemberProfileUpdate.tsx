@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 
-import { Member } from '@masochistme/sdk/dist/v1/types';
+import { Member, PatronTier } from '@masochistme/sdk/dist/v1/types';
 
-import { useUpdateMemberMutation } from 'sdk';
-import { media } from 'shared/theme';
+import { useUpdateMemberMutation, useMemberLeaderboards } from 'sdk';
+import { media } from 'styles/theme/themeOld';
 import { Alert, Flex, Tooltip, Button } from 'components';
 
 type Props = {
@@ -21,9 +21,12 @@ export const MemberProfileUpdate = (props: Props) => {
 		setIsOpen(true);
 	};
 
+	const { leaderData } = useMemberLeaderboards(member?.steamId);
 	const { mutate, data: memberUpdateData } = useUpdateMemberMutation(
 		member?.steamId,
 	);
+
+	const isHighestPatronTier = leaderData?.patreonTier === PatronTier.TIER4;
 
 	useEffect(() => {
 		const response = memberUpdateData?.message ?? 'Please wait...';
@@ -50,7 +53,8 @@ export const MemberProfileUpdate = (props: Props) => {
 			</Tooltip>
 			<Button
 				label="Update"
-				icon="fas fa-refresh"
+				icon="Refresh"
+				isGolden={isHighestPatronTier}
 				onClick={handleMemberUpdate}
 			/>
 			<Alert

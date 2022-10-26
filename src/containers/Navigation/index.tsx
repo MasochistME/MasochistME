@@ -2,14 +2,16 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { Icon } from 'components';
 import { useAppContext } from 'context';
-import { colors, fonts, media } from 'shared/theme';
-import { tabs, Tab } from 'shared/config/tabs';
-import { Flex } from 'components';
+import { fonts, media } from 'styles/theme/themeOld';
+import { tabs, Tab } from 'configuration/tabs';
+import { useTheme, ColorTokens } from 'styles';
 
 export const Navigation = (): JSX.Element => {
+	const { colorTokens } = useTheme();
 	return (
-		<StyledNavigation>
+		<StyledNavigation colorTokens={colorTokens}>
 			{tabs.map(
 				(tab: Tab, index: number) =>
 					tab.visible && <NavigationItem key={`nav-${index} `} tab={tab} />,
@@ -26,6 +28,7 @@ const NavigationItem = (props: Props): JSX.Element => {
 	const { tab } = props;
 
 	const { activeTab } = useAppContext();
+	const { colorTokens } = useTheme();
 	const history = useHistory();
 
 	const isActive = tab.id === activeTab;
@@ -36,20 +39,23 @@ const NavigationItem = (props: Props): JSX.Element => {
 	};
 
 	return (
-		<StyledTabItem onClick={onTabOpen} active={isActive}>
-			<StyledTabIcon className={tab.icon} />
+		<StyledTabItem
+			onClick={onTabOpen}
+			active={isActive}
+			colorTokens={colorTokens}>
+			<Icon icon={tab.icon} />
 			<StyledTabLabel>{tab.text}</StyledTabLabel>
 		</StyledTabItem>
 	);
 };
 
-const StyledNavigation = styled.div`
+const StyledNavigation = styled.div<{ colorTokens: ColorTokens }>`
 	display: grid;
 	width: 100%;
 	grid-template-columns: repeat(5, 1fr);
-	background-color: ${colors.superDarkGrey};
-	box-shadow: 0 0 30px ${colors.newDark};
-	color: ${colors.superLightGrey};
+	background-color: ${({ colorTokens }) => colorTokens['core-secondary-bg']};
+	box-shadow: 0 0 30px ${({ colorTokens }) => colorTokens['core-primary-bg']};
+	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	font-family: ${fonts.Raleway};
 	font-size: 0.9em;
 	text-transform: uppercase;
@@ -60,13 +66,13 @@ const StyledNavigation = styled.div`
 	list-style-type: none;
 `;
 
-type NavItemProps = { active?: boolean };
+type NavItemProps = { active?: boolean; colorTokens: ColorTokens };
 
 const StyledTabItem = styled.div.attrs((props: NavItemProps) => {
 	const { active } = props;
 	const style: React.CSSProperties = {};
 	if (active) {
-		style.backgroundColor = colors.newDark;
+		style.backgroundColor = props.colorTokens['core-primary-bg'];
 	}
 	return { style };
 })<NavItemProps>`
@@ -76,22 +82,18 @@ const StyledTabItem = styled.div.attrs((props: NavItemProps) => {
 	align-items: center;
 	gap: 8px;
 	padding: 24px 0;
-	border-right: 3px solid ${colors.newDark};
+	border-right: 3px solid ${({ colorTokens }) => colorTokens['core-primary-bg']};
 	height: 100%;
 	box-sizing: border-box;
 
 	&:hover {
-		background-color: ${colors.newDark};
+		background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']};
 		cursor: pointer;
 	}
 
 	@media (max-width: ${media.tablets}) {
 		padding: 12px 0;
 	}
-`;
-
-const StyledTabIcon = styled.i`
-	font-size: 1.4em;
 `;
 
 const StyledTabLabel = styled.div`

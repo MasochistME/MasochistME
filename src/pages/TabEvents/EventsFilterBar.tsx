@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { useAppContext } from 'context';
-import { EventsDict, EventDict } from 'shared/config';
-import { media } from 'shared/theme';
+import { EventsDict, EventDict } from 'configuration';
+import { media } from 'styles/theme/themeOld';
 import { FilterBar, Flex } from 'components';
 
 import { EventsFilterCheckbox } from './EventsFilterCheckbox';

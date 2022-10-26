@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { colors } from 'shared/theme';
 import { Flex } from 'components';
+import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
 	activeTab: string;
@@ -11,6 +11,7 @@ type Props = {
 };
 
 export const TabPanel = (props: Props) => {
+	const { colorTokens } = useTheme();
 	const { children, activeTab, tabId, ...other } = props;
 
 	return (
@@ -20,14 +21,16 @@ export const TabPanel = (props: Props) => {
 			id={`simple-tabpanel-${tabId}`}
 			aria-labelledby={`simple-tab-${tabId}`}
 			{...other}>
-			{activeTab === tabId && <StyledTab>{children}</StyledTab>}
+			{activeTab === tabId && (
+				<StyledTab colorTokens={colorTokens}>{children}</StyledTab>
+			)}
 		</div>
 	);
 };
 
-const StyledTab = styled(Flex)`
+const StyledTab = styled(Flex)<{ colorTokens: ColorTokens }>`
 	width: 100%;
 	padding: 16px;
-	background-color: ${colors.newDark}99;
+	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']}99;
 	box-sizing: border-box;
 `;

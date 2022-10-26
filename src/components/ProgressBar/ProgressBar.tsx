@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { colors, fonts, media } from 'shared/theme';
+
+import { fonts, media } from 'styles/theme/themeOld';
+import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
 	percentage: number;
@@ -9,29 +11,40 @@ type Props = {
 };
 
 export const ProgressBar = (props: Props): JSX.Element => {
+	const { colorTokens } = useTheme();
 	const { percentage, invert, style } = props;
+
 	return (
-		<ProgressBar.Completion invert={invert} style={style}>
-			<ProgressBar.Progress percentage={percentage} invert={invert} />
-			<ProgressBar.Percentage>{Math.round(percentage)}%</ProgressBar.Percentage>
+		<ProgressBar.Completion
+			invert={invert}
+			colorTokens={colorTokens}
+			style={style}>
+			<ProgressBar.Progress
+				percentage={percentage}
+				invert={invert}
+				colorTokens={colorTokens}
+			/>
+			<ProgressBar.Percentage colorTokens={colorTokens}>
+				{Math.round(percentage)}%
+			</ProgressBar.Percentage>
 		</ProgressBar.Completion>
 	);
 };
 
 ProgressBar.Completion = styled.div.attrs(
-	(props: Omit<Props, 'percentage'>) => {
+	(props: Omit<Props, 'percentage'> & { colorTokens: ColorTokens }) => {
 		const style: React.CSSProperties = {
-			backgroundColor: `${colors.newDark}`,
-			border: `1px solid ${colors.newDark}`,
+			backgroundColor: props.colorTokens['core-primary-bg'],
+			border: `1px solid ${props.colorTokens['core-primary-bg']}`,
 			...props.style,
 		};
 		if (props.invert) {
-			style.backgroundColor = `${colors.newMediumGrey}`;
-			style.border = `1px solid ${colors.newMediumGrey}`;
+			style.backgroundColor = `${props.colorTokens['semantic-color-interactive']}`;
+			style.border = `1px solid ${props.colorTokens['semantic-color-interactive']}`;
 		}
 		return { style };
 	},
-)<Omit<Props, 'percentage'>>`
+)<Omit<Props, 'percentage'> & { colorTokens: ColorTokens }>`
 	position: relative;
 	min-width: 200px;
 	height: 20px;
@@ -45,26 +58,28 @@ ProgressBar.Completion = styled.div.attrs(
 	}
 `;
 
-ProgressBar.Progress = styled.div.attrs((props: Omit<Props, 'style'>) => {
-	const isDone = props.percentage === 100;
-	const style: React.CSSProperties = {
-		width: `${props.percentage}%`,
-		backgroundColor: isDone
-			? colors.newMediumGrey
-			: `${colors.newMediumGrey}aa`,
-	};
-	if (props.invert) {
-		style.backgroundColor = `${colors.newDark}`;
-	}
-	return { style };
-})<Omit<Props, 'style'>>`
+ProgressBar.Progress = styled.div.attrs(
+	(props: Omit<Props, 'style'> & { colorTokens: ColorTokens }) => {
+		const isDone = props.percentage === 100;
+		const style: React.CSSProperties = {
+			width: `${props.percentage}%`,
+			backgroundColor: isDone
+				? props.colorTokens['semantic-color-interactive']
+				: `${props.colorTokens['semantic-color-interactive']}aa`,
+		};
+		if (props.invert) {
+			style.backgroundColor = props.colorTokens['core-primary-bg'];
+		}
+		return { style };
+	},
+)<Omit<Props, 'style'> & { colorTokens: ColorTokens }>`
 	position: absolute;
 	height: 100%;
 	padding: 0 !important;
 	border-radius: 8px;
 `;
 
-ProgressBar.Percentage = styled.div`
+ProgressBar.Percentage = styled.div<{ colorTokens: ColorTokens }>`
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -75,6 +90,6 @@ ProgressBar.Percentage = styled.div`
 	font-family: ${fonts.Raleway};
 	font-weight: bold;
 	letter-spacing: 0.1em;
-	color: ${colors.superLightGrey};
+	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	border-radius: 8px;
 `;

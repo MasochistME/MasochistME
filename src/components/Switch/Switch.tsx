@@ -1,7 +1,7 @@
 import { Switch as MUISwitch, SwitchProps } from '@mui/material';
 import styled from 'styled-components';
 
-import { colors } from 'shared/theme';
+import { colors } from 'styles/theme/themeOld';
 
 export const Switch = styled((props: SwitchProps) => (
 	<MUISwitch

@@ -1,17 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { colors, media } from 'shared/theme';
+import { media } from 'styles/theme/themeOld';
+import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
 	children: React.ReactNode;
 };
 export const FilterBar = (props: Props): JSX.Element => {
+	const { colorTokens } = useTheme();
 	const { children } = props;
-	return <StyledFilterBar>{children}</StyledFilterBar>;
+
+	return (
+		<StyledFilterBar colorTokens={colorTokens}>{children}</StyledFilterBar>
+	);
 };
 
-const StyledFilterBar = styled.div`
+const StyledFilterBar = styled.div<{ colorTokens: ColorTokens }>`
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
@@ -22,7 +27,7 @@ const StyledFilterBar = styled.div`
 	margin-bottom: 16px;
 	gap: 16px;
 	@media (max-width: ${media.smallNetbooks}) {
-		background-color: ${colors.newDark}99;
+		background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']}99;
 		align-items: center;
 		justify-content: center;
 	}

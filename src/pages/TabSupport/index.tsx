@@ -3,10 +3,9 @@ import styled from 'styled-components';
 import { orderBy } from 'lodash';
 import { PatreonTier } from '@masochistme/sdk/dist/v1/types';
 
-import patreon_button from 'shared/images/patreon.png';
 import { usePatreonTiers } from 'sdk';
 import { useActiveTab } from 'hooks';
-import { TabDict } from 'shared/config/tabs';
+import { TabDict } from 'configuration/tabs';
 import { Flex, Spinner } from 'components';
 import { Section, SectionProps, SubPage } from 'containers';
 
@@ -61,7 +60,10 @@ const TabSupportInfo = (props: Partial<SectionProps>): JSX.Element => {
 						href="https://www.patreon.com/pointonepercent"
 						rel="noopener noreferrer"
 						target="_blank">
-						<PatreonButton src={patreon_button} alt="Patreon button" />
+						<PatreonButton
+							src="http://cdn.masochist.me/assets/patreon.png"
+							alt="Patreon button"
+						/>
 					</a>
 				</Flex>
 			}

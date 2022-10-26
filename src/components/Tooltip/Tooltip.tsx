@@ -1,20 +1,23 @@
 import Tippy from '@tippyjs/react/headless';
 import styled from 'styled-components';
 
-import { colors, media } from 'shared/theme';
 import { Flex } from '../Flex';
+import { media } from 'styles/theme/themeOld';
+import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
 	content: React.ReactNode;
 	children: React.ReactElement;
 };
 export const Tooltip = (props: Props) => {
+	const { colorTokens } = useTheme();
 	const { content, children } = props;
 	if (!content) return children;
+
 	return (
 		<Tippy
 			render={attrs => (
-				<StyledTooltip column {...attrs}>
+				<StyledTooltip column colorTokens={colorTokens} {...attrs}>
 					{content}
 				</StyledTooltip>
 			)}>
@@ -23,12 +26,12 @@ export const Tooltip = (props: Props) => {
 	);
 };
 
-const StyledTooltip = styled(Flex)`
+const StyledTooltip = styled(Flex)<{ colorTokens: ColorTokens }>`
 	padding: 8px;
-	color: ${colors.superLightGrey};
-	background-color: ${colors.superDarkGrey};
+	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
+	background-color: ${({ colorTokens }) => colorTokens['core-secondary-bg']};
 	border-radius: 8px;
-	border: 1px solid ${colors.lightGrey};
+	border: 1px solid ${({ colorTokens }) => colorTokens['core-secondary-text']};
 	text-align: left;
 	max-width: ${media.bigPhones};
 `;

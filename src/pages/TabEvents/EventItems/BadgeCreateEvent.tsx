@@ -2,9 +2,10 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { EventBadgeCreate, Badge, Game } from '@masochistme/sdk/dist/v1/types';
 
+import { Icon } from 'components';
 import { BadgeThumbnail, GameThumbnail } from 'containers';
 import { useBadges, useCuratedGames } from 'sdk';
-import { Size } from 'utils';
+import { Size } from 'components';
 
 import { BaseEvent } from './_BaseEvent';
 
@@ -16,8 +17,6 @@ export const BadgeCreateEvent = ({ event }: { event: EventBadgeCreate }) => {
 
 	const badge = badgesData.find((b: Badge) => String(b._id) === event.badgeId);
 	const game = gamesData.find((g: Game) => g.id === event.gameId);
-
-	const iconBadgeCreate = 'fas fa-award';
 
 	const onGameClick = () => {
 		if (game?.id) history.push(`/game/${game.id}`);
@@ -38,7 +37,7 @@ export const BadgeCreateEvent = ({ event }: { event: EventBadgeCreate }) => {
 			</BaseEvent.Description>
 			<BaseEvent.Summary>
 				<BaseEvent.Icons>
-					<i className={iconBadgeCreate} />
+					<Icon icon="Badge" />
 				</BaseEvent.Icons>
 				<GameThumbnail game={game} size={Size.SMALL} onClick={onGameClick} />
 			</BaseEvent.Summary>

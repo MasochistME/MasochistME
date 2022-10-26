@@ -8,11 +8,12 @@ import {
 import styled from 'styled-components';
 
 import { useLoadTiers } from 'hooks';
-import { media, colors } from 'shared/theme';
+import { media } from 'styles/theme/themeOld';
 import { Loader, Flex } from 'components';
 import { Footer, Header, Navigation, SubHeader } from 'containers';
 
 import { NotFound } from 'pages';
+import { useTheme, ColorTokens } from 'styles';
 
 const TabBadges = React.lazy(() => import('./pages/TabBadges'));
 const TabEvents = React.lazy(() => import('./pages/TabEvents'));
@@ -24,6 +25,7 @@ const TabProfile = React.lazy(() => import('./pages/TabProfile'));
 const TabSupport = React.lazy(() => import('./pages/TabSupport'));
 
 export const App = (): JSX.Element => {
+	const { colorTokens } = useTheme();
 	useLoadTiers();
 
 	return (
@@ -32,7 +34,7 @@ export const App = (): JSX.Element => {
 				<Flex column align width="100vw">
 					<Header />
 					<Navigation />
-					<Content>
+					<Content colorTokens={colorTokens}>
 						<SubHeader />
 						<Switch>
 							<Route exact path="/">
@@ -97,13 +99,13 @@ const PageWrapper = styled(Flex)`
 	justify-content: space-between;
 `;
 
-const Content = styled.div`
+const Content = styled.div<{ colorTokens: ColorTokens }>`
 	width: 1500px;
 	max-width: 100vw;
 	position: relative;
 	box-sizing: border-box;
-	background-color: ${colors.newDark}cc;
-	color: ${colors.superLightGrey};
+	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']}cc;
+	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	@media (max-width: ${media.netbooks}) {
 		width: 100%;
 	}

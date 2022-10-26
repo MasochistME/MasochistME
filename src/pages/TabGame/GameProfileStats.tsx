@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Game } from '@masochistme/sdk/dist/v1/types';
 
-import { colors, media } from 'shared/theme';
+import { media } from 'styles/theme/themeOld';
 import { getPercentage } from 'utils';
 import { Flex } from 'components';
 import { StatBlock } from 'containers';
@@ -10,12 +10,14 @@ import {
 	useCuratorMembers,
 	useLeaderboardsGames,
 } from 'sdk';
+import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
 	game: Game;
 };
 
 export const GameProfileStats = (props: Props) => {
+	const { colorTokens } = useTheme();
 	const { game } = props;
 
 	const { leaderboardsData, isLoading } = useLeaderboardsGames();
@@ -42,7 +44,7 @@ export const GameProfileStats = (props: Props) => {
 		: '—';
 
 	return (
-		<StyledGameProfileStats>
+		<StyledGameProfileStats colorTokens={colorTokens}>
 			<StatBlock
 				title={
 					<StatBlock.Title>
@@ -51,7 +53,7 @@ export const GameProfileStats = (props: Props) => {
 				}
 				label={gameLeaderboards?.completions?.base ?? '—'}
 				sublabel="completions"
-				icon="fa-solid fa-trophy"
+				icon="Trophy"
 				isLoading={isLoading}
 			/>
 			<StatBlock
@@ -71,7 +73,7 @@ export const GameProfileStats = (props: Props) => {
 				}
 				label={getPercentage(gameLeaderboards?.owners ?? 0, membersAll.length)}
 				sublabel="owned by"
-				icon="fa-solid fa-user-check"
+				icon="UserCheck"
 				isLoading={isLoading}
 			/>
 			<StatBlock
@@ -94,7 +96,7 @@ export const GameProfileStats = (props: Props) => {
 					membersHavingGame.length,
 				)}
 				sublabel="completion rate"
-				icon="fa-solid fa-percent"
+				icon="Percent"
 				isLoading={isLoading}
 			/>
 			<StatBlock
@@ -119,16 +121,16 @@ export const GameProfileStats = (props: Props) => {
 				}
 				label={avgPlaytime}
 				sublabel="avg completion time"
-				icon="fa-solid fa-clock"
+				icon="Clock"
 				isLoading={isLoading}
 			/>
 		</StyledGameProfileStats>
 	);
 };
 
-const StyledGameProfileStats = styled(Flex)`
+const StyledGameProfileStats = styled(Flex)<{ colorTokens: ColorTokens }>`
 	justify-content: space-evenly;
-	background-color: ${colors.black}66;
+	background-color: ${({ colorTokens }) => colorTokens['core-tertiary-bg']}66;
 	gap: 16px;
 	padding: 24px 0 32px 0;
 	@media (max-width: ${media.tablets}) {

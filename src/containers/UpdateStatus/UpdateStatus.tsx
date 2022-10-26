@@ -2,12 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { useUpdateStatus } from 'sdk';
-import { colors } from 'shared/theme';
 import { Flex, ProgressBar } from 'components';
 import { HideOn } from 'containers';
+import { ColorTokens, useTheme } from 'styles';
 
 export const UpdateStatus = (): JSX.Element => {
 	const { updateData: status } = useUpdateStatus();
+	const { colorTokens } = useTheme();
 
 	const nextUpdate = status?.lastUpdate
 		? new Date(
@@ -17,7 +18,7 @@ export const UpdateStatus = (): JSX.Element => {
 
 	return (
 		<HideOn media="smallNetbooks" flex="1 0 450px" display="flex">
-			<StyledUpdateStatus column align justify>
+			<StyledUpdateStatus column align justify colorTokens={colorTokens}>
 				{!status?.isUpdating || status.updateStatus === 'idle' ? (
 					<StyledUpdateStatusText>
 						Next update: {nextUpdate}
@@ -34,8 +35,11 @@ export const UpdateStatus = (): JSX.Element => {
 	);
 };
 
-const StyledUpdateStatus = styled(Flex)`
-	background-color: ${colors.black};
+const StyledUpdateStatus = styled(Flex)<{ colorTokens: ColorTokens }>`
+	color: ${({ colorTokens }) =>
+		colorTokens['semantic-color-section-update--text']};
+	background-color: ${({ colorTokens }) =>
+		colorTokens['semantic-color-section-update--bg']};
 	flex: 1 0 450px;
 `;
 
