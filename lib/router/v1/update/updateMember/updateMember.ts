@@ -428,8 +428,8 @@ const getMemberSteamAchievements = async (
          */
         const completionPercentage =
           100 *
-          ((memberAchievementsMap.length ?? 0) /
-            (memberPlayerStatsData.playerstats.achievements.length ?? 0));
+          ((memberAchievementsMap?.length ?? 0) /
+            (memberPlayerStatsData?.playerstats?.achievements?.length ?? 0));
 
         let mostRecentAchievementDate = 0;
         memberAchievementsMap.forEach(achievement =>
