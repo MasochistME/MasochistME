@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { media } from 'shared/theme';
-import { Flex, Button } from 'components';
+import { Flex, Button, Icon } from 'components';
 import { Size } from 'utils';
 
 type Props = {
@@ -29,6 +29,7 @@ export const ButtonsSocialMedia = (props: Props): JSX.Element => {
 				tooltip="Our Steam curator"
 				onClick={onButtonCuratorClick}
 			/>
+			<Icon icon="Discord" />
 			<Button
 				size={size}
 				icon="fab fa-discord"
