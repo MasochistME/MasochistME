@@ -56,10 +56,10 @@ const TabLeaderboardsInfo = (props: Partial<SectionProps>): JSX.Element => {
 	} = useTiers();
 
 	const tiersDescriptions = tiersData.map((tier: Tier) => (
-		<li key={`tier-${String(tier._id)}`}>
-			<Icon icon={tier.icon as IconType} size={Size.MICRO} /> - worth{' '}
-			{tier.score} pts - {tier?.description}
-		</li>
+		<Flex key={`tier-${String(tier._id)}`} gap={4}>
+			<Icon icon={tier.icon as IconType} size={Size.MICRO} /> - {tier.score} pts
+			- {tier?.description}
+		</Flex>
 	));
 
 	return (
@@ -102,12 +102,11 @@ const StyledLeaderboards = styled(Flex)`
 	max-width: 100%;
 `;
 
-const StyledTierTypes = styled.ul`
-	margin: 0;
-	li {
-		text-align: left;
-		i {
-			width: 16px;
-		}
-	}
+const StyledTierTypes = styled(Flex)`
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 8px;
+	margin-left: 12px;
+	line-height: 1.5em;
+	text-align: left;
 `;

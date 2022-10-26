@@ -2,8 +2,7 @@ import React from 'react';
 import { Game } from '@masochistme/sdk/dist/v1/types';
 
 import { useLeaderboardsGames } from 'sdk';
-import { Flex, IconInfo, Skeleton, defaultSort } from 'components';
-import { Size } from 'components';
+import { Flex, Icon, Skeleton, defaultSort, Size } from 'components';
 
 export const useGameColumnAvgPlaytime = () => {
 	const { leaderboardsData, isLoading, isFetched } = useLeaderboardsGames();
@@ -22,7 +21,11 @@ export const useGameColumnAvgPlaytime = () => {
 		title: () => (
 			<Flex row align justify gap={4}>
 				Avg playtime
-				<IconInfo hoverText="Average time (in hours) needed to complete 100% of the Steam achievements" />
+				<Icon
+					size={Size.MICRO}
+					icon="QuestionCircle"
+					hoverText="Average time (in hours) needed to complete 100% of the Steam achievements"
+				/>
 			</Flex>
 		),
 		render: (game: Game) => (

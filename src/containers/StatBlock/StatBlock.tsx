@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { colors, fonts, media } from 'styles/theme/themeOld';
-import { Flex, Icon, IconType, Tooltip, Skeleton } from 'components';
+import { Flex, Icon, IconType, Tooltip, Skeleton, Size } from 'components';
 import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
@@ -18,7 +18,7 @@ export const StatBlock = (props: Props) => {
 	return (
 		<Tooltip content={title}>
 			<StyledStatBlock colorTokens={colorTokens}>
-				{icon && <Icon icon={icon} />}
+				{icon && <Icon icon={icon} size={Size.TINY} />}
 				{isLoading && <Skeleton width="100px" />}
 				{!isLoading && (
 					<Flex column align>
@@ -44,9 +44,6 @@ const StyledStatBlock = styled(Flex)<{ colorTokens: ColorTokens }>`
 	color: ${colors.yellow};
 	font-family: ${fonts.Dosis};
 	cursor: help;
-	i {
-		font-size: 1.8em;
-	}
 	@media (max-width: ${media.tablets}) {
 		padding: 4px 8px;
 		i {

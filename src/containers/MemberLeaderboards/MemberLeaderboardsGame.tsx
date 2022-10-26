@@ -5,9 +5,8 @@ import { Game, MemberGame, Tier } from '@masochistme/sdk/dist/v1/types';
 
 import { useTiers, useCuratedGames } from 'sdk';
 import { media } from 'styles/theme/themeOld';
-import { Flex, Icon, IconType, DateBlock, ProgressBar } from 'components';
+import { Flex, Icon, IconType, DateBlock, ProgressBar, Size } from 'components';
 import { MemberBadges, GameThumbnail } from 'containers';
-import { Size } from 'components';
 import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
@@ -50,7 +49,7 @@ export const MemberLeaderboardsGame = (props: Props): JSX.Element => {
 					size={Size.SMALL}
 					onClick={onGameClick}
 				/>
-				<Icon icon={gameTierIcon} />
+				<Icon icon={gameTierIcon} size={Size.MICRO} />
 				<StyledGameTitle onClick={onGameClick} colorTokens={colorTokens}>
 					{gameTitle}
 				</StyledGameTitle>

@@ -4,7 +4,7 @@ import { Game } from '@masochistme/sdk/dist/v1/types';
 
 import { useTiers, useCuratedGames } from 'sdk';
 import { getTierIcon, getGameThumbnail } from 'utils';
-import { Flex, Icon, Skeleton, Tooltip } from 'components';
+import { Flex, Icon, Skeleton, Tooltip, Size } from 'components';
 import { ModalLeaderboards } from 'containers';
 import { useTheme, ColorTokens } from 'styles';
 
@@ -46,7 +46,10 @@ export const GameTile = (props: Props): JSX.Element => {
 							className={`game-tier-${game.tier}`}
 							src={getGameThumbnail(game.id)}>
 							<StyledGameHiddenInfo column align colorTokens={colorTokens}>
-								<Icon icon={getTierIcon(game.tier, tiersData)} />
+								<Icon
+									icon={getTierIcon(game.tier, tiersData)}
+									size={Size.MICRO}
+								/>
 								<h3>{game.title}</h3>
 								<p style={{ margin: '0', fontSize: '0.85em' }}>
 									{game.description}

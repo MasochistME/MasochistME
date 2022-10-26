@@ -1,4 +1,4 @@
-import React, { useMemo, Suspense } from 'react';
+import React, { Suspense } from 'react';
 import { orderBy } from 'lodash';
 import styled from 'styled-components';
 import { MemberGame, PatronTier, TierId } from '@masochistme/sdk/dist/v1/types';

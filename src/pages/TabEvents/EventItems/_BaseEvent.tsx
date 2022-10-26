@@ -29,6 +29,7 @@ BaseEvent.Image = styled.img`
 
 BaseEvent.Description = styled(Flex)`
 	width: 100%;
+	align-items: center;
 	text-align: left;
 	gap: 4px;
 	@media (max-width: ${media.bigPhones}) {

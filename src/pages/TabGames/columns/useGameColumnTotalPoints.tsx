@@ -2,8 +2,7 @@ import React from 'react';
 import { Game, Tier } from '@masochistme/sdk/dist/v1/types';
 
 import { useLeaderboardsGames, useTiers } from 'sdk';
-import { Size } from 'components';
-import { Flex, IconInfo, Skeleton, defaultSort } from 'components';
+import { Flex, Icon, Skeleton, defaultSort, Size } from 'components';
 
 export const useGamesColumnTotalPoints = () => {
 	const { leaderboardsData, isLoading, isFetched } = useLeaderboardsGames();
@@ -21,7 +20,11 @@ export const useGamesColumnTotalPoints = () => {
 		title: () => (
 			<Flex row align justify gap={4}>
 				Points
-				<IconInfo hoverText="Sum of base points and all the game badges (excluding negative ones)" />
+				<Icon
+					size={Size.MICRO}
+					icon="QuestionCircle"
+					hoverText="Sum of base points and all the game badges (excluding negative ones)"
+				/>
 			</Flex>
 		),
 		render: (game: Game) => {

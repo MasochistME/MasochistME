@@ -6,8 +6,7 @@ import { PatronTier } from '@masochistme/sdk/dist/v1/types';
 import { useCuratorMembers, useLeaderboardsMembers } from 'sdk';
 import { colors, media } from 'styles/theme/themeOld';
 import { MemberAvatar } from 'containers';
-import { Flex, Icon } from 'components';
-import { Size } from 'components';
+import { Flex, Icon, Size } from 'components';
 
 import { LeaderboardsMemberPoints } from './LeaderboardsMemberPoints';
 import {
@@ -85,7 +84,10 @@ export const LeaderboardsMemberSummary = (props: Props): JSX.Element => {
 			</StyledLeaderboardsMemberDetailsImages>
 			<StyledLeaderboardsMemberDetails align>
 				<StyledLeaderboardsMemberExpandIcon onClick={onShowDetailsClick}>
-					<Icon icon={isExpanded ? 'ChevronDown' : 'ChevronUp'} />
+					<Icon
+						icon={isExpanded ? 'ChevronDown' : 'ChevronUp'}
+						size={Size.TINY}
+					/>
 				</StyledLeaderboardsMemberExpandIcon>
 				<StyledLeaderboardsMemberUsername style={{ gap: 8 }}>
 					<h4>{member.name}</h4>

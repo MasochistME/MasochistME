@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Section } from 'containers';
-import { Flex, Icon, Tooltip } from 'components';
+import { Flex, Icon, Tooltip, Size } from 'components';
 
 import { GraphHoursPlayedTotal } from './GraphHoursPlayedTotal';
 import { GraphHoursPlayedCompleted } from './GraphHoursPlayedCompleted';
@@ -21,13 +21,14 @@ export const MemberProfileGraphs = (props: Props): JSX.Element | null => {
 				minWidth="250px"
 				maxWidth="250px"
 				title={
-					<Tooltip
-						content={`Total number of hours this member spent playing games from specified tiers`}>
-						<Flex align gap={8}>
-							<span>Playtime total [h]</span>
-							<Icon icon="CircleInfo" />
-						</Flex>
-					</Tooltip>
+					<Flex align gap={8}>
+						<span>Playtime total [h]</span>
+						<Icon
+							size={Size.MICRO}
+							icon="QuestionCircle"
+							hoverText={`Total number of hours this member spent playing games from specified tiers`}
+						/>
+					</Flex>
 				}
 				content={<GraphHoursPlayedTotal memberId={memberId} />}
 			/>
@@ -35,13 +36,14 @@ export const MemberProfileGraphs = (props: Props): JSX.Element | null => {
 				minWidth="250px"
 				maxWidth="250px"
 				title={
-					<Tooltip
-						content={`Total number of hours this member spent completing games from specified tiers`}>
-						<Flex align gap={8}>
-							<span>Playtime completed [h]</span>
-							<Icon icon="CircleInfo" />
-						</Flex>
-					</Tooltip>
+					<Flex align gap={8}>
+						<span>Playtime completed [h]</span>
+						<Icon
+							size={Size.MICRO}
+							icon="CircleInfo"
+							hoverText="Total number of hours this member spent completing games from specified tiers"
+						/>
+					</Flex>
 				}
 				content={<GraphHoursPlayedCompleted memberId={memberId} />}
 			/>
@@ -49,13 +51,14 @@ export const MemberProfileGraphs = (props: Props): JSX.Element | null => {
 				minWidth="250px"
 				maxWidth="250px"
 				title={
-					<Tooltip
-						content={`Total number of games from specified tiers that this member completed`}>
-						<Flex align gap={8}>
-							<span>Games completed</span>
-							<Icon icon="CircleInfo" />
-						</Flex>
-					</Tooltip>
+					<Flex align gap={8}>
+						<span>Games completed</span>
+						<Icon
+							size={Size.MICRO}
+							icon="CircleInfo"
+							hoverText="Total number of games from specified tiers that this member completed"
+						/>
+					</Flex>
 				}
 				content={<GraphGamesCompleted memberId={memberId} />}
 			/>

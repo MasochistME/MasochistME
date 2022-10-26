@@ -29,7 +29,7 @@ import {
 import { media } from 'styles/theme/themeOld';
 import { getTierIcon } from 'utils';
 import { Section, SectionProps } from 'containers';
-import { Flex, Icon, IconType, Skeleton } from 'components';
+import { Flex, Icon, IconType, Skeleton, Size } from 'components';
 
 import { EventCompact } from './components';
 
@@ -233,7 +233,8 @@ const useEventComponents = () => {
 					<EventCompact.Link onClick={onGameClick}>
 						{game.title}
 					</EventCompact.Link>
-					changed its tier to <Icon icon={getTierIcon(game.tier, tiersData)} />!
+					changed its tier to{' '}
+					<Icon size={Size.TINY} icon={getTierIcon(game.tier, tiersData)} />!
 				</EventCompact>
 			);
 	};

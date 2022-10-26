@@ -34,9 +34,13 @@ export const Button = (props: Props) => {
 				disabled={disabled}
 				colorTokens={colorTokens}
 				onClick={onClick}>
-				{icon && iconPlacement === 'left' && <Icon icon={icon} />}
+				{icon && iconPlacement === 'left' && (
+					<Icon icon={icon} size={size / 3} />
+				)}
 				{label && <span>{label}</span>}
-				{icon && iconPlacement === 'right' && <Icon icon={icon} />}
+				{icon && iconPlacement === 'right' && (
+					<Icon icon={icon} size={size / 3} />
+				)}
 			</StyledButton>
 		</Tooltip>
 	);
@@ -47,10 +51,12 @@ const StyledButton = styled.button<{
 	iconOnly: boolean;
 	colorTokens: ColorTokens;
 }>`
+	display: flex;
+	align-items: center;
 	margin: 0;
 	padding: 0;
 	border: none;
-	gap: 8px;
+	gap: 4px;
 	padding: 4px 12px;
 	border-radius: 4px;
 	border: ${({ iconOnly, colorTokens }) =>

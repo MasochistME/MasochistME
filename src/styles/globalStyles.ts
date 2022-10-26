@@ -51,6 +51,10 @@ const GlobalStyle = createGlobalStyle<{
       color: ${({ colorTokens }) => colorTokens['semantic-color-link-hover']}
     }
   }
+
+  .rotate {
+    animation: rotation 8s infinite linear;
+  }
 `;
 
 export default GlobalStyle;

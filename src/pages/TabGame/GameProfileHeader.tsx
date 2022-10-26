@@ -5,7 +5,7 @@ import { Game, Tier } from '@masochistme/sdk/dist/v1/types';
 import { media } from 'styles/theme/themeOld';
 import { getGameThumbnail } from 'utils';
 import { useTiers } from 'sdk';
-import { Flex, Icon, IconType, Tooltip } from 'components';
+import { Flex, Icon, IconType, Tooltip, Size } from 'components';
 import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
@@ -28,15 +28,15 @@ export const GameProfileHeader = (props: Props): JSX.Element => {
 			/>
 			<StyledGameDetails column>
 				<Flex row align justifyContent="space-between">
-					<h1 style={{ margin: '0' }}>
-						<a
-							href={`https://steamcommunity.com/app/${game?.id}`}
-							target="_blank"
-							rel="noopener noreferrer">
-							<Icon icon="Steam" marginRight="10px" />
+					<a
+						href={`https://steamcommunity.com/app/${game?.id}`}
+						target="_blank"
+						rel="noopener noreferrer">
+						<StyledGameTitle>
+							<Icon icon="Steam" marginRight="10px" size={Size.TINY} />
 							{game?.title ?? 'Loading...'}
-						</a>
-					</h1>
+						</StyledGameTitle>
+					</a>
 					<GameHeaderTier gameTier={gameTier} />
 				</Flex>
 				<div style={{ fontSize: '1.1em' }}>
@@ -48,12 +48,13 @@ export const GameProfileHeader = (props: Props): JSX.Element => {
 };
 
 const GameHeaderTier = ({ gameTier }: { gameTier?: Tier }) => {
+	const gameIcon = (gameTier?.icon ?? 'QuestionCircle') as IconType;
+	const gameTooltip = `This game is worth ${gameTier?.score ?? '?'} pts.`;
 	return (
-		<Tooltip content={`This game is worth ${gameTier?.score ?? '?'} pts.`}>
-			<Icon
-				icon={(gameTier?.icon as IconType) ?? 'QuestionCircle'}
-				fontSize="2em"
-			/>
+		<Tooltip content={gameTooltip}>
+			<span>
+				<Icon icon={gameIcon} size={Size.SMALL} />
+			</span>
 		</Tooltip>
 	);
 };
@@ -65,6 +66,13 @@ const StyledGameHeader = styled(Flex)<{ colorTokens: ColorTokens }>`
 	justify-content: space-between;
 	align-items: flex-start;
 	background-color: ${({ colorTokens }) => colorTokens['core-tertiary-bg']}66;
+`;
+
+const StyledGameTitle = styled.h2`
+	display: flex;
+	margin: 0;
+	align-items: center;
+	font-size: 24px;
 `;
 
 const StyledGameHeaderThumbnail = styled.img<{ colorTokens: ColorTokens }>`

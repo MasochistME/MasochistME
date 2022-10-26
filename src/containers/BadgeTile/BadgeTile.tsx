@@ -4,7 +4,7 @@ import { Badge } from '@masochistme/sdk/dist/v1/types';
 
 import { fonts } from 'styles/theme/themeOld';
 import { BadgeThumbnail } from 'containers';
-import { Flex, Icon } from 'components';
+import { Flex, Icon, Size } from 'components';
 import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
@@ -41,7 +41,7 @@ export const BadgePoints = (props: Props) => {
 	return (
 		<Flex align gap={4} fontSize="18px" fontFamily={fonts.Dosis}>
 			{badge.points}
-			<Icon icon="CirclePlus" />
+			<Icon icon="CirclePlus" size={Size.MICRO} />
 		</Flex>
 	);
 };

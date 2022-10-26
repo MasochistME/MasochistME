@@ -3,7 +3,7 @@ import { Game } from '@masochistme/sdk/dist/v1/types';
 
 import { useLeaderboardsGames } from 'sdk';
 import { Size } from 'components';
-import { Flex, IconInfo, Skeleton, defaultSort } from 'components';
+import { Flex, Skeleton, defaultSort } from 'components';
 
 export const useGameColumnLatestCompletion = () => {
 	const { leaderboardsData, isLoading, isFetched } = useLeaderboardsGames();

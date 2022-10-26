@@ -27,7 +27,7 @@ export const MemberBadges = (props: Props): JSX.Element => {
 				<BadgeThumbnail
 					size={size}
 					badge={badge}
-					disabled={!memberHasBadge}
+					isDisabled={!memberHasBadge}
 					key={`badge-tile-${badge._id}`}
 				/>
 			);

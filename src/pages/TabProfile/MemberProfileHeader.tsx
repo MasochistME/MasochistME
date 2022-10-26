@@ -53,15 +53,15 @@ export const MemberProfileHeader = (props: Props): JSX.Element => {
 			</StyledMemberProfileHeaderAvatar>
 			<StyledMemberProfileDetails column>
 				<StyledMemberProfileTopRow>
-					<StyledMemberProfileUsername>
-						<a
-							href={`https://steamcommunity.com/profiles/${member?.steamId}`}
-							target="_blank"
-							rel="noopener noreferrer">
-							<Icon icon="Steam" marginRight="4px" />
+					<a
+						href={`https://steamcommunity.com/profiles/${member?.steamId}`}
+						target="_blank"
+						rel="noopener noreferrer">
+						<StyledMemberProfileUsername>
+							<Icon icon="Steam" marginRight="10px" />
 							{memberName}
-						</a>
-					</StyledMemberProfileUsername>
+						</StyledMemberProfileUsername>
+					</a>
 					<MemberProfileUpdate member={member} />
 				</StyledMemberProfileTopRow>
 				{leaderData?.patreonTier && (
@@ -71,7 +71,7 @@ export const MemberProfileHeader = (props: Props): JSX.Element => {
 						} supporter`}>
 						<StyledMemberProfilePatron>
 							<Icon icon={patron?.symbol as IconType} />
-							{patron?.description?.toUpperCase() ?? 'Loading...'}
+							<span>{patron?.description?.toUpperCase() ?? 'Loading...'}</span>
 						</StyledMemberProfilePatron>
 					</Tooltip>
 				)}
@@ -105,11 +105,14 @@ const StyledMemberProfileTopRow = styled(Flex)`
 `;
 
 const StyledMemberProfileUsername = styled.h2`
+	display: flex;
+	align-items: center;
 	margin: 0;
 	max-width: 600px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+	font-size: 24px;
 `;
 
 const StyledMemberProfileDetails = styled(Flex)`
@@ -123,6 +126,8 @@ const StyledMemberProfileDescription = styled.div`
 	overflow: hidden;
 `;
 
-const StyledMemberProfilePatron = styled.div`
+const StyledMemberProfilePatron = styled(Flex)`
 	cursor: help;
+	align-items: center;
+	gap: 6px;
 `;
