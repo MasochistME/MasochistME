@@ -4,7 +4,7 @@ import { PatronTier } from '@masochistme/sdk/dist/v1/types';
 
 import { usePatreonTiers } from 'sdk';
 import { colors } from 'styles/theme/themeOld';
-import { Flex, Icon, Tooltip } from 'components';
+import { Flex, Icon, Size } from 'components';
 
 const ICON_SIZE = '1.2em';
 
@@ -24,23 +24,21 @@ export const LeaderboardsMemberIconPatron = (props: Props) => {
 
 	if (patronTier) {
 		// @ts-ignore:next-line
-		const color = `${colors[`tier${patron.tier}`] ?? colors.superDarkGrey}`;
+		const color = colors[`tier${patron.tier}`] ?? colors.superDarkGrey;
+		console.log(color);
 		return (
-			<Tooltip
-				content={`This member is ${patron?.description.toUpperCase()} tier supporter.`}>
-				<PatronIcon icon="Donation" patronTierColor={color} />
-			</Tooltip>
+			<Icon
+				size={Size.TINY}
+				hoverText={`This member is ${patron?.description.toUpperCase()} tier supporter.`}
+				icon="Donation"
+				cursor="help"
+				color={colors.black}
+				shadowColor={color}
+			/>
 		);
 	}
 	return <LeaderboardsMemberIconDummy />;
 };
-
-const PatronIcon = styled(Icon)<{ patronTierColor: string }>`
-	cursor: help;
-	color: ${colors.black};
-	text-shadow: ${({ patronTierColor }) => patronTierColor} 0 0 10px;
-	font-size: ${ICON_SIZE};
-`;
 
 export const LeaderboardsMemberIconPrivate = () => {
 	const style = {
@@ -50,9 +48,11 @@ export const LeaderboardsMemberIconPrivate = () => {
 		fontSize: ICON_SIZE,
 	};
 	return (
-		<Tooltip content="This user has their profile set to private.">
-			<Icon icon="WarningTriangle" {...style} />
-		</Tooltip>
+		<Icon
+			hoverText="This user has their profile set to private."
+			icon="WarningTriangle"
+			{...style}
+		/>
 	);
 };
 
@@ -74,14 +74,11 @@ export const LeaderboardsMemberIconOutdated = ({
 			: dayjs(lastUpdated).fromNow();
 
 	return (
-		<Tooltip
-			content={
-				<Flex column>
-					<span>This member was last updated {lastUpdate}.</span>
-				</Flex>
-			}>
-			<Icon icon="WarningCircle" {...style} />
-		</Tooltip>
+		<Icon
+			hoverText={`This member was last updated ${lastUpdate}.`}
+			icon="WarningCircle"
+			{...style}
+		/>
 	);
 };
 

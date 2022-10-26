@@ -10,6 +10,7 @@ type Props = {
 	spin?: boolean;
 	icon: AssetIconType;
 	size?: Size;
+	shadowColor?: string;
 } & Omit<React.CSSProperties, 'width' | 'height'>;
 
 export const Icon = (props: Props): JSX.Element => {
@@ -19,26 +20,38 @@ export const Icon = (props: Props): JSX.Element => {
 		hoverText,
 		size = Size.MICRO,
 		icon,
+		shadowColor,
 		...style
 	} = props;
 	const SVG = icons[icon];
 
 	return (
 		<Tooltip content={hoverText}>
-			<StyledSVG className={className} style={style} size={size} spin={spin}>
+			<StyledSVG
+				className={className}
+				style={style}
+				size={size}
+				spin={spin}
+				shadowColor={shadowColor}>
 				<SVG />
 			</StyledSVG>
 		</Tooltip>
 	);
 };
 
-const StyledSVG = styled.span<{ size: Size; spin: boolean }>`
+const StyledSVG = styled.span<{
+	size: Size;
+	spin: boolean;
+	shadowColor?: string;
+}>`
 	svg {
 		${({ spin }) => spin && `animation: rotation 2s infinite linear;`}
 		display: block;
 		margin: 0 auto;
 		min-height: ${({ size }) => size}px;
 		max-height: ${({ size }) => size}px;
+		${({ shadowColor }) =>
+			shadowColor && `filter: drop-shadow(0 0 5px ${shadowColor});`}
 		path {
 			fill: currentColor;
 		}
