@@ -25,7 +25,7 @@ export const GameThumbnail = (props: Props) => {
 				{isLoading ? (
 					<Skeleton size={size} />
 				) : (
-					<img src={gameThumbnail} alt="Game" />
+					<img src={gameThumbnail} alt="Game" loading="lazy" />
 				)}
 			</StyledGameThumbnail>
 		</Tooltip>
@@ -38,7 +38,7 @@ export const GameThumbnail = (props: Props) => {
 				{isLoading ? (
 					<Skeleton size={size} />
 				) : (
-					<img src={gameThumbnail} alt="Game" />
+					<img src={gameThumbnail} alt="Game" loading="lazy" />
 				)}
 			</StyledGameThumbnail>
 		</GameTooltip>

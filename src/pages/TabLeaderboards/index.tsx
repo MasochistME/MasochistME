@@ -1,42 +1,37 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import styled from 'styled-components';
-import { Member, Tier, Leaderboards } from '@masochistme/sdk/dist/v1/types';
+import { Tier } from '@masochistme/sdk/dist/v1/types';
 
-import { useTiers, useCuratorMembers, useLeaderboardsMembers } from 'sdk';
-import { useAppContext } from 'context';
-import { useActiveTab } from 'hooks';
+import { useTiers } from 'sdk';
+import { useActiveTab, useRankingList } from 'hooks';
 import { TabDict } from 'shared/config/tabs';
 import { SubPage, Section, SectionProps } from 'containers';
-import { Flex, Spinner } from 'components';
+import { Flex, Skeleton, Spinner } from 'components';
 
-import { LeaderboardsMember } from './LeaderboardsMember';
 import { LeaderboardsFilterBar } from './LeaderboardsFilterBar';
+const LeaderboardsMember = React.lazy(() =>
+	import('./LeaderboardsMember').then(module => ({
+		default: module.LeaderboardsMember,
+	})),
+);
 
 const TabLeaderboards = (): JSX.Element => {
 	useActiveTab(TabDict.LEADERBOARDS);
 
-	const { queryMember } = useAppContext();
-	const { leaderboardsData, isFetched, isLoading, isError } =
-		useLeaderboardsMembers();
-	const { membersData } = useCuratorMembers();
+	const { rankingList = [], isLoading, isFetched } = useRankingList();
 
-	const createRankingList = () => {
-		if (isError) return;
-		return leaderboardsData.map((leader: Leaderboards) => {
-			const memberName =
-				membersData.find((m: Member) => m.steamId === leader.memberId)?.name ??
-				'UNKNOWN';
-			const isUserSearch =
-				memberName.toLowerCase().indexOf(queryMember.toLowerCase()) !== -1;
-			return isUserSearch ? (
-				<LeaderboardsMember
-					steamId={leader.memberId}
-					position={leader.position}
-					key={`leaderboards-leader-${leader.memberId}`}
-				/>
-			) : null;
-		});
-	};
+	const lazyRankingList = rankingList.map(leader => (
+		<Suspense
+			key={`leaderboards-leader-${leader.memberId}`}
+			fallback={
+				<Skeleton width="100%" height="50px" style={{ margin: '2px 0' }} />
+			}>
+			<LeaderboardsMember
+				steamId={leader.memberId}
+				position={leader.position}
+			/>
+		</Suspense>
+	));
 
 	return (
 		<SubPage>
@@ -44,7 +39,7 @@ const TabLeaderboards = (): JSX.Element => {
 				<TabLeaderboardsInfo isMobileOnly />
 				<LeaderboardsFilterBar />
 				{isLoading && <Spinner />}
-				{isFetched && <Flex column>{createRankingList()}</Flex>}
+				{isFetched && <Flex column>{lazyRankingList}</Flex>}
 			</StyledLeaderboards>
 			<TabLeaderboardsInfo isDesktopOnly minWidth="450px" maxWidth="450px" />
 		</SubPage>

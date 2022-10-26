@@ -51,7 +51,7 @@ export const MemberAvatar = (props: Props) => {
 					<BrokenImage size={size} title="Could not load the avatar." />
 				)}
 				{!isLoading && !isError && avatarUrl && (
-					<img src={avatarUrl ?? LOGO_URL} alt="Member avatar" />
+					<img src={avatarUrl ?? LOGO_URL} alt="Member avatar" loading="lazy" />
 				)}
 			</StyledMemberAvatar>
 		</Tooltip>

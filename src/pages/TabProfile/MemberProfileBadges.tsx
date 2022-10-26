@@ -1,10 +1,9 @@
 import React from 'react';
-import { MemberBadge, Badge, Game } from '@masochistme/sdk/dist/v1/types';
+import { MemberBadge, Game } from '@masochistme/sdk/dist/v1/types';
 
 import { useAllGames, useBadges, useMemberBadges } from 'sdk';
 import { BadgeTile } from 'containers';
 import { Flex } from 'components';
-import { orderBy } from 'lodash';
 
 type Props = { memberId: string };
 

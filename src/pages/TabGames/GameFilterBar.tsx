@@ -56,6 +56,7 @@ export const GameFilterBar = (): JSX.Element => {
 					{isTiersFetched &&
 						tiersData.map((tier: Tier) => (
 							<Checkbox
+								key={`checkbox-filter-${tier.id}`}
 								icon={tier.icon}
 								itemType={tier.id}
 								visibleItems={visibleTiers}

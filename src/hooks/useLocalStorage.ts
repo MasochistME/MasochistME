@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import { log } from 'utils';
 
 export const useLocalStorage = <T extends Record<string, any>>(
 	key: string,
@@ -14,8 +15,8 @@ export const useLocalStorage = <T extends Record<string, any>>(
 			const item = window.localStorage.getItem(key);
 
 			return item ? JSON.parse(item) : initialValue;
-		} catch (error) {
-			console.log(error);
+		} catch (error: any) {
+			log.WARN(error);
 			return initialValue;
 		}
 	});
@@ -28,8 +29,8 @@ export const useLocalStorage = <T extends Record<string, any>>(
 				if (typeof window !== 'undefined') {
 					window.localStorage.setItem(key, JSON.stringify(value));
 				}
-			} catch (error) {
-				console.log(error);
+			} catch (error: any) {
+				log.WARN(error);
 			}
 		},
 		[key, initialValue],

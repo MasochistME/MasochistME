@@ -28,11 +28,7 @@ export const BadgeThumbnail = (props: Props) => {
 			disabled={disabled}
 			colorTokens={colorTokens}
 			onClick={onClick}>
-			{isLoading ? (
-				<Skeleton size={size} />
-			) : (
-				<img src={badge?.img ?? LOGO_URL} alt="Badge" />
-			)}
+			<img src={badge?.img ?? LOGO_URL} alt="Badge" loading="lazy" />
 		</StyledBadgeThumbnail>
 	);
 	return title ? (

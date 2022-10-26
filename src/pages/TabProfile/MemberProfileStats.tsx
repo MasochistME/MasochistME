@@ -31,7 +31,7 @@ export const MemberProfileStats = (props: Props) => {
 		isFetched: isLeaderboardsFetched,
 	} = useLeaderboardsMembers();
 
-	const memberBadgesData = useMemberBadgesFilter(memberId);
+	const { memberBadges } = useMemberBadgesFilter(memberId);
 
 	const isLoading =
 		isMemberGamesLoading && isLeaderboardsLoading && isTiersLoading;
@@ -107,7 +107,7 @@ export const MemberProfileStats = (props: Props) => {
 	const badgesUnlocked = (
 		<StatBlock.Subtitle>
 			<i className="fas fa-medal" /> -{' '}
-			<span style={{ fontWeight: 'bold' }}>{memberBadgesData.length}</span>
+			<span style={{ fontWeight: 'bold' }}>{memberBadges.length}</span>
 		</StatBlock.Subtitle>
 	);
 

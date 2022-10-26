@@ -13,8 +13,6 @@ export const SubHeader = (): JSX.Element => {
 	const { SH_URL, colorTokens } = useTheme();
 	const findTab = () => tabs.find((tab: Tab) => tab.id === activeTab);
 
-	console.log(colorTokens);
-
 	return (
 		<StyledSubHeader row>
 			<StyledTitle row align colorTokens={colorTokens} shUrl={SH_URL}>

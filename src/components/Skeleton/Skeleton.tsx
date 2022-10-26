@@ -6,11 +6,12 @@ type Props = {
 	size?: Size;
 	width?: number | string;
 	height?: number | string;
+	style?: React.CSSProperties;
 };
 
 export const Skeleton = (props: Props) => {
 	const { colorTokens } = useTheme();
-	const { width, height, size = Size.MEDIUM } = props;
+	const { width, height, style = {}, size = Size.MEDIUM } = props;
 
 	return (
 		<MUISkeleton
@@ -18,6 +19,7 @@ export const Skeleton = (props: Props) => {
 			variant="rounded"
 			width={width ?? size}
 			height={height ?? size}
+			style={style}
 		/>
 	);
 };

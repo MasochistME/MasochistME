@@ -48,6 +48,7 @@ const TabBadges = (): JSX.Element => {
 							src={badge.img}
 							alt="badge"
 							key={`badge-${String(badge._id)}`}
+							loading="lazy"
 						/>
 					</Tooltip>
 				))}
