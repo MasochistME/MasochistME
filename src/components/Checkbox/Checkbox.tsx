@@ -1,11 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { colors } from 'shared/theme';
+import { useTheme, ColorTokens } from 'styles';
+
 import { Flex } from '../Flex';
 import { Tooltip } from '../Tooltip';
-import { useAppContext } from 'context';
-import { ColorTokens } from 'styles/colors';
 
 type Props<T extends string> = {
 	icon: string;
@@ -16,7 +15,7 @@ type Props<T extends string> = {
 };
 
 export const Checkbox = <T extends string>(props: Props<T>): JSX.Element => {
-	const { colorTokens } = useAppContext();
+	const { colorTokens } = useTheme();
 	const { icon, itemDescription, itemType, visibleItems, setVisibleItems } =
 		props;
 

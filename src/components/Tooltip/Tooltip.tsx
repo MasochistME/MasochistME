@@ -1,17 +1,16 @@
 import Tippy from '@tippyjs/react/headless';
 import styled from 'styled-components';
 
-import { colors, media } from 'shared/theme';
 import { Flex } from '../Flex';
-import { ColorTokens } from 'styles/colors';
-import { useAppContext } from 'context';
+import { media } from 'shared/theme';
+import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
 	content: React.ReactNode;
 	children: React.ReactElement;
 };
 export const Tooltip = (props: Props) => {
-	const { colorTokens } = useAppContext();
+	const { colorTokens } = useTheme();
 	const { content, children } = props;
 	if (!content) return children;
 

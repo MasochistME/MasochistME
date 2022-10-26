@@ -6,13 +6,12 @@ import { useGames } from 'sdk';
 import { getGameThumbnail } from 'utils';
 import { Section, SectionProps } from 'containers';
 import { Flex, Loader, Spinner } from 'components';
-import { ColorTokens } from 'styles/colors';
-import { useAppContext } from 'context';
+import { useTheme, ColorTokens } from 'styles';
 
 export const DashboardTileSale = (
 	props: Omit<SectionProps, 'content' | 'title'>,
 ): JSX.Element => {
-	const { colorTokens } = useAppContext();
+	const { colorTokens } = useTheme();
 	const { gamesData, isLoading, isFetched } = useGames({
 		filter: { isCurated: true, sale: true },
 		sort: { sale: 'desc' },

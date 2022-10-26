@@ -13,8 +13,7 @@ import { Loader, Flex } from 'components';
 import { Footer, Header, Navigation, SubHeader } from 'containers';
 
 import { NotFound } from 'pages';
-import { useAppContext } from 'context';
-import { ColorTokens } from 'styles/colors';
+import { useTheme, ColorTokens } from 'styles';
 
 const TabBadges = React.lazy(() => import('./pages/TabBadges'));
 const TabEvents = React.lazy(() => import('./pages/TabEvents'));
@@ -26,7 +25,7 @@ const TabProfile = React.lazy(() => import('./pages/TabProfile'));
 const TabSupport = React.lazy(() => import('./pages/TabSupport'));
 
 export const App = (): JSX.Element => {
-	const { colorTokens } = useAppContext();
+	const { colorTokens } = useTheme();
 	useLoadTiers();
 
 	return (

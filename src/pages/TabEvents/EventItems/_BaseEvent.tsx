@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 import { Flex } from 'components';
 import { Size } from 'utils';
-import { LOGO } from 'shared/consts';
 import { media, colors } from 'shared/theme';
+import { useTheme } from 'styles';
 
 type Props = {
 	children: React.ReactNode;
@@ -15,6 +15,11 @@ export const BaseEvent = (props: Props) => {
 			{children}
 		</Flex>
 	);
+};
+
+BaseEvent.Logo = () => {
+	const { LOGO_URL } = useTheme();
+	return <BaseEvent.Image alt="masochistme-logo" src={LOGO_URL} />;
 };
 
 BaseEvent.Image = styled.img`
@@ -58,5 +63,3 @@ BaseEvent.Summary = styled(Flex)`
 BaseEvent.Icons = styled(Flex)`
 	gap: 8px;
 `;
-
-BaseEvent.Logo = () => <BaseEvent.Image alt="masochistme-logo" src={LOGO} />;

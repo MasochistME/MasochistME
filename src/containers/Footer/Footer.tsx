@@ -4,11 +4,11 @@ import styled from 'styled-components';
 import { Flex } from 'components';
 import { fonts, media } from 'shared/theme';
 import { ButtonsSocialMedia } from 'containers';
-import { ColorTokens } from 'styles/colors';
-import { useAppContext } from 'context';
+import { useTheme, ColorTokens } from 'styles';
+import { Size } from 'utils';
 
 export const Footer = () => {
-	const { colorTokens } = useAppContext();
+	const { colorTokens } = useTheme();
 
 	return (
 		<StyledFooter align colorTokens={colorTokens}>
@@ -17,7 +17,7 @@ export const Footer = () => {
 					Copyright &copy; Arcyvilk 2016-2022. All rights reserved
 				</a>
 			</StyledFooterText>
-			<ButtonsSocialMedia />
+			<ButtonsSocialMedia size={Size.MEDIUM} />
 		</StyledFooter>
 	);
 };

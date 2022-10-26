@@ -2,8 +2,7 @@ import styled from 'styled-components';
 
 import { colors, fonts, media } from 'shared/theme';
 import { Flex, Tooltip, Skeleton } from 'components';
-import { ColorTokens } from 'styles/colors';
-import { useAppContext } from 'context';
+import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
 	label: React.ReactNode;
@@ -13,7 +12,7 @@ type Props = {
 	isLoading?: boolean;
 };
 export const StatBlock = (props: Props) => {
-	const { colorTokens } = useAppContext();
+	const { colorTokens } = useTheme();
 	const { label, sublabel, icon, title, isLoading } = props;
 
 	return (

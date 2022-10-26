@@ -1,9 +1,10 @@
-import { LOGO } from 'shared/consts';
+// import { LOGO } from 'shared/consts';
 
 export const getGameThumbnail = (gameId?: number) => {
 	if (gameId)
 		return `https://cdn.akamai.steamstatic.com/steam/apps/${gameId}/header.jpg`;
-	else return LOGO;
+	else return '';
+	// else return LOGO; // TODO
 };
 
 export const getGameSteamUrl = (gameId: number): string => {

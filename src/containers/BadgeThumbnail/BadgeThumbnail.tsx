@@ -4,17 +4,15 @@ import { Badge } from '@masochistme/sdk/dist/v1/types';
 
 import { BadgeTooltip, CommonProps } from 'containers';
 import { Size } from 'utils';
-import { LOGO } from 'shared/consts';
-import { ColorTokens } from 'styles/colors';
+import { ColorTokens, useTheme } from 'styles';
 import { Skeleton, Tooltip } from 'components';
-import { useAppContext } from 'context';
 
 type Props = CommonProps & {
 	badge?: Badge;
 };
 
 export const BadgeThumbnail = (props: Props) => {
-	const { colorTokens } = useAppContext();
+	const { colorTokens, LOGO_URL } = useTheme();
 	const {
 		badge,
 		disabled,
@@ -33,7 +31,7 @@ export const BadgeThumbnail = (props: Props) => {
 			{isLoading ? (
 				<Skeleton size={size} />
 			) : (
-				<img src={badge?.img ?? LOGO} alt="Badge" />
+				<img src={badge?.img ?? LOGO_URL} alt="Badge" />
 			)}
 		</StyledBadgeThumbnail>
 	);

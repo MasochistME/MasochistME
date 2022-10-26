@@ -4,11 +4,10 @@ import styled from 'styled-components';
 import { fonts, media } from 'shared/theme';
 import { Flex } from 'components';
 import { ButtonsSocialMedia, Logo } from 'containers';
-import { useAppContext } from 'context';
-import { ColorTokens } from 'styles/colors';
+import { useTheme, ColorTokens } from 'styles';
 
 export const Header = (): JSX.Element => {
-	const { colorTokens } = useAppContext();
+	const { colorTokens } = useTheme();
 	return (
 		<StyledHeader align colorTokens={colorTokens}>
 			<Logo />

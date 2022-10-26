@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { colors, fonts, media } from 'shared/theme';
-import { ColorTokens } from 'styles/colors';
-import { useAppContext } from 'context';
+
+import { fonts, media } from 'shared/theme';
+import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
 	percentage: number;
@@ -11,7 +11,7 @@ type Props = {
 };
 
 export const ProgressBar = (props: Props): JSX.Element => {
-	const { colorTokens } = useAppContext();
+	const { colorTokens } = useTheme();
 	const { percentage, invert, style } = props;
 
 	return (

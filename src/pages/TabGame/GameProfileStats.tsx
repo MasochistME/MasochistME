@@ -10,15 +10,14 @@ import {
 	useCuratorMembers,
 	useLeaderboardsGames,
 } from 'sdk';
-import { ColorTokens } from 'styles/colors';
-import { useAppContext } from 'context';
+import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
 	game: Game;
 };
 
 export const GameProfileStats = (props: Props) => {
-	const { colorTokens } = useAppContext();
+	const { colorTokens } = useTheme();
 	const { game } = props;
 
 	const { leaderboardsData, isLoading } = useLeaderboardsGames();

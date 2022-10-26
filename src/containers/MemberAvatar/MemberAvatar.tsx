@@ -3,12 +3,10 @@ import styled from 'styled-components';
 import { Member, PatronTier } from '@masochistme/sdk/dist/v1/types';
 
 import { Size } from 'utils';
-import { LOGO } from 'shared/consts';
 import { colors } from 'shared/theme';
 import { CommonProps } from 'containers';
 import { BrokenImage, Flex, Skeleton, Tooltip } from 'components';
-import { ColorTokens } from 'styles/colors';
-import { useAppContext } from 'context';
+import { useTheme, ColorTokens } from 'styles';
 
 type Props = CommonProps & {
 	member?: Partial<Member>;
@@ -16,7 +14,7 @@ type Props = CommonProps & {
 };
 
 export const MemberAvatar = (props: Props) => {
-	const { colorTokens } = useAppContext();
+	const { colorTokens, LOGO_URL } = useTheme();
 	const {
 		member = { name: 'Loading...' },
 		patronTier,
@@ -53,7 +51,7 @@ export const MemberAvatar = (props: Props) => {
 					<BrokenImage size={size} title="Could not load the avatar." />
 				)}
 				{!isLoading && !isError && avatarUrl && (
-					<img src={avatarUrl ?? LOGO} alt="Member avatar" />
+					<img src={avatarUrl ?? LOGO_URL} alt="Member avatar" />
 				)}
 			</StyledMemberAvatar>
 		</Tooltip>

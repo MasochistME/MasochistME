@@ -5,10 +5,10 @@ import styled from 'styled-components';
 import { useAppContext } from 'context';
 import { fonts, media } from 'shared/theme';
 import { tabs, Tab } from 'shared/config/tabs';
-import { ColorTokens } from 'styles/colors';
+import { useTheme, ColorTokens } from 'styles';
 
 export const Navigation = (): JSX.Element => {
-	const { colorTokens } = useAppContext();
+	const { colorTokens } = useTheme();
 	return (
 		<StyledNavigation colorTokens={colorTokens}>
 			{tabs.map(
@@ -26,7 +26,8 @@ type Props = {
 const NavigationItem = (props: Props): JSX.Element => {
 	const { tab } = props;
 
-	const { activeTab, colorTokens } = useAppContext();
+	const { activeTab } = useAppContext();
+	const { colorTokens } = useTheme();
 	const history = useHistory();
 
 	const isActive = tab.id === activeTab;

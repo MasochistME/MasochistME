@@ -1,7 +1,4 @@
-export enum Theme {
-	ASH = 'ash',
-	MEAT = 'meat',
-}
+import { Theme } from './theme';
 
 export type ColorTokens = {
 	'core-primary-bg': string; // newDark
@@ -16,10 +13,16 @@ export type ColorTokens = {
 	'semantic-color-active': string; // white
 	'semantic-color-disabled': string; // mediumGrey
 
-	'semantic-color-warning-strong': string;
-	'semantic-color-warning-muted': string;
-	'semantic-color-error-strong': string;
-	'semantic-color-error-muted': string;
+	'semantic-color-warning-strong': string; // yellow
+	'semantic-color-warning-muted': string; // tier4muted
+	'semantic-color-error-strong': string; // mediumred
+	'semantic-color-error-muted': string; // darkred
+
+	'semantic-color-link-normal': string;
+	'semantic-color-link-hover': string;
+	'semantic-color-link-visited': string;
+	'semantic-color-section-update--bg': string; // Color of the "Last updated" section in Subheader.
+	'semantic-color-section-update--text': string; // Color of the "Last updated" section in Subheader.
 };
 
 export const colors: Record<Theme, ColorTokens> = {
@@ -40,8 +43,38 @@ export const colors: Record<Theme, ColorTokens> = {
 		'semantic-color-warning-muted': '#a47b00',
 		'semantic-color-error-strong': '#582e34',
 		'semantic-color-error-muted': '#1e1012',
+
+		'semantic-color-link-normal': '#f0f0f0',
+		'semantic-color-link-hover': 'd0d0d0',
+		'semantic-color-link-visited': 'c0c0c0',
+		'semantic-color-section-update--bg': '#040404',
+		'semantic-color-section-update--text': '#f0f0f0',
 	},
 	[Theme.MEAT]: {
+		'core-primary-text': '#f0f0f0',
+		'core-secondary-text': '#f0f0f0',
+		'core-tertiary-text': '#f0f0f0',
+		'core-primary-bg': '#7e5252',
+		'core-secondary-bg': '#4e1414',
+		'core-tertiary-bg': '#623131',
+
+		'semantic-color-idle': '#2a2121',
+		'semantic-color-interactive': '#320303',
+		'semantic-color-active': '#0a0a0a',
+		'semantic-color-disabled': '#7b7a8d',
+
+		'semantic-color-warning-strong': '#fdc000',
+		'semantic-color-warning-muted': '#a47b00',
+		'semantic-color-error-strong': '#582e34',
+		'semantic-color-error-muted': '#1e1012',
+
+		'semantic-color-link-normal': '#f0f0f0',
+		'semantic-color-link-hover': 'd0d0d0',
+		'semantic-color-link-visited': 'c0c0c0',
+		'semantic-color-section-update--bg': '#c91745',
+		'semantic-color-section-update--text': '#f0f0f0',
+	},
+	[Theme.DUST]: {
 		'core-primary-text': '#040404',
 		'core-secondary-text': '#141620',
 		'core-tertiary-text': '#0a0a0a',
@@ -58,6 +91,12 @@ export const colors: Record<Theme, ColorTokens> = {
 		'semantic-color-warning-muted': '#a47b00',
 		'semantic-color-error-strong': '#582e34',
 		'semantic-color-error-muted': '#1e1012',
+
+		'semantic-color-link-normal': '#f0f0f0',
+		'semantic-color-link-hover': 'd0d0d0',
+		'semantic-color-link-visited': 'c0c0c0',
+		'semantic-color-section-update--bg': '#040404',
+		'semantic-color-section-update--text': '#f0f0f0',
 	},
 };
 

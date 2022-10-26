@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { media, fonts, colors } from 'shared/theme';
-import { useAppContext } from 'context';
-import { ColorTokens } from 'styles/colors';
+import { media, fonts } from 'shared/theme';
+import { useTheme, ColorTokens } from 'styles';
 
 type Props<T extends string> = {
 	query: T;
@@ -12,7 +11,7 @@ type Props<T extends string> = {
 };
 
 export const SearchBar = <T extends string>(props: Props<T>): JSX.Element => {
-	const { colorTokens } = useAppContext();
+	const { colorTokens } = useTheme();
 	const { placeholder, query, setQuery } = props;
 
 	const onSearch = (event: React.ChangeEvent<HTMLInputElement>): void => {

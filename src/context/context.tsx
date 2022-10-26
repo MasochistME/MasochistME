@@ -7,7 +7,7 @@ import { EventsDict } from 'shared/config/events';
 
 import config from 'config.json';
 
-import { colors, ColorTokens, Theme } from 'styles/colors';
+import { colors, ColorTokens, Theme } from 'styles';
 
 export enum GameView {
 	TILE = 'tiles',
@@ -18,9 +18,8 @@ type ContextType = {
 	sdk: SDK;
 	path: string;
 
-	activeTheme: Theme;
-	setActiveTheme: (activeTheme: Theme) => void;
-	colorTokens: ColorTokens;
+	_activeTheme: Theme;
+	_setActiveTheme: (activeTheme: Theme) => void;
 
 	activeTab: TabDict;
 	setActiveTab: (activeTab: TabDict) => void;
@@ -42,7 +41,7 @@ export const AppContextProvider = ({
 }: {
 	children: React.ReactNode;
 }): JSX.Element => {
-	const [activeTheme, setActiveTheme] = useState<Theme>(Theme.ASH);
+	const [_activeTheme, _setActiveTheme] = useState<Theme>(Theme.ASH);
 	const [activeTab, setActiveTab] = useState<TabDict>(TabDict.HOME);
 	const [gameListView, setGameListView] = useState<GameView>(GameView.TILE);
 	const [visibleTiers, setVisibleTiers] = useState<TierId[]>([]);
@@ -51,10 +50,6 @@ export const AppContextProvider = ({
 	);
 	const [queryGame, setQueryGame] = useState<string>('');
 	const [queryMember, setQueryMember] = useState<string>('');
-
-	const colorTokens = useMemo(() => {
-		return colors[activeTheme];
-	}, [activeTheme]);
 
 	const path = config.API;
 	const sdk = new SDK({
@@ -66,9 +61,8 @@ export const AppContextProvider = ({
 		path,
 		sdk,
 
-		activeTheme,
-		setActiveTheme,
-		colorTokens,
+		_activeTheme,
+		_setActiveTheme,
 
 		activeTab,
 		setActiveTab,

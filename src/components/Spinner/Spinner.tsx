@@ -2,11 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Flex } from 'components';
-import { ColorTokens } from 'styles/colors';
-import { useAppContext } from 'context';
+import { useTheme, ColorTokens } from 'styles';
 
 export const Spinner = (): JSX.Element => {
-	const { colorTokens } = useAppContext();
+	const { colorTokens } = useTheme();
 
 	return (
 		<StyledSpinner align justify colorTokens={colorTokens}>

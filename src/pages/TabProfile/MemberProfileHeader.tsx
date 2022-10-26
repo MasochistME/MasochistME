@@ -8,15 +8,14 @@ import { Flex, Tooltip } from 'components';
 import { MemberAvatar } from 'containers';
 
 import { MemberProfileUpdate } from './MemberProfileUpdate';
-import { ColorTokens } from 'styles/colors';
-import { useAppContext } from 'context';
+import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
 	memberId: string;
 };
 
 export const MemberProfileHeader = (props: Props): JSX.Element => {
-	const { colorTokens } = useAppContext();
+	const { colorTokens } = useTheme();
 	const { memberId } = props;
 
 	const { memberData: member, isLoading, isError } = useMemberById(memberId);

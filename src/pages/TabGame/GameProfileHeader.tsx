@@ -6,15 +6,14 @@ import { media } from 'shared/theme';
 import { getGameThumbnail } from 'utils';
 import { useTiers } from 'sdk';
 import { Flex, Tooltip } from 'components';
-import { ColorTokens } from 'styles/colors';
-import { useAppContext } from 'context';
+import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
 	game?: Game;
 };
 
 export const GameProfileHeader = (props: Props): JSX.Element => {
-	const { colorTokens } = useAppContext();
+	const { colorTokens } = useTheme();
 	const { game } = props;
 	const { tiersData } = useTiers();
 

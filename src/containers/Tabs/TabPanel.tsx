@@ -2,8 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Flex } from 'components';
-import { ColorTokens } from 'styles/colors';
-import { useAppContext } from 'context';
+import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
 	activeTab: string;
@@ -12,7 +11,7 @@ type Props = {
 };
 
 export const TabPanel = (props: Props) => {
-	const { colorTokens } = useAppContext();
+	const { colorTokens } = useTheme();
 	const { children, activeTab, tabId, ...other } = props;
 
 	return (

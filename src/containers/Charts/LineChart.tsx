@@ -88,8 +88,7 @@ import {
 	registerables,
 	ScaleOptionsByType,
 } from 'chart.js';
-import { colors } from 'shared/theme';
-import { useAppContext } from 'context';
+import { useTheme } from 'styles';
 
 ChartJS.register(...registerables);
 
@@ -101,7 +100,7 @@ type Props = {
 };
 
 export const LineChart = (props: Props): JSX.Element => {
-	const { colorTokens } = useAppContext();
+	const { colorTokens } = useTheme();
 	const { datasetIdKey, data, options = {} } = props;
 
 	const axisOptions = {

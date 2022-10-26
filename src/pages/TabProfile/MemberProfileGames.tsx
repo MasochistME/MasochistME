@@ -6,14 +6,13 @@ import { useTiers } from 'sdk';
 import { MemberLeaderboards } from 'containers';
 import { Checkbox, Flex, Spinner, Switch } from 'components';
 import { fonts, media } from 'shared/theme';
-import { ColorTokens } from 'styles/colors';
-import { useAppContext } from 'context';
+import { useTheme, ColorTokens } from 'styles';
 
 type Props = { memberId: string };
 
 export const MemberProfileGames = (props: Props) => {
 	const { memberId } = props;
-	const { colorTokens } = useAppContext();
+	const { colorTokens } = useTheme();
 	const [visibleTiers, setVisibleTiers] = useState<TierId[]>([]);
 	const [isHideCompleted, setIsHideCompleted] = useState<boolean>(false);
 	const [isHideUnfinished, setIsHideUnfinished] = useState<boolean>(false);

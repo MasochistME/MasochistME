@@ -1,19 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { LOGO } from 'shared/consts';
-import { Theme } from 'styles/colors';
-import { useAppContext } from 'context';
-
+import { useTheme } from 'styles/theme';
 export const Logo = () => {
-	const { activeTheme, setActiveTheme } = useAppContext();
+	const { changeTheme, LOGO_URL } = useTheme();
 
 	const onLogoClick = () => {
-		if (activeTheme === Theme.ASH) setActiveTheme(Theme.MEAT);
-		if (activeTheme === Theme.MEAT) setActiveTheme(Theme.ASH);
+		changeTheme();
 	};
-
-	return <StyledLogo onClick={onLogoClick} src={LOGO} alt="Logo" />;
+	return <StyledLogo onClick={onLogoClick} src={LOGO_URL} alt="Logo" />;
 };
 
 const StyledLogo = styled.img`

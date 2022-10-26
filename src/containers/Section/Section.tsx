@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
-import { colors, fonts, media } from 'shared/theme';
-import { ColorTokens } from 'styles/colors';
-import { useAppContext } from 'context';
+import { fonts, media } from 'shared/theme';
+import { useTheme, ColorTokens } from 'styles';
 
 export type SectionProps = {
 	isMobileOnly?: boolean;
@@ -16,7 +15,7 @@ export type SectionProps = {
 } & Omit<React.CSSProperties, 'width' | 'height' | 'content' | 'translate'>;
 
 export const Section = (props: SectionProps) => {
-	const { colorTokens } = useAppContext();
+	const { colorTokens } = useTheme();
 	const {
 		isMobileOnly = false,
 		isDesktopOnly = false,

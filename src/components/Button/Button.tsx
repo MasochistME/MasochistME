@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import { colors, fonts } from 'shared/theme';
+
+import { fonts } from 'shared/theme';
 import { Tooltip } from 'components';
 import { Size } from 'utils';
-import { useAppContext } from 'context';
-import { ColorTokens } from 'styles/colors';
+import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
 	label?: string;
@@ -25,7 +25,7 @@ export const Button = (props: Props) => {
 		size = Size.MEDIUM,
 		onClick,
 	} = props;
-	const { colorTokens } = useAppContext();
+	const { colorTokens } = useTheme();
 	return (
 		<Tooltip content={tooltip}>
 			<StyledButton
@@ -64,7 +64,8 @@ const StyledButton = styled.button<{
 		return '18px';
 	}};
 	font-family: ${fonts.Raleway};
-	background-color: ${({ colorTokens }) => colorTokens['core-tertiary-bg']};
+	background-color: ${({ iconOnly, colorTokens }) =>
+		iconOnly ? 'transparent' : colorTokens['core-tertiary-bg']};
 	color: ${({ colorTokens }) => colorTokens['core-secondary-text']};
 	cursor: pointer;
 	&:hover {

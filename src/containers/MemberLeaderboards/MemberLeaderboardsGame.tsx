@@ -8,8 +8,7 @@ import { media } from 'shared/theme';
 import { Flex, DateBlock, ProgressBar } from 'components';
 import { MemberBadges, GameThumbnail } from 'containers';
 import { Size } from 'utils';
-import { ColorTokens } from 'styles/colors';
-import { useAppContext } from 'context';
+import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
 	steamId: string;
@@ -17,7 +16,7 @@ type Props = {
 };
 
 export const MemberLeaderboardsGame = (props: Props): JSX.Element => {
-	const { colorTokens } = useAppContext();
+	const { colorTokens } = useTheme();
 	const { steamId, memberGame } = props;
 	const history = useHistory();
 

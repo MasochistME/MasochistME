@@ -1,5 +1,5 @@
 import MUISkeleton from '@mui/material/Skeleton';
-import { useAppContext } from 'context';
+import { useTheme } from 'styles';
 import { Size } from 'utils';
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
 };
 
 export const Skeleton = (props: Props) => {
-	const { colorTokens } = useAppContext();
+	const { colorTokens } = useTheme();
 	const { width, height, size = Size.MEDIUM } = props;
 
 	return (

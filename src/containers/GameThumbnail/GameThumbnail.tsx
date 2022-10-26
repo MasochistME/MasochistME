@@ -5,15 +5,14 @@ import { Game } from '@masochistme/sdk/dist/v1/types';
 import { Size, getGameThumbnail } from 'utils';
 import { Skeleton, Tooltip } from 'components';
 import { GameTooltip, CommonProps } from 'containers';
-import { ColorTokens } from 'styles/colors';
-import { useAppContext } from 'context';
+import { useTheme, ColorTokens } from 'styles';
 
 type Props = CommonProps & {
 	game?: Game;
 };
 
 export const GameThumbnail = (props: Props) => {
-	const { colorTokens } = useAppContext();
+	const { colorTokens } = useTheme();
 	const { game, size = Size.MEDIUM, title, isLoading, onClick } = props;
 	const gameThumbnail = getGameThumbnail(game?.id);
 

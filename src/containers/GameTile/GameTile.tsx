@@ -6,8 +6,7 @@ import { useTiers, useCuratedGames } from 'sdk';
 import { getTierIcon, getGameThumbnail } from 'utils';
 import { Flex, Skeleton, Tooltip } from 'components';
 import { ModalLeaderboards } from 'containers';
-import { ColorTokens } from 'styles/colors';
-import { useAppContext } from 'context';
+import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
 	gameId?: number;
@@ -16,7 +15,7 @@ type Props = {
 };
 
 export const GameTile = (props: Props): JSX.Element => {
-	const { colorTokens } = useAppContext();
+	const { colorTokens } = useTheme();
 	const { gameId, title, isLoading } = props;
 	const [isModalOpen, setIsModalOpen] = useState(false);
 

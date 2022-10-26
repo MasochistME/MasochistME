@@ -13,8 +13,7 @@ import { media, colors } from 'shared/theme';
 import { Flex, Loader, Spinner } from 'components';
 
 import { MemberLeaderboardsGame } from './MemberLeaderboardsGame';
-import { ColorTokens } from 'styles/colors';
-import { useAppContext } from 'context';
+import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
 	steamId: string;
@@ -26,7 +25,7 @@ type Props = {
 };
 
 export const MemberLeaderboards = (props: Props): JSX.Element => {
-	const { colorTokens } = useAppContext();
+	const { colorTokens } = useTheme();
 	const { steamId, filter } = props;
 
 	const {

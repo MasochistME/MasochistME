@@ -20,10 +20,11 @@ import { useEvents } from 'sdk';
 import { DateBlock, Flex } from 'components';
 
 import EventItem from './EventItems';
-import { ColorTokens } from 'styles/colors';
+import { useTheme, ColorTokens } from 'styles';
 
 export const EventsList = () => {
-	const { colorTokens, visibleEvents } = useAppContext();
+	const { visibleEvents } = useAppContext();
+	const { colorTokens } = useTheme();
 	const { eventsData } = useEvents({
 		sort: { date: 'desc' },
 		// @ts-ignore

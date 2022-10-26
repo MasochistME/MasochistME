@@ -1,15 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { colors, media } from 'shared/theme';
-import { ColorTokens } from 'styles/colors';
-import { useAppContext } from 'context';
+import { media } from 'shared/theme';
+import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
 	children: React.ReactNode;
 };
 export const FilterBar = (props: Props): JSX.Element => {
-	const { colorTokens } = useAppContext();
+	const { colorTokens } = useTheme();
 	const { children } = props;
 
 	return (

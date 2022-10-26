@@ -5,15 +5,14 @@ import { Badge } from '@masochistme/sdk/dist/v1/types';
 import { fonts } from 'shared/theme';
 import { BadgeThumbnail } from 'containers';
 import { Flex } from 'components';
-import { ColorTokens } from 'styles/colors';
-import { useAppContext } from 'context';
+import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
 	badge: Badge;
 };
 
 export const BadgeTile = (props: Props) => {
-	const { colorTokens } = useAppContext();
+	const { colorTokens } = useTheme();
 	const { badge } = props;
 
 	return (
