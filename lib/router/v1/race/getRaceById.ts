@@ -3,20 +3,18 @@ import { Request, Response } from 'express';
 import { Race } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
-import { connectToDb } from 'helpers/db';
+import { mongoInstance } from 'index';
 
 export const getRaceById = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
   try {
-    const { client, db } = await connectToDb();
+    const { db } = mongoInstance.getDb();
     const collection = db.collection<Race>('races');
     const _id = new ObjectId(req.params.raceId);
 
     const race: Race | null = await collection.findOne({ _id });
-
-    client.close();
 
     if (!race) {
       res.status(404).send({ error: 'Could not find the race with this id.' });

@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { RacePlayer } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
-import { connectToDb } from 'helpers/db';
+import { mongoInstance } from 'index';
 
 /**
  * Returns a race participant (if it exists).
@@ -14,7 +14,7 @@ export const getRaceParticipantById = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const { client, db } = await connectToDb();
+    const { db } = mongoInstance.getDb();
     const collection = db.collection<RacePlayer>('racePlayers');
     const { raceId, participantId: discordId } = req.params;
 
@@ -22,8 +22,6 @@ export const getRaceParticipantById = async (
       raceId,
       discordId,
     });
-
-    client.close();
 
     if (!racePlayer) {
       res.status(404).send({

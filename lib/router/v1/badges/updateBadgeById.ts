@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { Badge } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
-import { connectToDb } from 'helpers/db';
+import { mongoInstance } from 'index';
 
 /**
  * Updates a badge with given badge ID. All of the updatable fields are optional.
@@ -16,7 +16,7 @@ export const updateBadgeById = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const { client, db } = await connectToDb();
+    const { db } = mongoInstance.getDb();
     const collection = db.collection<Badge>('badges');
     const _id = new ObjectId(req.params.badgeId);
     const { name, description, points, requirements, image } = req.body; // TODO Add Request<Badge> body validation
@@ -33,8 +33,6 @@ export const updateBadgeById = async (
         },
       },
     );
-
-    client.close();
 
     if (!response.acknowledged) {
       res.status(400).send({ error: 'Could not update the badge.' });

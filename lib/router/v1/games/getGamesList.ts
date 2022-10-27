@@ -3,7 +3,8 @@ import { Game } from '@masochistme/sdk/dist/v1/types';
 import { GamesListParams } from '@masochistme/sdk/dist/v1/api/games';
 
 import { log } from 'helpers/log';
-import { connectToDb, sortCollection } from 'helpers/db';
+import { sortCollection } from 'helpers/db';
+import { mongoInstance } from 'index';
 
 /**
  * Returns a list of all games stored in the database.
@@ -16,7 +17,7 @@ export const getGamesList = async (
     const { filter = {}, sort = {}, limit = 1000 } = req.body;
     const { isCurated, sale, ...restFilter } = filter;
 
-    const { client, db } = await connectToDb();
+    const { db } = mongoInstance.getDb();
     const collection = db.collection<Game>('games');
     const games: Game[] = [];
 
@@ -41,8 +42,6 @@ export const getGamesList = async (
     await cursor.forEach((el: Game) => {
       games.push(el);
     });
-
-    client.close();
 
     res.status(200).send(games);
   } catch (err: any) {

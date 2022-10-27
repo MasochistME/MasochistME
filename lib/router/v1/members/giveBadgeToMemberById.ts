@@ -7,7 +7,7 @@ import {
 } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
-import { connectToDb } from 'helpers/db';
+import { mongoInstance } from 'index';
 
 /**
  * Gives a badge with given badge ID to member with given member ID.
@@ -20,7 +20,7 @@ export const giveBadgeToMemberById = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const { client, db } = await connectToDb();
+    const { db } = mongoInstance.getDb();
     const collectionEvents = db.collection<Omit<Event, '_id'>>('events');
     const collectionMemberBadges =
       db.collection<Omit<MemberBadge, '_id'>>('memberBadges');
@@ -62,8 +62,6 @@ export const giveBadgeToMemberById = async (
     const responseBadgeGrantEvent = await collectionEvents.insertOne(
       badgeGrantEvent,
     );
-
-    client.close();
 
     if (
       !responseBadgeGrant.acknowledged ||

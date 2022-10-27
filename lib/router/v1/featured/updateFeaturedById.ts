@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { Featured } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
-import { connectToDb } from 'helpers/db';
+import { mongoInstance } from 'index';
 
 /**
  * Updates a featured object with given feature object ID. All of the updatable fields are optional.
@@ -16,7 +16,7 @@ export const updateFeaturedById = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const { client, db } = await connectToDb();
+    const { db } = mongoInstance.getDb();
     const collection = db.collection<Featured>('featured');
     const _id = new ObjectId(req.params.featuredId);
     const featuredUpdate: Featured = req.body; // TODO Add Request<Featured> body validation
@@ -25,8 +25,6 @@ export const updateFeaturedById = async (
       { _id },
       { $set: featuredUpdate },
     );
-
-    client.close();
 
     if (!response.acknowledged) {
       res.status(400).send({ error: 'Could not update the featured object.' });

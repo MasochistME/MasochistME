@@ -3,7 +3,8 @@ import { Badge } from '@masochistme/sdk/dist/v1/types';
 import { BadgesListParams } from '@masochistme/sdk/dist/v1/api/badges';
 
 import { log } from 'helpers/log';
-import { connectToDb, sortCollection } from 'helpers/db';
+import { sortCollection } from 'helpers/db';
+import { mongoInstance } from 'index';
 
 /**
  * Returns a list of all badges stored in the database.
@@ -15,7 +16,7 @@ export const getBadgesList = async (
   try {
     const { filter = {}, sort = {}, limit = 1000 } = req.body;
 
-    const { client, db } = await connectToDb();
+    const { db } = mongoInstance.getDb();
     const collection = db.collection<Badge>('badges');
     const badges: Badge[] = [];
     const fixedSort = {
@@ -27,8 +28,6 @@ export const getBadgesList = async (
     await cursor.forEach((el: Badge) => {
       badges.push(el);
     });
-
-    client.close();
 
     res.status(200).send(badges);
   } catch (err: any) {

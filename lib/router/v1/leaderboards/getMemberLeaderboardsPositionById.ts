@@ -13,7 +13,7 @@ import {
 } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
-import { connectToDb } from 'helpers/db';
+import { mongoInstance } from 'index';
 
 /**
  * Returns information about member's position in MasochistME leaderboards.
@@ -23,7 +23,7 @@ export const getMemberLeaderboardsPositionById = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const { client, db } = await connectToDb();
+    const { db } = mongoInstance.getDb();
     const { memberId } = req.params;
 
     const collectionBadges = db.collection<Badge>('badges');
@@ -100,8 +100,6 @@ export const getMemberLeaderboardsPositionById = async (
         return game;
       });
     });
-
-    client.close();
 
     const sum = badgePoints + games.reduce((acc, curr) => acc + curr.points, 0);
 

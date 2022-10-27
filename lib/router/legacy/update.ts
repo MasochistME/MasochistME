@@ -49,7 +49,7 @@ export const initiateMainUpdate = async (
   req?: any,
   res?: any,
 ): Promise<void> => {
-  const { client, db } = await connectToDb();
+  const { db } = await connectToDb();
   const usersFromDB = await getDataFromDB('users');
   let members: any;
 
@@ -196,6 +196,5 @@ export const initiateMainUpdate = async (
   const finalize = () => {
     log.INFO('--> [UPDATE] Update successfully finished!');
     updateStatus(db, 100);
-    client.close();
   };
 };

@@ -8,16 +8,17 @@ import {
   EventMemberLeave,
   EventGameRemove,
   EventGameAdd,
+  EventGameTierChange,
   EventAchievementNumberChange,
   Tier,
 } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
-import { connectToDb } from 'helpers/db';
 import { splitArrayToChunks } from 'helpers';
 
 import { SteamGameDetailsData, MemberSteam } from '../types';
 import { statusCurator, UpdateStatus } from '.';
+import { mongoInstance } from 'index';
 
 type Update = { lastUpdate: Date; id: 'status' };
 
@@ -25,7 +26,7 @@ export const updateCuratorLogic = async (
   forceUpdate?: boolean,
   res?: Response,
 ) => {
-  const { client, db } = await connectToDb();
+  const { db } = mongoInstance.getDb();
   try {
     log.INFO(`--> [UPDATE] main update [INITIALIZED]`);
 
@@ -41,7 +42,6 @@ export const updateCuratorLogic = async (
     if (updateTooEarly && !forceUpdate) {
       log.INFO(`--> [UPDATE] main update [TOO EARLY]`);
       if (res) res.status(400).send('You cannot call update so early.');
-      client.close();
       return;
     }
     if (res) res.status(202).send('Curator update started.');
@@ -61,7 +61,9 @@ export const updateCuratorLogic = async (
         xml: 1,
       },
     });
-    const curatorMemberIds = getCuratorMemberIds(curatorMembersData.data);
+    const currentCuratorMemberIds = getCuratorMemberIds(
+      curatorMembersData.data,
+    );
 
     /**
      * Compare new member list with the data in database.
@@ -76,6 +78,21 @@ export const updateCuratorLogic = async (
     await membersCursor.forEach((el: Member) => {
       oldMembers.push(el);
     });
+
+    // Now we combine current curator members with the old ones from the database
+    // (that includes primarily old curator members)
+    const curatorMemberIds = [
+      ...currentCuratorMemberIds,
+      ...oldMembers
+        .filter(
+          oldMember =>
+            (oldMember.isProtected || oldMember.isMember) &&
+            !currentCuratorMemberIds.find(
+              currentMember => oldMember.steamId === currentMember,
+            ),
+        )
+        .map(oldMember => oldMember.steamId),
+    ];
 
     /**
      * Handle members who left.
@@ -262,6 +279,20 @@ export const updateCuratorLogic = async (
     });
 
     /**
+     * Get a list of old games from the database.
+     */
+    log.INFO(
+      `--> [UPDATE] main update --> comparing games with the database...`,
+    );
+    statusCurator.updateProgress = 90;
+    const collectionGames = db.collection<Omit<Game, '_id'>>('games');
+    const gamesCursor = await collectionGames.find();
+    const oldGames: Game[] = [];
+    await gamesCursor.forEach((el: Game) => {
+      oldGames.push(el);
+    });
+
+    /**
      * Get curator games from the Steam API.
      */
     log.INFO(`--> [UPDATE] main update --> fetching games...`);
@@ -274,8 +305,20 @@ export const updateCuratorLogic = async (
         types: 0,
       },
     });
-    const curatorGames =
+    const currentCuratorGames =
       getCuratorGamesData(curatorGamesData.data.results_html) ?? [];
+
+    // Now we combine current curator games with the old ones from the database
+    // (that includes primarily old curator games)
+    const curatorGames = [
+      ...currentCuratorGames,
+      ...oldGames.filter(
+        oldGame =>
+          !currentCuratorGames.find(
+            currentGame => oldGame.id === currentGame.id,
+          ),
+      ),
+    ];
 
     log.INFO(`--> [UPDATE] main update --> fetching game details...`);
 
@@ -284,20 +327,6 @@ export const updateCuratorLogic = async (
       tiers,
     )) as Omit<Game, '_id'>[];
     const curatorGamesIds = curatorGamesDetails.map(g => g.id);
-
-    /**
-     * Compare new games list with the data in database.
-     */
-    log.INFO(
-      `--> [UPDATE] main update --> comparing games with the database...`,
-    );
-    statusCurator.updateProgress = 90;
-    const collectionGames = db.collection<Omit<Game, '_id'>>('games');
-    const gamesCursor = await collectionGames.find();
-    const oldGames: Game[] = [];
-    await gamesCursor.forEach((el: Game) => {
-      oldGames.push(el);
-    });
 
     /**
      * Handle removed games.
@@ -392,8 +421,6 @@ export const updateCuratorLogic = async (
       );
     }
 
-    // STUFF here
-
     /**
      * Handle updated games.
      */
@@ -423,9 +450,12 @@ export const updateCuratorLogic = async (
           },
           {
             $set: {
-              title: game.title,
-              description: game.description,
-              tier: game.tier,
+              ...(!game.isProtected && {
+                // if game is protected, we want to update only sale and achievements
+                title: game.title,
+                description: game.description,
+                tier: game.tier,
+              }),
               sale: game.sale,
               achievementsTotal: game.achievementsTotal,
             },
@@ -460,17 +490,17 @@ export const updateCuratorLogic = async (
           }
           // Create GAME TIER CHANGE event
           // TODO temporarily disabled
-          // if (gamePrev?.tier !== game.tier) {
-          //   const collectionEventsTierChange =
-          //     db.collection<Omit<EventGameTierChange, '_id'>>('events');
-          //   await collectionEventsTierChange.insertOne({
-          //     type: EventType.GAME_TIER_CHANGE,
-          //     gameId: game.id,
-          //     oldTier: gamePrev?.tier ?? 'UNKNOWN',
-          //     newTier: game?.tier ?? 'UNKNOWN',
-          //     date: new Date(),
-          //   });
-          // }
+          if (gamePrev?.tier !== game.tier) {
+            const collectionEventsTierChange =
+              db.collection<Omit<EventGameTierChange, '_id'>>('events');
+            await collectionEventsTierChange.insertOne({
+              type: EventType.GAME_TIER_CHANGE,
+              gameId: game.id,
+              oldTier: gamePrev?.tier ?? 'UNKNOWN',
+              newTier: game?.tier ?? 'UNKNOWN',
+              date: new Date(),
+            });
+          }
         });
       });
       log.INFO(
@@ -489,7 +519,6 @@ export const updateCuratorLogic = async (
     statusCurator.updateProgress = 100;
     statusCurator.updateStatus = UpdateStatus.IDLE;
     statusCurator.isUpdating = false;
-    log.INFO(`--> [UPDATE] main update [END]`);
   } catch (err: any) {
     /**
      * Set the update status to error.
@@ -497,9 +526,10 @@ export const updateCuratorLogic = async (
     statusCurator.updateProgress = 0;
     statusCurator.updateStatus = UpdateStatus.ERROR;
     statusCurator.isUpdating = false;
-    client.close();
     log.INFO(`--> [UPDATE] main update [ERROR]`);
     log.WARN(err.message ?? err);
+  } finally {
+    log.INFO(`--> [UPDATE] main update [END]`);
   }
 };
 
@@ -514,7 +544,7 @@ const getCuratorMemberIds = (curatorMembersData: string) => {
 };
 
 /**
- * Function fetching IDs of current members of curator.
+ * Function fetching IDs of current games of curator.
  * @param curatorGamesData string
  */
 const getCuratorGamesData = (curatorGamesData: string) => {
@@ -532,7 +562,8 @@ const getCuratorGamesData = (curatorGamesData: string) => {
   );
   const desc = curatorGamesData.match(descRegex) ?? [];
   const gamesData = ids?.map((id, index) => ({
-    id,
+    id: Number(id),
+    isProtected: false,
     description:
       desc[index]?.replace(/\r/g, '').replace(/\n/g, '').replace(/\t/g, '') ??
       '',
@@ -547,7 +578,7 @@ const getCuratorGamesData = (curatorGamesData: string) => {
  * @param curatorGames {id: number, description:string}[]
  */
 const getCuratorGamesDetailsRecurrent = (
-  curatorGames: { id: string; description: string }[],
+  curatorGames: { id: number; description: string; isProtected: boolean }[],
   tiers: Tier[],
 ) =>
   new Promise(resolve => {
@@ -581,7 +612,7 @@ const getCuratorGamesDetailsRecurrent = (
  */
 const getCuratorGameDetails = async (
   game: {
-    id: string;
+    id: number;
     description: string;
   },
   tiers: Tier[],

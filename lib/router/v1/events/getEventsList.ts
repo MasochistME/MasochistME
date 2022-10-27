@@ -3,7 +3,8 @@ import { Event } from '@masochistme/sdk/dist/v1/types';
 import { EventsListParams } from '@masochistme/sdk/dist/v1/api/events';
 
 import { log } from 'helpers/log';
-import { connectToDb, sortCollection } from 'helpers/db';
+import { sortCollection } from 'helpers/db';
+import { mongoInstance } from 'index';
 
 /**
  * Returns a list of all events.
@@ -15,7 +16,7 @@ export const getEventsList = async (
   try {
     const { filter = {}, sort = {}, limit = 1000 } = req.body;
 
-    const { client, db } = await connectToDb();
+    const { db } = mongoInstance.getDb();
     const collection = db.collection<Event>('events');
     const events: Event[] = [];
 
@@ -27,8 +28,6 @@ export const getEventsList = async (
     await cursor.forEach((el: Event) => {
       events.push(el);
     });
-
-    client.close();
 
     res.status(200).send(events);
   } catch (err: any) {

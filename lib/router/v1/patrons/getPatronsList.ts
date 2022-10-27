@@ -3,7 +3,8 @@ import { Patron } from '@masochistme/sdk/dist/v1/types';
 import { PatronListParams } from '@masochistme/sdk/dist/v1/api/patrons';
 
 import { log } from 'helpers/log';
-import { connectToDb, sortCollection } from 'helpers/db';
+import { sortCollection } from 'helpers/db';
+import { mongoInstance } from 'index';
 
 /**
  * Returns a list of all patrons stored in the database.
@@ -15,7 +16,7 @@ export const getPatronsList = async (
   try {
     const { filter = {}, sort = {}, limit = 1000 } = req.body;
 
-    const { client, db } = await connectToDb();
+    const { db } = mongoInstance.getDb();
     const collection = db.collection<Patron>('patrons');
     const patrons: Omit<Patron, 'patronId'>[] = [];
     const fixedSort = {
@@ -28,8 +29,6 @@ export const getPatronsList = async (
       const { patronId: _, ...rest } = el;
       patrons.push(rest);
     });
-
-    client.close();
 
     res.status(200).send(patrons);
   } catch (err: any) {

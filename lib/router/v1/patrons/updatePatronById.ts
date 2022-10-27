@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { Patron } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
-import { connectToDb } from 'helpers/db';
+import { mongoInstance } from 'index';
 
 /**
  * Updates a patron with given patron ID. All of the updatable fields are optional.
@@ -16,7 +16,7 @@ export const updatePatronById = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const { client, db } = await connectToDb();
+    const { db } = mongoInstance.getDb();
     const collection = db.collection<Patron>('patrons');
     const _id = new ObjectId(req.params.badgeId);
     const { tier, username, avatar } = req.body; // TODO Add Request<Patron> body validation
@@ -31,8 +31,6 @@ export const updatePatronById = async (
         },
       },
     );
-
-    client.close();
 
     if (!response.acknowledged) {
       res.status(400).send({ error: 'Could not update the patron.' });

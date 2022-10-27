@@ -2,14 +2,14 @@ import { Request, Response } from 'express';
 import { Race, RacePlayer } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
-import { connectToDb } from 'helpers/db';
+import { mongoInstance } from 'index';
 
 export const updateRaceByParticipantId = async (
   req: Request<any, Partial<Omit<Race, '_id'>>>,
   res: Response,
 ): Promise<void> => {
   try {
-    const { client, db } = await connectToDb();
+    const { db } = mongoInstance.getDb();
     const collection = db.collection<RacePlayer>('racePlayers');
     const { raceId, participantId: discordId } = req.params;
 
@@ -36,8 +36,6 @@ export const updateRaceByParticipantId = async (
         },
       },
     );
-
-    client.close();
 
     if (!response.acknowledged) {
       res.status(400).send({ error: 'Could not update the user.' });

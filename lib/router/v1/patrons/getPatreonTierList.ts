@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { PatreonTier } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
-import { connectToDb } from 'helpers/db';
+import { mongoInstance } from 'index';
 
 /**
  * Returns a list of patreon tiers.
@@ -12,7 +12,7 @@ export const getPatreonTierList = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const { client, db } = await connectToDb();
+    const { db } = mongoInstance.getDb();
     const collection = db.collection<PatreonTier>('patreonTiers');
     const patreonTiers: PatreonTier[] = [];
 
@@ -21,8 +21,6 @@ export const getPatreonTierList = async (
     await cursor.forEach((el: PatreonTier) => {
       patreonTiers.push(el);
     });
-
-    client.close();
 
     res.status(200).send(patreonTiers);
   } catch (err: any) {

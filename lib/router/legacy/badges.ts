@@ -10,7 +10,7 @@ import { TBadgeAddedEvent, TBadgeGivenEvent } from './types/events';
  * Returns all badges
  */
 export const getAllBadges = async (_req: any, res: any) => {
-  const { client, db } = await connectToDb();
+  const { db } = await connectToDb();
   const data = db.collection('badges');
 
   data.find({}).toArray((err, badges) => {
@@ -30,7 +30,6 @@ export const getAllBadges = async (_req: any, res: any) => {
       );
       res.status(200).send(orderedBadges);
     }
-    client.close();
   });
 };
 
@@ -39,7 +38,7 @@ export const getAllBadges = async (_req: any, res: any) => {
  * @param res.params.id
  */
 export const getBadge = async (req: any, res: any) => {
-  const { client, db } = await connectToDb();
+  const { db } = await connectToDb();
   const data = db.collection('badges');
 
   data.findOne({ _id: new ObjectId(req.params.id) }, (err, badge) => {
@@ -51,7 +50,6 @@ export const getBadge = async (req: any, res: any) => {
     } else {
       res.status(200).send(badge);
     }
-    client.close();
   });
 };
 
@@ -65,7 +63,7 @@ export const addBadge = async (req: any, res: any) => {
     return;
   }
 
-  const { client, db } = await connectToDb();
+  const { db } = await connectToDb();
   const data = db.collection('badges');
 
   data.insertOne(req.body, (err, badge) => {
@@ -89,7 +87,6 @@ export const addBadge = async (req: any, res: any) => {
       });
       res.status(201).send(badge);
     }
-    client.close();
   });
 };
 
@@ -104,7 +101,7 @@ export const updateBadge = async (req: any, res: any) => {
     return;
   }
 
-  const { client, db } = await connectToDb();
+  const { db } = await connectToDb();
   const data = db.collection('badges');
 
   data.updateOne(
@@ -121,7 +118,6 @@ export const updateBadge = async (req: any, res: any) => {
         log.INFO(`Badge ${req.params.id} updated.`);
         res.status(200).send(badge);
       }
-      client.close();
     },
   );
 };
@@ -131,7 +127,7 @@ export const updateBadge = async (req: any, res: any) => {
  * @param req.params.id
  */
 export const deleteBadge = async (req: any, res: any) => {
-  const { client, db } = await connectToDb();
+  const { db } = await connectToDb();
   const data = db.collection('badges');
 
   data.deleteOne({ _id: new ObjectId(req.params.id) }, (err, badge) => {
@@ -144,7 +140,6 @@ export const deleteBadge = async (req: any, res: any) => {
       log.INFO(`Badge ${req.params.id} deleted.`);
       res.sendStatus(204);
     }
-    client.close();
   });
 };
 
@@ -154,7 +149,7 @@ export const deleteBadge = async (req: any, res: any) => {
  * @param req.params.steamid
  */
 export const giveBadge = async (req: any, res: any) => {
-  const { client, db } = await connectToDb();
+  const { db } = await connectToDb();
   const newBadge = {
     id: req.params.badgeid,
     unlocked: Date.now(),
@@ -223,7 +218,6 @@ export const giveBadge = async (req: any, res: any) => {
           }
         });
       }
-      client.close();
     },
   );
 
@@ -236,7 +230,7 @@ export const giveBadge = async (req: any, res: any) => {
  * @param req.params.steamid
  */
 export const takeBadge = async (req: any, res: any): Promise<void> => {
-  const { client, db } = await connectToDb();
+  const { db } = await connectToDb();
   // const badgeId = req.params.badgeid;
   let user;
 
@@ -282,7 +276,6 @@ export const takeBadge = async (req: any, res: any): Promise<void> => {
       }
     },
   );
-  client.close();
 
   res.sendStatus(200);
 };

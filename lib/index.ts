@@ -2,7 +2,7 @@ import * as dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
 
-import { connectToDb } from 'helpers/db';
+import { MongoInstance } from 'helpers/db';
 import { log } from 'helpers/log';
 
 // import { routerLegacy } from 'router/legacy';
@@ -32,18 +32,25 @@ app.use((req: any, res: any, next) => {
 // app.use('/api', routerLegacy);
 app.use('/api/v1', routerV1);
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT, async () => {
   log.INFO(`Server listening at port ${process.env.PORT}!`);
 });
 
-// ------------
+/**
+ * Initializing the database
+ */
 
+export const mongoInstance = new MongoInstance();
+
+/**
+ * Curator update function!
+ */
 const update = async () => {
-  const { client, db } = await connectToDb();
+  const { db } = mongoInstance.getDb();
   const collection = db.collection('update');
   //@ts-ignore
   const { lastUpdate = 0 } = await collection.findOne({ id: 'status' });
-  client.close();
+
   if (
     Date.now() - new Date(lastUpdate).getTime() >
     Number(process.env.BIG_DELAY)
