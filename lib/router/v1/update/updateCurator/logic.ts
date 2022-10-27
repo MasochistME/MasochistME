@@ -586,7 +586,7 @@ const getCuratorGamesDetailsRecurrent = (
 
     const getDetailedCuratorGamesData = async (gameIndex: number) => {
       log.INFO(`----> [UPDATE] game details ${curatorGames[gameIndex].id}...`);
-      statusCurator.updateProgress += (75 / 100) * (1 / curatorGames.length);
+      statusCurator.updateProgress += 75 * (100 / curatorGames.length);
       const details = await getCuratorGameDetails(
         curatorGames[gameIndex],
         tiers,
