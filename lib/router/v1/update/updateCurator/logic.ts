@@ -444,6 +444,7 @@ export const updateCuratorLogic = async (
         `--> [UPDATE] main update --> updating ${curatorUpdatedGamesDetails.length} old games [START]`,
       );
       curatorUpdatedGamesDetails.forEach(async game => {
+        if (!game.id) return;
         const responseUpdateOldGame = await collectionGames.updateOne(
           {
             id: game.id,
@@ -470,39 +471,33 @@ export const updateCuratorLogic = async (
         /**
          * Add events for games.
          */
-
-        curatorUpdatedGamesDetails.forEach(async game => {
-          if (!game.id) return;
-          const gamePrev = oldGames.find(g => g.id === game.id);
-          // Create ACHIEVEMENT NUMBER CHANGE event
-          if (gamePrev?.achievementsTotal !== game.achievementsTotal) {
-            const collectionEventsAchievementsChange =
-              db.collection<Omit<EventAchievementNumberChange, '_id'>>(
-                'events',
-              );
-            await collectionEventsAchievementsChange.insertOne({
-              type: EventType.ACHIEVEMENTS_CHANGE,
-              gameId: game.id,
-              oldNumber: gamePrev?.achievementsTotal ?? 0,
-              newNumber: game?.achievementsTotal ?? 0,
-              date: new Date(),
-            });
-          }
-          // Create GAME TIER CHANGE event
-          // TODO temporarily disabled
-          if (gamePrev?.tier !== game.tier) {
-            const collectionEventsTierChange =
-              db.collection<Omit<EventGameTierChange, '_id'>>('events');
-            await collectionEventsTierChange.insertOne({
-              type: EventType.GAME_TIER_CHANGE,
-              gameId: game.id,
-              oldTier: gamePrev?.tier ?? 'UNKNOWN',
-              newTier: game?.tier ?? 'UNKNOWN',
-              date: new Date(),
-            });
-          }
-        });
+        const gamePrev = oldGames.find(g => g.id === game.id);
+        // Create ACHIEVEMENT NUMBER CHANGE event
+        if (gamePrev?.achievementsTotal !== game.achievementsTotal) {
+          const collectionEventsAchievementsChange =
+            db.collection<Omit<EventAchievementNumberChange, '_id'>>('events');
+          await collectionEventsAchievementsChange.insertOne({
+            type: EventType.ACHIEVEMENTS_CHANGE,
+            gameId: game.id,
+            oldNumber: gamePrev?.achievementsTotal ?? 0,
+            newNumber: game?.achievementsTotal ?? 0,
+            date: new Date(),
+          });
+        }
+        // Create GAME TIER CHANGE event
+        if (gamePrev?.tier !== game.tier) {
+          const collectionEventsTierChange =
+            db.collection<Omit<EventGameTierChange, '_id'>>('events');
+          await collectionEventsTierChange.insertOne({
+            type: EventType.GAME_TIER_CHANGE,
+            gameId: game.id,
+            oldTier: gamePrev?.tier ?? 'UNKNOWN',
+            newTier: game?.tier ?? 'UNKNOWN',
+            date: new Date(),
+          });
+        }
       });
+
       log.INFO(
         `--> [UPDATE] main update --> updating ${curatorUpdatedGamesDetails.length} old games [END]`,
       );
@@ -586,7 +581,7 @@ const getCuratorGamesDetailsRecurrent = (
 
     const getDetailedCuratorGamesData = async (gameIndex: number) => {
       log.INFO(`----> [UPDATE] game details ${curatorGames[gameIndex].id}...`);
-      statusCurator.updateProgress += 75 * (1 / curatorGames.length);
+      statusCurator.updateProgress += 60 * (1 / curatorGames.length);
       const details = await getCuratorGameDetails(
         curatorGames[gameIndex],
         tiers,

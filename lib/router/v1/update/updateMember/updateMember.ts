@@ -32,6 +32,17 @@ export const updateMember = async (
   const { db } = mongoInstance.getDb();
   try {
     log.INFO(`--> [UPDATE] user ${memberId} [START]`);
+    const collectionMembers = db.collection<Member>('members');
+    const member = await collectionMembers.findOne({ steamId: memberId });
+
+    if (!member?.isMember && !member?.isProtected) {
+      res.status(202).send({
+        message:
+          'This user cannot be updated as they are not a member of curator.',
+      });
+      log.INFO(`--> [UPDATE] updating user ${memberId} [NOT A MEMBER]`);
+      return;
+    }
 
     /**
      * Check if the member update queue is not too long.
@@ -59,8 +70,6 @@ export const updateMember = async (
      * Check if a member was recently updated.
      * If yes, do not proceed.
      */
-    const collectionMembers = db.collection<Member>('members');
-    const member = await collectionMembers.findOne({ steamId: memberId });
     if (
       member?.lastUpdated &&
       Date.now() - new Date(member.lastUpdated).getTime() < 3600000
