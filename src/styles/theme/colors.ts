@@ -61,12 +61,12 @@ export const colors: Record<Theme, ColorTokens> = {
 		'semantic-color--tier-1': '#32a042',
 	},
 	[Theme.MEAT]: {
+		'core-primary-bg': '#4e1414',
+		'core-secondary-bg': '#7e5252',
+		'core-tertiary-bg': '#623131',
 		'core-primary-text': '#f0f0f0',
 		'core-secondary-text': '#f0f0f0',
 		'core-tertiary-text': '#f0f0f0',
-		'core-primary-bg': '#7e5252',
-		'core-secondary-bg': '#4e1414',
-		'core-tertiary-bg': '#623131',
 
 		'semantic-color-idle': '#2a2121',
 		'semantic-color-interactive': '#320303',

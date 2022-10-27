@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import { PatronTier } from '@masochistme/sdk/dist/v1/types';
 
-import { useCuratorMembers, useLeaderboardsMembers } from 'sdk';
+import { useMemberLeaderboardsSummary } from 'hooks';
 import { colors, media } from 'styles/theme/themeOld';
 import { MemberAvatar } from 'containers';
 import { Flex, Button, Size } from 'components';
@@ -27,32 +26,22 @@ export const LeaderboardsMemberSummary = (props: Props): JSX.Element => {
 	const { steamId, position, onShowDetails } = props;
 	const [isExpanded, setIsExpanded] = useState(false);
 
-	const { leaderboardsData } = useLeaderboardsMembers();
-	const { membersData } = useCuratorMembers();
-
-	const leaderData = leaderboardsData.find(l => l.memberId === steamId);
-	const memberData = membersData.find(m => m.steamId === steamId);
+	const {
+		memberLeaderboardsSummary: member,
+		memberData,
+		leaderData,
+	} = useMemberLeaderboardsSummary(steamId);
 
 	const size = Size.BIG;
-	const isDisabled = memberData?.isPrivate;
-	const isHighestPatronTier = leaderData?.patreonTier === PatronTier.TIER4;
 
-	const member = {
-		...leaderData,
-		name: memberData?.name ?? 'UNKNOWN',
-		avatar: memberData?.avatar ?? 'UNKNOWN',
-		isPrivate: memberData?.isPrivate ?? true,
-		lastUpdated: memberData?.lastUpdated ?? 0,
-	};
-
-	const infoIcon = () => {
+	const infoIcon = useMemo(() => {
 		if (member?.isPrivate) return <LeaderboardsMemberIconPrivate />;
 		if (Date.now() - new Date(member?.lastUpdated).getTime() > 2592000000)
 			return (
 				<LeaderboardsMemberIconOutdated lastUpdated={member?.lastUpdated} />
 			);
 		return <LeaderboardsMemberIconDummy />;
-	};
+	}, [member]);
 
 	const onShowDetailsClick = (
 		event: React.MouseEvent<HTMLButtonElement>,
@@ -68,8 +57,8 @@ export const LeaderboardsMemberSummary = (props: Props): JSX.Element => {
 
 	return (
 		<StyledLeaderboardsMemberSummary
-			isHighestPatronTier={isHighestPatronTier}
-			isDisabled={isDisabled}>
+			isHighestPatronTier={member.isHighestPatronTier}
+			isDisabled={member.isDisabled}>
 			<StyledLeaderboardsMemberDetailsImages>
 				<Flex>
 					<StyledMemberPosition align justify size={size}>
@@ -94,7 +83,7 @@ export const LeaderboardsMemberSummary = (props: Props): JSX.Element => {
 				<StyledLeaderboardsMemberUsername href={`/profile/${steamId}`}>
 					<Flex align justify gap={8}>
 						<h4>{member.name}</h4>
-						{infoIcon()}
+						{infoIcon}
 					</Flex>
 				</StyledLeaderboardsMemberUsername>
 				<LeaderboardsMemberPoints steamId={steamId} />

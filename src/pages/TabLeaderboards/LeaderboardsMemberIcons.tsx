@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import dayjs from 'dayjs';
 import { PatronTier } from '@masochistme/sdk/dist/v1/types';
 
@@ -12,17 +13,18 @@ export const LeaderboardsMemberIconPatron = (props: Props) => {
 	const { patronTier } = props;
 	const { patreonTiersData } = usePatreonTiers();
 
-	const patron = patreonTiersData.find(
-		patreonTier => patreonTier.id === patronTier,
-	) ?? {
-		description: 'Unknown',
-		tier: null,
-	};
+	const patron = useMemo(() => {
+		return (
+			patreonTiersData.find(patreonTier => patreonTier.id === patronTier) ?? {
+				description: 'Unknown',
+				tier: null,
+			}
+		);
+	}, [patreonTiersData, patronTier]);
 
 	if (patronTier) {
 		// @ts-ignore:next-line
 		const color = colors[`tier${patron.tier}`] ?? colors.superDarkGrey;
-		console.log(color);
 		return (
 			<Icon
 				size={20}
