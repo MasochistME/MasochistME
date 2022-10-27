@@ -39,7 +39,8 @@ const SearchBarInput = styled.input<{ colorTokens: ColorTokens }>`
 	font-size: 1.2em;
 	font-family: ${fonts.Raleway};
 	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']}cc;
-	border: 1px solid ${({ colorTokens }) => colorTokens['semantic-color-idle']}cc;
+	border: 1px solid
+		${({ colorTokens }) => colorTokens['semantic-color--idle']}cc;
 	border-radius: 8px;
 	box-sizing: border-box;
 	&:active,

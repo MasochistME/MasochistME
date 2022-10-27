@@ -95,7 +95,7 @@ const StyledFilterGame = styled(Flex)`
 
 const StyledFilterGameText = styled.span<{ colorTokens: ColorTokens }>`
 	font-size: 1.5em;
-	color: ${({ colorTokens }) => colorTokens['semantic-color-interactive']};
+	color: ${({ colorTokens }) => colorTokens['semantic-color--interactive']};
 	@media (max-width: ${media.tablets}) {
 		display: none;
 	}

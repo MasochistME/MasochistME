@@ -3,14 +3,15 @@ import dayjs from 'dayjs';
 import { PatronTier } from '@masochistme/sdk/dist/v1/types';
 
 import { usePatreonTiers } from 'sdk';
-import { colors } from 'styles/theme/themeOld';
 import { Icon, Size } from 'components';
+import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
 	patronTier?: PatronTier | null;
 };
 export const LeaderboardsMemberIconPatron = (props: Props) => {
 	const { patronTier } = props;
+	const { colorTokens } = useTheme();
 	const { patreonTiersData } = usePatreonTiers();
 
 	const patron = useMemo(() => {
@@ -23,15 +24,16 @@ export const LeaderboardsMemberIconPatron = (props: Props) => {
 	}, [patreonTiersData, patronTier]);
 
 	if (patronTier) {
-		// @ts-ignore:next-line
-		const color = colors[`tier${patron.tier}`] ?? colors.superDarkGrey;
+		// @ts-ignore
+		const color = (colorTokens[`semantic-color--tier${patron.tier}`] ??
+			colorTokens['core-secondary-bg']) as ColorTokens;
 		return (
 			<Icon
 				size={20}
 				hoverText={`This member is ${patron?.description.toUpperCase()} tier supporter.`}
 				icon="Donation"
 				cursor="help"
-				color={colors.black}
+				color={colorTokens['common-color--black']}
 				shadowColor={color}
 			/>
 		);
@@ -40,8 +42,9 @@ export const LeaderboardsMemberIconPatron = (props: Props) => {
 };
 
 export const LeaderboardsMemberIconPrivate = () => {
+	const { colorTokens } = useTheme();
 	const style = {
-		color: colors.lightRed,
+		color: colorTokens['semantic-color--error-strong'],
 		cursor: 'help',
 		opacity: '0.8',
 	};

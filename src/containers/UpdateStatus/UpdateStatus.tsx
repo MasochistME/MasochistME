@@ -37,9 +37,9 @@ export const UpdateStatus = (): JSX.Element => {
 
 const StyledUpdateStatus = styled(Flex)<{ colorTokens: ColorTokens }>`
 	color: ${({ colorTokens }) =>
-		colorTokens['semantic-color-section-update--text']};
+		colorTokens['semantic-color--section-update--text']};
 	background-color: ${({ colorTokens }) =>
-		colorTokens['semantic-color-section-update--bg']};
+		colorTokens['semantic-color--section-update--bg']};
 	flex: 1 0 450px;
 `;
 

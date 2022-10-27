@@ -72,7 +72,7 @@ const StyledMemberGame = styled(Flex)<{ colorTokens: ColorTokens }>`
 	border-bottom: 1px solid
 		${({ colorTokens }) => colorTokens['core-primary-bg']};
 	border-top: 1px solid
-		${({ colorTokens }) => colorTokens['semantic-color-interactive']};
+		${({ colorTokens }) => colorTokens['semantic-color--interactive']};
 	&:first-child {
 		border-top: none;
 	}

@@ -39,8 +39,8 @@ ProgressBar.Completion = styled.div.attrs(
 			...props.style,
 		};
 		if (props.invert) {
-			style.backgroundColor = `${props.colorTokens['semantic-color-interactive']}`;
-			style.border = `1px solid ${props.colorTokens['semantic-color-interactive']}`;
+			style.backgroundColor = `${props.colorTokens['semantic-color--interactive']}`;
+			style.border = `1px solid ${props.colorTokens['semantic-color--interactive']}`;
 		}
 		return { style };
 	},
@@ -64,8 +64,8 @@ ProgressBar.Progress = styled.div.attrs(
 		const style: React.CSSProperties = {
 			width: `${props.percentage}%`,
 			backgroundColor: isDone
-				? props.colorTokens['semantic-color-interactive']
-				: `${props.colorTokens['semantic-color-interactive']}aa`,
+				? props.colorTokens['semantic-color--interactive']
+				: `${props.colorTokens['semantic-color--interactive']}aa`,
 		};
 		if (props.invert) {
 			style.backgroundColor = props.colorTokens['core-primary-bg'];

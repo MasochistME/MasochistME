@@ -28,7 +28,7 @@ const StyledFooter = styled(Flex)<{ colorTokens: ColorTokens }>`
 	width: 100%;
 	padding: 0px 24px;
 	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']};
-	color: ${({ colorTokens }) => colorTokens['semantic-color-disabled']};
+	color: ${({ colorTokens }) => colorTokens['semantic-color--disabled']};
 	font-family: ${fonts.Raleway};
 `;
 

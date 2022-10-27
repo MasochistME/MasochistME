@@ -26,7 +26,7 @@ export const StatBlock = (props: Props) => {
 
 	const getTierColor = () => {
 		if (tier === ColorMap.GOLD) return colorTokens['semantic-color--tier-4'];
-		return colorTokens['semantic-color-active']; // Normal, default color
+		return colorTokens['semantic-color--active']; // Normal, default color
 	};
 
 	return (

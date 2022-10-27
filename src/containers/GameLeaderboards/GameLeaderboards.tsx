@@ -6,8 +6,9 @@ import { Member, MemberGame } from '@masochistme/sdk/dist/v1/types';
 import { useCuratorMembers, useGameCompletions } from 'sdk';
 import { DateBlock, Flex, ProgressBar } from 'components';
 import { MemberBadges, MemberAvatar } from 'containers';
-import { colors, media, fonts } from 'styles/theme/themeOld';
+import { media, fonts } from 'styles/theme/themeOld';
 import { Size } from 'components';
+import { ColorTokens, useTheme } from 'styles';
 
 type Completion = Omit<MemberGame, '_id' | 'memberId' | 'playtime'> & {
 	member: Member;
@@ -21,6 +22,7 @@ type Props = {
 
 export const GameLeaderboards = (props: Props) => {
 	const { gameId, isCompact } = props;
+	const { colorTokens } = useTheme();
 	const history = useHistory();
 
 	const { membersData } = useCuratorMembers();
@@ -61,9 +63,10 @@ export const GameLeaderboards = (props: Props) => {
 		return (
 			<StyledGameLeaderboardsMember
 				isCompact={isCompact}
+				colorTokens={colorTokens}
 				key={`leaderboards-member-${memberCompletion.member.steamId}`}>
 				{!isCompact && (
-					<StyledGameLeaderboardsMemberTime>
+					<StyledGameLeaderboardsMemberTime colorTokens={colorTokens}>
 						{assignDateIfFinished(memberCompletion)}
 					</StyledGameLeaderboardsMemberTime>
 				)}
@@ -76,6 +79,7 @@ export const GameLeaderboards = (props: Props) => {
 					<StyledGameLeaderboardsMemberUsername isCompact={isCompact}>
 						{memberCompletion.trophy}
 						<Link
+							colorTokens={colorTokens}
 							onClick={() => onMemberClick(memberCompletion.member.steamId)}>
 							{memberCompletion.member.name}
 						</Link>
@@ -98,24 +102,31 @@ export const GameLeaderboards = (props: Props) => {
 	});
 
 	return (
-		<StyledGameLeaderboards column>{leaderboardsList}</StyledGameLeaderboards>
+		<StyledGameLeaderboards column colorTokens={colorTokens}>
+			{leaderboardsList}
+		</StyledGameLeaderboards>
 	);
 };
 
-const StyledGameLeaderboards = styled(Flex)`
+const StyledGameLeaderboards = styled(Flex)<{ colorTokens: ColorTokens }>`
 	width: 100%;
 	box-sizing: border-box;
-	background-color: ${colors.superDarkGrey}cc;
+	background-color: ${({ colorTokens }) => colorTokens['core-secondary-bg']}cc;
 `;
 
-const StyledGameLeaderboardsMember = styled(Flex)<{ isCompact?: boolean }>`
+const StyledGameLeaderboardsMember = styled(Flex)<{
+	isCompact?: boolean;
+	colorTokens: ColorTokens;
+}>`
 	max-width: 100%;
 	align-items: center;
 	&:not(:first-child) {
-		border-top: 1px solid ${colors.newMediumGrey};
+		border-top: 1px solid
+			${({ colorTokens }) => colorTokens['semantic-color--interactive']};
 	}
 	&:not(:last-child) {
-		border-bottom: 1px solid ${colors.newDark};
+		border-bottom: 1px solid
+			${({ colorTokens }) => colorTokens['core-primary-bg']};
 	}
 `;
 
@@ -142,21 +153,23 @@ const StyledGameLeaderboardsMemberUsername = styled.div<{
 	}
 `;
 
-const StyledGameLeaderboardsMemberTime = styled.div`
+const StyledGameLeaderboardsMemberTime = styled.div<{
+	colorTokens: ColorTokens;
+}>`
 	display: flex;
 	align-items: center;
 	font-size: 0.7em;
 	font-family: ${fonts.Verdana};
-	color: ${colors.superLightGrey};
+	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	width: 128px;
 	@media (max-width: ${media.tablets}) {
 		display: none;
 	}
 `;
 
-const Link = styled.span`
+const Link = styled.span<{ colorTokens: ColorTokens }>`
 	cursor: pointer;
 	&:hover {
-		color: ${colors.white};
+		color: ${({ colorTokens }) => colorTokens['semantic-color--link-hover']};
 	}
 `;

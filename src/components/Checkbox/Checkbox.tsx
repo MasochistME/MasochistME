@@ -73,7 +73,7 @@ const StyledCheckbox = styled(Flex)<{ colorTokens: ColorTokens }>`
 	input {
 		display: none;
 		&:not(:checked) + label {
-			color: ${({ colorTokens }) => colorTokens['semantic-color-interactive']};
+			color: ${({ colorTokens }) => colorTokens['semantic-color--interactive']};
 		}
 	}
 	label {
@@ -85,6 +85,6 @@ const StyledCheckbox = styled(Flex)<{ colorTokens: ColorTokens }>`
 		cursor: pointer;
 	}
 	&:hover {
-		color: ${({ colorTokens }) => colorTokens['semantic-color-link-normal']};
+		color: ${({ colorTokens }) => colorTokens['semantic-color--link-normal']};
 	}
 `;

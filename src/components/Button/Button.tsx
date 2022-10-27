@@ -66,7 +66,7 @@ const StyledButton = styled.button<{
 	border: ${({ iconOnly, isGolden, colorTokens }) => {
 		if (iconOnly) return 0;
 		if (isGolden) return `1px solid ${colorTokens['semantic-color--tier-4']}`;
-		return `1px solid ${colorTokens['semantic-color-interactive']}`;
+		return `1px solid ${colorTokens['semantic-color--interactive']}`;
 	}};
 	font-size: ${({ size }) => {
 		if (size === Size.TINY) return '8px';

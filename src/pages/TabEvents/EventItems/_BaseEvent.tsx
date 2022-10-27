@@ -2,13 +2,14 @@ import styled from 'styled-components';
 
 import { Flex } from 'components';
 import { Size } from 'components';
-import { media, colors } from 'styles/theme/themeOld';
-import { useTheme } from 'styles';
+import { media } from 'styles/theme/themeOld';
+import { ColorTokens, useTheme } from 'styles';
 
 type Props = {
 	children: React.ReactNode;
+	onClick?: () => void;
 };
-export const BaseEvent = (props: Props) => {
+export const BaseEvent = (props: Pick<Props, 'children'>) => {
 	const { children } = props;
 	return (
 		<Flex align justifyContent="space-between" width="100%" gap={6}>
@@ -16,6 +17,26 @@ export const BaseEvent = (props: Props) => {
 		</Flex>
 	);
 };
+
+const BaseEventLink = (props: Props) => {
+	const { children, onClick } = props;
+	const { colorTokens } = useTheme();
+	return (
+		<StyledBaseEventLink colorTokens={colorTokens} {...onClick}>
+			{children}
+		</StyledBaseEventLink>
+	);
+};
+
+const StyledBaseEventLink = styled.span<{ colorTokens: ColorTokens }>`
+	font-weight: bold;
+	cursor: pointer;
+	&:hover {
+		color: ${({ colorTokens }) => colorTokens['common-color--white']};
+	}
+`;
+
+BaseEvent.Link = BaseEventLink;
 
 BaseEvent.Logo = () => {
 	const { LOGO_URL } = useTheme();
@@ -39,14 +60,6 @@ BaseEvent.Description = styled(Flex)`
 		display: flex;
 		align-items: center;
 		justify-content: center;
-	}
-`;
-
-BaseEvent.Link = styled.span`
-	font-weight: bold;
-	cursor: pointer;
-	&:hover {
-		color: ${colors.white};
 	}
 `;
 

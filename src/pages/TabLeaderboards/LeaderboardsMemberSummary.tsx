@@ -6,6 +6,7 @@ import { useMemberLeaderboardsSummary } from 'hooks';
 import { colors, media } from 'styles/theme/themeOld';
 import { MemberAvatar } from 'containers';
 import { Flex, Button, Size } from 'components';
+import { useTheme, ColorTokens } from 'styles';
 
 import { LeaderboardsMemberPoints } from './LeaderboardsMemberPoints';
 import {
@@ -23,6 +24,7 @@ type Props = {
 
 export const LeaderboardsMemberSummary = (props: Props): JSX.Element => {
 	const history = useHistory();
+	const { colorTokens } = useTheme();
 	const { steamId, position, onShowDetails } = props;
 	const [isExpanded, setIsExpanded] = useState(false);
 
@@ -57,6 +59,7 @@ export const LeaderboardsMemberSummary = (props: Props): JSX.Element => {
 
 	return (
 		<StyledLeaderboardsMemberSummary
+			colorTokens={colorTokens}
 			isHighestPatronTier={member.isHighestPatronTier}
 			isDisabled={member.isDisabled}>
 			<StyledLeaderboardsMemberDetailsImages>
@@ -80,7 +83,9 @@ export const LeaderboardsMemberSummary = (props: Props): JSX.Element => {
 					size={Size.MEDIUM}
 					onClick={onShowDetailsClick}
 				/>
-				<StyledLeaderboardsMemberUsername href={`/profile/${steamId}`}>
+				<StyledLeaderboardsMemberUsername
+					href={`/profile/${steamId}`}
+					colorTokens={colorTokens}>
 					<Flex align justify gap={8}>
 						<h4>{member.name}</h4>
 						{infoIcon}
@@ -93,6 +98,7 @@ export const LeaderboardsMemberSummary = (props: Props): JSX.Element => {
 };
 
 type SummaryProps = {
+	colorTokens: ColorTokens;
 	isDisabled?: boolean;
 	isHighestPatronTier?: boolean;
 };
@@ -102,58 +108,44 @@ const StyledLeaderboardsMemberSummary = styled(Flex)<SummaryProps>`
 	width: 1000px;
 	max-width: 100%;
 	gap: 4px;
-	color: ${({ isDisabled, isHighestPatronTier }) => {
-		if (isDisabled) return colors.lightRed;
-		if (isHighestPatronTier) return colors.tier4;
-		return colors.superLightGrey;
+	color: ${({ colorTokens, isDisabled, isHighestPatronTier }) => {
+		if (isDisabled) return colorTokens['semantic-color--error-strong'];
+		if (isHighestPatronTier) return colorTokens['semantic-color--tier-4'];
+		return colorTokens['core-primary-text'];
 	}};
-	background-color: ${({ isDisabled, isHighestPatronTier }) => {
-		if (isDisabled) return `${colors.darkRed}cc`;
-		if (isHighestPatronTier) return `${colors.tier4Darkened}dd`;
-		return `${colors.newDarkBlue}bb`;
+	background-color: ${({ colorTokens, isDisabled, isHighestPatronTier }) => {
+		if (isDisabled) return `${colorTokens['semantic-color--error-muted']}cc`;
+		if (isHighestPatronTier)
+			return `${colorTokens['semantic-color--tier-4--muted']}bb`;
+		return `${colorTokens['semantic-color--idle']}bb`;
 	}};
 	border-bottom: 1px solid
-		${({ isDisabled: _d, isHighestPatronTier: _s }) => {
-			// if (isDisabled) return colors.darkRed;
-			// if (isHighestPatronTier) return colors.tier4Transparent;
-			return `${colors.black}88`;
+		${({ colorTokens }) => {
+			return `${colorTokens['common-color--shadow']}88`;
 		}};
 	border-right: 1px solid
-		${({ isDisabled: _d, isHighestPatronTier: _s }) => {
-			// if (isDisabled) return colors.darkRed;
-			// if (isHighestPatronTier) return colors.tier4Transparent;
-			return `${colors.black}88`;
+		${({ colorTokens }) => {
+			return `${colorTokens['common-color--shadow']}88`;
 		}};
 	border-top: 1px solid
-		${({ isDisabled, isHighestPatronTier }) => {
-			if (isDisabled) return colors.mediumRed;
-			if (isHighestPatronTier) return `${colors.tier4Muted}66`;
-			return `${colors.newMediumGrey}99`;
+		${({ colorTokens, isDisabled, isHighestPatronTier }) => {
+			if (isDisabled) return colorTokens['semantic-color--error'];
+			if (isHighestPatronTier)
+				return `${colorTokens['semantic-color--tier-4--muted']}66`;
+			return `${colorTokens['semantic-color--interactive']}99`;
 		}};
 	border-left: 1px solid
-		${({ isDisabled, isHighestPatronTier }) => {
-			if (isDisabled) return colors.mediumRed;
-			if (isHighestPatronTier) return `${colors.tier4Muted}66`;
-			return `${colors.newMediumGrey}99`;
+		${({ colorTokens, isDisabled, isHighestPatronTier }) => {
+			if (isDisabled) return colorTokens['semantic-color--error'];
+			if (isHighestPatronTier)
+				return `${colorTokens['semantic-color--tier-4--muted']}66`;
+			return `${colorTokens['semantic-color--interactive']}99`;
 		}};
 `;
 
 const StyledLeaderboardsMemberDetailsImages = styled(Flex)`
 	flex-direction: row;
 	gap: 8px;
-`;
-
-const StyledLeaderboardsMemberExpandIcon = styled(Flex)`
-	width: 24px;
-	height: 100%;
-	font-size: 1.5em;
-	justify-content: center;
-	align-items: center;
-	cursor: pointer;
-	&:hover {
-		/* text-shadow: 0 0 10px ${colors.lightGrey}; */
-		font-size: 1.7em;
-	}
 `;
 
 const StyledMemberPosition = styled(Flex)<{ size: Size }>`
@@ -191,7 +183,7 @@ const StyledLeaderboardsMemberDetails = styled(Flex)`
 	}
 `;
 
-const StyledLeaderboardsMemberUsername = styled.a`
+const StyledLeaderboardsMemberUsername = styled.a<{ colorTokens: ColorTokens }>`
 	color: inherit;
 	&:hover {
 		color: white;
@@ -212,7 +204,7 @@ const StyledLeaderboardsMemberUsername = styled.a`
 		min-width: 0;
 		text-transform: uppercase;
 		&:hover {
-			color: ${colors.white};
+			color: ${({ colorTokens }) => colorTokens['semantic-color--link-hover']};
 		}
 	}
 `;

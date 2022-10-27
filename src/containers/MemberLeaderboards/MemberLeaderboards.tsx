@@ -92,7 +92,7 @@ export const StyledMemberGameList = styled(Flex)<SummaryProps>`
 	border-right: 1px solid
 		${({ colorTokens }) => colorTokens['core-secondary-bg']};
 	background-color: ${({ isDisabled, colorTokens }) => {
-		if (isDisabled) return `${colorTokens['semantic-color-error-muted']}aa`;
+		if (isDisabled) return `${colorTokens['semantic-color--error-muted']}aa`;
 		return `${colorTokens['core-secondary-bg']}cc`;
 	}};
 	&:first-child {

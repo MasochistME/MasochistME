@@ -106,7 +106,7 @@ export const LineChart = (props: Props): JSX.Element => {
 	const axisOptions = {
 		...props.axisOptions,
 		grid: {
-			color: colorTokens['semantic-color-interactive'],
+			color: colorTokens['semantic-color--interactive'],
 		},
 	};
 

@@ -1,6 +1,4 @@
 import { createGlobalStyle } from 'styled-components';
-
-import { colors } from 'styles/theme/themeOld';
 import { ColorTokens, AssetTokens } from './theme';
 
 const GlobalStyle = createGlobalStyle<{
@@ -12,7 +10,7 @@ const GlobalStyle = createGlobalStyle<{
   }
 
   html {
-    background-color: ${colors.black};
+    background-color: #000000;
     overflow-x: hidden;
   }
 
@@ -45,10 +43,10 @@ const GlobalStyle = createGlobalStyle<{
   
   a {
     text-decoration: underline dotted;
-    color: ${({ colorTokens }) => colorTokens['semantic-color-link-normal']};
+    color: ${({ colorTokens }) => colorTokens['semantic-color--link-normal']};
     &:hover {
       text-decoration: underline dotted;
-      color: ${({ colorTokens }) => colorTokens['semantic-color-link-hover']}
+      color: ${({ colorTokens }) => colorTokens['semantic-color--link-hover']}
     }
   }
 

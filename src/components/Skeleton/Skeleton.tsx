@@ -15,7 +15,7 @@ export const Skeleton = (props: Props) => {
 
 	return (
 		<MUISkeleton
-			sx={{ bgcolor: colorTokens['semantic-color-idle'] }}
+			sx={{ bgcolor: colorTokens['semantic-color--idle'] }}
 			variant="rounded"
 			width={width ?? size}
 			height={height ?? size}
