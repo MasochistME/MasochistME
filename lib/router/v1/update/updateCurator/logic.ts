@@ -39,7 +39,7 @@ export const updateCuratorLogic = async (
     const updateTooEarly =
       Date.now() - new Date(lastUpdate?.lastUpdate ?? 0).getTime() <=
       statusCurator.updateDelay;
-    if (updateTooEarly && !forceUpdate) {
+    if ((updateTooEarly || statusCurator.isUpdating) && !forceUpdate) {
       log.INFO(`--> [UPDATE] main update [TOO EARLY]`);
       if (res) res.status(400).send('You cannot call update so early.');
       return;
