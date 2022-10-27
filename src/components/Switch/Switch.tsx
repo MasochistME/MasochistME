@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { ColorTokens, useTheme } from 'styles';
 
-type Props = SwitchProps & { colorTokens: ColorTokens };
+type Props = SwitchProps & { colortokens: ColorTokens };
 
 export const Switch = (props: SwitchProps) => {
 	const { colorTokens } = useTheme();
@@ -11,7 +11,7 @@ export const Switch = (props: SwitchProps) => {
 		<StyledSwitch
 			focusVisibleClassName=".Mui-focusVisible"
 			disableRipple
-			colorTokens={colorTokens}
+			colortokens={colorTokens}
 			{...props}
 		/>
 	);
@@ -29,8 +29,8 @@ const StyledSwitch = styled(MUISwitch)<Props>`
 			transform: translateX(18px);
 			color: #fff;
 			& + .MuiSwitch-track {
-				background-color: ${({ colorTokens }) =>
-					colorTokens['semantic-color--switch-track--checked']};
+				background-color: ${({ colortokens }) =>
+					colortokens['semantic-color--switch-track--checked']};
 				opacity: 1;
 				border: 0;
 			}
@@ -43,8 +43,8 @@ const StyledSwitch = styled(MUISwitch)<Props>`
 			border: 6px solid #fff;
 		}
 		&.Mui-disabled .MuiSwitch-thumb {
-			color: ${({ colorTokens }) =>
-				colorTokens['semantic-color--switch-thumb--disabled']};
+			color: ${({ colortokens }) =>
+				colortokens['semantic-color--switch-thumb--disabled']};
 		}
 		&.Mui-disabled + .MuiSwitch-track {
 			opacity: 0.7;
@@ -54,12 +54,12 @@ const StyledSwitch = styled(MUISwitch)<Props>`
 		box-sizing: border-box;
 		width: 22px;
 		height: 22px;
-		color: ${({ colorTokens }) => colorTokens['semantic-color--switch-thumb']};
+		color: ${({ colortokens }) => colortokens['semantic-color--switch-thumb']};
 	}
 	.MuiSwitch-track {
 		border-radius: ${26 / 2}px;
-		background-color: ${({ colorTokens }) =>
-			colorTokens['semantic-color--switch-track']};
+		background-color: ${({ colortokens }) =>
+			colortokens['semantic-color--switch-track']};
 		opacity: 1;
 	}
 `;

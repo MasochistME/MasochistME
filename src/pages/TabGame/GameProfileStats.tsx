@@ -29,6 +29,10 @@ export const GameProfileStats = (props: Props) => {
 		filter: { gameId: game?.id },
 	});
 
+	const membersStartingGame = membersHavingGame.filter(
+		m => m.completionPercentage !== 0,
+	);
+
 	const avgPlaytime =
 		!gameLeaderboards?.avgPlaytime ||
 		Number.isNaN(gameLeaderboards?.avgPlaytime)
@@ -92,7 +96,7 @@ export const GameProfileStats = (props: Props) => {
 				}
 				label={getPercentage(
 					gameLeaderboards?.completions?.base ?? 0,
-					membersHavingGame.length,
+					membersStartingGame.length,
 				)}
 				sublabel="completion rate"
 				icon="Percent"

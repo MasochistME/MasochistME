@@ -14,21 +14,21 @@ type StyledTabProps = {
 
 export const Tab = (props: StyledTabProps) => {
 	const { colorTokens } = useTheme();
-	return <StyledMUITab disableRipple colorTokens={colorTokens} {...props} />;
+	return <StyledMUITab disableRipple colortokens={colorTokens} {...props} />;
 };
 
-const StyledMUITab = styled(MUITab)<{ colorTokens: ColorTokens }>`
+const StyledMUITab = styled(MUITab)<{ colortokens: ColorTokens }>`
 	text-transform: uppercase;
 	font-weight: bold;
 	font-family: ${fonts.Dosis};
 	font-size': 18px;
-	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
-	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']}99;
-	&.Mui-selected {
-		color: ${({ colorTokens }) => colorTokens['common-color--light']};
+	color: ${({ colortokens }) => colortokens['core-primary-text']};
+	background-color: ${({ colortokens }) => colortokens['core-primary-bg']}99;
+	.Mui-selected {
+		color: ${({ colortokens }) => colortokens['common-color--light']};
 	}
-	&.Mui-focusVisible {
-		background-color: ${({ colorTokens }) => colorTokens['common-color--shadow']};
+	.Mui-focusVisible {
+		background-color: ${({ colortokens }) => colortokens['common-color--shadow']};
 	}
 `;
 
@@ -46,7 +46,7 @@ export const Tabs = (props: StyledTabsProps) => {
 	const { colorTokens } = useTheme();
 	return (
 		<StyledMUITabs
-			colorTokens={colorTokens}
+			colortokens={colorTokens}
 			{...props}
 			TabIndicatorProps={{
 				children: <span className="MuiTabs-indicatorSpan" />,
@@ -55,17 +55,17 @@ export const Tabs = (props: StyledTabsProps) => {
 	);
 };
 
-const StyledMUITabs = styled(MUITabs)<{ colorTokens: ColorTokens }>`
-	& .MuiTabs-indicator {
+const StyledMUITabs = styled(MUITabs)<{ colortokens: ColorTokens }>`
+	.MuiTabs-indicator {
 		display: flex;
 		justify-content: center;
 		background-color: transparent;
 		height: 4px;
 	}
-	& .MuiTabs-indicatorSpan {
+	.MuiTabs-indicatorSpan {
 		max-width: 100;
 		width: 100%;
-		background-color: ${({ colorTokens }) =>
-			colorTokens['semantic-color--interactive']};
+		background-color: ${({ colortokens }) =>
+			colortokens['semantic-color--interactive']};
 	}
 `;

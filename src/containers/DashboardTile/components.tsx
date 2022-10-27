@@ -30,7 +30,10 @@ const EventLink = (props: Props) => {
 	const { children, style = {}, onClick } = props;
 	const { colorTokens } = useTheme();
 	return (
-		<StyledEventLink colorTokens={colorTokens} style={style} {...onClick}>
+		<StyledEventLink
+			colorTokens={colorTokens}
+			style={style}
+			{...(onClick && { onClick })}>
 			{children}
 		</StyledEventLink>
 	);
