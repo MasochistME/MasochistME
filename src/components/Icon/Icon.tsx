@@ -9,7 +9,7 @@ type Props = {
 	hoverText?: string;
 	spin?: boolean;
 	icon: AssetIconType;
-	size?: Size;
+	size?: Size | number;
 	shadowColor?: string;
 } & Omit<React.CSSProperties, 'width' | 'height'>;
 

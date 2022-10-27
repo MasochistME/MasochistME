@@ -1,12 +1,9 @@
-import styled from 'styled-components';
 import dayjs from 'dayjs';
 import { PatronTier } from '@masochistme/sdk/dist/v1/types';
 
 import { usePatreonTiers } from 'sdk';
 import { colors } from 'styles/theme/themeOld';
-import { Flex, Icon, Size } from 'components';
-
-const ICON_SIZE = '1.2em';
+import { Icon, Size } from 'components';
 
 type Props = {
 	patronTier?: PatronTier | null;
@@ -28,7 +25,7 @@ export const LeaderboardsMemberIconPatron = (props: Props) => {
 		console.log(color);
 		return (
 			<Icon
-				size={Size.TINY}
+				size={20}
 				hoverText={`This member is ${patron?.description.toUpperCase()} tier supporter.`}
 				icon="Donation"
 				cursor="help"
@@ -45,10 +42,10 @@ export const LeaderboardsMemberIconPrivate = () => {
 		color: colors.lightRed,
 		cursor: 'help',
 		opacity: '0.8',
-		fontSize: ICON_SIZE,
 	};
 	return (
 		<Icon
+			size={Size.MICRO}
 			hoverText="This user has their profile set to private."
 			icon="WarningTriangle"
 			{...style}
@@ -62,10 +59,8 @@ export const LeaderboardsMemberIconOutdated = ({
 	lastUpdated?: number | Date;
 }) => {
 	const style = {
-		color: '#a39969',
 		cursor: 'help',
 		opacity: '0.8',
-		fontSize: ICON_SIZE,
 	};
 
 	const lastUpdate =
@@ -75,6 +70,7 @@ export const LeaderboardsMemberIconOutdated = ({
 
 	return (
 		<Icon
+			size={Size.MICRO}
 			hoverText={`This member was last updated ${lastUpdate}.`}
 			icon="WarningCircle"
 			{...style}
@@ -83,6 +79,6 @@ export const LeaderboardsMemberIconOutdated = ({
 };
 
 export const LeaderboardsMemberIconDummy = () => {
-	const style = { color: 'transparent', fontSize: ICON_SIZE };
-	return <Icon icon="WarningCircle" {...style} />;
+	const style = { color: 'transparent' };
+	return <Icon icon="WarningCircle" size={20} {...style} />;
 };

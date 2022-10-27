@@ -9,7 +9,7 @@ export const Spinner = (): JSX.Element => {
 
 	return (
 		<StyledSpinner align justify colorTokens={colorTokens}>
-			<Icon icon="Spin" size={Size.BIG} spin />
+			<Icon icon="Spin" size={Size.MEDIUM} spin />
 		</StyledSpinner>
 	);
 };

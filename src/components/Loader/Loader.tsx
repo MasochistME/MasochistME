@@ -3,7 +3,7 @@ import { Flex, Spinner } from 'components';
 
 export const Loader = () => {
 	return (
-		<Flex align justify padding={64}>
+		<Flex align justify boxSizing="border-box" padding={64}>
 			<Spinner />
 		</Flex>
 	);

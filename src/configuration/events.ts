@@ -19,7 +19,7 @@ export const EventsDict: EventDict[] = [
 		type: EventType.MEMBER_LEAVE,
 	},
 	{
-		icon: 'Finish',
+		icon: 'SquareCheck',
 		description: 'member completing a curated game',
 		type: EventType.COMPLETE,
 	},

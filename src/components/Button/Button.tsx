@@ -61,7 +61,7 @@ const StyledButton = styled.button<{
 	padding: 0;
 	border: none;
 	gap: 4px;
-	padding: 4px 12px;
+	padding: ${({ iconOnly }) => (iconOnly ? `8px` : '4px 12px')};
 	border-radius: 4px;
 	border: ${({ iconOnly, isGolden, colorTokens }) => {
 		if (iconOnly) return 0;

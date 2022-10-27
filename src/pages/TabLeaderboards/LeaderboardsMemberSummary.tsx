@@ -6,7 +6,7 @@ import { PatronTier } from '@masochistme/sdk/dist/v1/types';
 import { useCuratorMembers, useLeaderboardsMembers } from 'sdk';
 import { colors, media } from 'styles/theme/themeOld';
 import { MemberAvatar } from 'containers';
-import { Flex, Icon, Size } from 'components';
+import { Flex, Button, Size } from 'components';
 
 import { LeaderboardsMemberPoints } from './LeaderboardsMemberPoints';
 import {
@@ -55,7 +55,7 @@ export const LeaderboardsMemberSummary = (props: Props): JSX.Element => {
 	};
 
 	const onShowDetailsClick = (
-		event: React.MouseEvent<HTMLDivElement>,
+		event: React.MouseEvent<HTMLButtonElement>,
 	): void => {
 		setIsExpanded(!isExpanded);
 		onShowDetails();
@@ -69,29 +69,33 @@ export const LeaderboardsMemberSummary = (props: Props): JSX.Element => {
 	return (
 		<StyledLeaderboardsMemberSummary
 			isHighestPatronTier={isHighestPatronTier}
-			isDisabled={isDisabled}
-			onClick={onShowProfile}>
+			isDisabled={isDisabled}>
 			<StyledLeaderboardsMemberDetailsImages>
 				<Flex>
 					<StyledMemberPosition align justify size={size}>
 						{position}.
 					</StyledMemberPosition>
-					<MemberAvatar member={memberData!} size={size} />
+					<MemberAvatar
+						member={memberData!}
+						size={size}
+						onClick={onShowProfile}
+					/>
 				</Flex>
 				<StyledLeaderboardsMemberIcons>
 					<LeaderboardsMemberIconPatron patronTier={leaderData?.patreonTier} />
 				</StyledLeaderboardsMemberIcons>
 			</StyledLeaderboardsMemberDetailsImages>
 			<StyledLeaderboardsMemberDetails align>
-				<StyledLeaderboardsMemberExpandIcon onClick={onShowDetailsClick}>
-					<Icon
-						icon={isExpanded ? 'ChevronDown' : 'ChevronUp'}
-						size={Size.TINY}
-					/>
-				</StyledLeaderboardsMemberExpandIcon>
-				<StyledLeaderboardsMemberUsername style={{ gap: 8 }}>
-					<h4>{member.name}</h4>
-					{infoIcon()}
+				<Button
+					icon={isExpanded ? 'ChevronDown' : 'ChevronUp'}
+					size={Size.MEDIUM}
+					onClick={onShowDetailsClick}
+				/>
+				<StyledLeaderboardsMemberUsername href={`/profile/${steamId}`}>
+					<Flex align justify gap={8}>
+						<h4>{member.name}</h4>
+						{infoIcon()}
+					</Flex>
 				</StyledLeaderboardsMemberUsername>
 				<LeaderboardsMemberPoints steamId={steamId} />
 			</StyledLeaderboardsMemberDetails>
@@ -109,7 +113,6 @@ const StyledLeaderboardsMemberSummary = styled(Flex)<SummaryProps>`
 	width: 1000px;
 	max-width: 100%;
 	gap: 4px;
-	cursor: pointer;
 	color: ${({ isDisabled, isHighestPatronTier }) => {
 		if (isDisabled) return colors.lightRed;
 		if (isHighestPatronTier) return colors.tier4;
@@ -157,6 +160,7 @@ const StyledLeaderboardsMemberExpandIcon = styled(Flex)`
 	font-size: 1.5em;
 	justify-content: center;
 	align-items: center;
+	cursor: pointer;
 	&:hover {
 		/* text-shadow: 0 0 10px ${colors.lightGrey}; */
 		font-size: 1.7em;
@@ -198,9 +202,11 @@ const StyledLeaderboardsMemberDetails = styled(Flex)`
 	}
 `;
 
-const StyledLeaderboardsMemberUsername = styled(Flex)`
-	align-items: center;
-	justify-content: center;
+const StyledLeaderboardsMemberUsername = styled.a`
+	color: inherit;
+	&:hover {
+		color: white;
+	}
 	max-width: 500px;
 	text-overflow: ellipsis;
 	white-space: nowrap;
