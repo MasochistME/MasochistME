@@ -25,7 +25,7 @@ export const LeaderboardsMemberIconPatron = (props: Props) => {
 
 	if (patronTier) {
 		// @ts-ignore
-		const color = (colorTokens[`semantic-color--tier${patron.tier}`] ??
+		const color = (colorTokens[`semantic-color--tier-${patron.tier}`] ??
 			colorTokens['core-secondary-bg']) as ColorTokens;
 		return (
 			<Icon
