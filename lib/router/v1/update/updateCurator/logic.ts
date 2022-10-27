@@ -284,7 +284,6 @@ export const updateCuratorLogic = async (
     log.INFO(
       `--> [UPDATE] main update --> comparing games with the database...`,
     );
-    statusCurator.updateProgress = 90;
     const collectionGames = db.collection<Omit<Game, '_id'>>('games');
     const gamesCursor = await collectionGames.find();
     const oldGames: Game[] = [];
@@ -331,6 +330,7 @@ export const updateCuratorLogic = async (
     /**
      * Handle removed games.
      */
+    statusCurator.updateProgress = 90;
     const gamesThatGotRemoved = oldGames
       ?.filter(
         oldGame =>
@@ -586,8 +586,7 @@ const getCuratorGamesDetailsRecurrent = (
 
     const getDetailedCuratorGamesData = async (gameIndex: number) => {
       log.INFO(`----> [UPDATE] game details ${curatorGames[gameIndex].id}...`);
-      statusCurator.updateProgress +=
-        (75 * (gameIndex / curatorGames.length)) / 100;
+      statusCurator.updateProgress += (75 / 100) * (1 / curatorGames.length);
       const details = await getCuratorGameDetails(
         curatorGames[gameIndex],
         tiers,
