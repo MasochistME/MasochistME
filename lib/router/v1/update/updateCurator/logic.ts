@@ -9,7 +9,6 @@ import {
   EventGameRemove,
   EventGameAdd,
   EventAchievementNumberChange,
-  EventGameTierChange,
   Tier,
 } from '@masochistme/sdk/dist/v1/types';
 
@@ -42,6 +41,7 @@ export const updateCuratorLogic = async (
     if (updateTooEarly && !forceUpdate) {
       log.INFO(`--> [UPDATE] main update [TOO EARLY]`);
       if (res) res.status(400).send('You cannot call update so early.');
+      client.close();
       return;
     }
     if (res) res.status(202).send('Curator update started.');
@@ -497,6 +497,7 @@ export const updateCuratorLogic = async (
     statusCurator.updateProgress = 0;
     statusCurator.updateStatus = UpdateStatus.ERROR;
     statusCurator.isUpdating = false;
+    client.close();
     log.INFO(`--> [UPDATE] main update [ERROR]`);
     log.WARN(err.message ?? err);
   }
