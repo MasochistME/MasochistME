@@ -21,14 +21,15 @@ const StyledMUITab = styled(MUITab)<{ colortokens: ColorTokens }>`
 	text-transform: uppercase;
 	font-weight: bold;
 	font-family: ${fonts.Dosis};
-	font-size': 18px;
+	font-size: 18px;
 	color: ${({ colortokens }) => colortokens['core-primary-text']};
 	background-color: ${({ colortokens }) => colortokens['core-primary-bg']}99;
-	.Mui-selected {
+	&.Mui-selected {
 		color: ${({ colortokens }) => colortokens['common-color--light']};
 	}
-	.Mui-focusVisible {
-		background-color: ${({ colortokens }) => colortokens['common-color--shadow']};
+	&.Mui-focusVisible {
+		background-color: ${({ colortokens }) =>
+			colortokens['common-color--shadow']};
 	}
 `;
 
