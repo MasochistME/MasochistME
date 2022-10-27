@@ -3,10 +3,9 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { useMemberLeaderboardsSummary } from 'hooks';
-import { colors, media } from 'styles/theme/themeOld';
+import { media, useTheme, ColorTokens } from 'styles';
 import { MemberAvatar } from 'containers';
 import { Flex, Button, Size } from 'components';
-import { useTheme, ColorTokens } from 'styles';
 
 import { LeaderboardsMemberPoints } from './LeaderboardsMemberPoints';
 import {
@@ -22,7 +21,7 @@ type Props = {
 	onShowDetails: () => void;
 };
 
-export const LeaderboardsMemberSummary = (props: Props): JSX.Element => {
+export const LeaderboardsMemberSummary = (props: Props): JSX.Element | null => {
 	const history = useHistory();
 	const { colorTokens } = useTheme();
 	const { steamId, position, onShowDetails } = props;
@@ -57,6 +56,7 @@ export const LeaderboardsMemberSummary = (props: Props): JSX.Element => {
 		if (steamId) history.push(`/profile/${steamId}`);
 	};
 
+	if (!memberData) return null;
 	return (
 		<StyledLeaderboardsMemberSummary
 			colorTokens={colorTokens}
@@ -68,7 +68,7 @@ export const LeaderboardsMemberSummary = (props: Props): JSX.Element => {
 						{position}.
 					</StyledMemberPosition>
 					<MemberAvatar
-						member={memberData!}
+						member={memberData}
 						size={size}
 						onClick={onShowProfile}
 					/>

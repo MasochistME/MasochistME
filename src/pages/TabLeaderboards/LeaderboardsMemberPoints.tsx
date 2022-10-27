@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import styled from 'styled-components';
 
 import { useMemberLeaderboardsPoints } from 'hooks';
-import { media } from 'styles/theme/themeOld';
+import { media } from 'styles';
 import { Size } from 'components';
 import { Flex, Icon, IconType, Spinner, Tooltip } from 'components';
 

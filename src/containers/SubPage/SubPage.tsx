@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { media } from 'styles/theme/themeOld';
+import { media } from 'styles';
 import { Flex } from 'components';
 
 export const SubPage = styled(Flex)`

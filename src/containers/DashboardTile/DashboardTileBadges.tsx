@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { EventBadgeCreate, EventType } from '@masochistme/sdk/dist/v1/types';
 
-import { media } from 'styles/theme/themeOld';
+import { media } from 'styles';
 import { useBadges, useEvents } from 'sdk';
 import { BadgeThumbnail, Section, SectionProps } from 'containers';
 import { Flex } from 'components';

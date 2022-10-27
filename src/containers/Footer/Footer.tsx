@@ -2,9 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Flex } from 'components';
-import { fonts, media } from 'styles/theme/themeOld';
+import { fonts, media, useTheme, ColorTokens } from 'styles';
 import { ButtonsSocialMedia } from 'containers';
-import { useTheme, ColorTokens } from 'styles';
 import { Size } from 'components';
 
 export const Footer = () => {

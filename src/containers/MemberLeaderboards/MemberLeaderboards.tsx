@@ -4,8 +4,7 @@ import styled from 'styled-components';
 import { MemberGame, TierId } from '@masochistme/sdk/dist/v1/types';
 
 import { useCuratedGames, useMemberGames, useMemberById } from 'sdk';
-import { media } from 'styles/theme/themeOld';
-import { useTheme, ColorTokens } from 'styles';
+import { media, useTheme, ColorTokens } from 'styles';
 import { Flex, Loader, Skeleton } from 'components';
 
 const MemberLeaderboardsGame = React.lazy(() =>

@@ -1,7 +1,7 @@
 import { Tab as MUITab, Tabs as MUITabs } from '@mui/material';
-import { ColorTokens, useTheme } from 'styles';
-import { fonts } from 'styles/theme/themeOld';
 import styled from 'styled-components';
+
+import { fonts, ColorTokens, useTheme } from 'styles';
 
 /**
  * A single tab.

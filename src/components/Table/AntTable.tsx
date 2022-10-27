@@ -1,9 +1,14 @@
 import { Table as AntdTable } from 'antd';
 import styled from 'styled-components';
 
-import { colors, fonts } from 'styles/theme/themeOld';
+import { fonts, ColorTokens } from 'styles';
 
-export const Table: any = styled(AntdTable)`
+interface Props extends React.ComponentProps<typeof AntdTable> {
+	clickable?: boolean;
+	colorTokens: ColorTokens;
+}
+
+export const Table: any = styled(AntdTable)<Props>`
 	width: 100%;
 	table {
 		width: 100%;
@@ -11,32 +16,36 @@ export const Table: any = styled(AntdTable)`
 		border-color: #000;
 	}
 	.ant-table-thead {
-		background: ${colors.superDarkGrey};
+		background: ${({ colorTokens }) => colorTokens['core-secondary-bg']};
 		height: 50px;
 		tr .ant-table-cell {
 			border-top: none;
 		}
 	}
 	.ant-table-row {
-		background-color: ${colors.newDark}99;
-		border-bottom: 5px solid ${colors.black};
-		cursor: ${({ clickable }: { clickable?: boolean }) =>
-			clickable ? 'pointer' : 'default'};
+		background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']}99;
+		border-bottom: 5px solid
+			${({ colorTokens }) => colorTokens['common-color--shadow']};
+		cursor: ${({ clickable }) => (clickable ? 'pointer' : 'default')};
 		&:last-child {
 			.ant-table-cell {
 				border-bottom: none;
 			}
 		}
 		&:hover {
-			background-color: ${({ clickable }: { clickable?: boolean }) =>
-				clickable ? `${colors.newMediumGrey}99` : `${colors.newMediumGrey}77`};
+			background-color: ${({ clickable, colorTokens }) =>
+				clickable
+					? `${colorTokens['semantic-color--interactive']}99`
+					: `${colorTokens['semantic-color--interactive']}}77`};
 		}
 	}
 	.ant-table-cell {
 		margin: 0;
 		text-align: center;
-		border-top: 1px solid ${colors.newMediumGrey};
-		border-bottom: 1px solid ${colors.newDark};
+		border-top: 1px solid
+			${({ colorTokens }) => colorTokens['common-color--light']};
+		border-bottom: 1px solid
+			${({ colorTokens }) => colorTokens['common-color--shadow']};
 		&:first-child {
 			padding: 0;
 		}
@@ -58,14 +67,14 @@ export const Table: any = styled(AntdTable)`
 			justify-content: center;
 			align-items: center;
 			margin-left: 4px;
-			color: ${colors.darkBlue};
+			color: ${({ colorTokens }) => colorTokens['core-extra-bg']};
 			svg {
 				width: 10px;
 				height: 10px;
 			}
 		}
 		.active {
-			color: ${colors.superLightGrey};
+			color: ${({ colorTokens }) => colorTokens['core-primary-text']}};
 		}
 	}
 
@@ -85,27 +94,24 @@ export const Table: any = styled(AntdTable)`
 			margin: 0 4px;
 			border-radius: 4px;
 			cursor: pointer;
-			color: ${colors.superLightGrey};
+			color: ${({ colorTokens }) => colorTokens['core-primary-text']}};
 			font-family: ${fonts.Dosis};
 			button {
 				width: 100%;
 				height: 100%;
 				border: none;
 				border-radius: 4px;
-				background: ${colors.superLightGrey}99;
+				background: ${({ colorTokens }) => colorTokens['core-primary-text']}99;
 				cursor: pointer;
 			}
-			a {
-				text-decoration: none;
-			}
 			&:hover {
-				background: ${colors.superDarkGrey}99;
+				background: ${({ colorTokens }) => colorTokens['core-secondary-bg']}99;
 			}
 		}
 	}
 
 	.ant-pagination-item-active {
-		background-color: ${colors.superDarkGrey}66;
+		background-color: ${({ colorTokens }) => colorTokens['core-secondary-bg']};66;
 	}
 
 	.ant-pagination-item-container {
@@ -119,11 +125,11 @@ export const Table: any = styled(AntdTable)`
 	}
 `;
 
-export const TableLink = styled.span`
+export const TableLink = styled.span<{ colorTokens: ColorTokens }>`
 	font-weight: bold;
 	cursor: pointer;
 	&:hover {
-		color: ${colors.white};
+		color: ${({ colorTokens }) => colorTokens['semantic-color--link-hover']};
 	}
 `;
 

@@ -4,10 +4,9 @@ import styled from 'styled-components';
 import { Game, MemberGame, Tier } from '@masochistme/sdk/dist/v1/types';
 
 import { useTiers, useCuratedGames } from 'sdk';
-import { media } from 'styles/theme/themeOld';
+import { media, useTheme, ColorTokens } from 'styles';
 import { Flex, Icon, IconType, DateBlock, ProgressBar, Size } from 'components';
 import { MemberBadges, GameThumbnail } from 'containers';
-import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
 	steamId: string;

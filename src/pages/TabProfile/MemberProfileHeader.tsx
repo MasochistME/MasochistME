@@ -4,7 +4,7 @@ import { PatreonTier } from '@masochistme/sdk/dist/v1/types';
 
 import { useMemberById, useMemberLeaderboards } from 'sdk';
 import { Size } from 'components';
-import { media } from 'styles/theme/themeOld';
+import { media } from 'styles';
 import { Flex, Icon, IconType, Tooltip } from 'components';
 import { MemberAvatar } from 'containers';
 

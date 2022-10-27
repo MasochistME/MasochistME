@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 
-import { fonts } from 'styles/theme/themeOld';
+import { fonts, useTheme, ColorTokens } from 'styles';
 import { Icon, IconType, Tooltip } from 'components';
 import { Size } from 'components';
-import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
 	label?: string;

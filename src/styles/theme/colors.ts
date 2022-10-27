@@ -37,6 +37,9 @@ export interface ColorTokens extends ColorTokensCommon {
 	'semantic-color--error-strong': string; // mediumred
 	'semantic-color--error-muted': string; // darkred
 
+	'semantic-color--progress--track': string;
+	'semantic-color--progress--thumb': string;
+
 	'semantic-color--link-normal': string;
 	'semantic-color--link-hover': string;
 	'semantic-color--link-visited': string;
@@ -90,6 +93,9 @@ export const colors: Record<Theme, ColorTokens> = {
 		'semantic-color--error-strong': '#d38893',
 		'semantic-color--error-muted': '#1e1012',
 
+		'semantic-color--progress--track': '#040404',
+		'semantic-color--progress--thumb': '#545281',
+
 		'semantic-color--link-normal': '#f0f0f0',
 		'semantic-color--link-hover': 'd0d0d0',
 		'semantic-color--link-visited': 'c0c0c0',
@@ -109,12 +115,12 @@ export const colors: Record<Theme, ColorTokens> = {
 		'core-secondary-bg': '#7e5252',
 		'core-tertiary-bg': '#623131',
 		'core-extra-bg': '#293251',
-		'core-primary-text': '#f0f0f0',
-		'core-secondary-text': '#f0f0f0',
-		'core-tertiary-text': '#f0f0f0',
+		'core-primary-text': '#fedfd6',
+		'core-secondary-text': '#f6a593',
+		'core-tertiary-text': '#fffef4',
 
-		'semantic-color--idle': '#2a2121',
-		'semantic-color--interactive': '#320303',
+		'semantic-color--idle': '#2e0a0a',
+		'semantic-color--interactive': '#890000',
 		'semantic-color--active': '#0a0a0a',
 		'semantic-color--disabled': '#7b7a8d',
 
@@ -124,6 +130,9 @@ export const colors: Record<Theme, ColorTokens> = {
 		'semantic-color--error': '#582e34',
 		'semantic-color--error-strong': '#d38893',
 		'semantic-color--error-muted': '#1e1012',
+
+		'semantic-color--progress--track': '#2e0a0a',
+		'semantic-color--progress--thumb': '#890000',
 
 		'semantic-color--link-normal': '#f0f0f0',
 		'semantic-color--link-hover': 'd0d0d0',
@@ -159,6 +168,9 @@ export const colors: Record<Theme, ColorTokens> = {
 		'semantic-color--error': '#582e34',
 		'semantic-color--error-strong': '#d38893',
 		'semantic-color--error-muted': '#1e1012',
+
+		'semantic-color--progress--track': '#2e0a0a',
+		'semantic-color--progress--thumb': '#890000',
 
 		'semantic-color--link-normal': '#f0f0f0',
 		'semantic-color--link-hover': 'd0d0d0',

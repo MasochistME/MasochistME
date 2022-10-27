@@ -1,12 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { fonts, media } from 'styles/theme/themeOld';
+import { fonts, media, useTheme, ColorTokens } from 'styles';
 import { Tab, tabs } from 'configuration/tabs';
 import { useAppContext } from 'context';
 import { Flex, Icon, Size } from 'components';
 import { UpdateStatus } from 'containers';
-import { useTheme, ColorTokens } from 'styles';
 
 export const SubHeader = (): JSX.Element => {
 	const { activeTab } = useAppContext();

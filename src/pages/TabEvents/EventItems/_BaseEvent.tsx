@@ -2,8 +2,7 @@ import styled from 'styled-components';
 
 import { Flex } from 'components';
 import { Size } from 'components';
-import { media } from 'styles/theme/themeOld';
-import { ColorTokens, useTheme } from 'styles';
+import { media, ColorTokens, useTheme } from 'styles';
 
 type Props = {
 	children: React.ReactNode;

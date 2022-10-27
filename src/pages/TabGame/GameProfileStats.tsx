@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Game } from '@masochistme/sdk/dist/v1/types';
 
-import { media } from 'styles/theme/themeOld';
+import { media, useTheme, ColorTokens } from 'styles';
 import { getPercentage } from 'utils';
 import { Flex } from 'components';
 import { StatBlock } from 'containers';
@@ -10,7 +10,6 @@ import {
 	useCuratorMembers,
 	useLeaderboardsGames,
 } from 'sdk';
-import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
 	game: Game;

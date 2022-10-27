@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
-import { fonts, media } from 'styles/theme/themeOld';
+import { fonts, media, useTheme, ColorTokens } from 'styles';
 import { Flex, Icon, IconType, Tooltip, Skeleton, Size } from 'components';
-import { useTheme, ColorTokens } from 'styles';
 import { ColorMap } from 'utils';
 
 type Props = {

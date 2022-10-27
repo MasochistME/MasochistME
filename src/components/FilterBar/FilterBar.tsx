@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { media } from 'styles/theme/themeOld';
-import { useTheme, ColorTokens } from 'styles';
+import { media, useTheme, ColorTokens } from 'styles';
 
 type Props = {
 	children: React.ReactNode;

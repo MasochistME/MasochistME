@@ -1,12 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { fonts } from 'styles/theme/themeOld';
+import { fonts, useTheme, ColorTokens } from 'styles';
 import { useGames } from 'sdk';
 import { getGameThumbnail } from 'utils';
 import { Section, SectionProps } from 'containers';
 import { Flex, Loader, Spinner } from 'components';
-import { useTheme, ColorTokens } from 'styles';
 
 export const DashboardTileSale = (
 	props: Omit<SectionProps, 'content' | 'title'>,

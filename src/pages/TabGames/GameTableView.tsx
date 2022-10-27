@@ -6,9 +6,11 @@ import { useAppContext } from 'context';
 import { Flex, Spinner, Table } from 'components';
 
 import { useGamesColumns } from './columns';
+import { useTheme } from 'styles';
 
 export const GameTableView = (): JSX.Element => {
 	const { visibleTiers, queryGame } = useAppContext();
+	const { colorTokens } = useTheme();
 	const gamesColumns = useGamesColumns();
 
 	const { gamesData, isLoading, isFetched } = useCuratedGames();
@@ -24,6 +26,7 @@ export const GameTableView = (): JSX.Element => {
 			{isLoading && <Spinner />}
 			{isFetched && (
 				<Table
+					colorTokens={colorTokens}
 					dataSource={games}
 					columns={gamesColumns}
 					showSorterTooltip={false}

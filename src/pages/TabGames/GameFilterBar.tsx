@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { Tier } from '@masochistme/sdk/dist/v1/types';
 
-import { media } from 'styles/theme/themeOld';
+import { media } from 'styles';
 import { useAppContext, GameView } from 'context';
 import { SearchBar } from 'containers';
 import {

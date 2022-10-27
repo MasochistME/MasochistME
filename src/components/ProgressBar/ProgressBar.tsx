@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { fonts, media } from 'styles/theme/themeOld';
-import { useTheme, ColorTokens } from 'styles';
+import { fonts, media, useTheme, ColorTokens } from 'styles';
 
 type Props = {
 	percentage: number;
@@ -34,13 +33,13 @@ export const ProgressBar = (props: Props): JSX.Element => {
 ProgressBar.Completion = styled.div.attrs(
 	(props: Omit<Props, 'percentage'> & { colorTokens: ColorTokens }) => {
 		const style: React.CSSProperties = {
-			backgroundColor: props.colorTokens['core-primary-bg'],
-			border: `1px solid ${props.colorTokens['core-primary-bg']}`,
+			backgroundColor: props.colorTokens['semantic-color--progress--track'],
+			border: `1px solid ${props.colorTokens['semantic-color--progress--track']}`,
 			...props.style,
 		};
 		if (props.invert) {
-			style.backgroundColor = `${props.colorTokens['semantic-color--interactive']}`;
-			style.border = `1px solid ${props.colorTokens['semantic-color--interactive']}`;
+			style.backgroundColor = `${props.colorTokens['semantic-color--progress--thumb']}`;
+			style.border = `1px solid ${props.colorTokens['semantic-color--progress--thumb']}`;
 		}
 		return { style };
 	},
@@ -64,11 +63,12 @@ ProgressBar.Progress = styled.div.attrs(
 		const style: React.CSSProperties = {
 			width: `${props.percentage}%`,
 			backgroundColor: isDone
-				? props.colorTokens['semantic-color--interactive']
-				: `${props.colorTokens['semantic-color--interactive']}aa`,
+				? props.colorTokens['semantic-color--progress--thumb']
+				: `${props.colorTokens['semantic-color--progress--thumb']}aa`,
 		};
 		if (props.invert) {
-			style.backgroundColor = props.colorTokens['core-primary-bg'];
+			style.backgroundColor =
+				props.colorTokens['semantic-color--progress--track'];
 		}
 		return { style };
 	},

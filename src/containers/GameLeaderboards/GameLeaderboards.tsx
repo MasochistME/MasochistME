@@ -6,9 +6,8 @@ import { Member, MemberGame } from '@masochistme/sdk/dist/v1/types';
 import { useCuratorMembers, useGameCompletions } from 'sdk';
 import { DateBlock, Flex, ProgressBar } from 'components';
 import { MemberBadges, MemberAvatar } from 'containers';
-import { media, fonts } from 'styles/theme/themeOld';
+import { ColorTokens, useTheme, media, fonts } from 'styles';
 import { Size } from 'components';
-import { ColorTokens, useTheme } from 'styles';
 
 type Completion = Omit<MemberGame, '_id' | 'memberId' | 'playtime'> & {
 	member: Member;

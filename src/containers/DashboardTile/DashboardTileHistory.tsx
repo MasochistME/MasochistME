@@ -26,7 +26,7 @@ import {
 	useAllMembers,
 	useAllGames,
 } from 'sdk';
-import { media } from 'styles/theme/themeOld';
+import { media } from 'styles';
 import { getTierIcon } from 'utils';
 import { EventsDict } from 'configuration';
 import { Section, SectionProps } from 'containers';
@@ -137,7 +137,7 @@ const useEventComponents = () => {
 
 	const getEventMemberJoin = (event: EventMemberJoin) => {
 		const icon =
-			EventsDict.find(e => e.type === EventType.MEMBER_LEAVE)?.icon ??
+			EventsDict.find(e => e.type === EventType.MEMBER_JOIN)?.icon ??
 			'QuestionCircle';
 		const member = members.find((m: Member) => m.steamId === event.memberId);
 		const onUserClick = () =>

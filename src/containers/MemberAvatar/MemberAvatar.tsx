@@ -3,10 +3,9 @@ import styled from 'styled-components';
 import { Member, PatronTier } from '@masochistme/sdk/dist/v1/types';
 
 import { Size } from 'components';
-import { colors } from 'styles/theme/themeOld';
+import { useTheme, ColorTokens } from 'styles';
 import { CommonProps } from 'containers';
 import { BrokenImage, Flex, Skeleton, Tooltip } from 'components';
-import { useTheme, ColorTokens } from 'styles';
 
 type Props = CommonProps & {
 	member?: Partial<Member>;
