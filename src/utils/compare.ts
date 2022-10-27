@@ -21,3 +21,15 @@ export const booleanCompare = (a = false, b = false): any => {
 	const b1 = b ? 'true' : 'false';
 	return stringCompare(a1, b1);
 };
+
+/**
+ * This is a function deduplicating elements in array.
+ * Should be used within filter function
+ * @param value current element of array
+ * @param index index of current element
+ * @param arrToDedup array to dedup
+ * @returns array Deduped array
+ */
+export const dedupArray = <T>(value: T, index: number, arrToDedup: T[]) => {
+	return arrToDedup.indexOf(value) === index;
+};

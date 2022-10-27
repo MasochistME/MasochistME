@@ -74,7 +74,7 @@ export const tabs: Tab[] = [
 		text: 'badges',
 		icon: 'Badge',
 		link: 'badges',
-		visible: false,
+		visible: true,
 		external: false,
 	},
 	{

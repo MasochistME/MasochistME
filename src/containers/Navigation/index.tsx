@@ -52,7 +52,7 @@ const NavigationItem = (props: Props): JSX.Element => {
 const StyledNavigation = styled.div<{ colorTokens: ColorTokens }>`
 	display: grid;
 	width: 100%;
-	grid-template-columns: repeat(5, 1fr);
+	grid-template-columns: repeat(6, 1fr);
 	background-color: ${({ colorTokens }) => colorTokens['core-secondary-bg']};
 	box-shadow: 0 0 30px ${({ colorTokens }) => colorTokens['core-primary-bg']};
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
