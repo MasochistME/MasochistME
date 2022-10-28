@@ -3,7 +3,8 @@ import { Member } from '@masochistme/sdk/dist/v1/types';
 import { MembersListParams } from '@masochistme/sdk/dist/v1/api/members';
 
 import { log } from 'helpers/log';
-import { connectToDb, sortCollection } from 'helpers/db';
+import { sortCollection } from 'helpers/db';
+import { mongoInstance } from 'index';
 
 /**
  * Returns a list of all members stored in the database.
@@ -16,7 +17,7 @@ export const getMembersList = async (
     const { filter = {}, sort = {}, limit = 1000 } = req.body;
     const { isPrivate, isMember, ...restFilter } = filter;
 
-    const { client, db } = await connectToDb();
+    const { db } = mongoInstance.getDb();
     const collection = db.collection<Member>('members');
     const members: Member[] = [];
 
@@ -39,8 +40,6 @@ export const getMembersList = async (
     await cursor.forEach((el: Member) => {
       members.push(el);
     });
-
-    client.close();
 
     res.status(200).send(members);
   } catch (err: any) {

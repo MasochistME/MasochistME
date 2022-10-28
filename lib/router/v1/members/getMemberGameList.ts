@@ -3,7 +3,8 @@ import { MemberGame } from '@masochistme/sdk/dist/v1/types';
 import { MemberGameListParams } from '@masochistme/sdk/dist/v1/api/members';
 
 import { log } from 'helpers/log';
-import { connectToDb, sortCollection } from 'helpers/db';
+import { mongoInstance } from 'index';
+import { sortCollection } from 'helpers/db';
 
 /**
  * Returns a list of all games owned by a single member.
@@ -17,7 +18,7 @@ export const getMemberGameList = async (
     const { isCurated, ...restFilter } = filter;
     const { memberId } = req.params;
 
-    const { client, db } = await connectToDb();
+    const { db } = mongoInstance.getDb();
     const collection = db.collection<MemberGame>('memberGames');
     const memberBadges: MemberGame[] = [];
 
@@ -46,8 +47,6 @@ export const getMemberGameList = async (
     await cursor.forEach((el: MemberGame) => {
       memberBadges.push(el);
     });
-
-    client.close();
 
     res.status(200).send(memberBadges);
   } catch (err: any) {

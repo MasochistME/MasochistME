@@ -10,7 +10,7 @@ import {
 } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
-import { connectToDb } from 'helpers/db';
+import { mongoInstance } from 'index';
 
 import {
   MemberSteam,
@@ -29,9 +29,20 @@ export const updateMember = async (
   res: Response,
 ): Promise<void> => {
   const { memberId } = req.params;
-  const { client, db } = await connectToDb();
+  const { db } = mongoInstance.getDb();
   try {
     log.INFO(`--> [UPDATE] user ${memberId} [START]`);
+    const collectionMembers = db.collection<Member>('members');
+    const member = await collectionMembers.findOne({ steamId: memberId });
+
+    if (!member?.isMember && !member?.isProtected) {
+      res.status(202).send({
+        message:
+          'This user cannot be updated as they are not a member of curator.',
+      });
+      log.INFO(`--> [UPDATE] updating user ${memberId} [NOT A MEMBER]`);
+      return;
+    }
 
     /**
      * Check if the member update queue is not too long.
@@ -42,7 +53,6 @@ export const updateMember = async (
         message: 'Too many users are updating now - retry in a few minutes.',
       });
       log.INFO(`--> [UPDATE] updating user ${memberId} [QUEUE OVERFLOW]`);
-      client.close();
       return;
     }
 
@@ -53,7 +63,6 @@ export const updateMember = async (
     if (queueMember.QUEUE.includes(memberId)) {
       res.status(202).send({ message: 'This user is already being updated.' });
       log.INFO(`--> [UPDATE] updating user ${memberId} [ALREADY UPDATING]`);
-      client.close();
       return;
     }
 
@@ -61,8 +70,6 @@ export const updateMember = async (
      * Check if a member was recently updated.
      * If yes, do not proceed.
      */
-    const collectionMembers = db.collection<Member>('members');
-    const member = await collectionMembers.findOne({ steamId: memberId });
     if (
       member?.lastUpdated &&
       Date.now() - new Date(member.lastUpdated).getTime() < 3600000
@@ -71,7 +78,6 @@ export const updateMember = async (
         .status(202)
         .send({ message: 'This user had been updated less than an hour ago.' });
       log.INFO(`--> [UPDATE] user ${memberId} [TOO EARLY]`);
-      client.close();
       return;
     }
 
@@ -296,16 +302,16 @@ export const updateMember = async (
      * Fin!
      */
     queueMember.QUEUE = queueMember.QUEUE.filter(queue => queue !== memberId);
-    // client.close();
     log.INFO(`--> [UPDATE] user ${memberId} [END]`);
   } catch (err: any) {
     log.INFO(`--> [UPDATE] user ${memberId} [ERROR]`);
     log.WARN(err.message ?? err);
-    client.close();
     /**
      * Remove user from update queue.
      */
     queueMember.QUEUE = queueMember.QUEUE.filter(queue => queue !== memberId);
+  } finally {
+    //
   }
 };
 

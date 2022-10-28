@@ -67,7 +67,7 @@ export const updateUser = async (req: any, res: any) => {
   const curatedGames = await getDataFromDB('games');
   const userToUpdate = await getDataFromDB('users', { id });
   const userUrl = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${process.env.STEAM_KEY}&steamids=${id}`;
-  const { client, db } = await connectToDb();
+  const { db } = await connectToDb();
   let userData;
 
   try {
@@ -143,7 +143,6 @@ export const updateUser = async (req: any, res: any) => {
         cache.updating = newCache;
         log.INFO(`--> [UPDATE] user ${id} [DONE]`);
       }
-      client.close();
     },
   );
 };

@@ -12,7 +12,7 @@ export const connectUserWithDiscord = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const { client, db } = await connectToDb();
+    const { db } = await connectToDb();
     const members = await getDataFromDB('users');
 
     const { steamid, discordid: discordId } = req.params;
@@ -41,7 +41,6 @@ export const connectUserWithDiscord = async (
           `--> [UPDATE] Steam User ${steamid} connected to Discord User ${discordId} [DONE]`,
         );
         res.sendStatus(200);
-        client.close();
       },
     );
   } catch (err: any) {
@@ -71,7 +70,7 @@ export const updateUserFields = async (
 
     const { steamid } = req.params;
     const { description } = req.body;
-    const { client, db } = await connectToDb();
+    const { db } = await connectToDb();
     const members = db.collection('users');
 
     members.updateOne(
@@ -88,7 +87,6 @@ export const updateUserFields = async (
           log.INFO(`Member ${steamid} updated.`);
           res.sendStatus(200);
         }
-        client.close();
       },
     );
   } catch (err: any) {

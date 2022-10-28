@@ -3,7 +3,8 @@ import { Race } from '@masochistme/sdk/dist/v1/types';
 import { RaceListParams } from '@masochistme/sdk/dist/v1/api/races';
 
 import { log } from 'helpers/log';
-import { connectToDb, sortCollection } from 'helpers/db';
+import { mongoInstance } from 'index';
+import { sortCollection } from 'helpers/db';
 
 /**
  * Returns a list of all races stored in the database.
@@ -15,7 +16,7 @@ export const getRaceList = async (
   try {
     const { filter = {}, sort = {}, limit = 1000 } = req.body;
 
-    const { client, db } = await connectToDb();
+    const { db } = mongoInstance.getDb();
     const collection = db.collection<Race>('races');
     const races: Race[] = [];
 
@@ -31,8 +32,6 @@ export const getRaceList = async (
     await cursor.forEach((el: Race) => {
       races.push(el);
     });
-
-    client.close();
 
     res.status(200).send(races);
   } catch (err: any) {

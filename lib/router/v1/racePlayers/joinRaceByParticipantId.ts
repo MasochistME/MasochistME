@@ -3,14 +3,14 @@ import { Request, Response } from 'express';
 import { Race, RacePlayer, RaceType } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
-import { connectToDb } from 'helpers/db';
+import { mongoInstance } from 'index';
 
 export const joinRaceByParticipantId = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
   try {
-    const { client, db } = await connectToDb();
+    const { db } = mongoInstance.getDb();
     const raceCollection = db.collection<Race>('races');
     const racePlayerCollection =
       db.collection<Omit<RacePlayer, '_id'>>('racePlayers');
@@ -44,8 +44,6 @@ export const joinRaceByParticipantId = async (
     };
 
     const response = await racePlayerCollection.insertOne(newParticipant);
-
-    client.close();
 
     if (!response.acknowledged) {
       res

@@ -7,7 +7,7 @@ import {
 } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
-import { connectToDb } from 'helpers/db';
+import { mongoInstance } from 'index';
 
 /**
  * Creates a new badge.
@@ -20,7 +20,7 @@ export const createBadge = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const { client, db } = await connectToDb();
+    const { db } = mongoInstance.getDb();
     const collectionEvents = db.collection<Omit<Event, '_id'>>('events');
     const collection = db.collection<Omit<Badge, '_id'>>('badges');
     const badge = req.body; // TODO Add Request<Badge> body validation
@@ -43,8 +43,6 @@ export const createBadge = async (
     const responseBadgeGrantEvent = await collectionEvents.insertOne(
       badgeCreateEvent,
     );
-
-    client.close();
 
     if (
       !responseBadgeCreate.acknowledged ||

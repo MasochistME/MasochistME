@@ -3,7 +3,8 @@ import { Season } from '@masochistme/sdk/dist/v1/types';
 import { SeasonsListParams } from '@masochistme/sdk/dist/v1/api/seasons';
 
 import { log } from 'helpers/log';
-import { connectToDb, sortCollection } from 'helpers/db';
+import { mongoInstance } from 'index';
+import { sortCollection } from 'helpers/db';
 
 /**
  * Returns a list of all seasons.
@@ -16,7 +17,7 @@ export const getSeasonsList = async (
     const { filter = {}, sort = {}, limit = 1000 } = req.body;
     const { active, inactive, finished, unfinished } = filter;
 
-    const { client, db } = await connectToDb();
+    const { db } = mongoInstance.getDb();
     const collection = db.collection<Season>('seasons');
     const seasons: Season[] = [];
 
@@ -41,8 +42,6 @@ export const getSeasonsList = async (
       if (inactive && el.startDate) return;
       seasons.push(el);
     });
-
-    client.close();
 
     res.status(200).send(seasons);
   } catch (err: any) {

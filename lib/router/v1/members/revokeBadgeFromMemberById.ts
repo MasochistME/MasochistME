@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { MemberBadge, Event } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
-import { connectToDb } from 'helpers/db';
+import { mongoInstance } from 'index';
 
 /**
  * Removes a badge with given badge ID from member with given member ID.
@@ -15,7 +15,7 @@ export const revokeBadgeFromMemberById = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const { client, db } = await connectToDb();
+    const { db } = mongoInstance.getDb();
     const collectionEvents = db.collection<Omit<Event, '_id'>>('events');
     const collectionMemberBadges =
       db.collection<Omit<MemberBadge, '_id'>>('memberBadges');
@@ -47,8 +47,6 @@ export const revokeBadgeFromMemberById = async (
       badgeId,
       memberId,
     });
-
-    client.close();
 
     if (
       !responseBadgeRevoke.acknowledged ||

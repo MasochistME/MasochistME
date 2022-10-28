@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { Tier } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
-import { connectToDb } from 'helpers/db';
+import { mongoInstance } from 'index';
 
 /**
  * Returns a list of tiers.
@@ -14,7 +14,7 @@ export const getTiersList = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const { client, db } = await connectToDb();
+    const { db } = mongoInstance.getDb();
     const collection = db.collection<Tier>('tiers');
     const cursor = collection.find().sort({ score: 1 });
     const tiers: Tier[] = [];
@@ -22,8 +22,6 @@ export const getTiersList = async (
     await cursor.forEach((el: Tier) => {
       tiers.push(el);
     });
-
-    client.close();
 
     res.status(200).send(tiers);
   } catch (err: any) {

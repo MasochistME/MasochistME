@@ -3,7 +3,8 @@ import { RacePlayer } from '@masochistme/sdk/dist/v1/types';
 import { RaceParticipantsListParams } from '@masochistme/sdk/dist/v1/api/racePlayers';
 
 import { log } from 'helpers/log';
-import { connectToDb, sortCollection } from 'helpers/db';
+import { mongoInstance } from 'index';
+import { sortCollection } from 'helpers/db';
 
 /**
  * Returns a list of all participants of a race.
@@ -16,7 +17,7 @@ export const getRaceParticipantsList = async (
     const { filter = {}, sort = {}, limit = 1000 } = req.body;
     const { raceId } = req.params;
 
-    const { client, db } = await connectToDb();
+    const { db } = mongoInstance.getDb();
     const collection = db.collection<RacePlayer>('racePlayers');
     const racePlayers: RacePlayer[] = [];
 
@@ -32,8 +33,6 @@ export const getRaceParticipantsList = async (
     await cursor.forEach((el: RacePlayer) => {
       racePlayers.push(el);
     });
-
-    client.close();
 
     res.status(200).send(racePlayers);
   } catch (err: any) {

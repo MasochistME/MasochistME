@@ -3,7 +3,8 @@ import { MemberBadge } from '@masochistme/sdk/dist/v1/types';
 import { MemberBadgeListParams } from '@masochistme/sdk/dist/v1/api/members';
 
 import { log } from 'helpers/log';
-import { connectToDb, sortCollection } from 'helpers/db';
+import { sortCollection } from 'helpers/db';
+import { mongoInstance } from 'index';
 
 /**
  * Returns a list of all badges belonging to a single member.
@@ -17,7 +18,7 @@ export const getMemberBadgeList = async (
     const { isEnabled, isLegacy, isSteamGame, ...restFilter } = filter;
     const { memberId } = req.params;
 
-    const { client, db } = await connectToDb();
+    const { db } = mongoInstance.getDb();
     const collection = db.collection<MemberBadge>('memberBadges');
     const memberBadges: MemberBadge[] = [];
 
@@ -37,8 +38,6 @@ export const getMemberBadgeList = async (
     await cursor.forEach((el: MemberBadge) => {
       memberBadges.push(el);
     });
-
-    client.close();
 
     res.status(200).send(memberBadges);
   } catch (err: any) {

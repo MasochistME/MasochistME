@@ -11,7 +11,7 @@ import {
 import { LeaderboardsGamesListParams } from '@masochistme/sdk/dist/v1/api/leaderboards';
 
 import { log } from 'helpers/log';
-import { connectToDb } from 'helpers/db';
+import { mongoInstance } from 'index';
 
 /**
  * Returns MasochistME leaderboards.
@@ -22,7 +22,7 @@ export const getLeaderboardsGamesList = async (
 ): Promise<void> => {
   try {
     const { limit = 1000 } = req.body;
-    const { client, db } = await connectToDb();
+    const { db } = mongoInstance.getDb();
 
     const collectionMembers = db.collection<Member>('members');
     const collectionGames = db.collection<Game>('games');
@@ -79,8 +79,6 @@ export const getLeaderboardsGamesList = async (
     await memberBadgesCursor.forEach((el: MemberBadge) => {
       if (membersIds.includes(el.memberId)) membersBadges.push(el);
     });
-
-    client.close();
 
     const gameLeaderboards: GameLeaderboards[] = games.map((game: Game) => {
       const owners =

@@ -3,7 +3,8 @@ import { Member, MemberGame } from '@masochistme/sdk/dist/v1/types';
 import { GameCompletionListParams } from '@masochistme/sdk/dist/v1/api/games';
 
 import { log } from 'helpers/log';
-import { connectToDb, sortCollection } from 'helpers/db';
+import { sortCollection } from 'helpers/db';
+import { mongoInstance } from 'index';
 
 /**
  * Returns a list of game completions from MasochistME members.
@@ -15,7 +16,7 @@ export const getGameCompletionList = async (
   try {
     const { filter = {}, sort = {}, limit = 1000 } = req.body;
     const { completed, ...restFilter } = filter;
-    const { client, db } = await connectToDb();
+    const { db } = mongoInstance.getDb();
 
     /**
      * Get all completions of the specified game.
@@ -58,8 +59,6 @@ export const getGameCompletionList = async (
     await cursorMemberGames.forEach((el: MemberGame) => {
       if (curatorMembers.includes(el.memberId)) games.push(el);
     });
-
-    client.close();
 
     res.status(200).send(games);
   } catch (err: any) {

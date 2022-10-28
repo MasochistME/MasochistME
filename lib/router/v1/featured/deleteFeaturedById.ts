@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { Featured } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
-import { connectToDb } from 'helpers/db';
+import { mongoInstance } from 'index';
 
 /**
  * Deletes a featured object with a given featured object ID.
@@ -16,13 +16,11 @@ export const deleteFeaturedById = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const { client, db } = await connectToDb();
+    const { db } = mongoInstance.getDb();
     const collection = db.collection<Featured>('featured');
     const _id = new ObjectId(req.params.featuredId);
 
     const response = await collection.deleteOne({ _id });
-
-    client.close();
 
     if (!response.acknowledged) {
       res.status(404).send({ error: 'Could not delete the featured object.' });

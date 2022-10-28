@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { Badge, MemberBadge } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
-import { connectToDb } from 'helpers/db';
+import { mongoInstance } from 'index';
 
 /**
  * Deletes a badge with a given badge ID, and removes it from all members that have it.
@@ -16,7 +16,7 @@ export const deleteBadgeById = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const { client, db } = await connectToDb();
+    const { db } = mongoInstance.getDb();
     const collectionBadges = db.collection<Badge>('badges');
     const collectionMemberBadges = db.collection<MemberBadge>('memberBadges');
     const _id = new ObjectId(req.params.badgeId);
@@ -25,8 +25,6 @@ export const deleteBadgeById = async (
     const responseMemberBadges = await collectionMemberBadges.deleteMany({
       badgeId: String(_id),
     });
-
-    client.close();
 
     if (!responseBadges.acknowledged || !responseMemberBadges.acknowledged) {
       res.status(404).send({ error: 'Could not delete the badge.' });

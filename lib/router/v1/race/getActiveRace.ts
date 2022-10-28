@@ -2,14 +2,14 @@ import { Request, Response } from 'express';
 import { Race } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
-import { connectToDb } from 'helpers/db';
+import { mongoInstance } from 'index';
 
 export const getActiveRace = async (
   _req: Request,
   res: Response,
 ): Promise<void> => {
   try {
-    const { client, db } = await connectToDb();
+    const { db } = mongoInstance.getDb();
     const collection = db.collection<Race>('races');
     const cursor = collection
       .find({ endDate: { $gte: new Date() } })
@@ -19,8 +19,6 @@ export const getActiveRace = async (
     await cursor.forEach((el: Race) => {
       futureRaces.push(el);
     });
-
-    client.close();
 
     res.status(200).send(futureRaces);
   } catch (err: any) {

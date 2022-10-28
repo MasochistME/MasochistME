@@ -3,7 +3,8 @@ import { Badge } from '@masochistme/sdk/dist/v1/types';
 import { BadgesByGameIdListParams } from '@masochistme/sdk/dist/v1/api/games';
 
 import { log } from 'helpers/log';
-import { connectToDb, sortCollection } from 'helpers/db';
+import { sortCollection } from 'helpers/db';
+import { mongoInstance } from 'index';
 
 /**
  * Returns a list of all badges belonging to a game with given ID.
@@ -17,7 +18,7 @@ export const getBadgesByGameIdList = async (
     const { isEnabled, isLegacy, ...restFilter } = filter;
     const { gameId } = req.params;
 
-    const { client, db } = await connectToDb();
+    const { db } = mongoInstance.getDb();
     const collection = db.collection<Badge>('badges');
     const badges: Badge[] = [];
 
@@ -36,8 +37,6 @@ export const getBadgesByGameIdList = async (
     await cursor.forEach((el: Badge) => {
       badges.push(el);
     });
-
-    client.close();
 
     res.status(200).send(badges);
   } catch (err: any) {

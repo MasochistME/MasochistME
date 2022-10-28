@@ -2,14 +2,14 @@ import { Request, Response } from 'express';
 import { Season } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
-import { connectToDb } from 'helpers/db';
+import { mongoInstance } from 'index';
 
 export const createSeason = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
   try {
-    const { client, db } = await connectToDb();
+    const { db } = mongoInstance.getDb();
     const collection = db.collection<Omit<Season, '_id'>>('seasons');
     const season = req.body; // TODO Add Request<Season> body validation
 
@@ -18,8 +18,6 @@ export const createSeason = async (
       startDate: null,
       endDate: null,
     });
-
-    client.close();
 
     if (!response.acknowledged) {
       res.status(400).send({ error: 'Could not create a new season.' });

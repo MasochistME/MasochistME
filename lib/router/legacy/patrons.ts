@@ -8,7 +8,7 @@ import { connectToDb } from 'helpers/db';
  * Returns all patrons no matter the tier.
  */
 export const getAllPatrons = async (_req: any, res: any) => {
-  const { client, db } = await connectToDb();
+  const { db } = await connectToDb();
 
   db.collection<PatreonTier>('patreonTiers')
     .find({})
@@ -45,7 +45,6 @@ export const getAllPatrons = async (_req: any, res: any) => {
                 );
               res.status(200).send(tiers);
             }
-            client.close();
           });
       }
     });
@@ -56,7 +55,7 @@ export const getAllPatrons = async (_req: any, res: any) => {
  * @param req.params.tier
  */
 export const getPatronsByTier = async (req: any, res: any) => {
-  const { client, db } = await connectToDb();
+  const { db } = await connectToDb();
 
   db.collection('patrons')
     .find({ tier: req.params.tier })
@@ -69,7 +68,6 @@ export const getPatronsByTier = async (req: any, res: any) => {
       } else {
         res.status(200).send(tier);
       }
-      client.close();
     });
 };
 
@@ -78,7 +76,7 @@ export const getPatronsByTier = async (req: any, res: any) => {
  * @param req.params.steamid
  */
 export const getPatron = async (req: any, res: any) => {
-  const { client, db } = await connectToDb();
+  const { db } = await connectToDb();
 
   db.collection('patrons').findOne(
     { steamid: req.params.steamid },
@@ -91,7 +89,6 @@ export const getPatron = async (req: any, res: any) => {
       } else {
         res.status(200).send(tier);
       }
-      client.close();
     },
   );
 };
@@ -102,7 +99,7 @@ export const getPatron = async (req: any, res: any) => {
  * @param req.params.vanityid
  */
 export const addPatron = async (req: any, res: any) => {
-  const { client, db } = await connectToDb();
+  const { db } = await connectToDb();
   const urlVanity =
     'http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001';
   const paramsVanity = {
@@ -139,7 +136,6 @@ export const addPatron = async (req: any, res: any) => {
       );
       res.status(201).send(patron);
     }
-    client.close();
   });
 };
 
@@ -149,7 +145,7 @@ export const addPatron = async (req: any, res: any) => {
  * @param req.params.tier
  */
 export const updatePatron = async (req: any, res: any) => {
-  const { client, db } = await connectToDb();
+  const { db } = await connectToDb();
   const urlSummary = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${process.env.STEAM_KEY}&steamids=${req.params.steamid}`;
   let userSummary: any;
   try {
@@ -188,7 +184,6 @@ export const updatePatron = async (req: any, res: any) => {
         );
         res.status(201).send(patron);
       }
-      client.close();
     },
   );
 };
@@ -198,7 +193,7 @@ export const updatePatron = async (req: any, res: any) => {
  * @param req.params.steamid
  */
 export const deletePatron = async (req: any, res: any) => {
-  const { client, db } = await connectToDb();
+  const { db } = await connectToDb();
 
   db.collection('patrons').deleteOne(
     { steamid: req.params.steamid },
@@ -212,7 +207,6 @@ export const deletePatron = async (req: any, res: any) => {
         log.INFO(`Patron ${req.params.steamid} deleted.`);
         res.sendStatus(204);
       }
-      client.close();
     },
   );
 };

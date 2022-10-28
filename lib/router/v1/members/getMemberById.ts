@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { Member } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
-import { connectToDb } from 'helpers/db';
+import { mongoInstance } from 'index';
 
 /**
  * Returns a member by the given ID (if it exists).
@@ -15,7 +15,7 @@ export const getMemberById = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const { client, db } = await connectToDb();
+    const { db } = mongoInstance.getDb();
     const collection = db.collection<Member>('members');
     const { memberId } = req.params;
 
@@ -25,8 +25,6 @@ export const getMemberById = async (
     const memberDiscord: Member | null = await collection.findOne({
       discordId: memberId,
     });
-
-    client.close();
 
     if (!memberSteam && !memberDiscord) {
       res.status(404).send({ error: 'Could not find a member with this id.' });

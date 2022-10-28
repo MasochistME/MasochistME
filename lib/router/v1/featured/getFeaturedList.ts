@@ -3,7 +3,8 @@ import { Featured } from '@masochistme/sdk/dist/v1/types';
 import { FeaturedListParams } from '@masochistme/sdk/dist/v1/api/featured';
 
 import { log } from 'helpers/log';
-import { connectToDb, sortCollection } from 'helpers/db';
+import { sortCollection } from 'helpers/db';
+import { mongoInstance } from 'index';
 
 /**
  * Returns a list of all featured objects stored in the database.
@@ -16,7 +17,7 @@ export const getFeaturedList = async (
     const { filter = {}, sort = {}, limit = 1000 } = req.body;
     const { from, to, ...restFilter } = filter;
 
-    const { client, db } = await connectToDb();
+    const { db } = mongoInstance.getDb();
     const collection = db.collection<Featured>('featured');
     const featured: Featured[] = [];
 
@@ -34,8 +35,6 @@ export const getFeaturedList = async (
     await cursor.forEach((el: Featured) => {
       featured.push(el);
     });
-
-    client.close();
 
     res.status(200).send(featured);
   } catch (err: any) {

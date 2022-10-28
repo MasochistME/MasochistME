@@ -268,7 +268,7 @@ export const updateCuratorGames = (_req?: any, res?: any): Promise<void> =>
     games.push(...gamesThatShouldNotGetDecurated); // TODO This might be wrong - add validation
 
     const getGameDetails = async (index: number) => {
-      const { client, db } = await connectToDb();
+      const { db } = await connectToDb();
       const gameId = games[index].id;
       const urlGamesDetails = `http://store.steampowered.com/api/appdetails?appids=${gameId}`;
       const percentage = 20 + (60 / games.length) * (index + 1);
@@ -366,7 +366,6 @@ export const updateCuratorGames = (_req?: any, res?: any): Promise<void> =>
               `- saving game ${gameId} (${gameDetails?.title?.toUpperCase()}) failed`,
             );
             log.WARN(err.message);
-            client.close();
           } else {
             // @ts-ignore:next-line
             log.INFO(
@@ -374,7 +373,6 @@ export const updateCuratorGames = (_req?: any, res?: any): Promise<void> =>
                 games.length
               }] - game ${gameId} (${gameDetails?.title?.toUpperCase()})`,
             );
-            client.close();
           }
           if (games[index + 1]) {
             setTimeout(

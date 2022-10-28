@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { Patron } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
-import { connectToDb } from 'helpers/db';
+import { mongoInstance } from 'index';
 
 /**
  * Creates a new patron.
@@ -15,13 +15,11 @@ export const createPatron = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const { client, db } = await connectToDb();
+    const { db } = mongoInstance.getDb();
     const collection = db.collection<Omit<Patron, '_id'>>('patrons');
     const patron: Omit<Patron, '_id'> = req.body; // TODO Add Request<Patron> body validation
 
     const response = await collection.insertOne(patron);
-
-    client.close();
 
     if (!response.acknowledged) {
       res.status(400).send({ error: 'Could not create a new patron.' });

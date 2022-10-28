@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { Member } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
-import { connectToDb } from 'helpers/db';
+import { mongoInstance } from 'index';
 
 /**
  * Updates a member with given member ID. All of the updatable fields are optional.
@@ -15,7 +15,7 @@ export const updateMemberById = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const { client, db } = await connectToDb();
+    const { db } = mongoInstance.getDb();
     const collection = db.collection<Member>('members');
     const { memberId } = req.params;
     const { description, discordId } = req.body; // TODO Add Request<Member> body validation
@@ -29,8 +29,6 @@ export const updateMemberById = async (
         },
       },
     );
-
-    client.close();
 
     if (!response.acknowledged) {
       res.status(400).send({ error: 'Could not update this member.' });

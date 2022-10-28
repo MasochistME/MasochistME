@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { Featured } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
-import { connectToDb } from 'helpers/db';
+import { mongoInstance } from 'index';
 
 /**
  * Creates a new featured object.
@@ -15,7 +15,7 @@ export const createFeatured = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const { client, db } = await connectToDb();
+    const { db } = mongoInstance.getDb();
     const collection = db.collection<Omit<Featured, '_id'>>('featured');
     const featured: Omit<Featured, '_id' | 'date'> = req.body; // TODO Add Request<Featured> body validation
 
@@ -23,8 +23,6 @@ export const createFeatured = async (
       date: new Date(),
       ...featured,
     });
-
-    client.close();
 
     if (!response.acknowledged) {
       res
