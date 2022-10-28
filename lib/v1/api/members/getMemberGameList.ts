@@ -63,13 +63,11 @@ export const getMemberGameList = async (
 };
 
 export type MemberGameListParams = MemberIdEither & {
-	filter?: Partial<Pick<MemberGame, 'completionPercentage'>> &
-		Partial<Pick<Game, 'isCurated'>>;
+	filter?: Partial<Pick<Game, 'isCurated'>> & 'completionPercentage';
 	sort?: {
-		[key in keyof (Partial<
-			Pick<MemberGame, 'playTime' | 'completionPercentage'>
-		> &
-			Partial<Pick<Game, 'tier' | 'achievementsTotal'>>)]: Sort;
+		[key in keyof (Partial<Pick<MemberGame, 'playTime'>> &
+			Partial<Pick<Game, 'tier' | 'achievementsTotal'>> &
+			'completionPercentage')]: Sort;
 	};
 	limit?: number;
 };

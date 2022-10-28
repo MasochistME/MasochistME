@@ -57,11 +57,9 @@ export type GameCompletionListParams = {
 		[key in keyof Partial<
 			Pick<
 				MemberGame,
-				| 'playTime'
-				| 'completionPercentage'
-				| 'mostRecentAchievementDate'
-				| 'achievementsUnlocked'
-			>
+				'playTime' | 'mostRecentAchievementDate' | 'achievementsUnlocked'
+			> &
+				'completionPercentage'
 		>]: Sort;
 	};
 	limit?: number;
