@@ -63,7 +63,7 @@ export const getMemberGameList = async (
 };
 
 export type MemberGameListParams = MemberIdEither & {
-	filter?: Partial<Pick<Game, 'isCurated'>> & 'completionPercentage';
+	filter?: Partial<Pick<Game, 'isCurated'>> & { completionPercentage: number };
 	sort?: {
 		[key in
 			| keyof Partial<Pick<MemberGame, 'playTime'>>
