@@ -123,12 +123,9 @@ export const updateMember = async (
      * Get info about member's Curator games.
      * If the first endpoint fails, use a fallback one.
      */
-    let newMemberSteamGames = await getMemberSteamGamesFallback(
-      memberId,
-      games,
-    );
+    let newMemberSteamGames = await getMemberSteamGames(memberId, games);
     if (!newMemberSteamGames)
-      newMemberSteamGames = await getMemberSteamGames(memberId, games);
+      newMemberSteamGames = await getMemberSteamGamesFallback(memberId, games);
 
     /**
      * Get info about member's achievements.
