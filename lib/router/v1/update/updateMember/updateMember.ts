@@ -192,17 +192,17 @@ export const updateMember = async (
           return true;
         }
         if (
-          memberGameOld.completionPercentage !==
-            memberGame.completionPercentage ||
+          memberGameOld.achievementsUnlocked !==
+            memberGame.achievementsUnlocked ||
           memberGameOld.playTime !== memberGame.playTime ||
           memberGameOld.mostRecentAchievementDate !==
             memberGame.mostRecentAchievementDate
         ) {
-          // This game is registered in DB and nothing changed - ignore
-          return false;
+          // This game is registered in DB and changed - proceed
+          return true;
         }
-        // This game is registered in DB and changed - proceed
-        return true;
+        // This game is registered in DB and nothing changed - ignore
+        return false;
       },
     );
 
@@ -319,9 +319,7 @@ export const updateMember = async (
  * including the free ones and restricted ones.
  */
 const getMemberSteamGames = async (memberId: string, curatedGames: Game[]) => {
-  log.INFO(
-    `--> [UPDATE] user ${memberId} --> fetching games data - fallback...`,
-  );
+  log.INFO(`--> [UPDATE] user ${memberId} --> fetching games data`);
   /**
    * Scrapping member's Steam profile page.
    */
@@ -355,7 +353,9 @@ const getMemberSteamGamesFallback = async (
   memberId: string,
   curatedGames: Game[],
 ) => {
-  log.INFO(`--> [UPDATE] user ${memberId} --> fetching games data...`);
+  log.INFO(
+    `--> [UPDATE] user ${memberId} --> fetching games data  - fallback...`,
+  );
   const memberSteamUrl = `http://api.steampowered.com/IPlayerService/GetOwnedGames/v1/`;
   const memberSteamGamesData = await axios.get(memberSteamUrl, {
     params: {
