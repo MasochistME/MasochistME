@@ -23,11 +23,6 @@ export interface MemberGame extends WithId {
 	 */
 	playTime: number;
 	/**
-	 * @deprecated Please use `achievementsUnlocked` instead!
-	 * A number from 0 to 100 representing the completion percentage of a game (counted by the achievement completion).
-	 */
-	completionPercentage: number;
-	/**
 	 * Number of achievements that this member unlocked in this game.
 	 */
 	achievementsUnlocked: number;
