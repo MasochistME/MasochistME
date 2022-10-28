@@ -1,15 +1,12 @@
 import styled from 'styled-components';
 import { Game } from '@masochistme/sdk/dist/v1/types';
 
+import { useGameCompletion } from 'hooks';
 import { media, useTheme, ColorTokens } from 'styles';
 import { getPercentage } from 'utils';
 import { Flex } from 'components';
 import { StatBlock } from 'containers';
-import {
-	useGameCompletions,
-	useCuratorMembers,
-	useLeaderboardsGames,
-} from 'sdk';
+import { useCuratorMembers, useLeaderboardsGames } from 'sdk';
 
 type Props = {
 	game: Game;
@@ -25,10 +22,11 @@ export const GameProfileStats = (props: Props) => {
 	);
 
 	const { membersData: membersAll } = useCuratorMembers();
-	const { completionsData: membersHavingGame } = useGameCompletions({
-		filter: { gameId: game?.id },
-	});
+	const { gameCompletions } = useGameCompletion(game.id);
 
+	const membersHavingGame = gameCompletions.filter(
+		l => l.completionPercentage === 100,
+	);
 	const membersStartingGame = membersHavingGame.filter(
 		m => m.completionPercentage !== 0,
 	);
@@ -45,6 +43,10 @@ export const GameProfileStats = (props: Props) => {
 	const completionTimeLongest = gameLeaderboards?.times?.longestCompletion
 		? `${gameLeaderboards?.times.longestCompletion} h`
 		: '—';
+	const completionPercentage = getPercentage(
+		gameLeaderboards?.completions?.base ?? 0,
+		membersStartingGame.length,
+	);
 
 	return (
 		<StyledGameProfileStats colorTokens={colorTokens}>
@@ -94,10 +96,7 @@ export const GameProfileStats = (props: Props) => {
 						</StatBlock.Subtitle>
 					</Flex>
 				}
-				label={getPercentage(
-					gameLeaderboards?.completions?.base ?? 0,
-					membersStartingGame.length,
-				)}
+				label={completionPercentage}
 				sublabel="completion rate"
 				icon="Percent"
 				isLoading={isLoading}

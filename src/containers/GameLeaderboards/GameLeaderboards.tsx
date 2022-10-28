@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 import styled from 'styled-components';
 import { Member, MemberGame } from '@masochistme/sdk/dist/v1/types';
 
-import { useCuratorMembers, useGameCompletions } from 'sdk';
+import { useGameCompletion, GameCompletion } from 'hooks';
 import { DateBlock, Flex, ProgressBar } from 'components';
 import { MemberBadges, MemberAvatar } from 'containers';
 import { ColorTokens, useTheme, media, fonts } from 'styles';
@@ -24,30 +24,7 @@ export const GameLeaderboards = (props: Props) => {
 	const { colorTokens } = useTheme();
 	const history = useHistory();
 
-	const { membersData } = useCuratorMembers();
-	const { completionsData } = useGameCompletions({
-		filter: { gameId },
-		sort: {
-			completionPercentage: 'desc',
-			mostRecentAchievementDate: 'asc',
-		},
-	});
-
-	const leaderboards = completionsData
-		.map((completion: MemberGame) => {
-			const member = membersData.find(
-				(m: Member) => m.steamId === completion.memberId,
-			);
-			if (!member) return;
-			return {
-				member: member,
-				gameId: completion.gameId,
-				mostRecentAchievementDate: completion.mostRecentAchievementDate,
-				completionPercentage: completion.completionPercentage,
-				trophy: null,
-			} as unknown as Completion;
-		})
-		.filter(Boolean);
+	const { gameCompletions } = useGameCompletion(gameId);
 
 	const assignDateIfFinished = (memberCompletion: Completion) => {
 		if (memberCompletion.completionPercentage === 100)
@@ -57,48 +34,50 @@ export const GameLeaderboards = (props: Props) => {
 
 	const onMemberClick = (id?: string) => id && history.push(`/profile/${id}`);
 
-	const leaderboardsList = leaderboards.map(memberCompletion => {
-		if (!memberCompletion) return null;
-		return (
-			<StyledGameLeaderboardsMember
-				isCompact={isCompact}
-				colorTokens={colorTokens}
-				key={`leaderboards-member-${memberCompletion.member.steamId}`}>
-				{!isCompact && (
-					<StyledGameLeaderboardsMemberTime colorTokens={colorTokens}>
-						{assignDateIfFinished(memberCompletion)}
-					</StyledGameLeaderboardsMemberTime>
-				)}
-				<MemberAvatar
-					member={memberCompletion.member}
-					size={isCompact ? Size.SMALL : Size.MEDIUM}
-					onClick={() => onMemberClick(memberCompletion.member.steamId)}
-				/>
-				<StyledGameLeaderboardsMemberInfo align>
-					<StyledGameLeaderboardsMemberUsername isCompact={isCompact}>
-						{memberCompletion.trophy}
-						<Link
-							colorTokens={colorTokens}
-							onClick={() => onMemberClick(memberCompletion.member.steamId)}>
-							{memberCompletion.member.name}
-						</Link>
-					</StyledGameLeaderboardsMemberUsername>
+	const leaderboardsList = gameCompletions.map(
+		(memberCompletion: GameCompletion) => {
+			if (!memberCompletion) return null;
+			return (
+				<StyledGameLeaderboardsMember
+					isCompact={isCompact}
+					colorTokens={colorTokens}
+					key={`leaderboards-member-${memberCompletion.member.steamId}`}>
 					{!isCompact && (
-						<Flex>
-							<MemberBadges
-								size={Size.SMALL}
-								memberId={memberCompletion.member.steamId}
-								gameId={gameId}
-							/>
-						</Flex>
+						<StyledGameLeaderboardsMemberTime colorTokens={colorTokens}>
+							{assignDateIfFinished(memberCompletion)}
+						</StyledGameLeaderboardsMemberTime>
 					)}
-				</StyledGameLeaderboardsMemberInfo>
-				<ProgressBar
-					percentage={Math.floor(memberCompletion.completionPercentage)}
-				/>
-			</StyledGameLeaderboardsMember>
-		);
-	});
+					<MemberAvatar
+						member={memberCompletion.member}
+						size={isCompact ? Size.SMALL : Size.MEDIUM}
+						onClick={() => onMemberClick(memberCompletion.member.steamId)}
+					/>
+					<StyledGameLeaderboardsMemberInfo align>
+						<StyledGameLeaderboardsMemberUsername isCompact={isCompact}>
+							{memberCompletion.trophy}
+							<Link
+								colorTokens={colorTokens}
+								onClick={() => onMemberClick(memberCompletion.member.steamId)}>
+								{memberCompletion.member.name}
+							</Link>
+						</StyledGameLeaderboardsMemberUsername>
+						{!isCompact && (
+							<Flex>
+								<MemberBadges
+									size={Size.SMALL}
+									memberId={memberCompletion.member.steamId}
+									gameId={gameId}
+								/>
+							</Flex>
+						)}
+					</StyledGameLeaderboardsMemberInfo>
+					<ProgressBar
+						percentage={Math.floor(memberCompletion.completionPercentage)}
+					/>
+				</StyledGameLeaderboardsMember>
+			);
+		},
+	);
 
 	return (
 		<StyledGameLeaderboards column colorTokens={colorTokens}>

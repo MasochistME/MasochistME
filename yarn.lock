@@ -2307,10 +2307,10 @@
   resolved "https://registry.yarnpkg.com/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz#b2ac626d6cb9c8718ab459166d4bb405b8ffa78b"
   integrity sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==
 
-"@masochistme/sdk@^2.1.3":
-  version "2.1.3"
-  resolved "https://registry.yarnpkg.com/@masochistme/sdk/-/sdk-2.1.3.tgz#5c51716fceb0115b281dac29d4f6608b13fe7a5d"
-  integrity sha512-9zOSzwzdnicpG/2dpiVpq1Rq+6EKyC4Vj0B+mg+8eoi/Yp0dDPHZKKhc0U9kB07FcI4Mr6f3ITHhxzHYow9b/A==
+"@masochistme/sdk@^2.1.10":
+  version "2.1.10"
+  resolved "https://registry.yarnpkg.com/@masochistme/sdk/-/sdk-2.1.10.tgz#65adc7937014b0e934f7be77b85292a1e8573ac7"
+  integrity sha512-Agq0Xw0ShNNabVxnZpDsN6RCwtsv5ChDkicqnayn507WI6iyxtGPdeQu3gIG13yD9AwmZaMQcq4zdJSPEDy7Bw==
   dependencies:
     axios "1.1.2"
     discord.js "^14.3.0"

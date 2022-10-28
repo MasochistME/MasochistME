@@ -14,7 +14,6 @@ export const GameProfileGraphs = (props: Props) => {
 
 	const { completionsData } = useGameCompletions({
 		filter: { gameId },
-		sort: { completionPercentage: 'desc' },
 	});
 
 	const gameCompletions = completionsData.filter(
