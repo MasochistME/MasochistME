@@ -151,6 +151,7 @@ export const updateMember = async (
         return {
           ...game,
           completionPercentage: gameStats?.game.completionPercentage ?? 0,
+          achievementsUnlocked: gameStats?.game.achievementsUnlocked ?? 0,
           mostRecentAchievementDate:
             gameStats?.game.mostRecentAchievementDate ?? new Date(0),
         };
@@ -391,7 +392,12 @@ type TempMemberStats = {
   memberId: string;
   gameId: number;
   achievements: Omit<MemberAchievement, '_id'>[];
-  game: Pick<MemberGame, 'completionPercentage' | 'mostRecentAchievementDate'>;
+  game: Pick<
+    MemberGame,
+    | 'completionPercentage'
+    | 'mostRecentAchievementDate'
+    | 'achievementsUnlocked'
+  >;
 };
 const getMemberSteamAchievements = async (
   memberId: string,
@@ -431,15 +437,16 @@ const getMemberSteamAchievements = async (
             achievementName: achievement.apiname,
             unlockTime: new Date(achievement.unlocktime * 1000),
           }));
+        const achievementsUnlocked = memberAchievementsMap?.length ?? 0;
         /**
+         * @deprecated completionPercentage should not be used! Use achievementsUnlocked instead
          * Using achievements data, calculate the game's completion percentage
          * as well as get the date of the game's completion
          * (so when user unlocked the last achievement).
          */
         const completionPercentage =
-          100 *
-          ((memberAchievementsMap?.length ?? 0) /
-            (memberPlayerStatsData?.playerstats?.achievements?.length ?? 0));
+          (100 * achievementsUnlocked) /
+          (memberPlayerStatsData?.playerstats?.achievements?.length ?? 0);
 
         let mostRecentAchievementDate = 0;
         memberAchievementsMap.forEach(achievement =>
@@ -457,6 +464,7 @@ const getMemberSteamAchievements = async (
           achievements: memberAchievementsMap,
           game: {
             completionPercentage,
+            achievementsUnlocked,
             mostRecentAchievementDate: new Date(mostRecentAchievementDate),
           },
         });

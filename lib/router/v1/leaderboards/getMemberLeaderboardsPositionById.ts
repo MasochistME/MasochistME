@@ -70,6 +70,8 @@ export const getMemberLeaderboardsPositionById = async (
 
     // Get all the games that member has.
     const memberGamesCursor = collectionMemberGames.find(
+      // TODO THIS IS NO LONGER SOURCE OF TRUTH!!!!!!!!!!
+      // Need to compare achievements unlocked with game's total number of achievements!!!
       { memberId, completionPercentage: 100 },
       { projection: { gameId: 1, _id: 0 } },
     );

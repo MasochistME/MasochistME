@@ -47,9 +47,12 @@ export const mongoInstance = new MongoInstance();
  */
 const update = async () => {
   const { db } = mongoInstance.getDb();
-  const collection = db.collection('update');
-  //@ts-ignore
-  const { lastUpdate = 0 } = await collection.findOne({ id: 'status' });
+  const collection = db.collection<{
+    lastUpdate: Date;
+    id: 'status';
+  }>('update');
+  const status = await collection.findOne({ id: 'status' });
+  const { lastUpdate = 0 } = status ?? {};
 
   if (
     Date.now() - new Date(lastUpdate).getTime() >

@@ -54,7 +54,7 @@ export const getLeaderboardsMembersList = async (
     // Get all games.
     const gamesCursor = collectionGames.find(
       {},
-      { projection: { id: 1, tier: 1, _id: 0 } },
+      { projection: { id: 1, tier: 1, achievementsTotal: 1, _id: 0 } },
     );
     const games: Game[] = [];
     await gamesCursor.forEach(el => {
@@ -82,17 +82,37 @@ export const getLeaderboardsMembersList = async (
     });
 
     // Get all games from all members.
-    const memberGamesCursor = collectionMemberGames.find(
-      { completionPercentage: 100 },
-      { projection: { gameId: 1, memberId: 1, _id: 0 } },
-    );
-    const membersGames: (MemberGame & { tier: TierId | null })[] = [];
+    const memberGamesCursor = collectionMemberGames.find();
+    const rawMembersGames: (MemberGame & { tier: TierId | null })[] = [];
     await memberGamesCursor.forEach((el: MemberGame) => {
-      membersGames.push({
+      rawMembersGames.push({
         ...el,
         tier: games.find(game => game.id === el.gameId)?.tier ?? null,
       });
     });
+
+    // Filter all games from all members to only completed ones.
+    const membersGames = rawMembersGames
+      .map(rawGame => {
+        const game = games.find(g => g.id === rawGame.gameId);
+        const gameAchievements = game?.achievementsTotal ?? 0;
+        const memberAchievementsUnlocked = rawGame?.achievementsUnlocked ?? 0;
+        const completionPercentage = Math.round(
+          100 * (memberAchievementsUnlocked / gameAchievements),
+        );
+        // We do that in case there are games that lost achievements.
+        const fixedCompletionPercentage =
+          completionPercentage > 100 ? 100 : completionPercentage;
+        return {
+          ...rawGame,
+          completionPercentage: Number.isNaN(fixedCompletionPercentage)
+            ? 0
+            : fixedCompletionPercentage,
+        };
+      })
+      .filter(rawGame => {
+        return rawGame.completionPercentage === 100;
+      });
 
     // Get all badges from all members.
     const memberBadgesCursor = collectionMemberBadges.find(
