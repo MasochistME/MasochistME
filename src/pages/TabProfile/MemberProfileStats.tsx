@@ -58,8 +58,6 @@ export const MemberProfileStats = (props: Props) => {
 		c => c.completionPercentage !== 0,
 	);
 
-	console.log(memberCompletions);
-
 	/**
 	 * Average time needed to finish the game.
 	 */
