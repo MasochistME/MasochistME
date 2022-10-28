@@ -59,4 +59,4 @@ const update = async () => {
   }
 };
 
-if (process.env?.ENV === 'dev') setInterval(update, 60000); // TODO Change update cadence from 60000 to 600000
+if (process.env?.ENV === 'prod') setInterval(update, 60000); // TODO Change update cadence from 60000 to 600000
