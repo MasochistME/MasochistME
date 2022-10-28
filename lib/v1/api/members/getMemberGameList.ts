@@ -68,7 +68,7 @@ export type MemberGameListParams = MemberIdEither & {
 		[key in
 			| keyof Partial<Pick<MemberGame, 'playTime'>>
 			| keyof Partial<Pick<Game, 'tier' | 'achievementsTotal'>>
-			| 'completionPercentage']: Sort;
+			| 'completionPercentage']?: Sort;
 	};
 	limit?: number;
 };

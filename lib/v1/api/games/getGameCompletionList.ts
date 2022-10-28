@@ -61,7 +61,7 @@ export type GameCompletionListParams = {
 						'playTime' | 'mostRecentAchievementDate' | 'achievementsUnlocked'
 					>
 			  >
-			| 'completionPercentage']: Sort;
+			| 'completionPercentage']?: Sort;
 	};
 	limit?: number;
 };
