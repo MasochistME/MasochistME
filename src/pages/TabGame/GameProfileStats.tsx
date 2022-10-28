@@ -24,10 +24,7 @@ export const GameProfileStats = (props: Props) => {
 	const { membersData: membersAll } = useCuratorMembers();
 	const { gameCompletions } = useGameCompletion(game.id);
 
-	const membersHavingGame = gameCompletions.filter(
-		l => l.completionPercentage === 100,
-	);
-	const membersStartingGame = membersHavingGame.filter(
+	const membersStartingGame = gameCompletions.filter(
 		m => m.completionPercentage !== 0,
 	);
 
