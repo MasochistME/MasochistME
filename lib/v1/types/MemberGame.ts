@@ -23,6 +23,10 @@ export interface MemberGame extends WithId {
 	 */
 	playTime: number;
 	/**
+	 * Completion percentage of a game. (This should not be taken from database but from API exclusively)
+	 */
+	completionPercentage: number;
+	/**
 	 * Number of achievements that this member unlocked in this game.
 	 */
 	achievementsUnlocked: number;
