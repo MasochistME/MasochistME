@@ -83,13 +83,9 @@ export const getLeaderboardsGamesList = async (
     const gameLeaderboards: GameLeaderboards[] = games.map((game: Game) => {
       const owners =
         membersGames.filter(memberGame => memberGame.gameId === game.id) ?? [];
-      const completions =
-        owners.filter(
-          owner =>
-            (owner.achievementsUnlocked ?? 0) /
-              (game.achievementsTotal ?? 0) ===
-            100,
-        ) ?? [];
+      const completions = owners.filter(
+        owner => owner.achievementsUnlocked / game.achievementsTotal >= 1,
+      );
       const avgPlaytime =
         (completions.reduce((sum, owner) => (sum += owner.playTime), 0) ?? 0) /
         completions.length;
