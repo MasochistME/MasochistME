@@ -1,5 +1,5 @@
-import { Request, Response } from 'express';
-import { Member, MemberGame } from '@masochistme/sdk/dist/v1/types';
+import e, { Request, Response } from 'express';
+import { Member, MemberGame, Game } from '@masochistme/sdk/dist/v1/types';
 import { GameCompletionListParams } from '@masochistme/sdk/dist/v1/api/games';
 
 import { log } from 'helpers/log';
@@ -14,28 +14,36 @@ export const getGameCompletionList = async (
   res: Response,
 ): Promise<void> => {
   try {
-    const { filter = {}, sort = {}, limit = 1000 } = req.body;
+    const { filter = {}, sort, limit = 1000 } = req.body;
     const { completed, ...restFilter } = filter;
     const { db } = mongoInstance.getDb();
 
     /**
+     * Get all curated games.
+     */
+    const collectionGames = db.collection<Game>('games');
+    const games: Game[] = [];
+    const cursorGames = collectionGames.find({
+      $or: [{ isCurated: true }, { isProtected: true }],
+    });
+    await cursorGames.forEach(el => {
+      games.push(el);
+    });
+
+    /**
      * Get all completions of the specified game.
      */
+
     const collectionMemberGames = db.collection<MemberGame>('memberGames');
-    const games: MemberGame[] = [];
     const cursorMemberGames = collectionMemberGames
       .find({
         ...restFilter,
-        ...(completed !== undefined && { completionPercentage: 100 }),
       })
       .sort({
-        ...(sort.playTime && { playTime: sortCollection(sort.playTime) }),
-        ...(sort.completionPercentage && {
-          completionPercentage: sortCollection(sort.completionPercentage),
-        }),
-        ...(sort.mostRecentAchievementDate && {
+        ...(sort?.playTime && { playTime: sortCollection(sort?.playTime) }),
+        ...(sort?.mostRecentAchievementDate && {
           mostRecentAchievementDate: sortCollection(
-            sort.mostRecentAchievementDate,
+            sort?.mostRecentAchievementDate,
           ),
         }),
       })
@@ -56,11 +64,54 @@ export const getGameCompletionList = async (
     /**
      * Filter completions by curator members only.
      */
+    const memberGames: MemberGame[] = [];
     await cursorMemberGames.forEach((el: MemberGame) => {
-      if (curatorMembers.includes(el.memberId)) games.push(el);
+      if (!curatorMembers.includes(el.memberId)) return;
+      const gameAchievements =
+        games.find(g => g.id === el.gameId)?.achievementsTotal ?? 0;
+      const achievementsUnlocked = el.achievementsUnlocked ?? 0;
+      const completionPercentage =
+        achievementsUnlocked && gameAchievements
+          ? Math.round((100 * achievementsUnlocked) / gameAchievements)
+          : 0;
+      memberGames.push({
+        ...el,
+        achievementsUnlocked,
+        // When game loses achievements, member can have over 100% completion ratio so we round down
+        completionPercentage:
+          completionPercentage > 100 ? 100 : completionPercentage,
+      });
     });
 
-    res.status(200).send(games);
+    /**
+     * Apply remaining filtering.
+     */
+    const filteredMemberGames = memberGames.filter(memberGame => {
+      if (completed === undefined) return true;
+      if (completed) return memberGame.completionPercentage === 100;
+      else return memberGame.completionPercentage !== 100;
+    });
+
+    /**
+     * Apply remaining sorting.
+     */
+    const sortDirection = sort?.completionPercentage ?? 'desc';
+    const sortedMemberGames = filteredMemberGames.sort(
+      (memberGameA: MemberGame, memberGameB: MemberGame) => {
+        // sort from highest to lowest completion
+        if (sortDirection === 'desc')
+          return (
+            memberGameB.completionPercentage - memberGameA.completionPercentage
+          );
+        // sort from lowest to highest completion
+        else
+          return (
+            memberGameA.completionPercentage - memberGameB.completionPercentage
+          );
+      },
+    );
+
+    res.status(200).send(sortedMemberGames);
   } catch (err: any) {
     log.WARN(err);
     res.status(500).send({ error: err.message ?? 'Internal server error' });
