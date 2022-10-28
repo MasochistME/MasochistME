@@ -3,10 +3,10 @@ import { useHistory } from 'react-router';
 import styled from 'styled-components';
 import { Member, MemberGame } from '@masochistme/sdk/dist/v1/types';
 
-import { useCuratorMembers, useGameCompletions } from 'sdk';
+import { useGameCompletion, GameCompletion } from 'hooks';
 import { DateBlock, Flex, ProgressBar } from 'components';
 import { MemberBadges, MemberAvatar } from 'containers';
-import { colors, media, fonts } from 'styles/theme/themeOld';
+import { ColorTokens, useTheme, media, fonts } from 'styles';
 import { Size } from 'components';
 
 type Completion = Omit<MemberGame, '_id' | 'memberId' | 'playtime'> & {
@@ -21,32 +21,10 @@ type Props = {
 
 export const GameLeaderboards = (props: Props) => {
 	const { gameId, isCompact } = props;
+	const { colorTokens } = useTheme();
 	const history = useHistory();
 
-	const { membersData } = useCuratorMembers();
-	const { completionsData } = useGameCompletions({
-		filter: { gameId },
-		sort: {
-			completionPercentage: 'desc',
-			mostRecentAchievementDate: 'asc',
-		},
-	});
-
-	const leaderboards = completionsData
-		.map((completion: MemberGame) => {
-			const member = membersData.find(
-				(m: Member) => m.steamId === completion.memberId,
-			);
-			if (!member) return;
-			return {
-				member: member,
-				gameId: completion.gameId,
-				mostRecentAchievementDate: completion.mostRecentAchievementDate,
-				completionPercentage: completion.completionPercentage,
-				trophy: null,
-			} as unknown as Completion;
-		})
-		.filter(Boolean);
+	const { gameCompletions } = useGameCompletion(gameId);
 
 	const assignDateIfFinished = (memberCompletion: Completion) => {
 		if (memberCompletion.completionPercentage === 100)
@@ -56,66 +34,77 @@ export const GameLeaderboards = (props: Props) => {
 
 	const onMemberClick = (id?: string) => id && history.push(`/profile/${id}`);
 
-	const leaderboardsList = leaderboards.map(memberCompletion => {
-		if (!memberCompletion) return null;
-		return (
-			<StyledGameLeaderboardsMember
-				isCompact={isCompact}
-				key={`leaderboards-member-${memberCompletion.member.steamId}`}>
-				{!isCompact && (
-					<StyledGameLeaderboardsMemberTime>
-						{assignDateIfFinished(memberCompletion)}
-					</StyledGameLeaderboardsMemberTime>
-				)}
-				<MemberAvatar
-					member={memberCompletion.member}
-					size={isCompact ? Size.SMALL : Size.MEDIUM}
-					onClick={() => onMemberClick(memberCompletion.member.steamId)}
-				/>
-				<StyledGameLeaderboardsMemberInfo align>
-					<StyledGameLeaderboardsMemberUsername isCompact={isCompact}>
-						{memberCompletion.trophy}
-						<Link
-							onClick={() => onMemberClick(memberCompletion.member.steamId)}>
-							{memberCompletion.member.name}
-						</Link>
-					</StyledGameLeaderboardsMemberUsername>
+	const leaderboardsList = gameCompletions.map(
+		(memberCompletion: GameCompletion) => {
+			if (!memberCompletion) return null;
+			return (
+				<StyledGameLeaderboardsMember
+					isCompact={isCompact}
+					colorTokens={colorTokens}
+					key={`leaderboards-member-${memberCompletion.member.steamId}`}>
 					{!isCompact && (
-						<Flex>
-							<MemberBadges
-								size={Size.SMALL}
-								memberId={memberCompletion.member.steamId}
-								gameId={gameId}
-							/>
-						</Flex>
+						<StyledGameLeaderboardsMemberTime colorTokens={colorTokens}>
+							{assignDateIfFinished(memberCompletion)}
+						</StyledGameLeaderboardsMemberTime>
 					)}
-				</StyledGameLeaderboardsMemberInfo>
-				<ProgressBar
-					percentage={Math.floor(memberCompletion.completionPercentage)}
-				/>
-			</StyledGameLeaderboardsMember>
-		);
-	});
+					<MemberAvatar
+						member={memberCompletion.member}
+						size={isCompact ? Size.SMALL : Size.MEDIUM}
+						onClick={() => onMemberClick(memberCompletion.member.steamId)}
+					/>
+					<StyledGameLeaderboardsMemberInfo align>
+						<StyledGameLeaderboardsMemberUsername isCompact={isCompact}>
+							{memberCompletion.trophy}
+							<Link
+								colorTokens={colorTokens}
+								onClick={() => onMemberClick(memberCompletion.member.steamId)}>
+								{memberCompletion.member.name}
+							</Link>
+						</StyledGameLeaderboardsMemberUsername>
+						{!isCompact && (
+							<Flex>
+								<MemberBadges
+									size={Size.SMALL}
+									memberId={memberCompletion.member.steamId}
+									gameId={gameId}
+								/>
+							</Flex>
+						)}
+					</StyledGameLeaderboardsMemberInfo>
+					<ProgressBar
+						percentage={Math.floor(memberCompletion.completionPercentage)}
+					/>
+				</StyledGameLeaderboardsMember>
+			);
+		},
+	);
 
 	return (
-		<StyledGameLeaderboards column>{leaderboardsList}</StyledGameLeaderboards>
+		<StyledGameLeaderboards column colorTokens={colorTokens}>
+			{leaderboardsList}
+		</StyledGameLeaderboards>
 	);
 };
 
-const StyledGameLeaderboards = styled(Flex)`
+const StyledGameLeaderboards = styled(Flex)<{ colorTokens: ColorTokens }>`
 	width: 100%;
 	box-sizing: border-box;
-	background-color: ${colors.superDarkGrey}cc;
+	background-color: ${({ colorTokens }) => colorTokens['core-secondary-bg']}cc;
 `;
 
-const StyledGameLeaderboardsMember = styled(Flex)<{ isCompact?: boolean }>`
+const StyledGameLeaderboardsMember = styled(Flex)<{
+	isCompact?: boolean;
+	colorTokens: ColorTokens;
+}>`
 	max-width: 100%;
 	align-items: center;
 	&:not(:first-child) {
-		border-top: 1px solid ${colors.newMediumGrey};
+		border-top: 1px solid
+			${({ colorTokens }) => colorTokens['semantic-color--interactive']};
 	}
 	&:not(:last-child) {
-		border-bottom: 1px solid ${colors.newDark};
+		border-bottom: 1px solid
+			${({ colorTokens }) => colorTokens['core-primary-bg']};
 	}
 `;
 
@@ -142,21 +131,23 @@ const StyledGameLeaderboardsMemberUsername = styled.div<{
 	}
 `;
 
-const StyledGameLeaderboardsMemberTime = styled.div`
+const StyledGameLeaderboardsMemberTime = styled.div<{
+	colorTokens: ColorTokens;
+}>`
 	display: flex;
 	align-items: center;
 	font-size: 0.7em;
 	font-family: ${fonts.Verdana};
-	color: ${colors.superLightGrey};
+	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	width: 128px;
 	@media (max-width: ${media.tablets}) {
 		display: none;
 	}
 `;
 
-const Link = styled.span`
+const Link = styled.span<{ colorTokens: ColorTokens }>`
 	cursor: pointer;
 	&:hover {
-		color: ${colors.white};
+		color: ${({ colorTokens }) => colorTokens['semantic-color--link-hover']};
 	}
 `;

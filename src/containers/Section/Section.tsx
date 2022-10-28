@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
-import { fonts, media } from 'styles/theme/themeOld';
-import { useTheme, ColorTokens } from 'styles';
+import { fonts, media, useTheme, ColorTokens } from 'styles';
 
 export type SectionProps = {
 	isMobileOnly?: boolean;
@@ -67,7 +66,7 @@ const StyledSection = styled.div.attrs((props: StyledProps) => {
 	border-radius: 16px;
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	background-color: ${({ colorTokens }) =>
-		colorTokens['semantic-color-idle']}cc;
+		colorTokens['semantic-color--idle']}cc;
 	box-shadow: 0 0 15px ${({ colorTokens }) => colorTokens['core-tertiary-bg']};
 	${({ isMobileOnly, isDesktopOnly }) => {
 		if (isMobileOnly)

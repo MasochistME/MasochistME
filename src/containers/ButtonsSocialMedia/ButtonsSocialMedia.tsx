@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { media } from 'styles/theme/themeOld';
+import { media } from 'styles';
 import { Flex, Button } from 'components';
 import { Size } from 'components';
 

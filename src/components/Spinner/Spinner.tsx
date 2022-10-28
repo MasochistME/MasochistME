@@ -17,5 +17,5 @@ export const Spinner = (): JSX.Element => {
 const StyledSpinner = styled(Flex)<{ colorTokens: ColorTokens }>`
 	box-sizing: border-box;
 	font-size: 32px;
-	color: ${({ colorTokens }) => colorTokens['semantic-color-interactive']};
+	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 `;

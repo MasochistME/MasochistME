@@ -8,12 +8,11 @@ import {
 import styled from 'styled-components';
 
 import { useLoadTiers } from 'hooks';
-import { media } from 'styles/theme/themeOld';
+import { media, useTheme, ColorTokens } from 'styles';
 import { Loader, Flex } from 'components';
 import { Footer, Header, Navigation, SubHeader } from 'containers';
 
 import { NotFound } from 'pages';
-import { useTheme, ColorTokens } from 'styles';
 
 const TabBadges = React.lazy(() => import('./pages/TabBadges'));
 const TabEvents = React.lazy(() => import('./pages/TabEvents'));

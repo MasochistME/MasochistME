@@ -1,122 +1,189 @@
 import { Theme } from './theme';
 
-export type ColorTokens = {
+type ColorTokensCommon = {
+	'common-color--black': string;
+	'common-color--white': string;
+	'common-color--shadow': string;
+	'common-color--light': string;
+
+	'semantic-color--tier-4': string;
+	'semantic-color--tier-4--muted': string;
+	'semantic-color--tier-3': string;
+	'semantic-color--tier-3--muted': string;
+	'semantic-color--tier-2': string;
+	'semantic-color--tier-2--muted': string;
+	'semantic-color--tier-1': string;
+	'semantic-color--tier-1--muted': string;
+};
+
+export interface ColorTokens extends ColorTokensCommon {
 	'core-primary-bg': string; // newDark
 	'core-secondary-bg': string; //superDarkGrey
 	'core-tertiary-bg': string; // black
+	'core-extra-bg': string; // darkBlue
 	'core-primary-text': string; //superLightGrey
 	'core-secondary-text': string; // lightGrey
 	'core-tertiary-text': string; // white
 
-	'semantic-color-idle': string; // newDarkBlue
-	'semantic-color-interactive': string; // newMediumGrey
-	'semantic-color-active': string; // white
-	'semantic-color-disabled': string; // mediumGrey
+	'semantic-color--idle': string; // newDarkBlue
+	'semantic-color--interactive': string; // newMediumGrey
+	'semantic-color--active': string; // white
+	'semantic-color--disabled': string; // mediumGrey
 
-	'semantic-color-warning-strong': string; // yellow
-	'semantic-color-warning-muted': string; // tier4muted
-	'semantic-color-error-strong': string; // mediumred
-	'semantic-color-error-muted': string; // darkred
+	'semantic-color--warning': string; // yellow
+	'semantic-color--warning-strong': string; // yellow
+	'semantic-color--warning-muted': string; // tier4muted
+	'semantic-color--error': string; // mediumred
+	'semantic-color--error-strong': string; // mediumred
+	'semantic-color--error-muted': string; // darkred
 
-	'semantic-color-link-normal': string;
-	'semantic-color-link-hover': string;
-	'semantic-color-link-visited': string;
-	'semantic-color-section-update--bg': string; // Color of the "Last updated" section in Subheader.
-	'semantic-color-section-update--text': string; // Color of the "Last updated" section in Subheader.
+	'semantic-color--progress--track': string;
+	'semantic-color--progress--thumb': string;
 
-	'semantic-color--tier-4': string;
-	'semantic-color--tier-3': string;
-	'semantic-color--tier-2': string;
-	'semantic-color--tier-1': string;
+	'semantic-color--link-normal': string;
+	'semantic-color--link-hover': string;
+	'semantic-color--link-visited': string;
+	'semantic-color--section-update--bg': string; // Color of the "Last updated" section in Subheader.
+	'semantic-color--section-update--text': string; // Color of the "Last updated" section in Subheader.
+
+	'semantic-color--switch-track': string;
+	'semantic-color--switch-thumb': string;
+	'semantic-color--switch-track--checked': string;
+	'semantic-color--switch-thumb--checked': string;
+	'semantic-color--switch-track--disabled': string;
+	'semantic-color--switch-thumb--disabled': string;
+}
+
+const commonColors = {
+	'common-color--black': '#040404',
+	'common-color--white': '#f0f0f0',
+	'common-color--shadow': '#141414',
+	'common-color--light': '#e0e0e0',
+
+	'semantic-color--tier-4': '#fdc000',
+	'semantic-color--tier-4--muted': '#684f00',
+	'semantic-color--tier-3': '#f5f5f5',
+	'semantic-color--tier-3--muted': '#979797',
+	'semantic-color--tier-2': '#ff6b1f',
+	'semantic-color--tier-2--muted': '#a14719',
+	'semantic-color--tier-1': '#32a042',
+	'semantic-color--tier-1--muted': '#184e20',
 };
 
 export const colors: Record<Theme, ColorTokens> = {
 	[Theme.ASH]: {
+		...commonColors,
 		'core-primary-bg': '#040404',
 		'core-secondary-bg': '#141620',
 		'core-tertiary-bg': '#0a0a0a',
+		'core-extra-bg': '#293251',
 		'core-primary-text': '#BEC9E0',
 		'core-secondary-text': '#9e9db5',
 		'core-tertiary-text': '#f0f0f0',
 
-		'semantic-color-idle': '#282f44',
-		'semantic-color-interactive': '#545281',
-		'semantic-color-active': '#9895db',
-		'semantic-color-disabled': '#7b7a8d',
+		'semantic-color--idle': '#282f44',
+		'semantic-color--interactive': '#545281',
+		'semantic-color--active': '#9895db',
+		'semantic-color--disabled': '#7b7a8d',
 
-		'semantic-color-warning-strong': '#fdc000',
-		'semantic-color-warning-muted': '#a47b00',
-		'semantic-color-error-strong': '#582e34',
-		'semantic-color-error-muted': '#1e1012',
+		'semantic-color--warning': '#fdc000',
+		'semantic-color--warning-strong': '#fdc000',
+		'semantic-color--warning-muted': '#a47b00',
+		'semantic-color--error': '#582e34',
+		'semantic-color--error-strong': '#d38893',
+		'semantic-color--error-muted': '#1e1012',
 
-		'semantic-color-link-normal': '#f0f0f0',
-		'semantic-color-link-hover': 'd0d0d0',
-		'semantic-color-link-visited': 'c0c0c0',
-		'semantic-color-section-update--bg': '#040404',
-		'semantic-color-section-update--text': '#f0f0f0',
+		'semantic-color--progress--track': '#040404',
+		'semantic-color--progress--thumb': '#545281',
 
-		'semantic-color--tier-4': '#fdc000',
-		'semantic-color--tier-3': '#f5f5f5',
-		'semantic-color--tier-2': '#ff6b1f',
-		'semantic-color--tier-1': '#32a042',
+		'semantic-color--link-normal': '#f0f0f0',
+		'semantic-color--link-hover': 'd0d0d0',
+		'semantic-color--link-visited': 'c0c0c0',
+		'semantic-color--section-update--bg': '#040404',
+		'semantic-color--section-update--text': '#f0f0f0',
+
+		'semantic-color--switch-track': '#545281',
+		'semantic-color--switch-thumb': '#f0f0f0',
+		'semantic-color--switch-track--checked': '#BEC9E0',
+		'semantic-color--switch-thumb--checked': '#f0f0f0',
+		'semantic-color--switch-track--disabled': '#7b7a8d',
+		'semantic-color--switch-thumb--disabled': '#f0f0f0',
 	},
 	[Theme.MEAT]: {
-		'core-primary-text': '#f0f0f0',
-		'core-secondary-text': '#f0f0f0',
-		'core-tertiary-text': '#f0f0f0',
-		'core-primary-bg': '#7e5252',
-		'core-secondary-bg': '#4e1414',
+		...commonColors,
+		'core-primary-bg': '#4e1414',
+		'core-secondary-bg': '#7e5252',
 		'core-tertiary-bg': '#623131',
+		'core-extra-bg': '#293251',
+		'core-primary-text': '#fedfd6',
+		'core-secondary-text': '#f6a593',
+		'core-tertiary-text': '#fffef4',
 
-		'semantic-color-idle': '#2a2121',
-		'semantic-color-interactive': '#320303',
-		'semantic-color-active': '#0a0a0a',
-		'semantic-color-disabled': '#7b7a8d',
+		'semantic-color--idle': '#2e0a0a',
+		'semantic-color--interactive': '#890000',
+		'semantic-color--active': '#0a0a0a',
+		'semantic-color--disabled': '#7b7a8d',
 
-		'semantic-color-warning-strong': '#fdc000',
-		'semantic-color-warning-muted': '#a47b00',
-		'semantic-color-error-strong': '#582e34',
-		'semantic-color-error-muted': '#1e1012',
+		'semantic-color--warning': '#fdc000',
+		'semantic-color--warning-strong': '#fdc000',
+		'semantic-color--warning-muted': '#a47b00',
+		'semantic-color--error': '#582e34',
+		'semantic-color--error-strong': '#d38893',
+		'semantic-color--error-muted': '#1e1012',
 
-		'semantic-color-link-normal': '#f0f0f0',
-		'semantic-color-link-hover': 'd0d0d0',
-		'semantic-color-link-visited': 'c0c0c0',
-		'semantic-color-section-update--bg': '#c91745',
-		'semantic-color-section-update--text': '#f0f0f0',
+		'semantic-color--progress--track': '#2e0a0a',
+		'semantic-color--progress--thumb': '#890000',
 
-		'semantic-color--tier-4': '#fdc000',
-		'semantic-color--tier-3': '#f5f5f5',
-		'semantic-color--tier-2': '#ff6b1f',
-		'semantic-color--tier-1': '#32a042',
+		'semantic-color--link-normal': '#f0f0f0',
+		'semantic-color--link-hover': 'd0d0d0',
+		'semantic-color--link-visited': 'c0c0c0',
+		'semantic-color--section-update--bg': '#c91745',
+		'semantic-color--section-update--text': '#f0f0f0',
+
+		'semantic-color--switch-track': '#320303',
+		'semantic-color--switch-thumb': '#f0f0f0',
+		'semantic-color--switch-track--checked': '#7e5252',
+		'semantic-color--switch-thumb--checked': '#f0f0f0',
+		'semantic-color--switch-track--disabled': '#7b7a8d',
+		'semantic-color--switch-thumb--disabled': '#f0f0f0',
 	},
 	[Theme.DUST]: {
+		...commonColors,
 		'core-primary-text': '#040404',
 		'core-secondary-text': '#141620',
 		'core-tertiary-text': '#0a0a0a',
+		'core-extra-bg': '#293251',
 		'core-primary-bg': '#BEC9E0',
 		'core-secondary-bg': '#c9d6f1',
 		'core-tertiary-bg': '#9e9db5',
 
-		'semantic-color-idle': '#838ca7',
-		'semantic-color-interactive': '#545281',
-		'semantic-color-active': '#0a0a0a',
-		'semantic-color-disabled': '#7b7a8d',
+		'semantic-color--idle': '#838ca7',
+		'semantic-color--interactive': '#545281',
+		'semantic-color--active': '#0a0a0a',
+		'semantic-color--disabled': '#7b7a8d',
 
-		'semantic-color-warning-strong': '#fdc000',
-		'semantic-color-warning-muted': '#a47b00',
-		'semantic-color-error-strong': '#582e34',
-		'semantic-color-error-muted': '#1e1012',
+		'semantic-color--warning': '#fdc000',
+		'semantic-color--warning-strong': '#fdc000',
+		'semantic-color--warning-muted': '#a47b00',
+		'semantic-color--error': '#582e34',
+		'semantic-color--error-strong': '#d38893',
+		'semantic-color--error-muted': '#1e1012',
 
-		'semantic-color-link-normal': '#f0f0f0',
-		'semantic-color-link-hover': 'd0d0d0',
-		'semantic-color-link-visited': 'c0c0c0',
-		'semantic-color-section-update--bg': '#040404',
-		'semantic-color-section-update--text': '#f0f0f0',
+		'semantic-color--progress--track': '#2e0a0a',
+		'semantic-color--progress--thumb': '#890000',
 
-		'semantic-color--tier-4': '#fdc000',
-		'semantic-color--tier-3': '#f5f5f5',
-		'semantic-color--tier-2': '#ff6b1f',
-		'semantic-color--tier-1': '#32a042',
+		'semantic-color--link-normal': '#f0f0f0',
+		'semantic-color--link-hover': 'd0d0d0',
+		'semantic-color--link-visited': 'c0c0c0',
+		'semantic-color--section-update--bg': '#040404',
+		'semantic-color--section-update--text': '#f0f0f0',
+
+		'semantic-color--switch-track': '#545281',
+		'semantic-color--switch-thumb': '#f0f0f0',
+		'semantic-color--switch-track--checked': '#BEC9E0',
+		'semantic-color--switch-thumb--checked': '#f0f0f0',
+		'semantic-color--switch-track--disabled': '#7b7a8d',
+		'semantic-color--switch-thumb--disabled': '#f0f0f0',
 	},
 };
 

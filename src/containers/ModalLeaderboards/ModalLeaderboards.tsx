@@ -4,7 +4,7 @@ import { Box, Modal } from '@mui/material';
 import { Game } from '@masochistme/sdk/dist/v1/types';
 
 import { useCuratedGames } from 'sdk';
-import { colors, fonts } from 'styles/theme/themeOld';
+import { fonts, useTheme, ColorTokens } from 'styles';
 import { Flex } from 'components';
 import { GameLeaderboards } from 'containers';
 
@@ -20,7 +20,7 @@ type Props = {
 
 export const ModalLeaderboards = (props: Props): JSX.Element | null => {
 	const { gameId, isCompact, isModalOpen, setIsModalOpen } = props;
-
+	const { colorTokens } = useTheme();
 	const { gamesData, isFetched: isGameLoaded } = useCuratedGames();
 	const game = gamesData.find((g: Game) => g.id === gameId);
 
@@ -41,7 +41,7 @@ export const ModalLeaderboards = (props: Props): JSX.Element | null => {
 	return (
 		<Modal open={isModalOpen} onClose={handleModalClose}>
 			<Box sx={modalStyle}>
-				<WrapperLeaderboards column>
+				<WrapperLeaderboards column colorTokens={colorTokens}>
 					{isGameLoaded && game && (
 						<>
 							<Flex column gap={16} padding="16px">
@@ -60,14 +60,14 @@ export const ModalLeaderboards = (props: Props): JSX.Element | null => {
 	);
 };
 
-export const WrapperLeaderboards = styled(Flex)`
+export const WrapperLeaderboards = styled(Flex)<{ colorTokens: ColorTokens }>`
 	box-sizing: border-box;
 	text-align: center;
 	width: 700px;
 	max-width: 100%;
 	height: auto;
 	gap: 16px;
-	background-color: ${colors.darkBlue}cc;
-	color: ${colors.superLightGrey};
+	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']}cc;
+	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	font-family: ${fonts.Raleway};
 `;

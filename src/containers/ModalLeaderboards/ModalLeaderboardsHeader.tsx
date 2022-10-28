@@ -22,15 +22,15 @@ export const ModalLeaderboardsHeader = (props: Props) => {
 
 	return (
 		<StyledModalLeaderboardsHeader row align>
-			<h2>
-				<a
-					href={`https://store.steampowered.com/app/${gameId}`}
-					target="_blank"
-					rel="noopener noreferrer"
-					onClick={event => event.stopPropagation()}>
-					<Icon icon="Steam" /> {gameTitle}
-				</a>
-			</h2>
+			<a
+				href={`https://store.steampowered.com/app/${gameId}`}
+				target="_blank"
+				rel="noopener noreferrer"
+				onClick={event => event.stopPropagation()}>
+				<Flex align gap={8}>
+					<Icon icon="Steam" /> <h2>{gameTitle}</h2>
+				</Flex>
+			</a>
 			<Button label="Details" icon="CircleInfo" onClick={onShowGame} />
 		</StyledModalLeaderboardsHeader>
 	);

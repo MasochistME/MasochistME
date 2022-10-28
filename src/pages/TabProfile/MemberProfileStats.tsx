@@ -7,7 +7,7 @@ import {
 
 import { useLeaderboardsMembers, useMemberGames, useTiers } from 'sdk';
 import { useMemberBadgesFilter } from 'hooks';
-import { media } from 'styles/theme/themeOld';
+import { media } from 'styles';
 import { getPercentage, ColorMap } from 'utils';
 import { Flex, Icon, IconType, Skeleton } from 'components';
 import { StatBlock } from 'containers';
@@ -57,6 +57,8 @@ export const MemberProfileStats = (props: Props) => {
 	const memberGamesStarted = memberGamesData.filter(
 		c => c.completionPercentage !== 0,
 	);
+
+	console.log(memberCompletions);
 
 	/**
 	 * Average time needed to finish the game.

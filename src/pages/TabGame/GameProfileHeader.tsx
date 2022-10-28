@@ -2,11 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { Game, Tier } from '@masochistme/sdk/dist/v1/types';
 
-import { media } from 'styles/theme/themeOld';
+import { media, useTheme, ColorTokens } from 'styles';
 import { getGameThumbnail } from 'utils';
 import { useTiers } from 'sdk';
 import { Flex, Icon, IconType, Tooltip, Size } from 'components';
-import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
 	game?: Game;

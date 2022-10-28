@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
-import { Tier } from '@masochistme/sdk/dist/v1/types';
 
-import { useTiers, useLeaderboardsMembers } from 'sdk';
-import { media } from 'styles/theme/themeOld';
+import { useMemberLeaderboardsPoints } from 'hooks';
+import { media } from 'styles';
 import { Size } from 'components';
 import { Flex, Icon, IconType, Spinner, Tooltip } from 'components';
 
@@ -13,49 +12,36 @@ type Props = {
 
 export const LeaderboardsMemberPoints = (props: Props): JSX.Element => {
 	const { steamId } = props;
-
-	const {
-		tiersData,
-		isLoading: isTiersLoading,
-		isFetched: isTiersFetched,
-	} = useTiers();
-	const {
-		leaderboardsData,
-		isLoading: isLeaderboardsLoading,
-		isFetched: isLeaderboardsFetched,
-	} = useLeaderboardsMembers();
-
-	const member = leaderboardsData.find(l => l.memberId === steamId);
-
-	const isLoading = isLeaderboardsLoading && isTiersLoading;
-	const isFetched = isLeaderboardsFetched && isTiersFetched;
+	const { tierPoints, member, isLoading } =
+		useMemberLeaderboardsPoints(steamId);
 
 	/**
 	 * All of the member's points, grouped by game tier.
 	 */
-	const tierPoints = tiersData.map((tier: Tier) => {
-		const tierPoints = member?.games?.find(game => game.tier === tier.id);
-		return (
-			<Tooltip
-				key={`member-score-${tier.id}`}
-				content={
-					<>
-						<span>Sum of all games completed in tier {tier.id}</span>
-						<span>Points total: {tierPoints?.points}</span>
-					</>
-				}>
-				<StyledScore>
-					<Icon icon={tier.icon as IconType} size={Size.MICRO} />
-					{tierPoints?.total}
-				</StyledScore>
-			</Tooltip>
-		);
-	});
+	const groupedTierPoints = useMemo(() => {
+		return tierPoints.map(tier => {
+			return (
+				<Tooltip
+					key={`member-score-${tier.id}`}
+					content={
+						<>
+							<span>Sum of all games completed in tier {tier.id}</span>
+							<span>Points total: {tier?.points}</span>
+						</>
+					}>
+					<StyledScore>
+						<Icon icon={tier.icon as IconType} size={Size.MICRO} />
+						{tier?.total}
+					</StyledScore>
+				</Tooltip>
+			);
+		});
+	}, [tierPoints]);
 
 	if (isLoading) return <Spinner />;
 	return (
 		<StyledLeaderboardsMemberPoints>
-			{tierPoints}
+			{groupedTierPoints}
 			<Tooltip
 				content={
 					<>

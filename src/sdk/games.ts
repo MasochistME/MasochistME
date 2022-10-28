@@ -2,6 +2,7 @@ import {
 	GamesListParams,
 	GameCompletionListParams,
 } from '@masochistme/sdk/dist/v1/api/games';
+import { Sort } from '@masochistme/sdk/dist/v1/types';
 import { useQuery } from '@tanstack/react-query';
 import { useAppContext } from 'context';
 
@@ -85,6 +86,14 @@ export const useGameBadges = (gameId: number) => {
  */
 export const useGameCompletions = (params?: GameCompletionListParams) => {
 	const { sdk } = useAppContext();
+	const fixedParams = {
+		...params,
+		sort: {
+			mostRecentAchievementDate: 'asc' as Sort,
+			completionPercentage: 'asc' as Sort,
+			...(params?.sort && { ...params.sort }),
+		},
+	};
 
 	const {
 		data: completionsData = [],
@@ -92,8 +101,13 @@ export const useGameCompletions = (params?: GameCompletionListParams) => {
 		isFetched,
 		isError,
 	} = useQuery(
-		['masochist', 'games', 'completions', params ? JSON.stringify(params) : ''],
-		() => sdk.getGameCompletionList({ ...(params ?? {}) }),
+		[
+			'masochist',
+			'games',
+			'completions',
+			fixedParams ? JSON.stringify(fixedParams) : '',
+		],
+		() => sdk.getGameCompletionList({ ...fixedParams }),
 	);
 
 	return { completionsData, isLoading, isFetched, isError };

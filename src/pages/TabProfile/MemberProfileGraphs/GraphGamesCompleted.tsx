@@ -1,12 +1,7 @@
 import React from 'react';
-import { orderBy } from 'lodash';
-import moment from 'moment';
-import { Tier, Game, Member } from '@masochistme/sdk/dist/v1/types';
 
-import { useCuratedGames, useTiers, useMemberById, useMemberGames } from 'sdk';
-import { Section, DoughnutChart, LineChart } from 'containers';
-import { log } from 'utils';
-import { Flex, Spinner } from 'components';
+import { useCuratedGames, useMemberGames } from 'sdk';
+import { DoughnutChart } from 'containers';
 
 type Props = {
 	memberId: string;
@@ -15,13 +10,8 @@ type Props = {
 export const GraphGamesCompleted = (props: Props) => {
 	const { memberId } = props;
 
-	const { tiersData } = useTiers();
 	const { gamesData } = useCuratedGames();
-	const {
-		memberGamesData,
-		isLoading: isMemberGamesLoading,
-		isFetched: isMemberGamesFetched,
-	} = useMemberGames(memberId);
+	const { memberGamesData } = useMemberGames(memberId);
 
 	const memberCompletedGames = memberGamesData
 		.filter(memberGame => memberGame.completionPercentage === 100)

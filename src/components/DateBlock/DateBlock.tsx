@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 
-import { fonts, media } from 'styles/theme/themeOld';
+import { fonts, media } from 'styles';
 import { Flex } from '../Flex';
 
 type Props = {

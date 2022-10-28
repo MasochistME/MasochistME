@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import icons, { IconType as AssetIconType } from 'assets/icons';
+import { ColorTokens } from 'styles';
 import { Size, Tooltip } from 'components';
 
 type Props = {
@@ -10,7 +11,7 @@ type Props = {
 	spin?: boolean;
 	icon: AssetIconType;
 	size?: Size | number;
-	shadowColor?: string;
+	shadowColor?: ColorTokens | string;
 } & Omit<React.CSSProperties, 'width' | 'height'>;
 
 export const Icon = (props: Props): JSX.Element => {
@@ -42,7 +43,7 @@ export const Icon = (props: Props): JSX.Element => {
 const StyledSVG = styled.span<{
 	size: Size;
 	spin: boolean;
-	shadowColor?: string;
+	shadowColor?: ColorTokens | string;
 }>`
 	svg {
 		${({ spin }) => spin && `animation: rotation 2s infinite linear;`}

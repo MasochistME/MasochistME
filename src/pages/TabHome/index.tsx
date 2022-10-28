@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { media } from 'styles/theme/themeOld';
+import { media } from 'styles';
 import { useActiveTab } from 'hooks';
 import { TabDict } from 'configuration/tabs';
 import { Flex } from 'components';

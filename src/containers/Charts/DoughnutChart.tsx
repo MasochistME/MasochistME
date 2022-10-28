@@ -64,7 +64,6 @@ import {
 	registerables,
 	ScaleOptionsByType,
 } from 'chart.js';
-import { colors } from 'styles/theme/themeOld';
 
 ChartJS.register(...registerables);
 

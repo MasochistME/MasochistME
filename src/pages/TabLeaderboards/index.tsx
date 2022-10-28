@@ -2,7 +2,8 @@ import React, { Suspense } from 'react';
 import styled from 'styled-components';
 import { Tier } from '@masochistme/sdk/dist/v1/types';
 
-import { useTiers } from 'sdk';
+import { useAppContext } from 'context';
+import { useMembers, useTiers } from 'sdk';
 import { useActiveTab, useRankingList } from 'hooks';
 import { TabDict } from 'configuration/tabs';
 import { SubPage, Section, SectionProps } from 'containers';
@@ -18,22 +19,33 @@ const LeaderboardsMember = React.lazy(() =>
 );
 
 const TabLeaderboards = (): JSX.Element => {
+	const { queryMember } = useAppContext();
 	useActiveTab(TabDict.LEADERBOARDS);
 
 	const { rankingList = [], isLoading, isFetched } = useRankingList();
+	const { membersData = [] } = useMembers();
 
-	const lazyRankingList = rankingList.map(leader => (
-		<Suspense
-			key={`leaderboards-leader-${leader.memberId}`}
-			fallback={
-				<Skeleton width="100%" height="50px" style={{ margin: '2px 0' }} />
-			}>
-			<LeaderboardsMember
-				steamId={leader.memberId}
-				position={leader.position}
-			/>
-		</Suspense>
-	));
+	const lazyRankingList = rankingList.map(leader => {
+		const memberName =
+			membersData.find(member => member.steamId === leader.memberId)?.name ??
+			'';
+		const includesNameQuery = memberName
+			.toLowerCase()
+			.includes(queryMember.toLowerCase());
+		if (queryMember && !includesNameQuery) return null;
+		return (
+			<Suspense
+				key={`leaderboards-leader-${leader.memberId}`}
+				fallback={
+					<Skeleton width="100%" height="50px" style={{ margin: '2px 0' }} />
+				}>
+				<LeaderboardsMember
+					steamId={leader.memberId}
+					position={leader.position}
+				/>
+			</Suspense>
+		);
+	});
 
 	return (
 		<SubPage>

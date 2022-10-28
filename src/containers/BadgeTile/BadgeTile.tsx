@@ -2,10 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { Badge } from '@masochistme/sdk/dist/v1/types';
 
-import { fonts } from 'styles/theme/themeOld';
+import { fonts, useTheme, ColorTokens } from 'styles';
 import { BadgeThumbnail } from 'containers';
 import { Flex, Icon, Size } from 'components';
-import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
 	badge: Badge;

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Collapse from '@mui/material/Collapse';
 import styled from 'styled-components';
 
-import { media } from 'styles/theme/themeOld';
+import { media } from 'styles';
 import { Flex } from 'components';
 import { MemberLeaderboards } from 'containers';
 

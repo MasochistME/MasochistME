@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { useAppContext } from 'context';
 import { EventsDict, EventDict } from 'configuration';
-import { media } from 'styles/theme/themeOld';
+import { media } from 'styles';
 import { FilterBar, Flex } from 'components';
 
 import { EventsFilterCheckbox } from './EventsFilterCheckbox';

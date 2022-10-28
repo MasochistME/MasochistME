@@ -10,7 +10,7 @@
 // import TableRow from '@mui/material/TableRow';
 // import Paper from '@mui/material/Paper';
 
-// import { colors, fonts } from 'styles/theme/themeOld';
+// import { colors, fonts } from 'styles';
 
 // import { TableHeader, Order } from './TableHeader';
 

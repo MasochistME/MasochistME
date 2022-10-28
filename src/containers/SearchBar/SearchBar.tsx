@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { media, fonts } from 'styles/theme/themeOld';
-import { useTheme, ColorTokens } from 'styles';
+import { media, fonts, useTheme, ColorTokens } from 'styles';
 
 type Props<T extends string> = {
 	query: T;
@@ -39,7 +38,8 @@ const SearchBarInput = styled.input<{ colorTokens: ColorTokens }>`
 	font-size: 1.2em;
 	font-family: ${fonts.Raleway};
 	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']}cc;
-	border: 1px solid ${({ colorTokens }) => colorTokens['semantic-color-idle']}cc;
+	border: 1px solid
+		${({ colorTokens }) => colorTokens['semantic-color--idle']}cc;
 	border-radius: 8px;
 	box-sizing: border-box;
 	&:active,

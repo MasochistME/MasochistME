@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { Game } from '@masochistme/sdk/dist/v1/types';
 
 import { useTiers } from 'sdk';
+import { useTheme } from 'styles';
 import { getTierIcon } from 'utils';
 import { Flex, Icon, TableLink, Size, defaultSort } from 'components';
 import { GameThumbnail } from 'containers';
@@ -18,6 +19,7 @@ import { useGameColumnLatestCompletion } from './useGameColumnLatestCompletion';
 
 export const useGamesColumns = () => {
 	const history = useHistory();
+	const { colorTokens } = useTheme();
 	const { tiersData } = useTiers();
 	const { columnTotalPoints } = useGamesColumnTotalPoints();
 	const { columnAchievements } = useGamesColumnAchievements();
@@ -49,7 +51,9 @@ export const useGamesColumns = () => {
 		title: 'Title',
 		width: '30%',
 		render: (game: Game) => (
-			<TableLink onClick={() => onGameClick(game)}>{game.title}</TableLink>
+			<TableLink colorTokens={colorTokens} onClick={() => onGameClick(game)}>
+				{game.title}
+			</TableLink>
 		),
 		sorter: (a: Game, b: Game) => defaultSort(a.title, b.title),
 	};

@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import { Member, PatronTier } from '@masochistme/sdk/dist/v1/types';
 
 import { useUpdateMemberMutation, useMemberLeaderboards } from 'sdk';
-import { media } from 'styles/theme/themeOld';
+import { media } from 'styles';
 import { Alert, Flex, Tooltip, Button } from 'components';
 
 type Props = {

@@ -1,12 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { colors, fonts, media } from 'styles/theme/themeOld';
+import { fonts, media, useTheme, ColorTokens } from 'styles';
 import { Tab, tabs } from 'configuration/tabs';
 import { useAppContext } from 'context';
 import { Flex, Icon, Size } from 'components';
 import { UpdateStatus } from 'containers';
-import { useTheme, ColorTokens } from 'styles';
 
 export const SubHeader = (): JSX.Element => {
 	const { activeTab } = useAppContext();
@@ -61,7 +60,8 @@ const StyledTitle = styled(Flex)<{ colorTokens: ColorTokens; shUrl: string }>`
 	h2 {
 		font-size: 1em;
 		font-weight: normal;
-		text-shadow: 0px 0px 5px ${colors.newDark};
+		text-shadow: 0px 0px 5px
+			${({ colorTokens }) => colorTokens['common-color--shadow']};
 		margin: 0;
 	}
 `;

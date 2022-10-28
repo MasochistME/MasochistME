@@ -3,10 +3,9 @@ import styled from 'styled-components';
 import { Member, PatronTier } from '@masochistme/sdk/dist/v1/types';
 
 import { Size } from 'components';
-import { colors } from 'styles/theme/themeOld';
+import { useTheme, ColorTokens } from 'styles';
 import { CommonProps } from 'containers';
 import { BrokenImage, Flex, Skeleton, Tooltip } from 'components';
-import { useTheme, ColorTokens } from 'styles';
 
 type Props = CommonProps & {
 	member?: Partial<Member>;
@@ -62,9 +61,10 @@ const StyledMemberAvatar = styled.div.attrs(
 	(
 		props: Pick<Props, 'size' | 'patronTier' | 'onClick'> & {
 			isEmpty: boolean;
+			colorTokens: ColorTokens;
 		},
 	) => {
-		const { size, patronTier, onClick } = props;
+		const { size, patronTier, colorTokens, onClick } = props;
 		const style: React.CSSProperties = {
 			minWidth: size,
 			minHeight: size,
@@ -73,16 +73,16 @@ const StyledMemberAvatar = styled.div.attrs(
 			cursor: onClick ? 'pointer' : 'help',
 		};
 		if (patronTier === PatronTier.TIER1) {
-			style.border = `5px solid ${colors.tier1}`;
+			style.border = `5px solid ${colorTokens['semantic-color--tier-1']}`;
 		}
 		if (patronTier === PatronTier.TIER2) {
-			style.border = `5px solid ${colors.tier2}`;
+			style.border = `5px solid ${colorTokens['semantic-color--tier-2']}`;
 		}
 		if (patronTier === PatronTier.TIER3) {
-			style.border = `5px solid ${colors.tier3}`;
+			style.border = `5px solid ${colorTokens['semantic-color--tier-3']}`;
 		}
 		if (patronTier === PatronTier.TIER4) {
-			style.border = `5px solid ${colors.tier4}`;
+			style.border = `5px solid ${colorTokens['semantic-color--tier-4']}`;
 		}
 		return { style };
 	},

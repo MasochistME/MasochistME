@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import dayjs from 'dayjs';
 import { EventMemberJoin, EventType } from '@masochistme/sdk/dist/v1/types';
 
-import { media } from 'styles/theme/themeOld';
+import { media } from 'styles';
 import { useCuratorMembers, useEvents } from 'sdk';
 import { MemberAvatar, Section, SectionProps } from 'containers';
 import { Flex } from 'components';

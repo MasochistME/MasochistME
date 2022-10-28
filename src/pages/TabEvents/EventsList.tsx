@@ -95,7 +95,7 @@ const StyledEventItem = styled(Flex)<{ colorTokens: ColorTokens }>`
 	border-bottom: 1px solid
 		${({ colorTokens }) => colorTokens['core-primary-bg']};
 	border-top: 1px solid
-		${({ colorTokens }) => colorTokens['semantic-color-disabled']}66;
+		${({ colorTokens }) => colorTokens['semantic-color--disabled']}66;
 	&:first-child {
 		border-top: none;
 	}

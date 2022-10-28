@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
-import { fonts, media } from 'styles/theme/themeOld';
+import { fonts, media, useTheme, ColorTokens } from 'styles';
 import { Flex, Icon, IconType, Tooltip, Skeleton, Size } from 'components';
-import { useTheme, ColorTokens } from 'styles';
 import { ColorMap } from 'utils';
 
 type Props = {
@@ -26,7 +25,7 @@ export const StatBlock = (props: Props) => {
 
 	const getTierColor = () => {
 		if (tier === ColorMap.GOLD) return colorTokens['semantic-color--tier-4'];
-		return colorTokens['semantic-color-active']; // Normal, default color
+		return colorTokens['semantic-color--active']; // Normal, default color
 	};
 
 	return (

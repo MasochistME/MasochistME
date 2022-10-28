@@ -5,8 +5,7 @@ import { Tier, TierId } from '@masochistme/sdk/dist/v1/types';
 import { useTiers } from 'sdk';
 import { MemberLeaderboards } from 'containers';
 import { Checkbox, Flex, IconType, Spinner, Switch } from 'components';
-import { fonts, media } from 'styles/theme/themeOld';
-import { useTheme, ColorTokens } from 'styles';
+import { fonts, media, useTheme, ColorTokens } from 'styles';
 
 type Props = { memberId: string };
 
@@ -95,7 +94,7 @@ const StyledFilterGame = styled(Flex)`
 
 const StyledFilterGameText = styled.span<{ colorTokens: ColorTokens }>`
 	font-size: 1.5em;
-	color: ${({ colorTokens }) => colorTokens['semantic-color-interactive']};
+	color: ${({ colorTokens }) => colorTokens['semantic-color--interactive']};
 	@media (max-width: ${media.tablets}) {
 		display: none;
 	}
