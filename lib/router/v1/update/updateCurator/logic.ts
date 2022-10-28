@@ -313,6 +313,7 @@ export const updateCuratorLogic = async (
       ...currentCuratorGames,
       ...oldGames.filter(
         oldGame =>
+          (oldGame.isCurated || oldGame.isProtected) &&
           !currentCuratorGames.find(
             currentGame => oldGame.id === currentGame.id,
           ),
