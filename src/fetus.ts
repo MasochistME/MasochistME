@@ -1,4 +1,3 @@
-import axios from "axios";
 import * as dotenv from "dotenv";
 import { Arcybot } from "arcybot";
 import { SDK } from "@masochistme/sdk/dist/v1/sdk";
@@ -22,7 +21,7 @@ export const mmeDb =
 
 const host =
   process.env["ENV"] === "dev"
-    ? "http://localhost:3081"
+    ? "http://65.108.214.190:3081"
     : "http://65.108.214.190:3002";
 
 export const mongo = new Database([{ symbol: botDb, url: process.env["DB"] }]);
@@ -33,9 +32,6 @@ export const sdk = new SDK({
 });
 
 export const cache = new Cache({ botDb });
-
-if (process.env.ACCESS_TOKEN)
-  axios.defaults.headers.common["Authorization"] = process.env.ACCESS_TOKEN;
 
 /************************
  *      BOT CONFIG      *

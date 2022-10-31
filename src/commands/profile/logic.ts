@@ -1,12 +1,11 @@
-import axios from "axios";
 import { APIEmbed } from "discord.js";
 import { DiscordInteraction } from "arcybot";
-import { Member } from "@masochistme/sdk/dist/v1/types";
+import { Leaderboards, Member } from "@masochistme/sdk/dist/v1/types";
 
 import { cache, sdk } from "fetus";
 import { createError, ErrorAction } from "utils";
 
-import { API_URL, UNKNOWN, USER_NO_DESCRIPTION } from "consts";
+import { UNKNOWN, USER_NO_DESCRIPTION } from "consts";
 
 type PartialMember = Pick<
   Member,
@@ -32,19 +31,21 @@ export const profile = async (
       throw `Your Discord account is not connected to the Masochist.ME profile.
       \nTo be able to use \`/profile\` command, please register first with the \`/register\` command.`;
 
-    const rankingUrl = `${API_URL}/ranking`;
-    const fullRanking = await axios.get(rankingUrl);
-    if (fullRanking.status !== 200) throw fullRanking.data;
+    const fullRanking = await sdk.getLeaderboardsMembersList({});
+    const memberRanking = fullRanking.find(
+      ranking => ranking.memberId === member.steamId,
+    );
+    const isMember = member.isMember || member.isProtected;
 
     const usefulMemberInfo: PartialMember = {
       steamId: member.steamId,
-      name: member.name,
+      name: `${member.name} (${isMember ? "member" : "guest"})`,
       avatar: member.avatar,
       url: `https://steamcommunity.com/profiles/${member.steamId}`,
       description: member.description,
-      tierCompletion: "", // getMemberTierCompletion(member),
-      badges: getMemberBadges(member, fullRanking),
-      rank: getMemberRank(member, fullRanking),
+      tierCompletion: getMemberTierCompletion(memberRanking, isMember),
+      badges: getMemberBadges(memberRanking, isMember),
+      rank: getMemberRank(memberRanking, isMember),
     };
     const embed = getMemberEmbed(usefulMemberInfo);
     interaction.editReply({ embeds: [embed] });
@@ -104,18 +105,11 @@ const getMemberEmbed = (member: PartialMember) => {
  * @param member Member
  * @return string
  */
-const getMemberRank = (member: Member, fullRanking: any) => {
-  const memberRanking =
-    fullRanking.data.find((r: any) => r.id === member.steamId)?.points?.sum ??
-    "0";
-  const memberPosition = fullRanking.data.findIndex(
-    (r: any) => r.id === member.steamId,
-  );
-  const fixedMemberPosition =
-    memberPosition === -1
-      ? "Not present in ranking"
-      : `\`\`#${Number(memberPosition) + 1}\`\``;
-  return `${fixedMemberPosition}\n\n**Total points:**\n\`\`${memberRanking}\`\``;
+const getMemberRank = (memberRanking?: Leaderboards, isMember?: boolean) => {
+  if (!isMember) return `—\n\n**Total points:**\n—`;
+  const memberPointsSum = memberRanking?.sum ?? "—";
+  const memberPosition = memberRanking?.position ?? "—";
+  return `${memberPosition}\n\n**Total points:**\n\`\`${memberPointsSum}\`\``;
 };
 
 /**
@@ -123,27 +117,33 @@ const getMemberRank = (member: Member, fullRanking: any) => {
  * @param member Member
  * @return string
  */
-// TODO FIX!
-// const getMemberTierCompletion = (member: Member) => {
-//   const memberTierCompletionSummary = cache.tiers
-//     .map(tier => {
-//       const memberTierCompletion = member[tier.id] ?? "0";
-//       return `\`\`Tier ${tier.id} - ${memberTierCompletion}\`\``;
-//     })
-//     .join("\n");
-//   return memberTierCompletionSummary;
-// };
+const getMemberTierCompletion = (
+  memberRanking?: Leaderboards,
+  isMember?: boolean,
+) => {
+  if (!isMember) return "—";
+  const memberTierCompletionSummary = cache.tiers
+    .map(tier => {
+      const memberTierCompletion =
+        memberRanking?.games?.[tier.id]?.total ?? "0";
+      return `\`\`Tier ${tier.id} - ${memberTierCompletion}\`\``;
+    })
+    .join("\n");
+  return memberTierCompletionSummary;
+};
 
 /**
  * Returns a number of badges that the member earned.
  * @param member Member
  * @return string
  */
-const getMemberBadges = (member: Member, fullRanking: any) => {
-  const memberBadges =
-    fullRanking.data.find((r: any) => r.id === member.steamId)?.points
-      ?.badges ?? {};
-  const { points = "0", total = "0" } = memberBadges;
+const getMemberBadges = (memberRanking?: Leaderboards, isMember?: boolean) => {
+  if (!isMember) return `—\n\n**Badges points:**\n—`;
+  const memberBadges: { points: number | "—"; total: number | "—" } =
+    memberRanking?.badges ?? {
+      points: "—",
+      total: "—",
+    };
 
-  return `\`\`${total}\`\`\n\n**Badges points:**\n\`\`${points}\`\``;
+  return `\`\`${memberBadges.total}\`\`\n\n**Badges points:**\n\`\`${memberBadges.points}\`\``;
 };
