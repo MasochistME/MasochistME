@@ -1,9 +1,9 @@
-import axios from "axios";
 import { getErrorEmbed } from "arcybot";
 import { ButtonInteraction, APIEmbed } from "discord.js";
 
 import { isMod } from "utils";
 import { API_URL, REGISTRATION_REVIEW } from "consts";
+import { sdk } from "fetus";
 
 /**
  * Handles autocompletion for the create badge command
@@ -50,17 +50,28 @@ export const registrationReview = async (
 
   if (interaction.customId === `${REGISTRATION_REVIEW}_APPROVE`) {
     try {
-      await connectDiscordUserToSteam(steamId, userDiscordId);
+      const acknowledged = await connectDiscordUserToSteam(
+        steamId,
+        userDiscordId,
+      );
+      if (acknowledged) {
+        throw new Error(
+          "Incorrect token. Please contact Arcyvilk because something is fucked up.",
+        );
+      } else
+        interaction.update({
+          embeds: [{ ...embed, title: "✅ User application - APPROVED" }],
+          components: [],
+        });
     } catch (err: any) {
       interaction.update({
-        ...getErrorEmbed("Error", err),
+        ...getErrorEmbed(
+          "Error",
+          "Incorrect token. Please contact Arcyvilk because something is fucked up.",
+        ),
         components: [],
       });
     }
-    interaction.update({
-      embeds: [{ ...embed, title: "✅ User application - APPROVED" }],
-      components: [],
-    });
   }
   if (interaction.customId === `${REGISTRATION_REVIEW}_REJECT`) {
     interaction.update({
@@ -79,9 +90,11 @@ const connectDiscordUserToSteam = async (
   steamId: string,
   discordId: string,
 ) => {
-  const url = `${API_URL}/users/user/${steamId}/discord/${discordId}`;
-  const badgeRes = await axios.put(url);
-  if (badgeRes.status !== 200) throw badgeRes.data;
+  const memberUpdateResponse = await sdk.updateMemberById({
+    memberId: steamId,
+    member: { discordId },
+  });
+  return memberUpdateResponse.acknowledged;
 };
 
 /**
