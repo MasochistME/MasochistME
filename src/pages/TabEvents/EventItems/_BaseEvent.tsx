@@ -21,7 +21,7 @@ const BaseEventLink = (props: Props) => {
 	const { children, onClick } = props;
 	const { colorTokens } = useTheme();
 	return (
-		<StyledBaseEventLink colorTokens={colorTokens} {...onClick}>
+		<StyledBaseEventLink colorTokens={colorTokens} onClick={onClick}>
 			{children}
 		</StyledBaseEventLink>
 	);
