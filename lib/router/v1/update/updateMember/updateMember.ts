@@ -195,8 +195,8 @@ export const updateMember = async (
           memberGameOld.achievementsUnlocked !==
             memberGame.achievementsUnlocked ||
           memberGameOld.playTime !== memberGame.playTime ||
-          memberGameOld.mostRecentAchievementDate !==
-            memberGame.mostRecentAchievementDate
+          memberGameOld.mostRecentAchievementDate.getTime() !==
+            memberGame.mostRecentAchievementDate.getTime()
         ) {
           // This game is registered in DB and changed - proceed
           return true;
@@ -319,7 +319,7 @@ export const updateMember = async (
  * including the free ones and restricted ones.
  */
 const getMemberSteamGames = async (memberId: string, curatedGames: Game[]) => {
-  log.INFO(`--> [UPDATE] user ${memberId} --> fetching games data`);
+  log.INFO(`--> [UPDATE] user ${memberId} --> fetching games data...`);
   /**
    * Scrapping member's Steam profile page.
    */
