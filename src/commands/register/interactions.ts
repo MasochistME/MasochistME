@@ -2,7 +2,7 @@ import { getErrorEmbed } from "arcybot";
 import { ButtonInteraction, APIEmbed } from "discord.js";
 
 import { isMod } from "utils";
-import { API_URL, REGISTRATION_REVIEW } from "consts";
+import { REGISTRATION_REVIEW } from "consts";
 import { sdk } from "fetus";
 
 /**
@@ -50,24 +50,31 @@ export const registrationReview = async (
 
   if (interaction.customId === `${REGISTRATION_REVIEW}_APPROVE`) {
     try {
-      const acknowledged = await connectDiscordUserToSteam(
+      const { acknowledged, modifiedCount } = await connectDiscordUserToSteam(
         steamId,
         userDiscordId,
       );
-      if (acknowledged) {
+      if (!acknowledged) {
         throw new Error(
           "Incorrect token. Please contact Arcyvilk because something is fucked up.",
         );
-      } else
-        interaction.update({
-          embeds: [{ ...embed, title: "✅ User application - APPROVED" }],
-          components: [],
-        });
+      }
+      if (modifiedCount === 0) {
+        throw new Error(
+          "Could not modify this member. Most likely the provided profile link is incorrect.",
+        );
+      }
+      interaction.update({
+        embeds: [{ ...embed, title: "✅ User application - APPROVED" }],
+        components: [],
+      });
     } catch (err: any) {
       interaction.update({
         ...getErrorEmbed(
           "Error",
-          "Incorrect token. Please contact Arcyvilk because something is fucked up.",
+          err?.message ??
+            err ??
+            "Incorrect token. Please contact Arcyvilk because something is fucked up.",
         ),
         components: [],
       });
@@ -94,7 +101,10 @@ const connectDiscordUserToSteam = async (
     memberId: steamId,
     member: { discordId },
   });
-  return memberUpdateResponse.acknowledged;
+  return {
+    acknowledged: memberUpdateResponse.acknowledged,
+    modifiedCount: memberUpdateResponse.modifiedCount,
+  };
 };
 
 /**

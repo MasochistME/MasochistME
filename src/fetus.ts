@@ -21,7 +21,7 @@ export const mmeDb =
 
 const host =
   process.env["ENV"] === "dev"
-    ? "http://65.108.214.190:3081"
+    ? "http://localhost:3081"
     : "http://65.108.214.190:3002";
 
 export const mongo = new Database([{ symbol: botDb, url: process.env["DB"] }]);

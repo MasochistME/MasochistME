@@ -11,7 +11,8 @@ import { createError, ErrorAction } from "utils";
 export const update = async (
   interaction: DiscordInteraction,
 ): Promise<void> => {
-  interaction.reply(
+  await interaction.deferReply();
+  interaction.editReply(
     getAwaitEmbed(
       "Updating...",
       "⏳ Updating cache...\n⏳ Updating command list...",
