@@ -161,7 +161,9 @@ export const getLeaderboardsMembersList = async (
       });
 
       const memberBadges = membersBadges.filter(
-        memberBadge => memberBadge.memberId === memberId,
+        memberBadge =>
+          memberBadge.memberId === memberId &&
+          badges.find(b => String(b._id) === memberBadge.badgeId),
       );
 
       const patreonTier =
