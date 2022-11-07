@@ -135,11 +135,13 @@ export const getLeaderboardsMembersList = async (
       const memberGames = membersGames.filter(
         memberGame => memberGame.memberId === memberId,
       );
-      let memberLeaderboardsGames = tiers.map(t => ({
-        tier: t.id,
-        points: 0,
-        total: 0,
-      }));
+      let memberLeaderboardsGames = tiers
+        .sort((a, b) => a.score - b.score)
+        .map(t => ({
+          tier: t.id,
+          points: 0,
+          total: 0,
+        }));
 
       memberGames.forEach(memberGame => {
         memberLeaderboardsGames = memberLeaderboardsGames.map(
