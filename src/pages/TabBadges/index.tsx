@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { dedupArray, stringCompare } from 'utils';
@@ -48,7 +49,7 @@ const TabBadges = (): JSX.Element => {
 					title={
 						<Flex align gap={8}>
 							<Icon icon={tierIcon} />
-							<a href={`/game/${game.gameId}`}>{game.gameTitle}</a>
+							<Link to={`/game/${game.gameId}`}>{game.gameTitle}</Link>
 						</Flex>
 					}
 					content={

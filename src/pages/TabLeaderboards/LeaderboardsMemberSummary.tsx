@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { useMemberLeaderboardsSummary } from 'hooks';
@@ -84,7 +84,7 @@ export const LeaderboardsMemberSummary = (props: Props): JSX.Element | null => {
 					onClick={onShowDetailsClick}
 				/>
 				<StyledLeaderboardsMemberUsername
-					href={`/profile/${steamId}`}
+					to={`/profile/${steamId}`}
 					colorTokens={colorTokens}>
 					<Flex align justify gap={8}>
 						<h4>{member.name}</h4>
@@ -183,7 +183,9 @@ const StyledLeaderboardsMemberDetails = styled(Flex)`
 	}
 `;
 
-const StyledLeaderboardsMemberUsername = styled.a<{ colorTokens: ColorTokens }>`
+const StyledLeaderboardsMemberUsername = styled(Link)<{
+	colorTokens: ColorTokens;
+}>`
 	color: inherit;
 	&:hover {
 		color: white;
