@@ -4,20 +4,20 @@
   "description": "A custom Dr. Fetus Bot for the Masochist.ME community!",
   "author": "Arcyvilk <arcyvilk@gmail.com>",
   "license": "MIT",
-  "type": "module",
   "scripts": {
     "create-command": "node ./scripts/createCommand.mjs && yarn lint --fix",
-    "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
+    "build:dev": "env ENV=dev tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
+    "build:prod": "env ENV=prod tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
     "fetus:dev": "env ENV=dev npx tsx src/fetus.ts",
     "fetus:dev:watch": "env ENV=dev nodemon --exec npx tsx src/fetus.ts",
     "fetus:prod": "env ENV=prod npx tsx src/fetus.ts",
     "fetus:prod:watch": "env ENV=prod nodemon --exec npx tsx src/fetus.ts",
+    "fetus": "node dist/fetus.js",
     "start": "env ENV=prod node dist/fetus.js",
     "lint": "eslint . --ext .ts --fix",
     "test": "echo TODO"
   },
   "main": "dist/fetus.js",
-  "types": "dist/fetus.d.ts",
   "homepage": "https://github.com/PointOnePercent/DrFetus#readme",
   "repository": {
     "type": "git",

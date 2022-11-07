@@ -31,7 +31,9 @@ export const profile = async (
       throw `Your Discord account is not connected to the Masochist.ME profile.
       \nTo be able to use \`/profile\` command, please register first with the \`/register\` command.`;
 
-    const fullRanking = await sdk.getLeaderboardsMembersList({});
+    const fullRanking = await sdk.getLeaderboardsMembersList({
+      filter: { isMember: true },
+    });
     const memberRanking = fullRanking.find(
       ranking => ranking.memberId === member.steamId,
     );
@@ -125,7 +127,7 @@ const getMemberTierCompletion = (
   const memberTierCompletionSummary = cache.tiers
     .map(tier => {
       const memberTierCompletion =
-        memberRanking?.games?.[tier.id]?.total ?? "0";
+        memberRanking?.games?.find(rank => rank.tier === tier.id)?.total ?? "0";
       return `\`\`Tier ${tier.id} - ${memberTierCompletion}\`\``;
     })
     .join("\n");
