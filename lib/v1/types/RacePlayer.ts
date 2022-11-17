@@ -33,6 +33,10 @@ interface BaseRacePlayer extends WithId {
 	 * If true, participant gave up.
 	 */
 	dnf: boolean;
+	/**
+	 * Link to screenshot or other proof of finishing a race.
+	 */
+	proof: string | null;
 }
 
 /**

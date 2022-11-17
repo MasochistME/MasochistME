@@ -53,6 +53,10 @@ export interface BaseFeatured extends WithId {
 	 */
 	description: string | null;
 	/**
+	 * If this flag is set to true, featured news does not disappear after its time runs out.
+	 */
+	isSticky: boolean;
+	/**
 	 * ID of the game in the featured video (if it's a Steam game).
 	 */
 	gameId: number | null;
