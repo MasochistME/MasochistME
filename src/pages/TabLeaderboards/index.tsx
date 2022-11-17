@@ -25,8 +25,6 @@ const TabLeaderboards = (): JSX.Element => {
 	const { leaderboardsData, isFetched, isLoading } = useLeaderboardsMembers();
 	const { membersData = [] } = useMembers();
 
-	console.log(leaderboardsData);
-
 	const lazyRankingList = leaderboardsData.map(leader => {
 		const memberName =
 			membersData.find(member => member.steamId === leader.memberId)?.name ??
