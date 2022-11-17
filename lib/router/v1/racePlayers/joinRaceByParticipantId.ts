@@ -40,6 +40,7 @@ export const joinRaceByParticipantId = async (
       startDate: null,
       endDate: null,
       dnf: false,
+      proof: null,
       ...(race.type === RaceType.SCORE_BASED && { score: null }),
     };
 
