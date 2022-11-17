@@ -36,6 +36,8 @@ export const ModalLeaderboards = (props: Props): JSX.Element | null => {
 		maxWidth: '90%',
 		maxHeight: '90%',
 		overflowY: 'auto',
+		border: `1px solid ${colorTokens['core-extra-bg']}`,
+		boxShadow: `0 0 10px ${colorTokens['common-color--black']}aa`,
 	};
 
 	return (
@@ -67,7 +69,7 @@ export const WrapperLeaderboards = styled(Flex)<{ colorTokens: ColorTokens }>`
 	max-width: 100%;
 	height: auto;
 	gap: 16px;
-	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']}cc;
+	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']}ee;
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	font-family: ${fonts.Raleway};
 `;

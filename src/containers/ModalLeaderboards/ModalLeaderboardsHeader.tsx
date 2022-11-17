@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { Flex, Icon, Button } from 'components';
@@ -22,15 +22,15 @@ export const ModalLeaderboardsHeader = (props: Props) => {
 
 	return (
 		<StyledModalLeaderboardsHeader row align>
-			<Link
-				to={`https://store.steampowered.com/app/${gameId}`}
+			<a
+				href={`https://store.steampowered.com/app/${gameId}`}
 				target="_blank"
 				rel="noopener noreferrer"
 				onClick={event => event.stopPropagation()}>
 				<Flex align gap={8}>
 					<Icon icon="Steam" /> <h2>{gameTitle}</h2>
 				</Flex>
-			</Link>
+			</a>
 			<Button label="Details" icon="CircleInfo" onClick={onShowGame} />
 		</StyledModalLeaderboardsHeader>
 	);
