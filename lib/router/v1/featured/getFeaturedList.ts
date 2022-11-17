@@ -23,8 +23,12 @@ export const getFeaturedList = async (
 
     const cursor = collection
       .find({
-        ...(from !== undefined && { date: { $gte: new Date(from) } }),
-        ...(to !== undefined && { date: { $lte: new Date(to) } }),
+        ...(from !== undefined && {
+          $or: [{ date: { $gte: new Date(from) } }, { isSticky: true }],
+        }),
+        ...(to !== undefined && {
+          $or: [{ date: { $lte: new Date(to) } }, { isSticky: true }],
+        }),
         ...restFilter,
       })
       .sort({
