@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { media } from 'styles';
@@ -22,10 +22,17 @@ export enum SectionMap {
 const TabHome = (): JSX.Element => {
 	useActiveTab(TabDict.HOME);
 
+	const [activeFeaturedIndex, setActiveFeaturedIndex] = useState<number>(0);
+
 	return (
 		<SubPage>
 			<StyledDashboard column justify align>
-				<DashboardTile.Featured fullWidth isMobileOnly />
+				<DashboardTile.Featured
+					fullWidth
+					isMobileOnly
+					activeIndex={activeFeaturedIndex}
+					setActiveIndex={setActiveFeaturedIndex}
+				/>
 				<StyledSectionTop>
 					<StyledColumnLeft>
 						<DashboardTile.History />
@@ -36,7 +43,12 @@ const TabHome = (): JSX.Element => {
 					</StyledColumnLeft>
 					<StyledColumnRight>
 						<DashboardTile.Games />
-						<DashboardTile.Featured isDesktopOnly />
+						<DashboardTile.Featured
+							fullWidth
+							isDesktopOnly
+							activeIndex={activeFeaturedIndex}
+							setActiveIndex={setActiveFeaturedIndex}
+						/>
 					</StyledColumnRight>
 				</StyledSectionTop>
 				<DashboardTile.Sale />

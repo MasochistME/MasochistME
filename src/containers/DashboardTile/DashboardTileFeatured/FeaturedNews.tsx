@@ -1,7 +1,7 @@
 import React from 'react';
 import { FeaturedNews as TFeaturedNews } from '@masochistme/sdk/dist/v1/types';
 
-import ReactMarkdown from 'react-markdown';
+import { Markdown } from 'components';
 
 type Props = { featured: TFeaturedNews };
 
@@ -15,5 +15,5 @@ export const FeaturedNews = (props: Props) => {
 		`
   `,
 	);
-	return <ReactMarkdown>{markdown}</ReactMarkdown>;
+	return <Markdown>{markdown}</Markdown>;
 };

@@ -34,7 +34,7 @@ import { Flex, Icon, IconType, Skeleton, Size } from 'components';
 
 import { EventCompact } from './components';
 
-const NUMBER_OF_EVENTS = 13;
+const NUMBER_OF_EVENTS = 15;
 
 export const DashboardTileHistory = (
 	props: Omit<SectionProps, 'content' | 'title'>,

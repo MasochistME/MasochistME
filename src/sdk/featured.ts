@@ -15,7 +15,10 @@ export const useFeatured = () => {
 		isFetched,
 		isError,
 	} = useQuery(['masochist', 'featured', 'lastweek'], () =>
-		sdk.getFeaturedList({ filter: { from: lastWeekDate } }),
+		sdk.getFeaturedList({
+			filter: { from: lastWeekDate },
+			sort: { date: 'desc' },
+		}),
 	);
 
 	return { featuredData, isLoading, isFetched, isError };
