@@ -89,7 +89,7 @@ export const vid = async (interaction: DiscordInteraction): Promise<void> => {
     }`;
 
     channel?.send({
-      content: `${link}\n_${description} ~<@${interaction.user.id}>_`,
+      content: `${link}\n_${description ?? ""} ~<@${interaction.user.id}>_`,
       components,
     });
 
