@@ -30,13 +30,13 @@ export const Pagination = (props: Props) => {
 	);
 };
 
-const WIDTH = 16;
+const WIDTH = 24;
 
 const StyledPagination = styled(Flex)`
 	width: 100%;
 	justify-content: center;
 	align-items: center;
-	gap: 4px;
+	gap: 8px;
 `;
 
 const StyledPaginationItem = styled.div<{

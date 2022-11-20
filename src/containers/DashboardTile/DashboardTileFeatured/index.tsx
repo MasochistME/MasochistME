@@ -18,8 +18,9 @@ export const DashboardTileFeatured = (props: Props): JSX.Element => {
 	const { featuredData, isLoading, isFetched, isError } = useFeatured();
 
 	const featuredContent = useMemo(() => {
-		if (!isFetched || isError) return null;
-		const featured = featuredData[activeIndex];
+		const featured = featuredData?.[activeIndex];
+		if (!featured || !isFetched || isError) return null;
+
 		if (featured.type === FeaturedType.NEWS)
 			return <FeaturedNews featured={featured} />;
 		if (featured.type === FeaturedType.VIDEO)

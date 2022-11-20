@@ -12,39 +12,45 @@ export const FeaturedVideo = (props: Props) => {
 	const { membersData } = useMembers();
 	const { gamesData } = useGames();
 
-	const memberName =
-		membersData.find(member => member.steamId === featured.memberId)?.name ??
-		'UNKNOWN MEMBER';
-	const gameTitle =
-		gamesData.find(game => game.id === featured.gameId)?.title ??
-		'UNKNOWN GAME';
+	const game = gamesData.find(game => game.id === featured.gameId);
+	const member = membersData.find(
+		member => member.discordId === featured.memberId,
+	);
 
 	if (!featured.link) return null;
+	const ytLinkRegex = new RegExp(/(?<=v=)(.*)/gim);
+	const ytLinkId = featured.link.match(ytLinkRegex)?.[0];
+	if (!ytLinkId) return null;
+	const fixedLink = `https://www.youtube.com/embed/${ytLinkId}`;
+
+	const getMarkdown = () => {
+		const title =
+			featured.gameTitle ??
+			(game
+				? `[${game.title}](http://masochist.me/game/${featured.gameId})`
+				: '');
+		const description = featured.description
+			? `- ${featured?.description.replace(
+					/\\n/g,
+					`
+			`,
+			  )}`
+			: '';
+		const memberUsername = member
+			? `- by [${member?.name}](http://masochist.me/profile/${featured.memberId})`
+			: '';
+
+		return `## ${title} ${description} ${memberUsername}`;
+	};
 
 	return (
 		<StyledFeaturedVideoWrapper column>
-			<Markdown>
-				{'## [' +
-					gameTitle +
-					'](http://masochist.me/game/' +
-					featured.gameId +
-					') - ' +
-					(featured?.description ?? '').replace(
-						/\\n/g,
-						`
-			`,
-					) +
-					' - by [' +
-					memberName +
-					'](http://masochist.me/profile/' +
-					featured.memberId +
-					')'}
-			</Markdown>
+			<Markdown>{getMarkdown()}</Markdown>
 			<StyledFeaturedVideo>
 				<iframe
 					width="840"
 					height="440"
-					src={featured.link}
+					src={fixedLink}
 					frameBorder="0"
 					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 					allowFullScreen

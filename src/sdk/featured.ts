@@ -16,7 +16,7 @@ export const useFeatured = () => {
 		isError,
 	} = useQuery(['masochist', 'featured', 'lastweek'], () =>
 		sdk.getFeaturedList({
-			filter: { from: lastWeekDate },
+			filter: { from: lastWeekDate, isApproved: true, isVisible: true },
 			sort: { date: 'desc' },
 		}),
 	);
