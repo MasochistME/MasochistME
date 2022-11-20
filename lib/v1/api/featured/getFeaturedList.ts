@@ -52,7 +52,16 @@ export const getFeaturedList = async (
 
 export type FeaturedListParams = {
 	filter?: Partial<
-		Pick<Featured, 'type' | 'memberId' | 'gameId' | 'gameTitle'> & {
+		Pick<
+			Featured,
+			| 'type'
+			| 'memberId'
+			| 'gameId'
+			| 'gameTitle'
+			| 'isApproved'
+			| 'isVisible'
+			| 'isSticky'
+		> & {
 			from?: Date;
 			to?: Date;
 		}

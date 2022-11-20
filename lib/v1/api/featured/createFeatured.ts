@@ -28,7 +28,12 @@ import { Featured, ResponseError } from 'v1/types';
  * @param params.featured - Data of the new featured object.
  */
 export const createFeatured = async (
-	params: { featured: Omit<Featured, '_id' | 'date'> },
+	params: {
+		featured: Omit<
+			Featured,
+			'_id' | 'date' | 'isApproved' | 'isVisible' | 'isSticky'
+		>;
+	},
 	/** @ignore */
 	BASE_URL: string,
 ): Promise<InsertOneResult<Featured>> => {
@@ -38,7 +43,7 @@ export const createFeatured = async (
 	const featuredResponse = await axios.post<
 		InsertOneResult<Featured> | ResponseError,
 		AxiosResponse<InsertOneResult<Featured> | ResponseError>,
-		Omit<Featured, '_id' | 'date'>
+		Omit<Featured, '_id' | 'date' | 'isApproved' | 'isVisible' | 'isSticky'>
 	>(url, featured, { validateStatus: () => true });
 
 	const { status, data } = featuredResponse;
