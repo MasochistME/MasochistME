@@ -17,7 +17,7 @@ import { useGameColumnOwners } from './useGameColumnOwners';
 import { useGameColumnAvgPlaytime } from './useGameColumnAvgPlaytime';
 import { useGameColumnLatestCompletion } from './useGameColumnLatestCompletion';
 
-export const useGamesColumns = () => {
+export const useGameTableCells = () => {
 	const history = useHistory();
 	const { colorTokens } = useTheme();
 	const { tiersData } = useTiers();
@@ -34,44 +34,32 @@ export const useGamesColumns = () => {
 		if (game?.id) history.push(`/game/${game.id}`);
 	};
 
-	const columnTier = {
-		render: (game: Game) => (
-			<Flex width="40px" align justify>
-				<Icon icon={getTierIcon(game.tier, tiersData)} />
-			</Flex>
-		),
-		sorter: (a: Game, b: Game) => defaultSort(a.tier, b.tier),
+	const cellTier = (game: Game) => (
+		<Flex width="40px" align justify>
+			<Icon icon={getTierIcon(game.tier, tiersData)} />
+		</Flex>
+	);
+
+	const cellThumbnail = (game: Game) => (
+		<GameThumbnail game={game} size={Size.MEDIUM} />
+	);
+
+	const cellTitle = (game: Game) => (
+		<TableLink colorTokens={colorTokens} onClick={() => onGameClick(game)}>
+			{game.title}
+		</TableLink>
+	);
+
+	const cellSale = (game: Game) => {
+		const sale = game.sale ? `${game.sale}%` : '—';
+		return <div>{sale}</div>;
 	};
 
-	const columnThumbnail = {
-		render: (game: Game) => <GameThumbnail game={game} size={Size.MEDIUM} />,
-	};
-
-	const columnTitle = {
-		title: 'Title',
-		width: '30%',
-		render: (game: Game) => (
-			<TableLink colorTokens={colorTokens} onClick={() => onGameClick(game)}>
-				{game.title}
-			</TableLink>
-		),
-		sorter: (a: Game, b: Game) => defaultSort(a.title, b.title),
-	};
-
-	const columnSale = {
-		title: 'Sale',
-		render: (game: Game) => {
-			const sale = game.sale ? `${game.sale}%` : '—';
-			return <div>{sale}</div>;
-		},
-		sorter: (a: Game, b: Game) => defaultSort(a.sale ?? 0, b.sale ?? 0),
-	};
-
-	return [
+	return {
 		// // Basic columns
-		columnTier,
-		columnThumbnail,
-		columnTitle,
+		cellTier,
+		cellThumbnail,
+		cellTitle,
 		// // Statistics columns
 		columnTotalPoints,
 		columnAchievements,
@@ -81,6 +69,6 @@ export const useGamesColumns = () => {
 		columnOwners,
 		columnAvgPlaytime,
 		columnLatestCompletion,
-		columnSale,
-	];
+		cellSale,
+	};
 };

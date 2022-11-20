@@ -7,31 +7,31 @@ import { visuallyHidden } from '@mui/utils';
 
 export type Order = 'asc' | 'desc';
 
-export type HeadCell<T extends string[]> = {
+export type HeadCell = {
 	disablePadding: boolean;
-	id: keyof T;
+	id: string;
 	label: string;
 	numeric: boolean;
 };
 
-type Props<T extends string[]> = {
-	headCells: HeadCell<T>[];
+type Props = {
+	headCells: HeadCell[];
 	order: Order;
-	orderBy: string;
-	onRequestSort: (event: React.MouseEvent<unknown>, property: keyof T) => void;
+	orderBy: string | undefined;
+	onRequestSort: (event: React.MouseEvent<unknown>, property: string) => void;
 };
 
-export const TableHeader = <T extends string[]>(props: Props<T>) => {
+export const TableHeader = (props: Props) => {
 	const { headCells, order, orderBy, onRequestSort } = props;
 	const createSortHandler =
-		(property: keyof T) => (event: React.MouseEvent<unknown>) => {
+		(property: string) => (event: React.MouseEvent<unknown>) => {
 			onRequestSort(event, property);
 		};
 
 	return (
 		<TableHead>
 			<TableRow>
-				{headCells.map(headCell => (
+				{headCells.map((headCell: HeadCell) => (
 					<TableCell
 						key={String(headCell.id)}
 						align={headCell.numeric ? 'right' : 'left'}

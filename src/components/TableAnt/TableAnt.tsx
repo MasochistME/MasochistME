@@ -8,7 +8,7 @@ interface Props extends React.ComponentProps<typeof AntdTable> {
 	colorTokens: ColorTokens;
 }
 
-export const Table: any = styled(AntdTable)<Props>`
+export const TableAnt: any = styled(AntdTable)<Props>`
 	width: 100%;
 	table {
 		width: 100%;

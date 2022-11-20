@@ -1,1 +1,1 @@
-export { Table, TableLink, defaultSort } from './AntTable';
+export { Table } from './Table';
