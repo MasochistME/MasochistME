@@ -10,6 +10,8 @@ export * from './FilterBar';
 export * from './Flex';
 export * from './Icon';
 export * from './Loader';
+export * from './Markdown';
+export * from './Pagination';
 export * from './ProgressBar';
 export * from './Skeleton';
 export * from './Spinner';

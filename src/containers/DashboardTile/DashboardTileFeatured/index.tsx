@@ -1,24 +1,52 @@
+import { useMemo } from 'react';
+import styled from 'styled-components';
 import { FeaturedType } from '@masochistme/sdk/dist/v1/types';
 
 import { useFeatured } from 'sdk/featured';
 import { Section, SectionProps } from 'containers';
+import { Flex, Loader, Pagination } from 'components';
 
 import { FeaturedVideo } from './FeaturedVideo';
 import { FeaturedNews } from './FeaturedNews';
 
-// const FEATURED = ['https://www.youtube.com/embed/9Lz7VeVDmV4'];
-
-export const DashboardTileFeatured = (
-	props: Omit<SectionProps, 'content' | 'title'>,
-): JSX.Element => {
-	// const [activeFeatured, setActiveFeatured] = useState();
+type Props = Omit<SectionProps, 'content' | 'title'> & {
+	activeIndex: number;
+	setActiveIndex: (activeIndex: number) => void;
+};
+export const DashboardTileFeatured = (props: Props): JSX.Element => {
+	const { activeIndex, setActiveIndex } = props;
 	const { featuredData, isLoading, isFetched, isError } = useFeatured();
 
-	const featuredContent = featuredData.map(f => {
-		if (f.type === FeaturedType.NEWS) return <FeaturedNews featured={f} />;
-		if (f.type === FeaturedType.VIDEO) return <FeaturedVideo featured={f} />;
-		return null;
-	});
+	const featuredContent = useMemo(() => {
+		const featured = featuredData?.[activeIndex];
+		if (!featured || !isFetched || isError) return null;
 
-	return <Section title="Featured" content={featuredContent} {...props} />;
+		if (featured.type === FeaturedType.NEWS)
+			return <FeaturedNews featured={featured} />;
+		if (featured.type === FeaturedType.VIDEO)
+			return <FeaturedVideo featured={featured} />;
+	}, [featuredData, isFetched, isError, activeIndex]);
+
+	return (
+		<Section
+			title="Featured"
+			content={
+				<StyledContent column>
+					{isLoading ? <Loader /> : featuredContent}
+					<Pagination
+						nrOfItems={featuredData.length}
+						activeIndex={activeIndex}
+						setActiveIndex={setActiveIndex}
+					/>
+				</StyledContent>
+			}
+			{...props}
+		/>
+	);
 };
+
+const StyledContent = styled(Flex)`
+	gap: 12px;
+	justify-content: space-between;
+	height: 100%;
+`;

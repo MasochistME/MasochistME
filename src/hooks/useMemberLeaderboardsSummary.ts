@@ -9,10 +9,11 @@ export const useMemberLeaderboardsSummary = (memberId: string) => {
 
 	const leaderData = useMemo(() => {
 		return leaderboardsData.find(l => l.memberId === memberId);
-	}, []);
+	}, [leaderboardsData, memberId]);
+
 	const memberData = useMemo(() => {
 		return membersData.find(m => m.steamId === memberId);
-	}, []);
+	}, [membersData, memberId]);
 
 	const memberLeaderboardsSummary = useMemo(() => {
 		return {

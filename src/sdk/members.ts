@@ -7,15 +7,21 @@ import { useAppContext } from 'context';
  */
 export const useMembers = (params?: MembersListParams) => {
 	const { sdk } = useAppContext();
+	const fixedParams = {
+		...(params ?? {}),
+		filter: {
+			...(params?.filter ?? {}),
+			isMember: true,
+		},
+	};
 
 	const {
 		data: membersData = [],
 		isLoading,
 		isFetched,
 		isError,
-	} = useQuery(
-		['masochist', 'members', params ? JSON.stringify(params) : ''],
-		() => sdk.getMembersList({ ...(params ?? {}) }),
+	} = useQuery(['masochist', 'members', JSON.stringify(fixedParams)], () =>
+		sdk.getMembersList(fixedParams),
 	);
 
 	return { membersData, isLoading, isFetched, isError };

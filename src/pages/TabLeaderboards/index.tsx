@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { Tier } from '@masochistme/sdk/dist/v1/types';
 
 import { useAppContext } from 'context';
-import { useMembers, useTiers } from 'sdk';
-import { useActiveTab, useRankingList } from 'hooks';
+import { useMembers, useLeaderboardsMembers, useTiers } from 'sdk';
+import { useActiveTab } from 'hooks';
 import { TabDict } from 'configuration/tabs';
 import { SubPage, Section, SectionProps } from 'containers';
 import { Flex, Icon, Skeleton, Spinner, IconType } from 'components';
@@ -22,10 +22,10 @@ const TabLeaderboards = (): JSX.Element => {
 	const { queryMember } = useAppContext();
 	useActiveTab(TabDict.LEADERBOARDS);
 
-	const { rankingList = [], isLoading, isFetched } = useRankingList();
+	const { leaderboardsData, isFetched, isLoading } = useLeaderboardsMembers();
 	const { membersData = [] } = useMembers();
 
-	const lazyRankingList = rankingList.map(leader => {
+	const lazyRankingList = leaderboardsData.map(leader => {
 		const memberName =
 			membersData.find(member => member.steamId === leader.memberId)?.name ??
 			'';
