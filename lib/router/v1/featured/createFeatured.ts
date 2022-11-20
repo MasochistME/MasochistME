@@ -17,10 +17,16 @@ export const createFeatured = async (
   try {
     const { db } = mongoInstance.getDb();
     const collection = db.collection<Omit<Featured, '_id'>>('featured');
-    const featured: Omit<Featured, '_id' | 'date'> = req.body; // TODO Add Request<Featured> body validation
+    const featured: Omit<
+      Featured,
+      '_id' | 'date' | 'isApproved' | 'isVisible' | 'isSticky'
+    > = req.body; // TODO Add Request<Featured> body validation
 
     const response = await collection.insertOne({
       date: new Date(),
+      isApproved: false,
+      isVisible: false,
+      isSticky: false,
       ...featured,
     });
 
