@@ -45,6 +45,18 @@ export interface BaseFeatured extends WithId {
 	 */
 	type: FeaturedType;
 	/**
+	 * Flag indicating if the featured post has been approved by a moderator.
+	 */
+	isApproved: boolean;
+	/**
+	 * Flag indicating if the featured post should be visible on the website.
+	 */
+	isVisible: boolean;
+	/**
+	 * If this flag is set to true, featured news does not disappear after its time runs out.
+	 */
+	isSticky: boolean;
+	/**
 	 * Steam or Discord ID of the member who posted featured object.
 	 */
 	memberId: string;
@@ -52,10 +64,6 @@ export interface BaseFeatured extends WithId {
 	 * Description of the featured object.
 	 */
 	description: string | null;
-	/**
-	 * If this flag is set to true, featured news does not disappear after its time runs out.
-	 */
-	isSticky: boolean;
 	/**
 	 * ID of the game in the featured video (if it's a Steam game).
 	 */
