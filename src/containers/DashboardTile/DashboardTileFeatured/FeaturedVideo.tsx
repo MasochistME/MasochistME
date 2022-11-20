@@ -17,11 +17,10 @@ export const FeaturedVideo = (props: Props) => {
 		member => member.discordId === featured.memberId,
 	);
 
-	if (!featured.link) return null;
-	const ytLinkRegex = new RegExp(/(?<=v=)(.*)/gim);
-	const ytLinkId = featured.link.match(ytLinkRegex)?.[0];
-	if (!ytLinkId) return null;
-	const fixedLink = `https://www.youtube.com/embed/${ytLinkId}`;
+	const ytLinkID = getYTVideoID(featured.link);
+	if (!ytLinkID) return null;
+
+	const fixedLink = `https://www.youtube.com/embed/${ytLinkID}`;
 
 	const getMarkdown = () => {
 		const title =
@@ -59,6 +58,18 @@ export const FeaturedVideo = (props: Props) => {
 			</StyledFeaturedVideo>
 		</StyledFeaturedVideoWrapper>
 	);
+};
+
+const getYTVideoID = (link?: string) => {
+	if (!link) return null;
+	const ytLinkRegex = [
+		new RegExp(/(?<=youtu.be\/)(.*)/gim),
+		new RegExp(/(?<=youtube.com\/watch\?v=)(.*)/gim),
+	];
+	const ytLinkIds = ytLinkRegex
+		.map(regex => link.match(regex)?.[0])
+		.filter(Boolean);
+	return ytLinkIds[0];
 };
 
 const StyledFeaturedVideoWrapper = styled(Flex)`
