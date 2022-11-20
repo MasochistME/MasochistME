@@ -3,7 +3,7 @@ import {
   ApplicationCommandOptionChoiceData,
 } from "discord.js";
 
-import { getBadgeChoices, getMemberChoices } from "commands/_utils/badge";
+import { getBadgeChoices, getMemberChoices } from "commands/_utils/choices";
 
 /**
  * Handles autocompletion for the badge-user interaction commands

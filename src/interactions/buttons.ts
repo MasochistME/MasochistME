@@ -1,6 +1,11 @@
 import { ButtonInteraction } from "discord.js";
 
-import { REGISTRATION_REVIEW, RACE_CONFIRMATION, RaceButton } from "consts";
+import {
+  REGISTRATION_REVIEW,
+  RACE_CONFIRMATION,
+  FEATURE_VIDEO,
+  RaceButton,
+} from "consts";
 import { registrationReview } from "commands/register/interactions";
 import {
   racesetupConfirm,
@@ -10,8 +15,12 @@ import {
   raceFinish,
   raceGiveUp,
 } from "commands/racesetup/interactions";
+import { featureVideo } from "commands/vid/interactions";
 
 export const handleButtons = (interaction: ButtonInteraction) => {
+  if (interaction.customId.includes(FEATURE_VIDEO)) {
+    featureVideo(interaction);
+  }
   if (interaction.customId.includes(REGISTRATION_REVIEW)) {
     registrationReview(interaction);
   }

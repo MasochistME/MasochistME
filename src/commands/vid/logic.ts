@@ -1,4 +1,7 @@
 import { DiscordInteraction, getErrorEmbed, getSuccessEmbed } from "arcybot";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
+import { ObjectId } from "mongodb";
+import { FeaturedType } from "@masochistme/sdk/dist/v1/types";
 
 import {
   createError,
@@ -6,7 +9,10 @@ import {
   getChannelById,
   getOption,
   isLink,
+  getIsUserRegistered,
 } from "utils";
+import { FEATURE_VIDEO } from "consts";
+import { sdk } from "fetus";
 
 /**
  * Sends a video to the designated channel.
@@ -15,6 +21,9 @@ import {
  */
 export const vid = async (interaction: DiscordInteraction): Promise<void> => {
   const link = interaction.options.getString("link", true);
+  const description =
+    interaction.options.getString("description", false) ?? null;
+  const game = interaction.options.getString("game", false);
   const channelVid = getOption("room_vid");
 
   if (!isLink(link)) {
@@ -54,15 +63,59 @@ export const vid = async (interaction: DiscordInteraction): Promise<void> => {
   }
 
   try {
-    channel?.send(`${link} - <@${interaction.user.id}>`);
+    const isUserRegistered = await getIsUserRegistered(interaction.user.id);
+    const isGameId = game && !Number.isNaN(Number(game));
+    const gameId = isGameId ? Number(game) : null;
+    const gameTitle = isGameId ? null : game;
+
+    const featuredVideo = {
+      type: FeaturedType.VIDEO,
+      memberId: interaction.user.id,
+      description,
+      gameId,
+      gameTitle,
+      gameLink: null,
+      link,
+    };
+    const postFeatured = await sdk.createFeatured({ featured: featuredVideo });
+    // Only members who connected their Discord account to MasochistME one can have their posts featured
+    const components = isUserRegistered
+      ? [getFeatureVideoButtons(postFeatured?.insertedId)]
+      : [];
+    const interactionReplyContent = `It is now reposted to the video channel. ${
+      !isUserRegistered
+        ? "\n\n⚠️ **You don't have your Discord account connected to your MasochistME account, so the moderators won't be able to feature your video.**\n\nTo have a possibility of having your videos posted to MasochistME featured section, use the `/register` command."
+        : ""
+    }`;
+
+    channel?.send({
+      content: `${link}\n_${description} ~<@${interaction.user.id}>_`,
+      components,
+    });
+
     interaction.reply(
-      getSuccessEmbed(
-        "Video sent!",
-        "It is now reposted to the video channel.",
-        true,
-      ),
+      getSuccessEmbed("Video sent!", interactionReplyContent, true),
     );
   } catch (err: any) {
     createError(interaction, err, ErrorAction.REPLY);
   }
+};
+
+/**
+ * Creates a row of buttons - approve and reject - for the mod review of user registration
+ * @return ActionRowBuilder<ButtonBuilder>
+ */
+const getFeatureVideoButtons = (insertedId?: ObjectId) => {
+  const customId = insertedId
+    ? `${FEATURE_VIDEO}_${insertedId}`
+    : FEATURE_VIDEO;
+  const buttonFeature = new ButtonBuilder()
+    .setCustomId(customId)
+    .setLabel("FEATURE VIDEO (mod only)")
+    .setStyle(ButtonStyle.Primary);
+  const buttonBar = new ActionRowBuilder<ButtonBuilder>().addComponents(
+    buttonFeature,
+  );
+
+  return buttonBar;
 };

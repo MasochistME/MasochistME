@@ -389,7 +389,7 @@ const getRaceStartEmbed = (
     },
     {
       name: "Download grace period",
-      value: `${race.downloadGrace} seconds`,
+      value: "This value is a secret!",
       inline: true,
     },
     {

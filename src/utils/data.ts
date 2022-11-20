@@ -1,6 +1,6 @@
 import { DiscordInteraction } from "arcybot";
 
-import { bot, cache } from "fetus";
+import { bot, cache, sdk } from "fetus";
 import { UNKNOWN_NAME } from "consts";
 import { ButtonInteraction } from "discord.js";
 
@@ -35,4 +35,15 @@ export const getMemberNameById = (id?: string | null): string => {
   if (!id) return UNKNOWN_NAME;
   const member = cache.members.find(m => m.id === id);
   return member?.name ?? UNKNOWN_NAME;
+};
+
+export const getIsUserRegistered = async (discordId: string) => {
+  try {
+    const member = await sdk.getMemberById({ discordId });
+    if (member) return true;
+    return false;
+  } catch (error) {
+    // Mongo returns 404 if user does not exist
+    return false;
+  }
 };

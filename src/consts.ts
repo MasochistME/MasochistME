@@ -10,6 +10,7 @@ export const USER_NO_DESCRIPTION = "This user does not have description yet.";
 export const RACE_TIMEOUT = 1000 * 60;
 
 // Custom interaction IDs
+export const FEATURE_VIDEO = "FEATURE_VIDEO";
 export const REGISTRATION_REVIEW = "REGISTRATION_REVIEW";
 export const RACE_CONFIRMATION = "RACE_CONFIRMATION";
 
