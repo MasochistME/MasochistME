@@ -1,8 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { FeaturedVideo as TFeaturedVideo } from '@masochistme/sdk/dist/v1/types';
 
-import { Flex, Markdown } from 'components';
+import { Flex } from 'components';
 import { useGames, useMembers } from 'sdk';
 
 type Props = { featured: TFeaturedVideo };
@@ -22,29 +23,25 @@ export const FeaturedVideo = (props: Props) => {
 
 	const fixedLink = `https://www.youtube.com/embed/${ytLinkID}`;
 
-	const getMarkdown = () => {
-		const title =
-			featured.gameTitle ??
-			(game
-				? `[${game.title}](http://masochist.me/game/${featured.gameId})`
-				: '');
-		const description = featured.description
-			? `- ${featured?.description.replace(
-					/\\n/g,
-					`
-			`,
-			  )}`
-			: '';
-		const memberUsername = member
-			? `- by [${member?.name}](http://masochist.me/profile/${featured.memberId})`
-			: '';
-
-		return `## ${title} ${description} ${memberUsername}`;
-	};
+	const title = featured.gameTitle ?? game?.title ?? null;
 
 	return (
 		<StyledFeaturedVideoWrapper column>
-			<Markdown>{getMarkdown()}</Markdown>
+			<h2>
+				{title &&
+					(featured.gameId ? (
+						<Link to={`game/${featured.gameId}`}>{title}</Link>
+					) : (
+						title
+					))}
+				{featured.description ? ` - ${featured.description}` : null}
+				{member && (
+					<>
+						{' '}
+						- by <Link to={`profile/${member.steamId}`}>{member.name}</Link>
+					</>
+				)}
+			</h2>
 			<StyledFeaturedVideo>
 				<iframe
 					width="840"
@@ -75,6 +72,9 @@ const getYTVideoID = (link?: string) => {
 const StyledFeaturedVideoWrapper = styled(Flex)`
 	gap: 8px;
 	height: calc(440px+200px);
+	h2 {
+		margin: 0;
+	}
 `;
 
 const StyledFeaturedVideo = styled.div`
