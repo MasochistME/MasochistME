@@ -39,7 +39,7 @@ export const updateRaceByParticipantId = async (
 		raceId: string;
 		memberId: string;
 		update: Partial<
-			Pick<RacePlayer, 'startDate' | 'endDate' | 'dnf' | 'proof'>
+			Pick<RacePlayer, 'startDate' | 'endDate' | 'dnf' | 'proof' | 'proofDate'>
 		> & {
 			score?: number;
 		};
@@ -53,7 +53,9 @@ export const updateRaceByParticipantId = async (
 	const racePlayerResponse = await axios.put<
 		UpdateResult | ResponseError,
 		AxiosResponse<UpdateResult | ResponseError>,
-		Partial<Pick<RacePlayer, 'startDate' | 'endDate' | 'dnf' | 'proof'>> & {
+		Partial<
+			Pick<RacePlayer, 'startDate' | 'endDate' | 'dnf' | 'proof' | 'proofDate'>
+		> & {
 			score?: number;
 		}
 	>(url, update, { validateStatus: () => true });

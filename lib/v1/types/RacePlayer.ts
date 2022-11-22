@@ -37,6 +37,10 @@ interface BaseRacePlayer extends WithId {
 	 * Link to screenshot or other proof of finishing a race.
 	 */
 	proof: string | null;
+	/**
+	 * Time when member uploaded the proof.
+	 */
+	proofDate: Date | null;
 }
 
 /**
