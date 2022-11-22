@@ -51,7 +51,7 @@ export const getRaceParticipantsList = async (
 };
 
 export type RaceParticipantsListParams = {
-	raceId: number;
+	raceId: string;
 	filter?: Partial<Pick<RacePlayer, 'dnf'>>;
 	sort?: {
 		[key in keyof Partial<
