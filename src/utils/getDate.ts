@@ -14,6 +14,7 @@ export const getDateFromDelay = (delay: number) => {
   return date;
 };
 
-export const getUTCDate = (date: Date) => {
+export const getUTCDate = (date: Date | null) => {
+  if (date === null) return "-";
   return dayjs(date).tz("UTC").format("DD. MMMM YYYY, H:mm:ss [(UTC)]");
 };

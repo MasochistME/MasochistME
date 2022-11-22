@@ -4,6 +4,7 @@ import { ButtonInteraction } from "discord.js";
 export enum ErrorAction {
   EDIT = "edit",
   REPLY = "reply",
+  SEND = "send",
 }
 
 export const createError = (
@@ -28,5 +29,8 @@ export const createError = (
   }
   if (action === ErrorAction.EDIT) {
     interaction.editReply(getErrorEmbed(errorTitle, getErrorContent()));
+  }
+  if (action === ErrorAction.SEND) {
+    interaction.channel?.send(getErrorEmbed(errorTitle, getErrorContent()));
   }
 };

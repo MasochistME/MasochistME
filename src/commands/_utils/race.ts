@@ -2,13 +2,13 @@ import { Race, RaceType } from "@masochistme/sdk/dist/v1/types";
 import { DiscordInteraction, getErrorEmbed, log } from "arcybot";
 import dayjs from "dayjs";
 
-import { RACE_TIMEOUT } from "consts";
+import { RACE_TIMEOUT, RACE_RESULTS_TIMEOUT } from "consts";
 import { getDateFromDelay, getModChannel } from "utils";
 import { sdk } from "fetus";
 
 import { RaceData } from "commands/racesetup/logic";
 import { raceReadyToGo } from "commands/racesetup/interactions/raceStart";
-import { raceResults } from "commands/racesetup/interactions/raceResults";
+import { raceFinalize } from "commands/racesetup/interactions/raceFinalize";
 
 /**
  * Executes every minute to check if any race needs to be started or finished.
@@ -88,7 +88,9 @@ const handleRaceFinish = async (race: Race) => {
       ),
     );
   }
-  raceResults(raceId);
+  // setTimeout(() => {
+  raceFinalize(raceId);
+  // }, RACE_RESULTS_TIMEOUT);
 };
 
 /**

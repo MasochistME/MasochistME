@@ -8,6 +8,7 @@ export const USER_NO_DESCRIPTION = "This user does not have description yet.";
 
 // Timeouts
 export const RACE_TIMEOUT = 1000 * 60;
+export const RACE_RESULTS_TIMEOUT = 1; // 1000 * 60 * 60; // TODO re-enable it
 
 // Custom interaction IDs
 export const FEATURE_VIDEO = "FEATURE_VIDEO";

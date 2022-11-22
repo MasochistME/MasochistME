@@ -5,19 +5,38 @@ import {
   ActionRowBuilder,
   APIEmbed,
   APIEmbedField,
+  Message,
 } from "discord.js";
+import dayjs from "dayjs";
 import { getErrorEmbed, getInfoEmbed, getSuccessEmbed, log } from "arcybot";
 import { Race, RaceType, RaceScoreBased } from "@masochistme/sdk/dist/v1/types";
 
 import { bot, sdk } from "fetus";
 import { RaceButton } from "consts";
 import {
+  awaitMessage,
   getUTCDate,
   getModChannel,
   cenzor,
   createError,
   ErrorAction,
 } from "utils";
+
+const fieldsBeforeReveal = [
+  {
+    name: "---",
+    value: `1. Once you click the **REVEAL** button, the grace time begins. It's a short time of undisclosured length for downloading and starting the game - it will get substracted from your final time.
+  \n2. After the game is downloaded and you are ready to start, click the **START** button. **Remember to do this or your race will get forfeited!**
+  \nGood luck! You can start the race whenever it's convenient for you within the time limit.`,
+  },
+];
+const fieldsAfterReveal = [
+  {
+    name: "---",
+    value: `**The grace period has started** - it will get substracted from your final score while you download the game.
+  \nWhen you are ready to start click the **START** button. **Remember to do this or your race will get forfeited!**`,
+  },
+];
 
 /**
  * Message sent to race participant on DM when the race begins.
@@ -27,20 +46,10 @@ import {
 export const raceReadyToGo = async (raceId: string): Promise<void> => {
   try {
     const race = await sdk.getRaceById({ raceId });
-    const participants = await sdk.getRaceParticipantsList({
-      raceId: Number(raceId), // TODO temp fix! change back to string
-    });
+    const participants = await sdk.getRaceParticipantsList({ raceId });
     const participantsDiscordIds = participants.map(
       participant => participant.discordId,
     );
-    const tempFields = [
-      {
-        name: "---",
-        value: `Your race begins once you click the **REVEAL** button. You have ${race.downloadGrace} seconds to download and set up the game.
-      \n***Remember*** to click the **START** button when you are ready or your race will get forfeited!
-      \nGood luck! You can start the race whenever it's convenient for you within the time limit.`,
-      },
-    ];
     log.INFO("Preparing to inform race participants about race starting...");
     getModChannel()?.send(
       getInfoEmbed(
@@ -57,7 +66,7 @@ export const raceReadyToGo = async (raceId: string): Promise<void> => {
               race,
               `⏳ ${race.name.toUpperCase()} - PREPARING...`,
               true,
-              tempFields,
+              fieldsBeforeReveal,
             ),
           ],
           components: [getRaceStartButtons(raceId, true, false, false, false)],
@@ -108,21 +117,13 @@ export const raceJoinAfterStart = async (
   try {
     const raceId = interaction.customId.replace(`${RaceButton.RACE_JOIN}-`, "");
     const race = await sdk.getRaceById({ raceId });
-    const tempFields = [
-      {
-        name: "---",
-        value: `Your race begins once you click the **REVEAL** button. You have ${race.downloadGrace} seconds to download and set up the game.
-      \n***Remember*** to click the **START** button when you are ready or your race will get forfeited!
-      \nGood luck! You can start the race whenever it's convenient for you within the time limit.`,
-      },
-    ];
     interaction.user.send({
       embeds: [
         getRaceStartEmbed(
           race,
           `⏳ ${race.name.toUpperCase()} - PREPARING...`,
           true,
-          tempFields,
+          fieldsBeforeReveal,
         ),
       ],
       components: [getRaceStartButtons(raceId, true, false, false, false)],
@@ -155,6 +156,7 @@ export const raceReveal = async (
           race,
           `⌛ ${race.name.toUpperCase()} - READY TO GO`,
           false,
+          fieldsAfterReveal,
         ),
       ],
       components: [getRaceStartButtons(raceId, false, true, false, false)],
@@ -189,8 +191,13 @@ export const raceStart = async (
     if (!acknowledged) throw new Error("Database did not respond.");
     const tempFields = [
       {
+        name: "---",
+        value: `When you are done click the **FINISH** button - this will prompt you to upload a proof of finishing the race.
+        \nYou'll have ${race.uploadGrace} seconds to upload your screenshot. If you exceed that time it's fine, but the additional time will be added to your final score.`,
+      },
+      {
         name: "Your start time",
-        value: startDate.toLocaleTimeString(),
+        value: getUTCDate(startDate),
         inline: true,
       },
     ];
@@ -204,55 +211,6 @@ export const raceStart = async (
         ),
       ],
       components: [getRaceStartButtons(raceId, false, false, true, true)],
-    });
-  } catch (err: any) {
-    createError(interaction, err, ErrorAction.REPLY);
-  }
-};
-
-/**
- * Response to race participant clicking the FINISH button.
- * @param interaction
- * @return void
- */
-export const raceFinish = async (
-  interaction: ButtonInteraction,
-): Promise<void> => {
-  if (!interaction.isButton()) return;
-
-  try {
-    const raceId = interaction.customId.replace(
-      `${RaceButton.RACE_FINISH}-`,
-      "",
-    );
-    const race = await sdk.getRaceById({ raceId });
-    const endDate = new Date();
-    const { acknowledged } = await sdk.updateRaceByParticipantId({
-      raceId,
-      memberId: interaction.user.id,
-      update: { endDate },
-    });
-    if (!acknowledged) throw new Error("Database did not respond.");
-    const originalEmbed = interaction.message.embeds[0].data;
-    const editedEmbed = {
-      ...originalEmbed,
-      fields: [
-        ...(originalEmbed.fields ?? []),
-        {
-          name: "Your finish time",
-          value: endDate.toLocaleTimeString(),
-          inline: true,
-        },
-      ],
-    };
-    interaction.update({
-      embeds: [
-        {
-          ...editedEmbed,
-          title: `☑️ ${race.name.toUpperCase()} - FINISHED`,
-        },
-      ],
-      components: [getRaceStartButtons(raceId, false, false, false, false)],
     });
   } catch (err: any) {
     createError(interaction, err, ErrorAction.REPLY);
@@ -301,6 +259,111 @@ export const raceGiveUp = async (
     });
   } catch (err: any) {
     createError(interaction, err, ErrorAction.REPLY);
+  }
+};
+
+/**
+ * Response to race participant clicking the FINISH button.
+ * @param interaction
+ * @return void
+ */
+export const raceFinish = async (
+  interaction: ButtonInteraction,
+): Promise<void> => {
+  if (!interaction.isButton()) return;
+
+  try {
+    const raceId = interaction.customId.replace(
+      `${RaceButton.RACE_FINISH}-`,
+      "",
+    );
+    const race = await sdk.getRaceById({ raceId });
+    const participant = await sdk.getRaceParticipantById({
+      raceId,
+      memberId: interaction.user.id,
+    });
+    const startDate = participant?.startDate;
+    const endDate = new Date();
+    const { acknowledged } = await sdk.updateRaceByParticipantId({
+      raceId,
+      memberId: interaction.user.id,
+      update: { endDate },
+    });
+    if (!acknowledged) throw new Error("Database did not respond.");
+    const tempFields = [
+      {
+        name: "Your start time",
+        value: getUTCDate(startDate),
+        inline: true,
+      },
+      {
+        name: "Your finish time",
+        value: getUTCDate(endDate),
+        inline: true,
+      },
+    ];
+    interaction
+      .update({
+        embeds: [
+          getRaceStartEmbed(
+            race,
+            `☑️ ${race.name.toUpperCase()} - FINISHED`,
+            false,
+            tempFields,
+          ),
+        ],
+        components: [getRaceStartButtons(raceId, false, false, false, false)],
+        fetchReply: true,
+      })
+      .then(() => {
+        raceUploadProof(interaction, race);
+      });
+  } catch (err: any) {
+    createError(interaction, err, ErrorAction.REPLY);
+  }
+};
+
+const raceUploadProof = async (
+  interaction: ButtonInteraction,
+  race: Race,
+): Promise<void> => {
+  const channel = interaction?.channel;
+  if (!channel) return;
+
+  channel.send(
+    getInfoEmbed(
+      "Upload the proof",
+      `Please post a proof of you finishing the race below this message within the next ${race.uploadGrace} seconds.
+      \nIf you exceed that time it's fine, but every second above the grace period will be added to your final score.`,
+    ),
+  );
+  try {
+    const filter = (msg: Message) => !!msg.attachments.size;
+    const time = dayjs(race.endDate).diff(new Date());
+    const proofCollection = await awaitMessage<ButtonInteraction>(
+      interaction,
+      filter,
+      time,
+    );
+    const proof = proofCollection?.attachments?.first()?.url;
+    if (!proof)
+      throw new Error(
+        "I could not collect a proof. Reason unknown. Probably something fucked up.",
+      );
+    const { acknowledged } = await sdk.updateRaceByParticipantId({
+      raceId: String(race._id),
+      memberId: interaction.user.id,
+      update: { proof, proofDate: new Date() },
+    });
+    if (!acknowledged)
+      throw new Error(
+        "Could not save your proof. Reason unknown but probably database died or something.",
+      );
+    channel.send(
+      getSuccessEmbed("You successfully uploaded your proof!", proof),
+    );
+  } catch (err: any) {
+    createError(interaction, err, ErrorAction.SEND);
   }
 };
 
@@ -388,13 +451,8 @@ const getRaceStartEmbed = (
       value: isCenzored ? cenzor(race.downloadLink) : race.downloadLink,
     },
     {
-      name: "Download grace period",
-      value: "This value is a secret!",
-      inline: true,
-    },
-    {
       name: "Screenshot upload grace period",
-      value: `${race.uploadGrace} seconds`,
+      value: `${race.uploadGrace} s`,
       inline: true,
     },
   ];
@@ -414,6 +472,7 @@ const getRaceStartEmbed = (
       {
         name: "Race organizer",
         value: `<@${race.organizer}>`,
+        inline: true,
       },
       ...(newFields ?? []),
     ],

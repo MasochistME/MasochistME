@@ -8,6 +8,7 @@ import {
 } from "discord.js";
 import { getErrorEmbed, getInfoEmbed } from "arcybot";
 import { Race, RaceType, RaceScoreBased } from "@masochistme/sdk/dist/v1/types";
+import dayjs from "dayjs";
 
 import { sdk } from "fetus";
 import { RaceButton } from "consts";
@@ -21,6 +22,18 @@ export const racesetupJoin = async (
   if (!interaction.isButton()) return;
 
   const raceId = interaction.customId.replace(`${RaceButton.RACE_JOIN}-`, "");
+  const race = await sdk.getRaceById({ raceId });
+  const isRaceEnded = dayjs(race.endDate).diff(new Date()) <= 0;
+  if (isRaceEnded) {
+    interaction.reply(
+      getErrorEmbed(
+        "This race has ended",
+        "You cannot join race which has already ended!",
+        true,
+      ),
+    );
+    return;
+  }
   try {
     const response = await sdk.getRaceParticipantById({
       raceId,
@@ -64,7 +77,6 @@ export const racesetupJoin = async (
   };
 
   const registerUser = await saveJoinRace(interaction);
-  const race = await sdk.getRaceById({ raceId });
   if (registerUser) {
     interaction.update({ embeds: [updatedEmbed] });
     if (race.isActive) raceJoinAfterStart(interaction);
@@ -162,13 +174,8 @@ const getNewRaceCensoredEmbed = (race: Race): APIEmbed => {
       value: cenzor(race.downloadLink),
     },
     {
-      name: "Download grace period",
-      value: `${race.downloadGrace} seconds`,
-      inline: true,
-    },
-    {
       name: "Screenshot upload grace period",
-      value: `${race.uploadGrace} seconds`,
+      value: `${race.uploadGrace} s`,
       inline: true,
     },
   ];
@@ -187,10 +194,11 @@ const getNewRaceCensoredEmbed = (race: Race): APIEmbed => {
       {
         name: "Race organizer",
         value: `<@${race.organizer}>`,
+        inline: true,
       },
       {
         name: "---",
-        value: `Clicking the **JOIN** button below will sign you up for the race!\n\nYou will get a ping from the bot when the race opens - then you can click **START** button whenever you feel ready to go.\n\n---`,
+        value: `Clicking the **JOIN** button below will sign you up for the race!\n\nYou'll get pinged by bot when the race opens - then you can click **START** whenever you feel ready to go.\n\n---`,
       },
     ],
   };

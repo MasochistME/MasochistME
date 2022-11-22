@@ -1,5 +1,6 @@
 import * as dotenv from "dotenv";
 import { Arcybot } from "arcybot";
+import { GatewayIntentBits, Partials } from "discord.js";
 import { SDK } from "@masochistme/sdk/dist/v1/sdk";
 
 import { getOption, Database } from "utils";
@@ -48,6 +49,8 @@ const init = async () => {
     botId: process.env.BOT_ID,
     modRole: getOption("modRole"),
     guildId: getOption("guildId"),
+    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.DirectMessages],
+    partials: [Partials.Message, Partials.Channel, Partials.Reaction],
   };
 
   bot = new Arcybot(
@@ -60,14 +63,16 @@ const init = async () => {
 
   bot.start("Dr. Fetus reporting for destruction!");
 
+  bot.botClient.on("ready", async () => {
+    // Race timer checks every minute if any race should start.
+    // TODO reenable when needed
+    // handleRaceTimer();
+  });
+
   bot.botClient.on("interactionCreate", async interaction => {
     if (interaction.isAutocomplete()) handleAutocomplete(interaction);
     if (interaction.isButton()) handleButtons(interaction);
   });
-
-  // Race timer checks every minute if any race should start.
-  // TODO reenable when needed
-  // handleRaceTimer();
 };
 
 init();

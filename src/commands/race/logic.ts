@@ -69,13 +69,8 @@ const getActiveRaceEmbed = (activeRace: Race): APIEmbed => {
       value: activeRace.downloadLink,
     },
     {
-      name: "Download grace period",
-      value: `${activeRace.downloadGrace} seconds`,
-      inline: true,
-    },
-    {
       name: "Screenshot upload grace period",
-      value: `${activeRace.uploadGrace} seconds`,
+      value: `${activeRace.uploadGrace} s`,
       inline: true,
     },
   ];

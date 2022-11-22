@@ -138,12 +138,12 @@ const getRaceConfirmationEmbed = (race: Omit<Race, "_id" | "isActive">) => {
     },
     {
       name: "Download grace period",
-      value: `${race.downloadGrace} seconds`,
+      value: `${race.downloadGrace} s`,
       inline: true,
     },
     {
       name: "Screenshot upload grace period",
-      value: `${race.uploadGrace} seconds`,
+      value: `${race.uploadGrace} s`,
       inline: true,
     },
   ];
