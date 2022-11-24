@@ -1,4 +1,4 @@
-import { getErrorEmbed, getSuccessEmbed } from "arcybot";
+import { getErrorEmbed } from "arcybot";
 import {
   ButtonInteraction,
   AutocompleteInteraction,
@@ -37,7 +37,7 @@ export const featureVideo = async (
 ): Promise<void> => {
   if (!interaction.isButton()) return;
   if (!isMod(interaction)) {
-    interaction.channel?.send(
+    interaction.reply(
       getErrorEmbed(
         "You can't do that",
         `Only a moderator can perform this action.`,
@@ -50,7 +50,7 @@ export const featureVideo = async (
   const featuredId = interaction.customId.replace(`${FEATURE_VIDEO}_`, "");
   if (featuredId === interaction.customId) {
     // There is no ID attached to the button, cannot feature video
-    interaction.channel?.send(
+    interaction.reply(
       getErrorEmbed(
         "Could not feature this video",
         "Could not find a relevant entity in the data base. This won't work without reposting the video again.",
@@ -66,7 +66,7 @@ export const featureVideo = async (
   });
 
   if (!featuredData.acknowledged) {
-    interaction.channel?.send(
+    interaction.reply(
       getErrorEmbed(
         "Error",
         "Could not create a featured post out of this video. Please try again later.",
@@ -83,4 +83,5 @@ export const featureVideo = async (
       }>_`,
     components: [],
   });
+  interaction.deleteReply();
 };
