@@ -14,17 +14,18 @@ export type HeadCell = {
 	numeric: boolean;
 };
 
-type Props = {
+type Props<T extends string> = {
 	headCells: HeadCell[];
 	order: Order;
-	orderBy: string | undefined;
-	onRequestSort: (event: React.MouseEvent<unknown>, property: string) => void;
+	orderBy: T | undefined;
+	onRequestSort: (event: React.MouseEvent<unknown>, property: T) => void;
 };
 
-export const TableHeader = (props: Props) => {
+export const TableHeader = <T extends string>(props: Props<T>) => {
 	const { headCells, order, orderBy, onRequestSort } = props;
+
 	const createSortHandler =
-		(property: string) => (event: React.MouseEvent<unknown>) => {
+		(property: T) => (event: React.MouseEvent<unknown>) => {
 			onRequestSort(event, property);
 		};
 
@@ -40,7 +41,7 @@ export const TableHeader = (props: Props) => {
 						<TableSortLabel
 							active={orderBy === headCell.id}
 							direction={orderBy === headCell.id ? order : 'asc'}
-							onClick={createSortHandler(headCell.id)}>
+							onClick={createSortHandler(headCell.id as unknown as T)}>
 							{headCell.label}
 							{orderBy === headCell.id ? (
 								<Box component="span" sx={visuallyHidden}>

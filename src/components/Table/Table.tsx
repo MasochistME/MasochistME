@@ -15,23 +15,25 @@ import { ColorTokens, useTheme } from 'styles';
 import { TableHeader, Order } from './TableHeader';
 
 type Row = {
-	name: string;
-	cells: React.ReactNode[];
+	value: string | number;
+	cell?: React.ReactNode;
 };
 
-type Props<T extends string[]> = {
-	columns: T;
-	rows: Row[];
+type Props<T extends string> = {
+	columns: T[];
+	rows: Record<T, Row>[];
 };
 
-export const Table = <T extends string[]>(props: Props<T>) => {
+export const Table = <T extends string>(props: Props<T>) => {
 	const { columns, rows } = props;
 	const { colorTokens } = useTheme();
 	const [order, setOrder] = useState<Order>('asc');
-	const [orderBy, setOrderBy] = useState<string | undefined>();
+	const [orderBy, setOrderBy] = useState<T>();
 	const [isDense, _setIsDense] = useState<boolean>(true);
 	const [page, setPage] = useState<number>(0);
 	const [rowsPerPage, setRowsPerPage] = useState<number>(20);
+
+	const rowsValues = Object.values(rows);
 
 	const handleChangePage = (
 		_event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
@@ -49,7 +51,7 @@ export const Table = <T extends string[]>(props: Props<T>) => {
 
 	const handleRequestSort = (
 		_event: React.MouseEvent<unknown>,
-		property: string,
+		property: T,
 	) => {
 		setOrderBy(property);
 		if (order === 'asc') setOrder('desc');
@@ -57,12 +59,12 @@ export const Table = <T extends string[]>(props: Props<T>) => {
 	};
 
 	const emptyRows =
-		page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+		page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rowsValues.length) : 0;
 
-	const sortedRows = _orderBy(rows, [orderBy], [order]).slice(
+	const sortedRows = _orderBy(rows, [`${orderBy}.value`], [order]).slice(
 		page * rowsPerPage,
 		page * rowsPerPage + rowsPerPage,
-	) as unknown as Row[];
+	);
 
 	const headCells = columns.map(column => ({
 		disablePadding: false,
@@ -84,14 +86,17 @@ export const Table = <T extends string[]>(props: Props<T>) => {
 					onRequestSort={handleRequestSort}
 				/>
 				<TableBody>
-					{sortedRows.map(row => (
-						<TableRow
-							sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-							{row.cells.map((cell: React.ReactNode) => (
-								<TableCell>{cell}</TableCell>
-							))}
-						</TableRow>
-					))}
+					{sortedRows.map(row => {
+						const rowValues: Row[] = Object.values(row);
+						return (
+							<TableRow
+								sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+								{rowValues.map((cell: Row) => (
+									<TableCell>{cell.cell ?? cell.value ?? '—'}</TableCell>
+								))}
+							</TableRow>
+						);
+					})}
 					{emptyRows > 0 && (
 						<TableRow
 							style={{
@@ -104,7 +109,7 @@ export const Table = <T extends string[]>(props: Props<T>) => {
 				<TablePagination
 					rowsPerPageOptions={[10, 20, 50]}
 					component="div"
-					count={rows.length}
+					count={rowsValues.length}
 					rowsPerPage={rowsPerPage}
 					page={page}
 					onPageChange={handleChangePage}

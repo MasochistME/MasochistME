@@ -8,9 +8,24 @@ import { useTheme } from 'styles';
 
 import { useGameTableCells } from './columns';
 
+enum Columns {
+	TIER = 'Tier',
+	THUMBNAIL = '',
+	TITLE = 'Title',
+	// // Statistics columns
+	POINTS = 'Points',
+	ACHIEVEMENTS = 'Achievements',
+	BADGES = 'Badges',
+	COMPLETIONS = 'Completions (base game)',
+	// columnCompletionsWithBadges,
+	OWNERS = 'Owners',
+	AVG_PLAYTIME = 'Avg playtime',
+	LATEST_COMPLETION = 'Latest completion',
+	SALE = 'Sale',
+}
+
 export const GameTableView = (): JSX.Element => {
 	const { visibleTiers, queryGame } = useAppContext();
-	const { colorTokens } = useTheme();
 	const { cellTier, cellThumbnail, cellTitle, cellSale } = useGameTableCells();
 
 	const { gamesData, isLoading, isFetched } = useCuratedGames();
@@ -21,59 +36,26 @@ export const GameTableView = (): JSX.Element => {
 			visibleTiers.find((tier: TierId) => tier === game.tier),
 	);
 
-	const gamesColumns = [
-		'Tier',
-		'',
-		'Title',
-		// // Statistics columns
-		'Points',
-		'Achievements',
-		'Badges',
-		'Completions (base game)',
-		// columnCompletionsWithBadges,
-		'Owners',
-		'Avg playtime',
-		'Latest completion',
-		'Sale',
-	];
-
-	const rows = games.map((game: Game) => ({
-		name: game.title,
-		cells: [
-			cellTier(game),
-			cellThumbnail(game),
-			cellTitle(game),
-			'?',
-			game.achievementsTotal,
-			'?',
-			'?',
-			'?',
-			'?',
-			'?',
-			cellSale(game),
-		],
+	const rows = games.map(game => ({
+		[Columns.TIER]: { value: game.tier, cell: cellTier(game) },
+		[Columns.THUMBNAIL]: { value: 0, cell: cellThumbnail(game) },
+		[Columns.TITLE]: { value: game.title, cell: cellTitle(game) },
+		[Columns.POINTS]: { value: '?' },
+		[Columns.ACHIEVEMENTS]: { value: game.achievementsTotal },
+		[Columns.BADGES]: { value: '?' },
+		[Columns.COMPLETIONS]: { value: '?' },
+		[Columns.OWNERS]: { value: '?' },
+		[Columns.AVG_PLAYTIME]: { value: '?' },
+		[Columns.LATEST_COMPLETION]: { value: '?' },
+		[Columns.SALE]: { value: game?.sale ?? 0, cell: cellSale(game) },
 	}));
+
+	const columns = Object.keys(rows[0] ?? []);
 
 	return (
 		<Flex width="100%">
 			{isLoading && <Spinner />}
-			{isFetched && (
-				<Table rows={rows} columns={gamesColumns} />
-				// <TableAnt
-				// 	colorTokens={colorTokens}
-				// 	dataSource={games}
-				// 	columns={gamesColumns}
-				// 	showSorterTooltip={false}
-				// 	pagination={{
-				// 		pageSize: 20,
-				// 		defaultPageSize: 20,
-				// 		hideOnSinglePage: true,
-				// 		showQuickJumper: false,
-				// 		showLessItems: true,
-				// 		showSizeChanger: false,
-				// 	}}
-				// />
-			)}
+			{isFetched && <Table rows={rows} columns={columns} />}
 		</Flex>
 	);
 };

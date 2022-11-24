@@ -23,7 +23,7 @@ type ActiveSeasonProps = {
 export const ActiveSeason = (props: ActiveSeasonProps) => {
 	const { season, races, isLoading } = props;
 	const [activeTab, setActiveTab] = useState<TabsSeasonDetails>(
-		TabsSeasonDetails.RANKING,
+		TabsSeasonDetails.RACES,
 	);
 
 	const handleChangeTab = (
