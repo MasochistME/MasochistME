@@ -35,3 +35,17 @@ export const isMod = (interaction: DiscordInteraction | ButtonInteraction) => {
 export const cenzor = (text: string) => {
   return Array(text.length).fill("█").join("");
 };
+
+/**
+ * Shorten the string to given length and add ellipsis if it was too long.
+ * @param strFull String to shorten
+ * @param maxLength Max length of the string after shortening
+ * @returns string
+ */
+export const shortenString = (strFull: string, maxLength: number) => {
+  const str =
+    strFull.length >= maxLength
+      ? strFull.substring(0, maxLength - 4) + "..."
+      : strFull;
+  return str;
+};
