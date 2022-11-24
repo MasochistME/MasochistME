@@ -31,6 +31,10 @@ export const FeaturedVideo = (props: Props) => {
 				{title &&
 					(featured.gameId ? (
 						<Link to={`game/${featured.gameId}`}>{title}</Link>
+					) : featured.gameLink ? (
+						<a href={featured.gameLink} target="_blank">
+							{title}
+						</a>
 					) : (
 						title
 					))}
