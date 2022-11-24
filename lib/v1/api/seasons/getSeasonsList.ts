@@ -38,13 +38,13 @@ export const getSeasonsList = async (
 	/** @ignore */
 	BASE_URL: string,
 ): Promise<Season[]> => {
-	const { filter } = params;
+	const { filter, sort, limit } = params;
 	const url = `${BASE_URL}/seasons/list`;
 
 	const seasonResponse = await axios.post<
 		Season[] | ResponseError,
 		AxiosResponse<Season[] | ResponseError>
-	>(url, filter, { validateStatus: () => true });
+	>(url, { filter, sort, limit }, { validateStatus: () => true });
 
 	const { status, data } = seasonResponse;
 
