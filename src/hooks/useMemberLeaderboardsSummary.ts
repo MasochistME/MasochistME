@@ -25,7 +25,7 @@ export const useMemberLeaderboardsSummary = (memberId: string) => {
 			isDisabled: memberData?.isPrivate,
 			isHighestPatronTier: leaderData?.patreonTier === PatronTier.TIER4,
 		};
-	}, []);
+	}, [memberData, leaderData]);
 
 	return { memberLeaderboardsSummary, memberData, leaderData };
 };

@@ -1,8 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { FeaturedVideo as TFeaturedVideo } from '@masochistme/sdk/dist/v1/types';
 
-import { Flex, Markdown } from 'components';
+import { Flex } from 'components';
 import { useGames, useMembers } from 'sdk';
 
 type Props = { featured: TFeaturedVideo };
@@ -17,35 +18,34 @@ export const FeaturedVideo = (props: Props) => {
 		member => member.discordId === featured.memberId,
 	);
 
-	if (!featured.link) return null;
-	const ytLinkRegex = new RegExp(/(?<=v=)(.*)/gim);
-	const ytLinkId = featured.link.match(ytLinkRegex)?.[0];
-	if (!ytLinkId) return null;
-	const fixedLink = `https://www.youtube.com/embed/${ytLinkId}`;
+	const ytLinkID = getYTVideoID(featured.link);
+	if (!ytLinkID) return null;
 
-	const getMarkdown = () => {
-		const title =
-			featured.gameTitle ??
-			(game
-				? `[${game.title}](http://masochist.me/game/${featured.gameId})`
-				: '');
-		const description = featured.description
-			? `- ${featured?.description.replace(
-					/\\n/g,
-					`
-			`,
-			  )}`
-			: '';
-		const memberUsername = member
-			? `- by [${member?.name}](http://masochist.me/profile/${featured.memberId})`
-			: '';
+	const fixedLink = `https://www.youtube.com/embed/${ytLinkID}`;
 
-		return `## ${title} ${description} ${memberUsername}`;
-	};
+	const title = featured.gameTitle ?? game?.title ?? null;
 
 	return (
 		<StyledFeaturedVideoWrapper column>
-			<Markdown>{getMarkdown()}</Markdown>
+			<h2>
+				{title &&
+					(featured.gameId ? (
+						<Link to={`game/${featured.gameId}`}>{title}</Link>
+					) : featured.gameLink ? (
+						<a href={featured.gameLink} target="_blank">
+							{title}
+						</a>
+					) : (
+						title
+					))}
+				{featured.description ? ` - ${featured.description}` : null}
+				{member && (
+					<>
+						{' '}
+						- by <Link to={`profile/${member.steamId}`}>{member.name}</Link>
+					</>
+				)}
+			</h2>
 			<StyledFeaturedVideo>
 				<iframe
 					width="840"
@@ -61,9 +61,24 @@ export const FeaturedVideo = (props: Props) => {
 	);
 };
 
+const getYTVideoID = (link?: string) => {
+	if (!link) return null;
+	const ytLinkRegex = [
+		new RegExp(/(?<=youtu.be\/)(.*)/gim),
+		new RegExp(/(?<=youtube.com\/watch\?v=)(.*)/gim),
+	];
+	const ytLinkIds = ytLinkRegex
+		.map(regex => link.match(regex)?.[0])
+		.filter(Boolean);
+	return ytLinkIds[0];
+};
+
 const StyledFeaturedVideoWrapper = styled(Flex)`
 	gap: 8px;
 	height: calc(440px+200px);
+	h2 {
+		margin: 0;
+	}
 `;
 
 const StyledFeaturedVideo = styled.div`

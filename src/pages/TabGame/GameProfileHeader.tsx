@@ -28,7 +28,7 @@ export const GameProfileHeader = (props: Props): JSX.Element => {
 			<StyledGameDetails column>
 				<Flex row align justifyContent="space-between">
 					<a
-						href={`https://steamcommunity.com/app/${game?.id}`}
+						href={`https://store.steampowered.com/app/${game?.id}`}
 						target="_blank"
 						rel="noopener noreferrer">
 						<StyledGameTitle>
