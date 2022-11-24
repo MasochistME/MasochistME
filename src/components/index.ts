@@ -17,6 +17,5 @@ export * from './Skeleton';
 export * from './Spinner';
 export * from './Switch';
 export * from './Table';
-export * from './TableAnt';
 export * from './Tooltip';
 export * from './Warning';

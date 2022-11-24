@@ -11,10 +11,9 @@ import { AppContextProvider } from 'context';
 
 import { App } from './App';
 
-import './styles/antStyles.css';
 import './index.css';
 
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+// import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 dayjs.extend(customParseFormat);
 dayjs.extend(relativeTime);
