@@ -13,6 +13,7 @@ import {
 } from "utils";
 import { FEATURE_VIDEO } from "consts";
 import { sdk } from "fetus";
+import { Options } from "./builder";
 
 /**
  * Sends a video to the designated channel.
@@ -20,13 +21,15 @@ import { sdk } from "fetus";
  * @return void
  */
 export const vid = async (interaction: DiscordInteraction): Promise<void> => {
-  const link = interaction.options.getString("link", true);
+  const videoLink = interaction.options.getString(Options.VIDEO_LINK, true);
+  const gameLink =
+    interaction.options.getString(Options.GAME_LINK, false) ?? null;
   const description =
-    interaction.options.getString("description", false) ?? null;
-  const game = interaction.options.getString("game", false);
+    interaction.options.getString(Options.DESCRIPTION, false) ?? null;
+  const game = interaction.options.getString(Options.GAME, false);
   const channelVid = getOption("room_vid");
 
-  if (!isLink(link)) {
+  if (!isLink(videoLink)) {
     interaction.reply(
       getErrorEmbed("Wrong link", "_This_ is not a link.", true),
     );
@@ -74,8 +77,8 @@ export const vid = async (interaction: DiscordInteraction): Promise<void> => {
       description,
       gameId,
       gameTitle,
-      gameLink: null,
-      link,
+      gameLink,
+      link: videoLink,
     };
     const postFeatured = await sdk.createFeatured({ featured: featuredVideo });
     // Only members who connected their Discord account to MasochistME one can have their posts featured
@@ -89,7 +92,9 @@ export const vid = async (interaction: DiscordInteraction): Promise<void> => {
     }`;
 
     channel?.send({
-      content: `${link}\n_${description ?? ""} ~<@${interaction.user.id}>_`,
+      content: `${videoLink}\n_${description ?? ""} ~<@${
+        interaction.user.id
+      }>_`,
       components,
     });
 

@@ -83,5 +83,4 @@ export const featureVideo = async (
       }>_`,
     components: [],
   });
-  interaction.deleteReply();
 };
