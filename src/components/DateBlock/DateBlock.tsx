@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import dayjs from 'dayjs';
 
 import { fonts, media } from 'styles';
+import { getHumanReadableDate } from 'utils';
 import { Flex } from '../Flex';
 
 type Props = {
@@ -13,7 +14,7 @@ export const DateBlock = (props: Props) => {
 	const { date, ...style } = props;
 
 	const fixedDate = useMemo(() => {
-		return dayjs(date).format('DD MMM YYYY');
+		return getHumanReadableDate(date);
 	}, []);
 	const fixedTime = useMemo(() => {
 		return dayjs(date).format('H:mm');

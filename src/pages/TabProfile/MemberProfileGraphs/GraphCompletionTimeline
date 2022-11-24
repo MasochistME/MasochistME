@@ -72,16 +72,17 @@ const getTimelines = (
 
 	// @ts-ignore
 	while (startDate.isBefore(endDate)) {
+			// @ts-ignore
 		data.push({
-			// @ts-ignore: any
-			label: startDate.format('YYYY-MM'),
+			// @ts-ignore
+			label: startDate.format('yyyy-MM'),
 			games: 0,
 			points: 0,
 		});
 		// @ts-ignore: any
 		startDate.add(1, 'month');
 	}
-
+	// @ts-ignore
 	data = data.map((date: any) => {
 		const gamesCompletedInMonth = timelines
 			.filter((game: any) => {

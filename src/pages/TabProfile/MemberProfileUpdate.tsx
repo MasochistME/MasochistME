@@ -6,6 +6,7 @@ import { Member, PatronTier } from '@masochistme/sdk/dist/v1/types';
 
 import { useUpdateMemberMutation, useMemberLeaderboards } from 'sdk';
 import { media } from 'styles';
+import { getHumanReadableDate } from 'utils';
 import { Alert, Flex, Tooltip, Button } from 'components';
 
 type Props = {
@@ -41,7 +42,7 @@ export const MemberProfileUpdate = (props: Props) => {
 	const lastUpdateDetails =
 		new Date(member?.lastUpdated ?? 0).getTime() === 0
 			? 'This member was never updated.'
-			: dayjs(member?.lastUpdated).format('D MMM YYYY, H:mm:ss');
+			: getHumanReadableDate(member?.lastUpdated, true);
 
 	return (
 		<StyledMemberProfileUpdate>
