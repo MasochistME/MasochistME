@@ -3,11 +3,10 @@ import { Game, TierId } from '@masochistme/sdk/dist/v1/types';
 
 import { useCuratedGames, useLeaderboardsGames } from 'sdk';
 import { useAppContext } from 'context';
-import { Flex, Spinner, Table } from 'components';
+import { Flex, Spinner, Table, TableColumn } from 'components';
 
 import {
 	CellTier,
-	CellThumbnail,
 	CellTitle,
 	CellTotalPoints,
 	CellSale,
@@ -25,8 +24,7 @@ import {
 } from './columns';
 
 enum Columns {
-	TIER = 'Tier',
-	THUMBNAIL = '',
+	TIER = '',
 	TITLE = 'Title',
 	POINTS = 'Points',
 	ACHIEVEMENTS = 'Achievements',
@@ -50,51 +48,81 @@ export const GameTableView = (): JSX.Element => {
 			visibleTiers.find((tier: TierId) => tier === game.tier),
 	);
 
-	const rows = games.map(game => ({
-		[Columns.TIER]: { value: game.tier, cell: <CellTier game={game} /> },
-		[Columns.THUMBNAIL]: { value: 0, cell: <CellThumbnail game={game} /> },
-		[Columns.TITLE]: { value: game.title, cell: <CellTitle game={game} /> },
-		[Columns.POINTS]: {
-			value: getGameTotalPoints(game, leaderboardsData),
-			cell: <CellTotalPoints game={game} />,
-		},
-		[Columns.ACHIEVEMENTS]: {
-			value: game.achievementsTotal,
-			cell: (
-				<Flex row align justify>
-					{game.achievementsTotal}
-				</Flex>
-			),
-		},
-		[Columns.BADGES]: {
-			value: getGameBadges(game, leaderboardsData),
-			cell: <CellBadges game={game} />,
-		},
-		[Columns.COMPLETIONS]: {
-			value: getGameCompletions(game, leaderboardsData),
-			cell: <CellCompletions game={game} />,
-		},
-		[Columns.OWNERS]: {
-			value: getGameOwners(game, leaderboardsData),
-			cell: <CellOwners game={game} />,
-		},
-		[Columns.AVG_PLAYTIME]: {
-			value: getGameAvgPlaytime(game, leaderboardsData),
-			cell: <CellAvgPlaytime game={game} />,
-		},
-		[Columns.LATEST_COMPLETION]: {
-			value: getGameLatestCompletion(game, leaderboardsData),
-			cell: <CellLatestCompletion game={game} />,
-		},
-		[Columns.SALE]: { value: game?.sale ?? 0, cell: <CellSale game={game} /> },
-	}));
-
-	const columns = Object.keys(rows[0] ?? []);
+	const columns: (game: Game) => TableColumn[] = (game: Game) => {
+		return [
+			{
+				key: Columns.TIER,
+				title: Columns.TIER,
+				value: game.tier,
+				cell: <CellTier game={game} />,
+				style: { width: '30px' },
+			},
+			{
+				key: Columns.TITLE,
+				title: Columns.TITLE,
+				value: game.title,
+				cell: <CellTitle game={game} />,
+				style: { width: '35%' },
+			},
+			{
+				key: Columns.POINTS,
+				title: Columns.POINTS,
+				value: getGameTotalPoints(game, leaderboardsData),
+				cell: <CellTotalPoints game={game} />,
+			},
+			{
+				key: Columns.ACHIEVEMENTS,
+				title: Columns.ACHIEVEMENTS,
+				value: game.achievementsTotal,
+				cell: (
+					<Flex row align justify>
+						{game.achievementsTotal}
+					</Flex>
+				),
+			},
+			{
+				key: Columns.BADGES,
+				title: Columns.BADGES,
+				value: getGameBadges(game, leaderboardsData),
+				cell: <CellBadges game={game} />,
+			},
+			{
+				key: Columns.COMPLETIONS,
+				title: Columns.COMPLETIONS,
+				value: getGameCompletions(game, leaderboardsData),
+				cell: <CellCompletions game={game} />,
+			},
+			{
+				key: Columns.OWNERS,
+				title: Columns.OWNERS,
+				value: getGameOwners(game, leaderboardsData),
+				cell: <CellOwners game={game} />,
+			},
+			{
+				key: Columns.AVG_PLAYTIME,
+				title: Columns.AVG_PLAYTIME,
+				value: getGameAvgPlaytime(game, leaderboardsData),
+				cell: <CellAvgPlaytime game={game} />,
+			},
+			{
+				key: Columns.LATEST_COMPLETION,
+				title: Columns.LATEST_COMPLETION,
+				value: getGameLatestCompletion(game, leaderboardsData),
+				cell: <CellLatestCompletion game={game} />,
+			},
+			{
+				key: Columns.SALE,
+				title: Columns.SALE,
+				value: game?.sale ?? 0,
+				cell: <CellSale game={game} />,
+			},
+		];
+	};
 
 	return (
 		<Flex width="100%">
 			{isLoading && <Spinner />}
-			{isFetched && <Table rows={rows} columns={columns} bigColumn={3} />}
+			{isFetched && <Table columns={columns} dataset={games} />}
 		</Flex>
 	);
 };

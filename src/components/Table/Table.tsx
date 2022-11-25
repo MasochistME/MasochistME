@@ -1,104 +1,91 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
-import TablePagination from '@mui/material/TablePagination';
-
 import { useTheme } from 'styles';
-
-import { Row, Order } from './types';
+import { Order, TableColumn, TableRow } from './types';
 import { TableHeader } from './TableHeader';
 import { TableBody } from './TableBody';
+import { TablePagination } from './TablePagination';
 
-type Props<T extends string> = {
-	columns: T[];
-	rows: Record<T, Row>[];
-	bigColumn?: number;
+type Props<T> = {
+	columns: (item: T) => TableColumn[];
+	dataset: T[];
 };
 
-export const Table = <T extends string>(props: Props<T>) => {
-	const { columns, rows, bigColumn = 0 } = props;
-	const { colorTokens } = useTheme();
+export const Table = <T extends Record<any, any>>(props: Props<T>) => {
+	const { columns, dataset } = props;
 	const [order, setOrder] = useState<Order>('asc');
-	const [orderBy, setOrderBy] = useState<T>();
+	const [orderBy, setOrderBy] = useState<string>();
 	const [page, setPage] = useState<number>(0);
 	const [rowsPerPage, setRowsPerPage] = useState<number>(20);
 
-	const rowsValues = Object.values(rows);
-
-	const handleChangePage = (
-		_event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
-		newPage: number,
-	) => {
-		setPage(newPage);
-	};
-
-	const handleChangeRowsPerPage = (
-		event: React.ChangeEvent<HTMLInputElement>,
-	) => {
-		setRowsPerPage(parseInt(event.target.value, 10));
-		setPage(0);
-	};
+	const fixedDataset = dataset.map(item => columns(item));
+	const fixedColumns = (fixedDataset[0] ?? []).map(col => ({
+		key: col.key,
+		title: col.title,
+		...(col.style ? { style: col.style } : {}),
+	}));
+	const fixedRows: TableRow[][] = fixedDataset.map(row =>
+		row.map(item => ({ value: item.value, cell: item.cell })),
+	);
 
 	const handleRequestSort = (
 		_event: React.MouseEvent<unknown>,
-		property: T,
+		property: string,
 	) => {
 		setOrderBy(property);
 		if (order === 'asc') setOrder('desc');
 		else setOrder('asc');
 	};
 
-	const headCells = columns.map(column => ({
+	const tableHeaderCells = fixedColumns.map(column => ({
 		disablePadding: false,
-		id: column,
-		label: column,
+		id: column.key,
+		label: column.title,
 		numeric: false,
 	}));
 
+	const colGroup = fixedColumns.map(col => <col style={col.style ?? {}} />);
+
 	return (
-		<StyledTable
-			bigColumn={bigColumn}
-			className="MuiTable-root"
-			aria-label="simple table">
+		<StyledTable className="MuiTable-root" aria-label="simple table">
+			<colgroup>{colGroup}</colgroup>
 			<TableHeader
 				order={order}
 				orderBy={orderBy}
-				headCells={headCells}
+				tableHeaderCells={tableHeaderCells}
 				onRequestSort={handleRequestSort}
 			/>
 			<TableBody
-				rows={rows}
+				rows={fixedRows}
 				page={page}
 				rowsPerPage={rowsPerPage}
 				order={order}
 				orderBy={orderBy}
 			/>
 			<TablePagination
-				rowsPerPageOptions={[10, 20, 50]}
-				component="div"
-				count={rowsValues.length}
-				rowsPerPage={rowsPerPage}
+				rows={fixedRows}
 				page={page}
-				onPageChange={handleChangePage}
-				onRowsPerPageChange={handleChangeRowsPerPage}
+				setPage={setPage}
+				rowsPerPage={rowsPerPage}
+				setRowsPerPage={setRowsPerPage}
 			/>
 		</StyledTable>
 	);
 };
 
-const StyledTable = styled.table<{ bigColumn: number }>`
+const StyledTable = styled.table`
 	width: 100%;
 	border-spacing: 0;
 	table-layout: auto;
-	td {
+	td,
+	th {
+		padding: 0 4px;
 		width: 1px;
 	}
-	td + td {
+	td + {
 		padding: 0 4px;
 		margin: 0;
 		border: none;
-	}
-	td:nth-child(${({ bigColumn }) => bigColumn}) {
-		width: 100%;
 	}
 `;

@@ -2,10 +2,10 @@ import _orderBy from 'lodash/orderBy';
 import styled from 'styled-components';
 import { ColorTokens, useTheme } from 'styles';
 
-import { Row, Order } from './types';
+import { TableRow, Order } from './types';
 
 type Props<T extends string> = {
-	rows: Record<T, Row>[];
+	rows: TableRow[][];
 	page: number;
 	rowsPerPage: number;
 	order: Order;
@@ -27,39 +27,33 @@ export const TableBody = <T extends string>(props: Props<T>) => {
 	);
 
 	return (
-		<tbody className="MuiTableBody-root">
+		<tbody>
 			{sortedRows.map(row => {
-				const rowValues: Row[] = Object.values(row);
 				return (
-					<TableRow colorTokens={colorTokens} className="MuiTableRow-root">
-						{rowValues.map((cell: Row) => (
-							<TableCell
-								colorTokens={colorTokens}
-								className="MuiTableCell-root">
+					<StyledTableRow colorTokens={colorTokens}>
+						{row.map((cell: TableRow) => (
+							<StyledTableCell colorTokens={colorTokens}>
 								{cell.cell ?? cell.value ?? '—'}
-							</TableCell>
+							</StyledTableCell>
 						))}
-					</TableRow>
+					</StyledTableRow>
 				);
 			})}
 			{emptyRows > 0 && (
-				<TableRow
+				<StyledTableRow
 					colorTokens={colorTokens}
-					className="MuiTableRow-root"
 					style={{
 						height: 33 * emptyRows,
 					}}>
-					<TableCell colorTokens={colorTokens} className="MuiTableCell-root" />
-				</TableRow>
+					<StyledTableCell colorTokens={colorTokens} />
+				</StyledTableRow>
 			)}
 		</tbody>
 	);
 };
 
-const TableRow = styled.tr<{ colorTokens: ColorTokens }>`
+const StyledTableRow = styled.tr<{ colorTokens: ColorTokens }>`
 	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']}99;
-	border-bottom: 5px solid
-		${({ colorTokens }) => colorTokens['common-color--shadow']};
 	cursor: pointer;
 	&:last-child > td {
 		border-bottom: none;
@@ -70,11 +64,8 @@ const TableRow = styled.tr<{ colorTokens: ColorTokens }>`
 	}
 `;
 
-const TableCell = styled.td<{ colorTokens: ColorTokens }>`
-	margin: 0;
+const StyledTableCell = styled.td<{ colorTokens: ColorTokens }>`
 	text-align: center;
-	width: 1px;
-	&:first-child {
-		padding: 0;
-	}
+	border-bottom: 5px solid
+		${({ colorTokens }) => colorTokens['common-color--shadow']};
 `;

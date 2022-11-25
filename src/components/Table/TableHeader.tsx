@@ -4,17 +4,17 @@ import { visuallyHidden } from '@mui/utils';
 import styled from 'styled-components';
 
 import { ColorTokens, useTheme } from 'styles';
-import { Order, HeadCell } from './types';
+import { Order, TableHeaderCell } from './types';
 
 type Props<T extends string> = {
-	headCells: HeadCell[];
+	tableHeaderCells: TableHeaderCell[];
 	order: Order;
 	orderBy: T | undefined;
 	onRequestSort: (event: React.MouseEvent<unknown>, property: T) => void;
 };
 
 export const TableHeader = <T extends string>(props: Props<T>) => {
-	const { headCells, order, orderBy, onRequestSort } = props;
+	const { tableHeaderCells, order, orderBy, onRequestSort } = props;
 	const { colorTokens } = useTheme();
 
 	const createSortHandler =
@@ -23,21 +23,20 @@ export const TableHeader = <T extends string>(props: Props<T>) => {
 		};
 
 	return (
-		<StyledTableHeader colorTokens={colorTokens} className="MuiTableHead-root">
-			<tr className="MuiTableRow-root">
-				{headCells.map((headCell: HeadCell) => (
+		<StyledTableHeader colorTokens={colorTokens}>
+			<tr>
+				{tableHeaderCells.map((tableHeaderCell: TableHeaderCell) => (
 					<StyledTableHeaderCell
 						colorTokens={colorTokens}
-						className="MuiTableCell-root"
-						key={String(headCell.id)}
-						align={headCell.numeric ? 'center' : 'left'}>
+						key={String(tableHeaderCell.id)}
+						align={tableHeaderCell.numeric ? 'center' : 'left'}>
 						<StyledTableSortLabel
 							colorTokens={colorTokens}
-							active={orderBy === headCell.id}
-							direction={orderBy === headCell.id ? order : 'asc'}
-							onClick={createSortHandler(headCell.id as unknown as T)}>
-							{headCell.label}
-							{orderBy === headCell.id ? (
+							active={orderBy === tableHeaderCell.id}
+							direction={orderBy === tableHeaderCell.id ? order : 'asc'}
+							onClick={createSortHandler(tableHeaderCell.id as unknown as T)}>
+							{tableHeaderCell.label}
+							{orderBy === tableHeaderCell.id ? (
 								<Box component="span" sx={visuallyHidden}>
 									{order === 'desc' ? 'sorted descending' : 'sorted ascending'}
 								</Box>
@@ -61,7 +60,7 @@ const StyledTableHeader = styled.thead<{ colorTokens: ColorTokens }>`
 `;
 
 const StyledTableHeaderCell = styled.th<{ colorTokens: ColorTokens }>`
-	padding: 0 4px;
+	width: auto;
 	.Mui-active {
 		color: ${({ colorTokens }) => colorTokens['semantic-color--active']};
 	}

@@ -18,18 +18,10 @@ export const CellTier = (props: Props) => {
 	const { tiersData } = useTiers();
 
 	return (
-		<Flex align justify maxWidth="40px" margin={0} padding={0}>
+		<Flex align justify>
 			<Icon icon={getTierIcon(game.tier, tiersData)} />
 		</Flex>
 	);
-};
-
-/**
- * Cell showing thumbnail of the game
- */
-export const CellThumbnail = (props: Props) => {
-	const { game } = props;
-	return <GameThumbnail game={game} size={Size.MEDIUM} />;
 };
 
 /**
@@ -44,7 +36,8 @@ export const CellTitle = (props: Props) => {
 		if (game?.id) history.push(`/game/${game.id}`);
 	};
 	return (
-		<Flex align textAlign="left">
+		<Flex align textAlign="left" gap={4}>
+			<GameThumbnail game={game} size={Size.MEDIUM} />
 			<TableLink colorTokens={colorTokens} onClick={() => onGameClick(game)}>
 				{game.title}
 			</TableLink>

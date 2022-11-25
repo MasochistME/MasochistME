@@ -1,18 +1,21 @@
-export type Row = {
-	value: string | number;
-	cell?: React.ReactNode;
+export type Order = 'asc' | 'desc';
+
+export type TableHeaderCell = {
+	disablePadding: boolean;
+	id: string;
+	label: React.ReactNode;
+	numeric: boolean;
 };
 
-export type Column<T> = {
-	name: T;
+export type TableColumn = {
+	key: string;
+	title: React.ReactNode;
+	value: string | number;
+	cell: React.ReactNode;
 	style?: React.CSSProperties;
 };
 
-export type Order = 'asc' | 'desc';
-
-export type HeadCell = {
-	disablePadding: boolean;
-	id: string;
-	label: string;
-	numeric: boolean;
+export type TableRow = {
+	value: string | number;
+	cell?: React.ReactNode;
 };
