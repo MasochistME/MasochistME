@@ -9,14 +9,15 @@ import { TablePagination } from './TablePagination';
 type Props<T> = {
 	columns: TableColumn<T>[];
 	dataset: T[];
+	rowsPerPage?: number;
 };
 
 export const Table = <T extends Record<any, any>>(props: Props<T>) => {
-	const { columns, dataset } = props;
+	const { columns, dataset, rowsPerPage: _rowsPerPage = 20 } = props;
 	const [order, setOrder] = useState<Order>('asc');
 	const [orderBy, setOrderBy] = useState<string>();
 	const [page, setPage] = useState<number>(0);
-	const [rowsPerPage, setRowsPerPage] = useState<number>(20);
+	const [rowsPerPage, setRowsPerPage] = useState<number>(_rowsPerPage);
 
 	const fixedDataset = dataset.map(
 		item =>

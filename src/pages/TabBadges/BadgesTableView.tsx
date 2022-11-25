@@ -74,7 +74,9 @@ export const BadgesTableView = () => {
 	return (
 		<Flex width="100%">
 			{isLoading && <Spinner />}
-			{isFetched && <Table columns={columns} dataset={badgesData} />}
+			{isFetched && (
+				<Table columns={columns} dataset={badgesData} rowsPerPage={10} />
+			)}
 		</Flex>
 	);
 };
