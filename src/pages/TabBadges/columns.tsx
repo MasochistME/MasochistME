@@ -29,6 +29,7 @@ export const CellGame = ({ badge }: Props) => {
 				</TableLink>
 			}
 			justifyContent="flex-start"
+			textAlign="left"
 		/>
 	);
 };
