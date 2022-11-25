@@ -38,7 +38,7 @@ export const BadgesTileView = () => {
 			return (
 				<Section
 					maxWidth="100%"
-					width="450px"
+					width="350px"
 					key={`game-${game.gameId}-badges`}
 					title={
 						<Flex align gap={8}>
@@ -60,6 +60,7 @@ export const BadgesTileView = () => {
 const StyledBadgesList = styled(Flex)`
 	flex-wrap: wrap;
 	align-items: flex-start;
+	justify-content: center;
 	gap: 16px;
 	width: 100%;
 `;
