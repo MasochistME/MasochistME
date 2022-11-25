@@ -1,7 +1,7 @@
 import React from 'react';
 import { Race } from '@masochistme/sdk/dist/v1/types';
 
-import { Flex, Table } from 'components';
+import { Flex, Table, TableCell } from 'components';
 import { getHumanReadableDate } from 'utils';
 
 type Props = {
@@ -27,12 +27,22 @@ export const ActiveSeasonRaces = (props: Props): JSX.Element => {
 		},
 		[Columns.RACE_NAME]: {
 			value: race.name,
+			cell: <TableCell content={race.name} isNoWrap isCentered={false} />,
 		},
-		[Columns.SIGN_UPS]: { value: 2 },
-		[Columns.PARTICIPANTS]: { value: 2 },
-		[Columns.DNF]: { value: 2 },
-		[Columns.TYPE]: { value: race.type },
-		[Columns.WINNER]: { value: 'Arcyvilk' },
+		[Columns.SIGN_UPS]: {
+			value: 2,
+			cell: <TableCell content="2" />,
+		},
+		[Columns.PARTICIPANTS]: { value: 2, cell: <TableCell content="2" /> },
+		[Columns.DNF]: { value: 2, cell: <TableCell content="2" /> },
+		[Columns.TYPE]: {
+			value: race.type,
+			cell: <TableCell content={race.type} />,
+		},
+		[Columns.WINNER]: {
+			value: 'Arcyvilk',
+			cell: <TableCell content="Arcyvilk" />,
+		},
 	}));
 
 	const columns = Object.keys(rows[0] ?? []);

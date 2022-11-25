@@ -1,18 +1,10 @@
 import Box from '@mui/material/Box';
-import TableCell from '@mui/material/TableCell';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
+import styled from 'styled-components';
 
-export type Order = 'asc' | 'desc';
-
-export type HeadCell = {
-	disablePadding: boolean;
-	id: string;
-	label: string;
-	numeric: boolean;
-};
+import { ColorTokens, useTheme } from 'styles';
+import { Order, HeadCell } from './types';
 
 type Props<T extends string> = {
 	headCells: HeadCell[];
@@ -23,6 +15,7 @@ type Props<T extends string> = {
 
 export const TableHeader = <T extends string>(props: Props<T>) => {
 	const { headCells, order, orderBy, onRequestSort } = props;
+	const { colorTokens } = useTheme();
 
 	const createSortHandler =
 		(property: T) => (event: React.MouseEvent<unknown>) => {
@@ -30,15 +23,16 @@ export const TableHeader = <T extends string>(props: Props<T>) => {
 		};
 
 	return (
-		<TableHead>
-			<TableRow>
+		<StyledTableHeader colorTokens={colorTokens} className="MuiTableHead-root">
+			<tr className="MuiTableRow-root">
 				{headCells.map((headCell: HeadCell) => (
-					<TableCell
+					<StyledTableHeaderCell
+						colorTokens={colorTokens}
+						className="MuiTableCell-root"
 						key={String(headCell.id)}
-						align={headCell.numeric ? 'right' : 'left'}
-						padding={headCell.disablePadding ? 'none' : 'normal'}
-						sortDirection={orderBy === headCell.id ? order : false}>
-						<TableSortLabel
+						align={headCell.numeric ? 'center' : 'left'}>
+						<StyledTableSortLabel
+							colorTokens={colorTokens}
 							active={orderBy === headCell.id}
 							direction={orderBy === headCell.id ? order : 'asc'}
 							onClick={createSortHandler(headCell.id as unknown as T)}>
@@ -48,10 +42,44 @@ export const TableHeader = <T extends string>(props: Props<T>) => {
 									{order === 'desc' ? 'sorted descending' : 'sorted ascending'}
 								</Box>
 							) : null}
-						</TableSortLabel>
-					</TableCell>
+						</StyledTableSortLabel>
+					</StyledTableHeaderCell>
 				))}
-			</TableRow>
-		</TableHead>
+			</tr>
+		</StyledTableHeader>
 	);
 };
+
+const StyledTableHeader = styled.thead<{ colorTokens: ColorTokens }>`
+	font-weight: 600;
+	text-align: center;
+	height: 50px;
+	background-color: ${({ colorTokens }) => colorTokens['core-secondary-bg']};
+	tr > td {
+		text-align: center;
+	}
+`;
+
+const StyledTableHeaderCell = styled.th<{ colorTokens: ColorTokens }>`
+	padding: 0 4px;
+	.Mui-active {
+		color: ${({ colorTokens }) => colorTokens['semantic-color--active']};
+	}
+`;
+
+const StyledTableSortLabel = styled(TableSortLabel)<{
+	colorTokens: ColorTokens;
+}>`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 50px;
+	.Mui-active,
+	&:hover {
+		color: ${({ colorTokens }) => colorTokens['semantic-color--active']};
+	}
+
+	svg {
+		fill: ${({ colorTokens }) => colorTokens['semantic-color--active']};
+	}
+`;
