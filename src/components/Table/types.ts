@@ -7,16 +7,16 @@ export type TableHeaderCell = {
 	numeric: boolean;
 };
 
-export type TableColumn = {
+export type TableColumn<T> = {
 	key: string;
 	title: React.ReactNode;
-	value: string | number;
-	cell: React.ReactNode;
+	value: (item: T) => string | number;
+	render: (item: T) => React.ReactNode;
 	style?: React.CSSProperties;
 };
 
 export type TableRow = {
 	key: string;
 	value: string | number;
-	cell?: React.ReactNode;
+	cell: React.ReactNode;
 };

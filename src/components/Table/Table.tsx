@@ -1,14 +1,13 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
-import { useTheme } from 'styles';
 import { Order, TableColumn, TableRow } from './types';
 import { TableHeader } from './TableHeader';
 import { TableBody } from './TableBody';
 import { TablePagination } from './TablePagination';
 
 type Props<T> = {
-	columns: (item: T) => TableColumn[];
+	columns: TableColumn<T>[];
 	dataset: T[];
 };
 
@@ -19,14 +18,32 @@ export const Table = <T extends Record<any, any>>(props: Props<T>) => {
 	const [page, setPage] = useState<number>(0);
 	const [rowsPerPage, setRowsPerPage] = useState<number>(20);
 
-	const fixedDataset = dataset.map(item => columns(item));
+	const fixedDataset = dataset.map(
+		item =>
+			columns.map(col => ({
+				...col,
+				...(col.value ? { value: col.value(item) } : {}),
+				...(col.render ? { render: col.render(item) } : {}),
+			})) as {
+				key: string;
+				title: React.ReactNode;
+				value: string | number;
+				render: React.ReactNode;
+				style?: React.CSSProperties;
+			}[],
+	);
+
 	const fixedColumns = (fixedDataset[0] ?? []).map(col => ({
 		key: col.key,
 		title: col.title,
 		...(col.style ? { style: col.style } : {}),
 	}));
 	const fixedRows: TableRow[][] = fixedDataset.map(row =>
-		row.map(item => ({ key: item.key, value: item.value, cell: item.cell })),
+		row.map(item => ({
+			key: item.key,
+			value: item.value,
+			cell: item.render ?? item.value ?? '—',
+		})),
 	);
 
 	const handleRequestSort = (

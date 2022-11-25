@@ -35,9 +35,11 @@ export const TableBody = <T extends string>(props: Props<T>) => {
 			{sortedRows.map(row => {
 				return (
 					<StyledTableRow colorTokens={colorTokens}>
-						{row.map((cell: TableRow) => (
-							<StyledTableCell colorTokens={colorTokens}>
-								{cell.cell ?? cell.value ?? '—'}
+						{row.map((cell: TableRow, index: number) => (
+							<StyledTableCell
+								key={`${cell.key}-${index}`}
+								colorTokens={colorTokens}>
+								{cell.cell}
 							</StyledTableCell>
 						))}
 					</StyledTableRow>
