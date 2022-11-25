@@ -1,7 +1,7 @@
 import React from 'react';
 import { Game, TierId } from '@masochistme/sdk/dist/v1/types';
 
-import { useCuratedGames, useLeaderboardsGames } from 'sdk';
+import { useCuratedGames, useLeaderboardsGames, useTiers } from 'sdk';
 import { useAppContext } from 'context';
 import { Flex, Icon, Size, Spinner, Table, TableColumn } from 'components';
 
@@ -41,6 +41,7 @@ export const GameTableView = (): JSX.Element => {
 
 	const { gamesData, isLoading, isFetched } = useCuratedGames();
 	const { leaderboardsData } = useLeaderboardsGames();
+	const { tiersData } = useTiers();
 
 	const games = gamesData.filter(
 		(game: Game) =>
@@ -75,7 +76,8 @@ export const GameTableView = (): JSX.Element => {
 					/>
 				</Flex>
 			),
-			value: (game: Game) => getGameTotalPoints(game, leaderboardsData),
+			value: (game: Game) =>
+				getGameTotalPoints(game, leaderboardsData, tiersData),
 			render: (game: Game) => <CellTotalPoints game={game} />,
 		},
 		{

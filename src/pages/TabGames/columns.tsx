@@ -64,7 +64,8 @@ export const CellSale = (props: Props) => {
 export const CellTotalPoints = (props: Props) => {
 	const { game } = props;
 	const { leaderboardsData, isLoading, isFetched } = useLeaderboardsGames();
-	const gameTotalPoints = getGameTotalPoints(game, leaderboardsData);
+	const { tiersData } = useTiers();
+	const gameTotalPoints = getGameTotalPoints(game, leaderboardsData, tiersData);
 
 	return (
 		<Flex row align justify>
@@ -161,8 +162,8 @@ export const CellLatestCompletion = (props: Props) => {
 export const getGameTotalPoints = (
 	game: Game,
 	leaderboardsData: GameLeaderboards[],
+	tiersData: Tier[],
 ) => {
-	const { tiersData } = useTiers();
 	const ptsBadges =
 		leaderboardsData.find(l => l.gameId === game?.id)?.badges?.points ?? 0;
 	const ptsTiers =
