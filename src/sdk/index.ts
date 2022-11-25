@@ -4,5 +4,6 @@ export * from './games';
 export * from './leaderboards';
 export * from './members';
 export * from './patreon';
+export * from './races';
 export * from './tiers';
 export * from './update';

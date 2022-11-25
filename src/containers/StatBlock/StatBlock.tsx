@@ -73,7 +73,7 @@ const StyledStatBlock = styled(Flex)<{
 const StyledStatBlockLabel = styled.span`
 	font-size: 2em;
 	font-weight: bold;
-	line-height: 0.8em;
+	line-height: 1em;
 	white-space: nowrap;
 	@media (max-width: ${media.tablets}) {
 		font-size: 1.3em;
@@ -85,6 +85,7 @@ const StyledStatBlockSublabel = styled.span<{ tierColor: string }>`
 	font-weight: bold;
 	color: ${({ tierColor }) => tierColor}bb;
 	white-space: nowrap;
+	line-height: 1em;
 	@media (max-width: ${media.smallNetbooks}) {
 		display: none;
 	}

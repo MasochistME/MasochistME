@@ -5,13 +5,15 @@ const GlobalStyle = createGlobalStyle<{
 	colorTokens: ColorTokens;
 	assetTokens: AssetTokens;
 }>`
-  .ReactCollapse--collapse {
+  body, html {
     width: 100%;
+    height: 100%;
   }
 
   html {
     background-color: #000000;
     overflow-x: hidden;
+    --scroll-bar: 0;
   }
 
   body {
@@ -28,10 +30,24 @@ const GlobalStyle = createGlobalStyle<{
     background-repeat: no-repeat;
     font-family: 'Raleway';
     text-align: justify;
+
+    font-feature-settings: "tnum", "tnum";
+    font-size: 14px;
+    font-variant: tabular-nums;
+    line-height: 1.5175;
+    margin: 0;
   }
   
   #root {
     flex: 1 0 100%;
+  }
+
+  *, :after, :before {
+    box-sizing:border-box;
+  }
+
+  .ReactCollapse--collapse {
+    width: 100%;
   }
 
   div {
