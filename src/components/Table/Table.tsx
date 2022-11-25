@@ -26,7 +26,7 @@ export const Table = <T extends Record<any, any>>(props: Props<T>) => {
 		...(col.style ? { style: col.style } : {}),
 	}));
 	const fixedRows: TableRow[][] = fixedDataset.map(row =>
-		row.map(item => ({ value: item.value, cell: item.cell })),
+		row.map(item => ({ key: item.key, value: item.value, cell: item.cell })),
 	);
 
 	const handleRequestSort = (
@@ -34,8 +34,7 @@ export const Table = <T extends Record<any, any>>(props: Props<T>) => {
 		property: string,
 	) => {
 		setOrderBy(property);
-		if (order === 'asc') setOrder('desc');
-		else setOrder('asc');
+		setOrder(order === 'asc' ? 'desc' : 'asc');
 	};
 
 	const tableHeaderCells = fixedColumns.map(column => ({

@@ -16,6 +16,7 @@ export type TableColumn = {
 };
 
 export type TableRow = {
+	key: string;
 	value: string | number;
 	cell?: React.ReactNode;
 };

@@ -16,15 +16,19 @@ export const TableBody = <T extends string>(props: Props<T>) => {
 	const { rows, page, rowsPerPage, order, orderBy } = props;
 	const { colorTokens } = useTheme();
 
-	const rowsValues = Object.values(rows);
-
 	const emptyRows =
-		page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rowsValues.length) : 0;
+		page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
-	const sortedRows = _orderBy(rows, [`${orderBy}.value`], [order]).slice(
-		page * rowsPerPage,
-		page * rowsPerPage + rowsPerPage,
-	);
+	const sortedRows = _orderBy(
+		rows,
+		(resultItem: TableRow[]) => {
+			const itemOrderBy = resultItem.find(item => item.key === orderBy) ?? {
+				value: 0,
+			};
+			return itemOrderBy.value;
+		},
+		[order],
+	).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
 	return (
 		<tbody>
