@@ -337,11 +337,18 @@ const getMemberSteamGames = async (memberId: string, curatedGames: Game[]) => {
       const isCurated = curatedGames.find(g => g.id === game.appid);
       return !!isCurated;
     })
-    .map(game => ({
-      memberId,
-      gameId: game.appid,
-      playTime: game.hours_forever ? Number(game.hours_forever) : 0, // this is in hours
-    }));
+    .map(game => {
+      // this is in hours
+      const playTime =
+        game.hours_forever && !Number.isNaN(Number(game.hours_forever))
+          ? Number(game.hours_forever)
+          : 0;
+      return {
+        memberId,
+        gameId: game.appid,
+        playTime,
+      };
+    });
   return memberScrappedProfileFixed;
 };
 
