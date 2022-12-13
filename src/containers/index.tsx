@@ -18,7 +18,7 @@ export * from './MemberLeaderboards';
 export * from './ModalLeaderboards';
 export * from './Navigation';
 export * from './Section';
-export * from './SearchBar';
+export * from './Input';
 export * from './StatBlock';
 export * from './SubHeader';
 export * from './SubPage';

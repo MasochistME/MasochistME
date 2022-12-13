@@ -4,7 +4,7 @@ import { Tier } from '@masochistme/sdk/dist/v1/types';
 
 import { media } from 'styles';
 import { useAppContext, GameView } from 'context';
-import { SearchBar } from 'containers';
+import { Input } from 'containers';
 import {
 	Button,
 	Checkbox,
@@ -53,7 +53,7 @@ export const GameFilterBar = (): JSX.Element => {
 	return (
 		<FilterBar>
 			<StyledGameFilterBar>
-				<SearchBar
+				<Input
 					placeholder="Search games"
 					query={queryGame}
 					setQuery={setQueryGame}

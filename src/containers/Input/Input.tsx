@@ -9,7 +9,7 @@ type Props<T extends string> = {
 	placeholder?: string;
 };
 
-export const SearchBar = <T extends string>(props: Props<T>): JSX.Element => {
+export const Input = <T extends string>(props: Props<T>): JSX.Element => {
 	const { colorTokens } = useTheme();
 	const { placeholder, query, setQuery } = props;
 
@@ -19,7 +19,7 @@ export const SearchBar = <T extends string>(props: Props<T>): JSX.Element => {
 	};
 
 	return (
-		<SearchBarInput
+		<StyledInput
 			type="text"
 			placeholder={placeholder}
 			onChange={onSearch}
@@ -29,7 +29,7 @@ export const SearchBar = <T extends string>(props: Props<T>): JSX.Element => {
 	);
 };
 
-const SearchBarInput = styled.input<{ colorTokens: ColorTokens }>`
+const StyledInput = styled.input<{ colorTokens: ColorTokens }>`
 	flex: 1 1 auto;
 	height: 44px;
 	width: 350px;
@@ -38,6 +38,7 @@ const SearchBarInput = styled.input<{ colorTokens: ColorTokens }>`
 	font-size: 1.2em;
 	font-family: ${fonts.Raleway};
 	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']}cc;
+	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	border: 1px solid
 		${({ colorTokens }) => colorTokens['semantic-color--idle']}cc;
 	border-radius: 8px;
