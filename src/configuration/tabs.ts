@@ -54,14 +54,14 @@ export const tabs: Tab[] = [
 		visible: true,
 		external: false,
 	},
-	// {
-	// 	id: TabDict.RACES,
-	// 	text: 'races',
-	// 	icon: 'Finish',
-	// 	link: 'races',
-	// 	visible: true,
-	// 	external: false,
-	// },
+	{
+		id: TabDict.RACES,
+		text: 'races',
+		icon: 'Finish',
+		link: 'races',
+		visible: true,
+		external: false,
+	},
 	{
 		id: TabDict.EVENTS,
 		text: 'event log',

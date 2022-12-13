@@ -4,10 +4,10 @@ import styled from 'styled-components';
 import { useTheme } from 'styles/theme';
 
 export const Logo = () => {
-	const { /*changeTheme,*/ LOGO_URL } = useTheme();
+	const { changeTheme, LOGO_URL } = useTheme();
 
 	const onLogoClick = () => {
-		// changeTheme();
+		changeTheme();
 	};
 
 	return <StyledLogo src={LOGO_URL} alt="Logo" onClick={onLogoClick} />;
