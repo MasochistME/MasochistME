@@ -1,11 +1,16 @@
 import * as dotenv from "dotenv";
-import { Arcybot } from "arcybot";
-import { GatewayIntentBits, Partials } from "discord.js";
+import { Arcybot, log } from "arcybot";
+import {
+  CacheType,
+  GatewayIntentBits,
+  Interaction,
+  Partials,
+} from "discord.js";
 import { SDK } from "@masochistme/sdk/dist/v1/sdk";
 
 import { getOption, Database } from "utils";
 import { Cache } from "cache";
-import { handleRaceTimer } from "commands/_utils/race";
+// import { handleRaceTimer } from "commands/_utils/race";
 
 import { commandsFunctions, customCommands } from "commands";
 import { handleAutocomplete, handleButtons } from "interactions";
@@ -70,9 +75,45 @@ const init = async () => {
   });
 
   bot.botClient.on("interactionCreate", async interaction => {
+    debug(interaction);
     if (interaction.isAutocomplete()) handleAutocomplete(interaction);
     if (interaction.isButton()) handleButtons(interaction);
+  });
+
+  // Debug mode
+  bot.botClient.on("error", async error => {
+    log.DEBUG("Discord bot error detected");
+    console.log(error);
+  });
+
+  bot.botClient.on("warn", async (message: string) => {
+    log.DEBUG("Discord bot warning detected");
+    console.log(message);
   });
 };
 
 init();
+
+const debug = async (interaction: Interaction<CacheType>) => {
+  log.DEBUG(`NEW INTERACTION`);
+  log.DEBUG(`-> interaction type: ${interaction.type}`);
+  log.DEBUG(`-> user: ${interaction.user.username}`);
+  if (interaction.isCommand()) {
+    log.DEBUG("-> type: COMMAND");
+    log.DEBUG(`-> command: ${interaction.commandName}`);
+    log.DEBUG(
+      // @ts-ignore
+      `-> options: ${interaction.options["_hoistedOptions"]?.map(
+        (option: any) => `\n ---> ${option.name} => ${option.value}`,
+      )}`,
+    );
+  }
+  if (interaction.isAutocomplete()) {
+    log.DEBUG("-> type: AUTOCOMPLETE");
+    log.DEBUG(`-> autocomplete: ${interaction.commandName}`);
+  }
+  if (interaction.isButton()) {
+    log.DEBUG("-> type: BUTTON");
+    log.DEBUG(`-> button: ${interaction.customId}`);
+  }
+};
