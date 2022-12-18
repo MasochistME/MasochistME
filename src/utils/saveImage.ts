@@ -2,6 +2,7 @@ import path from "path";
 import axios from "axios";
 import fs from "fs";
 import { getFileExtension } from "./data";
+import { log } from "arcybot";
 
 export const saveImage = async (url: string, name: string) => {
   try {
@@ -30,6 +31,8 @@ export const saveImage = async (url: string, name: string) => {
     });
     return newPath;
   } catch (err: any) {
-    throw new Error(err);
+    throw new Error(
+      `Could not save the badge image on the server :( \nReason: ${err}`,
+    );
   }
 };
