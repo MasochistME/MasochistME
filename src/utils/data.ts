@@ -47,3 +47,9 @@ export const getIsUserRegistered = async (discordId: string) => {
     return false;
   }
 };
+
+export const getFileExtension = (url: string): string | null => {
+  const regex = new RegExp(/([^\.]*)$/i);
+  const extension = regex.exec(url)?.[0] ?? null;
+  return extension;
+};
