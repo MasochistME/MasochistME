@@ -1,6 +1,7 @@
 import { cache } from "fetus";
 import { getFilteredChoices } from "commands/_utils";
 
+const NO_SEASON = { name: "None", value: "None" };
 /**
  * Filter the list of inactive seasons based on the user provided autocomplete value.
  * @param focused string - user provided autocomplete value
@@ -15,8 +16,9 @@ export const getSeasonInactiveChoices = (focused: string) => {
         value: String(season._id),
       };
     });
+  const allChoices = [...choices, NO_SEASON];
 
-  return getFilteredChoices(choices, focused);
+  return getFilteredChoices(allChoices, focused);
 };
 
 /**
@@ -33,6 +35,7 @@ export const getSeasonActiveChoices = (focused: string) => {
         value: String(season._id),
       };
     });
+  const allChoices = [...choices, NO_SEASON];
 
-  return getFilteredChoices(choices, focused);
+  return getFilteredChoices(allChoices, focused);
 };

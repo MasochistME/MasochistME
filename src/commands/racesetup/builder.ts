@@ -74,6 +74,12 @@ const getCommonRequiredOptionsRaceSetup = (
         .setName(Options.UPLOAD_GRACE)
         .setDescription("Grace period for the screenshot upload [seconds]")
         .setRequired(true),
+    )
+    .addStringOption(option =>
+      option
+        .setName(Options.SEASON)
+        .setDescription("Active season the race should be included in")
+        .setRequired(true),
     );
 };
 
@@ -85,20 +91,9 @@ const getCommonRequiredOptionsRaceSetup = (
 const getCommonOptionalOptionsRaceSetup = (
   subcommand: SlashCommandSubcommandBuilder,
 ) => {
-  return subcommand
-    .addStringOption(option =>
-      option
-        .setName(Options.SEASON)
-        .setDescription(
-          "(Optional) Active season the race should be included in",
-        )
-        .setAutocomplete(true),
-    )
-    .addAttachmentOption(option =>
-      option
-        .setName(Options.ICON)
-        .setDescription("(Optional) Icon of the race"),
-    );
+  return subcommand.addAttachmentOption(option =>
+    option.setName(Options.ICON).setDescription("(Optional) Icon of the race"),
+  );
 };
 
 /**
