@@ -2,17 +2,16 @@ import path from "path";
 import axios from "axios";
 import fs from "fs";
 import { getFileExtension } from "./data";
-import { log } from "arcybot";
 
 export const saveImage = async (url: string, name: string) => {
   try {
-    // const localFilePath = path.resolve(__dirname, "../../../__CDN/badges", `${name}.${extension}`);
     const extension = getFileExtension(url);
     const localFilePath = path.resolve(
       __dirname,
-      "../../",
+      "../../../__CDN/badges",
       `${name}.${extension}`,
     );
+
     const newPath = `http://cdn.masochist.me/badges/${name}.${extension}`;
     const response = await axios({
       method: "GET",
