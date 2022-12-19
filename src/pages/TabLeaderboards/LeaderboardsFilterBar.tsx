@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useAppContext } from 'context';
-import { SearchBar } from 'containers';
+import { Input } from 'containers';
 import { FilterBar } from 'components';
 import { useCuratorMembers } from 'sdk';
 
@@ -11,7 +11,7 @@ export const LeaderboardsFilterBar = (): JSX.Element => {
 
 	return (
 		<FilterBar>
-			<SearchBar
+			<Input
 				placeholder="Search members"
 				query={queryMember}
 				setQuery={setQueryMember}
