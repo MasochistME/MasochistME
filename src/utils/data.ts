@@ -18,8 +18,8 @@ export const getChannelById = (
   return null;
 };
 
-export const getModChannel = () => {
-  const modRoom = getOption("room_mod");
+export const getModChannel = (isRaceRoom?: boolean) => {
+  const modRoom = getOption(isRaceRoom ? "room_race_mod" : "room_mod");
   const channel = bot.botClient.channels.cache.find(ch => ch.id === modRoom);
   if (channel?.isTextBased()) return channel;
   return null;

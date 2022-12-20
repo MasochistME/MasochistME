@@ -22,7 +22,7 @@ export const handleRaceTimer = async () => {
     });
   } catch (err: any) {
     log.WARN(err);
-    getModChannel()?.send(
+    getModChannel(true)?.send(
       getErrorEmbed(
         "ERROR - RACE TIMER",
         "There was something wrong trying to check the race status.",
@@ -52,7 +52,7 @@ const handleRaceStart = async (race: Race) => {
     race: { isActive: true },
   });
   if (!response.acknowledged) {
-    getModChannel()?.send(
+    getModChannel(true)?.send(
       getErrorEmbed(
         "ERROR - RACE STARTING...",
         `Race **${name.toUpperCase()}** should start right now, but something fucked up and it could not start.`,
@@ -81,7 +81,7 @@ const handleRaceFinish = async (race: Race) => {
     race: { isActive: false },
   });
   if (!response.acknowledged) {
-    getModChannel()?.send(
+    getModChannel(true)?.send(
       getErrorEmbed(
         "ERROR - RACE FINISHING...",
         `Race **${name.toUpperCase()}** should finish right now, but something fucked up and it could not finish.`,

@@ -13,6 +13,7 @@ import { Race, RaceType, RaceScoreBased } from "@masochistme/sdk/dist/v1/types";
 
 import { bot, sdk } from "fetus";
 import { RaceButton } from "consts";
+import { ImgType, saveImage } from "utils/saveImage";
 import {
   awaitMessage,
   getUTCDate,
@@ -21,6 +22,7 @@ import {
   createError,
   ErrorAction,
 } from "utils";
+import { informModsAboutRaceFinish } from "./informModsAboutRaceFinish";
 
 const fieldsBeforeReveal = [
   {
@@ -51,7 +53,7 @@ export const raceReadyToGo = async (raceId: string): Promise<void> => {
       participant => participant.discordId,
     );
     log.INFO("Preparing to inform race participants about race starting...");
-    getModChannel()?.send(
+    getModChannel(true)?.send(
       getInfoEmbed(
         `${race.name.toUpperCase()} - RACE STARTED`,
         `Race successfully started!
@@ -72,7 +74,7 @@ export const raceReadyToGo = async (raceId: string): Promise<void> => {
           components: [getRaceStartButtons(raceId, true, false, false, false)],
         })
         .then(() => {
-          getModChannel()?.send(
+          getModChannel(true)?.send(
             getSuccessEmbed(
               `${race.name.toUpperCase()} - PARTICIPANT UPDATED`,
               `Participant <@${userId}> got informed about race starting.`,
@@ -81,7 +83,7 @@ export const raceReadyToGo = async (raceId: string): Promise<void> => {
           log.INFO(`Discord user ${userId} informed about the race starting!`);
         })
         .catch(() => {
-          getModChannel()?.send(
+          getModChannel(true)?.send(
             getErrorEmbed(
               `${race.name.toUpperCase()} - PARTICIPANT NOT UPDATED`,
               `Participant <@${userId}> could not get informed about race starting.`,
@@ -93,7 +95,7 @@ export const raceReadyToGo = async (raceId: string): Promise<void> => {
         });
     });
   } catch (err: any) {
-    getModChannel()?.send(
+    getModChannel(true)?.send(
       getErrorEmbed(
         `ERROR - RACE STARTING...`,
         err?.error ?? err?.message ?? err ?? "Something went wrong.",
@@ -338,6 +340,8 @@ const raceUploadProof = async (
     ),
   );
   try {
+    const raceId = String(race._id);
+    const memberId = interaction.user.id;
     const filter = (msg: Message) => !!msg.attachments.size;
     const time = dayjs(race.endDate).diff(new Date());
     const proofCollection = await awaitMessage<ButtonInteraction>(
@@ -345,23 +349,29 @@ const raceUploadProof = async (
       filter,
       time,
     );
-    const proof = proofCollection?.attachments?.first()?.url;
+    const proof = proofCollection?.attachments?.first()?.proxyURL;
     if (!proof)
       throw new Error(
         "I could not collect a proof. Reason unknown. Probably something fucked up.",
       );
+    const fixedImage = await saveImage(
+      proof,
+      `race-${raceId}_player-${memberId}`,
+      ImgType.RACE,
+    );
     const { acknowledged } = await sdk.updateRaceByParticipantId({
-      raceId: String(race._id),
-      memberId: interaction.user.id,
-      update: { proof, proofDate: new Date() },
+      raceId,
+      memberId,
+      update: { proof: fixedImage, proofDate: new Date() },
     });
     if (!acknowledged)
       throw new Error(
         "Could not save your proof. Reason unknown but probably database died or something.",
       );
     channel.send(
-      getSuccessEmbed("You successfully uploaded your proof!", proof),
+      getSuccessEmbed("You successfully uploaded your proof!", fixedImage),
     );
+    informModsAboutRaceFinish(raceId, memberId);
   } catch (err: any) {
     createError(interaction, err, ErrorAction.SEND);
   }

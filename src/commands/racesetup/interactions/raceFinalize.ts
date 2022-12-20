@@ -22,7 +22,7 @@ export const raceFinalize = async (raceId: string): Promise<void> => {
     const finished = participantsUpdated.filter(p => !p.dnf).length;
     const percentage = Math.round((100 * finished) / participated);
 
-    getModChannel()?.send(
+    getModChannel(true)?.send(
       getInfoEmbed(
         `${race.name.toUpperCase()} - RACE FINISHED`,
         `Race successfully finished.
@@ -31,7 +31,7 @@ export const raceFinalize = async (raceId: string): Promise<void> => {
       ),
     );
   } catch (err: any) {
-    getModChannel()?.send(
+    getModChannel(true)?.send(
       getErrorEmbed(
         `ERROR - RACE FINISHING...`,
         `Race finished and something fucked up when I was trying to send the results. Sorry :(`,

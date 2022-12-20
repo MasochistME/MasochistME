@@ -10,7 +10,7 @@ import { SDK } from "@masochistme/sdk/dist/v1/sdk";
 
 import { getOption, Database } from "utils";
 import { Cache } from "cache";
-// import { handleRaceTimer } from "commands/_utils/race";
+import { handleRaceTimer } from "commands/_utils/race";
 
 import { commandsFunctions, customCommands } from "commands";
 import { handleAutocomplete, handleButtons } from "interactions";
@@ -70,8 +70,7 @@ const init = async () => {
 
   bot.botClient.on("ready", async () => {
     // Race timer checks every minute if any race should start.
-    // TODO reenable when needed
-    // handleRaceTimer();
+    handleRaceTimer();
   });
 
   bot.botClient.on("interactionCreate", async interaction => {

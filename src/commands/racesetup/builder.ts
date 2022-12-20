@@ -79,7 +79,8 @@ const getCommonRequiredOptionsRaceSetup = (
       option
         .setName(Options.SEASON)
         .setDescription("Active season the race should be included in")
-        .setRequired(true),
+        .setRequired(true)
+        .setAutocomplete(true),
     );
 };
 
