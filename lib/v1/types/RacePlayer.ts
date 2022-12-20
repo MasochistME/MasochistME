@@ -22,6 +22,10 @@ interface BaseRacePlayer extends WithId {
 	 */
 	type: keyof typeof RaceType;
 	/**
+	 * Time when member revealed the race info.
+	 */
+	revealDate: Date | null;
+	/**
 	 * Time when member clicked the START button.
 	 */
 	startDate: Date | null;
@@ -30,6 +34,10 @@ interface BaseRacePlayer extends WithId {
 	 */
 	endDate: Date | null;
 	/**
+	 * Time when member uploaded the proof.
+	 */
+	proofDate: Date | null;
+	/**
 	 * If true, participant gave up.
 	 */
 	dnf: boolean;
@@ -37,10 +45,6 @@ interface BaseRacePlayer extends WithId {
 	 * Link to screenshot or other proof of finishing a race.
 	 */
 	proof: string | null;
-	/**
-	 * Time when member uploaded the proof.
-	 */
-	proofDate: Date | null;
 }
 
 /**
