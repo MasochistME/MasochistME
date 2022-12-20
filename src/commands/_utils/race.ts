@@ -1,9 +1,9 @@
-import { Race, RaceType } from "@masochistme/sdk/dist/v1/types";
+import { Race, RacePlayer, RaceType } from "@masochistme/sdk/dist/v1/types";
 import { DiscordInteraction, getErrorEmbed, log } from "arcybot";
 import dayjs from "dayjs";
 
 import { RACE_TIMEOUT, RACE_RESULTS_TIMEOUT } from "consts";
-import { getDateFromDelay, getModChannel } from "utils";
+import { getDateFromDelay, getModChannel, getTimestampFromDate } from "utils";
 import { sdk } from "fetus";
 
 import { RaceData } from "commands/racesetup/logic";
@@ -142,4 +142,31 @@ export const getRace = (
     ...(raceData.icon && { icon: raceData.icon }),
     ...(raceData.playLimit && { playLimit: raceData.playLimit }),
   };
+};
+
+/**
+ * Gets time of a race player, taking all the grace periods into consideration
+ * @param raceParticipant RacePlayer
+ */
+export const getParticipantRaceTime = (
+  raceParticipant: RacePlayer,
+  race: Race,
+) => {
+  const { revealDate, startDate, endDate, proofDate } = raceParticipant;
+  const { uploadGrace, downloadGrace } = race;
+
+  const reveal = getTimestampFromDate(revealDate);
+  const start = getTimestampFromDate(startDate);
+  const end = getTimestampFromDate(endDate);
+  const proof = getTimestampFromDate(proofDate);
+
+  const download = downloadGrace * 1000;
+  const upload = uploadGrace * 1000;
+
+  const downloadPenalty =
+    start - reveal > download ? -download + (start - reveal) : 0;
+  const uploadPenalty = proof - end > upload ? -upload + (proof - end) : 0;
+  const fullTime = end - start + downloadPenalty + uploadPenalty;
+
+  return fullTime;
 };

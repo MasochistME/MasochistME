@@ -22,7 +22,10 @@ import {
   createError,
   ErrorAction,
 } from "utils";
-import { informModsAboutRaceFinish } from "./informModsAboutRaceFinish";
+import {
+  informModsAboutRaceFinish,
+  informModsAboutRaceForfeit,
+} from "./informModsAboutParticipant";
 
 const fieldsBeforeReveal = [
   {
@@ -151,6 +154,13 @@ export const raceReveal = async (
       "",
     );
     const race = await sdk.getRaceById({ raceId });
+    const revealDate = new Date();
+    const { acknowledged } = await sdk.updateRaceByParticipantId({
+      raceId,
+      memberId: interaction.user.id,
+      update: { revealDate },
+    });
+    if (!acknowledged) throw new Error("Database did not respond.");
 
     interaction.update({
       embeds: [

@@ -9,7 +9,9 @@ export type CacheItem = {
   id: string | number;
 };
 
-export type CacheMember = CacheItem;
+export interface CacheMember extends CacheItem {
+  discordId: string | null;
+}
 
 export interface CacheGame extends CacheItem {
   description: string;

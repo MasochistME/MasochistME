@@ -33,7 +33,7 @@ export const saveImage = async (url: string, name: string, type: ImgType) => {
     const pipe = response.data.pipe(fs.createWriteStream(localFilePath));
 
     pipe.on("finish", () => {
-      console.log("Successfully downloaded file!");
+      console.log("--> Successfully downloaded and saved a file!");
     });
     return newPath;
   } catch (err: any) {

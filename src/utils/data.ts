@@ -33,7 +33,7 @@ export const getBadgeNameById = (badgeId?: string | null): string => {
 
 export const getMemberNameById = (id?: string | null): string => {
   if (!id) return UNKNOWN_NAME;
-  const member = cache.members.find(m => m.id === id);
+  const member = cache.members.find(m => m.id === id || m.discordId === id);
   return member?.name ?? UNKNOWN_NAME;
 };
 
