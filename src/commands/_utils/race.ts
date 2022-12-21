@@ -1,5 +1,5 @@
 import { Race, RacePlayer, RaceType } from "@masochistme/sdk/dist/v1/types";
-import { DiscordInteraction, getErrorEmbed, log } from "arcybot";
+import { getErrorEmbed, log } from "arcybot";
 import dayjs from "dayjs";
 
 import { RACE_TIMEOUT, RACE_RESULTS_TIMEOUT } from "consts";
@@ -88,9 +88,9 @@ const handleRaceFinish = async (race: Race) => {
       ),
     );
   }
-  // setTimeout(() => {
-  raceFinalize(raceId);
-  // }, RACE_RESULTS_TIMEOUT);
+  setTimeout(() => {
+    raceFinalize(raceId);
+  }, RACE_RESULTS_TIMEOUT);
 };
 
 /**

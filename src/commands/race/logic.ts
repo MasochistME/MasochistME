@@ -23,9 +23,14 @@ export const race = async (interaction: DiscordInteraction): Promise<void> => {
           "There is no ongoing races at this moment, not any are planned in the future.",
         ),
       );
-    } else {
-      interaction.editReply({ embeds: [getActiveRaceEmbed(activeRaces[0])] });
+      return;
     }
+    const activeRace = await sdk.getRaceById({
+      raceId: String(activeRaces[0]?._id),
+    });
+    // @ts-ignore
+    const csv = activeRace.leaderboards.map();
+    // interaction.editReply({ embeds: [getActiveRaceEmbed(activeRaces[0])] });
   } catch (err: any) {
     createError(interaction, err, ErrorAction.EDIT);
   }
