@@ -116,6 +116,13 @@ export const racesetupJoin = async (
   const registerUser = await saveJoinRace(interaction);
   if (registerUser) {
     interaction.update({ embeds: [updatedEmbed] });
+    interaction.user.send(
+      getInfoEmbed(
+        "You joined the race!",
+        `Congratulations, you successfully joined the **${race.name}** race!`,
+      ),
+    );
+
     if (race.isActive) raceJoinAfterStart(interaction);
   }
 };
