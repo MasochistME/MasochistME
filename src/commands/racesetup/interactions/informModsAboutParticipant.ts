@@ -65,35 +65,46 @@ const getParticipantStatsRaceFinish = async (
     raceId,
     memberId,
   });
-  const { revealDate, startDate, endDate, proofDate } = raceParticipant;
+  const { startDate, endDate } = raceParticipant;
+  const { downloadGrace, uploadGrace } = race;
 
-  const totalTimeTimestamp = getParticipantRaceTime(raceParticipant, race);
-  const totalTime = dayjs.duration(totalTimeTimestamp).format("m:ss.SSS");
+  const { fullTime, downloadTime, uploadTime } = getParticipantRaceTime(
+    raceParticipant,
+    race,
+  );
+  const totalTime = dayjs.duration(fullTime).format("m:ss.SSS");
+  const download = `${downloadTime > downloadGrace ? "⚠️ " : ""}${dayjs
+    .duration(downloadTime)
+    .format("m:ss.SSS")}`;
+  const upload = `${uploadTime > uploadGrace ? "⚠️ " : ""}${dayjs
+    .duration(uploadTime)
+    .format("m:ss.SSS")}`;
 
   const fields: APIEmbedField[] = [
     { name: "FINAL TIME", value: totalTime, inline: false },
-    { name: "PROOF", value: raceParticipant.proof ?? "—", inline: false },
     {
-      name: "Reveal time",
-      value: revealDate ? revealDate.toLocaleString() : "—",
-      inline: false,
+      name: "Time spent downloading game",
+      value: download,
+      inline: true,
     },
     {
+      name: "Time spent uploading proof",
+      value: upload,
+      inline: true,
+    },
+    { name: "PROOF", value: raceParticipant.proof ?? "—", inline: false },
+    {
       name: "Start time",
-      value: startDate ? startDate.toLocaleString() : "—",
-      inline: false,
+      value: startDate ? dayjs(startDate).format("DD.MM.YYYY, HH:mm:ss") : "—",
+      inline: true,
     },
     {
       name: "Finish time",
-      value: endDate ? endDate.toLocaleString() : "—",
-      inline: false,
-    },
-    {
-      name: "Proof upload time",
-      value: proofDate ? proofDate.toLocaleString() : "—",
-      inline: false,
+      value: endDate ? dayjs(startDate).format("DD.MM.YYYY, HH:mm:ss") : "—",
+      inline: true,
     },
   ];
+
   const embed: APIEmbed = {
     title: `${race.name ?? "UNKNOWN RACE"} - FINISH - ${
       getMemberNameById(memberId) ?? memberId

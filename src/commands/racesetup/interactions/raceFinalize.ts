@@ -3,7 +3,6 @@ import { getErrorEmbed, getInfoEmbed, log } from "arcybot";
 
 import { sdk } from "fetus";
 import { getMemberNameById, getModChannel } from "utils";
-import { getParticipantRaceTime } from "commands/_utils/race";
 
 /**
  * Aggregates and sends the results after race finish.
@@ -16,13 +15,6 @@ export const raceFinalize = async (raceId: string): Promise<void> => {
     const participantsOld = await sdk.getRaceParticipantsList({
       raceId,
     });
-
-    console.log(
-      participantsOld.map(p => ({
-        ...p,
-        score: getParticipantRaceTime(p, race),
-      })),
-    );
 
     const participantsUpdated = await distributeDNF(participantsOld, 0);
 

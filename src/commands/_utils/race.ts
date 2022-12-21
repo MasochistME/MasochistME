@@ -168,5 +168,5 @@ export const getParticipantRaceTime = (
   const uploadPenalty = proof - end > upload ? -upload + (proof - end) : 0;
   const fullTime = end - start + downloadPenalty + uploadPenalty;
 
-  return fullTime;
+  return { downloadTime: start - reveal, uploadTime: proof - end, fullTime };
 };
