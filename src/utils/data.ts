@@ -2,7 +2,7 @@ import { DiscordInteraction } from "arcybot";
 
 import { bot, cache, sdk } from "fetus";
 import { UNKNOWN_NAME } from "consts";
-import { ButtonInteraction } from "discord.js";
+import { ButtonInteraction, DMChannel } from "discord.js";
 
 export const getOption = (key: string) =>
   cache.options.find(option => option.option === key)?.value;
@@ -18,11 +18,23 @@ export const getChannelById = (
   return null;
 };
 
-export const getModChannel = () => {
-  const modRoom = getOption("room_mod");
+export const getChannelByKey = (roomKey: string) => {
+  const room = getOption(roomKey);
+  const channel = bot.botClient.channels.cache.find(ch => ch.id === room);
+  if (channel?.isTextBased()) return channel;
+  return null;
+};
+
+export const getModChannel = (isRaceRoom?: boolean) => {
+  const modRoom = getOption(isRaceRoom ? "room_race_mod" : "room_mod");
   const channel = bot.botClient.channels.cache.find(ch => ch.id === modRoom);
   if (channel?.isTextBased()) return channel;
   return null;
+};
+
+export const getDMChannel = (memberId: string): DMChannel | null => {
+  const user = bot.botClient.users.cache.find(ch => ch.id === memberId);
+  return user as unknown as DMChannel;
 };
 
 export const getBadgeNameById = (badgeId?: string | null): string => {
@@ -33,7 +45,7 @@ export const getBadgeNameById = (badgeId?: string | null): string => {
 
 export const getMemberNameById = (id?: string | null): string => {
   if (!id) return UNKNOWN_NAME;
-  const member = cache.members.find(m => m.id === id);
+  const member = cache.members.find(m => m.id === id || m.discordId === id);
   return member?.name ?? UNKNOWN_NAME;
 };
 

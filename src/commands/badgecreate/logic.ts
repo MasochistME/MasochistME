@@ -3,7 +3,7 @@ import { DiscordInteraction } from "arcybot";
 import { sdk } from "fetus";
 import { Badge } from "@masochistme/sdk/dist/v1/types";
 import { createError, ErrorAction } from "utils";
-import { saveImage } from "utils/saveImage";
+import { ImgType, saveImage } from "utils/saveImage";
 
 /**
  * Creates a new badge.
@@ -24,6 +24,7 @@ export const badgecreate = async (
     const fixedImage = await saveImage(
       thumbnail.proxyURL,
       `${gameId}_${name.replace(" ", "-")}`,
+      ImgType.BADGE,
     );
 
     const badge: Omit<Badge, "_id"> = {

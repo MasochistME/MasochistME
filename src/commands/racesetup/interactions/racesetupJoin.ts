@@ -12,17 +12,45 @@ import dayjs from "dayjs";
 
 import { sdk } from "fetus";
 import { RaceButton } from "consts";
-import { getChannelById, getOption, getUTCDate, cenzor } from "utils";
+import { getChannelByKey, getUTCDate, cenzor } from "utils";
 
-import { raceJoinAfterStart } from "./raceStart";
+import { raceJoinAfterStart } from "./playerActions";
 
 export const racesetupJoin = async (
   interaction: ButtonInteraction,
 ): Promise<void> => {
   if (!interaction.isButton()) return;
 
+  try {
+    await sdk.getMemberById({
+      discordId: interaction.user.id,
+    });
+  } catch (err) {
+    interaction.reply(
+      getErrorEmbed(
+        "You need to register to be able to join a race",
+        `Your Discord account is not connected to the Masochist.ME profile.
+          \nTo be able to join the race, please register first with the \`/register\` command and wait for the approval from mods.`,
+        true,
+      ),
+    );
+    return;
+  }
+
   const raceId = interaction.customId.replace(`${RaceButton.RACE_JOIN}-`, "");
   const race = await sdk.getRaceById({ raceId });
+
+  if (race.owner === interaction.user.id) {
+    interaction.reply(
+      getErrorEmbed(
+        "You are the owner of this race",
+        "You cannot participate in a race that you are an owner of.",
+        true,
+      ),
+    );
+    return;
+  }
+
   const isRaceEnded = dayjs(race.endDate).diff(new Date()) <= 0;
   if (isRaceEnded) {
     interaction.reply(
@@ -61,9 +89,18 @@ export const racesetupJoin = async (
     value: "",
   };
 
+  const getUpdatedParticipantsValue = () => {
+    const updatedValue = `${participants.value} <@${interaction.user.id}>`;
+    if (updatedValue.length >= 80) {
+      if (participants.value.endsWith("and more...")) return participants.value;
+      return `${participants.value} and more...`;
+    }
+    return `${participants.value} <@${interaction.user.id}>`;
+  };
+
   const updatedParticipants = {
     ...participants,
-    value: `${participants.value}<@${interaction.user.id}>\n`,
+    value: getUpdatedParticipantsValue(),
   };
   const updatedFields = [
     ...(originalEmbed.fields ?? []).filter(
@@ -115,17 +152,12 @@ const saveJoinRace = async (
  * Sends a race join form to users facing channel.
  * @param interaction ButtonInteraction
  */
-export const sendRaceJoinForm = async (
-  interaction: ButtonInteraction,
-  raceId: string,
-) => {
+export const sendRaceJoinForm = async (raceId: string) => {
   const newRace = await sdk.getRaceById({ raceId });
-
-  const raceRoomId = getOption("room_race");
-  const channel = getChannelById(interaction, raceRoomId);
+  const channel = getChannelByKey("room_race");
 
   await channel?.send({
-    embeds: [getNewRaceCensoredEmbed(newRace)],
+    embeds: [await getNewRaceCensoredEmbed(newRace)],
     components: [getRaceJoinButton(raceId)],
   });
 };
@@ -149,7 +181,11 @@ const getRaceJoinButton = (newRaceId: string) => {
  * @param race Race
  * @return APIEmbed
  */
-const getNewRaceCensoredEmbed = (race: Race): APIEmbed => {
+const getNewRaceCensoredEmbed = async (race: Race): Promise<APIEmbed> => {
+  const season = race.season
+    ? await sdk.getSeasonById({ seasonId: race.season })
+    : null;
+  const seasonName = season?.name ?? "None";
   const fields: APIEmbedField[] = [
     {
       name: "Instructions",
@@ -192,9 +228,14 @@ const getNewRaceCensoredEmbed = (race: Race): APIEmbed => {
     fields: [
       ...fields,
       {
-        name: "Race organizer",
-        value: `<@${race.organizer}>`,
+        name: "Race owner",
+        value: `<@${race.owner}>`,
         inline: true,
+      },
+      {
+        name: "Season",
+        value: seasonName,
+        inline: false,
       },
       {
         name: "---",

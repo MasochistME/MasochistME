@@ -29,7 +29,7 @@ export const profile = async (
     });
     if (!member)
       throw `Your Discord account is not connected to the Masochist.ME profile.
-      \nTo be able to use \`/profile\` command, please register first with the \`/register\` command.`;
+      \nTo be able to use \`/profile\` command, please register first with the \`/register\` command and wait for the approval from mods.`;
 
     const fullRanking = await sdk.getLeaderboardsMembersList({
       filter: { isMember: true },

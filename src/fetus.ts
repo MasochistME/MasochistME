@@ -10,10 +10,10 @@ import { SDK } from "@masochistme/sdk/dist/v1/sdk";
 
 import { getOption, Database } from "utils";
 import { Cache } from "cache";
-// import { handleRaceTimer } from "commands/_utils/race";
+import { handleRaceTimer } from "commands/_utils/race";
 
 import { commandsFunctions, customCommands } from "commands";
-import { handleAutocomplete, handleButtons } from "interactions";
+import { handleModals, handleAutocomplete, handleButtons } from "interactions";
 
 dotenv.config();
 
@@ -70,14 +70,14 @@ const init = async () => {
 
   bot.botClient.on("ready", async () => {
     // Race timer checks every minute if any race should start.
-    // TODO reenable when needed
-    // handleRaceTimer();
+    handleRaceTimer();
   });
 
   bot.botClient.on("interactionCreate", async interaction => {
     debug(interaction);
     if (interaction.isAutocomplete()) handleAutocomplete(interaction);
     if (interaction.isButton()) handleButtons(interaction);
+    if (interaction.isModalSubmit()) handleModals(interaction);
   });
 
   // Debug mode
@@ -94,6 +94,9 @@ const init = async () => {
 
 init();
 
+/**
+ * Temporary debug code.
+ */
 const debug = async (interaction: Interaction<CacheType>) => {
   log.DEBUG(`NEW INTERACTION`);
   log.DEBUG(`-> interaction type: ${interaction.type}`);

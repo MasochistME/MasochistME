@@ -1,8 +1,8 @@
 import { RacePlayer } from "@masochistme/sdk/dist/v1/types";
-import { getErrorEmbed, getInfoEmbed } from "arcybot";
+import { getErrorEmbed, getInfoEmbed, log } from "arcybot";
 
 import { sdk } from "fetus";
-import { getModChannel } from "utils";
+import { getMemberNameById, getModChannel } from "utils";
 
 /**
  * Aggregates and sends the results after race finish.
@@ -18,20 +18,41 @@ export const raceFinalize = async (raceId: string): Promise<void> => {
 
     const participantsUpdated = await distributeDNF(participantsOld, 0);
 
-    const participated = participantsUpdated.length;
-    const finished = participantsUpdated.filter(p => !p.dnf).length;
-    const percentage = Math.round((100 * finished) / participated);
+    const participated = participantsUpdated.length ?? 0;
+    const disqualified =
+      participantsUpdated.filter(p => p.disqualified).length ?? 0;
+    const finished =
+      participantsUpdated.filter(p => !p.dnf && !p.disqualified).length ?? 0;
 
-    getModChannel()?.send(
+    const finishedPercentage = Math.round((100 * finished) / participated) ?? 0;
+    const disqualifiedPercentage =
+      Math.round((100 * disqualified) / participated) ?? 0;
+
+    //@ts-ignore
+    const leaderboards = race.leaderboards
+      .slice(0, 9)
+      .map(
+        (leader: any, index: number) =>
+          `\`\`#${index + 1}\`\`. \`\`${
+            leader.score
+          }\`\` - **${getMemberNameById(leader.discordId)}**`,
+      )
+      .join("\n");
+
+    getModChannel(true)?.send(
       getInfoEmbed(
-        `${race.name.toUpperCase()} - RACE FINISHED`,
-        `Race successfully finished.
-        \n**${participated}** members participated.
-        \n**${finished}** members finished (**${percentage}%** completion ratio).`,
+        `${race.name.toUpperCase()} - RACE FINISHED!`,
+        `**LEADERBOARDS**
+        ${leaderboards}
+        \n**STATISTICS**
+        - **${participated}** members participated
+        - **${finished}** members finished (**${finishedPercentage}%** completion ratio)
+        - **${disqualified}** members were disqualified (**${disqualifiedPercentage}%** disqualification ratio)`,
       ),
     );
   } catch (err: any) {
-    getModChannel()?.send(
+    log.WARN(err);
+    getModChannel(true)?.send(
       getErrorEmbed(
         `ERROR - RACE FINISHING...`,
         `Race finished and something fucked up when I was trying to send the results. Sorry :(`,
@@ -44,9 +65,10 @@ const distributeDNF = async (
   participants: RacePlayer[],
   index: number,
 ): Promise<RacePlayer[]> => {
+  if (!participants.length) return [];
   const participant = participants[index];
   const isDNF =
-    !participant.endDate || !participant.proof || !participant.proofDate;
+    !participant?.endDate || !participant?.proof || !participant?.proofDate;
   if (isDNF) {
     await sdk.updateRaceByParticipantId({
       raceId: participant.raceId,

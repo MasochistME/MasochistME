@@ -38,7 +38,7 @@ export class Cache {
     this.badges = await sdk.getBadgesList({});
     this.seasons = await sdk.getSeasonsList({ filter: {} });
     this.members = (await sdk.getMembersList({}))
-      .map(m => ({ name: m.name, id: m.steamId }))
+      .map(m => ({ name: m.name, id: m.steamId, discordId: m.discordId }))
       .sort();
     this.games = (await sdk.getGamesList({}))
       .map(g => ({ name: g.title, description: g.description, id: g.id }))

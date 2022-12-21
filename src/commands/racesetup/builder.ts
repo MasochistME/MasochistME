@@ -12,6 +12,8 @@ export enum Options {
   UPLOAD_GRACE = "upload-grace",
   PLAY_LIMIT = "play-time",
   ICON = "icon",
+  OWNER = "owner",
+  OWNERS_TIME = "owners-time",
 }
 
 /**
@@ -79,7 +81,8 @@ const getCommonRequiredOptionsRaceSetup = (
       option
         .setName(Options.SEASON)
         .setDescription("Active season the race should be included in")
-        .setRequired(true),
+        .setRequired(true)
+        .setAutocomplete(true),
     );
 };
 
@@ -91,9 +94,26 @@ const getCommonRequiredOptionsRaceSetup = (
 const getCommonOptionalOptionsRaceSetup = (
   subcommand: SlashCommandSubcommandBuilder,
 ) => {
-  return subcommand.addAttachmentOption(option =>
-    option.setName(Options.ICON).setDescription("(Optional) Icon of the race"),
-  );
+  return subcommand
+    .addAttachmentOption(option =>
+      option
+        .setName(Options.ICON)
+        .setDescription("(Optional) Icon of the race"),
+    )
+    .addUserOption(option =>
+      option
+        .setName(Options.OWNER)
+        .setDescription(
+          "Owner of the race (leave empty to set you as an owner)",
+        ),
+    )
+    .addNumberOption(option =>
+      option
+        .setName(Options.OWNERS_TIME)
+        .setDescription(
+          "Owner's time in seconds (leave empty if owner does not want to participate)",
+        ),
+    );
 };
 
 /**
@@ -111,21 +131,22 @@ export const racesetupBuilder = new SlashCommandBuilder()
           "Set up a time based race (winner has the fastest completion time).",
         );
     return getCommonOptionalOptionsRaceSetup(subcommandWithTypeSpecificOptions);
-  })
-  .addSubcommand(subcommand => {
-    const subcommandWithCommonRecommendedOptions =
-      getCommonRequiredOptionsRaceSetup(subcommand);
-    const subcommandWithTypeSpecificOptions =
-      subcommandWithCommonRecommendedOptions
-        .setName("score-based")
-        .setDescription(
-          "Set up a score based race (winner has the highest score within a time frame).",
-        )
-        .addNumberOption(option =>
-          option
-            .setName(Options.PLAY_LIMIT)
-            .setDescription("Time limit for achieving the best score [minutes]")
-            .setRequired(true),
-        );
-    return getCommonOptionalOptionsRaceSetup(subcommandWithTypeSpecificOptions);
   });
+// TODO re-add score based races when done
+// .addSubcommand(subcommand => {
+//   const subcommandWithCommonRecommendedOptions =
+//     getCommonRequiredOptionsRaceSetup(subcommand);
+//   const subcommandWithTypeSpecificOptions =
+//     subcommandWithCommonRecommendedOptions
+//       .setName("score-based")
+//       .setDescription(
+//         "Set up a score based race (winner has the highest score within a time frame).",
+//       )
+//       .addNumberOption(option =>
+//         option
+//           .setName(Options.PLAY_LIMIT)
+//           .setDescription("Time limit for achieving the best score [minutes]")
+//           .setRequired(true),
+//       );
+//   return getCommonOptionalOptionsRaceSetup(subcommandWithTypeSpecificOptions);
+// });

@@ -1,13 +1,13 @@
-import { Race, RaceType } from "@masochistme/sdk/dist/v1/types";
+import { Race, RacePlayer, RaceType } from "@masochistme/sdk/dist/v1/types";
 import { DiscordInteraction, getErrorEmbed, log } from "arcybot";
 import dayjs from "dayjs";
 
 import { RACE_TIMEOUT, RACE_RESULTS_TIMEOUT } from "consts";
-import { getDateFromDelay, getModChannel } from "utils";
+import { getDateFromDelay, getModChannel, getTimestampFromDate } from "utils";
 import { sdk } from "fetus";
 
 import { RaceData } from "commands/racesetup/logic";
-import { raceReadyToGo } from "commands/racesetup/interactions/raceStart";
+import { raceReadyToGo } from "commands/racesetup/interactions/playerActions";
 import { raceFinalize } from "commands/racesetup/interactions/raceFinalize";
 
 /**
@@ -22,7 +22,7 @@ export const handleRaceTimer = async () => {
     });
   } catch (err: any) {
     log.WARN(err);
-    getModChannel()?.send(
+    getModChannel(true)?.send(
       getErrorEmbed(
         "ERROR - RACE TIMER",
         "There was something wrong trying to check the race status.",
@@ -52,7 +52,7 @@ const handleRaceStart = async (race: Race) => {
     race: { isActive: true },
   });
   if (!response.acknowledged) {
-    getModChannel()?.send(
+    getModChannel(true)?.send(
       getErrorEmbed(
         "ERROR - RACE STARTING...",
         `Race **${name.toUpperCase()}** should start right now, but something fucked up and it could not start.`,
@@ -81,7 +81,7 @@ const handleRaceFinish = async (race: Race) => {
     race: { isActive: false },
   });
   if (!response.acknowledged) {
-    getModChannel()?.send(
+    getModChannel(true)?.send(
       getErrorEmbed(
         "ERROR - RACE FINISHING...",
         `Race **${name.toUpperCase()}** should finish right now, but something fucked up and it could not finish.`,
@@ -123,10 +123,7 @@ export const getDraftRace = (): Omit<Race, "_id" | "isActive"> | null => {
  * @param raceData RaceData
  * @return Omit<Race, "_id">
  */
-export const getRace = (
-  interaction: DiscordInteraction,
-  raceData: RaceData,
-) => {
+export const getRace = (raceData: RaceData) => {
   return {
     name: raceData.name,
     instructions: raceData.instructions,
@@ -137,9 +134,37 @@ export const getRace = (
     downloadLink: raceData.downloadLink,
     downloadGrace: raceData.downloadGrace,
     uploadGrace: raceData.uploadGrace,
-    organizer: interaction.user.id,
+    owner: raceData.owner,
+    ownerTime: raceData.ownerTime,
     season: raceData.season,
     ...(raceData.icon && { icon: raceData.icon }),
     ...(raceData.playLimit && { playLimit: raceData.playLimit }),
   };
+};
+
+/**
+ * Gets time of a race player, taking all the grace periods into consideration
+ * @param raceParticipant RacePlayer
+ */
+export const getParticipantRaceTime = (
+  raceParticipant: RacePlayer,
+  race: Race,
+) => {
+  const { revealDate, startDate, endDate, proofDate } = raceParticipant;
+  const { uploadGrace, downloadGrace } = race;
+
+  const reveal = getTimestampFromDate(revealDate);
+  const start = getTimestampFromDate(startDate);
+  const end = getTimestampFromDate(endDate);
+  const proof = getTimestampFromDate(proofDate);
+
+  const download = downloadGrace * 1000;
+  const upload = uploadGrace * 1000;
+
+  const downloadPenalty =
+    start - reveal > download ? -download + (start - reveal) : 0;
+  const uploadPenalty = proof - end > upload ? -upload + (proof - end) : 0;
+  const fullTime = end - start + downloadPenalty + uploadPenalty;
+
+  return { downloadTime: start - reveal, uploadTime: proof - end, fullTime };
 };
