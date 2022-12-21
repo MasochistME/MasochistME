@@ -14,6 +14,7 @@ export const RACE_RESULTS_TIMEOUT = 1; // 1000 * 60 * 60; // TODO re-enable it
 export const FEATURE_VIDEO = "FEATURE_VIDEO";
 export const REGISTRATION_REVIEW = "REGISTRATION_REVIEW";
 export const RACE_CONFIRMATION = "RACE_CONFIRMATION";
+export const RACE_DISQUALIFICATION = "RACE_DISQUALIFICATION";
 
 export enum RaceButton {
   RACE_JOIN = "RACE_JOIN",

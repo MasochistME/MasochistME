@@ -1,5 +1,5 @@
 import { RacePlayer } from "@masochistme/sdk/dist/v1/types";
-import { getErrorEmbed, getInfoEmbed } from "arcybot";
+import { getErrorEmbed, getInfoEmbed, log } from "arcybot";
 
 import { sdk } from "fetus";
 import { getModChannel } from "utils";
@@ -31,6 +31,7 @@ export const raceFinalize = async (raceId: string): Promise<void> => {
       ),
     );
   } catch (err: any) {
+    log.WARN(err);
     getModChannel(true)?.send(
       getErrorEmbed(
         `ERROR - RACE FINISHING...`,

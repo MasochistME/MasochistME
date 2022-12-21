@@ -2,7 +2,7 @@ import { DiscordInteraction } from "arcybot";
 
 import { bot, cache, sdk } from "fetus";
 import { UNKNOWN_NAME } from "consts";
-import { ButtonInteraction } from "discord.js";
+import { ButtonInteraction, DMChannel } from "discord.js";
 
 export const getOption = (key: string) =>
   cache.options.find(option => option.option === key)?.value;
@@ -23,6 +23,11 @@ export const getModChannel = (isRaceRoom?: boolean) => {
   const channel = bot.botClient.channels.cache.find(ch => ch.id === modRoom);
   if (channel?.isTextBased()) return channel;
   return null;
+};
+
+export const getDMChannel = (memberId: string): DMChannel | null => {
+  const user = bot.botClient.users.cache.find(ch => ch.id === memberId);
+  return user as unknown as DMChannel;
 };
 
 export const getBadgeNameById = (badgeId?: string | null): string => {

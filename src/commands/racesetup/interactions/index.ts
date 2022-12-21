@@ -7,3 +7,4 @@ export {
   raceFinish,
   raceGiveUp,
 } from "./raceStart";
+export { raceDisqualify } from "./raceDisqualify";

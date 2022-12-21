@@ -4,6 +4,7 @@ import {
   REGISTRATION_REVIEW,
   RACE_CONFIRMATION,
   FEATURE_VIDEO,
+  RACE_DISQUALIFICATION,
   RaceButton,
 } from "consts";
 import { registrationReview } from "commands/register/interactions";
@@ -14,6 +15,7 @@ import {
   raceStart,
   raceFinish,
   raceGiveUp,
+  raceDisqualify,
 } from "commands/racesetup/interactions";
 import { featureVideo } from "commands/vid/interactions";
 
@@ -41,5 +43,8 @@ export const handleButtons = (interaction: ButtonInteraction) => {
   }
   if (interaction.customId.includes(RaceButton.RACE_GIVE_UP)) {
     raceGiveUp(interaction);
+  }
+  if (interaction.customId.includes(RACE_DISQUALIFICATION)) {
+    raceDisqualify(interaction);
   }
 };

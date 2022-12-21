@@ -8,6 +8,7 @@ import {
 import { DiscordInteraction } from "arcybot";
 import { Race, RaceScoreBased, RaceType } from "@masochistme/sdk/dist/v1/types";
 
+import { sdk } from "fetus";
 import { RACE_CONFIRMATION } from "consts";
 import { isLink, getUTCDate, createError, ErrorAction } from "utils";
 import { getRace, setDraftRace } from "commands/_utils/race";
@@ -19,7 +20,6 @@ import {
   errorNegativeTimers,
   errorWrongDownloadLink,
 } from "./errors";
-import { sdk } from "fetus";
 
 export type RaceData = {
   name: string;
@@ -42,6 +42,7 @@ export type RaceData = {
 export const racesetup = async (
   interaction: DiscordInteraction,
 ): Promise<void> => {
+  const season = interaction.options.getString(Options.SEASON, true);
   const raceData: RaceData = {
     name: interaction.options.getString(Options.NAME, true),
     instructions: interaction.options.getString(Options.INSTRUCTIONS, true),
@@ -53,7 +54,7 @@ export const racesetup = async (
     uploadGrace: interaction.options.getNumber(Options.UPLOAD_GRACE, true),
     playLimit: interaction.options.getNumber(Options.PLAY_LIMIT),
     icon: interaction.options.getAttachment(Options.ICON)?.url,
-    season: interaction.options.getString(Options.SEASON, false),
+    season: season === "None" ? null : season,
   };
 
   if (raceData.startsIn + raceData.endsAfter <= 0)
@@ -74,7 +75,7 @@ export const racesetup = async (
   try {
     setDraftRace(race);
     interaction.reply({
-      embeds: [getRaceConfirmationEmbed(race)],
+      embeds: [await getRaceConfirmationEmbed(race)],
       components: [getRaceConfirmationButtons()],
     });
   } catch (err: any) {
@@ -108,7 +109,13 @@ const getRaceConfirmationButtons = () => {
  * @param interaction DiscordInteraction
  * @return APIEmbed
  */
-const getRaceConfirmationEmbed = (race: Omit<Race, "_id" | "isActive">) => {
+const getRaceConfirmationEmbed = async (
+  race: Omit<Race, "_id" | "isActive">,
+) => {
+  const season = race.season
+    ? await sdk.getSeasonById({ seasonId: race.season })
+    : null;
+  const seasonName = season?.name ?? "None";
   const fields: APIEmbedField[] = [
     {
       name: "Name",
@@ -158,7 +165,14 @@ const getRaceConfirmationEmbed = (race: Omit<Race, "_id" | "isActive">) => {
 
   const embed: APIEmbed = {
     title: `⏳ New race - **${race.name}** - awaiting confirmation...`,
-    fields: fields,
+    fields: [
+      ...fields,
+      {
+        name: "Season",
+        value: seasonName,
+        inline: false,
+      },
+    ],
     ...(race.icon && { thumbnail: { url: race.icon } }),
   };
 

@@ -21,21 +21,22 @@ export const racesetupJoin = async (
 ): Promise<void> => {
   if (!interaction.isButton()) return;
 
-  const discordMember = await sdk.getMemberById({
-    discordId: interaction.user.id,
-  });
-
-  if (!discordMember) {
+  try {
+    await sdk.getMemberById({
+      discordId: interaction.user.id,
+    });
+  } catch (err) {
     interaction.reply(
       getErrorEmbed(
         "You need to register to be able to join a race",
         `Your Discord account is not connected to the Masochist.ME profile.
-        \nTo be able to join the race, please register first with the \`/register\` command and wait for the approval from mods.`,
+          \nTo be able to join the race, please register first with the \`/register\` command and wait for the approval from mods.`,
         true,
       ),
     );
     return;
   }
+
   const raceId = interaction.customId.replace(`${RaceButton.RACE_JOIN}-`, "");
   const race = await sdk.getRaceById({ raceId });
   const isRaceEnded = dayjs(race.endDate).diff(new Date()) <= 0;
@@ -140,7 +141,7 @@ export const sendRaceJoinForm = async (
   const channel = getChannelById(interaction, raceRoomId);
 
   await channel?.send({
-    embeds: [getNewRaceCensoredEmbed(newRace)],
+    embeds: [await getNewRaceCensoredEmbed(newRace)],
     components: [getRaceJoinButton(raceId)],
   });
 };
@@ -164,7 +165,11 @@ const getRaceJoinButton = (newRaceId: string) => {
  * @param race Race
  * @return APIEmbed
  */
-const getNewRaceCensoredEmbed = (race: Race): APIEmbed => {
+const getNewRaceCensoredEmbed = async (race: Race): Promise<APIEmbed> => {
+  const season = race.season
+    ? await sdk.getSeasonById({ seasonId: race.season })
+    : null;
+  const seasonName = season?.name ?? "None";
   const fields: APIEmbedField[] = [
     {
       name: "Instructions",
@@ -210,6 +215,11 @@ const getNewRaceCensoredEmbed = (race: Race): APIEmbed => {
         name: "Race organizer",
         value: `<@${race.organizer}>`,
         inline: true,
+      },
+      {
+        name: "Season",
+        value: seasonName,
+        inline: false,
       },
       {
         name: "---",
