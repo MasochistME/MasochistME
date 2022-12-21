@@ -18,16 +18,15 @@ export const raceFinalize = async (raceId: string): Promise<void> => {
 
     const participantsUpdated = await distributeDNF(participantsOld, 0);
 
-    const participated = participantsUpdated.length;
-    const disqualified = participantsUpdated.filter(p => p.disqualified).length;
-    const finished = participantsUpdated.filter(
-      p => !p.dnf && !p.disqualified,
-    ).length;
+    const participated = participantsUpdated.length ?? 0;
+    const disqualified =
+      participantsUpdated.filter(p => p.disqualified).length ?? 0;
+    const finished =
+      participantsUpdated.filter(p => !p.dnf && !p.disqualified).length ?? 0;
 
-    const finishedPercentage = Math.round((100 * finished) / participated);
-    const disqualifiedPercentage = Math.round(
-      (100 * disqualified) / participated,
-    );
+    const finishedPercentage = Math.round((100 * finished) / participated) ?? 0;
+    const disqualifiedPercentage =
+      Math.round((100 * disqualified) / participated) ?? 0;
 
     //@ts-ignore
     const leaderboards = race.leaderboards

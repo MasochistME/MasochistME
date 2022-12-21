@@ -72,10 +72,6 @@ export const raceDisqualifyModal = async (
     const raceId = raceExec?.[0] ?? null;
     const memberId = memberExec?.[0] ?? null;
 
-    console.log(modalId);
-    console.log(raceExec);
-    console.log(memberExec);
-
     if (!raceId || !memberId)
       throw "Something went wrong. Just try again, it should work this time.";
 
