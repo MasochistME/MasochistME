@@ -4,6 +4,7 @@ export enum Options {
   NAME = "name",
   DESCRIPTION = "description",
   ICON = "icon",
+  IS_SPECIAL = "special",
 }
 
 /**
@@ -27,5 +28,13 @@ export const seasoncreateBuilder = new SlashCommandBuilder()
     option
       .setName(Options.ICON)
       .setDescription("Icon of the new season.")
+      .setRequired(true),
+  )
+  .addBooleanOption(option =>
+    option
+      .setName(Options.IS_SPECIAL)
+      .setDescription(
+        "Is this a 'special' season? (season other than a 'main' season)?",
+      )
       .setRequired(true),
   );

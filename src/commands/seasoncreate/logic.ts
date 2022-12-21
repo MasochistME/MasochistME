@@ -16,10 +16,13 @@ export const seasoncreate = async (
 ): Promise<void> => {
   await interaction.deferReply();
 
-  const season: Pick<Season, "name" | "description" | "icon"> = {
+  const season: Omit<Season, "_id"> = {
     name: interaction.options.getString(Options.NAME, true),
     description: interaction.options.getString(Options.DESCRIPTION, true),
     icon: interaction.options.getAttachment(Options.ICON, true).url,
+    isSpecial: interaction.options.getBoolean(Options.IS_SPECIAL, true),
+    startDate: null,
+    endDate: null,
   };
 
   try {
@@ -32,6 +35,7 @@ export const seasoncreate = async (
       fields: [
         { name: "Name", value: season.name },
         { name: "Description", value: season.description },
+        { name: "Special season", value: String(season.isSpecial) },
         {
           name: "---",
           value: `You have created a new season! Its ID is **${response.insertedId}**.
