@@ -25,7 +25,7 @@ import { Season, ResponseError } from 'v1/types';
  */
 export const createSeason = async (
 	params: {
-		season: Pick<Season, 'name' | 'description' | 'icon'>;
+		season: Omit<Season, '_id'>;
 	},
 	/** @ignore */
 	BASE_URL: string,
@@ -36,7 +36,7 @@ export const createSeason = async (
 	const seasonResponse = await axios.post<
 		InsertOneResult<Season> | ResponseError,
 		AxiosResponse<InsertOneResult<Season> | ResponseError>,
-		Pick<Season, 'name' | 'description' | 'icon'>
+		Omit<Season, '_id'>
 	>(url, season, { validateStatus: () => true });
 
 	const { status, data } = seasonResponse;

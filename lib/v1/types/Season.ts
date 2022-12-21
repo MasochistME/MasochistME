@@ -29,4 +29,8 @@ export interface Season extends WithId {
 	 * If the season has ended, the date of ending is stored in this field.
 	 */
 	endDate: Date | null;
+	/**
+	 * Indicates if this is a special season.
+	 */
+	isSpecial: boolean;
 }
