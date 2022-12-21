@@ -165,9 +165,15 @@ routerV1.post('/races/race/:raceId/participants/list', getRaceParticipantsList);
  *         SEASONS         *
  ***************************/
 
-import { createSeason, updateSeasonById, getSeasonsList } from './seasons';
+import {
+  createSeason,
+  updateSeasonById,
+  getSeasonsList,
+  getSeasonById,
+} from './seasons';
 
 routerV1.post('/seasons', apiV1Auth, createSeason);
+routerV1.get('/seasons/season/:seasonId', getSeasonById);
 routerV1.put('/seasons/season/:seasonId', apiV1Auth, updateSeasonById);
 routerV1.post('/seasons/list', getSeasonsList);
 

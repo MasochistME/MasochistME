@@ -22,3 +22,12 @@ export const stringCompare = (a = '', b = ''): any => {
   const bl = b.replace(/\s+/g, '');
   return al.localeCompare(bl, 'nb');
 };
+
+/**
+ * Gets a timestamp from date.
+ */
+export const getTimestampFromDate = (date: Date | string | null): number => {
+  if (typeof date === 'string') return Date.parse(date);
+  if (date instanceof Date) return date.getTime();
+  return 0;
+};

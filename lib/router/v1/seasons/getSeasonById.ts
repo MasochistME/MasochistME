@@ -12,7 +12,7 @@ export const getSeasonById = async (
   try {
     const { db } = mongoInstance.getDb();
     const collection = db.collection<Season>('seasons');
-    const _id = new ObjectId(req.params.raceId);
+    const _id = new ObjectId(req.params.seasonId);
 
     const season: Season | null = await collection.findOne({ _id });
 

@@ -9,6 +9,17 @@ import { log } from 'helpers/log';
 import { routerV1 } from 'router/v1';
 import { updateCurator } from 'router/v1/update';
 
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+import duration from 'dayjs/plugin/duration';
+
+dayjs.extend(duration);
+dayjs.extend(relativeTime);
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
 dotenv.config();
 const app = express();
 
