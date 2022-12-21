@@ -187,6 +187,11 @@ const getRaceConfirmationEmbed = async (
         value: seasonName,
         inline: false,
       },
+      {
+        name: "Owner",
+        value: `<@${race.owner}>`,
+        inline: false,
+      },
     ],
     ...(race.icon && { thumbnail: { url: race.icon } }),
   };

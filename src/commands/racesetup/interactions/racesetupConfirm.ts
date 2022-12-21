@@ -21,16 +21,6 @@ export const racesetupConfirm = async (
   if (!interaction.isButton()) return;
 
   const originalEmbed = interaction.message.embeds[0].data;
-  const editedEmbed = {
-    ...originalEmbed,
-    fields: [
-      ...(originalEmbed.fields ?? []),
-      {
-        name: "Race owner",
-        value: `<@${interaction.user.id}>`,
-      },
-    ],
-  };
 
   if (interaction.customId === `${RACE_CONFIRMATION}_CONFIRM`) {
     try {
@@ -38,7 +28,7 @@ export const racesetupConfirm = async (
       sendRaceJoinForm(newRaceId);
       interaction.update({
         embeds: [
-          { ...editedEmbed, title: `✅ Race draft confirmed and created!` },
+          { ...originalEmbed, title: `✅ Race draft confirmed and created!` },
         ],
         components: [],
       });
@@ -54,7 +44,7 @@ export const racesetupConfirm = async (
   }
   if (interaction.customId === `${RACE_CONFIRMATION}_REJECT`) {
     interaction.update({
-      embeds: [{ ...editedEmbed, title: `❌ Race draft rejected!` }],
+      embeds: [{ ...originalEmbed, title: `❌ Race draft rejected!` }],
       components: [],
     });
   }
