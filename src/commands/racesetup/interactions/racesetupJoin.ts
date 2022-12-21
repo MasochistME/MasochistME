@@ -91,7 +91,7 @@ export const racesetupJoin = async (
 
   const getUpdatedParticipantsValue = () => {
     const updatedValue = `${participants.value} <@${interaction.user.id}>`;
-    if (updatedValue.length >= 80) {
+    if (updatedValue.length >= 300) {
       if (participants.value.endsWith("and more...")) return participants.value;
       return `${participants.value} and more...`;
     }
