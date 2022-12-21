@@ -19,7 +19,7 @@ export const updateSeasonById = async (
     const { db } = mongoInstance.getDb();
     const collection = db.collection<Season>('seasons');
     const _id = new ObjectId(req.params.seasonId);
-    const { name, description, icon, startDate, endDate } = req.body; // TODO Add Request<Season> body validation
+    const { name, description, icon, startDate, endDate, isSpecial } = req.body; // TODO Add Request<Season> body validation
 
     const response = await collection.updateOne(
       { _id },
@@ -30,6 +30,7 @@ export const updateSeasonById = async (
           ...(icon && { icon }),
           ...(startDate && { startDate: new Date(startDate) }),
           ...(endDate && { endDate: new Date(endDate) }),
+          ...(isSpecial !== undefined && { isSpecial }),
         },
       },
     );

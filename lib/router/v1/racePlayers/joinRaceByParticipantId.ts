@@ -37,11 +37,13 @@ export const joinRaceByParticipantId = async (
       discordId,
       raceId,
       type: race.type,
+      revealDate: null,
       startDate: null,
       endDate: null,
+      proofDate: null,
       dnf: false,
       proof: null,
-      proofDate: null,
+      disqualified: false,
       ...(race.type === RaceType.SCORE_BASED && { score: null }),
     };
 

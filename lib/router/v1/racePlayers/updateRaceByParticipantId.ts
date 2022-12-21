@@ -23,8 +23,16 @@ export const updateRaceByParticipantId = async (
       return;
     }
 
-    const { revealDate, startDate, endDate, proofDate, score, dnf, proof } =
-      req.body; // TODO Add Request<RacePlayer> body validation
+    const {
+      revealDate,
+      startDate,
+      endDate,
+      proofDate,
+      score,
+      dnf,
+      proof,
+      disqualified,
+    } = req.body; // TODO Add Request<RacePlayer> body validation
 
     const response = await collection.updateOne(
       { _id: racePlayer._id },
@@ -36,6 +44,7 @@ export const updateRaceByParticipantId = async (
           ...(proofDate && { proofDate: new Date(proofDate) }),
           ...(score && { score: Number(score) }),
           ...(dnf !== undefined && { dnf }),
+          ...(disqualified !== undefined && { disqualified }),
           ...(proof && { proof }),
         },
       },
