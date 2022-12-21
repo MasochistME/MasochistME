@@ -21,18 +21,22 @@ import {
   errorWrongDownloadLink,
 } from "./errors";
 
-export type RaceData = {
-  name: string;
-  instructions: string;
-  objectives: string;
+export type RaceData = Pick<
+  Race,
+  | "name"
+  | "instructions"
+  | "objectives"
+  | "downloadGrace"
+  | "uploadGrace"
+  | "downloadLink"
+  | "icon"
+  | "season"
+  | "owner"
+  | "ownerTime"
+> & {
   startsIn: number;
   endsAfter: number;
-  downloadLink: string;
-  downloadGrace: number;
-  uploadGrace: number;
-  season: string | null;
   playLimit: number | null;
-  icon?: string;
 };
 /**
  * Describe your "racesetup" command here.
@@ -55,6 +59,10 @@ export const racesetup = async (
     playLimit: interaction.options.getNumber(Options.PLAY_LIMIT),
     icon: interaction.options.getAttachment(Options.ICON)?.url,
     season: season === "None" ? null : season,
+    owner:
+      interaction.options.getUser(Options.OWNER, false)?.id ??
+      interaction.user.id,
+    ownerTime: interaction.options.getNumber(Options.OWNERS_TIME, false),
   };
 
   if (raceData.startsIn + raceData.endsAfter <= 0)
@@ -70,7 +78,7 @@ export const racesetup = async (
   )
     return errorNegativeTimers(interaction, raceData);
 
-  const race = getRace(interaction, raceData);
+  const race = getRace(raceData);
 
   try {
     setDraftRace(race);

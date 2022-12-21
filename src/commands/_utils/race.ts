@@ -123,10 +123,7 @@ export const getDraftRace = (): Omit<Race, "_id" | "isActive"> | null => {
  * @param raceData RaceData
  * @return Omit<Race, "_id">
  */
-export const getRace = (
-  interaction: DiscordInteraction,
-  raceData: RaceData,
-) => {
+export const getRace = (raceData: RaceData) => {
   return {
     name: raceData.name,
     instructions: raceData.instructions,
@@ -137,7 +134,8 @@ export const getRace = (
     downloadLink: raceData.downloadLink,
     downloadGrace: raceData.downloadGrace,
     uploadGrace: raceData.uploadGrace,
-    organizer: interaction.user.id,
+    owner: raceData.owner,
+    ownerTime: raceData.ownerTime,
     season: raceData.season,
     ...(raceData.icon && { icon: raceData.icon }),
     ...(raceData.playLimit && { playLimit: raceData.playLimit }),

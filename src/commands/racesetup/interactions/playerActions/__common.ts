@@ -130,8 +130,8 @@ export const getRaceStartEmbed = (
     fields: [
       ...fields,
       {
-        name: "Race organizer",
-        value: `<@${race.organizer}>`,
+        name: "Race owner",
+        value: `<@${race.owner}>`,
         inline: true,
       },
       ...(newFields ?? []),

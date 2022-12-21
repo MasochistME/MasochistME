@@ -26,7 +26,7 @@ export const racesetupConfirm = async (
     fields: [
       ...(originalEmbed.fields ?? []),
       {
-        name: "Race organizer",
+        name: "Race owner",
         value: `<@${interaction.user.id}>`,
       },
     ],
