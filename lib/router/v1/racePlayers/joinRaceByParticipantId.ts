@@ -44,6 +44,8 @@ export const joinRaceByParticipantId = async (
       dnf: false,
       proof: null,
       disqualified: false,
+      disqualificationReason: null,
+      disqualifiedBy: null,
       ...(race.type === RaceType.SCORE_BASED && { score: null }),
     };
 
