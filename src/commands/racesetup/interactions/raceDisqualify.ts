@@ -31,8 +31,8 @@ export const raceDisqualify = async (
   try {
     const buttonId = interaction.customId.toLowerCase();
 
-    const raceId = raceIdRegex.exec(buttonId)?.[0] ?? null;
-    const memberId = memberIdRegex.exec(buttonId)?.[0] ?? null;
+    const raceId = buttonId.match(raceIdRegex)?.[0] ?? null;
+    const memberId = buttonId.match(memberIdRegex)?.[0] ?? null;
 
     if (!raceId || !memberId)
       throw "Something went wrong. Just try again, it should work this time.";
@@ -67,11 +67,17 @@ export const raceDisqualifyModal = async (
     const modalId = interaction.customId.toLowerCase();
     const disqualificationReason =
       interaction.fields.getTextInputValue(DISQUALIFICATION_REASON) ?? "—";
-    const raceId = raceIdRegex.exec(modalId)?.[0] ?? null;
-    const memberId = memberIdRegex.exec(modalId)?.[0] ?? null;
+    const raceExec = modalId.match(raceIdRegex);
+    const memberExec = modalId.match(memberIdRegex);
+    const raceId = raceExec?.[0] ?? null;
+    const memberId = memberExec?.[0] ?? null;
 
-    if (!raceId) throw "Incorrect race ID.";
-    if (!memberId) throw "Incorrect member ID.";
+    console.log(modalId);
+    console.log(raceExec);
+    console.log(memberExec);
+
+    if (!raceId || !memberId)
+      throw "Something went wrong. Just try again, it should work this time.";
 
     const race = await sdk.getRaceById({ raceId });
     const raceName = race?.name ?? "UNKNOWN RACE";

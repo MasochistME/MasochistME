@@ -66,9 +66,10 @@ const distributeDNF = async (
   participants: RacePlayer[],
   index: number,
 ): Promise<RacePlayer[]> => {
+  if (!participants.length) return [];
   const participant = participants[index];
   const isDNF =
-    !participant.endDate || !participant.proof || !participant.proofDate;
+    !participant?.endDate || !participant?.proof || !participant?.proofDate;
   if (isDNF) {
     await sdk.updateRaceByParticipantId({
       raceId: participant.raceId,

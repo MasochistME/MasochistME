@@ -7,7 +7,7 @@ import { getDateFromDelay, getModChannel, getTimestampFromDate } from "utils";
 import { sdk } from "fetus";
 
 import { RaceData } from "commands/racesetup/logic";
-import { raceReadyToGo } from "commands/racesetup/interactions/raceStart";
+import { raceReadyToGo } from "commands/racesetup/interactions/playerActions";
 import { raceFinalize } from "commands/racesetup/interactions/raceFinalize";
 
 /**

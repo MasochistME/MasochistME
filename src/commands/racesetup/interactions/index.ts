@@ -3,8 +3,10 @@ export { racesetupJoin } from "./racesetupJoin";
 export {
   raceReadyToGo,
   raceReveal,
+  raceJoinAfterStart,
   raceStart,
   raceFinish,
   raceGiveUp,
-} from "./raceStart";
+  raceGiveUpModal,
+} from "./playerActions";
 export { raceDisqualify } from "./raceDisqualify";

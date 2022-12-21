@@ -12,9 +12,9 @@ import dayjs from "dayjs";
 
 import { sdk } from "fetus";
 import { RaceButton } from "consts";
-import { getChannelById, getOption, getUTCDate, cenzor } from "utils";
+import { getChannelByKey, getUTCDate, cenzor } from "utils";
 
-import { raceJoinAfterStart } from "./raceStart";
+import { raceJoinAfterStart } from "./playerActions";
 
 export const racesetupJoin = async (
   interaction: ButtonInteraction,
@@ -131,14 +131,9 @@ const saveJoinRace = async (
  * Sends a race join form to users facing channel.
  * @param interaction ButtonInteraction
  */
-export const sendRaceJoinForm = async (
-  interaction: ButtonInteraction,
-  raceId: string,
-) => {
+export const sendRaceJoinForm = async (raceId: string) => {
   const newRace = await sdk.getRaceById({ raceId });
-
-  const raceRoomId = getOption("room_race");
-  const channel = getChannelById(interaction, raceRoomId);
+  const channel = getChannelByKey("room_race");
 
   await channel?.send({
     embeds: [await getNewRaceCensoredEmbed(newRace)],

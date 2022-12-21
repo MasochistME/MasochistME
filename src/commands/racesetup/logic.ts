@@ -5,7 +5,7 @@ import {
   APIEmbed,
   APIEmbedField,
 } from "discord.js";
-import { DiscordInteraction } from "arcybot";
+import { DiscordInteraction, getInfoEmbed } from "arcybot";
 import { Race, RaceScoreBased, RaceType } from "@masochistme/sdk/dist/v1/types";
 
 import { sdk } from "fetus";
@@ -74,7 +74,13 @@ export const racesetup = async (
 
   try {
     setDraftRace(race);
-    interaction.reply({
+    interaction.reply(
+      getInfoEmbed(
+        "Race draft saved!",
+        "I've sent you a confirmation message, check your DMs.",
+      ),
+    );
+    interaction.user.send({
       embeds: [await getRaceConfirmationEmbed(race)],
       components: [getRaceConfirmationButtons()],
     });
