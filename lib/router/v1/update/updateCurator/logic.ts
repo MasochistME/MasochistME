@@ -28,8 +28,6 @@ export const updateCuratorLogic = async (
 ) => {
   const { db } = mongoInstance.getDb();
   try {
-    log.INFO(`--> [UPDATE] main update [INITIALIZED]`);
-
     /**
      * Check if the update was not called too early.
      */
@@ -40,11 +38,11 @@ export const updateCuratorLogic = async (
       Date.now() - new Date(lastUpdate?.lastUpdate ?? 0).getTime() <=
       statusCurator.updateDelay;
     if ((updateTooEarly || statusCurator.isUpdating) && !forceUpdate) {
-      log.INFO(`--> [UPDATE] main update [TOO EARLY]`);
       if (res) res.status(400).send('You cannot call update so early.');
       return;
     }
     if (res) res.status(202).send('Curator update started.');
+    log.INFO(`--> [UPDATE] main update [INITIALIZED]`);
 
     statusCurator.updateStatus = UpdateStatus.ONGOING;
     statusCurator.updateProgress = 0;
@@ -515,6 +513,7 @@ export const updateCuratorLogic = async (
     statusCurator.updateProgress = 100;
     statusCurator.updateStatus = UpdateStatus.IDLE;
     statusCurator.isUpdating = false;
+    log.INFO(`--> [UPDATE] main update [END]`);
   } catch (err: any) {
     /**
      * Set the update status to error.
@@ -524,7 +523,6 @@ export const updateCuratorLogic = async (
     statusCurator.isUpdating = false;
     log.INFO(`--> [UPDATE] main update [ERROR]`);
     log.WARN(err.message ?? err);
-  } finally {
     log.INFO(`--> [UPDATE] main update [END]`);
   }
 };
