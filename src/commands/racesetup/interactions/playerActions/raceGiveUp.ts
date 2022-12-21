@@ -95,7 +95,7 @@ export const raceGiveUpModal = async (interaction: ModalSubmitInteraction) => {
 
     getModChannel(true)?.send(
       getInfoEmbed(
-        `Player gave up`,
+        `${raceName} - PARTICIPANT GAVE UP`,
         `Player **<@${interaction.user.id}>** gave up.
         \n**Race:** ${raceName}\n**Reason:** _${giveupReason}_\n**Date:** ${new Date().toLocaleString()}`,
       ),

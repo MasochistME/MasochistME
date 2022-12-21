@@ -77,9 +77,18 @@ export const racesetupJoin = async (
     value: "",
   };
 
+  const getUpdatedParticipantsValue = () => {
+    const updatedValue = `${participants.value} <@${interaction.user.id}>`;
+    if (updatedValue.length >= 80) {
+      if (participants.value.endsWith("and more...")) return participants.value;
+      return `${participants.value} and more...`;
+    }
+    return `${participants.value} <@${interaction.user.id}>`;
+  };
+
   const updatedParticipants = {
     ...participants,
-    value: `${participants.value}<@${interaction.user.id}>\n`,
+    value: getUpdatedParticipantsValue(),
   };
   const updatedFields = [
     ...(originalEmbed.fields ?? []).filter(
