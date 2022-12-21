@@ -38,20 +38,7 @@ export const updateRaceByParticipantId = async (
 	params: {
 		raceId: string;
 		memberId: string;
-		update: Partial<
-			Pick<
-				RacePlayer,
-				| 'revealDate'
-				| 'startDate'
-				| 'endDate'
-				| 'dnf'
-				| 'proof'
-				| 'proofDate'
-				| 'disqualified'
-			>
-		> & {
-			score?: number;
-		};
+		update: Partial<Omit<RacePlayer, '_id' | 'type'>>;
 	},
 	/** @ignore */
 	BASE_URL: string,
@@ -62,20 +49,7 @@ export const updateRaceByParticipantId = async (
 	const racePlayerResponse = await axios.put<
 		UpdateResult | ResponseError,
 		AxiosResponse<UpdateResult | ResponseError>,
-		Partial<
-			Pick<
-				RacePlayer,
-				| 'revealDate'
-				| 'startDate'
-				| 'endDate'
-				| 'dnf'
-				| 'proof'
-				| 'proofDate'
-				| 'disqualified'
-			>
-		> & {
-			score?: number;
-		}
+		Partial<Omit<RacePlayer, '_id' | 'type'>>
 	>(url, update, { validateStatus: () => true });
 
 	const { status, data } = racePlayerResponse;

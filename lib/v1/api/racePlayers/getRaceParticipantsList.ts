@@ -52,7 +52,7 @@ export const getRaceParticipantsList = async (
 
 export type RaceParticipantsListParams = {
 	raceId: string;
-	filter?: Partial<Pick<RacePlayer, 'dnf'>>;
+	filter?: Partial<Pick<RacePlayer, 'dnf' | 'disqualified' | 'disqualifiedBy'>>;
 	sort?: {
 		[key in keyof Partial<
 			Pick<RacePlayerScore, 'startDate' | 'endDate' | 'score'>

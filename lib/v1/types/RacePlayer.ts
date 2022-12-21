@@ -49,6 +49,14 @@ interface BaseRacePlayer extends WithId {
 	 * A field for mods to disqualify a player even if they finished a race.
 	 */
 	disqualified: boolean;
+	/**
+	 * Discord ID of the mod who disqualified a player.
+	 */
+	disqualifiedBy: string | null;
+	/**
+	 * Reason for disqualification.
+	 */
+	disqualificationReason: string | null;
 }
 
 /**
@@ -73,6 +81,10 @@ export interface RacePlayerTime extends Omit<BaseRacePlayer, 'type'> {
 	 * Time based race type.
 	 */
 	type: RaceType.TIME_BASED;
+	/**
+	 * Player's score (not stored in database, only returned from endpoint)
+	 */
+	score?: number;
 }
 
 /**
