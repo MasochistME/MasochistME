@@ -39,6 +39,18 @@ export const racesetupJoin = async (
 
   const raceId = interaction.customId.replace(`${RaceButton.RACE_JOIN}-`, "");
   const race = await sdk.getRaceById({ raceId });
+
+  if (race.owner === interaction.user.id) {
+    interaction.reply(
+      getErrorEmbed(
+        "You are the owner of this race",
+        "You cannot participate in a race that you are an owner of.",
+        true,
+      ),
+    );
+    return;
+  }
+
   const isRaceEnded = dayjs(race.endDate).diff(new Date()) <= 0;
   if (isRaceEnded) {
     interaction.reply(
