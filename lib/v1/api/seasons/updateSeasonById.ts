@@ -30,7 +30,7 @@ import { Season, ResponseError } from 'v1/types';
  * } = await sdk.updateSeasonById({ seasonId, season });
  * ```
  *
- * @param params.seasonId - ID of the season.
+ * @param params.seasonId - ID of the season to be updated.
  * @param params.season   - fields that should be changed in a season, if it exists.
  */
 export const updateSeasonById = async (

@@ -22,24 +22,23 @@ import { Season, ResponseError } from 'v1/types';
  * } = await sdk.endSeasonById({ seasonId });
  * ```
  *
- * @param params.seasonId - ID of the season to be ended.
+ * @param params.seasonId - ID of the season to be started.
  */
-export const endSeasonById = async (
+export const getSeasonById = async (
 	params: { seasonId: string },
 	/** @ignore */
 	BASE_URL: string,
-): Promise<UpdateResult> => {
+): Promise<Season> => {
 	const { seasonId } = params;
 	const url = `${BASE_URL}/seasons/season/${seasonId}`;
 
-	const seasonResponse = await axios.put<
-		UpdateResult | ResponseError,
-		AxiosResponse<UpdateResult | ResponseError>,
-		Pick<Season, 'endDate'>
-	>(url, { endDate: new Date() }, { validateStatus: () => true });
+	const seasonResponse = await axios.get<
+		Season | ResponseError,
+		AxiosResponse<Season | ResponseError>
+	>(url, { validateStatus: () => true });
 
 	const { status, data } = seasonResponse;
 
 	if (status !== 200) throw new Error((data as ResponseError).error);
-	return data as UpdateResult;
+	return data as Season;
 };
