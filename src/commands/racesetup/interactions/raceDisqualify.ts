@@ -26,6 +26,8 @@ export const raceDisqualify = async (
     if (!memberId) throw "Incorrect member ID.";
 
     const race = await sdk.getRaceById({ raceId });
+    const raceName = race?.name ?? "UNKNOWN RACE";
+    const memberName = getMemberNameById(memberId) ?? memberId;
 
     const { acknowledged } = await sdk.updateRaceByParticipantId({
       raceId,
@@ -37,11 +39,7 @@ export const raceDisqualify = async (
     getModChannel(true)?.send(
       getErrorEmbed(
         `Player disqualified`,
-        `Player **${
-          getMemberNameById(memberId) ?? memberId
-        }** got disqualified from race **${
-          race?.name ?? "UNKNOWN RACE"
-        }**.\n\n**Responsible mod:** <@${
+        `Player **${memberName}** got disqualified from race **${raceName}**.\n\n**Responsible mod:** <@${
           interaction.user.id
         }>\n**Member ID:** ${memberId}\n**Race ID:** ${raceId}\n**Date:** ${new Date().toLocaleString()}`,
       ),
@@ -49,18 +47,14 @@ export const raceDisqualify = async (
     getDMChannel(memberId)?.send(
       getErrorEmbed(
         `You have been disqualified from a race`,
-        `You got disqualified from race ${
-          race?.name ?? "UNKNOWN RACE"
-        }.\n\n**Responsible mod:** <@${
-          interaction.user.id
-        }>\n**Member ID:** ${memberId}\n**Race ID:** ${raceId}\n\nIf you think this is a mistake, contact mods.`,
+        `You got disqualified from race ${raceName}.\n\n**Responsible mod:** <@${interaction.user.id}>\n\nIf you think this is a mistake, contact mods.`,
       ),
     );
 
     const originalEmbed = interaction.message.embeds[0].data;
     const editedEmbed = {
       ...originalEmbed,
-      title: `${originalEmbed.title} - DISQUALIFIED`,
+      title: `${raceName} - ${memberName} - DISQUALIFIED`,
       fields: [
         ...(originalEmbed.fields ?? []),
         {
@@ -69,7 +63,7 @@ export const raceDisqualify = async (
           inline: true,
         },
         {
-          name: "⛔ Disqualifcation date",
+          name: "⛔ Disqualification date",
           value: new Date().toLocaleString(),
           inline: true,
         },

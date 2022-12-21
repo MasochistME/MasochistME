@@ -76,7 +76,7 @@ const getParticipantStatsRaceFinish = async (
     {
       name: "Reveal time",
       value: revealDate ? revealDate.toLocaleString() : "—",
-      inline: true,
+      inline: false,
     },
     {
       name: "Start time",
@@ -86,7 +86,7 @@ const getParticipantStatsRaceFinish = async (
     {
       name: "Finish time",
       value: endDate ? endDate.toLocaleString() : "—",
-      inline: true,
+      inline: false,
     },
     {
       name: "Proof upload time",
@@ -98,6 +98,7 @@ const getParticipantStatsRaceFinish = async (
     title: `${race.name ?? "UNKNOWN RACE"} - FINISH - ${
       getMemberNameById(memberId) ?? memberId
     }`,
+    thumbnail: { url: raceParticipant.proof ?? "http://http.cat/404" },
     fields,
   };
   return embed;

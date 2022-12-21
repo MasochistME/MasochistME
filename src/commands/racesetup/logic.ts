@@ -79,7 +79,8 @@ export const racesetup = async (
       components: [getRaceConfirmationButtons()],
     });
   } catch (err: any) {
-    createError(interaction, err, ErrorAction.EDIT);
+    console.log(err);
+    createError(interaction, err, ErrorAction.SEND);
   }
 };
 

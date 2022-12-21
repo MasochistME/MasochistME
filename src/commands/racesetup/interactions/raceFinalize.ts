@@ -2,7 +2,8 @@ import { RacePlayer } from "@masochistme/sdk/dist/v1/types";
 import { getErrorEmbed, getInfoEmbed, log } from "arcybot";
 
 import { sdk } from "fetus";
-import { getModChannel } from "utils";
+import { getMemberNameById, getModChannel } from "utils";
+import { getParticipantRaceTime } from "commands/_utils/race";
 
 /**
  * Aggregates and sends the results after race finish.
@@ -16,18 +17,45 @@ export const raceFinalize = async (raceId: string): Promise<void> => {
       raceId,
     });
 
+    console.log(
+      participantsOld.map(p => ({
+        ...p,
+        score: getParticipantRaceTime(p, race),
+      })),
+    );
+
     const participantsUpdated = await distributeDNF(participantsOld, 0);
 
     const participated = participantsUpdated.length;
-    const finished = participantsUpdated.filter(p => !p.dnf).length;
-    const percentage = Math.round((100 * finished) / participated);
+    const disqualified = participantsUpdated.filter(p => p.disqualified).length;
+    const finished = participantsUpdated.filter(
+      p => !p.dnf && !p.disqualified,
+    ).length;
+
+    const finishedPercentage = Math.round((100 * finished) / participated);
+    const disqualifiedPercentage = Math.round(
+      (100 * disqualified) / participated,
+    );
+
+    //@ts-ignore
+    const leaderboards = race.leaderboards
+      .map(
+        (leader: any, index: number) =>
+          `\`\`#${index + 1}\`\`. \`\`${
+            leader.score
+          }\`\` - **${getMemberNameById(leader.discordId)}**`,
+      )
+      .join("\n");
 
     getModChannel(true)?.send(
       getInfoEmbed(
-        `${race.name.toUpperCase()} - RACE FINISHED`,
-        `Race successfully finished.
-        \n**${participated}** members participated.
-        \n**${finished}** members finished (**${percentage}%** completion ratio).`,
+        `${race.name.toUpperCase()} - RACE FINISHED!`,
+        `**LEADERBOARDS**
+        ${leaderboards}
+        \n**STATISTICS**
+        - **${participated}** members participated
+        - **${finished}** members finished (**${finishedPercentage}%** completion ratio)
+        - **${disqualified}** members were disqualified (**${disqualifiedPercentage}%** disqualification ratio)`,
       ),
     );
   } catch (err: any) {

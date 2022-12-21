@@ -27,6 +27,7 @@ export const getHumanReadableDate = (date: Date | null) => {
 };
 
 export const getTimestampFromDate = (date: Date | string | null): number => {
-  const strDate = typeof date === "string" ? date : String(date);
-  return Date.parse(strDate ?? 0);
+  if (typeof date === "string") return Date.parse(date);
+  if (date instanceof Date) return date.getTime();
+  return 0;
 };
