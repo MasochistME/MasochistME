@@ -50,9 +50,13 @@ interface BaseRace extends WithId {
 	 */
 	uploadGrace: number;
 	/**
-	 * Discord ID of the race's organizer.
+	 * Discord ID of the race's owner.
 	 */
-	organizer: string;
+	owner: string;
+	/**
+	 * Time of the race's owner.
+	 */
+	ownerTime: number | null;
 	/**
 	 * Flag indicating if the race is currently ongoing.
 	 */

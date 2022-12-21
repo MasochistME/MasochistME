@@ -18,7 +18,7 @@ import { Race, ResponseError } from 'v1/types';
  *  downloadLink: "http://masochist.me",
  *  downloadGrace: "30",
  *  uploadGrace: "30",
- *  organizer: "738927465878329",
+ *  owner: "738927465878329",
  *  season: "5eda7778c87dd9a7",
  *  icon: "http://http.cat/404.jpg",
  * };

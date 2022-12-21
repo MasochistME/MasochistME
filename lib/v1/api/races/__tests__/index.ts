@@ -20,7 +20,8 @@ const race = await sdk.createRace({
 		downloadLink: 'http://http.cat',
 		downloadGrace: 120,
 		uploadGrace: 120,
-		organizer: '165962236009906176',
+		owner: '165962236009906176',
+		ownerTime: 11,
 	},
 });
 
