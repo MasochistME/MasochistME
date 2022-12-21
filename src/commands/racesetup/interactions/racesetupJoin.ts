@@ -21,6 +21,21 @@ export const racesetupJoin = async (
 ): Promise<void> => {
   if (!interaction.isButton()) return;
 
+  const discordMember = await sdk.getMemberById({
+    discordId: interaction.user.id,
+  });
+
+  if (!discordMember) {
+    interaction.reply(
+      getErrorEmbed(
+        "You need to register to be able to join a race",
+        `Your Discord account is not connected to the Masochist.ME profile.
+        \nTo be able to join the race, please register first with the \`/register\` command and wait for the approval from mods.`,
+        true,
+      ),
+    );
+    return;
+  }
   const raceId = interaction.customId.replace(`${RaceButton.RACE_JOIN}-`, "");
   const race = await sdk.getRaceById({ raceId });
   const isRaceEnded = dayjs(race.endDate).diff(new Date()) <= 0;
