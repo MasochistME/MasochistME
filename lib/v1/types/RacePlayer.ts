@@ -45,6 +45,10 @@ interface BaseRacePlayer extends WithId {
 	 * Link to screenshot or other proof of finishing a race.
 	 */
 	proof: string | null;
+	/**
+	 * A field for mods to disqualify a player even if they finished a race.
+	 */
+	disqualified: boolean;
 }
 
 /**

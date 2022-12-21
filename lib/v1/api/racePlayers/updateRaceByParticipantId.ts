@@ -41,7 +41,13 @@ export const updateRaceByParticipantId = async (
 		update: Partial<
 			Pick<
 				RacePlayer,
-				'revealDate' | 'startDate' | 'endDate' | 'dnf' | 'proof' | 'proofDate'
+				| 'revealDate'
+				| 'startDate'
+				| 'endDate'
+				| 'dnf'
+				| 'proof'
+				| 'proofDate'
+				| 'disqualified'
 			>
 		> & {
 			score?: number;
@@ -59,7 +65,13 @@ export const updateRaceByParticipantId = async (
 		Partial<
 			Pick<
 				RacePlayer,
-				'revealDate' | 'startDate' | 'endDate' | 'dnf' | 'proof' | 'proofDate'
+				| 'revealDate'
+				| 'startDate'
+				| 'endDate'
+				| 'dnf'
+				| 'proof'
+				| 'proofDate'
+				| 'disqualified'
 			>
 		> & {
 			score?: number;
