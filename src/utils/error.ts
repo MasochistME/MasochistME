@@ -1,5 +1,5 @@
 import { DiscordInteraction, getErrorEmbed, log } from "arcybot";
-import { ButtonInteraction } from "discord.js";
+import { ButtonInteraction, ModalSubmitInteraction } from "discord.js";
 
 export enum ErrorAction {
   EDIT = "edit",
@@ -8,7 +8,7 @@ export enum ErrorAction {
 }
 
 export const createError = (
-  interaction: DiscordInteraction | ButtonInteraction,
+  interaction: DiscordInteraction | ButtonInteraction | ModalSubmitInteraction,
   err: any,
   action: ErrorAction,
   title?: string,
@@ -21,6 +21,7 @@ export const createError = (
     if (err?.error?.length) return err.error;
     if (err?.message?.length) return err?.message;
     if (message) return message;
+    if (err) return err;
     return "Something fucked up.";
   };
 

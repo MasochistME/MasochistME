@@ -73,10 +73,10 @@ const getParticipantStatsRaceFinish = async (
     race,
   );
   const totalTime = dayjs.duration(fullTime).format("m:ss.SSS");
-  const download = `${downloadTime > downloadGrace ? "⚠️ " : ""}${dayjs
+  const download = `${downloadTime > downloadGrace * 1000 ? "⚠️ " : ""}${dayjs
     .duration(downloadTime)
     .format("m:ss.SSS")}`;
-  const upload = `${uploadTime > uploadGrace ? "⚠️ " : ""}${dayjs
+  const upload = `${uploadTime > uploadGrace * 1000 ? "⚠️ " : ""}${dayjs
     .duration(uploadTime)
     .format("m:ss.SSS")}`;
 
@@ -100,7 +100,7 @@ const getParticipantStatsRaceFinish = async (
     },
     {
       name: "Finish time",
-      value: endDate ? dayjs(startDate).format("DD.MM.YYYY, HH:mm:ss") : "—",
+      value: endDate ? dayjs(endDate).format("DD.MM.YYYY, HH:mm:ss") : "—",
       inline: true,
     },
   ];
