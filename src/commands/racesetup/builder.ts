@@ -112,21 +112,22 @@ export const racesetupBuilder = new SlashCommandBuilder()
           "Set up a time based race (winner has the fastest completion time).",
         );
     return getCommonOptionalOptionsRaceSetup(subcommandWithTypeSpecificOptions);
-  })
-  .addSubcommand(subcommand => {
-    const subcommandWithCommonRecommendedOptions =
-      getCommonRequiredOptionsRaceSetup(subcommand);
-    const subcommandWithTypeSpecificOptions =
-      subcommandWithCommonRecommendedOptions
-        .setName("score-based")
-        .setDescription(
-          "Set up a score based race (winner has the highest score within a time frame).",
-        )
-        .addNumberOption(option =>
-          option
-            .setName(Options.PLAY_LIMIT)
-            .setDescription("Time limit for achieving the best score [minutes]")
-            .setRequired(true),
-        );
-    return getCommonOptionalOptionsRaceSetup(subcommandWithTypeSpecificOptions);
   });
+// TODO re-add score based races when done
+// .addSubcommand(subcommand => {
+//   const subcommandWithCommonRecommendedOptions =
+//     getCommonRequiredOptionsRaceSetup(subcommand);
+//   const subcommandWithTypeSpecificOptions =
+//     subcommandWithCommonRecommendedOptions
+//       .setName("score-based")
+//       .setDescription(
+//         "Set up a score based race (winner has the highest score within a time frame).",
+//       )
+//       .addNumberOption(option =>
+//         option
+//           .setName(Options.PLAY_LIMIT)
+//           .setDescription("Time limit for achieving the best score [minutes]")
+//           .setRequired(true),
+//       );
+//   return getCommonOptionalOptionsRaceSetup(subcommandWithTypeSpecificOptions);
+// });

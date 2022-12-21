@@ -39,6 +39,7 @@ export const raceFinalize = async (raceId: string): Promise<void> => {
 
     //@ts-ignore
     const leaderboards = race.leaderboards
+      .slice(0, 9)
       .map(
         (leader: any, index: number) =>
           `\`\`#${index + 1}\`\`. \`\`${
