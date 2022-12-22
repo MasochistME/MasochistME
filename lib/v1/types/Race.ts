@@ -3,6 +3,7 @@
  */
 
 import { WithId } from 'v1/types/__Helpers';
+import { RacePlayer } from './RacePlayer';
 
 export enum RaceType {
 	TIME_BASED = 'time',
@@ -100,3 +101,8 @@ export interface RaceTimeBased extends Omit<BaseRace, 'type'> {
  * A single object describes a single race.
  */
 export type Race = RaceScoreBased | RaceTimeBased;
+
+export type RaceWithParticipants = Race & {
+	participants?: RacePlayer[];
+	leaderboards?: RacePlayer[];
+};
