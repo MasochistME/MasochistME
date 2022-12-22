@@ -1,10 +1,10 @@
 import { DiscordInteraction, getInfoEmbed } from "arcybot";
-import { Race, RaceType, RaceScoreBased } from "@masochistme/sdk/dist/v1/types";
 import { APIEmbed, APIEmbedField } from "discord.js";
+import { RaceWithParticipants } from "@masochistme/sdk/dist/v1/types";
 import dayjs from "dayjs";
 
 import { sdk } from "fetus";
-import { createError, ErrorAction, getDiscordTimestamp } from "utils";
+import { splitArrayToChunks, createError, ErrorAction } from "utils";
 
 /**
  * Displays info about an ongoing or soon starting race, if it exists.
@@ -14,23 +14,17 @@ import { createError, ErrorAction, getDiscordTimestamp } from "utils";
 export const race = async (interaction: DiscordInteraction): Promise<void> => {
   await interaction.deferReply();
 
+  const raceId = interaction.options.getString("race", true);
+  if (!raceId) throw "The selected race apparently does not exist.";
+
   try {
-    const activeRaces = await sdk.getActiveRace();
-    if (!activeRaces.length) {
-      interaction.editReply(
-        getInfoEmbed(
-          "No active races",
-          "There is no ongoing races at this moment, not any are planned in the future.",
-        ),
-      );
-      return;
-    }
-    const activeRace = await sdk.getRaceById({
-      raceId: String(activeRaces[0]?._id),
-    });
-    // @ts-ignore
-    const csv = activeRace.leaderboards.map();
-    // interaction.editReply({ embeds: [getActiveRaceEmbed(activeRaces[0])] });
+    const race = await sdk.getRaceById({ raceId });
+    const isFinished =
+      dayjs(race.startDate).diff(new Date()) < 0 &&
+      dayjs(race.endDate).diff(new Date()) < 0;
+
+    if (isFinished) getFinishedRaceEmbed(interaction, race);
+    else getActiveRaceEmbed(interaction, race);
   } catch (err: any) {
     createError(interaction, err, ErrorAction.EDIT);
   }
@@ -41,56 +35,48 @@ export const race = async (interaction: DiscordInteraction): Promise<void> => {
  * @param activeRace Race
  * @return APIEmbed
  */
-const getActiveRaceEmbed = (activeRace: Race): APIEmbed => {
-  const isOngoing =
-    dayjs(activeRace.startDate).diff(new Date()) < 0 &&
-    dayjs(activeRace.endDate).diff(new Date()) > 0;
+const getActiveRaceEmbed = (
+  interaction: DiscordInteraction,
+  race: RaceWithParticipants,
+) => {
+  const raceParticipants = (race.participants ?? [])
+    .map(participant => `● <@${participant.discordId}>`)
+    .join("\n ");
+  interaction.editReply(
+    getInfoEmbed(
+      `${race.name}\n→ ${
+        race.participants?.length ?? 0
+      } registered participants`,
+      raceParticipants,
+    ),
+  );
+};
 
-  const fields: APIEmbedField[] = [
-    {
-      name: "Name",
-      value: activeRace.name,
-    },
-    {
-      name: "Instructions",
-      value: activeRace.instructions,
-    },
-    {
-      name: "Start time",
-      value: getDiscordTimestamp(activeRace.startDate, !isOngoing),
-      inline: true,
-    },
-    {
-      name: "Finish time",
-      value: getDiscordTimestamp(activeRace.startDate, isOngoing),
-      inline: true,
-    },
-    {
-      name: "Download link",
-      value: activeRace.downloadLink,
-    },
-    {
-      name: "Screenshot upload grace period",
-      value: `${activeRace.uploadGrace} s`,
-      inline: true,
-    },
-  ];
-
-  if (activeRace.type === RaceType.SCORE_BASED)
-    // optional field
-    fields.push({
-      name: "Play time limit",
-      value: `${(activeRace as RaceScoreBased).playLimit} minutes`,
-      inline: true,
-    });
-
+/**
+ * Creates an embed for the finished race
+ * @param activeRace Race
+ * @return APIEmbed
+ */
+const getFinishedRaceEmbed = (
+  interaction: DiscordInteraction,
+  race: RaceWithParticipants,
+) => {
+  const raceParticipants = (race.leaderboards ?? []).map(
+    (participant, index) =>
+      `\`\`#${index + 1}\`\` - \`\`${participant.score}\`\` - <@${
+        participant.discordId
+      }>`,
+  );
+  const raceParticipantsChunks = splitArrayToChunks(raceParticipants, 5);
+  const fields: APIEmbedField[] = raceParticipantsChunks.map(chunk => ({
+    name: "---",
+    value: chunk.join("\n"),
+    inline: false,
+  }));
   const embed: APIEmbed = {
-    title: isOngoing
-      ? `🏃 ${activeRace.name} - running NOW`
-      : `⏳ ${activeRace.name.toUpperCase()} - starting soon`,
-    fields: fields,
-    ...(activeRace.icon && { thumbnail: { url: activeRace.icon } }),
+    title: `🏁 ${race.name}\n→ ${race.participants?.length ?? 0} finished runs`,
+    fields,
   };
 
-  return embed;
+  interaction.editReply({ embeds: [embed] });
 };

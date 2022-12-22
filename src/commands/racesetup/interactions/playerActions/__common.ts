@@ -88,9 +88,6 @@ export const getRaceStartEmbed = (
   isCenzored: boolean,
   newFields?: APIEmbedField[],
 ): APIEmbed => {
-  const isOngoing =
-    dayjs(race.startDate).diff(new Date()) < 0 &&
-    dayjs(race.endDate).diff(new Date()) > 0;
   const fields: APIEmbedField[] = [
     {
       name: "Instructions",
@@ -102,12 +99,12 @@ export const getRaceStartEmbed = (
     },
     {
       name: "Start time",
-      value: getDiscordTimestamp(race.startDate, !isOngoing),
+      value: getDiscordTimestamp(race.startDate),
       inline: true,
     },
     {
       name: "Finish time",
-      value: getDiscordTimestamp(race.endDate, isOngoing),
+      value: getDiscordTimestamp(race.endDate),
       inline: true,
     },
     {

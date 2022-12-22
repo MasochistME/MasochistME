@@ -5,6 +5,7 @@ import { badgeEditAutocomplete } from "commands/badgeedit/interactions";
 import { vidGameAutocomplete } from "commands/vid/interactions";
 
 import { badgeAutocomplete } from "commands/_interactions/badge";
+import { raceAutocomplete } from "commands/race/interactions";
 import {
   seasonInactiveAutocomplete,
   seasonActiveAutocomplete,
@@ -15,7 +16,8 @@ const BADGE_EDIT_CMDS = ["badgedelete", "badgeedit"];
 const BADGE_CREATION_CMDS = ["badgecreate"];
 const SEASON_START = ["seasonstart"];
 const GET_ACTIVE_SEASONS = ["racesetup", "seasonend"];
-const VID_GET_GANE = ["vid"];
+const VID_GET_GAME = ["vid"];
+const RACE_CMDS = ["race"];
 
 export const handleAutocomplete = (interaction: AutocompleteInteraction) => {
   if (BADGE_CREATION_CMDS.includes(interaction.commandName)) {
@@ -33,7 +35,10 @@ export const handleAutocomplete = (interaction: AutocompleteInteraction) => {
   if (GET_ACTIVE_SEASONS.includes(interaction.commandName)) {
     seasonActiveAutocomplete(interaction);
   }
-  if (VID_GET_GANE.includes(interaction.commandName)) {
+  if (VID_GET_GAME.includes(interaction.commandName)) {
     vidGameAutocomplete(interaction);
+  }
+  if (RACE_CMDS.includes(interaction.commandName)) {
+    raceAutocomplete(interaction);
   }
 };

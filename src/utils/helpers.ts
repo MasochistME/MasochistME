@@ -49,3 +49,18 @@ export const shortenString = (strFull: string, maxLength: number) => {
       : strFull;
   return str;
 };
+
+/**
+ *
+ * @param arr
+ * @param chunkSize
+ * @returns
+ */
+export const splitArrayToChunks = <T>(arr: T[], chunkSize: number) => {
+  const chunkArr: T[][] = [];
+  for (let i = 0; i < arr.length; i += chunkSize) {
+    const chunk: T[] = arr.slice(i, i + chunkSize);
+    chunkArr.push(chunk);
+  }
+  return chunkArr;
+};

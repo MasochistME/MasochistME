@@ -32,10 +32,7 @@ export const getTimestampFromDate = (date: Date | string | null): number => {
   return 0;
 };
 
-export const getDiscordTimestamp = (
-  date: Date | string | null,
-  relativeTime?: boolean,
-): string => {
-  const timestamp = getTimestampFromDate(date);
-  return `<t:${(timestamp / 1000).toFixed(0)}:${relativeTime ? "R" : "F"}>`;
+export const getDiscordTimestamp = (date: Date | string | null): string => {
+  const timestamp = (getTimestampFromDate(date) / 1000).toFixed(0);
+  return `<t:${timestamp}:F> (<t:${timestamp}:R>)`;
 };

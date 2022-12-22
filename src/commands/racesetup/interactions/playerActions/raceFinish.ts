@@ -7,7 +7,10 @@ import { sdk } from "fetus";
 import { RaceButton } from "consts";
 import { ImgType, saveImage } from "utils/saveImage";
 import { awaitMessage, getUTCDate, createError, ErrorAction } from "utils";
-import { informModsAboutRaceFinish } from "./informModsAboutParticipant";
+import {
+  raceShowPlayerFinishResultMods,
+  raceShowPlayerFinishResultSelf,
+} from "./infoRaceParticipant";
 
 import { getRaceStartEmbed, getRaceStartButtons } from "./__common";
 
@@ -82,7 +85,7 @@ const raceUploadProof = async (
   channel.send(
     getInfoEmbed(
       "Upload the proof",
-      `Please post a proof of you finishing the race below this message within the next ${race.uploadGrace} seconds.
+      `Please post a proof of you finishing the race below this message **within the next ${race.uploadGrace} seconds**.
       \nIf you exceed that time it's fine, but every second above the grace period will be added to your final score.`,
     ),
   );
@@ -116,9 +119,13 @@ const raceUploadProof = async (
         "Could not save your proof. Reason unknown but probably database died or something.",
       );
     channel.send(
-      getSuccessEmbed("You successfully uploaded your proof!", fixedImage),
+      getSuccessEmbed(
+        "You successfully uploaded your proof!",
+        `Link to proof: ${fixedImage}`,
+      ),
     );
-    informModsAboutRaceFinish(raceId, memberId);
+    raceShowPlayerFinishResultMods(raceId, memberId);
+    raceShowPlayerFinishResultSelf(channel, raceId, memberId);
   } catch (err: any) {
     createError(interaction, err, ErrorAction.SEND);
   }

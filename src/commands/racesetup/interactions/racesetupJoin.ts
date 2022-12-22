@@ -119,7 +119,8 @@ export const racesetupJoin = async (
     interaction.user.send(
       getInfoEmbed(
         "You joined the race!",
-        `Congratulations, you successfully joined the **${race.name}** race!`,
+        `Congratulations, you successfully joined the **${race.name}** race!\nYou'll get pinged by bot when the race opens - then you can click **START** whenever you feel ready to go.
+        `,
       ),
     );
 
@@ -193,9 +194,6 @@ const getNewRaceCensoredEmbed = async (race: Race): Promise<APIEmbed> => {
     ? await sdk.getSeasonById({ seasonId: race.season })
     : null;
   const seasonName = season?.name ?? "None";
-  const isOngoing =
-    dayjs(race.startDate).diff(new Date()) < 0 &&
-    dayjs(race.endDate).diff(new Date()) > 0;
 
   const fields: APIEmbedField[] = [
     {
@@ -208,12 +206,12 @@ const getNewRaceCensoredEmbed = async (race: Race): Promise<APIEmbed> => {
     },
     {
       name: "Start time",
-      value: getDiscordTimestamp(race.startDate, !isOngoing),
+      value: getDiscordTimestamp(race.startDate),
       inline: true,
     },
     {
       name: "Finish time",
-      value: getDiscordTimestamp(race.endDate, isOngoing),
+      value: getDiscordTimestamp(race.endDate),
       inline: true,
     },
     {

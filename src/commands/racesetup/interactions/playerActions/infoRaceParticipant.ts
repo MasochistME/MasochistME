@@ -4,8 +4,8 @@ import {
   APIEmbedField,
   ButtonBuilder,
   ButtonStyle,
+  TextBasedChannel,
 } from "discord.js";
-import { getInfoEmbed } from "arcybot";
 import dayjs from "dayjs";
 
 import { sdk } from "fetus";
@@ -13,7 +13,17 @@ import { getMemberNameById, getModChannel } from "utils";
 import { getParticipantRaceTime } from "commands/_utils/race";
 import { RACE_DISQUALIFICATION } from "consts";
 
-export const informModsAboutRaceFinish = async (
+export const raceShowPlayerFinishResultSelf = async (
+  channel: TextBasedChannel,
+  raceId: string,
+  memberId: string,
+) => {
+  channel.send({
+    embeds: [await getParticipantStatsRaceFinish(raceId, memberId)],
+  });
+};
+
+export const raceShowPlayerFinishResultMods = async (
   raceId: string,
   memberId: string,
 ) => {
@@ -25,40 +35,15 @@ export const informModsAboutRaceFinish = async (
   }
 
   await modChannel.send({
-    embeds: [await getParticipantStatsRaceFinish(raceId, memberId)],
+    embeds: [await getParticipantStatsRaceFinish(raceId, memberId, true)],
     components: [getParticipantRaceFinishActions(raceId, memberId)],
   });
-};
-
-export const informModsAboutRaceForfeit = async (
-  raceId: string,
-  memberId: string,
-) => {
-  const race = await sdk.getRaceById({ raceId });
-  const raceParticipant = await sdk.getRaceParticipantById({
-    raceId,
-    memberId,
-  });
-
-  const modChannel = getModChannel(true);
-  if (!modChannel) {
-    throw new Error(
-      "Could not inform mods about you forfeiting a race. Tough luck QQ",
-    );
-  }
-  modChannel.send(
-    getInfoEmbed(
-      `${race.name ?? "UNKNOWN RACE"} - GIVE UP - ${
-        getMemberNameById(memberId) ?? memberId
-      }`,
-      `**Revealed at:** ${raceParticipant.revealDate}\n**Started at:** ${raceParticipant.startDate}\n`,
-    ),
-  );
 };
 
 const getParticipantStatsRaceFinish = async (
   raceId: string,
   memberId: string,
+  showMore?: boolean,
 ) => {
   const race = await sdk.getRaceById({ raceId });
   const raceParticipant = await sdk.getRaceParticipantById({
@@ -82,16 +67,20 @@ const getParticipantStatsRaceFinish = async (
 
   const fields: APIEmbedField[] = [
     { name: "FINAL TIME", value: totalTime, inline: false },
-    {
-      name: "Time spent downloading game",
-      value: download,
-      inline: true,
-    },
-    {
-      name: "Time spent uploading proof",
-      value: upload,
-      inline: true,
-    },
+    ...(showMore
+      ? [
+          {
+            name: "Time spent downloading game",
+            value: download,
+            inline: true,
+          },
+          {
+            name: "Time spent uploading proof",
+            value: upload,
+            inline: true,
+          },
+        ]
+      : []),
     { name: "PROOF", value: raceParticipant.proof ?? "—", inline: false },
     {
       name: "Start time",
@@ -106,7 +95,7 @@ const getParticipantStatsRaceFinish = async (
   ];
 
   const embed: APIEmbed = {
-    title: `${race.name ?? "UNKNOWN RACE"} - FINISH - ${
+    title: `🏁 ${race.name ?? "UNKNOWN RACE"} - FINISH - ${
       getMemberNameById(memberId) ?? memberId
     }`,
     thumbnail: { url: raceParticipant.proof ?? "http://http.cat/404" },

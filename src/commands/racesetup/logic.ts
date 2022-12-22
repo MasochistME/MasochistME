@@ -132,9 +132,6 @@ const getRaceConfirmationEmbed = async (
     ? await sdk.getSeasonById({ seasonId: race.season })
     : null;
   const seasonName = season?.name ?? "None";
-  const isOngoing =
-    dayjs(race.startDate).diff(new Date()) < 0 &&
-    dayjs(race.endDate).diff(new Date()) > 0;
 
   const fields: APIEmbedField[] = [
     {
@@ -151,12 +148,12 @@ const getRaceConfirmationEmbed = async (
     },
     {
       name: "Start time",
-      value: getDiscordTimestamp(race.startDate, !isOngoing),
+      value: getDiscordTimestamp(race.startDate),
       inline: true,
     },
     {
       name: "Finish time",
-      value: getDiscordTimestamp(race.endDate, isOngoing),
+      value: getDiscordTimestamp(race.endDate),
       inline: true,
     },
     {

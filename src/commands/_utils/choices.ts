@@ -1,6 +1,7 @@
 import { cache } from "fetus";
 import { getFilteredChoices } from "commands/_utils";
 import { shortenString } from "utils";
+import { Console } from "console";
 
 /**
  * Filter the badge choice list based on the user provided autocomplete value.
@@ -51,6 +52,23 @@ export const getMemberChoices = (focused: string) => {
     return {
       name,
       value: String(member.id),
+    };
+  });
+
+  return getFilteredChoices(choices, focused);
+};
+
+/**
+ * Filter the race choice list based on the user provided autocomplete value.
+ * @param focused string - user provided autocomplete value
+ * @return ApplicationCommandOptionChoiceData[]
+ */
+export const getRaceChoices = (focused: string) => {
+  const choices = cache.races.map(race => {
+    const name = shortenString(race.name, 100);
+    return {
+      name,
+      value: String(race._id),
     };
   });
 

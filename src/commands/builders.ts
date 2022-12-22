@@ -8,6 +8,7 @@ import { memeaddBuilder } from "./memeadd/builder";
 import { memedeleteBuilder } from "./memedelete/builder";
 // import { memelistBuilder } from "./memelist/builder";
 // import { profileBuilder } from "./profile/builder";
+import { raceBuilder } from "./race/builder";
 import { racesetupBuilder } from "./racesetup/builder";
 import { registerBuilder } from "./register/builder";
 // import { updateBuilder } from "./update/builder";
@@ -28,6 +29,7 @@ export const customCommands = [
   memedeleteBuilder,
   // memelistBuilder,
   // profileBuilder,
+  raceBuilder,
   racesetupBuilder,
   registerBuilder,
   // updateBuilder,
