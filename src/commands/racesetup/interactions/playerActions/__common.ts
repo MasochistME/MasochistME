@@ -5,10 +5,11 @@ import {
   APIEmbed,
   APIEmbedField,
 } from "discord.js";
+import dayjs from "dayjs";
 import { Race, RaceType, RaceScoreBased } from "@masochistme/sdk/dist/v1/types";
 
 import { RaceButton } from "consts";
-import { getUTCDate, cenzor } from "utils";
+import { getDiscordTimestamp, cenzor } from "utils";
 
 export const fieldsBeforeReveal = [
   {
@@ -87,6 +88,9 @@ export const getRaceStartEmbed = (
   isCenzored: boolean,
   newFields?: APIEmbedField[],
 ): APIEmbed => {
+  const isOngoing =
+    dayjs(race.startDate).diff(new Date()) < 0 &&
+    dayjs(race.endDate).diff(new Date()) > 0;
   const fields: APIEmbedField[] = [
     {
       name: "Instructions",
@@ -98,12 +102,12 @@ export const getRaceStartEmbed = (
     },
     {
       name: "Start time",
-      value: getUTCDate(race.startDate),
+      value: getDiscordTimestamp(race.startDate, !isOngoing),
       inline: true,
     },
     {
       name: "Finish time",
-      value: getUTCDate(race.endDate),
+      value: getDiscordTimestamp(race.endDate, isOngoing),
       inline: true,
     },
     {

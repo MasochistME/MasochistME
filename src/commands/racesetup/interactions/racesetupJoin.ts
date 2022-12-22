@@ -12,7 +12,7 @@ import dayjs from "dayjs";
 
 import { sdk } from "fetus";
 import { RaceButton } from "consts";
-import { getChannelByKey, getUTCDate, cenzor } from "utils";
+import { getChannelByKey, getDiscordTimestamp, cenzor } from "utils";
 
 import { raceJoinAfterStart } from "./playerActions";
 
@@ -193,6 +193,10 @@ const getNewRaceCensoredEmbed = async (race: Race): Promise<APIEmbed> => {
     ? await sdk.getSeasonById({ seasonId: race.season })
     : null;
   const seasonName = season?.name ?? "None";
+  const isOngoing =
+    dayjs(race.startDate).diff(new Date()) < 0 &&
+    dayjs(race.endDate).diff(new Date()) > 0;
+
   const fields: APIEmbedField[] = [
     {
       name: "Instructions",
@@ -204,12 +208,12 @@ const getNewRaceCensoredEmbed = async (race: Race): Promise<APIEmbed> => {
     },
     {
       name: "Start time",
-      value: getUTCDate(race.startDate),
+      value: getDiscordTimestamp(race.startDate, !isOngoing),
       inline: true,
     },
     {
       name: "Finish time",
-      value: getUTCDate(race.endDate),
+      value: getDiscordTimestamp(race.endDate, isOngoing),
       inline: true,
     },
     {

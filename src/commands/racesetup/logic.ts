@@ -5,12 +5,13 @@ import {
   APIEmbed,
   APIEmbedField,
 } from "discord.js";
+import dayjs from "dayjs";
 import { DiscordInteraction, getInfoEmbed } from "arcybot";
 import { Race, RaceScoreBased, RaceType } from "@masochistme/sdk/dist/v1/types";
 
 import { sdk } from "fetus";
 import { RACE_CONFIRMATION } from "consts";
-import { isLink, getUTCDate, createError, ErrorAction } from "utils";
+import { isLink, getDiscordTimestamp, createError, ErrorAction } from "utils";
 import { getRace, setDraftRace } from "commands/_utils/race";
 
 import { Options } from "./builder";
@@ -131,6 +132,10 @@ const getRaceConfirmationEmbed = async (
     ? await sdk.getSeasonById({ seasonId: race.season })
     : null;
   const seasonName = season?.name ?? "None";
+  const isOngoing =
+    dayjs(race.startDate).diff(new Date()) < 0 &&
+    dayjs(race.endDate).diff(new Date()) > 0;
+
   const fields: APIEmbedField[] = [
     {
       name: "Name",
@@ -146,12 +151,12 @@ const getRaceConfirmationEmbed = async (
     },
     {
       name: "Start time",
-      value: getUTCDate(race.startDate),
+      value: getDiscordTimestamp(race.startDate, !isOngoing),
       inline: true,
     },
     {
       name: "Finish time",
-      value: getUTCDate(race.endDate),
+      value: getDiscordTimestamp(race.endDate, isOngoing),
       inline: true,
     },
     {

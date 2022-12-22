@@ -4,7 +4,7 @@ import { APIEmbed, APIEmbedField } from "discord.js";
 import dayjs from "dayjs";
 
 import { sdk } from "fetus";
-import { createError, ErrorAction, getUTCDate } from "utils";
+import { createError, ErrorAction, getDiscordTimestamp } from "utils";
 
 /**
  * Displays info about an ongoing or soon starting race, if it exists.
@@ -57,16 +57,12 @@ const getActiveRaceEmbed = (activeRace: Race): APIEmbed => {
     },
     {
       name: "Start time",
-      value: isOngoing
-        ? getUTCDate(activeRace.startDate)
-        : dayjs(activeRace.startDate).fromNow(),
+      value: getDiscordTimestamp(activeRace.startDate, !isOngoing),
       inline: true,
     },
     {
       name: "Finish time",
-      value: isOngoing
-        ? dayjs(activeRace.endDate).fromNow()
-        : getUTCDate(activeRace.endDate),
+      value: getDiscordTimestamp(activeRace.startDate, isOngoing),
       inline: true,
     },
     {
