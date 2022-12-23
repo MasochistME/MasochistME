@@ -248,7 +248,7 @@ const getNewRaceCensoredEmbed = async (race: Race): Promise<APIEmbed> => {
       },
       {
         name: "---",
-        value: `Clicking the **JOIN** button below will sign you up for the race!\n\nYou'll get pinged by bot when the race opens - then you can click **START** whenever you feel ready to go.\n\n---`,
+        value: `@here clicking the **JOIN** button below will sign you up for the race!\n\nYou'll get pinged by bot when the race opens - then you can click **START** whenever you feel ready to go.\n\n---`,
       },
     ],
   };
