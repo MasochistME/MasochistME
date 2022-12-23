@@ -50,7 +50,7 @@ export const getRaceList = async (
 };
 
 export type RaceListParams = {
-	filter?: Partial<Pick<Race, 'type' | 'season'>>;
+	filter?: Partial<Pick<Race, 'type' | 'season' | 'isDone' | 'isActive'>>;
 	sort?: {
 		[key in keyof Partial<
 			Pick<Race, 'startDate' | 'endDate' | 'season'>
