@@ -68,7 +68,7 @@ const handleRaceStart = async (race: Race) => {
  * @return void
  */
 const handleRaceFinish = async (race: Race) => {
-  const { name, startDate, endDate, isActive, _id } = race;
+  const { startDate, endDate, isActive, _id } = race;
   const raceId = String(_id);
   const raceShouldEnd =
     isActive &&
@@ -76,9 +76,9 @@ const handleRaceFinish = async (race: Race) => {
     dayjs(endDate).diff(new Date()) <= 0;
   if (!raceShouldEnd) return;
   log.INFO("Race ends - entering the one hour long grace period...");
-  // setTimeout(() => {
-  raceFinalize(raceId);
-  // }, RACE_RESULTS_TIMEOUT);
+  setTimeout(() => {
+    raceFinalize(raceId);
+  }, RACE_RESULTS_TIMEOUT);
 };
 
 /**
