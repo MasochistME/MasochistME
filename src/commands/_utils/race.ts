@@ -76,6 +76,18 @@ const handleRaceFinish = async (race: Race) => {
     dayjs(endDate).diff(new Date()) <= 0;
   if (!raceShouldEnd) return;
   log.INFO("Race ends - entering the one hour long grace period...");
+  const response = await sdk.updateRaceById({
+    raceId,
+    race: { isActive: false },
+  });
+  if (!response.acknowledged) {
+    getModChannel(true)?.send(
+      getErrorEmbed(
+        "ERROR - RACE FINISHING...",
+        `Race **${race?.name}** should finish right now, but something fucked up and it could not finish.`,
+      ),
+    );
+  }
   setTimeout(() => {
     raceFinalize(raceId);
   }, RACE_RESULTS_TIMEOUT);

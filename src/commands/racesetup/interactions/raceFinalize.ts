@@ -13,23 +13,10 @@ import { getChannelByKey, getMemberNameById, getModChannel } from "utils";
 export const raceFinalize = async (raceId: string): Promise<void> => {
   try {
     log.INFO("Detected a race to end...");
-    const response = await sdk.updateRaceById({
-      raceId,
-      race: { isActive: false },
-    });
-    if (!response.acknowledged) {
-      getModChannel(true)?.send(
-        getErrorEmbed(
-          "ERROR - RACE FINISHING...",
-          `Race **${raceId}** should finish right now, but something fucked up and it could not finish.`,
-        ),
-      );
-    }
 
     const participantsOld = await sdk.getRaceParticipantsList({
       raceId,
     });
-
     const participantsUpdated = await distributeDNF(participantsOld, 0);
     const race = await sdk.getRaceById({ raceId });
 
