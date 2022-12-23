@@ -11,7 +11,7 @@ import {
   isLink,
   getIsUserRegistered,
 } from "utils";
-import { FEATURE_VIDEO } from "consts";
+import { FEATURE_VIDEO, Room } from "consts";
 import { sdk } from "fetus";
 import { Options } from "./builder";
 
@@ -27,7 +27,7 @@ export const vid = async (interaction: DiscordInteraction): Promise<void> => {
   const description =
     interaction.options.getString(Options.DESCRIPTION, false) ?? null;
   const game = interaction.options.getString(Options.GAME, false);
-  const channelVid = getOption("room_vid");
+  const channelVid = getOption(Room.VID);
 
   if (!isLink(videoLink)) {
     interaction.reply(

@@ -10,6 +10,16 @@ export const USER_NO_DESCRIPTION = "This user does not have description yet.";
 export const RACE_TIMEOUT = 1000 * 60;
 export const RACE_RESULTS_TIMEOUT = 1000 * 60 * 60;
 
+// Rooms
+export enum Room {
+  LOG = "room_log",
+  MOD = "room_mod",
+  VID = "room_vid",
+  RACE_CURRENT = "room_race",
+  RACE_PAST = "room_race_past",
+  RACE_MOD = "room_race_mod",
+}
+
 // Custom interaction IDs
 export const FEATURE_VIDEO = "FEATURE_VIDEO";
 export const REGISTRATION_REVIEW = "REGISTRATION_REVIEW";

@@ -11,7 +11,7 @@ import { Race, RaceType, RaceScoreBased } from "@masochistme/sdk/dist/v1/types";
 import dayjs from "dayjs";
 
 import { sdk } from "fetus";
-import { RaceButton } from "consts";
+import { RaceButton, Room } from "consts";
 import { getChannelByKey, getDiscordTimestamp, cenzor } from "utils";
 
 import { raceJoinAfterStart } from "./playerActions";
@@ -162,7 +162,7 @@ const saveJoinRace = async (
  */
 export const sendRaceJoinForm = async (raceId: string) => {
   const newRace = await sdk.getRaceById({ raceId });
-  const channel = getChannelByKey("room_race");
+  const channel = getChannelByKey(Room.RACE_CURRENT);
 
   await channel?.send({
     embeds: [await getNewRaceCensoredEmbed(newRace)],

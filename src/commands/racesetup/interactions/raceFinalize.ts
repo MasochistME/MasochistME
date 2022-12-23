@@ -1,8 +1,9 @@
 import { RacePlayer } from "@masochistme/sdk/dist/v1/types";
 import { getErrorEmbed, getInfoEmbed, log } from "arcybot";
+import { Room } from "consts";
 
 import { sdk } from "fetus";
-import { getMemberNameById, getModChannel } from "utils";
+import { getChannelByKey, getMemberNameById, getModChannel } from "utils";
 
 /**
  * Aggregates and sends the results after race finish.
@@ -11,12 +12,26 @@ import { getMemberNameById, getModChannel } from "utils";
  */
 export const raceFinalize = async (raceId: string): Promise<void> => {
   try {
-    const race = await sdk.getRaceById({ raceId });
+    log.INFO("Detected a race to end...");
+    const response = await sdk.updateRaceById({
+      raceId,
+      race: { isActive: false },
+    });
+    if (!response.acknowledged) {
+      getModChannel(true)?.send(
+        getErrorEmbed(
+          "ERROR - RACE FINISHING...",
+          `Race **${raceId}** should finish right now, but something fucked up and it could not finish.`,
+        ),
+      );
+    }
+
     const participantsOld = await sdk.getRaceParticipantsList({
       raceId,
     });
 
     const participantsUpdated = await distributeDNF(participantsOld, 0);
+    const race = await sdk.getRaceById({ raceId });
 
     const participated = participantsUpdated.length ?? 0;
     const disqualified =
@@ -28,9 +43,8 @@ export const raceFinalize = async (raceId: string): Promise<void> => {
     const disqualifiedPercentage =
       Math.round((100 * disqualified) / participated) ?? 0;
 
-    //@ts-ignore
-    const leaderboards = race.leaderboards
-      .slice(0, 9)
+    const leaderboards = (race.leaderboards ?? [])
+      .slice(0, 10)
       .map(
         (leader: any, index: number) =>
           `\`\`#${index + 1}\`\`. \`\`${
@@ -39,17 +53,19 @@ export const raceFinalize = async (raceId: string): Promise<void> => {
       )
       .join("\n");
 
-    getModChannel(true)?.send(
-      getInfoEmbed(
-        `${race.name.toUpperCase()} - RACE FINISHED!`,
-        `**LEADERBOARDS**
+    const raceLeaderboards = getInfoEmbed(
+      `${race.name.toUpperCase()}!`,
+      `**LEADERBOARDS**
         ${leaderboards}
+        \nOwner's (<@${race.owner}>) time: ${race.ownerTime ?? "-"}s
+        \nTo see participants above 10th place use \`\`/race\`\` command.
         \n**STATISTICS**
         - **${participated}** members participated
         - **${finished}** members finished (**${finishedPercentage}%** completion ratio)
         - **${disqualified}** members were disqualified (**${disqualifiedPercentage}%** disqualification ratio)`,
-      ),
     );
+    getModChannel(true)?.send(raceLeaderboards);
+    getChannelByKey(Room.RACE_PAST)?.send(raceLeaderboards);
   } catch (err: any) {
     log.WARN(err);
     getModChannel(true)?.send(

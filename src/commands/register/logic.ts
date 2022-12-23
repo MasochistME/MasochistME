@@ -6,7 +6,7 @@ import {
 } from "discord.js";
 import { DiscordInteraction, getSuccessEmbed, getErrorEmbed } from "arcybot";
 
-import { REGISTRATION_REVIEW } from "consts";
+import { REGISTRATION_REVIEW, Room } from "consts";
 import { getChannelById, getMemberNameById, getOption } from "utils";
 
 /**
@@ -36,7 +36,7 @@ export const register = async (
     return;
   }
 
-  const modRoomId = getOption("room_mod");
+  const modRoomId = getOption(Room.MOD);
   const channel = getChannelById(interaction, modRoomId);
 
   await channel?.send({

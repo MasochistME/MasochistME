@@ -74,7 +74,7 @@ const getFinishedRaceEmbed = (
     inline: false,
   }));
   const embed: APIEmbed = {
-    title: `🏁 ${race.name}\n→ ${race.participants?.length ?? 0} finished runs`,
+    title: `🏁 ${race.name}\n→ ${race.leaderboards?.length ?? 0} finished runs`,
     fields,
   };
 

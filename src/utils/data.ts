@@ -1,7 +1,7 @@
 import { DiscordInteraction } from "arcybot";
 
 import { bot, cache, sdk } from "fetus";
-import { UNKNOWN_NAME } from "consts";
+import { Room, UNKNOWN_NAME } from "consts";
 import { ButtonInteraction, DMChannel } from "discord.js";
 
 export const getOption = (key: string) =>
@@ -26,7 +26,7 @@ export const getChannelByKey = (roomKey: string) => {
 };
 
 export const getModChannel = (isRaceRoom?: boolean) => {
-  const modRoom = getOption(isRaceRoom ? "room_race_mod" : "room_mod");
+  const modRoom = getOption(isRaceRoom ? Room.RACE_MOD : Room.MOD);
   const channel = bot.botClient.channels.cache.find(ch => ch.id === modRoom);
   if (channel?.isTextBased()) return channel;
   return null;
