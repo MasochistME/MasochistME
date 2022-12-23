@@ -17,6 +17,7 @@ import { Race, ResponseError } from 'v1/types';
  * - `uploadGrace`
  * - `icon`
  * - `isActive`
+ * - `isDone`
  *
  * ## Usage
  * ```ts

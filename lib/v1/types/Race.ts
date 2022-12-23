@@ -59,10 +59,6 @@ interface BaseRace extends WithId {
 	 */
 	ownerTime: number | null;
 	/**
-	 * Flag indicating if the race is currently ongoing.
-	 */
-	isActive: boolean;
-	/**
 	 * ID of the season that this race belongs to (if null, it's a special non-seasoned race).
 	 */
 	season: string | null;
@@ -70,6 +66,14 @@ interface BaseRace extends WithId {
 	 * URL of the race's icon.
 	 */
 	icon?: string;
+	/**
+	 * Flag indicating if the race is currently ongoing.
+	 */
+	isActive: boolean;
+	/**
+	 * Flag indicating if the race is finished and grace period after its end also finished.
+	 */
+	isDone: boolean;
 }
 
 /**
