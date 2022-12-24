@@ -24,6 +24,7 @@ export const updateRaceById = async (
       uploadGrace,
       icon,
       isActive,
+      isDone,
     } = req.body; // TODO Add Request<Race> body validation
 
     const response = await collection.updateOne(
@@ -40,6 +41,7 @@ export const updateRaceById = async (
           ...(uploadGrace && { uploadGrace: Number(uploadGrace) }),
           ...(icon && { icon }),
           ...(isActive !== undefined && { isActive: Boolean(isActive) }),
+          ...(isDone !== undefined && { isDone: Boolean(isDone) }),
         },
       },
     );
