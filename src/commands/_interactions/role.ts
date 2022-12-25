@@ -26,7 +26,7 @@ export const roleAutocomplete = async (
   let choices: ApplicationCommandOptionChoiceData[] = discordRoles;
   const focused = interaction.options.getFocused(true);
 
-  if (focused.name === Options.ROLE_SELF_ASSIGN)
+  if (focused.name === Options.ROLE_SELF)
     choices = getFilteredChoices(choices, focused.value);
 
   await interaction.respond(choices);

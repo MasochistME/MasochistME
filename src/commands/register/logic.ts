@@ -36,7 +36,7 @@ export const register = async (
     return;
   }
 
-  const modRoomId = getOption(Room.MOD);
+  const modRoomId = getOption<string>(Room.MOD);
   const channel = getChannelById(interaction, modRoomId);
 
   await channel?.send({
