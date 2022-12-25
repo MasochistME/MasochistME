@@ -5,6 +5,7 @@ import { APIEmbed } from "discord.js";
 
 import { sdk } from "fetus";
 import { getChannelByKey, getModChannel } from "utils";
+import { getMedal } from "commands/_utils/race";
 
 /**
  * Aggregates and sends the results after race finish.
@@ -33,16 +34,17 @@ export const raceFinalize = async (raceId: string): Promise<void> => {
 
     const leaderboards = (race.leaderboards ?? [])
       .slice(0, 10)
-      .map(
-        (leader: any, index: number) =>
-          `\n\`\`#${index + 1}\`\`. \`\`${leader.score}\`\` - <@${
-            leader.discordId
-          }>`,
-      )
-      .join();
+      .map((leader: RacePlayer, index: number) => {
+        const isLeader = leader.discordId === race.owner ? "(owner)" : "";
+        return `\`\`#${index + 1}\`\`. \`\`${leader.score}\`\` - <@${
+          leader.discordId
+        }> ${getMedal(index)} ${isLeader}`;
+      })
+      .join("\n");
 
     const raceLeaderboardsEmbed: APIEmbed = {
-      title: `${race.name.toUpperCase()}!`,
+      title: `🏁 ${race.name.toUpperCase()}`,
+      ...(race?.icon ? { thumbnail: { url: race.icon } } : {}),
       fields: [
         {
           name: `Leaderboards`,

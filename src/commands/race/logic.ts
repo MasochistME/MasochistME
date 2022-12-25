@@ -4,6 +4,7 @@ import { RaceWithParticipants } from "@masochistme/sdk/dist/v1/types";
 
 import { sdk } from "fetus";
 import { splitArrayToChunks, createError, ErrorAction } from "utils";
+import { getMedal } from "commands/_utils/race";
 
 /**
  * Displays info about an ongoing or soon starting race, if it exists.
@@ -58,12 +59,12 @@ const getFinishedRaceEmbed = (
   interaction: DiscordInteraction,
   race: RaceWithParticipants,
 ) => {
-  const raceParticipants = (race.leaderboards ?? []).map(
-    (participant, index) =>
-      `\`\`#${index + 1}\`\` - \`\`${participant.score}\`\` - <@${
-        participant.discordId
-      }>`,
-  );
+  const raceParticipants = (race.leaderboards ?? []).map((leader, index) => {
+    const isLeader = leader.discordId === race.owner ? "(owner)" : "";
+    return `\`\`#${index + 1}\`\` - \`\`${leader.score}\`\` - <@${
+      leader.discordId
+    }> ${getMedal(index)} ${isLeader}`;
+  });
   const raceParticipantsChunks = splitArrayToChunks(raceParticipants, 5);
   const fields: APIEmbedField[] = raceParticipantsChunks.map(chunk => ({
     name: "---",

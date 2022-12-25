@@ -182,3 +182,15 @@ export const getParticipantRaceTime = (
 
   return { downloadTime: start - reveal, uploadTime: proof - end, fullTime };
 };
+
+/**
+ * Returns a medal emoji if someone won a race
+ * @param place number
+ * @returns medal lol
+ */
+export const getMedal = (place: number) => {
+  if (place === 0) return "🥇";
+  if (place === 1) return "🥈";
+  if (place === 2) return "🥉";
+  return "";
+};
