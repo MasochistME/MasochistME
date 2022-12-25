@@ -19,9 +19,7 @@ export const race = async (interaction: DiscordInteraction): Promise<void> => {
 
   try {
     const race = await sdk.getRaceById({ raceId });
-    const isFinished =
-      dayjs(race.startDate).diff(new Date()) < 0 &&
-      dayjs(race.endDate).diff(new Date()) < 0;
+    const isFinished = !race.isActive && race.isDone;
 
     if (isFinished) getFinishedRaceEmbed(interaction, race);
     else getActiveRaceEmbed(interaction, race);

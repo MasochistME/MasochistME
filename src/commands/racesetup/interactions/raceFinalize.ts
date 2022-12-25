@@ -3,7 +3,7 @@ import { getErrorEmbed, getInfoEmbed, log } from "arcybot";
 import { Room } from "consts";
 
 import { sdk } from "fetus";
-import { getChannelByKey, getMemberNameById, getModChannel } from "utils";
+import { getChannelByKey, getModChannel } from "utils";
 
 /**
  * Aggregates and sends the results after race finish.
@@ -34,9 +34,9 @@ export const raceFinalize = async (raceId: string): Promise<void> => {
       .slice(0, 10)
       .map(
         (leader: any, index: number) =>
-          `\`\`#${index + 1}\`\`. \`\`${
-            leader.score
-          }\`\` - **${getMemberNameById(leader.discordId)}**`,
+          `\`\`#${index + 1}\`\`. \`\`${leader.score}\`\` - <@${
+            leader.discordId
+          }>`,
       )
       .join("\n");
 

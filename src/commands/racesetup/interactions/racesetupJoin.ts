@@ -14,7 +14,7 @@ import { sdk } from "fetus";
 import { RaceButton, Room } from "consts";
 import { getChannelByKey, getDiscordTimestamp, cenzor } from "utils";
 
-import { raceJoinAfterStart } from "./playerActions";
+import { raceSendStartFormToParticipantSelf } from "./playerActions";
 
 export const racesetupJoin = async (
   interaction: ButtonInteraction,
@@ -124,7 +124,7 @@ export const racesetupJoin = async (
       ),
     );
 
-    if (race.isActive) raceJoinAfterStart(interaction);
+    if (race.isActive) raceSendStartFormToParticipantSelf(interaction);
   }
 };
 

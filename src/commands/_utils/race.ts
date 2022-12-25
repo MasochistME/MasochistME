@@ -68,10 +68,11 @@ const handleRaceStart = async (race: Race) => {
  * @return void
  */
 const handleRaceFinish = async (race: Race) => {
-  const { startDate, endDate, isActive, _id } = race;
+  const { startDate, endDate, isActive, isDone, _id } = race;
   const raceId = String(_id);
   const raceShouldEnd =
     isActive &&
+    !isDone &&
     dayjs(startDate).diff(new Date()) <= 0 &&
     dayjs(endDate).diff(new Date()) <= 0;
   if (!raceShouldEnd) return;

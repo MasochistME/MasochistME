@@ -16,6 +16,7 @@ import {
   raceFinish,
   raceGiveUp,
   raceDisqualify,
+  raceSendStartFormToParticipantMod,
 } from "commands/racesetup/interactions";
 import { featureVideo } from "commands/vid/interactions";
 
@@ -31,6 +32,9 @@ export const handleButtons = (interaction: ButtonInteraction) => {
   }
   if (interaction.customId.includes(RaceButton.RACE_JOIN)) {
     racesetupJoin(interaction);
+  }
+  if (interaction.customId.includes(RaceButton.RACE_RESEND_JOIN_FORM)) {
+    raceSendStartFormToParticipantMod(interaction);
   }
   if (interaction.customId.includes(RaceButton.RACE_REVEAL)) {
     raceReveal(interaction);
