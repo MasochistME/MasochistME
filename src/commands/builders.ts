@@ -3,6 +3,7 @@ import { badgedeleteBuilder } from "./badgedelete/builder";
 import { badgeeditBuilder } from "./badgeedit/builder";
 import { badgegiveBuilder } from "./badgegive/builder";
 import { badgerevokeBuilder } from "./badgerevoke/builder";
+import { iamBuilder, iamnotBuilder } from "./iam/builder";
 // import { memeBuilder } from "./meme/builder";
 import { memeaddBuilder } from "./memeadd/builder";
 import { memedeleteBuilder } from "./memedelete/builder";
@@ -24,6 +25,8 @@ export const customCommands = [
   badgeeditBuilder,
   badgegiveBuilder,
   badgerevokeBuilder,
+  iamBuilder,
+  iamnotBuilder,
   // memeBuilder,
   memeaddBuilder,
   memedeleteBuilder,
