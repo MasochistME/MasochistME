@@ -15,8 +15,8 @@ import { raceFinalize } from "commands/racesetup/interactions/raceFinalize";
  */
 export const handleRaceTimer = async () => {
   try {
-    const activeRaces = await sdk.getRaceList({});
-    activeRaces.forEach(async (race: Race) => {
+    const allRaces = await sdk.getRaceList({});
+    allRaces.forEach(async (race: Race) => {
       await handleRaceStart(race);
       await handleRaceFinish(race);
     });
@@ -70,28 +70,34 @@ const handleRaceStart = async (race: Race) => {
 const handleRaceFinish = async (race: Race) => {
   const { startDate, endDate, isActive, isDone, _id } = race;
   const raceId = String(_id);
-  const raceShouldEnd =
-    isActive &&
-    !isDone &&
+  const raceEnded =
     dayjs(startDate).diff(new Date()) <= 0 &&
     dayjs(endDate).diff(new Date()) <= 0;
-  if (!raceShouldEnd) return;
-  log.INFO("Race ends - entering the one hour long grace period...");
-  const response = await sdk.updateRaceById({
-    raceId,
-    race: { isActive: false },
-  });
-  if (!response.acknowledged) {
-    getModChannel(true)?.send(
-      getErrorEmbed(
-        "ERROR - RACE FINISHING...",
-        `Race **${race?.name}** should finish right now, but something fucked up and it could not finish.`,
-      ),
+  const raceEndPeriodEnded =
+    dayjs(endDate).diff(new Date()) <= RACE_RESULTS_TIMEOUT;
+
+  const raceShouldEnterEndPeriod = raceEnded && isActive && !isDone;
+  const raceShouldEnd = raceEnded && !isActive && !isDone && raceEndPeriodEnded;
+
+  if (raceShouldEnterEndPeriod) {
+    log.INFO(
+      `Race ends - entering the ${RACE_RESULTS_TIMEOUT}ms long grace period...`,
     );
-  }
-  setTimeout(() => {
+    const response = await sdk.updateRaceById({
+      raceId,
+      race: { isActive: false },
+    });
+    if (!response.acknowledged) {
+      getModChannel(true)?.send(
+        getErrorEmbed(
+          "ERROR - RACE FINISHING...",
+          `Race **${race?.name}** should finish right now, but something fucked up and it could not finish.`,
+        ),
+      );
+    }
+  } else if (raceShouldEnd) {
     raceFinalize(raceId);
-  }, RACE_RESULTS_TIMEOUT);
+  }
 };
 
 /**

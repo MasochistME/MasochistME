@@ -60,6 +60,18 @@ export const raceFinalize = async (raceId: string): Promise<void> => {
     };
     getModChannel(true)?.send({ embeds: [raceLeaderboardsEmbed] });
     getChannelByKey(Room.RACE_PAST)?.send({ embeds: [raceLeaderboardsEmbed] });
+    const response = await sdk.updateRaceById({
+      raceId,
+      race: { isDone: true },
+    });
+    if (!response.acknowledged) {
+      getModChannel(true)?.send(
+        getErrorEmbed(
+          "ERROR - RACE FINALIZING...",
+          `Race **${race?.name}** should ultimately finalize right now, but something fucked up and it could not.`,
+        ),
+      );
+    }
   } catch (err: any) {
     log.WARN(err);
     getModChannel(true)?.send(

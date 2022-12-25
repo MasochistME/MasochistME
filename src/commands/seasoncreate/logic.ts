@@ -39,7 +39,7 @@ export const seasoncreate = async (
         {
           name: "---",
           value: `You have created a new season! Its ID is **${response.insertedId}**.
-          \nIt is not yet started - you can start it when you're ready with the \`\`/seasonstart <season_id>\`\` command.
+          \nIt is not yet started - first update the bot with \`\`/update\`\` command, and then - when you're ready - use the \`\`/seasonstart <season_id>\`\` command.
           \nStarting a new race will **not** end any of the other ongoing races.`,
         },
       ],
