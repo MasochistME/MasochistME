@@ -26,6 +26,9 @@ export const raceReveal = async (
       "",
     );
     const race = await sdk.getRaceById({ raceId });
+    if (race.isDone)
+      throw "This race is finished. You cannot participate anymore.";
+
     const revealDate = new Date();
     const { acknowledged } = await sdk.updateRaceByParticipantId({
       raceId,

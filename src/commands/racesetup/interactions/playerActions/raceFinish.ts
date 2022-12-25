@@ -30,6 +30,9 @@ export const raceFinish = async (
       "",
     );
     const race = await sdk.getRaceById({ raceId });
+    if (race.isDone)
+      throw "This race is finished. You cannot participate anymore.";
+
     const participant = await sdk.getRaceParticipantById({
       raceId,
       memberId: interaction.user.id,
