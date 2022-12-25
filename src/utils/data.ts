@@ -4,7 +4,7 @@ import { bot, cache, sdk } from "fetus";
 import { Room, UNKNOWN_NAME } from "consts";
 import { ButtonInteraction, DMChannel } from "discord.js";
 
-export const getOption = (key: string) =>
+export const getOption = <T>(key: string): T =>
   cache.options.find(option => option.option === key)?.value;
 
 export const getChannelById = (

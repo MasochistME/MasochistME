@@ -20,5 +20,5 @@ export interface CacheGame extends CacheItem {
 export interface CacheOption {
   _id: ObjectId;
   option: string;
-  value: string;
+  value: any;
 }

@@ -52,8 +52,8 @@ const init = async () => {
   const config = {
     discordToken: process.env.DISCORD_TOKEN,
     botId: process.env.BOT_ID,
-    modRole: getOption("modRole"),
-    guildId: getOption("guildId"),
+    modRole: getOption("modRole") as string,
+    guildId: getOption("guildId") as string,
     intents: [GatewayIntentBits.Guilds, GatewayIntentBits.DirectMessages],
     partials: [Partials.Message, Partials.Channel, Partials.Reaction],
   };

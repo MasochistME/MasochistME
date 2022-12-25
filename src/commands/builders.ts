@@ -3,7 +3,6 @@ import { badgedeleteBuilder } from "./badgedelete/builder";
 import { badgeeditBuilder } from "./badgeedit/builder";
 import { badgegiveBuilder } from "./badgegive/builder";
 import { badgerevokeBuilder } from "./badgerevoke/builder";
-import { iamBuilder, iamnotBuilder } from "./iam/builder";
 // import { memeBuilder } from "./meme/builder";
 import { memeaddBuilder } from "./memeadd/builder";
 import { memedeleteBuilder } from "./memedelete/builder";
@@ -12,6 +11,7 @@ import { memedeleteBuilder } from "./memedelete/builder";
 import { raceBuilder } from "./race/builder";
 import { racesetupBuilder } from "./racesetup/builder";
 import { registerBuilder } from "./register/builder";
+import { roleBuilder } from "./role/builder";
 // import { updateBuilder } from "./update/builder";
 import { vidBuilder } from "./vid/builder";
 import { seasoncreateBuilder } from "./seasoncreate/builder";
@@ -25,8 +25,6 @@ export const customCommands = [
   badgeeditBuilder,
   badgegiveBuilder,
   badgerevokeBuilder,
-  iamBuilder,
-  iamnotBuilder,
   // memeBuilder,
   memeaddBuilder,
   memedeleteBuilder,
@@ -35,6 +33,7 @@ export const customCommands = [
   raceBuilder,
   racesetupBuilder,
   registerBuilder,
+  roleBuilder,
   // updateBuilder,
   vidBuilder,
   seasoncreateBuilder,

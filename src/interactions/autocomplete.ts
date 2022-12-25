@@ -19,7 +19,7 @@ const SEASON_START = ["seasonstart"];
 const GET_ACTIVE_SEASONS = ["racesetup", "seasonend"];
 const VID_GET_GAME = ["vid"];
 const RACE_CMDS = ["race"];
-const IAM_CMDS = ["iam", "iamnot"];
+const ROLE_CMDS = ["role"];
 
 export const handleAutocomplete = (interaction: AutocompleteInteraction) => {
   if (BADGE_CREATION_CMDS.includes(interaction.commandName)) {
@@ -43,7 +43,7 @@ export const handleAutocomplete = (interaction: AutocompleteInteraction) => {
   if (RACE_CMDS.includes(interaction.commandName)) {
     raceAutocomplete(interaction);
   }
-  if (IAM_CMDS.includes(interaction.commandName)) {
+  if (ROLE_CMDS.includes(interaction.commandName)) {
     roleAutocomplete(interaction);
   }
 };

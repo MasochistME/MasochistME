@@ -103,7 +103,9 @@ const handleRaceFinish = async (race: Race) => {
 /**
  * Draft race - after it's set up by moderator but before it's confirmed
  */
-export const draftRace: { race: Omit<Race, "_id" | "isActive"> | null } = {
+export const draftRace: {
+  race: Omit<Race, "_id" | "isActive" | "isDone"> | null;
+} = {
   race: null,
 };
 
@@ -111,7 +113,9 @@ export const draftRace: { race: Omit<Race, "_id" | "isActive"> | null } = {
  * Saves or clears the draft race.
  * @param race Omit<Race, "_id">
  */
-export const setDraftRace = (race?: Omit<Race, "_id" | "isActive">) => {
+export const setDraftRace = (
+  race?: Omit<Race, "_id" | "isActive" | "isDone">,
+) => {
   if (race) draftRace.race = race;
   else draftRace.race = null;
 };
@@ -120,7 +124,10 @@ export const setDraftRace = (race?: Omit<Race, "_id" | "isActive">) => {
  * Returns draft race if it exists, or null if it does not.
  * @return Omit<Race, "_id"> | null
  */
-export const getDraftRace = (): Omit<Race, "_id" | "isActive"> | null => {
+export const getDraftRace = (): Omit<
+  Race,
+  "_id" | "isActive" | "isDone"
+> | null => {
   return draftRace.race;
 };
 

@@ -5,7 +5,7 @@ import { badgedelete } from "./badgedelete/logic";
 import { badgeedit } from "./badgeedit/logic";
 import { badgegive } from "./badgegive/logic";
 import { badgerevoke } from "./badgerevoke/logic";
-import { iam, iamnot } from "./iam/logic";
+import { role } from "./role/logic";
 import { meme } from "./meme/logic";
 import { memeadd } from "./memeadd/logic";
 import { memedelete } from "./memedelete/logic";
@@ -27,8 +27,6 @@ export const commandsFunctions: CommandFn[] = [
   badgeedit,
   badgegive,
   badgerevoke,
-  iam,
-  iamnot,
   meme,
   memeadd,
   memedelete,
@@ -37,6 +35,7 @@ export const commandsFunctions: CommandFn[] = [
   race,
   racesetup,
   register,
+  role,
   seasoncreate,
   seasonstart,
   seasonend,

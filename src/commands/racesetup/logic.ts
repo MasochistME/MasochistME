@@ -5,7 +5,6 @@ import {
   APIEmbed,
   APIEmbedField,
 } from "discord.js";
-import dayjs from "dayjs";
 import { DiscordInteraction, getInfoEmbed } from "arcybot";
 import { Race, RaceScoreBased, RaceType } from "@masochistme/sdk/dist/v1/types";
 
@@ -126,7 +125,7 @@ const getRaceConfirmationButtons = () => {
  * @return APIEmbed
  */
 const getRaceConfirmationEmbed = async (
-  race: Omit<Race, "_id" | "isActive">,
+  race: Omit<Race, "_id" | "isActive" | "isDone">,
 ) => {
   const season = race.season
     ? await sdk.getSeasonById({ seasonId: race.season })
