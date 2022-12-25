@@ -14,7 +14,10 @@ import { sdk } from "fetus";
 import { RaceButton, RoleOption, Room } from "consts";
 import { getChannelByKey, getDiscordTimestamp, cenzor, getOption } from "utils";
 
-import { raceSendStartFormToParticipantSelf } from "./playerActions";
+import {
+  raceParticipantsInformedError,
+  raceSendStartFormToParticipantSelf,
+} from "./playerActions";
 
 export const racesetupJoin = async (
   interaction: ButtonInteraction,
@@ -115,14 +118,38 @@ export const racesetupJoin = async (
 
   const registerUser = await saveJoinRace(interaction);
   if (registerUser) {
-    interaction.update({ embeds: [updatedEmbed] });
-    interaction.user.send(
-      getInfoEmbed(
-        "You joined the race!",
-        `Congratulations, you successfully joined the **${race.name}** race!\nYou'll get pinged by bot when the race opens - then you can click **START** whenever you feel ready to go.
+    interaction.user
+      .send(
+        getInfoEmbed(
+          "You joined the race!",
+          `Congratulations, you successfully joined the **${race.name}** race!\nYou'll get pinged by bot when the race opens - then you can click **START** whenever you feel ready to go.
         `,
-      ),
-    );
+        ),
+      )
+      .then(() => {
+        interaction.update({ embeds: [updatedEmbed] });
+      })
+      .catch(() => {
+        const embed: APIEmbed = {
+          title: `❌ Bot could not send you a confirmation DM`,
+          fields: [
+            {
+              name: "___",
+              value: `You joined the race but Dr Fetus bot could not send you a confirmation DM. That's an issue since you won't be able to get race details when it starts.`,
+            },
+            {
+              name: "Possible reasons",
+              value: `- you blocked DrFetus bot\n- you disabled DMs from MasochistME server members\n- you might need to update your settings\n- you're not in this server... yeah maybe not this one`,
+            },
+            {
+              name: "Possible fixes",
+              value: `- \`\`User Settings\`\` > \`\`Text & Messages\`\` > \`\`Show embeds and preview website link pasted into chat\`\` - this option should be **enabled**\n- \`\`User Settings\`\` > \`\`Privacy & Safety\`\` > \`\`Enable message requests from server members you may not know\`\` - this option should be **enabled**
+              \nIf after doing those things it still doesn't work, complain to mods or Arcyvilk.`,
+            },
+          ],
+        };
+        interaction.reply({ embeds: [embed], ephemeral: true });
+      });
 
     if (race.isActive) raceSendStartFormToParticipantSelf(interaction);
   }
