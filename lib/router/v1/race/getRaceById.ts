@@ -34,8 +34,24 @@ export const getRaceById = async (
       players.push({ ...player, score });
     });
 
+    const raceOwner = {
+      raceId,
+      discordId: race.owner,
+      type: race.type,
+      startDate: null,
+      endDate: null,
+      revealDate: null,
+      proofDate: null,
+      proof: null,
+      dnf: false,
+      disqualified: false,
+      disqualifiedBy: null,
+      disqualificationReason: null,
+      score: race?.ownerTime ? race?.ownerTime * 1000 : 0,
+    };
+
     // TODO this currently only works for time based races!
-    const sortedPlayers = players
+    const sortedPlayers = [...players, raceOwner]
       .filter(player => !player.dnf && !player.disqualified)
       .sort((playerA, playerB) => playerA.score - playerB.score)
       .map(player => {
@@ -55,6 +71,12 @@ export const getRaceById = async (
   }
 };
 
+/**
+ * Returns participant's time in miliseconds
+ * @param raceParticipant
+ * @param race
+ * @returns
+ */
 const getParticipantRaceTime = (raceParticipant: RacePlayer, race: Race) => {
   const { revealDate, startDate, endDate, proofDate } = raceParticipant;
   const { uploadGrace, downloadGrace } = race;
@@ -67,9 +89,8 @@ const getParticipantRaceTime = (raceParticipant: RacePlayer, race: Race) => {
   const download = downloadGrace * 1000;
   const upload = uploadGrace * 1000;
 
-  const downloadPenalty =
-    start - reveal > download ? -download + (start - reveal) : 0;
-  const uploadPenalty = proof - end > upload ? -upload + (proof - end) : 0;
+  const downloadPenalty = start - reveal > download ? download : 0;
+  const uploadPenalty = proof - end > upload ? upload : 0;
   const fullTime = end - start + downloadPenalty + uploadPenalty;
 
   return fullTime;
