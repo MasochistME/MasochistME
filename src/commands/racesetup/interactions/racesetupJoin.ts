@@ -14,10 +14,7 @@ import { sdk } from "fetus";
 import { RaceButton, RoleOption, Room } from "consts";
 import { getChannelByKey, getDiscordTimestamp, cenzor, getOption } from "utils";
 
-import {
-  raceParticipantsInformedError,
-  raceSendStartFormToParticipantSelf,
-} from "./playerActions";
+import { raceSendStartFormToParticipantSelf } from "./playerActions";
 
 export const racesetupJoin = async (
   interaction: ButtonInteraction,
