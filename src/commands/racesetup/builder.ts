@@ -41,6 +41,13 @@ const getCommonRequiredOptionsRaceSetup = (
     )
     .addStringOption(option =>
       option
+        .setName(Options.SEASON)
+        .setDescription("Active season the race should be included in")
+        .setRequired(true)
+        .setAutocomplete(true),
+    )
+    .addStringOption(option =>
+      option
         .setName(Options.INSTRUCTIONS)
         .setDescription("Instructions visible before starting the race")
         .setRequired(true),
@@ -76,13 +83,6 @@ const getCommonRequiredOptionsRaceSetup = (
         .setName(Options.UPLOAD_GRACE)
         .setDescription("Grace period for the screenshot upload [seconds]")
         .setRequired(true),
-    )
-    .addStringOption(option =>
-      option
-        .setName(Options.SEASON)
-        .setDescription("Active season the race should be included in")
-        .setRequired(true)
-        .setAutocomplete(true),
     );
 };
 
