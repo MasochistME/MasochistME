@@ -36,7 +36,7 @@ import { Season, ResponseError } from 'v1/types';
 export const updateSeasonById = async (
 	params: {
 		seasonId: string;
-		season: Omit<Season, '_id'>;
+		season: Partial<Omit<Season, '_id'>>;
 	},
 	/** @ignore */
 	BASE_URL: string,
@@ -47,7 +47,7 @@ export const updateSeasonById = async (
 	const seasonResponse = await axios.put<
 		UpdateResult | ResponseError,
 		AxiosResponse<UpdateResult | ResponseError>,
-		Omit<Season, '_id'>
+		Partial<Omit<Season, '_id'>>
 	>(url, season, { validateStatus: () => true });
 
 	const { status, data } = seasonResponse;
