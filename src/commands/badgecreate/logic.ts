@@ -17,16 +17,11 @@ export const badgecreate = async (
 
   const gameId = interaction.options.getString("game", true);
   const name = interaction.options.getString("name", true);
-  const thumbnail = interaction.options.getAttachment("image", true);
+  const thumbnail = interaction.options.getAttachment("image", true)?.proxyURL;
   const isSteamGame = !isNaN(parseInt(gameId));
 
   try {
-    const fixedImage = await saveImage(
-      thumbnail.proxyURL,
-      `${gameId}_${name.replace(" ", "-")}`,
-      ImgType.BADGE,
-    );
-
+    // First we save a badge with just the Discord's attachment image.
     const badge: Omit<Badge, "_id"> = {
       name,
       gameId: isSteamGame ? Number(gameId) : null,
@@ -34,15 +29,29 @@ export const badgecreate = async (
       points: interaction.options.getNumber("points", true),
       description: interaction.options.getString("description", true),
       title: isSteamGame ? null : gameId,
-      img: fixedImage,
+      img: thumbnail,
       isEnabled: true,
       isLegacy: false,
       isSteamGame,
     };
 
-    const response = await sdk.createBadge({ badge });
-    if (!response.acknowledged)
+    const { acknowledged, insertedId } = await sdk.createBadge({ badge });
+    if (!acknowledged)
       throw new Error("Could not create a badge, please try again later.");
+    // Then we update the badge image with the one stored on server.
+    const badgeId = String(insertedId);
+    const fixedImage = await saveImage(
+      thumbnail,
+      `${gameId}_${badgeId}`,
+      ImgType.BADGE,
+    );
+    const { acknowledged: ackUpdate } = await sdk.updateBadgeById({
+      badgeId,
+      badge: { img: fixedImage },
+    });
+    if (!ackUpdate)
+      throw "Could not save badge's image to server, please try again.";
+
     const disabledFields = [
       "game",
       "img",
@@ -52,7 +61,7 @@ export const badgecreate = async (
     ];
     const embed = {
       title: "🥇 Badge created!",
-      thumbnail: { url: thumbnail.url },
+      thumbnail: { url: fixedImage },
       fields: [
         ...Object.entries(badge)
           .filter(entry => !disabledFields.includes(entry[0]))
@@ -63,7 +72,7 @@ export const badgecreate = async (
           })),
         {
           name: "---",
-          value: `You have added a new badge! Its ID is ${response.insertedId}.`,
+          value: `You have added a new badge! Its ID is ${insertedId}.`,
         },
       ],
     };

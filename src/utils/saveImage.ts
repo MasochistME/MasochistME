@@ -44,8 +44,13 @@ export const saveImage = async (
     });
     return newPath;
   } catch (err: any) {
-    throw new Error(
-      `Could not save the image on the server :( \nReason: ${err}`,
-    );
+    if (err?.response?.status === 415)
+      throw new Error(
+        "This type of file is not supported. You need to upload an image.",
+      );
+    else
+      throw new Error(
+        `Could not save the image on the server :( \nReason: ${err}`,
+      );
   }
 };

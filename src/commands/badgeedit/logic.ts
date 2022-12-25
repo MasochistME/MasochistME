@@ -1,6 +1,12 @@
 import { DiscordInteraction } from "arcybot";
 
-import { createError, ErrorAction, getBadgeNameById } from "utils";
+import {
+  createError,
+  ErrorAction,
+  getBadgeNameById,
+  ImgType,
+  saveImage,
+} from "utils";
 import { sdk } from "fetus";
 
 /**
@@ -25,12 +31,20 @@ export const badgeedit = async (
     if (!existingBadge)
       throw new Error("Cannot edit a badge which does not exist.");
 
+    const fixedImage = image
+      ? await saveImage(
+          image.proxyURL,
+          `${existingBadge.gameId}_${badgeId}`,
+          ImgType.BADGE,
+        )
+      : null;
+
     const newBadge = {
       ...(name && { name }),
       ...(description && { description }),
       ...(points && { points }),
       ...(requirements && { requirements }),
-      ...(image && { img: image.url }),
+      ...(image && fixedImage && { img: fixedImage }),
     };
 
     const response = await sdk.updateBadgeById({ badgeId, badge: newBadge });

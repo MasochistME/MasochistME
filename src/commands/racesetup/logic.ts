@@ -47,6 +47,9 @@ export const racesetup = async (
   interaction: DiscordInteraction,
 ): Promise<void> => {
   const season = interaction.options.getString(Options.SEASON, true);
+  const icon = interaction.options.getAttachment(Options.ICON);
+  if (icon && !icon.contentType?.includes("image/"))
+    throw "This type of file is not supported as a race icon. You need to upload an image.";
   const raceData: RaceData = {
     name: interaction.options.getString(Options.NAME, true),
     instructions: interaction.options.getString(Options.INSTRUCTIONS, true),
@@ -57,7 +60,7 @@ export const racesetup = async (
     downloadGrace: interaction.options.getNumber(Options.DOWNLOAD_GRACE, true),
     uploadGrace: interaction.options.getNumber(Options.UPLOAD_GRACE, true),
     playLimit: interaction.options.getNumber(Options.PLAY_LIMIT),
-    icon: interaction.options.getAttachment(Options.ICON)?.proxyURL,
+    icon: icon?.proxyURL,
     season: season === "None" ? null : season,
     owner:
       interaction.options.getUser(Options.OWNER, false)?.id ??

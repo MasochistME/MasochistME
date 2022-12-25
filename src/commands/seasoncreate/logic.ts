@@ -17,11 +17,14 @@ export const seasoncreate = async (
   await interaction.deferReply();
 
   try {
+    const icon = interaction.options.getAttachment(Options.ICON, true);
+    if (!icon.contentType?.includes("image/"))
+      throw "This type of file is not supported as a season icon. You need to upload an image.";
     // First we just create a season
     const rawSeason: Omit<Season, "_id"> = {
       name: interaction.options.getString(Options.NAME, true),
       description: interaction.options.getString(Options.DESCRIPTION, true),
-      icon: interaction.options.getAttachment(Options.ICON, true).proxyURL,
+      icon: icon.proxyURL,
       isSpecial: interaction.options.getBoolean(Options.IS_SPECIAL, true),
       startDate: null,
       endDate: null,
@@ -39,7 +42,7 @@ export const seasoncreate = async (
     const seasonId = String(insertedId);
     const savedIcon = await saveImage(
       interaction.options.getAttachment(Options.ICON, true).proxyURL,
-      `${seasonId}`,
+      seasonId,
       ImgType.ICON_SEASON,
     );
     // We don't throw if this does not work because season icon is not something crucial
