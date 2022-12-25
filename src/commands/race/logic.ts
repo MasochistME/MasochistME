@@ -1,7 +1,6 @@
 import { DiscordInteraction, getInfoEmbed } from "arcybot";
 import { APIEmbed, APIEmbedField } from "discord.js";
 import { RaceWithParticipants } from "@masochistme/sdk/dist/v1/types";
-import dayjs from "dayjs";
 
 import { sdk } from "fetus";
 import { splitArrayToChunks, createError, ErrorAction } from "utils";
@@ -73,7 +72,14 @@ const getFinishedRaceEmbed = (
   }));
   const embed: APIEmbed = {
     title: `🏁 ${race.name}\n→ ${race.leaderboards?.length ?? 0} finished runs`,
-    fields,
+    fields: [
+      {
+        name: `Link to the game`,
+        value: race.downloadLink,
+        inline: false,
+      },
+      ...fields,
+    ],
   };
 
   interaction.editReply({ embeds: [embed] });

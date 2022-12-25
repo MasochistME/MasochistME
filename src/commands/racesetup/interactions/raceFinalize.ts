@@ -1,6 +1,7 @@
 import { RacePlayer } from "@masochistme/sdk/dist/v1/types";
-import { getErrorEmbed, getInfoEmbed, log } from "arcybot";
+import { getErrorEmbed, log } from "arcybot";
 import { Room } from "consts";
+import { APIEmbed } from "discord.js";
 
 import { sdk } from "fetus";
 import { getChannelByKey, getModChannel } from "utils";
@@ -34,25 +35,31 @@ export const raceFinalize = async (raceId: string): Promise<void> => {
       .slice(0, 10)
       .map(
         (leader: any, index: number) =>
-          `\`\`#${index + 1}\`\`. \`\`${leader.score}\`\` - <@${
+          `\n\`\`#${index + 1}\`\`. \`\`${leader.score}\`\` - <@${
             leader.discordId
           }>`,
       )
-      .join("\n");
+      .join();
 
-    const raceLeaderboards = getInfoEmbed(
-      `${race.name.toUpperCase()}!`,
-      `**LEADERBOARDS**
-        ${leaderboards}
-        \nOwner's (<@${race.owner}>) time: ${race.ownerTime ?? "-"}s
-        \nTo see participants above 10th place use \`\`/race\`\` command.
-        \n**STATISTICS**
-        - **${participated}** members participated
-        - **${finished}** members finished (**${finishedPercentage}%** completion ratio)
-        - **${disqualified}** members were disqualified (**${disqualifiedPercentage}%** disqualification ratio)`,
-    );
-    getModChannel(true)?.send(raceLeaderboards);
-    getChannelByKey(Room.RACE_PAST)?.send(raceLeaderboards);
+    const raceLeaderboardsEmbed: APIEmbed = {
+      title: `${race.name.toUpperCase()}!`,
+      fields: [
+        {
+          name: `Leaderboards`,
+          value: leaderboards?.length ? leaderboards : "—",
+        },
+        {
+          name: `Link to the game`,
+          value: race.downloadLink,
+        },
+        {
+          name: "Statistics",
+          value: `- **${participated}** members signed in\n- **${finished}** members finished (**${finishedPercentage}%** completion ratio)\n- **${disqualified}** members were disqualified (**${disqualifiedPercentage}%** disqualification ratio)\n\nTo see participants above 10th place use \`\`/race\`\` command.`,
+        },
+      ],
+    };
+    getModChannel(true)?.send({ embeds: [raceLeaderboardsEmbed] });
+    getChannelByKey(Room.RACE_PAST)?.send({ embeds: [raceLeaderboardsEmbed] });
   } catch (err: any) {
     log.WARN(err);
     getModChannel(true)?.send(
