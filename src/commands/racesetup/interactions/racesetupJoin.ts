@@ -11,8 +11,8 @@ import { Race, RaceType, RaceScoreBased } from "@masochistme/sdk/dist/v1/types";
 import dayjs from "dayjs";
 
 import { sdk } from "fetus";
-import { RaceButton, Room } from "consts";
-import { getChannelByKey, getDiscordTimestamp, cenzor } from "utils";
+import { RaceButton, RoleOption, Room } from "consts";
+import { getChannelByKey, getDiscordTimestamp, cenzor, getOption } from "utils";
 
 import { raceSendStartFormToParticipantSelf } from "./playerActions";
 
@@ -163,10 +163,16 @@ const saveJoinRace = async (
 export const sendRaceJoinForm = async (raceId: string) => {
   const newRace = await sdk.getRaceById({ raceId });
   const channel = getChannelByKey(Room.RACE_CURRENT);
+  const roleRace = getOption<string>(RoleOption.ROLE_RACE);
 
   await channel?.send({
     embeds: [await getNewRaceCensoredEmbed(newRace)],
     components: [getRaceJoinButton(raceId)],
+    // allowedMentions: { parse: ["roles"] },
+  });
+  await channel?.send({
+    content: `<@&${roleRace}>`,
+    // allowedMentions: { parse: ["roles"] },
   });
 };
 
@@ -194,6 +200,7 @@ const getNewRaceCensoredEmbed = async (race: Race): Promise<APIEmbed> => {
     ? await sdk.getSeasonById({ seasonId: race.season })
     : null;
   const seasonName = season?.name ?? "None";
+  const roleRace = getOption<string>(RoleOption.ROLE_RACE);
 
   const fields: APIEmbedField[] = [
     {
@@ -248,7 +255,7 @@ const getNewRaceCensoredEmbed = async (race: Race): Promise<APIEmbed> => {
       },
       {
         name: "---",
-        value: `@here clicking the **JOIN** button below will sign you up for the race!\n\nYou'll get pinged by bot when the race opens - then you can click **START** whenever you feel ready to go.\n\n---`,
+        value: `<@&${roleRace}> clicking the **JOIN** button below will sign you up for the race!\n\nYou'll get pinged by bot when the race opens - then you can click **START** whenever you feel ready to go.\n\n---`,
       },
     ],
   };

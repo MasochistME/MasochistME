@@ -6,6 +6,7 @@ import {
 import { getFilteredChoices } from "commands/_utils";
 import { Options } from "commands/role/builder";
 import { getOption } from "utils";
+import { RoleOption } from "consts";
 
 /**
  * Handles autocompletion for the "role" command.
@@ -17,7 +18,7 @@ export const roleAutocomplete = async (
 ): Promise<void> => {
   if (!interaction.isAutocomplete()) return;
 
-  const allowedRoles = getOption<string[]>("iam_roles") ?? [];
+  const allowedRoles = getOption<string[]>(RoleOption.IAM_ROLES) ?? [];
   const discordRoles =
     interaction.guild?.roles.cache
       .filter(role => allowedRoles.includes(role.id))

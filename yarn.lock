@@ -573,10 +573,10 @@ anymatch@~3.1.2:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
-arcybot@^1.4.5:
-  version "1.4.5"
-  resolved "https://registry.yarnpkg.com/arcybot/-/arcybot-1.4.5.tgz#ba867b4a390ea6787577464a63a836829df28c11"
-  integrity sha512-cIe/AKC8GfqV9mopB4JEt9FzPJgKxj5oHeLn1nJKIZXIOplIoM00DOzC3JSLT1D/ombR3Jx+IDGMfqAO3Kid+g==
+arcybot@^1.4.6:
+  version "1.4.6"
+  resolved "https://registry.yarnpkg.com/arcybot/-/arcybot-1.4.6.tgz#be373c0de4b9e2b749ae08c4ae98ad2df43728fd"
+  integrity sha512-aIqhzLrOh/976FrqUbCKOxV34vIaTIa6wYeP/oNkH+joMU/WXBja6texux+YcEhbWC07PT54D0egkN+RmoaIPA==
   dependencies:
     discord.js "^14.3.0"
     mongodb "^4.9.1"

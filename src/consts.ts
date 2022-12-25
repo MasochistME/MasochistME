@@ -20,6 +20,11 @@ export enum Room {
   RACE_MOD = "room_race_mod",
 }
 
+export enum RoleOption {
+  ROLE_RACE = "role_race",
+  IAM_ROLES = "iam_roles",
+}
+
 // Custom interaction IDs
 export const FEATURE_VIDEO = "FEATURE_VIDEO";
 export const REGISTRATION_REVIEW = "REGISTRATION_REVIEW";
