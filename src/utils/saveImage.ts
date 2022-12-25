@@ -6,8 +6,15 @@ import { getFileExtension } from "./data";
 export enum ImgType {
   BADGE = "badges",
   RACE = "races",
+  ICON_SEASON = "icons/season",
+  ICON_RACE = "icons/race",
 }
-export const saveImage = async (url: string, name: string, type: ImgType) => {
+export const saveImage = async (
+  url: string | undefined,
+  name: string,
+  type: ImgType,
+) => {
+  if (!url) throw "URL of the race icon is incorrect. Please try again.";
   try {
     const extension = getFileExtension(url);
     const localFilePath =

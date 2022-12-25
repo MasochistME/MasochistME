@@ -6,3 +6,4 @@ export * from "./events";
 export * from "./getDate";
 export * from "./helpers";
 export * from "./rng";
+export * from "./saveImage";

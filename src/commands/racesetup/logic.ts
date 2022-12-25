@@ -57,7 +57,7 @@ export const racesetup = async (
     downloadGrace: interaction.options.getNumber(Options.DOWNLOAD_GRACE, true),
     uploadGrace: interaction.options.getNumber(Options.UPLOAD_GRACE, true),
     playLimit: interaction.options.getNumber(Options.PLAY_LIMIT),
-    icon: interaction.options.getAttachment(Options.ICON)?.url,
+    icon: interaction.options.getAttachment(Options.ICON)?.proxyURL,
     season: season === "None" ? null : season,
     owner:
       interaction.options.getUser(Options.OWNER, false)?.id ??

@@ -3,6 +3,7 @@ import { getErrorEmbed } from "arcybot";
 import { Race } from "@masochistme/sdk/dist/v1/types";
 
 import { sdk } from "fetus";
+import { ImgType, saveImage } from "utils";
 import { RACE_CONFIRMATION } from "consts";
 
 import { sendRaceJoinForm } from "./racesetupJoin";
@@ -25,6 +26,17 @@ export const racesetupConfirm = async (
   if (interaction.customId === `${RACE_CONFIRMATION}_CONFIRM`) {
     try {
       const newRaceId = await saveRaceDetails();
+      const savedRaceIcon = await saveImage(
+        originalEmbed.thumbnail?.proxy_url,
+        newRaceId,
+        ImgType.ICON_RACE,
+      );
+      // We don't throw if this does not work because season icon is not something crucial
+      await sdk.updateRaceById({
+        raceId: newRaceId,
+        race: { icon: savedRaceIcon },
+      });
+
       sendRaceJoinForm(newRaceId);
       interaction.update({
         embeds: [
