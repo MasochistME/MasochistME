@@ -8,7 +8,7 @@ import {
 import { DiscordInteraction, getInfoEmbed } from "arcybot";
 import { Race, RaceScoreBased, RaceType } from "@masochistme/sdk/dist/v1/types";
 
-import { sdk } from "fetus";
+import { cache, sdk } from "fetus";
 import { RACE_CONFIRMATION } from "consts";
 import { isLink, getDiscordTimestamp, createError, ErrorAction } from "utils";
 import { getRace, setDraftRace } from "commands/_utils/race";
@@ -46,8 +46,12 @@ export type RaceData = Pick<
 export const racesetup = async (
   interaction: DiscordInteraction,
 ): Promise<void> => {
-  const season = interaction.options.getString(Options.SEASON, true);
+  const rawSeason = interaction.options.getString(Options.SEASON, true);
   const icon = interaction.options.getAttachment(Options.ICON);
+  const cachedSeason = cache.seasons.find(
+    s => s.name === rawSeason || String(s._id) === rawSeason,
+  );
+  const season = cachedSeason ? String(cachedSeason?._id) : null;
   if (icon && !icon.contentType?.includes("image/"))
     throw "This type of file is not supported as a race icon. You need to upload an image.";
   const raceData: RaceData = {
@@ -61,7 +65,7 @@ export const racesetup = async (
     uploadGrace: interaction.options.getNumber(Options.UPLOAD_GRACE, true),
     playLimit: interaction.options.getNumber(Options.PLAY_LIMIT),
     icon: icon?.proxyURL,
-    season: season === "None" ? null : season,
+    season,
     owner:
       interaction.options.getUser(Options.OWNER, false)?.id ??
       interaction.user.id,
