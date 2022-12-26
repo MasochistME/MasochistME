@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Tier } from '@masochistme/sdk/dist/v1/types';
 
 import { media } from 'styles';
-import { useAppContext, GameView } from 'context';
+import { useAppContext } from 'context';
 import { Input } from 'containers';
 import {
 	Button,
@@ -13,21 +13,21 @@ import {
 	Spinner,
 	IconType,
 } from 'components';
-import { useActiveTab } from 'hooks';
+import { useActiveTab, GameView } from 'hooks';
 import { TabDict } from 'configuration/tabs';
 import { useTiers } from 'sdk';
 
-export const GameFilterBar = (): JSX.Element => {
+type Props = {
+	gameListView: GameView;
+	toggleGameView: () => void;
+};
+
+export const GameFilterBar = (props: Props): JSX.Element => {
+	const { gameListView, toggleGameView } = props;
 	useActiveTab(TabDict.GAMES);
 
-	const {
-		queryGame,
-		setQueryGame,
-		gameListView,
-		setGameListView,
-		visibleTiers,
-		setVisibleTiers,
-	} = useAppContext();
+	const { queryGame, setQueryGame, visibleTiers, setVisibleTiers } =
+		useAppContext();
 	const {
 		tiersData,
 		isLoading: isTiersLoading,
@@ -44,11 +44,6 @@ export const GameFilterBar = (): JSX.Element => {
 		if (gameListView === GameView.TILE) return 'Toggle table view';
 		else return 'Toggle grid view';
 	}, [gameListView]);
-
-	const onGameViewClick = () => {
-		if (gameListView === GameView.TILE) setGameListView(GameView.TABLE);
-		if (gameListView === GameView.TABLE) setGameListView(GameView.TILE);
-	};
 
 	return (
 		<FilterBar>
@@ -73,7 +68,7 @@ export const GameFilterBar = (): JSX.Element => {
 				</StyledGameFilterBarTiers>
 			</StyledGameFilterBar>
 			<Button
-				onClick={onGameViewClick}
+				onClick={toggleGameView}
 				icon={gameViewButtonIcon}
 				label={gameViewButtonLabel}
 			/>

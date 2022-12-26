@@ -6,17 +6,9 @@ import { TabDict } from 'configuration/tabs';
 import { EventsDict } from 'configuration/events';
 
 import { Theme } from 'styles';
+import { GameView, BadgeView } from 'hooks';
 
 import config from 'config.json';
-
-export enum GameView {
-	TILE = 'tiles',
-	TABLE = 'table',
-}
-export enum BadgeView {
-	TILE = 'tiles',
-	TABLE = 'table',
-}
 
 type ContextType = {
 	sdk: SDK;
@@ -32,10 +24,10 @@ type ContextType = {
 	visibleEvents: EventType[];
 	setVisibleEvents: (visibleEvents: EventType[]) => void;
 
-	gameListView: GameView;
-	setGameListView: (gameListView: GameView) => void;
-	badgeListView: BadgeView;
-	setBadgeListView: (badgeListView: BadgeView) => void;
+	_gameListView: GameView;
+	_setGameListView: (gameListView: GameView) => void;
+	_badgeListView: BadgeView;
+	_setBadgeListView: (badgeListView: BadgeView) => void;
 
 	queryGame: string;
 	setQueryGame: (queryGame: string) => void;
@@ -48,10 +40,12 @@ export const AppContextProvider = ({
 }: {
 	children: React.ReactNode;
 }): JSX.Element => {
-	const [_activeTheme, _setActiveTheme] = useState<Theme>(Theme.ASH);
 	const [activeTab, setActiveTab] = useState<TabDict>(TabDict.HOME);
-	const [gameListView, setGameListView] = useState<GameView>(GameView.TILE);
-	const [badgeListView, setBadgeListView] = useState<BadgeView>(BadgeView.TILE);
+	const [_activeTheme, _setActiveTheme] = useState<Theme>(Theme.ASH);
+	const [_gameListView, _setGameListView] = useState<GameView>(GameView.TILE);
+	const [_badgeListView, _setBadgeListView] = useState<BadgeView>(
+		BadgeView.TILE,
+	);
 	const [visibleTiers, setVisibleTiers] = useState<TierId[]>([]);
 	const [visibleEvents, setVisibleEvents] = useState<EventType[]>(
 		EventsDict.map(e => e.type),
@@ -79,10 +73,10 @@ export const AppContextProvider = ({
 		visibleEvents,
 		setVisibleEvents,
 
-		gameListView,
-		setGameListView,
-		badgeListView,
-		setBadgeListView,
+		_gameListView,
+		_setGameListView,
+		_badgeListView,
+		_setBadgeListView,
 
 		queryGame,
 		setQueryGame,

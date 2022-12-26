@@ -1,9 +1,8 @@
 import React, { Suspense } from 'react';
 import styled from 'styled-components';
 
-import { useActiveTab } from 'hooks';
+import { useActiveTab, GameView, useToggleView } from 'hooks';
 import { TabDict } from 'configuration/tabs';
-import { useAppContext, GameView } from 'context';
 import { SubPage } from 'containers';
 import { Flex, Loader } from 'components';
 
@@ -19,12 +18,15 @@ const GameTileView = React.lazy(() =>
 const TabGames = (): JSX.Element => {
 	useActiveTab(TabDict.GAMES);
 
-	const { gameListView } = useAppContext();
+	const { gameListView, toggleGameView } = useToggleView();
 
 	return (
 		<SubPage>
 			<StyledGames column>
-				<GameFilterBar />
+				<GameFilterBar
+					gameListView={gameListView}
+					toggleGameView={toggleGameView}
+				/>
 				{gameListView === GameView.TILE && (
 					<Suspense fallback={<Loader />}>
 						<GameTileView />
