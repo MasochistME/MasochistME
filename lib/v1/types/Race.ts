@@ -55,10 +55,6 @@ interface BaseRace extends WithId {
 	 */
 	owner: string;
 	/**
-	 * Time of the race's owner.
-	 */
-	ownerTime: number | null;
-	/**
 	 * ID of the season that this race belongs to (if null, it's a special non-seasoned race).
 	 */
 	season: string | null;
@@ -92,6 +88,10 @@ export interface RaceScoreBased extends Omit<BaseRace, 'type'> {
 	 * How much time before end of a run player is warned that their time is ending [minutes].
 	 */
 	warningPeriod: number;
+	/**
+	 * Score of the race's owner.
+	 */
+	ownerScore: number | null;
 }
 
 /**
@@ -102,6 +102,10 @@ export interface RaceTimeBased extends Omit<BaseRace, 'type'> {
 	 * Time based race type.
 	 */
 	type: RaceType.TIME_BASED;
+	/**
+	 * Time of the race's owner.
+	 */
+	ownerTime: number | null;
 }
 
 /**
