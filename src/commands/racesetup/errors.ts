@@ -1,7 +1,5 @@
 import { DiscordInteraction, getErrorEmbed } from "arcybot";
 
-import { RaceData } from "./logic";
-
 /**
  * Handles error caused by race ending before it starts.
  * @param interaction DiscordInteraction
@@ -40,18 +38,16 @@ export const errorRaceInThePast = (interaction: DiscordInteraction) => {
  */
 export const errorNegativeTimers = (
   interaction: DiscordInteraction,
-  raceData: RaceData,
+  downloadGrace: number,
+  uploadGrace: number,
+  playLimit?: number,
 ) => {
   interaction.reply(
     getErrorEmbed(
       "Wrong time provided",
       `There is something very wrong with the timers you provided.\n
-      **Download grace period** - \`\`${
-        raceData.downloadGrace
-      }s\`\`\n**Upload grace period** - \`\`${raceData.uploadGrace}s\`\`
-      ${
-        raceData.playLimit ? `**Play time limit** - ${raceData.playLimit}m` : ""
-      }\n
+      **Download grace period** - \`\`${downloadGrace}s\`\`\n**Upload grace period** - \`\`${uploadGrace}s\`\`
+      ${playLimit ? `**Play time limit** - ${playLimit}m` : ""}\n
       At least one of those looks _seriously wrong_.`,
     ),
   );
@@ -61,17 +57,17 @@ export const errorNegativeTimers = (
 /**
  * Handles error caused by download link not being an actual HTTP link.
  * @param interaction DiscordInteraction
- * @param raceData RaceData
+ * @param link string
  * @return void
  */
 export const errorWrongDownloadLink = (
   interaction: DiscordInteraction,
-  raceData: RaceData,
+  link: string,
 ) => {
   interaction.reply(
     getErrorEmbed(
       "Wrong download link",
-      `${raceData.downloadLink} → Does _this_ look like a link to you?`,
+      `${link} → Does _this_ look like a link to you?`,
     ),
   );
   return;

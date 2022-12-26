@@ -6,14 +6,19 @@ import {
   APIEmbedField,
 } from "discord.js";
 import { DiscordInteraction, getInfoEmbed } from "arcybot";
-import { Race, RaceScoreBased, RaceType } from "@masochistme/sdk/dist/v1/types";
+import {
+  Race,
+  RaceScoreBased,
+  RaceTimeBased,
+  RaceType,
+} from "@masochistme/sdk/dist/v1/types";
 
 import { cache, sdk } from "fetus";
 import { RACE_CONFIRMATION } from "consts";
 import { isLink, getDiscordTimestamp, createError, ErrorAction } from "utils";
 import { getRace, setDraftRace } from "commands/_utils/race";
 
-import { Options } from "./builder";
+import { OptionRaceType, Options } from "./builder";
 import {
   errorEndsBeforeStart,
   errorRaceInThePast,
@@ -21,23 +26,22 @@ import {
   errorWrongDownloadLink,
 } from "./errors";
 
-export type RaceData = Pick<
-  Race,
-  | "name"
-  | "instructions"
-  | "objectives"
-  | "downloadGrace"
-  | "uploadGrace"
-  | "downloadLink"
-  | "icon"
-  | "season"
-  | "owner"
-  | "ownerTime"
-> & {
-  startsIn: number;
-  endsAfter: number;
-  playLimit: number | null;
-};
+export type RaceData =
+  | (Omit<
+      RaceScoreBased,
+      "startDate" | "endDate" | "type" | "isActive" | "isDone" | "_id"
+    > & {
+      startsIn: number;
+      endsAfter: number;
+      playLimit: number | null;
+    })
+  | (Omit<
+      RaceTimeBased,
+      "startDate" | "endDate" | "type" | "isActive" | "isDone" | "_id"
+    > & {
+      startsIn: number;
+      endsAfter: number;
+    });
 /**
  * Describe your "racesetup" command here.
  * @param interaction DiscordInteraction
@@ -46,44 +50,142 @@ export type RaceData = Pick<
 export const racesetup = async (
   interaction: DiscordInteraction,
 ): Promise<void> => {
-  const rawSeason = interaction.options.getString(Options.SEASON, true);
   const icon = interaction.options.getAttachment(Options.ICON);
+  const startsIn = interaction.options.getNumber(Options.STARTS_IN, true);
+  const endsAfter = interaction.options.getNumber(Options.ENDS_AFTER, true);
+  const downloadLink = interaction.options.getString(
+    Options.DOWNLOAD_LINK,
+    true,
+  );
+
+  // Handle all the common errors between time and score based races
+  if (icon && !icon.contentType?.includes("image/")) {
+    throw "This type of file is not supported as a race icon. You need to upload an image.";
+  }
+  if (startsIn + endsAfter <= 0) {
+    return errorEndsBeforeStart(interaction);
+  }
+  if (startsIn < 0 || endsAfter < 0) {
+    return errorRaceInThePast(interaction);
+  }
+  if (!isLink(downloadLink)) {
+    return errorWrongDownloadLink(interaction, downloadLink);
+  }
+
+  // Redirect to the relevant type of race
+  const raceType = interaction.options.getSubcommand(true);
+
+  if (raceType === OptionRaceType.TIME_BASED)
+    return racesetupTimeBased(interaction);
+  if (raceType === OptionRaceType.SCORE_BASED)
+    return racesetupScoreBased(interaction);
+  throw "Selected race type is not supported, please try again.";
+};
+
+/**
+ * Time based race.
+ * @param interaction DiscordInteraction
+ * @returns void
+ */
+const racesetupTimeBased = async (
+  interaction: DiscordInteraction,
+): Promise<void> => {
+  const rawSeason = interaction.options.getString(Options.SEASON, true);
   const cachedSeason = cache.seasons.find(
     s => s.name === rawSeason || String(s._id) === rawSeason,
   );
   const season = cachedSeason ? String(cachedSeason?._id) : null;
-  if (icon && !icon.contentType?.includes("image/"))
-    throw "This type of file is not supported as a race icon. You need to upload an image.";
+
   const raceData: RaceData = {
     name: interaction.options.getString(Options.NAME, true),
+    downloadLink: interaction.options.getString(Options.DOWNLOAD_LINK, true),
+    season,
     instructions: interaction.options.getString(Options.INSTRUCTIONS, true),
     objectives: interaction.options.getString(Options.OBJECTIVES, true),
     startsIn: interaction.options.getNumber(Options.STARTS_IN, true),
     endsAfter: interaction.options.getNumber(Options.ENDS_AFTER, true),
-    downloadLink: interaction.options.getString(Options.DOWNLOAD_LINK, true),
     downloadGrace: interaction.options.getNumber(Options.DOWNLOAD_GRACE, true),
     uploadGrace: interaction.options.getNumber(Options.UPLOAD_GRACE, true),
-    playLimit: interaction.options.getNumber(Options.PLAY_LIMIT),
-    icon: icon?.proxyURL,
-    season,
+    // Optional fields
+    icon: interaction.options.getAttachment(Options.ICON)?.proxyURL,
     owner:
       interaction.options.getUser(Options.OWNER, false)?.id ??
       interaction.user.id,
     ownerTime: interaction.options.getNumber(Options.OWNERS_TIME, false),
   };
 
-  if (raceData.startsIn + raceData.endsAfter <= 0)
-    return errorEndsBeforeStart(interaction);
-  if (raceData.startsIn < 0 || raceData.endsAfter < 0)
-    return errorRaceInThePast(interaction);
-  if (!isLink(raceData.downloadLink))
-    return errorWrongDownloadLink(interaction, raceData);
+  if (raceData.downloadGrace < 0 || raceData.uploadGrace < 0) {
+    return errorNegativeTimers(
+      interaction,
+      raceData.downloadGrace,
+      raceData.uploadGrace,
+    );
+  }
+
+  const race = getRace(raceData);
+
+  try {
+    setDraftRace(race);
+    interaction.reply(
+      getInfoEmbed(
+        "Race draft saved!",
+        "I've sent you a confirmation message, check your DMs.",
+      ),
+    );
+    interaction.user.send({
+      embeds: [await getRaceConfirmationEmbed(race)],
+      components: [getRaceConfirmationButtons()],
+    });
+  } catch (err: any) {
+    console.log(err);
+    createError(interaction, err, ErrorAction.SEND);
+  }
+};
+
+/**
+ * Score based race.
+ * @param interaction DiscordInteraction
+ * @returns void
+ */
+const racesetupScoreBased = async (
+  interaction: DiscordInteraction,
+): Promise<void> => {
+  const rawSeason = interaction.options.getString(Options.SEASON, true);
+  const cachedSeason = cache.seasons.find(
+    s => s.name === rawSeason || String(s._id) === rawSeason,
+  );
+  const season = cachedSeason ? String(cachedSeason?._id) : null;
+  const raceData: RaceData = {
+    name: interaction.options.getString(Options.NAME, true),
+    downloadLink: interaction.options.getString(Options.DOWNLOAD_LINK, true),
+    season,
+    instructions: interaction.options.getString(Options.INSTRUCTIONS, true),
+    objectives: interaction.options.getString(Options.OBJECTIVES, true),
+    startsIn: interaction.options.getNumber(Options.STARTS_IN, true),
+    endsAfter: interaction.options.getNumber(Options.ENDS_AFTER, true),
+    downloadGrace: interaction.options.getNumber(Options.DOWNLOAD_GRACE, true),
+    uploadGrace: interaction.options.getNumber(Options.UPLOAD_GRACE, true),
+    playLimit: interaction.options.getNumber(Options.PLAY_LIMIT, true),
+    // Optional fields
+    icon: interaction.options.getAttachment(Options.ICON)?.proxyURL,
+    owner:
+      interaction.options.getUser(Options.OWNER, false)?.id ??
+      interaction.user.id,
+    ownerTime: interaction.options.getNumber(Options.OWNERS_TIME, false),
+  };
+
   if (
     raceData.downloadGrace < 0 ||
     raceData.uploadGrace < 0 ||
     Number(raceData.playLimit) < 0
-  )
-    return errorNegativeTimers(interaction, raceData);
+  ) {
+    return errorNegativeTimers(
+      interaction,
+      raceData.downloadGrace,
+      raceData.uploadGrace,
+      raceData.playLimit,
+    );
+  }
 
   const race = getRace(raceData);
 

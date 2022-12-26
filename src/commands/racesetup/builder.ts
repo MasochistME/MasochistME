@@ -16,6 +16,11 @@ export enum Options {
   OWNERS_TIME = "owners-time",
 }
 
+export enum OptionRaceType {
+  TIME_BASED = "time-based",
+  SCORE_BASED = "score-based",
+}
+
 /**
  * Returns a bunch of common REQUIRED options shared between time-based and score-based races.
  * @param subcommand SlashCommandSubcommandBuilder
@@ -122,31 +127,28 @@ const getCommonOptionalOptionsRaceSetup = (
 export const racesetupBuilder = new SlashCommandBuilder()
   .setName("racesetup")
   .addSubcommand(subcommand => {
-    const subcommandWithCommonRecommendedOptions =
-      getCommonRequiredOptionsRaceSetup(subcommand);
-    const subcommandWithTypeSpecificOptions =
-      subcommandWithCommonRecommendedOptions
-        .setName("time-based")
-        .setDescription(
-          "Set up a time based race (winner has the fastest completion time).",
-        );
+    const subcommandWithTypeSpecificOptions = getCommonRequiredOptionsRaceSetup(
+      subcommand,
+    )
+      .setName(OptionRaceType.TIME_BASED)
+      .setDescription(
+        "Set up a time based race (winner has the fastest completion time).",
+      );
+    return getCommonOptionalOptionsRaceSetup(subcommandWithTypeSpecificOptions);
+  })
+  .addSubcommand(subcommand => {
+    const subcommandWithTypeSpecificOptions = getCommonRequiredOptionsRaceSetup(
+      subcommand,
+    )
+      .setName(OptionRaceType.SCORE_BASED)
+      .setDescription(
+        "Set up a score based race (winner has the highest score within a time frame).",
+      )
+      .addNumberOption(option =>
+        option
+          .setName(Options.PLAY_LIMIT)
+          .setDescription("Time limit for achieving the best score [minutes]")
+          .setRequired(true),
+      );
     return getCommonOptionalOptionsRaceSetup(subcommandWithTypeSpecificOptions);
   });
-// TODO re-add score based races when done
-// .addSubcommand(subcommand => {
-//   const subcommandWithCommonRecommendedOptions =
-//     getCommonRequiredOptionsRaceSetup(subcommand);
-//   const subcommandWithTypeSpecificOptions =
-//     subcommandWithCommonRecommendedOptions
-//       .setName("score-based")
-//       .setDescription(
-//         "Set up a score based race (winner has the highest score within a time frame).",
-//       )
-//       .addNumberOption(option =>
-//         option
-//           .setName(Options.PLAY_LIMIT)
-//           .setDescription("Time limit for achieving the best score [minutes]")
-//           .setRequired(true),
-//       );
-//   return getCommonOptionalOptionsRaceSetup(subcommandWithTypeSpecificOptions);
-// });
