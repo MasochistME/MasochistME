@@ -63,14 +63,16 @@ export const FeaturedVideo = (props: Props) => {
 
 const getYTVideoID = (link?: string) => {
 	if (!link) return null;
-	const ytLinkRegex = [
-		new RegExp(/(?<=youtu.be\/)(.*)/gim),
-		new RegExp(/(?<=youtube.com\/watch\?v=)(.*)/gim),
-	];
-	const ytLinkIds = ytLinkRegex
-		.map(regex => link.match(regex)?.[0])
-		.filter(Boolean);
-	return ytLinkIds[0];
+
+	// // Lookbehind is not supported on Safari :(
+	// const ytLinkRegex = [
+	// 	new RegExp(/(?<=youtu.be\/)(.*)/gim),
+	// 	new RegExp(/(?<=youtube.com\/watch\?v=)(.*)/gim),
+	// ];
+	const ytLinkId = link
+		.replace(/(.*youtube\.com\/watch\?v=.*?)/, '')
+		.replace(/(.*youtu.be\/.*?)/, '');
+	return ytLinkId;
 };
 
 const StyledFeaturedVideoWrapper = styled(Flex)`
