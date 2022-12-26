@@ -51,6 +51,8 @@ const StyledSVG = styled.span<{
 		margin: 0 auto;
 		min-height: ${({ size }) => size}px;
 		max-height: ${({ size }) => size}px;
+		height: ${({ size }) => size}px;
+		width: ${({ size }) => size}px;
 		${({ shadowColor }) =>
 			shadowColor && `filter: drop-shadow(0 0 5px ${shadowColor});`}
 		path {
