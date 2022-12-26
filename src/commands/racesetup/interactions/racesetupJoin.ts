@@ -254,6 +254,7 @@ const getNewRaceCensoredEmbed = async (race: Race): Promise<APIEmbed> => {
       value: `${race.uploadGrace} s`,
       inline: true,
     },
+    { name: "Race type", value: race.type, inline: true },
   ];
 
   if (race.type === RaceType.SCORE_BASED)
@@ -268,18 +269,18 @@ const getNewRaceCensoredEmbed = async (race: Race): Promise<APIEmbed> => {
     fields: [
       ...fields,
       {
-        name: "Race owner",
-        value: `<@${race.owner}>`,
-        inline: true,
+        name: "---",
+        value: `<@&${roleRace}> clicking the **JOIN** button below will sign you up for the race!\n\nYou'll get pinged by bot when the race opens - then you can click **START** whenever you feel ready to go.`,
       },
       {
         name: "Season",
         value: seasonName,
-        inline: false,
+        inline: true,
       },
       {
-        name: "---",
-        value: `<@&${roleRace}> clicking the **JOIN** button below will sign you up for the race!\n\nYou'll get pinged by bot when the race opens - then you can click **START** whenever you feel ready to go.\n\n---`,
+        name: "Race owner",
+        value: `<@${race.owner}>`,
+        inline: true,
       },
     ],
   };

@@ -69,7 +69,7 @@ const init = async () => {
   bot.start("Dr. Fetus reporting for destruction!");
 
   bot.botClient.on("ready", async () => {
-    // Race timer checks every minute if any race should start.
+    // Race timer checks every minute if any race should get updated.
     handleRaceTimer();
   });
 

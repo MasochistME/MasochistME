@@ -12,6 +12,7 @@ import {
   RaceTimeBased,
   RaceType,
 } from "@masochistme/sdk/dist/v1/types";
+import dayjs from "dayjs";
 
 import { cache, sdk } from "fetus";
 import { RACE_CONFIRMATION } from "consts";
@@ -29,7 +30,7 @@ import {
 export type RaceData =
   | (Omit<
       RaceScoreBased,
-      "startDate" | "endDate" | "type" | "isActive" | "isDone" | "_id"
+      "startDate" | "endDate" | "isActive" | "isDone" | "_id"
     > & {
       startsIn: number;
       endsAfter: number;
@@ -37,7 +38,7 @@ export type RaceData =
     })
   | (Omit<
       RaceTimeBased,
-      "startDate" | "endDate" | "type" | "isActive" | "isDone" | "_id"
+      "startDate" | "endDate" | "isActive" | "isDone" | "_id"
     > & {
       startsIn: number;
       endsAfter: number;
@@ -98,6 +99,7 @@ const racesetupTimeBased = async (
 
   const raceData: RaceData = {
     name: interaction.options.getString(Options.NAME, true),
+    type: RaceType.TIME_BASED,
     downloadLink: interaction.options.getString(Options.DOWNLOAD_LINK, true),
     season,
     instructions: interaction.options.getString(Options.INSTRUCTIONS, true),
@@ -111,7 +113,7 @@ const racesetupTimeBased = async (
     owner:
       interaction.options.getUser(Options.OWNER, false)?.id ??
       interaction.user.id,
-    ownerTime: interaction.options.getNumber(Options.OWNERS_TIME, false),
+    ownerTime: interaction.options.getNumber(Options.OWNERS_TIME, false) ?? 0,
   };
 
   if (raceData.downloadGrace < 0 || raceData.uploadGrace < 0) {
@@ -157,6 +159,7 @@ const racesetupScoreBased = async (
   const season = cachedSeason ? String(cachedSeason?._id) : null;
   const raceData: RaceData = {
     name: interaction.options.getString(Options.NAME, true),
+    type: RaceType.SCORE_BASED,
     downloadLink: interaction.options.getString(Options.DOWNLOAD_LINK, true),
     season,
     instructions: interaction.options.getString(Options.INSTRUCTIONS, true),
@@ -165,7 +168,9 @@ const racesetupScoreBased = async (
     endsAfter: interaction.options.getNumber(Options.ENDS_AFTER, true),
     downloadGrace: interaction.options.getNumber(Options.DOWNLOAD_GRACE, true),
     uploadGrace: interaction.options.getNumber(Options.UPLOAD_GRACE, true),
+    // Score race specific fields
     playLimit: interaction.options.getNumber(Options.PLAY_LIMIT, true),
+    warningPeriod: interaction.options.getNumber(Options.WARNING_PERIOD, true),
     // Optional fields
     icon: interaction.options.getAttachment(Options.ICON)?.proxyURL,
     owner:
@@ -245,7 +250,9 @@ const getRaceConfirmationEmbed = async (
     {
       name: "Name",
       value: race.name,
+      inline: true,
     },
+    { name: "Race type", value: race.type, inline: true },
     {
       name: "Instructions",
       value: race.instructions,
@@ -300,6 +307,11 @@ const getRaceConfirmationEmbed = async (
       {
         name: "Owner",
         value: `<@${race.owner}>`,
+        inline: true,
+      },
+      {
+        name: "Owner's time",
+        value: dayjs.duration(race?.ownerTime ?? 0).format("m:ss.SSS"),
         inline: true,
       },
     ],

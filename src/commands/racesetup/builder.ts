@@ -10,10 +10,12 @@ export enum Options {
   DOWNLOAD_LINK = "download-link",
   DOWNLOAD_GRACE = "download-grace",
   UPLOAD_GRACE = "upload-grace",
-  PLAY_LIMIT = "play-time",
   ICON = "icon",
   OWNER = "owner",
   OWNERS_TIME = "owners-time",
+  // Score race specific
+  PLAY_LIMIT = "play-time",
+  WARNING_PERIOD = "warning-period",
 }
 
 export enum OptionRaceType {
@@ -148,6 +150,12 @@ export const racesetupBuilder = new SlashCommandBuilder()
         option
           .setName(Options.PLAY_LIMIT)
           .setDescription("Time limit for achieving the best score [minutes]")
+          .setRequired(true),
+      )
+      .addNumberOption(option =>
+        option
+          .setName(Options.WARNING_PERIOD)
+          .setDescription("Time to warn player before end of the run [minutes]")
           .setRequired(true),
       );
     return getCommonOptionalOptionsRaceSetup(subcommandWithTypeSpecificOptions);

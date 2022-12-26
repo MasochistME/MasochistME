@@ -1,10 +1,21 @@
-import { Race, RacePlayer, RaceType } from "@masochistme/sdk/dist/v1/types";
-import { getErrorEmbed, log } from "arcybot";
+import {
+  Race,
+  RacePlayer,
+  RacePlayerScore,
+  RaceScoreBased,
+  RaceType,
+} from "@masochistme/sdk/dist/v1/types";
+import { getErrorEmbed, getInfoEmbed, log } from "arcybot";
 import dayjs from "dayjs";
 
 import { RACE_TIMEOUT, RACE_RESULTS_TIMEOUT } from "consts";
-import { getDateFromDelay, getModChannel, getTimestampFromDate } from "utils";
-import { sdk } from "fetus";
+import {
+  getDateFromDelay,
+  getDMChannel,
+  getModChannel,
+  getTimestampFromDate,
+} from "utils";
+import { bot, sdk } from "fetus";
 
 import { RaceData } from "commands/racesetup/logic";
 import { raceReadyToGo } from "commands/racesetup/interactions/playerActions";
@@ -19,6 +30,7 @@ export const handleRaceTimer = async () => {
     allRaces.forEach(async (race: Race) => {
       await handleRaceStart(race);
       await handleRaceFinish(race);
+      if (race.type === RaceType.SCORE_BASED) await handleScoreRace(race);
     });
   } catch (err: any) {
     log.WARN(err);
@@ -101,6 +113,139 @@ const handleRaceFinish = async (race: Race) => {
 };
 
 /**
+ * Handle participants playing a score based race.
+ * @param race RaceScoreBased
+ */
+const handleScoreRace = async (race: RaceScoreBased) => {
+  const raceId = String(race._id);
+  const raceParticipants = (await sdk.getRaceParticipantsList({
+    raceId,
+  })) as RacePlayerScore[];
+  await handleScoreRaceWarn(
+    race,
+    raceParticipants.filter(p => !p.isWarned),
+  );
+  await handleScoreRaceDNF(
+    race,
+    raceParticipants.filter(p => p.isWarned),
+  );
+};
+
+/**
+ * Warn race players which are still playing.
+ * @param race RaceScoreBased
+ * @param raceParticipants RacePlayerScore[]
+ */
+const handleScoreRaceWarn = async (
+  race: RaceScoreBased,
+  raceParticipants: RacePlayerScore[],
+) => {
+  try {
+    const { playLimit, warningPeriod, _id } = race;
+    const raceId = String(_id);
+
+    raceParticipants.forEach(async participant => {
+      const participantPlayTime =
+        getTimestampFromDate(new Date()) -
+        getTimestampFromDate(participant.startDate);
+      const shouldPlayerBeWarned =
+        !participant.endDate &&
+        playLimit * 60 * 1000 - participantPlayTime <= playLimit * 60 * 1000;
+      if (shouldPlayerBeWarned) {
+        getDMChannel(participant.discordId)
+          ?.send(
+            getInfoEmbed(
+              "Your race attempt ends soon",
+              `You have ${warningPeriod} minutes left before the end of your run.
+              \n**You need to physically click the END button before the race timer runs out.** If you forget to do this, you'll get DNF.`,
+            ),
+          )
+          .catch(() => {
+            throw `Could not send DM to <@${participant.discordId}> about their race attempt ending.`;
+          });
+        const { acknowledged } = await sdk.updateRaceByParticipantId({
+          raceId,
+          memberId: participant.discordId,
+          update: { isWarned: true } as Partial<
+            Omit<RacePlayerScore, "_id" | "type">
+          >,
+        });
+        if (!acknowledged)
+          throw `Participant <@${participant.discordId}> has been warned but I could not update them in the database.`;
+      }
+    });
+  } catch (err: any) {
+    getModChannel(true)?.send(
+      getErrorEmbed("ERROR - WARNING PARTICIPANT...", err),
+    );
+  }
+};
+
+/**
+ * Disqualify race players which forgot to click END button.
+ * @param race RaceScoreBased
+ * @param raceParticipants RacePlayerScore[]
+ */
+const handleScoreRaceDNF = async (
+  race: RaceScoreBased,
+  raceParticipants: RacePlayerScore[],
+) => {
+  try {
+    const { playLimit, _id } = race;
+    const raceId = String(_id);
+    const botId = bot.botClient.user?.id;
+
+    raceParticipants.forEach(async participant => {
+      const participantPlayTime =
+        getTimestampFromDate(new Date()) -
+        getTimestampFromDate(participant.startDate);
+      const shouldPlayerBeDisqualified =
+        !participant.endDate && participantPlayTime > playLimit * 60 * 1000;
+      if (shouldPlayerBeDisqualified) {
+        getDMChannel(participant.discordId)
+          ?.send(
+            getErrorEmbed(
+              "Your timer ran out",
+              `The time of your run has ended and you didn't physically click the END button, therefore you got disqualified.`,
+            ),
+          )
+          .catch(() => {
+            throw `Could not send DM to <@${participant.discordId}> about being disqualified due to time running out.`;
+          });
+        const update = {
+          dnf: true,
+          disqualified: true,
+          disqualifiedBy: botId,
+          disqualificationReason: "Timer run out",
+        } as Partial<Omit<RacePlayerScore, "_id" | "type">>;
+        const { acknowledged } = await sdk.updateRaceByParticipantId({
+          raceId,
+          memberId: participant.discordId,
+          update,
+        });
+        if (!acknowledged)
+          throw `Participant <@${participant.discordId}> has been warned but I could not update them in the database.`;
+        getModChannel(true)?.send(
+          getErrorEmbed(
+            `Player disqualified`,
+            `Player **<@${
+              participant.discordId
+            }>** got disqualified from race by **<@${botId}>**.
+              \n**Race:** ${race.name}\n**Reason:** _${
+              update.disqualificationReason
+            }_\n**Date:** ${new Date().toLocaleString()}`,
+          ),
+        );
+      }
+    });
+  } catch (err: any) {
+    getModChannel(true)?.send(
+      getErrorEmbed("ERROR - WARNING PARTICIPANT...", err),
+    );
+  }
+};
+
+/**
  * Draft race - after it's set up by moderator but before it's confirmed
  */
 export const draftRace: {
@@ -138,21 +283,11 @@ export const getDraftRace = (): Omit<
  * @return Omit<Race, "_id">
  */
 export const getRace = (raceData: RaceData) => {
+  const { startsIn, endsAfter, ...raceDataRest } = raceData;
   return {
-    name: raceData.name,
-    instructions: raceData.instructions,
-    objectives: raceData.objectives,
-    type: raceData.playLimit ? RaceType.SCORE_BASED : RaceType.TIME_BASED,
-    startDate: getDateFromDelay(raceData.startsIn),
-    endDate: getDateFromDelay(raceData.startsIn + raceData.endsAfter),
-    downloadLink: raceData.downloadLink,
-    downloadGrace: raceData.downloadGrace,
-    uploadGrace: raceData.uploadGrace,
-    owner: raceData.owner,
-    ownerTime: raceData.ownerTime,
-    season: raceData.season,
-    ...(raceData.icon && { icon: raceData.icon }),
-    ...(raceData.playLimit && { playLimit: raceData.playLimit }),
+    ...raceDataRest,
+    startDate: getDateFromDelay(startsIn),
+    endDate: getDateFromDelay(startsIn + endsAfter),
   };
 };
 

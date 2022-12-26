@@ -1,7 +1,7 @@
 import { ButtonInteraction, Message } from "discord.js";
 import dayjs from "dayjs";
-import { getInfoEmbed, getSuccessEmbed } from "arcybot";
-import { Race } from "@masochistme/sdk/dist/v1/types";
+import { getInfoEmbed } from "arcybot";
+import { Race, RaceType } from "@masochistme/sdk/dist/v1/types";
 
 import { sdk } from "fetus";
 import { RaceButton } from "consts";
@@ -95,11 +95,14 @@ const raceUploadProof = async (
   try {
     const raceId = String(race._id);
     const memberId = interaction.user.id;
-    const filter = (msg: Message) => !!msg.attachments.size;
+    const proofFilter = (msg: Message) => !!msg.attachments.size;
     const time = dayjs(race.endDate).diff(new Date());
+    let score = 0;
+
+    // Collect a proof from user.
     const proofCollection = await awaitMessage<ButtonInteraction>(
       interaction,
-      filter,
+      proofFilter,
       time,
     );
     const proof = proofCollection?.attachments?.first()?.proxyURL;
@@ -107,6 +110,25 @@ const raceUploadProof = async (
       throw new Error(
         "I could not collect a proof. Reason unknown. Probably something fucked up.",
       );
+
+    // Collect a score from user.
+    if (race.type === RaceType.SCORE_BASED) {
+      channel.send(
+        getInfoEmbed("Upload your score", `Please post your final score`),
+      );
+      const proofFilter = (msg: Message) => !Number.isNaN(Number(msg.content));
+      const scoreCollection = await awaitMessage<ButtonInteraction>(
+        interaction,
+        proofFilter,
+        time,
+      );
+      score = Number(scoreCollection?.content);
+      if (!score)
+        throw new Error(
+          "I could not collect your score. Reason unknown. Probably something fucked up.",
+        );
+    }
+
     const fixedImage = await saveImage(
       proof,
       `race-${raceId}_player-${memberId}`,
@@ -115,18 +137,18 @@ const raceUploadProof = async (
     const { acknowledged } = await sdk.updateRaceByParticipantId({
       raceId,
       memberId,
-      update: { proof: fixedImage, proofDate: new Date() },
+      update: {
+        proof: fixedImage,
+        proofDate: new Date(),
+        ...(score ? { score } : {}),
+      },
     });
+
     if (!acknowledged)
       throw new Error(
         "Could not save your proof. Reason unknown but probably database died or something.",
       );
-    channel.send(
-      getSuccessEmbed(
-        "You successfully uploaded your proof!",
-        `Link to proof: ${fixedImage}`,
-      ),
-    );
+
     raceShowPlayerFinishResultMods(raceId, memberId);
     raceShowPlayerFinishResultSelf(channel, raceId, memberId);
   } catch (err: any) {

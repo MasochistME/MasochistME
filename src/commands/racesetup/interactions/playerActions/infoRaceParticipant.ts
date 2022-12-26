@@ -12,6 +12,7 @@ import { sdk } from "fetus";
 import { getMemberNameById, getModChannel } from "utils";
 import { getParticipantRaceTime } from "commands/_utils/race";
 import { RACE_DISQUALIFICATION } from "consts";
+import { RaceType } from "@masochistme/sdk/dist/v1/types";
 
 export const raceShowPlayerFinishResultSelf = async (
   channel: TextBasedChannel,
@@ -82,6 +83,15 @@ const getParticipantStatsRaceFinish = async (
         ]
       : []),
     { name: "PROOF", value: raceParticipant.proof ?? "—", inline: false },
+    ...(race.type === RaceType.SCORE_BASED
+      ? [
+          {
+            name: "SCORE",
+            value: String(raceParticipant.score) ?? "—",
+            inline: false,
+          },
+        ]
+      : []),
     {
       name: "Start time",
       value: startDate ? dayjs(startDate).format("DD.MM.YYYY, HH:mm:ss") : "—",
