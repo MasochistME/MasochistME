@@ -3,6 +3,7 @@ import { Theme } from './theme';
 type ColorTokensCommon = {
 	'common-color--black': string;
 	'common-color--white': string;
+	'common-color--red': string;
 	'common-color--shadow': string;
 	'common-color--light': string;
 
@@ -57,6 +58,7 @@ export interface ColorTokens extends ColorTokensCommon {
 const commonColors = {
 	'common-color--black': '#040404',
 	'common-color--white': '#f0f0f0',
+	'common-color--red': '#ff0000',
 	'common-color--shadow': '#141414',
 	'common-color--light': '#e0e0e0',
 

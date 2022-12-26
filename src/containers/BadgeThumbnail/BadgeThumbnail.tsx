@@ -22,10 +22,12 @@ export const BadgeThumbnail = (props: Props) => {
 		onClick,
 	} = props;
 
+	const isNegative = (badge?.points ?? 0) < 0;
 	const badgeComponent = (
 		<StyledBadgeThumbnail
 			size={size}
 			isDisabled={isDisabled}
+			isNegative={isNegative}
 			colorTokens={colorTokens}
 			onClick={onClick}>
 			<img src={badge?.img ?? LOGO_URL} alt="Badge" loading="lazy" />
@@ -53,7 +55,10 @@ const StyledBadgeThumbnail = styled.div.attrs(
 		return { style };
 	},
 )<
-	Pick<Props, 'size' | 'onClick' | 'isDisabled'> & { colorTokens: ColorTokens }
+	Pick<Props, 'size' | 'onClick' | 'isDisabled'> & {
+		isNegative: boolean;
+		colorTokens: ColorTokens;
+	}
 >`
 	display: flex;
 	align-items: center;
@@ -63,10 +68,12 @@ const StyledBadgeThumbnail = styled.div.attrs(
 	/* padding: 2px; */
 	border-radius: ${({ size }) =>
 		size === Size.SMALL || size === Size.TINY ? 4 : 8}px;
-	border: ${({ size, isDisabled, colorTokens }) => {
+	border: ${({ size, isDisabled, isNegative, colorTokens }) => {
 		const borderSize = size === Size.SMALL || size === Size.TINY ? 2 : 3;
 		const borderColor = isDisabled
 			? `${colorTokens['core-primary-text']}66`
+			: isNegative
+			? colorTokens['common-color--red']
 			: colorTokens['core-primary-text'];
 		return `${borderSize}px solid ${borderColor}`;
 	}};

@@ -23,6 +23,8 @@ export const MemberBadges = (props: Props): JSX.Element => {
 			const memberHasBadge = !!memberBadgesData.find(
 				b => b.badgeId === String(badge._id),
 			);
+			const isBadgeNegative = badge.points < 0;
+			if (isBadgeNegative && !memberHasBadge) return null;
 			return (
 				<BadgeThumbnail
 					size={size}
