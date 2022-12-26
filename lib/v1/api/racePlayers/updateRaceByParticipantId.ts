@@ -1,7 +1,12 @@
 import axios, { AxiosResponse } from 'axios';
 import { UpdateResult } from 'mongodb';
 
-import { RacePlayer, ResponseError } from 'v1/types';
+import {
+	RacePlayer,
+	RacePlayerScore,
+	RacePlayerTime,
+	ResponseError,
+} from 'v1/types';
 
 /**
  * Updates a race participant by given ID (if it exists).
@@ -38,7 +43,7 @@ export const updateRaceByParticipantId = async (
 	params: {
 		raceId: string;
 		memberId: string;
-		update: Partial<Omit<RacePlayer, '_id' | 'type'>>;
+		update: Partial<Omit<RacePlayerScore | RacePlayerTime, '_id' | 'type'>>;
 	},
 	/** @ignore */
 	BASE_URL: string,
