@@ -32,6 +32,7 @@ export const updateRaceByParticipantId = async (
       dnf,
       proof,
       disqualified,
+      isWarned,
     } = req.body; // TODO Add Request<RacePlayer> body validation
 
     const response = await collection.updateOne(
@@ -46,6 +47,7 @@ export const updateRaceByParticipantId = async (
           ...(dnf !== undefined && { dnf }),
           ...(disqualified !== undefined && { disqualified }),
           ...(proof && { proof }),
+          ...(isWarned !== undefined && { isWarned }),
         },
       },
     );

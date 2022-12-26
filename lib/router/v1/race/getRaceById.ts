@@ -1,7 +1,7 @@
 import { ObjectId, WithId } from 'mongodb';
 import { Request, Response } from 'express';
 import dayjs from 'dayjs';
-import { Race, RacePlayer } from '@masochistme/sdk/dist/v1/types';
+import { Race, RacePlayer, RaceType } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
 import { getTimestampFromDate } from 'helpers';
@@ -30,9 +30,16 @@ export const getRaceById = async (
 
     const players: WithId<RacePlayer & { score: number }>[] = [];
     await cursorPlayers.forEach((player: RacePlayer) => {
-      const score = getParticipantRaceTime(player, race);
+      const score = getParticipantRaceScore(player, race);
       players.push({ ...player, score });
     });
+
+    const getOwnerScore = () => {
+      if (race.type === RaceType.TIME_BASED)
+        return race?.ownerTime ? race?.ownerTime * 1000 : 0;
+      if (race.type === RaceType.SCORE_BASED) return race?.ownerScore ?? 0;
+      return 0;
+    };
 
     const raceOwner = {
       raceId,
@@ -47,7 +54,7 @@ export const getRaceById = async (
       disqualified: false,
       disqualifiedBy: null,
       disqualificationReason: null,
-      score: race?.ownerTime ? race?.ownerTime * 1000 : 0,
+      score: getOwnerScore(),
     };
 
     // TODO this currently only works for time based races!
@@ -57,7 +64,10 @@ export const getRaceById = async (
       .map(player => {
         return {
           ...player,
-          score: dayjs.duration(player.score).format('m:ss.SSS'),
+          score:
+            race.type === RaceType.TIME_BASED
+              ? dayjs.duration(player.score).format('m:ss.SSS')
+              : player.score ?? 0,
         };
       });
     res.status(200).send({
@@ -77,9 +87,17 @@ export const getRaceById = async (
  * @param race
  * @returns
  */
-const getParticipantRaceTime = (raceParticipant: RacePlayer, race: Race) => {
-  const { revealDate, startDate, endDate, proofDate } = raceParticipant;
-  const { uploadGrace, downloadGrace } = race;
+const getParticipantRaceScore = (raceParticipant: RacePlayer, race: Race) => {
+  const {
+    revealDate,
+    startDate,
+    endDate,
+    proofDate,
+    score = 0,
+  } = raceParticipant;
+  const { uploadGrace, downloadGrace, type } = race;
+
+  if (type === RaceType.SCORE_BASED) return score as number;
 
   const reveal = getTimestampFromDate(revealDate);
   const start = getTimestampFromDate(startDate);
