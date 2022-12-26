@@ -1,6 +1,12 @@
 import axios, { AxiosResponse } from 'axios';
 
-import { RacePlayer, Sort, ResponseError, RacePlayerScore } from 'v1/types';
+import {
+	RacePlayer,
+	Sort,
+	ResponseError,
+	RacePlayerScore,
+	RacePlayerTime,
+} from 'v1/types';
 
 /**
  * Returns a list of all participants from a single race by given ID (if it exists).
@@ -52,7 +58,14 @@ export const getRaceParticipantsList = async (
 
 export type RaceParticipantsListParams = {
 	raceId: string;
-	filter?: Partial<Pick<RacePlayer, 'dnf' | 'disqualified' | 'disqualifiedBy'>>;
+	filter?:
+		| Partial<Pick<RacePlayerTime, 'dnf' | 'disqualified' | 'disqualifiedBy'>>
+		| Partial<
+				Pick<
+					RacePlayerScore,
+					'dnf' | 'disqualified' | 'disqualifiedBy' | 'isWarned'
+				>
+		  >;
 	sort?: {
 		[key in keyof Partial<
 			Pick<RacePlayerScore, 'startDate' | 'endDate' | 'score'>
