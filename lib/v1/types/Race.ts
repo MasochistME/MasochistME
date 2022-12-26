@@ -88,6 +88,10 @@ export interface RaceScoreBased extends Omit<BaseRace, 'type'> {
 	 * Time limit for the user to achieve the highest score [minutes].
 	 */
 	playLimit: number;
+	/**
+	 * How much time before end of a run player is warned that their time is ending [minutes].
+	 */
+	warningPeriod: number;
 }
 
 /**

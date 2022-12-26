@@ -68,6 +68,10 @@ export interface RacePlayerScore extends Omit<BaseRacePlayer, 'type'> {
 	 */
 	type: RaceType.SCORE_BASED;
 	/**
+	 * If participant got warned that their time is ending.
+	 */
+	isWarned: boolean;
+	/**
 	 * Score that participant achieved in the given limit of time.
 	 */
 	score: number | null;
