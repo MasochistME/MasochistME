@@ -27,22 +27,14 @@ import {
   errorWrongDownloadLink,
 } from "./errors";
 
-export type RaceData =
-  | (Omit<
-      RaceScoreBased,
-      "startDate" | "endDate" | "isActive" | "isDone" | "_id"
-    > & {
-      startsIn: number;
-      endsAfter: number;
-      playLimit: number | null;
-    })
-  | (Omit<
-      RaceTimeBased,
-      "startDate" | "endDate" | "isActive" | "isDone" | "_id"
-    > & {
-      startsIn: number;
-      endsAfter: number;
-    });
+export type RaceData<T> = Omit<
+  T,
+  "startDate" | "endDate" | "isActive" | "isDone" | "_id"
+> & {
+  startsIn: number;
+  endsAfter: number;
+};
+
 /**
  * Describe your "racesetup" command here.
  * @param interaction DiscordInteraction
@@ -97,7 +89,7 @@ const racesetupTimeBased = async (
   );
   const season = cachedSeason ? String(cachedSeason?._id) : null;
 
-  const raceData: RaceData = {
+  const raceData: RaceData<RaceTimeBased> = {
     name: interaction.options.getString(Options.NAME, true),
     type: RaceType.TIME_BASED,
     downloadLink: interaction.options.getString(Options.DOWNLOAD_LINK, true),
@@ -108,12 +100,12 @@ const racesetupTimeBased = async (
     endsAfter: interaction.options.getNumber(Options.ENDS_AFTER, true),
     downloadGrace: interaction.options.getNumber(Options.DOWNLOAD_GRACE, true),
     uploadGrace: interaction.options.getNumber(Options.UPLOAD_GRACE, true),
-    // Optional fields
+    ownerTime: interaction.options.getNumber(Options.OWNERS_TIME, false) ?? 0,
+    // Score race specific fields
     icon: interaction.options.getAttachment(Options.ICON)?.proxyURL,
     owner:
       interaction.options.getUser(Options.OWNER, false)?.id ??
       interaction.user.id,
-    ownerTime: interaction.options.getNumber(Options.OWNERS_TIME, false) ?? 0,
   };
 
   if (raceData.downloadGrace < 0 || raceData.uploadGrace < 0) {
@@ -157,7 +149,7 @@ const racesetupScoreBased = async (
     s => s.name === rawSeason || String(s._id) === rawSeason,
   );
   const season = cachedSeason ? String(cachedSeason?._id) : null;
-  const raceData: RaceData = {
+  const raceData: RaceData<RaceScoreBased> = {
     name: interaction.options.getString(Options.NAME, true),
     type: RaceType.SCORE_BASED,
     downloadLink: interaction.options.getString(Options.DOWNLOAD_LINK, true),
@@ -169,14 +161,15 @@ const racesetupScoreBased = async (
     downloadGrace: interaction.options.getNumber(Options.DOWNLOAD_GRACE, true),
     uploadGrace: interaction.options.getNumber(Options.UPLOAD_GRACE, true),
     // Score race specific fields
-    playLimit: interaction.options.getNumber(Options.PLAY_LIMIT, true),
-    warningPeriod: interaction.options.getNumber(Options.WARNING_PERIOD, true),
+    playLimit: interaction.options.getNumber(Options.PLAY_LIMIT, true) * 60,
+    warningPeriod:
+      interaction.options.getNumber(Options.WARNING_PERIOD, true) * 60,
+    ownerScore: interaction.options.getNumber(Options.OWNERS_SCORE, false) ?? 0,
     // Optional fields
     icon: interaction.options.getAttachment(Options.ICON)?.proxyURL,
     owner:
       interaction.options.getUser(Options.OWNER, false)?.id ??
       interaction.user.id,
-    ownerTime: interaction.options.getNumber(Options.OWNERS_TIME, false),
   };
 
   if (
@@ -285,36 +278,47 @@ const getRaceConfirmationEmbed = async (
       value: `${race.uploadGrace} s`,
       inline: true,
     },
-  ];
-
-  if (race.type === RaceType.SCORE_BASED)
-    // optional field
-    fields.push({
-      name: "Play time limit",
-      value: `${(race as RaceScoreBased).playLimit} minutes`,
+    ...(race.type === RaceType.SCORE_BASED
+      ? [
+          {
+            name: "Play time limit",
+            value: `${(race as RaceScoreBased).playLimit / 60} minutes`,
+            inline: true,
+          },
+        ]
+      : []),
+    {
+      name: "Season",
+      value: seasonName,
       inline: true,
-    });
+    },
+    {
+      name: "Owner",
+      value: `<@${race.owner}>`,
+      inline: true,
+    },
+    ...(race.type === RaceType.TIME_BASED
+      ? [
+          {
+            name: "Owner's time",
+            value: dayjs
+              .duration(((race as RaceTimeBased)?.ownerTime ?? 0) * 1000)
+              .format("m:ss.SSS"),
+            inline: true,
+          },
+        ]
+      : [
+          {
+            name: "Owner's score",
+            value: String((race as RaceScoreBased).ownerScore),
+            inline: true,
+          },
+        ]),
+  ];
 
   const embed: APIEmbed = {
     title: `⏳ New race - **${race.name}** - awaiting confirmation...`,
-    fields: [
-      ...fields,
-      {
-        name: "Season",
-        value: seasonName,
-        inline: true,
-      },
-      {
-        name: "Owner",
-        value: `<@${race.owner}>`,
-        inline: true,
-      },
-      {
-        name: "Owner's time",
-        value: dayjs.duration(race?.ownerTime ?? 0).format("m:ss.SSS"),
-        inline: true,
-      },
-    ],
+    fields,
     ...(race.icon && { thumbnail: { url: race.icon } }),
   };
 

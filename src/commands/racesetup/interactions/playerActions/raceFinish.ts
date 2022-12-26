@@ -37,6 +37,8 @@ export const raceFinish = async (
       raceId,
       memberId: interaction.user.id,
     });
+    if (participant.dnf || participant.disqualified)
+      throw "You are already disqualified from this race.";
     const startDate = participant?.startDate;
     const endDate = new Date();
     const { acknowledged } = await sdk.updateRaceByParticipantId({
@@ -45,18 +47,21 @@ export const raceFinish = async (
       update: { endDate },
     });
     if (!acknowledged) throw new Error("Database did not respond.");
-    const tempFields = [
-      {
-        name: "Your start time",
-        value: getUTCDate(startDate),
-        inline: true,
-      },
-      {
-        name: "Your finish time",
-        value: getUTCDate(endDate),
-        inline: true,
-      },
-    ];
+    const tempFields =
+      race.type === RaceType.TIME_BASED
+        ? [
+            {
+              name: "Your start time",
+              value: getUTCDate(startDate),
+              inline: true,
+            },
+            {
+              name: "Your finish time",
+              value: getUTCDate(endDate),
+              inline: true,
+            },
+          ]
+        : [];
     interaction
       .update({
         embeds: [

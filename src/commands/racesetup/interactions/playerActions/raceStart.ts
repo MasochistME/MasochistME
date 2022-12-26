@@ -2,9 +2,15 @@ import { ButtonInteraction } from "discord.js";
 
 import { sdk } from "fetus";
 import { RaceButton } from "consts";
-import { getUTCDate, createError, ErrorAction } from "utils";
+import {
+  getUTCDate,
+  getTimestampFromDate,
+  createError,
+  ErrorAction,
+} from "utils";
 
 import { getRaceStartEmbed, getRaceStartButtons } from "./__common";
+import { RaceType } from "@masochistme/sdk/dist/v1/types";
 
 /**
  * Response to race participant clicking the START button.
@@ -38,11 +44,24 @@ export const raceStart = async (
         value: `When you are done click the **FINISH** button - this will prompt you to upload a proof of finishing the race.
         \nYou'll have ${race.uploadGrace} seconds to upload your screenshot. If you exceed that time it's fine, but the additional time will be added to your final score.`,
       },
-      {
-        name: "Your start time",
-        value: getUTCDate(startDate),
-        inline: true,
-      },
+      ...(race.type === RaceType.SCORE_BASED
+        ? [
+            {
+              name: "Time left",
+              value: `<t:${(
+                (getTimestampFromDate(startDate) + race.playLimit * 1000) /
+                1000
+              ).toFixed(0)}:R>`,
+              inline: true,
+            },
+          ]
+        : [
+            {
+              name: "Your start time",
+              value: getUTCDate(startDate),
+              inline: true,
+            },
+          ]),
     ];
     interaction.update({
       embeds: [

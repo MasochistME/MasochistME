@@ -121,7 +121,7 @@ export const getRaceStartEmbed = (
   if (race.type === RaceType.SCORE_BASED)
     fields.push({
       name: "Play time limit",
-      value: `${(race as RaceScoreBased).playLimit} minutes`,
+      value: `${(race as RaceScoreBased).playLimit / 60} minutes`,
       inline: true,
     });
 

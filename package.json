@@ -33,7 +33,7 @@
     "dist/**/*"
   ],
   "dependencies": {
-    "@masochistme/sdk": "^2.2.10",
+    "@masochistme/sdk": "^2.2.11",
     "arcybot": "^1.4.6",
     "compromise": "^12.2.1",
     "dayjs": "^1.11.5",

@@ -14,6 +14,7 @@ export enum Options {
   OWNER = "owner",
   OWNERS_TIME = "owners-time",
   // Score race specific
+  OWNERS_SCORE = "owners-score",
   PLAY_LIMIT = "play-time",
   WARNING_PERIOD = "warning-period",
 }
@@ -113,13 +114,6 @@ const getCommonOptionalOptionsRaceSetup = (
         .setDescription(
           "Owner of the race (leave empty to set you as an owner)",
         ),
-    )
-    .addNumberOption(option =>
-      option
-        .setName(Options.OWNERS_TIME)
-        .setDescription(
-          "Owner's time in seconds (leave empty if owner does not want to participate)",
-        ),
     );
 };
 
@@ -135,6 +129,13 @@ export const racesetupBuilder = new SlashCommandBuilder()
       .setName(OptionRaceType.TIME_BASED)
       .setDescription(
         "Set up a time based race (winner has the fastest completion time).",
+      )
+      .addNumberOption(option =>
+        option
+          .setName(Options.OWNERS_TIME)
+          .setDescription(
+            "Owner's time in seconds (leave empty if owner does not want to participate)",
+          ),
       );
     return getCommonOptionalOptionsRaceSetup(subcommandWithTypeSpecificOptions);
   })
@@ -157,6 +158,13 @@ export const racesetupBuilder = new SlashCommandBuilder()
           .setName(Options.WARNING_PERIOD)
           .setDescription("Time to warn player before end of the run [minutes]")
           .setRequired(true),
+      )
+      .addNumberOption(option =>
+        option
+          .setName(Options.OWNERS_SCORE)
+          .setDescription(
+            "Owner's score (leave empty if owner does not want to participate)",
+          ),
       );
     return getCommonOptionalOptionsRaceSetup(subcommandWithTypeSpecificOptions);
   });

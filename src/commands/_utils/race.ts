@@ -3,6 +3,7 @@ import {
   RacePlayer,
   RacePlayerScore,
   RaceScoreBased,
+  RaceTimeBased,
   RaceType,
 } from "@masochistme/sdk/dist/v1/types";
 import { getErrorEmbed, getInfoEmbed, log } from "arcybot";
@@ -120,14 +121,15 @@ const handleScoreRace = async (race: RaceScoreBased) => {
   const raceId = String(race._id);
   const raceParticipants = (await sdk.getRaceParticipantsList({
     raceId,
+    filter: { dnf: false },
   })) as RacePlayerScore[];
   await handleScoreRaceWarn(
     race,
-    raceParticipants.filter(p => !p.isWarned),
+    raceParticipants.filter(p => p.startDate && !p.endDate && !p.isWarned),
   );
   await handleScoreRaceDNF(
     race,
-    raceParticipants.filter(p => p.isWarned),
+    raceParticipants.filter(p => p.startDate && !p.endDate && p.isWarned),
   );
 };
 
@@ -149,20 +151,18 @@ const handleScoreRaceWarn = async (
         getTimestampFromDate(new Date()) -
         getTimestampFromDate(participant.startDate);
       const shouldPlayerBeWarned =
-        !participant.endDate &&
-        playLimit * 60 * 1000 - participantPlayTime <= playLimit * 60 * 1000;
+        playLimit * 1000 - participantPlayTime <= warningPeriod * 1000;
       if (shouldPlayerBeWarned) {
-        getDMChannel(participant.discordId)
-          ?.send(
-            getInfoEmbed(
-              "Your race attempt ends soon",
-              `You have ${warningPeriod} minutes left before the end of your run.
-              \n**You need to physically click the END button before the race timer runs out.** If you forget to do this, you'll get DNF.`,
-            ),
-          )
-          .catch(() => {
-            throw `Could not send DM to <@${participant.discordId}> about their race attempt ending.`;
-          });
+        await getDMChannel(participant.discordId)?.send(
+          getInfoEmbed(
+            "Your race attempt ends soon",
+            `You have ${
+              warningPeriod / 60
+            } minutes left before the end of your run.
+              \n**You need to physically click the END button before the race timer runs out.** If you forget to do this, you'll get DNF.
+              \n[DEBUG] Timestamp: \`\`${getTimestampFromDate(new Date())}\`\``,
+          ),
+        );
         const { acknowledged } = await sdk.updateRaceByParticipantId({
           raceId,
           memberId: participant.discordId,
@@ -199,19 +199,15 @@ const handleScoreRaceDNF = async (
       const participantPlayTime =
         getTimestampFromDate(new Date()) -
         getTimestampFromDate(participant.startDate);
-      const shouldPlayerBeDisqualified =
-        !participant.endDate && participantPlayTime > playLimit * 60 * 1000;
+      const shouldPlayerBeDisqualified = participantPlayTime > playLimit * 1000;
       if (shouldPlayerBeDisqualified) {
-        getDMChannel(participant.discordId)
-          ?.send(
-            getErrorEmbed(
-              "Your timer ran out",
-              `The time of your run has ended and you didn't physically click the END button, therefore you got disqualified.`,
-            ),
-          )
-          .catch(() => {
-            throw `Could not send DM to <@${participant.discordId}> about being disqualified due to time running out.`;
-          });
+        await getDMChannel(participant.discordId)?.send(
+          getErrorEmbed(
+            "Your timer ran out",
+            `The time of your run has ended and you didn't physically click the END button, therefore you got disqualified.
+              \n[DEBUG] Timestamp: \`\`${getTimestampFromDate(new Date())}\`\``,
+          ),
+        );
         const update = {
           dnf: true,
           disqualified: true,
@@ -224,7 +220,7 @@ const handleScoreRaceDNF = async (
           update,
         });
         if (!acknowledged)
-          throw `Participant <@${participant.discordId}> has been warned but I could not update them in the database.`;
+          throw `Participant <@${participant.discordId}> could not get disqualified even though they should, pls fix.`;
         getModChannel(true)?.send(
           getErrorEmbed(
             `Player disqualified`,
@@ -282,7 +278,7 @@ export const getDraftRace = (): Omit<
  * @param raceData RaceData
  * @return Omit<Race, "_id">
  */
-export const getRace = (raceData: RaceData) => {
+export const getRace = (raceData: RaceData<RaceScoreBased | RaceTimeBased>) => {
   const { startsIn, endsAfter, ...raceDataRest } = raceData;
   return {
     ...raceDataRest,
