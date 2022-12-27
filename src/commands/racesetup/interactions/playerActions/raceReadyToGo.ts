@@ -165,12 +165,8 @@ const raceParticipantsInformedError = (race: Race, memberId: string) => {
         value: `Participant <@${memberId}> could not get informed about race starting.`,
       },
       {
-        name: "Possible reasons",
-        value: `\n- they blocked DrFetus bot\n- they disabled DMs from MasochistME server members\n- they left the Discord server\n- they might need to update their settings`,
-      },
-      {
-        name: "Possible fixes",
-        value: `\n- \`\`User Settings\`\` > \`\`Text & Messages\`\` > \`\`Show embeds and preview website link pasted into chat\`\` - this option should be **enabled**\n- \`\`User Settings\`\` > \`\`Privacy & Safety\`\` > \`\`Enable message requests from server members you may not know\`\` - this option should be **enabled**`,
+        name: "How to fix it?",
+        value: `Check https://www.notion.so/Races-6fe4971a56194039b85807adf2077262#9edac186e61a4be38bac0e4a046ba39bv - we have a list of possible reasons and fixes there.`,
       },
     ],
   };
