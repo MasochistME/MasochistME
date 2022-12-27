@@ -100,7 +100,8 @@ const raceUploadProof = async (
   try {
     const raceId = String(race._id);
     const memberId = interaction.user.id;
-    const proofFilter = (msg: Message) => !!msg.attachments.size;
+    const proofFilter = (msg: Message) =>
+      msg.author.id === memberId && !!msg.attachments.size;
     const time = dayjs(race.endDate).diff(new Date());
     let score = 0;
 
@@ -119,9 +120,10 @@ const raceUploadProof = async (
     // Collect a score from user.
     if (race.type === RaceType.SCORE_BASED) {
       channel.send(
-        getInfoEmbed("Upload your score", `Please post your final score`),
+        getInfoEmbed("Upload your score", `Please post your final score.`),
       );
-      const proofFilter = (msg: Message) => !Number.isNaN(Number(msg.content));
+      const proofFilter = (msg: Message) =>
+        msg.author.id === memberId && !Number.isNaN(Number(msg.content));
       const scoreCollection = await awaitMessage<ButtonInteraction>(
         interaction,
         proofFilter,
