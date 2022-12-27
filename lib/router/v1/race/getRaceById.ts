@@ -60,7 +60,13 @@ export const getRaceById = async (
     // TODO this currently only works for time based races!
     const sortedPlayers = [...players, raceOwner]
       .filter(player => !player.dnf && !player.disqualified)
-      .sort((playerA, playerB) => playerA.score - playerB.score)
+      .sort((playerA, playerB) => {
+        // If race is time based, wins person with lowest time;
+        // otherwise person with highest score wins.
+        if (race.type === RaceType.TIME_BASED)
+          return playerA.score - playerB.score;
+        return playerB.score - playerA.score;
+      })
       .map(player => {
         return {
           ...player,
