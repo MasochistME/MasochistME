@@ -4,13 +4,14 @@ import styled from 'styled-components';
 import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
+	isCompact?: boolean;
 	nrOfItems: number;
 	activeIndex: number;
 	setActiveIndex: (activeIndex: number) => void;
 };
 
 export const Pagination = (props: Props) => {
-	const { nrOfItems, activeIndex, setActiveIndex } = props;
+	const { isCompact = false, nrOfItems, activeIndex, setActiveIndex } = props;
 	const { colorTokens } = useTheme();
 
 	const onCarouselPaginationClick = (index: number) => {
@@ -23,6 +24,7 @@ export const Pagination = (props: Props) => {
 				<StyledPaginationItem
 					colorTokens={colorTokens}
 					isActive={index === activeIndex}
+					isCompact={isCompact}
 					onClick={() => onCarouselPaginationClick(index)}
 				/>
 			))}
@@ -30,24 +32,34 @@ export const Pagination = (props: Props) => {
 	);
 };
 
-const WIDTH = 24;
+enum Width {
+	DEFAULT = 24,
+	COMPACT = 18,
+}
 
 const StyledPagination = styled(Flex)`
 	width: 100%;
 	justify-content: center;
 	align-items: center;
 	gap: 8px;
+	flex-wrap: wrap;
 `;
 
 const StyledPaginationItem = styled.div<{
 	colorTokens: ColorTokens;
 	isActive?: boolean;
+	isCompact?: boolean;
 }>`
-	min-width: ${WIDTH}px;
-	min-height: ${WIDTH}px;
-	max-width: ${WIDTH}px;
-	max-height: ${WIDTH}px;
-	border-radius: ${WIDTH}px;
+	min-width: ${({ isCompact }) =>
+		isCompact ? Width.COMPACT : Width.DEFAULT}px;
+	min-height: ${({ isCompact }) =>
+		isCompact ? Width.COMPACT : Width.DEFAULT}px;
+	max-width: ${({ isCompact }) =>
+		isCompact ? Width.COMPACT : Width.DEFAULT}px;
+	max-height: ${({ isCompact }) =>
+		isCompact ? Width.COMPACT : Width.DEFAULT}px;
+	border-radius: ${({ isCompact }) =>
+		isCompact ? Width.COMPACT : Width.DEFAULT}px;
 	margin-bottom: 0;
 	cursor: pointer;
 	background-color: ${({ colorTokens, isActive }) =>

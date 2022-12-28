@@ -1,8 +1,7 @@
 import { useMemo, Suspense } from 'react';
 import styled from 'styled-components';
 
-import { useActiveTab } from 'hooks';
-import { useAppContext, BadgeView } from 'context';
+import { useActiveTab, BadgeView, useToggleView } from 'hooks';
 import { TabDict } from 'configuration/tabs';
 import { Button, FilterBar, Flex, Loader } from 'components';
 import { SubPage, Section, SectionProps } from 'containers';
@@ -12,7 +11,7 @@ import { BadgesTileView } from './BadgesTileView';
 
 const TabBadges = (): JSX.Element => {
 	useActiveTab(TabDict.BADGES);
-	const { badgeListView, setBadgeListView } = useAppContext();
+	const { badgeListView, toggleBadgeView } = useToggleView();
 
 	const badgeViewButtonIcon = useMemo(() => {
 		if (badgeListView === BadgeView.TILE) return 'Table';
@@ -25,11 +24,6 @@ const TabBadges = (): JSX.Element => {
 		else return 'Toggle grid view';
 	}, [badgeListView]);
 
-	const onBadgeViewClick = () => {
-		if (badgeListView === BadgeView.TILE) setBadgeListView(BadgeView.TABLE);
-		if (badgeListView === BadgeView.TABLE) setBadgeListView(BadgeView.TILE);
-	};
-
 	return (
 		<SubPage>
 			<StyledBadges>
@@ -37,7 +31,7 @@ const TabBadges = (): JSX.Element => {
 				<FilterBar>
 					<div />
 					<Button
-						onClick={onBadgeViewClick}
+						onClick={toggleBadgeView}
 						icon={badgeViewButtonIcon}
 						label={badgeViewButtonLabel}
 					/>

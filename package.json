@@ -14,6 +14,7 @@
     "url": "https://github.com/MasochistME/MasochistME/issues"
   },
   "scripts": {
+    "maso:dev": "env HOST=0.0.0.0 react-app-rewired start",
     "maso:start": "react-app-rewired start",
     "maso:build": "react-app-rewired build",
     "lint": "eslint src --ext .ts,.tsx",

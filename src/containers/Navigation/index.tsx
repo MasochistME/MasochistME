@@ -83,6 +83,7 @@ const StyledTabItem = styled.div.attrs((props: NavItemProps) => {
 	padding: 24px 0;
 	border-right: 3px solid ${({ colorTokens }) => colorTokens['core-primary-bg']};
 	height: 100%;
+	max-height: 90px;
 	box-sizing: border-box;
 
 	&:hover {
@@ -92,6 +93,7 @@ const StyledTabItem = styled.div.attrs((props: NavItemProps) => {
 
 	@media (max-width: ${media.tablets}) {
 		padding: 12px 0;
+		max-height: 40px;
 	}
 `;
 
