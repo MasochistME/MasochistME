@@ -6,8 +6,7 @@ import { useFeatured } from 'sdk/featured';
 import { Section, SectionProps } from 'containers';
 import { Flex, Loader, Pagination } from 'components';
 
-import { FeaturedVideo } from './FeaturedVideo';
-import { FeaturedNews } from './FeaturedNews';
+import { FeaturedNews, FeaturedVideo } from 'containers/Featured';
 
 type Props = Omit<SectionProps, 'content' | 'title'> & {
 	activeIndex: number;

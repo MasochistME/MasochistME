@@ -9,6 +9,7 @@ import { useActiveTab } from 'hooks';
 import { TabDict } from 'configuration/tabs';
 import { useTheme, ColorTokens } from 'styles';
 
+import { MemberProfileFeaturedSection } from './MemberProfileFeaturedSection';
 import { MemberProfileBadgesSection } from './MemberProfileBadgesSection';
 import { MemberProfileHeader } from './MemberProfileHeader';
 import { MemberProfileBadges } from './MemberProfileBadges';
@@ -99,7 +100,10 @@ const TabProfile = (): JSX.Element => {
 					)}
 				</StyledProfile>
 			</Flex>
-			<MemberProfileBadgesSection memberId={id} />
+			<MemberProfileSidebar column>
+				<MemberProfileBadgesSection memberId={id} />
+				<MemberProfileFeaturedSection memberId={id} />
+			</MemberProfileSidebar>
 		</SubPage>
 	);
 };
@@ -125,4 +129,10 @@ const StyledMemberProfileTop = styled(Flex)<{
 	}};
 	border-radius: 16px;
 	${({ tierColor }) => `border: 2px solid ${tierColor}`};
+`;
+
+const MemberProfileSidebar = styled(Flex)`
+	width: 100%;
+	max-width: 450px;
+	gap: 8px;
 `;

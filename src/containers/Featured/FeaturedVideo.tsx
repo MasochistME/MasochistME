@@ -1,15 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import dayjs from 'dayjs';
 import { FeaturedVideo as TFeaturedVideo } from '@masochistme/sdk/dist/v1/types';
 
 import { Flex } from 'components';
+import { getYTVideoID } from 'utils';
 import { useGames, useMembers } from 'sdk';
 
-type Props = { featured: TFeaturedVideo };
+type Props = { featured: TFeaturedVideo; isCompact?: boolean };
 
 export const FeaturedVideo = (props: Props) => {
-	const { featured } = props;
+	const { featured, isCompact = false } = props;
 	const { membersData } = useMembers();
 	const { gamesData } = useGames();
 
@@ -27,27 +29,44 @@ export const FeaturedVideo = (props: Props) => {
 
 	return (
 		<StyledFeaturedVideoWrapper column>
-			<h2>
-				{title &&
-					(featured.gameId ? (
-						<Link to={`game/${featured.gameId}`}>{title}</Link>
-					) : featured.gameLink ? (
-						<a href={featured.gameLink} target="_blank">
-							{title}
-						</a>
-					) : (
-						title
-					))}
-				{featured.description ? ` - ${featured.description}` : null}
-				{member && (
-					<>
-						{' '}
-						- by <Link to={`profile/${member.steamId}`}>{member.name}</Link>
-					</>
-				)}
-			</h2>
+			{isCompact && (
+				<>
+					<p style={{ fontStyle: 'italic' }}>{featured?.description}</p>
+					<p style={{ lineHeight: 0, height: 0, opacity: 0 }}>
+						This is a very dirty hack to make this work. If I don't put this
+						line of text here, the section containing the video won't adjust its
+						height to the video. I have no idea how to fix it - it seems to work
+						just fine if we include a multiline text just above the video, but
+						not all videos have a description. Hence, I am putting this hacky
+						text here. If you know how to solve it contact ARCYVILK#6666 on
+						Discord pls
+					</p>
+				</>
+			)}
+			{!isCompact && (
+				<h2>
+					{title &&
+						(featured.gameId ? (
+							<Link to={`game/${featured.gameId}`}>{title}</Link>
+						) : featured.gameLink ? (
+							<a href={featured.gameLink} target="_blank">
+								{title}
+							</a>
+						) : (
+							title
+						))}
+					{featured.description ? ` - ${featured.description}` : null}
+					{member && (
+						<>
+							{' '}
+							- by <Link to={`profile/${member.steamId}`}>{member.name}</Link>
+						</>
+					)}
+				</h2>
+			)}
 			<StyledFeaturedVideo>
 				<iframe
+					className="youtube-player"
 					width="840"
 					height="440"
 					src={fixedLink}
@@ -61,23 +80,10 @@ export const FeaturedVideo = (props: Props) => {
 	);
 };
 
-const getYTVideoID = (link?: string) => {
-	if (!link) return null;
-
-	// // Lookbehind is not supported on Safari :(
-	// const ytLinkRegex = [
-	// 	new RegExp(/(?<=youtu.be\/)(.*)/gim),
-	// 	new RegExp(/(?<=youtube.com\/watch\?v=)(.*)/gim),
-	// ];
-	const ytLinkId = link
-		.replace(/(.*youtube\.com\/watch\?v=.*?)/, '')
-		.replace(/(.*youtu.be\/.*?)/, '');
-	return ytLinkId;
-};
-
 const StyledFeaturedVideoWrapper = styled(Flex)`
 	gap: 8px;
-	height: calc(440px+200px);
+	height: auto;
+	p,
 	h2 {
 		margin: 0;
 	}
