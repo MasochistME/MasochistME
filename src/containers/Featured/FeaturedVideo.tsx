@@ -46,7 +46,7 @@ export const FeaturedVideo = (props: Props) => {
 			<h3>
 				<Flex justifyContent="space-between">
 					{!hideOwner && member ? (
-						<Link to={`profile/${member.steamId}`}>{member.name}</Link>
+						<Link to={`/profile/${member.steamId}`}>{member.name}</Link>
 					) : (
 						<span />
 					)}
@@ -61,7 +61,7 @@ export const FeaturedVideo = (props: Props) => {
 				{!hideGame &&
 					title &&
 					(featured.gameId ? (
-						<Link to={`game/${featured.gameId}`}>{title}</Link>
+						<Link to={`/game/${featured.gameId}`}>{title}</Link>
 					) : featured.gameLink ? (
 						<a href={featured.gameLink} target="_blank">
 							{title}

@@ -39,7 +39,15 @@ export const MemberProfileFeaturedSection = (props: Props): JSX.Element => {
 		if (featured.type === FeaturedType.NEWS)
 			return <FeaturedNews featured={featured} isCompact />;
 		if (featured.type === FeaturedType.VIDEO)
-			return <FeaturedVideo featured={featured} isCompact hideOwner hideDate />;
+			return (
+				<FeaturedVideo
+					featured={featured}
+					isCompact
+					hideOwner
+					hideDate
+					hideGame
+				/>
+			);
 	}, [featuredData, isFetched, isError, activeIndex]);
 
 	if (!featuredData.length) return <span />;
