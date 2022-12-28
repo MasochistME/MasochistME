@@ -1,20 +1,29 @@
 import { useMemo } from 'react';
 import styled from 'styled-components';
-import { FeaturedType } from '@masochistme/sdk/dist/v1/types';
+import { Featured, FeaturedType } from '@masochistme/sdk/dist/v1/types';
 
-import { useFeatured } from 'sdk/featured';
 import { Section, SectionProps } from 'containers';
 import { Flex, Loader, Pagination } from 'components';
 
 import { FeaturedNews, FeaturedVideo } from 'containers/Featured';
 
 type Props = Omit<SectionProps, 'content' | 'title'> & {
+	featuredData: Featured[];
+	isLoading: boolean;
+	isFetched: boolean;
+	isError: boolean;
 	activeIndex: number;
 	setActiveIndex: (activeIndex: number) => void;
 };
 export const DashboardTileFeatured = (props: Props): JSX.Element => {
-	const { activeIndex, setActiveIndex } = props;
-	const { featuredData, isLoading, isFetched, isError } = useFeatured();
+	const {
+		featuredData,
+		isLoading,
+		isFetched,
+		isError,
+		activeIndex,
+		setActiveIndex,
+	} = props;
 
 	const featuredContent = useMemo(() => {
 		const featured = featuredData?.[activeIndex];
