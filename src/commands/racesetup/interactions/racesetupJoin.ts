@@ -135,13 +135,8 @@ export const racesetupJoin = async (
               value: `You joined the race but Dr Fetus bot could not send you a confirmation DM. That's an issue since you won't be able to get race details when it starts.`,
             },
             {
-              name: "Possible reasons",
-              value: `- you blocked DrFetus bot\n- you disabled DMs from MasochistME server members\n- you might need to update your settings\n- you're not in this server... yeah maybe not this one`,
-            },
-            {
-              name: "Possible fixes",
-              value: `- \`\`User Settings\`\` > \`\`Text & Messages\`\` > \`\`Show embeds and preview website link pasted into chat\`\` - this option should be **enabled**\n- \`\`User Settings\`\` > \`\`Privacy & Safety\`\` > \`\`Enable message requests from server members you may not know\`\` - this option should be **enabled**
-              \nIf after doing those things it still doesn't work, complain to mods or Arcyvilk.`,
+              name: "How to fix it?",
+              value: `Check https://www.notion.so/Races-6fe4971a56194039b85807adf2077262#9edac186e61a4be38bac0e4a046ba39bv - we have a list of possible reasons and fixes there.`,
             },
           ],
         };

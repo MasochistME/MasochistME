@@ -26,7 +26,7 @@ export const vid = async (interaction: DiscordInteraction): Promise<void> => {
     interaction.options.getString(Options.GAME_LINK, false) ?? null;
   const description =
     interaction.options.getString(Options.DESCRIPTION, false) ?? null;
-  const game = interaction.options.getString(Options.GAME, false);
+  const game = interaction.options.getString(Options.GAME, true);
   const channelVid = getOption<string>(Room.VID);
 
   if (!isLink(videoLink)) {

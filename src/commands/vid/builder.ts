@@ -20,7 +20,7 @@ export const vidBuilder = new SlashCommandBuilder()
       .setName(Options.GAME)
       .setDescription("Game featured in the video")
       .setAutocomplete(true)
-      .setRequired(false),
+      .setRequired(true),
   )
   .addStringOption(option =>
     option
