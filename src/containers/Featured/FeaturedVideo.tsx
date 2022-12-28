@@ -8,10 +8,24 @@ import { Flex } from 'components';
 import { getYTVideoID } from 'utils';
 import { useGames, useMembers } from 'sdk';
 
-type Props = { featured: TFeaturedVideo; isCompact?: boolean };
+type Props = {
+	featured: TFeaturedVideo;
+	isCompact?: boolean;
+	hideGame?: boolean;
+	hideDescription?: boolean;
+	hideOwner?: boolean;
+	hideDate?: boolean;
+};
 
 export const FeaturedVideo = (props: Props) => {
-	const { featured, isCompact = false } = props;
+	const {
+		featured,
+		isCompact = false,
+		hideGame = false,
+		hideDescription = false,
+		hideOwner = false,
+		hideDate = false,
+	} = props;
 	const { membersData } = useMembers();
 	const { gamesData } = useGames();
 
@@ -29,40 +43,47 @@ export const FeaturedVideo = (props: Props) => {
 
 	return (
 		<StyledFeaturedVideoWrapper column>
-			{isCompact && (
-				<>
-					<p style={{ fontStyle: 'italic' }}>{featured?.description}</p>
-					<p style={{ lineHeight: 0, height: 0, opacity: 0 }}>
-						This is a very dirty hack to make this work. If I don't put this
-						line of text here, the section containing the video won't adjust its
-						height to the video. I have no idea how to fix it - it seems to work
-						just fine if we include a multiline text just above the video, but
-						not all videos have a description. Hence, I am putting this hacky
-						text here. If you know how to solve it contact ARCYVILK#6666 on
-						Discord pls
-					</p>
-				</>
-			)}
-			{!isCompact && (
-				<h2>
-					{title &&
-						(featured.gameId ? (
-							<Link to={`game/${featured.gameId}`}>{title}</Link>
-						) : featured.gameLink ? (
-							<a href={featured.gameLink} target="_blank">
-								{title}
-							</a>
-						) : (
-							title
-						))}
-					{featured.description ? ` - ${featured.description}` : null}
-					{member && (
-						<>
-							{' '}
-							- by <Link to={`profile/${member.steamId}`}>{member.name}</Link>
-						</>
+			<h3>
+				<Flex justifyContent="space-between">
+					{!hideOwner && member ? (
+						<Link to={`profile/${member.steamId}`}>{member.name}</Link>
+					) : (
+						<span />
 					)}
-				</h2>
+					{!hideDate && (
+						<p style={{ fontStyle: 'italic' }}>
+							{dayjs(featured?.date).format('DD MMMM, YYYY')}
+						</p>
+					)}
+				</Flex>
+			</h3>
+			<Flex gap={4}>
+				{!hideGame &&
+					title &&
+					(featured.gameId ? (
+						<Link to={`game/${featured.gameId}`}>{title}</Link>
+					) : featured.gameLink ? (
+						<a href={featured.gameLink} target="_blank">
+							{title}
+						</a>
+					) : !hideGame ? (
+						title
+					) : null)}
+				{!hideDescription && (
+					<p style={{ fontStyle: 'italic', textAlign: 'left' }}>
+						{featured.description ? `● ${featured.description}` : null}
+					</p>
+				)}
+			</Flex>
+			{isCompact && (
+				<p style={{ lineHeight: 0, height: 0, opacity: 0 }}>
+					This is a very dirty hack to make this work. If I don't put this line
+					of text here, the section containing the video won't adjust its height
+					to the video. I have no idea how to fix it - it seems to work just
+					fine if we include a multiline text just above the video, but not all
+					videos have a description. Hence, I am putting this hacky text here.
+					If you know how to solve it contact ARCYVILK#6666 on Discord pls
+				</p>
 			)}
 			<StyledFeaturedVideo>
 				<iframe
@@ -84,7 +105,7 @@ const StyledFeaturedVideoWrapper = styled(Flex)`
 	gap: 8px;
 	height: auto;
 	p,
-	h2 {
+	h3 {
 		margin: 0;
 	}
 `;

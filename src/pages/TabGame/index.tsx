@@ -10,20 +10,22 @@ import { useActiveTab } from 'hooks';
 import { TabDict } from 'configuration/tabs';
 
 import { GameProfileHeader } from './GameProfileHeader';
-import { GameProfileGraphs } from './GameProfileGraphs';
-import { GameProfileBadges } from './GameProfileBadges';
 import { GameProfileLeaderboards } from './GameProfileLeaderboards';
+import { GameProfileFeatured } from './GameProfileFeatured';
+// import { GameProfileGraphs } from './GameProfileGraphs';
+// import { GameProfileBadges } from './GameProfileBadges';
 import { GameProfileStats } from './GameProfileStats';
 
 enum TabsMap {
+	LEADERBOARDS = 'leaderboards',
+	FEATURED = 'featured',
 	GRAPHS = 'graphs',
 	BADGES = 'badges',
-	MEMBERS = 'members',
 }
 
 const TabGame = (): JSX.Element => {
 	useActiveTab(TabDict.GAME);
-	const [activeTab, setActiveTab] = useState<string>(TabsMap.MEMBERS);
+	const [activeTab, setActiveTab] = useState<string>(TabsMap.LEADERBOARDS);
 	const { id } = useParams<{ id: string }>();
 	const gameId = Number(id);
 
@@ -62,19 +64,24 @@ const TabGame = (): JSX.Element => {
 					{!isGamesLoading && isGamesFetched && (
 						<>
 							<Tabs value={activeTab} onChange={handleChangeTab}>
-								<Tab label="Leaderboards" value={TabsMap.MEMBERS} />
+								<Tab label="Leaderboards" value={TabsMap.LEADERBOARDS} />
+								<Tab label="Featured content" value={TabsMap.FEATURED} />
 								{/* <Tab label="Badges" value={TabsMap.BADGES} /> */}
 								{/* <Tab label="Graphs" value={TabsMap.GRAPHS} /> */}
 							</Tabs>
-							<TabPanel activeTab={activeTab} tabId={TabsMap.MEMBERS}>
+							<TabPanel activeTab={activeTab} tabId={TabsMap.LEADERBOARDS}>
 								<GameProfileLeaderboards gameId={gameId} />
 							</TabPanel>
-							<TabPanel activeTab={activeTab} tabId={TabsMap.BADGES}>
-								<GameProfileBadges gameId={gameId} />
+							<TabPanel activeTab={activeTab} tabId={TabsMap.FEATURED}>
+								<GameProfileFeatured gameId={gameId} />
 							</TabPanel>
+							{/* 
 							<TabPanel activeTab={activeTab} tabId={TabsMap.GRAPHS}>
 								<GameProfileGraphs gameId={gameId} title={game.title} />
 							</TabPanel>
+							<TabPanel activeTab={activeTab} tabId={TabsMap.BADGES}>
+								<GameProfileBadges gameId={gameId} />
+							</TabPanel> */}
 						</>
 					)}
 				</StyledGameStats>
