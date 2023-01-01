@@ -164,10 +164,12 @@ export const getGameTotalPoints = (
 	leaderboardsData: GameLeaderboards[],
 	tiersData: Tier[],
 ) => {
+	const hasAchievements = game.achievementsTotal !== 0;
 	const ptsBadges =
 		leaderboardsData.find(l => l.gameId === game?.id)?.badges?.points ?? 0;
-	const ptsTiers =
-		tiersData.find((tier: Tier) => tier.id === game.tier)?.score ?? 0;
+	const ptsTiers = hasAchievements
+		? tiersData.find((tier: Tier) => tier.id === game.tier)?.score ?? 0
+		: 0;
 	const gameTotalPoints = ptsBadges + ptsTiers;
 
 	return gameTotalPoints;
