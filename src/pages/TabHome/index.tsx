@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { media } from 'styles';
+import { useFeatured } from 'sdk/featured';
+import { chooseRandomIndex } from 'utils';
 import { useActiveTab } from 'hooks';
 import { TabDict } from 'configuration/tabs';
 import { Flex } from 'components';
 import { SubPage, DashboardTile } from 'containers';
+import { Featured } from '@masochistme/sdk/dist/v1/types';
 
 export enum SectionMap {
 	WELCOME = 'welcome',
@@ -22,7 +25,13 @@ export enum SectionMap {
 const TabHome = (): JSX.Element => {
 	useActiveTab(TabDict.HOME);
 
+	const { featuredData, isLoading, isFetched, isError } = useFeatured();
 	const [activeFeaturedIndex, setActiveFeaturedIndex] = useState<number>(0);
+
+	useEffect(() => {
+		if (isFetched)
+			setActiveFeaturedIndex(chooseRandomIndex<Featured>(featuredData));
+	}, [featuredData, isFetched]);
 
 	return (
 		<SubPage>
@@ -30,6 +39,10 @@ const TabHome = (): JSX.Element => {
 				<DashboardTile.Featured
 					fullWidth
 					isMobileOnly
+					featuredData={featuredData}
+					isLoading={isLoading}
+					isFetched={isFetched}
+					isError={isError}
 					activeIndex={activeFeaturedIndex}
 					setActiveIndex={setActiveFeaturedIndex}
 				/>
@@ -46,6 +59,10 @@ const TabHome = (): JSX.Element => {
 						<DashboardTile.Featured
 							fullWidth
 							isDesktopOnly
+							featuredData={featuredData}
+							isLoading={isLoading}
+							isFetched={isFetched}
+							isError={isError}
 							activeIndex={activeFeaturedIndex}
 							setActiveIndex={setActiveFeaturedIndex}
 						/>

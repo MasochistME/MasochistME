@@ -1,9 +1,22 @@
 import styled from 'styled-components';
 
+import { useScrollToLocation } from 'hooks';
 import { media } from 'styles';
 import { Flex } from 'components';
 
-export const SubPage = styled(Flex)`
+type Props = {
+	children: React.ReactNode;
+};
+
+export const SubPage = (props: Props) => {
+	const { children } = props;
+
+	useScrollToLocation();
+
+	return <StyledSubPage>{children}</StyledSubPage>;
+};
+
+const StyledSubPage = styled(Flex)`
 	flex: 1 1 auto;
 	flex-direction: row;
 	align-items: flex-start;

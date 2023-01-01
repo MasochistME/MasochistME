@@ -44,6 +44,7 @@ export interface ColorTokens extends ColorTokensCommon {
 	'semantic-color--link-normal': string;
 	'semantic-color--link-hover': string;
 	'semantic-color--link-visited': string;
+	'semantic-color--link-muted': string;
 	'semantic-color--section-update--bg': string; // Color of the "Last updated" section in Subheader.
 	'semantic-color--section-update--text': string; // Color of the "Last updated" section in Subheader.
 
@@ -101,6 +102,7 @@ export const colors: Record<Theme, ColorTokens> = {
 		'semantic-color--link-normal': '#f0f0f0',
 		'semantic-color--link-hover': 'd0d0d0',
 		'semantic-color--link-visited': 'c0c0c0',
+		'semantic-color--link-muted': 'afafaf',
 		'semantic-color--section-update--bg': '#040404',
 		'semantic-color--section-update--text': '#f0f0f0',
 
@@ -139,6 +141,7 @@ export const colors: Record<Theme, ColorTokens> = {
 		'semantic-color--link-normal': '#f0f0f0',
 		'semantic-color--link-hover': 'd0d0d0',
 		'semantic-color--link-visited': 'c0c0c0',
+		'semantic-color--link-muted': 'afafaf',
 		'semantic-color--section-update--bg': '#c91745',
 		'semantic-color--section-update--text': '#f0f0f0',
 
@@ -177,6 +180,7 @@ export const colors: Record<Theme, ColorTokens> = {
 		'semantic-color--link-normal': '#f0f0f0',
 		'semantic-color--link-hover': 'd0d0d0',
 		'semantic-color--link-visited': 'c0c0c0',
+		'semantic-color--link-muted': 'afafaf',
 		'semantic-color--section-update--bg': '#040404',
 		'semantic-color--section-update--text': '#f0f0f0',
 

@@ -13,14 +13,7 @@ type Props = CommonProps & {
 
 export const BadgeThumbnail = (props: Props) => {
 	const { colorTokens, LOGO_URL } = useTheme();
-	const {
-		badge,
-		isDisabled,
-		size = Size.MEDIUM,
-		title,
-		isLoading,
-		onClick,
-	} = props;
+	const { badge, isDisabled, size = Size.MEDIUM, title, onClick } = props;
 
 	const isNegative = (badge?.points ?? 0) < 0;
 	const badgeComponent = (

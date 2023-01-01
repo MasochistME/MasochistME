@@ -1,6 +1,9 @@
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 
+import { sha256 } from 'utils';
 import { fonts, media, useTheme, ColorTokens } from 'styles';
+import { Button } from 'components';
 
 export type SectionProps = {
 	isMobileOnly?: boolean;
@@ -8,6 +11,7 @@ export type SectionProps = {
 	fullWidth?: boolean;
 	title?: React.ReactNode;
 	isCentered?: boolean;
+	anchorId?: string;
 	content: React.ReactNode;
 	width?: string;
 	height?: string;
@@ -15,6 +19,7 @@ export type SectionProps = {
 
 export const Section = (props: SectionProps) => {
 	const { colorTokens } = useTheme();
+	const history = useHistory();
 	const {
 		isMobileOnly = false,
 		isDesktopOnly = false,
@@ -22,8 +27,17 @@ export const Section = (props: SectionProps) => {
 		title,
 		content,
 		isCentered = true,
+		anchorId,
 		...style
 	} = props;
+
+	const sanitizedAnchorId = anchorId?.replace(/[^a-zA-Z0-9]/gm, '');
+
+	const jumpToAnchor = (e: any) => {
+		e.preventDefault();
+		e.stopPropagation();
+		history.push(`#${sanitizedAnchorId}`);
+	};
 
 	return (
 		<StyledSection
@@ -33,8 +47,12 @@ export const Section = (props: SectionProps) => {
 			colorTokens={colorTokens}
 			{...style}>
 			{title && (
-				<Section.Title isCentered={isCentered} colorTokens={colorTokens}>
+				<Section.Title
+					isCentered={isCentered}
+					colorTokens={colorTokens}
+					id={sanitizedAnchorId}>
 					{title}
+					{anchorId && <Button icon="Link" onClick={jumpToAnchor} />}
 				</Section.Title>
 			)}
 			<Section.Content>{content}</Section.Content>
@@ -78,9 +96,17 @@ const StyledSection = styled.div.attrs((props: StyledProps) => {
 			display:none;
 		}`;
 	}}
+
+	* {
+		max-width: 100%;
+	}
 `;
 
-Section.Title = styled.h3<{ isCentered: boolean; colorTokens: ColorTokens }>`
+Section.Title = styled.h3<{
+	isCentered: boolean;
+	colorTokens: ColorTokens;
+	id: any;
+}>`
 	display: flex;
 	align-items: center;
 	justify-content: ${({ isCentered }) =>

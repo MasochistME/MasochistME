@@ -10,6 +10,7 @@ export enum TabDict {
 	RACES = 'races',
 	BADGES = 'badges',
 	SUPPORT = 'support',
+	CHANGELOG = 'changelog',
 }
 
 export type Tab = {
@@ -78,6 +79,7 @@ export const tabs: Tab[] = [
 		visible: true,
 		external: false,
 	},
+	// NOT INCLUDED IN THE NAVIGATION BAR
 	{
 		id: TabDict.PROFILE,
 		text: 'profile',
@@ -91,6 +93,14 @@ export const tabs: Tab[] = [
 		text: 'game',
 		icon: 'Puzzle',
 		link: 'game',
+		visible: false,
+		external: false,
+	},
+	{
+		id: TabDict.CHANGELOG,
+		text: 'Changelog',
+		icon: 'Checklist',
+		link: 'changelog',
 		visible: false,
 		external: false,
 	},

@@ -55,16 +55,26 @@ const TabSupportInfo = (props: Partial<SectionProps>): JSX.Element => {
 						<li>Arcyvilk's coffee for the long coding nights.</li>
 					</ul>
 					<div>If you also want to contribute:</div>
-					{/** TODO add ko-fi and Patreon link */}
-					<a
-						href="https://www.patreon.com/pointonepercent"
-						rel="noopener noreferrer"
-						target="_blank">
-						<PatreonButton
-							src="http://cdn.masochist.me/assets/patreon.png"
-							alt="Patreon button"
-						/>
-					</a>
+					<Flex align justify gap={16}>
+						<a
+							href="https://www.patreon.com/pointonepercent"
+							rel="noopener noreferrer"
+							target="_blank">
+							<ButtonSupport
+								src="http://cdn.masochist.me/assets/patreon.png"
+								alt="Patreon button"
+							/>
+						</a>
+						<a
+							href="https://ko-fi.com/arcyvilk"
+							target="_blank"
+							rel="noopener noreferrer">
+							<ButtonSupport
+								src="https://storage.ko-fi.com/cdn/kofi2.png?v=3"
+								alt="Buy Me a Coffee at ko-fi.com"
+							/>
+						</a>
+					</Flex>
 				</Flex>
 			}
 		/>
@@ -76,13 +86,17 @@ export default TabSupport;
 const StyledHallOfFame = styled(Flex)`
 	flex-direction: column;
 	flex: 1 1 100%;
+	flex-wrap: wrap;
 	gap: 16px;
 `;
 
-const PatreonButton = styled.img`
+const ButtonSupport = styled.img`
 	cursor: pointer;
 	box-shadow: 0 0 10px #000;
 	margin: 0;
 	padding: 0;
-	width: 200px;
+	height: 36px;
+	border: 0px;
+	border: 0;
+	border-radius: 8px;
 `;

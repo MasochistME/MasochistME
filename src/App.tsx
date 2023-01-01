@@ -23,6 +23,7 @@ const TabLeaderboards = React.lazy(() => import('./pages/TabLeaderboards'));
 const TabProfile = React.lazy(() => import('./pages/TabProfile'));
 const TabSupport = React.lazy(() => import('./pages/TabSupport'));
 const TabRaces = React.lazy(() => import('./pages/TabRaces'));
+const TabChangelog = React.lazy(() => import('./pages/TabChangelog'));
 
 export const App = (): JSX.Element => {
 	const { colorTokens } = useTheme();
@@ -83,6 +84,11 @@ export const App = (): JSX.Element => {
 							<Route exact path="/game/:id">
 								<Suspense fallback={<Loader />}>
 									<TabGame />
+								</Suspense>
+							</Route>
+							<Route exact path="/changelog">
+								<Suspense fallback={<Loader />}>
+									<TabChangelog />
 								</Suspense>
 							</Route>
 							<Route>

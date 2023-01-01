@@ -20,7 +20,10 @@ export const MemberProfileFeaturedSection = (props: Props): JSX.Element => {
 		isLoading,
 		isFetched,
 		isError,
-	} = useFeaturedFiltered({ sort: { date: 'desc' } });
+	} = useFeaturedFiltered({
+		filter: { isApproved: true, isVisible: true },
+		sort: { date: 'desc' },
+	});
 	const { membersData } = useMembers();
 	const discordId = membersData.find(
 		member => member.steamId === memberId,
@@ -36,9 +39,18 @@ export const MemberProfileFeaturedSection = (props: Props): JSX.Element => {
 		if (featured.type === FeaturedType.NEWS)
 			return <FeaturedNews featured={featured} isCompact />;
 		if (featured.type === FeaturedType.VIDEO)
-			return <FeaturedVideo featured={featured} isCompact />;
+			return (
+				<FeaturedVideo
+					featured={featured}
+					isCompact
+					hideOwner
+					hideDate
+					hideGame
+				/>
+			);
 	}, [featuredData, isFetched, isError, activeIndex]);
 
+	if (!featuredData.length) return <span />;
 	return (
 		<Section
 			fullWidth

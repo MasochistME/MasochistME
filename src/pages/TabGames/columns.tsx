@@ -143,12 +143,15 @@ export const CellAvgPlaytime = (props: Props) => {
 export const CellLatestCompletion = (props: Props) => {
 	const { game } = props;
 	const { leaderboardsData, isLoading, isFetched } = useLeaderboardsGames();
-	const latestGameCompletion = getGameLatestCompletion(game, leaderboardsData);
+	const { latestGameCompletionLocale } = getGameLatestCompletion(
+		game,
+		leaderboardsData,
+	);
 
 	return (
 		<Flex row align justify>
 			{isLoading && <Skeleton size={Size.SMALL} />}
-			{isFetched && latestGameCompletion}
+			{isFetched && latestGameCompletionLocale}
 		</Flex>
 	);
 };
@@ -164,10 +167,12 @@ export const getGameTotalPoints = (
 	leaderboardsData: GameLeaderboards[],
 	tiersData: Tier[],
 ) => {
+	const hasAchievements = game.achievementsTotal !== 0;
 	const ptsBadges =
 		leaderboardsData.find(l => l.gameId === game?.id)?.badges?.points ?? 0;
-	const ptsTiers =
-		tiersData.find((tier: Tier) => tier.id === game.tier)?.score ?? 0;
+	const ptsTiers = hasAchievements
+		? tiersData.find((tier: Tier) => tier.id === game.tier)?.score ?? 0
+		: 0;
 	const gameTotalPoints = ptsBadges + ptsTiers;
 
 	return gameTotalPoints;
@@ -235,5 +240,8 @@ export const getGameLatestCompletion = (
 		return new Date(date).toLocaleDateString();
 	};
 
-	return getLatestGameCompletionLocale(game);
+	return {
+		latestGameCompletion: getLatestGameCompletion(game),
+		latestGameCompletionLocale: getLatestGameCompletionLocale(game),
+	};
 };

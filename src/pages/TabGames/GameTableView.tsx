@@ -126,7 +126,13 @@ export const GameTableView = (): JSX.Element => {
 		{
 			key: Columns.LATEST_COMPLETION,
 			title: Columns.LATEST_COMPLETION,
-			value: (game: Game) => getGameLatestCompletion(game, leaderboardsData),
+			value: (game: Game) => {
+				const { latestGameCompletion } = getGameLatestCompletion(
+					game,
+					leaderboardsData,
+				);
+				return latestGameCompletion;
+			},
 			render: (game: Game) => <CellLatestCompletion game={game} />,
 		},
 		{

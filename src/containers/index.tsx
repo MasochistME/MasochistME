@@ -4,6 +4,7 @@ export * from './BadgeTooltip';
 export * from './ButtonsSocialMedia';
 export * from './Charts';
 export * from './DashboardTile';
+export * from './Featured';
 export * from './Footer';
 export * from './GameLeaderboards';
 export * from './GameThumbnail';
