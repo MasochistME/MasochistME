@@ -40,6 +40,7 @@ export const BadgesTileView = () => {
 					maxWidth="100%"
 					width="350px"
 					key={`game-${game.gameId}-badges`}
+					anchorId={String(game.gameId)}
 					title={
 						<Flex align gap={8}>
 							<Icon icon={tierIcon} />

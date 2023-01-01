@@ -22,6 +22,7 @@ const TabHome = React.lazy(() => import('./pages/TabHome'));
 const TabLeaderboards = React.lazy(() => import('./pages/TabLeaderboards'));
 const TabProfile = React.lazy(() => import('./pages/TabProfile'));
 const TabSupport = React.lazy(() => import('./pages/TabSupport'));
+const TabChangelog = React.lazy(() => import('./pages/TabChangelog'));
 // const TabRaces = React.lazy(() => import('./pages/TabRaces'));
 
 export const App = (): JSX.Element => {
@@ -83,6 +84,11 @@ export const App = (): JSX.Element => {
 							<Route exact path="/game/:id">
 								<Suspense fallback={<Loader />}>
 									<TabGame />
+								</Suspense>
+							</Route>
+							<Route exact path="/changelog">
+								<Suspense fallback={<Loader />}>
+									<TabChangelog />
 								</Suspense>
 							</Route>
 							<Route>

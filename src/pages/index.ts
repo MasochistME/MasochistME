@@ -1,4 +1,5 @@
 export * from './TabBadges';
+export * from './TabChangelog';
 export * from './TabEvents';
 export * from './TabGame';
 export * from './TabGames';

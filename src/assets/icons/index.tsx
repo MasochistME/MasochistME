@@ -19,6 +19,7 @@ import { default as Heart } from './Heart';
 import { default as History } from './History';
 import { default as Home } from './Home';
 import { default as IDCard } from './IDCard';
+import { default as Link } from './Link';
 import { default as Medal } from './Medal';
 import { default as Patreon } from './Patreon';
 import { default as Percent } from './Percent';
@@ -65,6 +66,7 @@ const icons = {
 	Heart,
 	History,
 	Home,
+	Link,
 	IDCard,
 	Medal,
 	Patreon,
