@@ -339,9 +339,9 @@ const getMemberSteamGames = async (memberId: string, curatedGames: Game[]) => {
     })
     .map(game => {
       // this is in hours
-      const playtimeHours = (game?.hours_forever ?? '0')
-        .replace(',', '') // hours_forever is string which inserts comma or dot when in thousands
-        .replace('.', '');
+      // hours_forever is string which inserts comma when in thousands
+      // it also inserts dot when there's a fraction of an hour, but this can stay
+      const playtimeHours = (game?.hours_forever ?? '0').replace(',', '');
       const playTime = !Number.isNaN(Number(playtimeHours))
         ? Number(playtimeHours)
         : 0;
