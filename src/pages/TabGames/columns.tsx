@@ -143,12 +143,15 @@ export const CellAvgPlaytime = (props: Props) => {
 export const CellLatestCompletion = (props: Props) => {
 	const { game } = props;
 	const { leaderboardsData, isLoading, isFetched } = useLeaderboardsGames();
-	const latestGameCompletion = getGameLatestCompletion(game, leaderboardsData);
+	const { latestGameCompletionLocale } = getGameLatestCompletion(
+		game,
+		leaderboardsData,
+	);
 
 	return (
 		<Flex row align justify>
 			{isLoading && <Skeleton size={Size.SMALL} />}
-			{isFetched && latestGameCompletion}
+			{isFetched && latestGameCompletionLocale}
 		</Flex>
 	);
 };
@@ -237,5 +240,8 @@ export const getGameLatestCompletion = (
 		return new Date(date).toLocaleDateString();
 	};
 
-	return getLatestGameCompletionLocale(game);
+	return {
+		latestGameCompletion: getLatestGameCompletion(game),
+		latestGameCompletionLocale: getLatestGameCompletionLocale(game),
+	};
 };
