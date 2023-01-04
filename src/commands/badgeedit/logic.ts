@@ -8,6 +8,7 @@ import {
   saveImage,
 } from "utils";
 import { sdk } from "fetus";
+import { Badge } from "@masochistme/sdk/dist/v1/types";
 
 /**
  * Edits an existing badge.
@@ -39,12 +40,12 @@ export const badgeedit = async (
         )
       : null;
 
-    const newBadge = {
+    const newBadge: Partial<Badge> = {
       ...(name && { name }),
       ...(description && { description }),
       ...(points && { points }),
       ...(requirements && { requirements }),
-      ...(image && fixedImage && { img: fixedImage }),
+      ...(fixedImage && { img: fixedImage }),
     };
 
     const response = await sdk.updateBadgeById({ badgeId, badge: newBadge });

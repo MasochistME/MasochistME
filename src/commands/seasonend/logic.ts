@@ -15,14 +15,14 @@ export const seasonend = async (
   await interaction.deferReply();
   try {
     const seasonId = interaction.options.getString(Options.SEASON_ID, true);
-    const seasonList = await sdk.getSeasonsList({ filter: { inactive: true } });
+    const seasonList = await sdk.getSeasonsList({ filter: { active: true } });
     const specifiedSeason = seasonList.find(
       season => seasonId === String(season._id),
     );
 
     if (!specifiedSeason)
       throw new Error(
-        `Race with the name **${seasonId.toUpperCase()}** does not exist.`,
+        `Race with the ID **${seasonId.toUpperCase()}** does not exist.`,
       );
     if (specifiedSeason?.endDate)
       throw new Error("You cannot finish a season which is already finished.");
