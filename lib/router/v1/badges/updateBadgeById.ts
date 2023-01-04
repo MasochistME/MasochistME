@@ -19,7 +19,8 @@ export const updateBadgeById = async (
     const { db } = mongoInstance.getDb();
     const collection = db.collection<Badge>('badges');
     const _id = new ObjectId(req.params.badgeId);
-    const { name, description, points, requirements, image } = req.body; // TODO Add Request<Badge> body validation
+    const { name, description, points, requirements, img } =
+      req.body as Partial<Badge>; // TODO Add Request<Badge> body validation
 
     const response = await collection.updateOne(
       { _id },
@@ -29,7 +30,7 @@ export const updateBadgeById = async (
           ...(description && { description }),
           ...(points && { points }),
           ...(requirements && { requirements }),
-          ...(image && { img: image }),
+          ...(img && { img }),
         },
       },
     );
