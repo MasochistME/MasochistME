@@ -244,6 +244,15 @@ const getNewRaceCensoredEmbed = async (race: Race): Promise<APIEmbed> => {
       name: "Download link",
       value: cenzor(race.downloadLink),
     },
+    ...(race.type === RaceType.SCORE_BASED
+      ? [
+          {
+            name: "Download grace period",
+            value: `${race.downloadGrace} s`,
+            inline: true,
+          },
+        ]
+      : []),
     {
       name: "Screenshot upload grace period",
       value: `${race.uploadGrace} s`,

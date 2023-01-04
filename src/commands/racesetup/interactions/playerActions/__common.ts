@@ -24,7 +24,7 @@ export const fieldsAfterReveal = [
   {
     name: "---",
     value: `**The grace period has started** - it will get substracted from your final score while you download the game.
-  \nWhen you are ready to start click the **START** button. **Remember to do this or your race will get forfeited!**`,
+  \nWhen you are ready to start click the **START** button. **Remember to do this or the entire grace period will be added to your final time!**`,
   },
 ];
 
