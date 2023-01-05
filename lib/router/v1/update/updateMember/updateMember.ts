@@ -127,6 +127,12 @@ export const updateMember = async (
     if (!newMemberSteamGames)
       newMemberSteamGames = await getMemberSteamGamesFallback(memberId, games);
 
+    if (!newMemberSteamGames.length) {
+      log.INFO(
+        `--> [UPDATE] user ${memberId} --> game list is empty, check if the user does not have private game list...`,
+      );
+    }
+
     /**
      * Get info about member's achievements.
      * Achievements also give us info about game's completion ratio.
@@ -145,12 +151,17 @@ export const updateMember = async (
         const gameStats = newMemberSteamAchievements.find(
           g => g.gameId === game.gameId,
         );
+        const {
+          completionPercentage = 0,
+          achievementsUnlocked = 0,
+          mostRecentAchievementDate = new Date(0),
+        } = gameStats?.game ?? {};
+
         return {
           ...game,
-          completionPercentage: gameStats?.game.completionPercentage ?? 0,
-          achievementsUnlocked: gameStats?.game.achievementsUnlocked ?? 0,
-          mostRecentAchievementDate:
-            gameStats?.game.mostRecentAchievementDate ?? new Date(0),
+          completionPercentage,
+          achievementsUnlocked,
+          mostRecentAchievementDate,
         };
       },
     );
@@ -192,10 +203,13 @@ export const updateMember = async (
           return true;
         }
         if (
-          memberGameOld.achievementsUnlocked !==
+          // we use "lesser than" instead of "not equal", since Steam API sometimes breaks
+          // and returns 0 for all those values.
+          // If we check inequality instead of lesser than, the old values get reset.
+          memberGameOld.achievementsUnlocked <
             memberGame.achievementsUnlocked ||
-          memberGameOld.playTime !== memberGame.playTime ||
-          memberGameOld.mostRecentAchievementDate.getTime() !==
+          memberGameOld.playTime < memberGame.playTime ||
+          memberGameOld.mostRecentAchievementDate.getTime() <
             memberGame.mostRecentAchievementDate.getTime()
         ) {
           // This game is registered in DB and changed - proceed
@@ -325,12 +339,18 @@ const getMemberSteamGames = async (memberId: string, curatedGames: Game[]) => {
    */
   const memberScrappedProfileUrl = `https://steamcommunity.com/profiles/${memberId}/games/?tab=all`;
   const memberScrappedProfileData =
-    (await axios.get(memberScrappedProfileUrl)).data ?? '';
+    (await axios.get(memberScrappedProfileUrl)).data ?? '{}';
   const profileRegex = new RegExp(/(?<=var rgGames = )(.*)(?=[}}])/i);
-  const memberScrappedProfileranslated =
-    profileRegex.exec(memberScrappedProfileData)?.[0] + '}]' ?? '{}';
+  // this can return undefined, if user privated only their game list
+  const memberScrappedProfileMatched = profileRegex.exec(
+    memberScrappedProfileData,
+  )?.[0];
+  const memberScrappedProfileTranslated = memberScrappedProfileMatched
+    ? memberScrappedProfileMatched + '}]'
+    : '[]';
+
   const memberScrappedProfileParsed: MemberSteamGameFallback[] = JSON.parse(
-    memberScrappedProfileranslated,
+    memberScrappedProfileTranslated,
   );
   const memberScrappedProfileFixed = memberScrappedProfileParsed
     .filter(game => {
@@ -416,6 +436,7 @@ const getMemberSteamAchievements = async (
     const getRecurrentAchievementData = async (gameIndex: number) => {
       try {
         const game = memberGames[gameIndex];
+        if (!game) return resolve(memberAchievements);
         log.INFO(`---> [UPDATE] achievements for game ${game.gameId}...`);
         const memberPlayerStatsUrl = `http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v1`;
         const memberPlayerStatsData: MemberSteamPlayerStats =
