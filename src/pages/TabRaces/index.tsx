@@ -27,7 +27,7 @@ const TabRaces = (): JSX.Element => {
 	useActiveTab(TabDict.RACES);
 
 	const [activeTab, setActiveTab] = useState<TabsSeasons>(
-		TabsSeasons.CURRENT_SEASONS,
+		TabsSeasons.PAST_SEASONS, // TODO change to CURRENT_SEASONS
 	);
 
 	const handleChangeTab = (_e: React.SyntheticEvent, newTab: TabsSeasons) => {
@@ -113,4 +113,5 @@ export default TabRaces;
 const StyledSeasonsList = styled(Flex)`
 	flex-direction: column;
 	flex: 1 1 100%;
+	width: 100%;
 `;

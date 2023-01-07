@@ -3,6 +3,7 @@ export * from './useCompletions';
 export * from './useLoadTiers';
 export * from './useLocalStorage';
 export * from './useMemberBadgesFilter';
+export * from './useMemberData';
 export * from './useMemberLeaderboardsPoints';
 export * from './useMemberLeaderboardsSummary';
 export * from './useRacesFromSeason';

@@ -29,6 +29,7 @@ export const TabPastSeasons = (): JSX.Element => {
 };
 
 const StyledPastSeasons = styled(Flex)<{ colorTokens: ColorTokens }>`
+	width: 100%;
 	& > *:not(:last-child) {
 		box-sizing: border-box;
 		margin-bottom: 16px;

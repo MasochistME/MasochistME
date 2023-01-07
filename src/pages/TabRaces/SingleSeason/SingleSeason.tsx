@@ -34,7 +34,7 @@ export const SingleSeason = (props: SingleSeasonProps) => {
 	};
 
 	return (
-		<Flex column gap={16}>
+		<StyledSeasonWrapper column>
 			<StyledSeasonTitle>
 				{isLoading ? <Skeleton width="300px" /> : season.name}
 			</StyledSeasonTitle>
@@ -81,9 +81,14 @@ export const SingleSeason = (props: SingleSeasonProps) => {
 					<SingleSeasonRaces races={races} />
 				</TabPanel>
 			</StyledRacesList>
-		</Flex>
+		</StyledSeasonWrapper>
 	);
 };
+
+const StyledSeasonWrapper = styled(Flex)`
+	gap: 16px;
+	width: 100%;
+`;
 
 const StyledSeasonTitle = styled.h2`
 	display: flex;
@@ -91,6 +96,7 @@ const StyledSeasonTitle = styled.h2`
 	align-items: center;
 	font-size: 24px;
 `;
+
 const StyledRacesList = styled(Flex)`
 	flex-direction: column;
 	flex: 1 1 100%;

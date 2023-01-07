@@ -15,7 +15,7 @@ export const TabCurrentSeason = (): JSX.Element => {
 		<StyledActiveSeasons column colorTokens={colorTokens}>
 			{activeSeasons.map(season => {
 				const seasonRaces = currentSeasonRaces.filter(
-					race => race.season === String(season._id),
+					race => race.season === String(season._id) && !race.isActive,
 				);
 				return (
 					<SingleSeason
@@ -30,6 +30,7 @@ export const TabCurrentSeason = (): JSX.Element => {
 };
 
 const StyledActiveSeasons = styled(Flex)<{ colorTokens: ColorTokens }>`
+	width: 100%;
 	& > *:not(:last-child) {
 		box-sizing: border-box;
 		margin-bottom: 16px;
