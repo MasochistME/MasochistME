@@ -66,6 +66,7 @@ export const getRaceList = async (
         participants: participantsFinished?.length ?? 0,
         dnf: dnf?.length ?? 0,
         winner,
+        list: participantsFinished.map(p => p.discordId),
       };
       return { ...r, summary };
     });
