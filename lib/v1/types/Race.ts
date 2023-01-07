@@ -118,7 +118,13 @@ export type Race = RaceScoreBased | RaceTimeBased;
  * Returns race data with all details about participants and leaderboards.
  */
 export type RaceWithParticipants = Race & {
+	/**
+	 * List of all participants of a specific race.
+	 */
 	participants?: RacePlayer[];
+	/**
+	 * Leaderboards of a specific race (sorted players, removed DNFs)
+	 */
 	leaderboards?: RacePlayer[];
 };
 
@@ -126,10 +132,29 @@ export type RaceWithParticipants = Race & {
  * Returns race data with simple summary about participants.
  */
 export type RaceWithSummary = Race & {
+	/**
+	 * Object storing basic summary of the race.
+	 */
 	summary?: {
+		/**
+		 * Number of people who signed up for a race (clicked a JOIN button).
+		 */
 		signups: number;
+		/**
+		 * Number of people who signed up for a race, played and successfully finished it.
+		 */
 		participants: number;
+		/**
+		 * Number of people who signed up for a race and either never participated, forfeited or got disqualified.
+		 */
 		dnf: number;
+		/**
+		 * Discord ID of a race winner.
+		 */
 		winner: string | null;
+		/**
+		 * Array of Discord IDs of race participants (people who played and successfully finished a race).
+		 */
+		list: string[];
 	};
 };
