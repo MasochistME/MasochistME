@@ -18,7 +18,7 @@ enum Columns {
 	WINNER = 'Winner',
 }
 
-export const ActiveSeasonRaces = (props: Props): JSX.Element => {
+export const SingleSeasonRaces = (props: Props): JSX.Element => {
 	const { races } = props;
 
 	const columns: TableColumn<Race>[] = [

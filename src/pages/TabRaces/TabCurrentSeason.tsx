@@ -4,7 +4,7 @@ import { Flex } from 'components';
 import { useRacesFromActiveSeasons } from 'hooks';
 import { ColorTokens, useTheme } from 'styles';
 
-import { ActiveSeason } from './ActiveSeason';
+import { SingleSeason } from './SingleSeason';
 
 export const TabCurrentSeason = (): JSX.Element => {
 	const { activeSeasons, currentSeasonRaces, isLoading } =
@@ -18,7 +18,7 @@ export const TabCurrentSeason = (): JSX.Element => {
 					race => race.season === String(season._id),
 				);
 				return (
-					<ActiveSeason
+					<SingleSeason
 						season={season}
 						races={seasonRaces}
 						isLoading={isLoading}

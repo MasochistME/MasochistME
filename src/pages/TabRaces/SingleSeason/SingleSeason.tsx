@@ -6,21 +6,21 @@ import { Flex, Skeleton } from 'components';
 import { StatBlock, Tabs, Tab, TabPanel } from 'containers';
 import { getHumanReadableDate } from 'utils';
 
-import { ActiveSeasonRanking } from './ActiveSeasonRanking';
-import { ActiveSeasonRaces } from './ActiveSeasonRaces';
+import { SingleSeasonRanking } from './SingleSeasonRanking';
+import { SingleSeasonRaces } from './SingleSeasonRaces';
 
 enum TabsSeasonDetails {
 	RANKING = 'ranking',
 	RACES = 'races',
 }
 
-type ActiveSeasonProps = {
+type SingleSeasonProps = {
 	season: Season;
 	races: Race[];
 	isLoading: boolean;
 };
 
-export const ActiveSeason = (props: ActiveSeasonProps) => {
+export const SingleSeason = (props: SingleSeasonProps) => {
 	const { season, races, isLoading } = props;
 	const [activeTab, setActiveTab] = useState<TabsSeasonDetails>(
 		TabsSeasonDetails.RACES,
@@ -75,10 +75,10 @@ export const ActiveSeason = (props: ActiveSeasonProps) => {
 					<Tab label="Races" value={TabsSeasonDetails.RACES} />
 				</Tabs>
 				<TabPanel activeTab={activeTab} tabId={TabsSeasonDetails.RANKING}>
-					<ActiveSeasonRanking />
+					<SingleSeasonRanking />
 				</TabPanel>
 				<TabPanel activeTab={activeTab} tabId={TabsSeasonDetails.RACES}>
-					<ActiveSeasonRaces races={races} />
+					<SingleSeasonRaces races={races} />
 				</TabPanel>
 			</StyledRacesList>
 		</Flex>

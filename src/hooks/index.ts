@@ -5,6 +5,6 @@ export * from './useLocalStorage';
 export * from './useMemberBadgesFilter';
 export * from './useMemberLeaderboardsPoints';
 export * from './useMemberLeaderboardsSummary';
-export * from './useRacesFromActiveSeasons';
+export * from './useRacesFromSeason';
 export * from './useScrollToLocation';
 export * from './useToggleView';
