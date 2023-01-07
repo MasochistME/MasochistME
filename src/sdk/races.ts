@@ -27,6 +27,27 @@ export const useRaces = (params?: RaceListParams) => {
  *
  * @returns
  */
+export const useRaceById = (raceId?: string | null) => {
+	const { sdk } = useAppContext();
+
+	const {
+		data: raceData,
+		isLoading,
+		isFetched,
+		isError,
+	} = useQuery(
+		['masochist', 'race', raceId],
+		() => sdk.getRaceById({ raceId: raceId! }),
+		{ enabled: !!raceId },
+	);
+
+	return { raceData, isLoading, isFetched, isError };
+};
+
+/**
+ *
+ * @returns
+ */
 export const useSeasons = (params?: SeasonsListParams) => {
 	const { sdk } = useAppContext();
 

@@ -1,10 +1,21 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Race, RaceWithSummary } from '@masochistme/sdk/dist/v1/types';
+import { useEffect, useState } from 'react';
+import {
+	Race,
+	RaceType,
+	RaceWithSummary,
+} from '@masochistme/sdk/dist/v1/types';
 
-import { DateBlock, Flex, Table, TableCell, TableColumn } from 'components';
+import {
+	DateBlock,
+	Flex,
+	Icon,
+	Table,
+	TableCell,
+	TableColumn,
+} from 'components';
+import { ModalRace, WinnerLink } from 'containers';
 import { getHumanReadableDate } from 'utils';
-import { useMemberData } from 'hooks';
+import styled from 'styled-components';
 
 type Props = {
 	races: Race[];
@@ -22,15 +33,36 @@ enum Columns {
 
 export const SingleSeasonRaces = (props: Props): JSX.Element => {
 	const { races } = props;
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [selectedRaceId, setSelectedRaceId] = useState<string | null>(null);
+
+	const onRaceClick = (raceId: string) => {
+		if (raceId) {
+			setIsModalOpen(!isModalOpen);
+			setSelectedRaceId(raceId);
+		}
+	};
+
+	useEffect(() => {
+		if (!isModalOpen) setSelectedRaceId(null);
+	}, [isModalOpen]);
 
 	const columns: TableColumn<RaceWithSummary>[] = [
 		{
+			key: Columns.TYPE,
+			title: Columns.TYPE,
+			value: (race: RaceWithSummary) => race.type,
+			render: (race: RaceWithSummary) => {
+				const icon = race.type === RaceType.SCORE_BASED ? 'Stopwatch' : 'Gauge';
+				return (
+					<TableCell content={<Icon icon={icon} hoverText={race.type} />} />
+				);
+			},
+		},
+		{
 			key: Columns.DATE,
 			title: Columns.DATE,
-			value: (race: RaceWithSummary) => {
-				const raceStartDate = getHumanReadableDate(race.startDate, false);
-				return raceStartDate;
-			},
+			value: (race: RaceWithSummary) => new Date(race.startDate ?? 0).getTime(),
 			render: (race: RaceWithSummary) => (
 				<TableCell
 					content={<DateBlock date={race.startDate} withHours={false} />}
@@ -42,15 +74,22 @@ export const SingleSeasonRaces = (props: Props): JSX.Element => {
 			key: Columns.RACE_NAME,
 			title: Columns.RACE_NAME,
 			value: (race: RaceWithSummary) => race.name,
-			render: (race: RaceWithSummary) => (
-				<TableCell
-					content={race.name}
-					isNoWrap
-					isCentered={false}
-					textTransform="uppercase"
-					fontWeight={600}
-				/>
-			),
+			render: (race: RaceWithSummary) => {
+				const raceId = String(race._id);
+				return (
+					<TableCell
+						content={
+							<TableCellRaceName onClick={() => onRaceClick(raceId)}>
+								{race.name}
+							</TableCellRaceName>
+						}
+						isNoWrap
+						isCentered={false}
+						textTransform="uppercase"
+						fontWeight={600}
+					/>
+				);
+			},
 		},
 		{
 			key: Columns.SIGN_UPS,
@@ -77,15 +116,9 @@ export const SingleSeasonRaces = (props: Props): JSX.Element => {
 			),
 		},
 		{
-			key: Columns.TYPE,
-			title: Columns.TYPE,
-			value: (race: RaceWithSummary) => race.type,
-			render: (race: RaceWithSummary) => <TableCell content={race.type} />,
-		},
-		{
 			key: Columns.WINNER,
 			title: Columns.WINNER,
-			value: (race: RaceWithSummary) => String(race.summary?.winner ?? null),
+			value: (race: RaceWithSummary) => String(race.summary?.winner),
 			render: (race: RaceWithSummary) => (
 				<TableCell content={<WinnerLink discordId={race.summary?.winner} />} />
 			),
@@ -94,21 +127,18 @@ export const SingleSeasonRaces = (props: Props): JSX.Element => {
 
 	return (
 		<Flex column width="100%">
-			<Table columns={columns} dataset={races} />
+			<Table columns={columns} dataset={races} rowsPerPage={10} />
+			<ModalRace
+				raceId={selectedRaceId}
+				isModalOpen={isModalOpen}
+				setIsModalOpen={setIsModalOpen}
+			/>
 		</Flex>
 	);
 };
 
-const WinnerLink = ({ discordId }: { discordId?: string | null }) => {
-	const { getMemberUsername, getMemberSteamId } = useMemberData(discordId);
-	const steamId = getMemberSteamId();
-	const username = getMemberUsername();
-
-	if (!username) return <h4>—</h4>;
-	if (username && !steamId) return <h4>{username}</h4>;
-	return (
-		<Link to={`/profile/${steamId}`}>
-			<h4>{username}</h4>
-		</Link>
-	);
-};
+const TableCellRaceName = styled(Flex)`
+	&:hover {
+		color: white;
+	}
+`;

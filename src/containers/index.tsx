@@ -17,6 +17,7 @@ export * from './MemberAvatar';
 export * from './MemberBadges';
 export * from './MemberLeaderboards';
 export * from './ModalLeaderboards';
+export * from './ModalRace';
 export * from './Navigation';
 export * from './Section';
 export * from './Input';
@@ -25,5 +26,6 @@ export * from './SubHeader';
 export * from './SubPage';
 export * from './Tabs';
 export * from './UpdateStatus';
+export * from './WinnerLink';
 
 export * from './CommonProps';

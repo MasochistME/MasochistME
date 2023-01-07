@@ -9,10 +9,12 @@ import { default as ChevronUp } from './ChevronUp';
 import { default as CircleInfo } from './CircleInfo';
 import { default as CirclePlus } from './CirclePlus';
 import { default as Clock } from './Clock';
+import { default as Crown } from './Crown';
 import { default as Discord } from './Discord';
 import { default as Donation } from './Donation';
 import { default as Finish } from './Finish';
 import { default as Gamepad } from './Gamepad';
+import { default as Gauge } from './Gauge';
 import { default as Grid } from './Grid';
 import { default as Hashtag } from './Hashtag';
 import { default as Heart } from './Heart';
@@ -37,6 +39,7 @@ import { default as StarHalf } from './StarHalf';
 import { default as StarHalfAlt } from './StarHalfAlt';
 import { default as StarSmall } from './StarSmall';
 import { default as Steam } from './Steam';
+import { default as Stopwatch } from './Stopwatch';
 import { default as Table } from './Table';
 import { default as Trophy } from './Trophy';
 import { default as UserCheck } from './UserCheck';
@@ -57,10 +60,12 @@ const icons = {
 	CircleInfo,
 	CirclePlus,
 	Clock,
+	Crown,
 	Discord,
 	Donation,
 	Finish,
 	Gamepad,
+	Gauge,
 	Grid,
 	Hashtag,
 	Heart,
@@ -85,6 +90,7 @@ const icons = {
 	StarHalfAlt,
 	StarSmall,
 	Steam,
+	Stopwatch,
 	Table,
 	Trophy,
 	UserCheck,

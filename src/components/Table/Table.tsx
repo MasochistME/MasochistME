@@ -13,11 +13,11 @@ type Props<T> = {
 };
 
 export const Table = <T extends Record<any, any>>(props: Props<T>) => {
-	const { columns, dataset, rowsPerPage: _rowsPerPage = 20 } = props;
+	const { columns, dataset, rowsPerPage: _rowsPerPage } = props;
 	const [order, setOrder] = useState<Order>('asc');
 	const [orderBy, setOrderBy] = useState<string>();
 	const [page, setPage] = useState<number>(0);
-	const [rowsPerPage, setRowsPerPage] = useState<number>(_rowsPerPage);
+	const [rowsPerPage, setRowsPerPage] = useState<number>(_rowsPerPage ?? 20);
 
 	const fixedDataset = dataset.map(
 		item =>

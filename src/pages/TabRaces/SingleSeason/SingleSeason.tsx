@@ -22,6 +22,7 @@ type SingleSeasonProps = {
 
 export const SingleSeason = (props: SingleSeasonProps) => {
 	const { season, races, isLoading } = props;
+
 	const [activeTab, setActiveTab] = useState<TabsSeasonDetails>(
 		TabsSeasonDetails.RACES,
 	);
