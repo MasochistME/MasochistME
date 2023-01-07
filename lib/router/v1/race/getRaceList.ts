@@ -6,7 +6,10 @@ import { RaceListParams } from '@masochistme/sdk/dist/v1/api/races';
 import { log } from 'helpers/log';
 import { sortCollection } from 'helpers/db';
 import { mongoInstance } from 'index';
-import { getParticipantRaceScore } from 'router/v1/race/__utils';
+import {
+  getParticipantRaceScore,
+  sortPlayersByResult,
+} from 'router/v1/race/__utils';
 
 /**
  * Returns a list of all races stored in the database.
@@ -36,7 +39,7 @@ export const getRaceList = async (
     });
     const raceIds = races.map(r => String(r._id));
 
-    // get all race participants
+    // // get all race participants
     const collectionPlayers = db.collection<RacePlayer>('racePlayers');
     const players: WithId<RacePlayer & { score: number }>[] = [];
     const cursorPlayers = await collectionPlayers.find({
@@ -52,13 +55,17 @@ export const getRaceList = async (
     // aggregate all the data together
     const racesWithSummary = races.map(r => {
       if (r.isActive) return r;
-      const raceParticipants = players.filter(p => p.raceId === String(r._id));
+
+      const signups = players.filter(p => p.raceId === String(r._id));
+      const participantsFinished = sortPlayersByResult(r, signups);
+      const dnf = signups.filter(p => p.dnf || p.disqualified);
+      const winner = participantsFinished[0]?.discordId ?? null;
+
       const summary = {
-        signups: raceParticipants.length,
-        participants:
-          raceParticipants.filter(p => !p.dnf && !p.disqualified)?.length ?? 0,
-        dnf: raceParticipants.filter(p => p.dnf || p.disqualified)?.length ?? 0,
-        winner: raceParticipants[0]?.discordId ?? null,
+        signups: signups.length ?? 0,
+        participants: participantsFinished?.length ?? 0,
+        dnf: dnf?.length ?? 0,
+        winner,
       };
       return { ...r, summary };
     });

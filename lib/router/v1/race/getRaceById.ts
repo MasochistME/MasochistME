@@ -1,11 +1,13 @@
 import { ObjectId, WithId } from 'mongodb';
 import { Request, Response } from 'express';
-import dayjs from 'dayjs';
-import { Race, RacePlayer, RaceType } from '@masochistme/sdk/dist/v1/types';
+import { Race, RacePlayer } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
 import { mongoInstance } from 'index';
-import { getParticipantRaceScore } from 'router/v1/race/__utils';
+import {
+  getParticipantRaceScore,
+  sortPlayersByResult,
+} from 'router/v1/race/__utils';
 
 export const getRaceById = async (
   req: Request,
@@ -34,52 +36,13 @@ export const getRaceById = async (
       players.push({ ...player, score });
     });
 
-    const getOwnerScore = () => {
-      if (race.type === RaceType.TIME_BASED)
-        return race?.ownerTime ? race?.ownerTime * 1000 : 0;
-      if (race.type === RaceType.SCORE_BASED) return race?.ownerScore ?? 0;
-      return 0;
-    };
+    // TODO this needs to be adjusted a bit for score based races
+    const leaderboards = sortPlayersByResult(race, players);
 
-    const raceOwner = {
-      raceId,
-      discordId: race.owner,
-      type: race.type,
-      startDate: null,
-      endDate: null,
-      revealDate: null,
-      proofDate: null,
-      proof: null,
-      dnf: false,
-      disqualified: false,
-      disqualifiedBy: null,
-      disqualificationReason: null,
-      score: getOwnerScore(),
-    };
-
-    // TODO this currently only works for time based races!
-    const sortedPlayers = [...players, raceOwner]
-      .filter(player => !player.dnf && !player.disqualified)
-      .sort((playerA, playerB) => {
-        // If race is time based, wins person with lowest time;
-        // otherwise person with highest score wins.
-        if (race.type === RaceType.TIME_BASED)
-          return playerA.score - playerB.score;
-        return playerB.score - playerA.score;
-      })
-      .map(player => {
-        return {
-          ...player,
-          score:
-            race.type === RaceType.TIME_BASED
-              ? dayjs.duration(player.score).format('m:ss.SSS')
-              : player.score ?? 0,
-        };
-      });
     res.status(200).send({
       ...race,
       participants: players,
-      leaderboards: sortedPlayers,
+      leaderboards,
     });
   } catch (err: any) {
     log.WARN(err);
