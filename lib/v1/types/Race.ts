@@ -114,7 +114,22 @@ export interface RaceTimeBased extends Omit<BaseRace, 'type'> {
  */
 export type Race = RaceScoreBased | RaceTimeBased;
 
+/**
+ * Returns race data with all details about participants and leaderboards.
+ */
 export type RaceWithParticipants = Race & {
 	participants?: RacePlayer[];
 	leaderboards?: RacePlayer[];
+};
+
+/**
+ * Returns race data with simple summary about participants.
+ */
+export type RaceWithSummary = Race & {
+	summary?: {
+		signups: number;
+		participants: number;
+		dnf: number;
+		winner: string | null;
+	};
 };

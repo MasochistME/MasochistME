@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 
-import { Race, Sort, ResponseError } from 'v1/types';
+import { Race, RaceWithSummary, Sort, ResponseError } from 'v1/types';
 
 /**
  * Returns a list of all races.
@@ -34,7 +34,7 @@ export const getRaceList = async (
 	params: RaceListParams,
 	/** @ignore */
 	BASE_URL: string,
-): Promise<Race[]> => {
+): Promise<RaceWithSummary[]> => {
 	const { filter, sort, limit } = params;
 	const url = `${BASE_URL}/races/list`;
 
@@ -46,7 +46,7 @@ export const getRaceList = async (
 	const { status, data } = raceResponse;
 
 	if (status !== 200) throw new Error((data as ResponseError).error);
-	return data as Race[];
+	return data as RaceWithSummary[];
 };
 
 export type RaceListParams = {
