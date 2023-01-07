@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { Race, Season } from '@masochistme/sdk/dist/v1/types';
+import { RaceWithSummary, Season } from '@masochistme/sdk/dist/v1/types';
 
 import { Flex, Skeleton } from 'components';
 import { StatBlock, Tabs, Tab, TabPanel } from 'containers';
@@ -16,7 +16,7 @@ enum TabsSeasonDetails {
 
 type SingleSeasonProps = {
 	season: Season;
-	races: Race[];
+	races: RaceWithSummary[];
 	isLoading: boolean;
 };
 
@@ -25,6 +25,16 @@ export const SingleSeason = (props: SingleSeasonProps) => {
 	const [activeTab, setActiveTab] = useState<TabsSeasonDetails>(
 		TabsSeasonDetails.RACES,
 	);
+
+	const uniqueParticipants =
+		[
+			...new Set(
+				races
+					.map(r => r.summary?.list ?? [])
+					.flat()
+					.sort(),
+			),
+		]?.length ?? '—';
 
 	const handleChangeTab = (
 		_e: React.SyntheticEvent,
@@ -62,7 +72,7 @@ export const SingleSeason = (props: SingleSeasonProps) => {
 					isLoading={isLoading}
 				/>
 				<StatBlock
-					label="—"
+					label={uniqueParticipants}
 					sublabel="unique participants"
 					title={<StatBlock.Title>Unique participants</StatBlock.Title>}
 					icon="Finish"

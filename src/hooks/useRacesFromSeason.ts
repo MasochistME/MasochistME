@@ -11,12 +11,13 @@ export const useRacesFromActiveSeasons = () => {
 		isFetched: isSeasonsFetched,
 	} = useSeasons({
 		filter: { active: true },
+		sort: { startDate: 'desc' },
 	});
 	const {
 		racesData,
 		isLoading: isRacesLoading,
 		isFetched: isRacesFetched,
-	} = useRaces();
+	} = useRaces({ filter: { isActive: false }, sort: { startDate: 'desc' } });
 
 	const isLoading = isRacesLoading && isSeasonsLoading;
 	const isFetched = isRacesFetched && isSeasonsFetched;
@@ -41,12 +42,13 @@ export const useRacesFromPastSeasons = () => {
 		isFetched: isSeasonsFetched,
 	} = useSeasons({
 		filter: { finished: true },
+		sort: { startDate: 'desc' },
 	});
 	const {
 		racesData,
 		isLoading: isRacesLoading,
 		isFetched: isRacesFetched,
-	} = useRaces();
+	} = useRaces({ filter: { isActive: false }, sort: { startDate: 'desc' } });
 
 	const isLoading = isRacesLoading && isSeasonsLoading;
 	const isFetched = isRacesFetched && isSeasonsFetched;
