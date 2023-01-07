@@ -27,17 +27,29 @@ export const SingleSeasonRaces = (props: Props): JSX.Element => {
 		{
 			key: Columns.DATE,
 			title: Columns.DATE,
-			value: (race: RaceWithSummary) => getHumanReadableDate(race.startDate),
+			value: (race: RaceWithSummary) => {
+				const raceStartDate = getHumanReadableDate(race.startDate, false);
+				return raceStartDate;
+			},
 			render: (race: RaceWithSummary) => (
-				<DateBlock date={race.startDate} width="100px" />
+				<TableCell
+					content={<DateBlock date={race.startDate} withHours={false} />}
+				/>
 			),
+			style: { width: '100px' },
 		},
 		{
 			key: Columns.RACE_NAME,
 			title: Columns.RACE_NAME,
 			value: (race: RaceWithSummary) => race.name,
 			render: (race: RaceWithSummary) => (
-				<TableCell content={race.name} isNoWrap isCentered={false} />
+				<TableCell
+					content={race.name}
+					isNoWrap
+					isCentered={false}
+					textTransform="uppercase"
+					fontWeight={600}
+				/>
 			),
 		},
 		{
@@ -75,7 +87,7 @@ export const SingleSeasonRaces = (props: Props): JSX.Element => {
 			title: Columns.WINNER,
 			value: (race: RaceWithSummary) => String(race.summary?.winner ?? null),
 			render: (race: RaceWithSummary) => (
-				<WinnerLink discordId={race.summary?.winner} />
+				<TableCell content={<WinnerLink discordId={race.summary?.winner} />} />
 			),
 		},
 	];
@@ -91,6 +103,9 @@ const WinnerLink = ({ discordId }: { discordId?: string | null }) => {
 	const { getMemberUsername, getMemberSteamId } = useMemberData(discordId);
 	const steamId = getMemberSteamId();
 	const username = getMemberUsername();
+
+	if (!username) return <h4>—</h4>;
+	if (username && !steamId) return <h4>{username}</h4>;
 	return (
 		<Link to={`/profile/${steamId}`}>
 			<h4>{username}</h4>

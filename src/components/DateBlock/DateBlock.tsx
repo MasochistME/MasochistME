@@ -8,10 +8,11 @@ import { Flex } from '../Flex';
 
 type Props = {
 	date?: Date | number;
+	withHours?: boolean;
 } & React.CSSProperties;
 
 export const DateBlock = (props: Props) => {
-	const { date, ...style } = props;
+	const { date, withHours = true, ...style } = props;
 
 	const fixedDate = useMemo(() => {
 		return getHumanReadableDate(date);
@@ -30,7 +31,7 @@ export const DateBlock = (props: Props) => {
 			{date && (
 				<>
 					<span>{fixedDate}</span>
-					<span>{fixedTime}</span>
+					{withHours && <span>{fixedTime}</span>}
 				</>
 			)}
 		</StyledDateBlock>
