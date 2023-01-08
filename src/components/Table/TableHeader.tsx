@@ -34,6 +34,7 @@ export const TableHeader = <T extends string>(props: Props<T>) => {
 							colorTokens={colorTokens}
 							active={orderBy === tableHeaderCell.id}
 							direction={orderBy === tableHeaderCell.id ? order : 'asc'}
+							hideSortIcon
 							onClick={createSortHandler(tableHeaderCell.id as unknown as T)}>
 							{tableHeaderCell.label}
 							{orderBy === tableHeaderCell.id ? (
