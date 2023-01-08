@@ -37,6 +37,7 @@ export const ModalRaceLeaderboards = (props: Props) => {
 			render: (player: RacePlayer & { place: number }) => (
 				<TableCell content={String(player.place)} />
 			),
+			style: { width: '100px' },
 		},
 		{
 			key: Columns.USERNAME,
@@ -44,9 +45,16 @@ export const ModalRaceLeaderboards = (props: Props) => {
 			value: (player: RacePlayer) => String(player.discordId),
 			render: (player: RacePlayer) => (
 				<TableCell
-					content={<WinnerLink discordId={player.discordId} isCompact />}
+					content={
+						<WinnerLink
+							discordId={player.discordId}
+							raceId={raceId}
+							isCompact
+						/>
+					}
 				/>
 			),
+			style: { width: '100%', maxWidth: '80%' },
 		},
 	];
 
@@ -58,6 +66,7 @@ export const ModalRaceLeaderboards = (props: Props) => {
 			render: (player: RacePlayer) => (
 				<TableCell content={String(player.score)} />
 			),
+			style: { width: '100px' },
 		});
 
 	if (race?.type === RaceType.TIME_BASED)
@@ -68,18 +77,13 @@ export const ModalRaceLeaderboards = (props: Props) => {
 			render: (player: RacePlayer) => (
 				<TableCell content={String(player.score)} />
 			),
+			style: { width: '100px' },
 		});
 
 	return (
 		<Flex width="100%">
 			{isLoading && <Spinner />}
-			{isFetched && (
-				<Table
-					columns={columns}
-					dataset={leaderboardsWithPlace}
-					rowsPerPage={10}
-				/>
-			)}
+			{isFetched && <Table columns={columns} dataset={leaderboardsWithPlace} />}
 		</Flex>
 	);
 };

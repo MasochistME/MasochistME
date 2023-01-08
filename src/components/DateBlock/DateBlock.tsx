@@ -16,10 +16,10 @@ export const DateBlock = (props: Props) => {
 
 	const fixedDate = useMemo(() => {
 		return getHumanReadableDate(date);
-	}, []);
+	}, [date]);
 	const fixedTime = useMemo(() => {
 		return dayjs(date).format('H:mm');
-	}, []);
+	}, [date]);
 
 	return (
 		<StyledDateBlock style={style}>

@@ -20,7 +20,7 @@ type Props = {
 enum Columns {
 	DATE = 'Start date',
 	RACE_NAME = 'Race name',
-	SIGN_UPS = 'Signups',
+	SIGN_UPS = 'Sign-ups',
 	PARTICIPANTS = 'Participants',
 	DNF = 'DNF',
 	TYPE = '',
@@ -53,7 +53,7 @@ export const SingleSeasonRaces = (props: Props): JSX.Element => {
 					content={<DateBlock date={race.startDate} withHours={false} />}
 				/>
 			),
-			style: { width: '100px' },
+			style: { width: '90px' },
 		},
 		{
 			key: Columns.TYPE,
@@ -61,14 +61,20 @@ export const SingleSeasonRaces = (props: Props): JSX.Element => {
 			value: (race: RaceWithSummary) => race.type,
 			render: (race: RaceWithSummary) => (
 				<TableCell
-					content={<Icon icon={getRaceTypeIcon(race)} hoverText={race.type} />}
+					content={
+						<Icon
+							icon={getRaceTypeIcon(race)}
+							hoverText={`${race.type.toUpperCase()} based race`}
+						/>
+					}
 				/>
 			),
+			style: { width: '30px' },
 		},
 		{
 			key: Columns.RACE_NAME,
 			title: Columns.RACE_NAME,
-			value: (race: RaceWithSummary) => race.name,
+			value: (race: RaceWithSummary) => race.name.toUpperCase(),
 			render: (race: RaceWithSummary) => {
 				const raceId = String(race._id);
 				return (
@@ -78,13 +84,14 @@ export const SingleSeasonRaces = (props: Props): JSX.Element => {
 								{race.name}
 							</TableCellRaceName>
 						}
-						isNoWrap
 						isCentered={false}
 						textTransform="uppercase"
 						fontWeight={600}
+						textAlign="left"
 					/>
 				);
 			},
+			style: { width: '100%', maxWidth: '50%' },
 		},
 		{
 			key: Columns.SIGN_UPS,
@@ -93,6 +100,7 @@ export const SingleSeasonRaces = (props: Props): JSX.Element => {
 			render: (race: RaceWithSummary) => (
 				<TableCell content={race.summary?.signups} />
 			),
+			style: { maxWidth: '50px' },
 		},
 		{
 			key: Columns.PARTICIPANTS,
@@ -101,6 +109,7 @@ export const SingleSeasonRaces = (props: Props): JSX.Element => {
 			render: (race: RaceWithSummary) => (
 				<TableCell content={race.summary?.participants} />
 			),
+			style: { maxWidth: '50px' },
 		},
 		{
 			key: Columns.DNF,
@@ -109,6 +118,7 @@ export const SingleSeasonRaces = (props: Props): JSX.Element => {
 			render: (race: RaceWithSummary) => (
 				<TableCell content={race.summary?.dnf} />
 			),
+			style: { width: '40px' },
 		},
 		{
 			key: Columns.WINNER,
@@ -121,6 +131,7 @@ export const SingleSeasonRaces = (props: Props): JSX.Element => {
 					}
 				/>
 			),
+			style: { maxWidth: '200px' },
 		},
 	];
 
