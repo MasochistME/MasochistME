@@ -10,6 +10,6 @@ export const getTierIcon = (
 };
 
 export const getRaceTypeIcon = (race: Race): IconType => {
-	const icon = race.type === RaceType.SCORE_BASED ? 'ClockEmpty' : 'Gauge';
+	const icon = race.type === RaceType.SCORE_BASED ? 'Gauge' : 'ClockEmpty';
 	return icon as IconType;
 };

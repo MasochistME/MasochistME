@@ -1,4 +1,4 @@
-import { RacePlayer } from '@masochistme/sdk/dist/v1/types';
+import { RacePlayer, RaceType } from '@masochistme/sdk/dist/v1/types';
 
 import { useRaceById } from 'sdk';
 import { Flex, Spinner, Table, TableCell, TableColumn } from 'components';
@@ -9,11 +9,12 @@ type Props = {
 };
 
 enum Columns {
-	PLACE = 'place',
-	USERNAME = 'username',
-	SCORE = 'score',
-	DNF = 'dnf',
-	DISQUALIFIED = 'disqualified',
+	PLACE = 'Place',
+	USERNAME = 'Username',
+	SCORE = 'Score',
+	TIME = 'Time',
+	DNF = 'DNF',
+	DISQUALIFIED = 'Disqualified',
 }
 
 export const ModalRaceLeaderboards = (props: Props) => {
@@ -47,31 +48,27 @@ export const ModalRaceLeaderboards = (props: Props) => {
 				/>
 			),
 		},
-		{
+	];
+
+	if (race?.type === RaceType.SCORE_BASED)
+		columns.push({
 			key: Columns.SCORE,
 			title: Columns.SCORE,
 			value: (player: RacePlayer) => String(player.score),
 			render: (player: RacePlayer) => (
 				<TableCell content={String(player.score)} />
 			),
-		},
-		// {
-		// 	key: Columns.DNF,
-		// 	title: Columns.DNF,
-		// 	value: (player: RacePlayer) => String(player.dnf),
-		// 	render: (player: RacePlayer) => (
-		// 		<TableCell content={String(player.dnf)} />
-		// 	),
-		// },
-		// {
-		// 	key: Columns.DISQUALIFIED,
-		// 	title: Columns.DISQUALIFIED,
-		// 	value: (player: RacePlayer) => String(player.disqualified),
-		// 	render: (player: RacePlayer) => (
-		// 		<TableCell content={String(player.disqualified)} />
-		// 	),
-		// },
-	];
+		});
+
+	if (race?.type === RaceType.TIME_BASED)
+		columns.push({
+			key: Columns.TIME,
+			title: Columns.TIME,
+			value: (player: RacePlayer) => String(player.score),
+			render: (player: RacePlayer) => (
+				<TableCell content={String(player.score)} />
+			),
+		});
 
 	return (
 		<Flex width="100%">
