@@ -9,6 +9,7 @@ import { default as ChevronUp } from './ChevronUp';
 import { default as CircleInfo } from './CircleInfo';
 import { default as CirclePlus } from './CirclePlus';
 import { default as Clock } from './Clock';
+import { default as ClockEmpty } from './ClockEmpty';
 import { default as Crown } from './Crown';
 import { default as Discord } from './Discord';
 import { default as Donation } from './Donation';
@@ -61,6 +62,7 @@ const icons = {
 	CircleInfo,
 	CirclePlus,
 	Clock,
+	ClockEmpty,
 	Crown,
 	Discord,
 	Donation,

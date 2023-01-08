@@ -1,9 +1,5 @@
 import { useEffect, useState } from 'react';
-import {
-	Race,
-	RaceType,
-	RaceWithSummary,
-} from '@masochistme/sdk/dist/v1/types';
+import { Race, RaceWithSummary } from '@masochistme/sdk/dist/v1/types';
 
 import {
 	DateBlock,
@@ -14,8 +10,8 @@ import {
 	TableColumn,
 } from 'components';
 import { ModalRace, WinnerLink } from 'containers';
-import { getHumanReadableDate } from 'utils';
 import styled from 'styled-components';
+import { getRaceTypeIcon } from 'utils/getIcon';
 
 type Props = {
 	races: Race[];
@@ -27,7 +23,7 @@ enum Columns {
 	SIGN_UPS = 'Signups',
 	PARTICIPANTS = 'Participants',
 	DNF = 'DNF',
-	TYPE = 'Type',
+	TYPE = '',
 	WINNER = 'Winner',
 }
 
@@ -49,17 +45,6 @@ export const SingleSeasonRaces = (props: Props): JSX.Element => {
 
 	const columns: TableColumn<RaceWithSummary>[] = [
 		{
-			key: Columns.TYPE,
-			title: Columns.TYPE,
-			value: (race: RaceWithSummary) => race.type,
-			render: (race: RaceWithSummary) => {
-				const icon = race.type === RaceType.SCORE_BASED ? 'Stopwatch' : 'Gauge';
-				return (
-					<TableCell content={<Icon icon={icon} hoverText={race.type} />} />
-				);
-			},
-		},
-		{
 			key: Columns.DATE,
 			title: Columns.DATE,
 			value: (race: RaceWithSummary) => new Date(race.startDate ?? 0).getTime(),
@@ -69,6 +54,16 @@ export const SingleSeasonRaces = (props: Props): JSX.Element => {
 				/>
 			),
 			style: { width: '100px' },
+		},
+		{
+			key: Columns.TYPE,
+			title: Columns.TYPE,
+			value: (race: RaceWithSummary) => race.type,
+			render: (race: RaceWithSummary) => (
+				<TableCell
+					content={<Icon icon={getRaceTypeIcon(race)} hoverText={race.type} />}
+				/>
+			),
 		},
 		{
 			key: Columns.RACE_NAME,
@@ -120,7 +115,11 @@ export const SingleSeasonRaces = (props: Props): JSX.Element => {
 			title: Columns.WINNER,
 			value: (race: RaceWithSummary) => String(race.summary?.winner),
 			render: (race: RaceWithSummary) => (
-				<TableCell content={<WinnerLink discordId={race.summary?.winner} />} />
+				<TableCell
+					content={
+						<WinnerLink discordId={race.summary?.winner} isCompact={false} />
+					}
+				/>
 			),
 		},
 	];

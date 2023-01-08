@@ -4,6 +4,7 @@ import { RaceType } from '@masochistme/sdk/dist/v1/types';
 
 import { useRaceById } from 'sdk';
 import { Flex, Icon, Size, Spinner } from 'components';
+import { getRaceTypeIcon } from 'utils';
 
 type Props = {
 	raceId?: string | null;
@@ -14,7 +15,7 @@ export const ModalRaceHeader = (props: Props) => {
 	const { raceData: race } = useRaceById(raceId);
 	if (!race) return <Spinner />;
 
-	const icon = race.type === RaceType.SCORE_BASED ? 'Stopwatch' : 'Gauge';
+	const icon = getRaceTypeIcon(race);
 	const iconTextHover =
 		race.type === RaceType.SCORE_BASED ? 'Score based race' : 'Time based race';
 

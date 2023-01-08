@@ -42,7 +42,9 @@ export const ModalRaceLeaderboards = (props: Props) => {
 			title: Columns.USERNAME,
 			value: (player: RacePlayer) => String(player.discordId),
 			render: (player: RacePlayer) => (
-				<TableCell content={<WinnerLink discordId={player.discordId} />} />
+				<TableCell
+					content={<WinnerLink discordId={player.discordId} isCompact />}
+				/>
 			),
 		},
 		{
