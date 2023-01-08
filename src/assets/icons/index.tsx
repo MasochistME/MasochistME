@@ -39,6 +39,7 @@ import { default as StarSmall } from './StarSmall';
 import { default as Steam } from './Steam';
 import { default as Table } from './Table';
 import { default as Trophy } from './Trophy';
+import { default as User } from './User';
 import { default as UserCheck } from './UserCheck';
 import { default as UserMinus } from './UserMinus';
 import { default as UserPlus } from './UserPlus';
@@ -87,6 +88,7 @@ const icons = {
 	Steam,
 	Table,
 	Trophy,
+	User,
 	UserCheck,
 	UserMinus,
 	UserPlus,

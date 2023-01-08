@@ -27,6 +27,8 @@ export const CustomEvent = (props: Props): JSX.Element | null => {
 
 	if (!event.content) return null;
 
+	console.log(icon);
+
 	return (
 		<BaseEvent>
 			<MemberAvatar member={member} size={Size.SMALL} />
