@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import { MemberBadge, Game } from '@masochistme/sdk/dist/v1/types';
 
 import { useAllGames, useBadges, useMemberBadges } from 'sdk';
@@ -31,9 +32,13 @@ export const MemberProfileBadges = (props: Props) => {
 		})
 		.filter(Boolean);
 
-	return (
-		<Flex align justify flexWrap="wrap" gap={16}>
-			{memberBadges}
-		</Flex>
-	);
+	return <StyledMemberProfileBadges>{memberBadges}</StyledMemberProfileBadges>;
 };
+
+const StyledMemberProfileBadges = styled(Flex)`
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 16px;
+	width: 100%;
+`;
