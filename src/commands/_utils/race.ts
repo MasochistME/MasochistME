@@ -306,11 +306,14 @@ export const getParticipantRaceTime = (
   const download = downloadGrace * 1000;
   const upload = uploadGrace * 1000;
 
-  const downloadPenalty = start - reveal > download ? download : 0;
-  const uploadPenalty = proof - end > upload ? upload : 0;
+  const downloadTime = start - reveal;
+  const uploadTime = proof - end;
+
+  const downloadPenalty = downloadTime > download ? downloadTime : 0;
+  const uploadPenalty = uploadTime > upload ? uploadTime : 0;
   const fullTime = end - start + downloadPenalty + uploadPenalty;
 
-  return { downloadTime: start - reveal, uploadTime: proof - end, fullTime };
+  return { downloadTime, uploadTime, fullTime };
 };
 
 /**

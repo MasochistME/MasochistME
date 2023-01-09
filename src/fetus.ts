@@ -68,28 +68,26 @@ const init = async () => {
 
   bot.start("Dr. Fetus reporting for destruction!");
 
-  bot.botClient.on("ready", async () => {
-    // Race timer checks every minute if any race should get updated.
-    handleRaceTimer();
-  });
-
-  bot.botClient.on("interactionCreate", async interaction => {
-    debug(interaction);
-    if (interaction.isAutocomplete()) handleAutocomplete(interaction);
-    if (interaction.isButton()) handleButtons(interaction);
-    if (interaction.isModalSubmit()) handleModals(interaction);
-  });
-
-  // Debug mode
-  bot.botClient.on("error", async error => {
-    log.DEBUG("Discord bot error detected");
-    console.log(error);
-  });
-
-  bot.botClient.on("warn", async (message: string) => {
-    log.DEBUG("Discord bot warning detected");
-    console.log(message);
-  });
+  bot.botClient
+    .on("ready", async () => {
+      // Race timer checks every minute if any race should get updated.
+      handleRaceTimer();
+    })
+    .on("interactionCreate", async interaction => {
+      debug(interaction);
+      if (interaction.isAutocomplete()) handleAutocomplete(interaction);
+      if (interaction.isButton()) handleButtons(interaction);
+      if (interaction.isModalSubmit()) handleModals(interaction);
+    })
+    .on("error", async error => {
+      log.DEBUG("Discord bot error detected");
+      console.log(error);
+    })
+    .on("warn", async (message: string) => {
+      log.DEBUG("Discord bot warning detected");
+      console.log(message);
+    })
+    .on("debug", console.log);
 };
 
 init();
