@@ -303,7 +303,7 @@ const getRaceConfirmationEmbed = async (
             name: "Owner's time",
             value: dayjs
               .duration(((race as RaceTimeBased)?.ownerTime ?? 0) * 1000)
-              .format("m:ss.SSS"),
+              .format("H:mm:ss.SSS"),
             inline: true,
           },
         ]

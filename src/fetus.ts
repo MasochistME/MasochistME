@@ -74,7 +74,6 @@ const init = async () => {
       handleRaceTimer();
     })
     .on("interactionCreate", async interaction => {
-      debug(interaction);
       if (interaction.isAutocomplete()) handleAutocomplete(interaction);
       if (interaction.isButton()) handleButtons(interaction);
       if (interaction.isModalSubmit()) handleModals(interaction);
@@ -91,30 +90,3 @@ const init = async () => {
 };
 
 init();
-
-/**
- * Temporary debug code.
- */
-const debug = async (interaction: Interaction<CacheType>) => {
-  log.DEBUG(`NEW INTERACTION`);
-  log.DEBUG(`-> interaction type: ${interaction.type}`);
-  log.DEBUG(`-> user: ${interaction.user.username}`);
-  if (interaction.isCommand()) {
-    log.DEBUG("-> type: COMMAND");
-    log.DEBUG(`-> command: ${interaction.commandName}`);
-    log.DEBUG(
-      // @ts-ignore
-      `-> options: ${interaction.options["_hoistedOptions"]?.map(
-        (option: any) => `\n ---> ${option.name} => ${option.value}`,
-      )}`,
-    );
-  }
-  if (interaction.isAutocomplete()) {
-    log.DEBUG("-> type: AUTOCOMPLETE");
-    log.DEBUG(`-> autocomplete: ${interaction.commandName}`);
-  }
-  if (interaction.isButton()) {
-    log.DEBUG("-> type: BUTTON");
-    log.DEBUG(`-> button: ${interaction.customId}`);
-  }
-};
