@@ -54,7 +54,7 @@ export const getRaceList = async (
 
     // aggregate all the data together
     const racesWithSummary = races.map(r => {
-      if (r.isActive) return r;
+      if (r.isActive || r.isDone) return r;
 
       const signups = players.filter(p => p.raceId === String(r._id));
       const participantsFinished = sortPlayersByResult(r, signups);

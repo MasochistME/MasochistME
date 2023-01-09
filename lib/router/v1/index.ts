@@ -170,11 +170,16 @@ import {
   updateSeasonById,
   getSeasonsList,
   getSeasonById,
+  getSeasonLeaderboardsById,
 } from './seasons';
 
 routerV1.post('/seasons', apiV1Auth, createSeason);
 routerV1.get('/seasons/season/:seasonId', getSeasonById);
 routerV1.put('/seasons/season/:seasonId', apiV1Auth, updateSeasonById);
+routerV1.get(
+  '/seasons/season/:seasonId/leaderboards',
+  getSeasonLeaderboardsById,
+);
 routerV1.post('/seasons/list', getSeasonsList);
 
 /****************************
