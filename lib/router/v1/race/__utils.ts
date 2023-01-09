@@ -1,4 +1,3 @@
-import { WithId } from 'mongodb';
 import dayjs from 'dayjs';
 import { Race, RacePlayer, RaceType } from '@masochistme/sdk/dist/v1/types';
 
