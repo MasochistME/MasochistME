@@ -324,6 +324,6 @@ export const getParticipantRaceTime = (
 export const getMedal = (place: number) => {
   if (place === 0) return "🥇";
   if (place >= 1 && place < 3) return "🥈";
-  if (place >= 3 && place < 5) return "🥉";
+  if (place >= 3 && place < 6) return "🥉";
   return "";
 };
