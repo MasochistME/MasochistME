@@ -31,7 +31,7 @@ import { Featured, ResponseError } from 'v1/types';
 export const updateFeaturedById = async (
 	params: {
 		featuredId: string;
-		featured: Partial<Omit<Featured, '_id' | 'date'>>;
+		featured: Partial<Omit<Featured, '_id'>>;
 	},
 	/** @ignore */
 	BASE_URL: string,
@@ -42,7 +42,7 @@ export const updateFeaturedById = async (
 	const response = await axios.put<
 		UpdateResult | ResponseError,
 		AxiosResponse<UpdateResult | ResponseError>,
-		Partial<Omit<Featured, '_id' | 'date'>>
+		Partial<Omit<Featured, '_id'>>
 	>(url, featured, { validateStatus: () => true });
 
 	const { status, data } = response;
