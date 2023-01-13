@@ -62,7 +62,7 @@ export const featureVideo = async (
 
   const featuredData = await sdk.updateFeaturedById({
     featuredId,
-    featured: { isApproved: true, isVisible: true },
+    featured: { isApproved: true, isVisible: true, date: new Date() },
   });
 
   if (!featuredData.acknowledged) {
