@@ -2,7 +2,7 @@ import { RacePlayer, RaceType } from '@masochistme/sdk/dist/v1/types';
 
 import { useRaceById } from 'sdk';
 import { Flex, Spinner, Table, TableCell, TableColumn } from 'components';
-import { WinnerLink } from 'containers';
+import { Podium, WinnerLink } from 'containers';
 
 type Props = {
 	raceId?: string | null;
@@ -28,6 +28,7 @@ export const ModalRaceLeaderboards = (props: Props) => {
 			place: place + 1,
 		}),
 	);
+	const leaderboardsWithPlacePodium = leaderboardsWithPlace.splice(0, 3);
 
 	const columns: TableColumn<RacePlayer & { place: number }>[] = [
 		{
@@ -81,9 +82,14 @@ export const ModalRaceLeaderboards = (props: Props) => {
 		});
 
 	return (
-		<Flex width="100%">
+		<Flex column width="100%" gap={16}>
 			{isLoading && <Spinner />}
-			{isFetched && <Table columns={columns} dataset={leaderboardsWithPlace} />}
+			{isFetched && (
+				<>
+					<Podium podium={leaderboardsWithPlacePodium} />
+					<Table columns={columns} dataset={leaderboardsWithPlace} />
+				</>
+			)}
 		</Flex>
 	);
 };
