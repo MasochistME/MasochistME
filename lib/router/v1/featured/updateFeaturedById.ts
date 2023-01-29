@@ -19,11 +19,16 @@ export const updateFeaturedById = async (
     const { db } = mongoInstance.getDb();
     const collection = db.collection<Featured>('featured');
     const _id = new ObjectId(req.params.featuredId);
-    const featuredUpdate: Featured = req.body; // TODO Add Request<Featured> body validation
+    const { date, ...featuredUpdate }: Featured = req.body; // TODO Add Request<Featured> body validation
 
     const response = await collection.updateOne(
       { _id },
-      { $set: featuredUpdate },
+      {
+        $set: {
+          ...(date && { date: new Date(date) }),
+          ...featuredUpdate,
+        },
+      },
     );
 
     if (!response.acknowledged) {
