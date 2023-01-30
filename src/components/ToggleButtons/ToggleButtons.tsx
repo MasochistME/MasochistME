@@ -1,7 +1,7 @@
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 import styled from 'styled-components';
 
-import { ColorTokens } from 'styles';
+import { ColorTokens, fonts } from 'styles';
 import { useTheme } from 'styles';
 
 type Option = {
@@ -52,24 +52,29 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)<{
 	colorTokens: ColorTokens;
 }>`
 	&.MuiToggleButtonGroup-root {
-		background-color: ${({ colorTokens }) =>
-			colorTokens['semantic-color--interactive']};
+		border-radius: 32px;
+		overflow: hidden;
+		gap: 4px;
 	}
 `;
 const StyledToggleButton = styled(ToggleButton)<{
 	colorTokens: ColorTokens;
 }>`
+	font-family: ${fonts.Dosis};
+	font-weight: 600;
 	&.MuiButtonBase-root {
 		line-height: unset;
 		padding: 8px;
+		background-color: ${({ colorTokens }) =>
+			colorTokens['semantic-color--idle']};
 		color: ${({ colorTokens }) => colorTokens['core-tertiary-text']};
 		&:hover {
 			background-color: ${({ colorTokens }) =>
-				colorTokens['semantic-color--active']};
+				colorTokens['semantic-color--interactive']};
 		}
 	}
 	&.Mui-selected {
 		background-color: ${({ colorTokens }) =>
-			colorTokens['semantic-color--active']};
+			colorTokens['semantic-color--interactive']};
 	}
 `;
