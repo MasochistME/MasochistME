@@ -2,12 +2,35 @@ import React from 'react';
 
 import { useAppContext } from 'context';
 import { Input } from 'containers';
-import { FilterBar } from 'components';
-import { useCuratorMembers } from 'sdk';
+import { FilterBar, ToggleButtons } from 'components';
+import { TimePeriod } from './_utils';
 
 export const LeaderboardsFilterBar = (): JSX.Element => {
-	const { queryMember, setQueryMember } = useAppContext();
-	const { membersData } = useCuratorMembers();
+	const {
+		queryMember,
+		setQueryMember,
+		queryLeaderboardPeriod,
+		setQueryLeaderboardPeriod,
+	} = useAppContext();
+
+	const options = [
+		{
+			label: 'All',
+			value: TimePeriod.ALL,
+		},
+		{
+			label: 'Past week',
+			value: TimePeriod.PAST_WEEK,
+		},
+		{
+			label: 'Past month',
+			value: TimePeriod.PAST_MONTH,
+		},
+		{
+			label: 'Past year',
+			value: TimePeriod.PAST_YEAR,
+		},
+	];
 
 	return (
 		<FilterBar>
@@ -16,9 +39,11 @@ export const LeaderboardsFilterBar = (): JSX.Element => {
 				query={queryMember}
 				setQuery={setQueryMember}
 			/>
-			<span style={{ fontStyle: 'italic' }}>
-				Members total: {membersData?.length ?? '?'}
-			</span>
+			<ToggleButtons
+				options={options}
+				value={queryLeaderboardPeriod}
+				changeValue={setQueryLeaderboardPeriod}
+			/>
 		</FilterBar>
 	);
 };

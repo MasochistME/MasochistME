@@ -4,7 +4,7 @@ import { useAppContext } from 'context';
 /**
  *
  */
-export const useLeaderboardsMembers = (limit?: number) => {
+export const useLeaderboardsMembers = (limit?: number, dateFrom?: string) => {
 	const { sdk } = useAppContext();
 
 	const {
@@ -13,10 +13,19 @@ export const useLeaderboardsMembers = (limit?: number) => {
 		isFetched,
 		isError,
 	} = useQuery(
-		['masochist', 'leaderboards', 'members', `limit-${limit ?? 1000}`],
+		[
+			'masochist',
+			'leaderboards',
+			'members',
+			`limit-${limit ?? 1000}`,
+			`dateFrom-${dateFrom}`,
+		],
 		() =>
 			sdk.getLeaderboardsMembersList({
-				filter: { isMember: true },
+				filter: {
+					isMember: true,
+					...(dateFrom && { from: new Date(dateFrom) }),
+				},
 				limit: limit ?? 1000,
 			}),
 	);

@@ -21,7 +21,7 @@
     "test": "echo TODO"
   },
   "dependencies": {
-    "@masochistme/sdk": "^2.1.18",
+    "@masochistme/sdk": "^2.2.15",
     "@mui/material": "^5.10.10",
     "@mui/styled-engine-sc": "^5.10.6",
     "@tanstack/react-query": "^4.12.0",

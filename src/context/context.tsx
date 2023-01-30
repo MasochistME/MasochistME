@@ -9,6 +9,7 @@ import { Theme } from 'styles';
 import { GameView, BadgeView } from 'hooks';
 
 import config from 'config.json';
+import { TimePeriod } from 'pages/TabLeaderboards/_utils';
 
 type ContextType = {
 	sdk: SDK;
@@ -33,6 +34,8 @@ type ContextType = {
 	setQueryGame: (queryGame: string) => void;
 	queryMember: string;
 	setQueryMember: (queryMember: string) => void;
+	queryLeaderboardPeriod: TimePeriod;
+	setQueryLeaderboardPeriod: (queryLeaderboardPeriod: TimePeriod) => void;
 };
 
 export const AppContextProvider = ({
@@ -52,6 +55,8 @@ export const AppContextProvider = ({
 	);
 	const [queryGame, setQueryGame] = useState<string>('');
 	const [queryMember, setQueryMember] = useState<string>('');
+	const [queryLeaderboardPeriod, setQueryLeaderboardPeriod] =
+		useState<TimePeriod>(TimePeriod.ALL);
 
 	const path = config.API;
 	const sdk = new SDK({
@@ -82,6 +87,8 @@ export const AppContextProvider = ({
 		setQueryGame,
 		queryMember,
 		setQueryMember,
+		queryLeaderboardPeriod,
+		setQueryLeaderboardPeriod,
 	};
 
 	return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

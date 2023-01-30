@@ -3,6 +3,8 @@ import { default as AnglesUp } from './AnglesUp';
 import { default as Badge } from './Badge';
 import { default as BirthdayCake } from './BirthdayCake';
 import { default as Bolt } from './Bolt';
+import { default as Bookmark } from './Bookmark';
+import { default as Calendar } from './Calendar';
 import { default as Checklist } from './Checklist';
 import { default as ChevronDown } from './ChevronDown';
 import { default as ChevronUp } from './ChevronUp';
@@ -52,6 +54,8 @@ const icons = {
 	Badge,
 	BirthdayCake,
 	Bolt,
+	Bookmark,
+	Calendar,
 	Checklist,
 	ChevronDown,
 	ChevronUp,
