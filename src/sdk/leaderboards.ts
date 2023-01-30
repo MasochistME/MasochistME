@@ -1,11 +1,18 @@
+import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
+
+import { getTimePeriod } from 'utils/getTimePeriod';
 import { useAppContext } from 'context';
 
 /**
  *
  */
-export const useLeaderboardsMembers = (limit?: number, dateFrom?: string) => {
-	const { sdk } = useAppContext();
+export const useLeaderboardsMembers = (limit?: number) => {
+	const { sdk, queryLeaderboardPeriod } = useAppContext();
+	const fixedDateFrom = useMemo(
+		() => getTimePeriod(queryLeaderboardPeriod),
+		[queryLeaderboardPeriod],
+	);
 
 	const {
 		data: leaderboardsData = [],
@@ -18,13 +25,13 @@ export const useLeaderboardsMembers = (limit?: number, dateFrom?: string) => {
 			'leaderboards',
 			'members',
 			`limit-${limit ?? 1000}`,
-			`dateFrom-${dateFrom}`,
+			`dateFrom-${fixedDateFrom}`,
 		],
 		() =>
 			sdk.getLeaderboardsMembersList({
 				filter: {
 					isMember: true,
-					...(dateFrom && { from: new Date(dateFrom) }),
+					...(fixedDateFrom && { from: new Date(fixedDateFrom) }),
 				},
 				limit: limit ?? 1000,
 			}),

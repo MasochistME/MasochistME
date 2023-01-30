@@ -7,9 +7,9 @@ import { EventsDict } from 'configuration/events';
 
 import { Theme } from 'styles';
 import { GameView, BadgeView } from 'hooks';
+import { TimePeriod } from 'utils/getTimePeriod';
 
 import config from 'config.json';
-import { TimePeriod } from 'pages/TabLeaderboards/_utils';
 
 type ContextType = {
 	sdk: SDK;

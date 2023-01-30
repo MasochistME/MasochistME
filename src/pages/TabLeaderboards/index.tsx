@@ -11,7 +11,6 @@ import { Flex, Icon, Skeleton, Spinner, IconType } from 'components';
 import { Size } from 'components';
 
 import { LeaderboardsFilterBar } from './LeaderboardsFilterBar';
-import { TimePeriod } from './_utils';
 
 const LeaderboardsMember = React.lazy(() =>
 	import('./LeaderboardsMember').then(module => ({
@@ -20,14 +19,10 @@ const LeaderboardsMember = React.lazy(() =>
 );
 
 const TabLeaderboards = (): JSX.Element => {
-	const { queryMember, queryLeaderboardPeriod } = useAppContext();
+	const { queryMember } = useAppContext();
 	useActiveTab(TabDict.LEADERBOARDS);
 
-	const fixedDateFrom = useTimePeriod(queryLeaderboardPeriod);
-	const { leaderboardsData, isFetched, isLoading } = useLeaderboardsMembers(
-		undefined,
-		fixedDateFrom,
-	);
+	const { leaderboardsData, isFetched, isLoading } = useLeaderboardsMembers();
 	const { membersData = [] } = useMembers();
 
 	const lazyRankingList = leaderboardsData.map(leader => {
@@ -112,15 +107,6 @@ const TabLeaderboardsInfo = (props: Partial<SectionProps>): JSX.Element => {
 };
 
 export default TabLeaderboards;
-
-const useTimePeriod = (from: TimePeriod) => {
-	if (from === TimePeriod.PAST_WEEK)
-		return new Date(Date.now() - 1000 * 60 * 60 * 24 * 7).toString();
-	if (from === TimePeriod.PAST_MONTH)
-		return new Date(Date.now() - 1000 * 60 * 60 * 24 * 30).toString();
-	if (from === TimePeriod.PAST_YEAR)
-		return new Date(Date.now() - 1000 * 60 * 60 * 24 * 365).toString();
-};
 
 const StyledLeaderboards = styled(Flex)`
 	flex-direction: column;

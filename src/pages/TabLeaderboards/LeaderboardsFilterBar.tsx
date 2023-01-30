@@ -3,7 +3,7 @@ import React from 'react';
 import { useAppContext } from 'context';
 import { Input } from 'containers';
 import { FilterBar, ToggleButtons } from 'components';
-import { TimePeriod } from './_utils';
+import { TimePeriod } from 'utils/getTimePeriod';
 
 export const LeaderboardsFilterBar = (): JSX.Element => {
 	const {

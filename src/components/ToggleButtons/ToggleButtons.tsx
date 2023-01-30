@@ -63,6 +63,10 @@ const StyledToggleButton = styled(ToggleButton)<{
 		line-height: unset;
 		padding: 8px;
 		color: ${({ colorTokens }) => colorTokens['core-tertiary-text']};
+		&:hover {
+			background-color: ${({ colorTokens }) =>
+				colorTokens['semantic-color--active']};
+		}
 	}
 	&.Mui-selected {
 		background-color: ${({ colorTokens }) =>
