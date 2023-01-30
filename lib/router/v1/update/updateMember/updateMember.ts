@@ -127,6 +127,16 @@ export const updateMember = async (
     if (!newMemberSteamGames)
       newMemberSteamGames = await getMemberSteamGamesFallback(memberId, games);
 
+    // Add family share games to the list
+    const recentMemberSteamGames = await getMemberRecentSteamGames(
+      memberId,
+      games,
+    );
+    recentMemberSteamGames.forEach(game => {
+      const hasGame = newMemberSteamGames.find(g => g.gameId === game.gameId);
+      if (!hasGame) newMemberSteamGames.push(game);
+    });
+
     if (!newMemberSteamGames.length) {
       log.INFO(
         `--> [UPDATE] user ${memberId} --> game list is empty, check if the user does not have private game list...`,
@@ -409,6 +419,56 @@ const getMemberSteamGamesFallback = async (
     }));
 
   return memberSteamGamesFixed;
+};
+
+/**
+ * Get member's recent games from scrapping the Steam page.
+ * The reason this is used before the proper endpoint is that it shows
+ * family share games as well, if they were played in the last 2 weeks.
+ */
+const getMemberRecentSteamGames = async (
+  memberId: string,
+  curatedGames: Game[],
+) => {
+  log.INFO(`--> [UPDATE] user ${memberId} --> fetching games data...`);
+  /**
+   * Scrapping member's Steam profile page - recent tab.
+   */
+  const memberScrappedProfileUrl = `https://steamcommunity.com/profiles/${memberId}/games/?tab=recent`;
+  const memberScrappedProfileData =
+    (await axios.get(memberScrappedProfileUrl)).data ?? '{}';
+  const profileRegex = new RegExp(/(?<=var rgGames = )(.*)(?=[}}])/i);
+  // this can return undefined, if user privated only their game list
+  const memberScrappedProfileMatched = profileRegex.exec(
+    memberScrappedProfileData,
+  )?.[0];
+  const memberScrappedProfileTranslated = memberScrappedProfileMatched
+    ? memberScrappedProfileMatched + '}]'
+    : '[]';
+
+  const memberScrappedProfileParsed: MemberSteamGameFallback[] = JSON.parse(
+    memberScrappedProfileTranslated,
+  );
+  const memberScrappedProfileFixed = memberScrappedProfileParsed
+    .filter(game => {
+      const isCurated = curatedGames.find(g => g.id === game.appid);
+      return !!isCurated;
+    })
+    .map(game => {
+      // this is in hours
+      // hours_forever is string which inserts comma when in thousands
+      // it also inserts dot when there's a fraction of an hour, but this can stay
+      const playtimeHours = (game?.hours_forever ?? '0').replace(',', '');
+      const playTime = !Number.isNaN(Number(playtimeHours))
+        ? Number(playtimeHours)
+        : 0;
+      return {
+        memberId,
+        gameId: game.appid,
+        playTime,
+      };
+    });
+  return memberScrappedProfileFixed;
 };
 
 /**
