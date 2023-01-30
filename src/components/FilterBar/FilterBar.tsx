@@ -19,7 +19,7 @@ const StyledFilterBar = styled.div<{ colorTokens: ColorTokens }>`
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
-	align-items: flex-start;
+	align-items: center;
 	justify-content: space-between;
 	box-sizing: border-box;
 	padding: 16px 8px;

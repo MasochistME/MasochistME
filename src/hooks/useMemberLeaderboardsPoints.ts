@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
-import { useTiers, useLeaderboardsMembers } from 'sdk';
 import { Tier } from '@masochistme/sdk/dist/v1/types';
+
+import { useTiers, useLeaderboardsMembers } from 'sdk';
 
 export const useMemberLeaderboardsPoints = (memberId: string) => {
 	const {
