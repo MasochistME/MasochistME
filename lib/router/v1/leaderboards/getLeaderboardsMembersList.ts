@@ -24,7 +24,7 @@ export const getLeaderboardsMembersList = async (
 ): Promise<void> => {
   try {
     const { filter = {}, sort, limit = 1000 } = req.body;
-    const { isMember, ...restFilter } = filter;
+    const { isMember, from, to, ...restFilter } = filter;
     const { db } = mongoInstance.getDb();
 
     const collectionMembers = db.collection<Member>('members');
@@ -82,7 +82,10 @@ export const getLeaderboardsMembersList = async (
     });
 
     // Get all games from all members.
-    const memberGamesCursor = collectionMemberGames.find();
+    const memberGamesCursor = collectionMemberGames.find({
+      ...(from && { mostRecentAchievementDate: { $gte: new Date(from) } }),
+      ...(to && { mostRecentAchievementDate: { $lte: new Date(to) } }),
+    });
     const rawMembersGames: (MemberGame & { tier: TierId | null })[] = [];
     await memberGamesCursor.forEach((el: MemberGame) => {
       rawMembersGames.push({
@@ -116,7 +119,10 @@ export const getLeaderboardsMembersList = async (
 
     // Get all badges from all members.
     const memberBadgesCursor = collectionMemberBadges.find(
-      {},
+      {
+        ...(from && { unlocked: { $gte: new Date(from) } }),
+        ...(to && { unlocked: { $lte: new Date(to) } }),
+      },
       { projection: { badgeId: 1, memberId: 1, _id: 0 } },
     );
     const membersBadges: MemberBadge[] = [];
