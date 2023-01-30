@@ -31,7 +31,7 @@ export const getLeaderboardsGamesList = async (
 };
 
 export type LeaderboardsGamesListParams = {
-	filter?: { patreonTier?: number; isMember?: boolean };
+	filter?: { patreonTier?: number; isMember?: boolean; from?: Date; to?: Date };
 	sort?: {
 		[key in 'owners' | 'avgPlaytime']: Sort;
 	};
