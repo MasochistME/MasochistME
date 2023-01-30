@@ -7,6 +7,9 @@ export enum TimePeriod {
 
 export const getTimePeriod = (from: TimePeriod) => {
 	const now = new Date();
+	// We get the timestamp from the midnight of current day,
+	// because using current timestamp creates unnecesary fetches
+	// of the data on every rerender
 	const timestamp = new Date(
 		now.getFullYear(),
 		now.getMonth(),
