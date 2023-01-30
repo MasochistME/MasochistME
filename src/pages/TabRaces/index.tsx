@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { useActiveTab } from 'hooks';
 import { TabDict } from 'configuration/tabs';
-import { Flex, Spinner } from 'components';
+import { Flex } from 'components';
 import {
 	Section,
 	SectionProps,
@@ -53,55 +53,69 @@ const TabRaces = (): JSX.Element => {
 				</TabPanel>
 			</StyledSeasonsList>
 			<Flex column width="100%" maxWidth="450px" gap={16}>
-				<TabNextRaceInfo isDesktopOnly width="100%" maxWidth="450px" />
-				<TabSpecialEventInfo isDesktopOnly width="100%" maxWidth="450px" />
+				<TabRaceInfo isDesktopOnly width="100%" maxWidth="450px" />
+				<TabHowToJoinInfo isDesktopOnly width="100%" maxWidth="450px" />
 			</Flex>
 		</SubPage>
 	);
 };
 
-const TabNextRaceInfo = (props: Partial<SectionProps>): JSX.Element => {
+const TabRaceInfo = (props: Partial<SectionProps>): JSX.Element => {
 	return (
 		<Section
 			{...props}
-			title="Next race"
+			title="Races"
 			content={
 				<Flex column gap={8}>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eget
-					pulvinar lectus, in volutpat nisl. Donec varius dolor a sapien
-					hendrerit malesuada. Donec ac dui ac ex feugiat suscipit at a sem. In
-					hac habitasse platea dictumst. Morbi a ullamcorper ligula. Vivamus
-					suscipit lacinia neque. Ut quis dolor a nunc dignissim consequat. Orci
-					varius natoque penatibus et magnis dis parturient montes, nascetur
-					ridiculus mus. Sed consequat dui libero, et varius quam consectetur
-					sit amet. Aenean sodales non risus in elementum. Interdum et malesuada
-					fames ac ante ipsum primis in faucibus. Ut malesuada, neque eget
-					gravida elementum, diam massa porttitor nisi, a venenatis nulla neque
-					consectetur lacus.
+					<div>
+						Races are community events (usually happening over the weekend),
+						where you have to blindly complete a short secret game and get the
+						best possible score.
+					</div>
+					<div> There are two types of races:</div>
+					<ul>
+						<li>
+							<span style={{ fontWeight: 600 }}>time based</span> - you have to
+							complete the game in the shortest time possible,
+						</li>
+						<li>
+							<span style={{ fontWeight: 600 }}>score based</span> - you have to
+							get the highest score within a limited time frame.
+						</li>
+					</ul>
+					<div>
+						Races are organized into seasons. A season typically consists of 10
+						races and takes into consideration 8 best results of all
+						participants.
+					</div>
 				</Flex>
 			}
 		/>
 	);
 };
 
-const TabSpecialEventInfo = (props: Partial<SectionProps>): JSX.Element => {
+const TabHowToJoinInfo = (props: Partial<SectionProps>): JSX.Element => {
 	return (
 		<Section
 			{...props}
-			title="Special event"
+			title="How to join"
 			content={
 				<Flex column gap={8}>
-					Integer sem arcu, aliquet ut metus ac, mattis lobortis diam. Etiam
-					consectetur fringilla velit, quis convallis diam placerat quis. Nam
-					quis ante massa. Nam vitae faucibus diam, non mollis arcu. Sed
-					feugiat, lorem vel bibendum vestibulum, diam sem lacinia sapien, quis
-					maximus ex nisl hendrerit mauris. In est enim, auctor sit amet dapibus
-					suscipit, commodo quis enim. Aliquam velit lorem, pharetra ut nibh id,
-					sagittis scelerisque magna. Maecenas vitae nisi hendrerit ipsum porta
-					bibendum. Quisque eleifend nisi quis lorem sodales, nec viverra metus
-					pharetra. Donec sagittis orci sed magna molestie condimentum. Quisque
-					id vehicula metus, sed congue leo. Ut vel consectetur risus. Nunc
-					aliquet ut purus eu dictum. Curabitur vitae porttitor quam.
+					<div>
+						Races take place in{' '}
+						<a href="https://discord.com/invite/NjAeT53kVb" target="_blank">
+							our Discord server
+						</a>{' '}
+						and require you to be a member of MasochistME community.
+					</div>
+					<div>
+						<a
+							href="https://abiding-washer-fc3.notion.site/Races-6fe4971a56194039b85807adf2077262"
+							target="_blank">
+							This link talks about joining and participating in more detail
+						</a>
+						.
+					</div>
 				</Flex>
 			}
 		/>
