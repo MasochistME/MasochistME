@@ -6,10 +6,17 @@ export enum TimePeriod {
 }
 
 export const getTimePeriod = (from: TimePeriod) => {
+	const now = new Date();
+	const timestamp = new Date(
+		now.getFullYear(),
+		now.getMonth(),
+		now.getDate(),
+	).getTime();
+
 	if (from === TimePeriod.PAST_WEEK)
-		return new Date(Date.now() - 1000 * 60 * 60 * 24 * 7).toString();
+		return new Date(timestamp - 1000 * 60 * 60 * 24 * 7).toString();
 	if (from === TimePeriod.PAST_MONTH)
-		return new Date(Date.now() - 1000 * 60 * 60 * 24 * 30).toString();
+		return new Date(timestamp - 1000 * 60 * 60 * 24 * 30).toString();
 	if (from === TimePeriod.PAST_YEAR)
-		return new Date(Date.now() - 1000 * 60 * 60 * 24 * 365).toString();
+		return new Date(timestamp - 1000 * 60 * 60 * 24 * 365).toString();
 };
