@@ -4,7 +4,7 @@ import { orderBy } from 'lodash';
 import { PatreonTier } from '@masochistme/sdk/dist/v1/types';
 
 import { usePatreonTiers } from 'sdk';
-import { useActiveTab } from 'hooks';
+import { useActiveTab, useMixpanel } from 'hooks';
 import { TabDict } from 'configuration/tabs';
 import { Flex, Spinner } from 'components';
 import { Section, SectionProps, SubPage } from 'containers';
@@ -37,6 +37,13 @@ const TabSupport = (): JSX.Element => {
 };
 
 const TabSupportInfo = (props: Partial<SectionProps>): JSX.Element => {
+	const { trackLink } = useMixpanel();
+	const idLinkPatreon = 'link--patreon';
+	const idLinkKofi = 'link--kofi';
+
+	trackLink(idLinkPatreon, 'link.patreon.click');
+	trackLink(idLinkKofi, 'link.kofi.click');
+
 	return (
 		<Section
 			{...props}
@@ -59,7 +66,8 @@ const TabSupportInfo = (props: Partial<SectionProps>): JSX.Element => {
 						<a
 							href="https://www.patreon.com/pointonepercent"
 							rel="noopener noreferrer"
-							target="_blank">
+							target="_blank"
+							id={idLinkPatreon}>
 							<ButtonSupport
 								src="http://cdn.masochist.me/assets/patreon.png"
 								alt="Patreon button"
@@ -68,7 +76,8 @@ const TabSupportInfo = (props: Partial<SectionProps>): JSX.Element => {
 						<a
 							href="https://ko-fi.com/arcyvilk"
 							target="_blank"
-							rel="noopener noreferrer">
+							rel="noopener noreferrer"
+							id={idLinkKofi}>
 							<ButtonSupport
 								src="https://storage.ko-fi.com/cdn/kofi2.png?v=3"
 								alt="Buy Me a Coffee at ko-fi.com"
