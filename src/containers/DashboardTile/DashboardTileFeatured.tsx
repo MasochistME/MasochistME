@@ -45,6 +45,7 @@ export const DashboardTileFeatured = (props: Props): JSX.Element => {
 						nrOfItems={featuredData.length}
 						activeIndex={activeIndex}
 						setActiveIndex={setActiveIndex}
+						trackId={`featured.pagination`}
 					/>
 				</StyledContent>
 			}

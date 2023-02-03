@@ -41,8 +41,8 @@ const TabSupportInfo = (props: Partial<SectionProps>): JSX.Element => {
 	const idLinkPatreon = 'link--patreon';
 	const idLinkKofi = 'link--kofi';
 
-	trackLink(idLinkPatreon, 'link.patreon.click');
-	trackLink(idLinkKofi, 'link.kofi.click');
+	trackLink(`#${idLinkPatreon}`, 'link.patreon.click');
+	trackLink(`#${idLinkKofi}`, 'link.kofi.click');
 
 	return (
 		<Section

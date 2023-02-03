@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { Game, Badge } from '@masochistme/sdk/dist/v1/types';
@@ -6,7 +6,7 @@ import { Game, Badge } from '@masochistme/sdk/dist/v1/types';
 import { useCuratedGames, useGameBadges } from 'sdk';
 import { Flex, Spinner, Warning } from 'components';
 import { SubPage, Section, BadgeTile, Tabs, Tab, TabPanel } from 'containers';
-import { useActiveTab } from 'hooks';
+import { useActiveTab, useMixpanel } from 'hooks';
 import { TabDict } from 'configuration/tabs';
 
 import { GameProfileHeader } from './GameProfileHeader';
@@ -24,10 +24,15 @@ enum TabsMap {
 }
 
 const TabGame = (): JSX.Element => {
-	useActiveTab(TabDict.GAME);
+	useActiveTab(TabDict.GAME, true);
 	const [activeTab, setActiveTab] = useState<string>(TabsMap.LEADERBOARDS);
+	const { track } = useMixpanel();
 	const { id } = useParams<{ id: string }>();
 	const gameId = Number(id);
+
+	useEffect(() => {
+		track('tab.game.visit', { id });
+	}, []);
 
 	const {
 		gamesData,
@@ -44,6 +49,7 @@ const TabGame = (): JSX.Element => {
 
 	const handleChangeTab = (_e: React.SyntheticEvent, newTab: TabsMap) => {
 		setActiveTab(newTab);
+		track('page.game.tab', { tab: newTab });
 	};
 
 	if (!game)

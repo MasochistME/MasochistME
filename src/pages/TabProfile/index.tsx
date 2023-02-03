@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { useMemberById, usePatreonTiers, useMemberLeaderboards } from 'sdk';
 import { Flex, Warning } from 'components';
 import { SubPage, Tabs, Tab, TabPanel } from 'containers';
-import { useActiveTab } from 'hooks';
+import { useActiveTab, useMixpanel } from 'hooks';
 import { TabDict } from 'configuration/tabs';
 import { useTheme, ColorTokens } from 'styles';
 
@@ -25,10 +25,15 @@ enum TabsMap {
 }
 
 const TabProfile = (): JSX.Element => {
-	useActiveTab(TabDict.PROFILE);
+	useActiveTab(TabDict.PROFILE, true);
 	const { colorTokens } = useTheme();
+	const { track } = useMixpanel();
 	const [activeTab, setActiveTab] = useState<string>(TabsMap.GAMES);
 	const { id } = useParams<{ id: string }>();
+
+	useEffect(() => {
+		track('tab.profile.visit', { id });
+	}, []);
 
 	const { leaderData } = useMemberLeaderboards(id);
 	const { memberData: member, isError } = useMemberById(id);
@@ -54,6 +59,7 @@ const TabProfile = (): JSX.Element => {
 
 	const handleChangeTab = (_e: React.SyntheticEvent, newTab: TabsMap) => {
 		setActiveTab(newTab);
+		track('page.user.tab', { tab: newTab });
 	};
 
 	if (isError)

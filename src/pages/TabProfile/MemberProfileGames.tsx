@@ -6,12 +6,14 @@ import { useTiers } from 'sdk';
 import { MemberLeaderboards } from 'containers';
 import { Checkbox, Flex, IconType, Spinner, Switch } from 'components';
 import { fonts, media, useTheme, ColorTokens } from 'styles';
+import { useMixpanel } from 'hooks';
 
 type Props = { memberId: string };
 
 export const MemberProfileGames = (props: Props) => {
 	const { memberId } = props;
 	const { colorTokens } = useTheme();
+	const { track } = useMixpanel();
 	const [visibleTiers, setVisibleTiers] = useState<TierId[]>([]);
 	const [isHideCompleted, setIsHideCompleted] = useState<boolean>(false);
 	const [isHideUnfinished, setIsHideUnfinished] = useState<boolean>(false);
@@ -27,9 +29,11 @@ export const MemberProfileGames = (props: Props) => {
 
 	const handleHideCompleted = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setIsHideCompleted(event.target.checked);
+		track('page.user.games.filter', { hideCompleted: event.target.checked });
 	};
 	const handleHideUnfinished = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setIsHideUnfinished(event.target.checked);
+		track('page.user.games.filter', { hideUnfinished: event.target.checked });
 	};
 
 	return (
