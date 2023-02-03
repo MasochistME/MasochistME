@@ -1,17 +1,20 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
-import { Flex, Icon, Button } from 'components';
+import { useCuratedGames } from 'sdk';
+import { Flex, Icon, Button, QueryBoundary, Skeleton } from 'components';
+import { Game } from '@masochistme/sdk/dist/v1/types';
 
 type Props = {
 	gameId: number;
-	gameTitle?: string;
 };
 
-export const ModalLeaderboardsHeader = (props: Props) => {
-	const { gameId, gameTitle = 'Loading...' } = props;
+export const ModalLeaderboardsHeader = ({ gameId }: Props) => {
 	const history = useHistory();
+	const { gamesData } = useCuratedGames();
+
+	const game = gamesData.find((g: Game) => g.id === gameId);
 
 	const onShowGame = (
 		event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -28,7 +31,8 @@ export const ModalLeaderboardsHeader = (props: Props) => {
 				rel="noopener noreferrer"
 				onClick={event => event.stopPropagation()}>
 				<Flex align gap={8}>
-					<Icon icon="Steam" /> <h2>{gameTitle}</h2>
+					<Icon icon="Steam" />
+					<h2>{game ? game.title : 'Loading...'}</h2>
 				</Flex>
 			</a>
 			<Button label="Details" icon="CircleInfo" onClick={onShowGame} />

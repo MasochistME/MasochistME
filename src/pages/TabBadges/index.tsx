@@ -1,9 +1,9 @@
-import { useMemo, Suspense } from 'react';
+import { useMemo } from 'react';
 import styled from 'styled-components';
 
 import { useActiveTab, BadgeView, useToggleView } from 'hooks';
 import { TabDict } from 'configuration/tabs';
-import { Button, FilterBar, Flex, Loader } from 'components';
+import { Button, FilterBar, Flex, Loader, QueryBoundary } from 'components';
 import { SubPage, Section, SectionProps } from 'containers';
 
 import { BadgesTableView } from './BadgesTableView';
@@ -37,9 +37,9 @@ const TabBadges = (): JSX.Element => {
 					/>
 				</FilterBar>
 				{badgeListView === BadgeView.TILE && (
-					<Suspense fallback={<Loader />}>
+					<QueryBoundary fallback={<Loader />}>
 						<BadgesTileView />
-					</Suspense>
+					</QueryBoundary>
 				)}
 				{badgeListView === BadgeView.TABLE && <BadgesTableView />}
 			</StyledBadges>

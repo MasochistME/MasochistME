@@ -7,17 +7,30 @@ import { EventMemberJoin, EventType } from '@masochistme/sdk/dist/v1/types';
 import { media } from 'styles';
 import { useCuratorMembers, useEvents } from 'sdk';
 import { MemberAvatar, Section, SectionProps } from 'containers';
-import { Flex } from 'components';
+import { Flex, QueryBoundary } from 'components';
 import { Size } from 'components';
 
 const NUMBER_OF_MEMBERS = 10;
 
-export const DashboardTileMembers = (
-	props: Omit<SectionProps, 'content' | 'title'>,
-): JSX.Element => {
+type Props = Omit<SectionProps, 'content' | 'title'>;
+export const DashboardTileMembers = (props: Props) => {
+	const members = new Array(NUMBER_OF_MEMBERS)
+		.fill(null)
+		.map((_, i: number) => (
+			<MemberAvatar isLoading key={`member-new-${i}`} size={Size.BIG} />
+		));
+
+	return (
+		<QueryBoundary fallback={<Content members={members} />}>
+			<DashboardTileMembersBoundary {...props} />
+		</QueryBoundary>
+	);
+};
+
+const DashboardTileMembersBoundary = (props: Props) => {
 	const history = useHistory();
 	const { membersData } = useCuratorMembers();
-	const { eventsData, isLoading, isFetched } = useEvents({
+	const { eventsData } = useEvents({
 		limit: NUMBER_OF_MEMBERS,
 		sort: { date: 'desc' },
 		filter: { type: EventType.MEMBER_JOIN },
@@ -31,7 +44,7 @@ export const DashboardTileMembers = (
 		event => event.type === EventType.MEMBER_JOIN,
 	) as unknown as EventMemberJoin[];
 
-	const newestMembers = memberEvents.map(event => {
+	const members = memberEvents.map(event => {
 		const member = membersData.find(
 			member => member.steamId === event.memberId,
 		);
@@ -52,31 +65,19 @@ export const DashboardTileMembers = (
 			);
 	});
 
-	const loadingMembers = new Array(NUMBER_OF_MEMBERS)
-		.fill(null)
-		.map((_, i: number) => (
-			<MemberAvatar
-				key={`new-member-${i}`}
-				isLoading={isLoading}
-				size={Size.BIG}
-			/>
-		));
-
-	return (
-		<Section
-			width="100%"
-			maxWidth="450px"
-			title="New members"
-			content={
-				<StyledNewMembers>
-					{isLoading && loadingMembers}
-					{isFetched && newestMembers}
-				</StyledNewMembers>
-			}
-			{...props}
-		/>
-	);
+	return <Content members={members} {...props} />;
 };
+
+type ContentProps = Props & { members: React.ReactNode[] };
+const Content = ({ members, ...props }: ContentProps) => (
+	<Section
+		width="100%"
+		maxWidth="450px"
+		title="New members"
+		content={<StyledNewMembers>{members}</StyledNewMembers>}
+		{...props}
+	/>
+);
 
 const StyledNewMembers = styled(Flex)`
 	display: grid;

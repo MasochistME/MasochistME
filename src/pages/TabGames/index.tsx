@@ -1,10 +1,10 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import { useActiveTab, GameView, useToggleView } from 'hooks';
 import { TabDict } from 'configuration/tabs';
 import { SubPage } from 'containers';
-import { Flex, Loader } from 'components';
+import { Flex, Loader, QueryBoundary } from 'components';
 
 import { GameTableView } from './GameTableView';
 import { GameFilterBar } from './GameFilterBar';
@@ -28,9 +28,9 @@ const TabGames = (): JSX.Element => {
 					toggleGameView={toggleGameView}
 				/>
 				{gameListView === GameView.TILE && (
-					<Suspense fallback={<Loader />}>
+					<QueryBoundary fallback={<Loader />}>
 						<GameTileView />
-					</Suspense>
+					</QueryBoundary>
 				)}
 				{gameListView === GameView.TABLE && <GameTableView />}
 			</StyledGames>

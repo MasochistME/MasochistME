@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router';
 import styled from 'styled-components';
 import {
 	Badge,
@@ -30,16 +30,36 @@ import { media } from 'styles';
 import { getTierIcon } from 'utils';
 import { EventsDict } from 'configuration';
 import { Section, SectionProps } from 'containers';
-import { Flex, Icon, IconType, Skeleton, Size } from 'components';
+import {
+	Flex,
+	Icon,
+	IconType,
+	Skeleton,
+	Size,
+	QueryBoundary,
+} from 'components';
 
 import { EventCompact } from './components';
 
 const NUMBER_OF_EVENTS = 15;
 
-export const DashboardTileHistory = (
-	props: Omit<SectionProps, 'content' | 'title'>,
-): JSX.Element => {
-	const { eventsData, isLoading, isFetched } = useEvents({
+type Props = Omit<SectionProps, 'content' | 'title'>;
+export const DashboardTileHistory = (props: Props) => {
+	const events = new Array(NUMBER_OF_EVENTS)
+		.fill(null)
+		.map((_, i: number) => (
+			<Skeleton key={`event-new-${i}`} height={22} width="100%" />
+		));
+
+	return (
+		<QueryBoundary fallback={<Content events={events} />}>
+			<DashboardTileHistoryBoundary {...props} />
+		</QueryBoundary>
+	);
+};
+
+export const DashboardTileHistoryBoundary = (props: Props) => {
+	const { eventsData } = useEvents({
 		sort: { date: 'desc' },
 		limit: NUMBER_OF_EVENTS,
 	});
@@ -97,27 +117,24 @@ export const DashboardTileHistory = (
 		}
 	};
 
-	const loadingEvents = new Array(NUMBER_OF_EVENTS)
-		.fill(null)
-		.map((_, i: number) => (
-			<Skeleton key={`badge-new-${i}`} height={22} width="100%" />
-		));
-
 	return (
-		<Section
-			width="100%"
-			maxWidth="450px"
-			title="Last events"
-			content={
-				<StyledSectionHistory>
-					{isLoading && loadingEvents}
-					{isFetched && eventsData.map((event: Event) => classifyEvents(event))}
-				</StyledSectionHistory>
-			}
+		<Content
+			events={eventsData.map((event: Event) => classifyEvents(event))}
 			{...props}
 		/>
 	);
 };
+
+type ContentProps = Props & { events: React.ReactNode[] };
+const Content = ({ events, ...props }: ContentProps) => (
+	<Section
+		width="100%"
+		maxWidth="450px"
+		title="Last events"
+		content={<StyledSectionHistory>{events}</StyledSectionHistory>}
+		{...props}
+	/>
+);
 
 const StyledSectionHistory = styled(Flex)`
 	flex-direction: column;

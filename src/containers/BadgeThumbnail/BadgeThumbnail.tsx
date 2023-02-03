@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Badge } from '@masochistme/sdk/dist/v1/types';
 
 import { BadgeTooltip, CommonProps } from 'containers';
-import { Size } from 'components';
+import { QueryBoundary, Size, Skeleton } from 'components';
 import { ColorTokens, useTheme } from 'styles';
 import { Tooltip } from 'components';
 
@@ -13,7 +13,16 @@ type Props = CommonProps & {
 
 export const BadgeThumbnail = (props: Props) => {
 	const { colorTokens, LOGO_URL } = useTheme();
-	const { badge, isDisabled, size = Size.MEDIUM, title, onClick } = props;
+	const {
+		badge,
+		isDisabled,
+		isLoading,
+		size = Size.MEDIUM,
+		title,
+		onClick,
+	} = props;
+
+	if (isLoading) return <Skeleton size={size} />;
 
 	const isNegative = (badge?.points ?? 0) < 0;
 	const badgeComponent = (
@@ -28,7 +37,11 @@ export const BadgeThumbnail = (props: Props) => {
 	);
 
 	if (title) return <Tooltip content={title}>{badgeComponent}</Tooltip>;
-	return <BadgeTooltip badge={badge}>{badgeComponent}</BadgeTooltip>;
+	return (
+		<QueryBoundary fallback={null}>
+			<BadgeTooltip badge={badge}>{badgeComponent}</BadgeTooltip>
+		</QueryBoundary>
+	);
 };
 
 const StyledBadgeThumbnail = styled.div.attrs(

@@ -6,7 +6,7 @@ import { useFeatured } from 'sdk/featured';
 import { chooseRandomIndex } from 'utils';
 import { useActiveTab } from 'hooks';
 import { TabDict } from 'configuration/tabs';
-import { Flex } from 'components';
+import { Flex, QueryBoundary } from 'components';
 import { SubPage, DashboardTile } from 'containers';
 import { Featured } from '@masochistme/sdk/dist/v1/types';
 
@@ -25,27 +25,13 @@ export enum SectionMap {
 const TabHome = (): JSX.Element => {
 	useActiveTab(TabDict.HOME);
 
-	const { featuredData, isLoading, isFetched, isError } = useFeatured();
-	const [activeFeaturedIndex, setActiveFeaturedIndex] = useState<number>(0);
-
-	useEffect(() => {
-		if (isFetched)
-			setActiveFeaturedIndex(chooseRandomIndex<Featured>(featuredData));
-	}, [featuredData, isFetched]);
-
 	return (
 		<SubPage>
 			<StyledDashboard column justify align>
-				<DashboardTile.Featured
-					fullWidth
-					isMobileOnly
-					featuredData={featuredData}
-					isLoading={isLoading}
-					isFetched={isFetched}
-					isError={isError}
-					activeIndex={activeFeaturedIndex}
-					setActiveIndex={setActiveFeaturedIndex}
-				/>
+				<QueryBoundary
+					fallback={<DashboardTile.Featured.Skeleton isMobileOnly />}>
+					<FeaturedBoundary isMobileOnly />
+				</QueryBoundary>
 				<StyledSectionTop>
 					<StyledColumnLeft>
 						<DashboardTile.History />
@@ -56,23 +42,46 @@ const TabHome = (): JSX.Element => {
 					</StyledColumnLeft>
 					<StyledColumnRight>
 						<DashboardTile.Games />
-						<DashboardTile.Featured
-							fullWidth
-							isDesktopOnly
-							featuredData={featuredData}
-							isLoading={isLoading}
-							isFetched={isFetched}
-							isError={isError}
-							activeIndex={activeFeaturedIndex}
-							setActiveIndex={setActiveFeaturedIndex}
-						/>
+						<QueryBoundary
+							fallback={<DashboardTile.Featured.Skeleton isDesktopOnly />}>
+							<FeaturedBoundary isDesktopOnly />
+						</QueryBoundary>
 					</StyledColumnRight>
 				</StyledSectionTop>
-				<DashboardTile.Sale />
+				{/* <DashboardTile.Sale /> */}
 			</StyledDashboard>
 			{/* <DashboardTile.Top /> */}
 			{/* <DashboardTile.Discord /> */}
 		</SubPage>
+	);
+};
+
+type FeaturedBoundaryProps = {
+	isDesktopOnly?: boolean;
+	isMobileOnly?: boolean;
+};
+const FeaturedBoundary = (props: FeaturedBoundaryProps) => {
+	const { isDesktopOnly = false, isMobileOnly = false } = props;
+	const { featuredData, isLoading, isFetched, isError } = useFeatured();
+	const [activeFeaturedIndex, setActiveFeaturedIndex] = useState<number>(0);
+
+	useEffect(() => {
+		if (isFetched)
+			setActiveFeaturedIndex(chooseRandomIndex<Featured>(featuredData));
+	}, [featuredData, isFetched]);
+
+	return (
+		<DashboardTile.Featured
+			fullWidth
+			isDesktopOnly={isDesktopOnly}
+			isMobileOnly={isMobileOnly}
+			featuredData={featuredData}
+			isLoading={isLoading}
+			isFetched={isFetched}
+			isError={isError}
+			activeIndex={activeFeaturedIndex}
+			setActiveIndex={setActiveFeaturedIndex}
+		/>
 	);
 };
 

@@ -1,66 +1,53 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { Tier } from '@masochistme/sdk/dist/v1/types';
+import { Leaderboards, Tier } from '@masochistme/sdk/dist/v1/types';
 
 import { useAppContext } from 'context';
 import { useMembers, useLeaderboardsMembers, useTiers } from 'sdk';
 import { useActiveTab } from 'hooks';
 import { TabDict } from 'configuration/tabs';
 import { SubPage, Section, SectionProps } from 'containers';
-import { Flex, Icon, Skeleton, Spinner, IconType } from 'components';
+import { Flex, Icon, Spinner, IconType, QueryBoundary } from 'components';
 import { Size } from 'components';
 
 import { LeaderboardsFilterBar } from './LeaderboardsFilterBar';
-
-const LeaderboardsMember = React.lazy(() =>
-	import('./LeaderboardsMember').then(module => ({
-		default: module.LeaderboardsMember,
-	})),
-);
+import { LeaderboardsMember } from './LeaderboardsMember';
 
 const TabLeaderboards = (): JSX.Element => {
-	const { queryMember } = useAppContext();
 	useActiveTab(TabDict.LEADERBOARDS);
-
-	const { leaderboardsData, isFetched, isLoading } = useLeaderboardsMembers();
-	const { membersData = [] } = useMembers();
-
-	const lazyRankingList = leaderboardsData.map(leader => {
-		const memberName =
-			membersData.find(member => member.steamId === leader.memberId)?.name ??
-			'';
-		const includesNameQuery = memberName
-			.toLowerCase()
-			.includes(queryMember.toLowerCase());
-		if (queryMember && !includesNameQuery) return null;
-		return (
-			<Suspense
-				key={`leaderboards-leader-${leader.memberId}`}
-				fallback={
-					<Skeleton width="100%" height="50px" style={{ margin: '2px 0' }} />
-				}>
-				<LeaderboardsMember
-					steamId={leader.memberId}
-					position={leader.position}
-				/>
-			</Suspense>
-		);
-	});
 
 	return (
 		<SubPage>
 			<StyledLeaderboards>
-				<TabLeaderboardsInfo isMobileOnly />
+				<Info isMobileOnly />
 				<LeaderboardsFilterBar />
-				{isLoading && <Spinner />}
-				{isFetched && <Flex column>{lazyRankingList}</Flex>}
+				<QueryBoundary fallback={<Spinner />}>
+					<LeaderboardsList />
+				</QueryBoundary>
 			</StyledLeaderboards>
-			<TabLeaderboardsInfo isDesktopOnly minWidth="450px" maxWidth="450px" />
+			<QueryBoundary fallback={<Spinner />}>
+				<Info isDesktopOnly minWidth="450px" maxWidth="450px" />
+			</QueryBoundary>
 		</SubPage>
 	);
 };
 
-const TabLeaderboardsInfo = (props: Partial<SectionProps>): JSX.Element => {
+const LeaderboardsList = () => {
+	const lazyRankingList = useLazyRankingList();
+	return (
+		<Flex column>
+			{lazyRankingList.map(leader => (
+				<LeaderboardsMember
+					steamId={leader.memberId}
+					position={leader.position}
+					key={`leaderboards-leader-${leader.memberId}`}
+				/>
+			))}
+		</Flex>
+	);
+};
+
+const Info = (props: Partial<SectionProps>): JSX.Element => {
 	const {
 		tiersData,
 		isLoading: isTiersLoading,
@@ -104,6 +91,25 @@ const TabLeaderboardsInfo = (props: Partial<SectionProps>): JSX.Element => {
 			}
 		/>
 	);
+};
+
+const useLazyRankingList = () => {
+	const { queryMember } = useAppContext();
+	const { leaderboardsData } = useLeaderboardsMembers();
+	const { membersData = [] } = useMembers();
+
+	return leaderboardsData
+		.map(leader => {
+			const memberName =
+				membersData.find(member => member.steamId === leader.memberId)?.name ??
+				'';
+			const includesNameQuery = memberName
+				.toLowerCase()
+				.includes(queryMember.toLowerCase());
+			if (queryMember && !includesNameQuery) return null;
+			return leader;
+		})
+		.filter(Boolean) as Leaderboards[];
 };
 
 export default TabLeaderboards;

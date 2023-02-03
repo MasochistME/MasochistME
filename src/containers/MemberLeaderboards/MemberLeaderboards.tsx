@@ -1,17 +1,13 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { orderBy } from 'lodash';
 import styled from 'styled-components';
 import { MemberGame, TierId } from '@masochistme/sdk/dist/v1/types';
 
 import { useCuratedGames, useMemberGames, useMemberById } from 'sdk';
 import { media, useTheme, ColorTokens } from 'styles';
-import { Flex, Loader, Skeleton } from 'components';
+import { Flex, Loader, QueryBoundary } from 'components';
 
-const MemberLeaderboardsGame = React.lazy(() =>
-	import('./MemberLeaderboardsGame').then(module => ({
-		default: module.MemberLeaderboardsGame,
-	})),
-);
+import { MemberLeaderboardsGame } from './MemberLeaderboardsGame';
 
 type Props = {
 	steamId: string;
@@ -24,13 +20,32 @@ type Props = {
 
 export const MemberLeaderboards = (props: Props): JSX.Element => {
 	const { colorTokens } = useTheme();
-	const { steamId, filter } = props;
+	const { steamId } = props;
 
-	const { gamesData } = useCuratedGames();
-	const { memberGamesData, isLoading, isFetched } = useMemberGames(steamId);
+	const lazyGameList = useLazyGamesList(props);
 	const { memberData } = useMemberById(steamId);
 
 	const isDisabled = memberData?.isPrivate;
+
+	return (
+		<StyledMemberGameList isDisabled={isDisabled} colorTokens={colorTokens}>
+			{lazyGameList.map(memberGame => (
+				<QueryBoundary fallback={<Loader />}>
+					<MemberLeaderboardsGame
+						steamId={steamId}
+						memberGame={memberGame}
+						key={`game-${memberGame.gameId}`}
+					/>
+				</QueryBoundary>
+			))}
+		</StyledMemberGameList>
+	);
+};
+
+const useLazyGamesList = (props: Props) => {
+	const { steamId, filter } = props;
+	const { gamesData } = useCuratedGames();
+	const { memberGamesData } = useMemberGames(steamId);
 
 	const lazyGameList: MemberGame[] = orderBy(
 		memberGamesData.filter(memberGame => {
@@ -55,25 +70,7 @@ export const MemberLeaderboards = (props: Props): JSX.Element => {
 		return shouldFilter;
 	});
 
-	return (
-		<StyledMemberGameList isDisabled={isDisabled} colorTokens={colorTokens}>
-			{isLoading && <Loader />}
-			{isFetched &&
-				lazyGameList.map(memberGame => (
-					<Suspense
-						key={`game-${memberGame.gameId}`}
-						fallback={
-							<Skeleton
-								width="100%"
-								height="20px"
-								style={{ margin: '1px 0' }}
-							/>
-						}>
-						<MemberLeaderboardsGame steamId={steamId} memberGame={memberGame} />
-					</Suspense>
-				))}
-		</StyledMemberGameList>
-	);
+	return lazyGameList;
 };
 
 type SummaryProps = {

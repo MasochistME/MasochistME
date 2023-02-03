@@ -37,6 +37,7 @@ export const MemberAvatar = (props: Props) => {
 		return null;
 	}, [member]);
 
+	if (isLoading) return <Skeleton size={size} />;
 	return (
 		<Tooltip content={title ?? <Flex column>{member.name}</Flex>}>
 			<StyledMemberAvatar
@@ -45,11 +46,10 @@ export const MemberAvatar = (props: Props) => {
 				patronTier={patronTier}
 				isEmpty={!avatarUrl}
 				colorTokens={colorTokens}>
-				{isLoading && <Skeleton size={size} />}
-				{!isLoading && (isError || !avatarUrl) && (
+				{(isError || !avatarUrl) && (
 					<BrokenImage size={size} title="Could not load the avatar." />
 				)}
-				{!isLoading && !isError && avatarUrl && (
+				{!isError && avatarUrl && (
 					<img src={avatarUrl ?? LOGO_URL} alt="Member avatar" loading="lazy" />
 				)}
 			</StyledMemberAvatar>
