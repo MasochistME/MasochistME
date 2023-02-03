@@ -5,7 +5,7 @@ import { EventBadgeCreate, EventType } from '@masochistme/sdk/dist/v1/types';
 import { media } from 'styles';
 import { useBadges, useEvents } from 'sdk';
 import { BadgeThumbnail, Section, SectionProps } from 'containers';
-import { Flex, QueryBoundary } from 'components';
+import { Flex, FetchError, QueryBoundary } from 'components';
 import { Size } from 'components';
 
 const NUMBER_OF_BADGES = 5;
@@ -19,19 +19,21 @@ export const DashboardTileBadges = (props: Props) => {
 		));
 
 	return (
-		<QueryBoundary fallback={<Content badges={badges} />}>
+		<QueryBoundary
+			fallback={<Content content={badges} />}
+			errorFallback={<Content content={<FetchError />} />}>
 			<DashboardTileBadgesBoundary {...props} />
 		</QueryBoundary>
 	);
 };
 
-type ContentProps = Props & { badges: React.ReactNode[] };
-const Content = ({ badges, ...props }: ContentProps) => (
+type ContentProps = Props & { content: React.ReactNode };
+const Content = ({ content, ...props }: ContentProps) => (
 	<Section
 		width="100%"
 		maxWidth="450px"
 		title="New badges"
-		content={<StyledNewBadges>{badges}</StyledNewBadges>}
+		content={<StyledNewBadges>{content}</StyledNewBadges>}
 		{...props}
 	/>
 );
@@ -60,7 +62,7 @@ const DashboardTileBadgesBoundary = (props: Props) => {
 			);
 	});
 
-	return <Content badges={badges} {...props} />;
+	return <Content content={badges} {...props} />;
 };
 
 const StyledNewBadges = styled(Flex)`

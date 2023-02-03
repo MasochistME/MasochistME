@@ -7,7 +7,7 @@ import { EventMemberJoin, EventType } from '@masochistme/sdk/dist/v1/types';
 import { media } from 'styles';
 import { useCuratorMembers, useEvents } from 'sdk';
 import { MemberAvatar, Section, SectionProps } from 'containers';
-import { Flex, QueryBoundary } from 'components';
+import { Flex, FetchError, QueryBoundary } from 'components';
 import { Size } from 'components';
 
 const NUMBER_OF_MEMBERS = 10;
@@ -21,7 +21,11 @@ export const DashboardTileMembers = (props: Props) => {
 		));
 
 	return (
-		<QueryBoundary fallback={<Content members={members} />}>
+		<QueryBoundary
+			fallback={<Content content={members} />}
+			errorFallback={
+				<Content content={<FetchError width="450px" maxWidth="100%" />} />
+			}>
 			<DashboardTileMembersBoundary {...props} />
 		</QueryBoundary>
 	);
@@ -65,23 +69,21 @@ const DashboardTileMembersBoundary = (props: Props) => {
 			);
 	});
 
-	return <Content members={members} {...props} />;
+	return <Content content={members} {...props} />;
 };
 
-type ContentProps = Props & { members: React.ReactNode[] };
-const Content = ({ members, ...props }: ContentProps) => (
+type ContentProps = Props & { content: React.ReactNode };
+const Content = ({ content, ...props }: ContentProps) => (
 	<Section
 		width="100%"
 		maxWidth="450px"
 		title="New members"
-		content={<StyledNewMembers>{members}</StyledNewMembers>}
+		content={<StyledNewMembers>{content}</StyledNewMembers>}
 		{...props}
 	/>
 );
 
 const StyledNewMembers = styled(Flex)`
-	display: grid;
-	grid-template-columns: repeat(5, 1fr);
 	justify-content: center;
 	gap: 16px;
 	flex-wrap: wrap;

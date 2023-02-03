@@ -37,6 +37,7 @@ import {
 	Skeleton,
 	Size,
 	QueryBoundary,
+	FetchError,
 } from 'components';
 
 import { EventCompact } from './components';
@@ -52,7 +53,9 @@ export const DashboardTileHistory = (props: Props) => {
 		));
 
 	return (
-		<QueryBoundary fallback={<Content events={events} />}>
+		<QueryBoundary
+			fallback={<Content content={events} />}
+			errorFallback={<Content content={<FetchError />} />}>
 			<DashboardTileHistoryBoundary {...props} />
 		</QueryBoundary>
 	);
@@ -119,19 +122,19 @@ export const DashboardTileHistoryBoundary = (props: Props) => {
 
 	return (
 		<Content
-			events={eventsData.map((event: Event) => classifyEvents(event))}
+			content={eventsData.map((event: Event) => classifyEvents(event))}
 			{...props}
 		/>
 	);
 };
 
-type ContentProps = Props & { events: React.ReactNode[] };
-const Content = ({ events, ...props }: ContentProps) => (
+type ContentProps = Props & { content: React.ReactNode };
+const Content = ({ content, ...props }: ContentProps) => (
 	<Section
 		width="100%"
 		maxWidth="450px"
 		title="Last events"
-		content={<StyledSectionHistory>{events}</StyledSectionHistory>}
+		content={<StyledSectionHistory>{content}</StyledSectionHistory>}
 		{...props}
 	/>
 );

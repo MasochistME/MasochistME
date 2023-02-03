@@ -5,7 +5,7 @@ import { EventGameAdd, EventType } from '@masochistme/sdk/dist/v1/types';
 
 import { useCuratedGames, useEvents } from 'sdk';
 import { Section, SectionProps, GameTile } from 'containers';
-import { Flex, QueryBoundary } from 'components';
+import { Flex, FetchError, QueryBoundary } from 'components';
 
 const NUMBER_OF_GAMES = 3;
 
@@ -16,7 +16,9 @@ export const DashboardTileGames = (props: Props): JSX.Element => {
 		.map((_, i: number) => <GameTile key={`game-new-${i}`} isLoading />);
 
 	return (
-		<QueryBoundary fallback={<Content games={games} />} displayError>
+		<QueryBoundary
+			fallback={<Content content={games} />}
+			errorFallback={<Content content={<FetchError />} />}>
 			<DashboardTileGamesBoundary {...props} />
 		</QueryBoundary>
 	);
@@ -46,15 +48,15 @@ const DashboardTileGamesBoundary = (props: Props): JSX.Element => {
 			);
 	});
 
-	return <Content games={games} {...props} />;
+	return <Content content={games} {...props} />;
 };
 
-type ContentProps = Props & { games: React.ReactNode[] };
-const Content = ({ games, ...props }: ContentProps) => (
+type ContentProps = Props & { content: React.ReactNode };
+const Content = ({ content, ...props }: ContentProps) => (
 	<Section
 		title="Recent curations"
 		maxWidth="100%"
-		content={<StyledNewGammes>{games}</StyledNewGammes>}
+		content={<StyledNewGammes>{content}</StyledNewGammes>}
 		{...props}
 	/>
 );

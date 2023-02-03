@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Featured, FeaturedType } from '@masochistme/sdk/dist/v1/types';
 
 import { Section, SectionProps } from 'containers';
-import { Flex, Loader, Pagination, Skeleton } from 'components';
+import { FetchError, Flex, Loader, Pagination, Skeleton } from 'components';
 
 import { FeaturedNews, FeaturedVideo } from 'containers/Featured';
 
@@ -69,6 +69,20 @@ DashboardTileFeatured.Skeleton = (
 		content={
 			<StyledContent column align>
 				<Skeleton width="840px" height="440px" />
+			</StyledContent>
+		}
+		{...props}
+	/>
+);
+
+DashboardTileFeatured.Error = (
+	props: Omit<SectionProps, 'content' | 'title'>,
+) => (
+	<Section
+		title="Featured"
+		content={
+			<StyledContent column align>
+				<FetchError width="840px" height="440px" maxWidth="100%" />
 			</StyledContent>
 		}
 		{...props}

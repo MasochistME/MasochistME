@@ -6,7 +6,7 @@ import { useFeatured } from 'sdk/featured';
 import { chooseRandomIndex } from 'utils';
 import { useActiveTab } from 'hooks';
 import { TabDict } from 'configuration/tabs';
-import { Flex, QueryBoundary } from 'components';
+import { Flex, FetchError, QueryBoundary } from 'components';
 import { SubPage, DashboardTile } from 'containers';
 import { Featured } from '@masochistme/sdk/dist/v1/types';
 
@@ -29,7 +29,8 @@ const TabHome = (): JSX.Element => {
 		<SubPage>
 			<StyledDashboard column justify align>
 				<QueryBoundary
-					fallback={<DashboardTile.Featured.Skeleton isMobileOnly />}>
+					fallback={<DashboardTile.Featured.Skeleton isMobileOnly />}
+					errorFallback={<DashboardTile.Featured.Error isMobileOnly />}>
 					<FeaturedBoundary isMobileOnly />
 				</QueryBoundary>
 				<StyledSectionTop>
@@ -43,7 +44,8 @@ const TabHome = (): JSX.Element => {
 					<StyledColumnRight>
 						<DashboardTile.Games />
 						<QueryBoundary
-							fallback={<DashboardTile.Featured.Skeleton isDesktopOnly />}>
+							fallback={<DashboardTile.Featured.Skeleton isDesktopOnly />}
+							errorFallback={<DashboardTile.Featured.Error isDesktopOnly />}>
 							<FeaturedBoundary isDesktopOnly />
 						</QueryBoundary>
 					</StyledColumnRight>

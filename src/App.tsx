@@ -9,7 +9,7 @@ import styled from 'styled-components';
 
 import { useLoadTiers } from 'hooks';
 import { media, useTheme, ColorTokens } from 'styles';
-import { Flex } from 'components';
+import { FetchError, Flex, Loader, QueryBoundary } from 'components';
 import { Footer, Header, Navigation, SubHeader } from 'containers';
 
 import { NotFound } from 'pages';
@@ -39,37 +39,56 @@ export const App = (): JSX.Element => {
 						<SubHeader />
 						<Switch>
 							<Route exact path="/">
-								<TabHome />
+								<Boundary>
+									<TabHome />
+								</Boundary>
 							</Route>
 							<Route exact path="/home">
 								<Redirect to="/" />
 							</Route>
 							<Route exact path="/games">
-								<TabGames />
+								<Boundary>
+									<TabGames />
+								</Boundary>
 							</Route>
 							<Route exact path="/leaderboards">
-								<TabLeaderboards />
+								<Boundary>
+									<TabLeaderboards />
+								</Boundary>
 							</Route>
 							<Route exact path="/events">
-								<TabEvents />
+								<Boundary>
+									<TabEvents />
+								</Boundary>
 							</Route>
 							<Route exact path="/support">
-								<TabSupport />
+								<Boundary>
+									<TabSupport />
+								</Boundary>
 							</Route>
 							<Route exact path="/badges">
-								<TabBadges />
+								<Boundary>
+									<TabBadges />
+								</Boundary>
 							</Route>
 							{/* <Route exact path="/races">
-									<TabRaces />
+							<Boundary>
+									<TabRaces /></Boundary>
 								</Route> */}
 							<Route exact path="/profile/:id">
-								<TabProfile />
+								<Boundary>
+									<TabProfile />
+								</Boundary>
 							</Route>
 							<Route exact path="/game/:id">
-								<TabGame />
+								<Boundary>
+									<TabGame />
+								</Boundary>
 							</Route>
 							<Route exact path="/changelog">
-								<TabChangelog />
+								<Boundary>
+									<TabChangelog />
+								</Boundary>
 							</Route>
 							<Route>
 								<NotFound />
@@ -82,6 +101,12 @@ export const App = (): JSX.Element => {
 		</Router>
 	);
 };
+
+const Boundary = ({ children }: React.PropsWithChildren<unknown>) => (
+	<QueryBoundary fallback={<Loader />} errorFallback={<FetchError />}>
+		{children}
+	</QueryBoundary>
+);
 
 const PageWrapper = styled(Flex)`
 	box-sizing: border-box;
