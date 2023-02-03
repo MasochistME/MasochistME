@@ -30,10 +30,6 @@ const TabGame = (): JSX.Element => {
 	const { id } = useParams<{ id: string }>();
 	const gameId = Number(id);
 
-	useEffect(() => {
-		track('tab.game.visit', { id });
-	}, []);
-
 	const {
 		gamesData,
 		isLoading: isGamesLoading,
@@ -46,6 +42,10 @@ const TabGame = (): JSX.Element => {
 	} = useGameBadges(gameId);
 
 	const game = gamesData.find((g: Game) => g.id === gameId);
+
+	useEffect(() => {
+		track('tab.game.visit', { name: game?.title, id });
+	}, []);
 
 	const handleChangeTab = (_e: React.SyntheticEvent, newTab: TabsMap) => {
 		setActiveTab(newTab);

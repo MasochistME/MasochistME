@@ -31,13 +31,13 @@ const TabProfile = (): JSX.Element => {
 	const [activeTab, setActiveTab] = useState<string>(TabsMap.GAMES);
 	const { id } = useParams<{ id: string }>();
 
-	useEffect(() => {
-		track('tab.profile.visit', { id });
-	}, []);
-
 	const { leaderData } = useMemberLeaderboards(id);
 	const { memberData: member, isError } = useMemberById(id);
 	const { patreonTiersData } = usePatreonTiers();
+
+	useEffect(() => {
+		track('tab.profile.visit', { name: member?.name, id });
+	}, []);
 
 	const patron = (patreonTiersData.find(
 		patreonTier => patreonTier.id === leaderData?.patreonTier,
