@@ -36,8 +36,8 @@ const TabProfile = (): JSX.Element => {
 	const { patreonTiersData } = usePatreonTiers();
 
 	useEffect(() => {
-		track('tab.profile.visit', { name: member?.name, id });
-	}, []);
+		if (member?.name) track('tab.profile.visit', { name: member.name, id });
+	}, [member]);
 
 	const patron = (patreonTiersData.find(
 		patreonTier => patreonTier.id === leaderData?.patreonTier,

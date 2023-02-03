@@ -44,8 +44,8 @@ const TabGame = (): JSX.Element => {
 	const game = gamesData.find((g: Game) => g.id === gameId);
 
 	useEffect(() => {
-		track('tab.game.visit', { name: game?.title, id });
-	}, []);
+		if (game?.title) track('tab.game.visit', { name: game.title, id });
+	}, [game]);
 
 	const handleChangeTab = (_e: React.SyntheticEvent, newTab: TabsMap) => {
 		setActiveTab(newTab);
