@@ -19,9 +19,5 @@ export const useBadges = (params?: BadgesListParams) => {
 		() => sdk.getBadgesList({ ...(params ?? {}) }),
 	);
 
-	console.log(isLoading, 'isLoading');
-	console.log(isFetched, 'isFetched');
-	console.log(isError, 'isError');
-
 	return { badgesData, isLoading, isFetched, isError };
 };
