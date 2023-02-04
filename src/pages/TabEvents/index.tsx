@@ -9,7 +9,7 @@ import { TabDict, EventsDict } from 'configuration';
 import { EventsList } from './EventsList';
 import { EventsFilterBar } from './EventsFilterBar';
 
-const TabEvents = (): JSX.Element => {
+export const TabEvents = (): JSX.Element => {
 	useActiveTab(TabDict.EVENTS);
 
 	return (
@@ -54,8 +54,6 @@ const InfoBoundary = () => {
 		</Flex>
 	);
 };
-
-export default TabEvents;
 
 const StyledEventsList = styled(Flex)`
 	width: 100%;

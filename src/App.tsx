@@ -13,15 +13,15 @@ import { Footer, Header, Navigation, SubHeader } from 'containers';
 
 import { NotFound } from 'pages';
 
-import TabBadges from './pages/TabBadges';
-import TabChangelog from './pages/TabChangelog';
-import TabEvents from './pages/TabEvents';
-import TabGame from './pages/TabGame';
-import TabGames from './pages/TabGames';
-import TabHome from './pages/TabHome';
-import TabLeaderboards from './pages/TabLeaderboards';
-import TabProfile from './pages/TabProfile';
-import TabSupport from './pages/TabSupport';
+import { TabBadges } from './pages/TabBadges';
+import { TabChangelog } from './pages/TabChangelog';
+import { TabEvents } from './pages/TabEvents';
+import { TabGame } from './pages/TabGame';
+import { TabGames } from './pages/TabGames';
+import { TabHome } from './pages/TabHome';
+import { TabLeaderboards } from './pages/TabLeaderboards';
+import { TabProfile } from './pages/TabProfile';
+import { TabSupport } from './pages/TabSupport';
 // import TabRaces from 'pages/TabRaces';
 
 export const App = (): JSX.Element => {

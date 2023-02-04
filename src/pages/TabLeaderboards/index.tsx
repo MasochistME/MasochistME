@@ -22,7 +22,7 @@ import { Size } from 'components';
 import { LeaderboardsFilterBar } from './LeaderboardsFilterBar';
 import { LeaderboardsMember } from './LeaderboardsMember';
 
-const TabLeaderboards = (): JSX.Element => {
+export const TabLeaderboards = (): JSX.Element => {
 	useActiveTab(TabDict.LEADERBOARDS);
 
 	return (
@@ -131,8 +131,6 @@ const useLazyRankingList = () => {
 		})
 		.filter(Boolean) as Leaderboards[];
 };
-
-export default TabLeaderboards;
 
 const StyledLeaderboards = styled(Flex)`
 	flex-direction: column;

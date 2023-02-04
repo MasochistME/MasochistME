@@ -22,7 +22,7 @@ export enum SectionMap {
 	DISCORD = 'discord',
 }
 
-const TabHome = (): JSX.Element => {
+export const TabHome = (): JSX.Element => {
 	useActiveTab(TabDict.HOME);
 
 	return (
@@ -86,8 +86,6 @@ const FeaturedBoundary = (props: FeaturedBoundaryProps) => {
 		/>
 	);
 };
-
-export default TabHome;
 
 const StyledDashboard = styled(Flex)`
 	width: 100%;

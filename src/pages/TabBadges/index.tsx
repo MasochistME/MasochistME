@@ -9,7 +9,7 @@ import { SubPage, Section, SectionProps } from 'containers';
 import { BadgesTableView } from './BadgesTableView';
 import { BadgesTileView } from './BadgesTileView';
 
-const TabBadges = (): JSX.Element => {
+export const TabBadges = (): JSX.Element => {
 	useActiveTab(TabDict.BADGES);
 	const { badgeListView, toggleBadgeView } = useToggleView();
 
@@ -74,8 +74,6 @@ const TabBadgesInfo = (props: Partial<SectionProps>): JSX.Element => {
 		/>
 	);
 };
-
-export default TabBadges;
 
 const StyledBadges = styled(Flex)`
 	flex-direction: column;

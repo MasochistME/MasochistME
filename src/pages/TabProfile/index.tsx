@@ -24,7 +24,7 @@ enum TabsMap {
 	GAMES = 'games',
 }
 
-const TabProfile = (): JSX.Element => {
+export const TabProfile = (): JSX.Element => {
 	useActiveTab(TabDict.PROFILE, true);
 	const { colorTokens } = useTheme();
 	const { track } = useMixpanel();
@@ -113,8 +113,6 @@ const TabProfile = (): JSX.Element => {
 		</SubPage>
 	);
 };
-
-export default TabProfile;
 
 const StyledProfile = styled(Flex)`
 	width: 100%;

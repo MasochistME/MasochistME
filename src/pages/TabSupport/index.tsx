@@ -11,7 +11,7 @@ import { Section, SectionProps, SubPage } from 'containers';
 
 import { SupportTier } from './SupportTier';
 
-const TabSupport = (): JSX.Element => {
+export const TabSupport = (): JSX.Element => {
 	useActiveTab(TabDict.SUPPORT);
 
 	return (
@@ -96,8 +96,6 @@ const Info = (props: Partial<SectionProps>): JSX.Element => {
 		/>
 	);
 };
-
-export default TabSupport;
 
 const StyledHallOfFame = styled(Flex)`
 	flex-direction: column;

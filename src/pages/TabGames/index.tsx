@@ -15,7 +15,7 @@ const GameTileView = React.lazy(() =>
 	})),
 );
 
-const TabGames = (): JSX.Element => {
+export const TabGames = (): JSX.Element => {
 	useActiveTab(TabDict.GAMES);
 
 	const { gameListView, toggleGameView } = useToggleView();
@@ -68,8 +68,6 @@ const TabGames = (): JSX.Element => {
 // 		/>
 // 	);
 // };
-
-export default TabGames;
 
 const StyledGames = styled(Flex)`
 	width: 100%;

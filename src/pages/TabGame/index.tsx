@@ -23,7 +23,7 @@ enum TabsMap {
 	BADGES = 'badges',
 }
 
-const TabGame = (): JSX.Element => {
+export const TabGame = (): JSX.Element => {
 	useActiveTab(TabDict.GAME, true);
 	const [activeTab, setActiveTab] = useState<string>(TabsMap.LEADERBOARDS);
 	const { track } = useMixpanel();
@@ -110,8 +110,6 @@ const TabGame = (): JSX.Element => {
 		</SubPage>
 	);
 };
-
-export default TabGame;
 
 const StyledGameStats = styled.div`
 	max-width: 1000px;
