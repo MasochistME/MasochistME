@@ -60,9 +60,7 @@ export const App = (): JSX.Element => {
 								</Boundary>
 							</Route>
 							<Route exact path="/support">
-								<Boundary>
-									<TabSupport />
-								</Boundary>
+								<TabSupport />
 							</Route>
 							<Route exact path="/badges">
 								<Boundary>
