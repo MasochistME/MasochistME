@@ -5,7 +5,7 @@ import { EventBadgeCreate, EventType } from '@masochistme/sdk/dist/v1/types';
 import { media } from 'styles';
 import { useBadges, useEvents } from 'sdk';
 import { BadgeThumbnail, Section, SectionProps } from 'containers';
-import { Flex, FetchError, QueryBoundary } from 'components';
+import { Flex, ErrorFallback, QueryBoundary } from 'components';
 import { Size } from 'components';
 
 const NUMBER_OF_BADGES = 5;
@@ -21,7 +21,7 @@ export const DashboardTileBadges = (props: Props) => {
 	return (
 		<QueryBoundary
 			fallback={<Content content={badges} />}
-			errorFallback={<Content content={<FetchError />} />}>
+			errorFallback={<Content content={<ErrorFallback />} />}>
 			<DashboardTileBadgesBoundary {...props} />
 		</QueryBoundary>
 	);

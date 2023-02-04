@@ -7,7 +7,7 @@ import { EventMemberJoin, EventType } from '@masochistme/sdk/dist/v1/types';
 import { media } from 'styles';
 import { useCuratorMembers, useEvents } from 'sdk';
 import { MemberAvatar, Section, SectionProps } from 'containers';
-import { Flex, FetchError, QueryBoundary } from 'components';
+import { Flex, ErrorFallback, QueryBoundary } from 'components';
 import { Size } from 'components';
 
 const NUMBER_OF_MEMBERS = 10;
@@ -24,7 +24,7 @@ export const DashboardTileMembers = (props: Props) => {
 		<QueryBoundary
 			fallback={<Content content={members} />}
 			errorFallback={
-				<Content content={<FetchError width="450px" maxWidth="100%" />} />
+				<Content content={<ErrorFallback width="450px" maxWidth="100%" />} />
 			}>
 			<DashboardTileMembersBoundary {...props} />
 		</QueryBoundary>

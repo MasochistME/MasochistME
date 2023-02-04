@@ -37,7 +37,7 @@ import {
 	Skeleton,
 	Size,
 	QueryBoundary,
-	FetchError,
+	ErrorFallback,
 } from 'components';
 
 import { EventCompact } from './components';
@@ -55,7 +55,7 @@ export const DashboardTileHistory = (props: Props) => {
 	return (
 		<QueryBoundary
 			fallback={<Content content={events} />}
-			errorFallback={<Content content={<FetchError />} />}>
+			errorFallback={<Content content={<ErrorFallback />} />}>
 			<DashboardTileHistoryBoundary {...props} />
 		</QueryBoundary>
 	);

@@ -9,7 +9,7 @@ type Props = {
 	maxWidth?: string;
 	maxHeight?: string;
 };
-export const FetchError = (props: Props) => {
+export const ErrorFallback = (props: Props) => {
 	return (
 		<StyledWrapper {...props}>
 			<StyledImg src="http://cdn.masochist.me/files/ash_fail.png" />

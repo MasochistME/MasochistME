@@ -15,7 +15,7 @@ import {
 	QueryBoundary,
 	Loader,
 	Skeleton,
-	FetchError,
+	ErrorFallback,
 } from 'components';
 import { Size } from 'components';
 
@@ -32,7 +32,7 @@ const TabLeaderboards = (): JSX.Element => {
 				<LeaderboardsFilterBar />
 				<QueryBoundary
 					fallback={<LeaderboardsListSkeleton />}
-					errorFallback={<FetchError />}>
+					errorFallback={<ErrorFallback />}>
 					<LeaderboardsList />
 				</QueryBoundary>
 			</StyledLeaderboards>
@@ -68,7 +68,7 @@ const Info = (props: Partial<SectionProps>) => (
 	<Section
 		title="Game ranking system"
 		content={
-			<QueryBoundary fallback={<Loader />} errorFallback={<FetchError />}>
+			<QueryBoundary fallback={<Loader />} errorFallback={<ErrorFallback />}>
 				<InfoContent />
 			</QueryBoundary>
 		}

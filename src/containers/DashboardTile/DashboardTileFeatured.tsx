@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Featured, FeaturedType } from '@masochistme/sdk/dist/v1/types';
 
 import { Section, SectionProps } from 'containers';
-import { FetchError, Flex, Loader, Pagination, Skeleton } from 'components';
+import { ErrorFallback, Flex, Loader, Pagination, Skeleton } from 'components';
 
 import { FeaturedNews, FeaturedVideo } from 'containers/Featured';
 
@@ -82,7 +82,7 @@ DashboardTileFeatured.Error = (
 		title="Featured"
 		content={
 			<StyledContent column align>
-				<FetchError width="840px" height="440px" maxWidth="100%" />
+				<ErrorFallback width="840px" height="440px" maxWidth="100%" />
 			</StyledContent>
 		}
 		{...props}

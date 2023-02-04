@@ -1,2 +1,2 @@
 export * from './QueryBoundary';
-export * from './FetchError';
+export * from './ErrorFallback';

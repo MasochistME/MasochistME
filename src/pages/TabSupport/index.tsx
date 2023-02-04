@@ -6,7 +6,7 @@ import { PatreonTier } from '@masochistme/sdk/dist/v1/types';
 import { usePatreonTiers } from 'sdk';
 import { useActiveTab, useMixpanel } from 'hooks';
 import { TabDict } from 'configuration/tabs';
-import { FetchError, Flex, Loader, QueryBoundary } from 'components';
+import { ErrorFallback, Flex, Loader, QueryBoundary } from 'components';
 import { Section, SectionProps, SubPage } from 'containers';
 
 import { SupportTier } from './SupportTier';
@@ -18,7 +18,7 @@ const TabSupport = (): JSX.Element => {
 		<SubPage>
 			<StyledHallOfFame>
 				<Info isMobileOnly />
-				<QueryBoundary fallback={<Loader />} errorFallback={<FetchError />}>
+				<QueryBoundary fallback={<Loader />} errorFallback={<ErrorFallback />}>
 					<PatronsList />
 				</QueryBoundary>
 			</StyledHallOfFame>

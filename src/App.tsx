@@ -9,7 +9,7 @@ import styled from 'styled-components';
 
 import { useLoadTiers } from 'hooks';
 import { media, useTheme, ColorTokens } from 'styles';
-import { FetchError, Flex, Loader, QueryBoundary } from 'components';
+import { ErrorFallback, Flex, Loader, QueryBoundary } from 'components';
 import { Footer, Header, Navigation, SubHeader } from 'containers';
 
 import { NotFound } from 'pages';
@@ -99,7 +99,7 @@ export const App = (): JSX.Element => {
 };
 
 const Boundary = ({ children }: React.PropsWithChildren<unknown>) => (
-	<QueryBoundary fallback={<Loader />} errorFallback={<FetchError />}>
+	<QueryBoundary fallback={<Loader />} errorFallback={<ErrorFallback />}>
 		{children}
 	</QueryBoundary>
 );

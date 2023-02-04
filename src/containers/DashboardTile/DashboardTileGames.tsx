@@ -5,7 +5,7 @@ import { EventGameAdd, EventType } from '@masochistme/sdk/dist/v1/types';
 
 import { useCuratedGames, useEvents } from 'sdk';
 import { Section, SectionProps, GameTile } from 'containers';
-import { Flex, FetchError, QueryBoundary } from 'components';
+import { Flex, ErrorFallback, QueryBoundary } from 'components';
 
 const NUMBER_OF_GAMES = 3;
 
@@ -18,7 +18,7 @@ export const DashboardTileGames = (props: Props): JSX.Element => {
 	return (
 		<QueryBoundary
 			fallback={<Content content={games} />}
-			errorFallback={<Content content={<FetchError />} />}>
+			errorFallback={<Content content={<ErrorFallback />} />}>
 			<DashboardTileGamesBoundary {...props} />
 		</QueryBoundary>
 	);
