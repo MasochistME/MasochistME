@@ -6,7 +6,7 @@ import { useFeatured } from 'sdk/featured';
 import { chooseRandomIndex } from 'utils';
 import { useActiveTab } from 'hooks';
 import { TabDict } from 'configuration/tabs';
-import { Flex, FetchError, QueryBoundary } from 'components';
+import { Flex, QueryBoundary } from 'components';
 import { SubPage, DashboardTile } from 'containers';
 import { Featured } from '@masochistme/sdk/dist/v1/types';
 
@@ -50,7 +50,7 @@ const TabHome = (): JSX.Element => {
 						</QueryBoundary>
 					</StyledColumnRight>
 				</StyledSectionTop>
-				{/* <DashboardTile.Sale /> */}
+				<DashboardTile.Sale />
 			</StyledDashboard>
 			{/* <DashboardTile.Top /> */}
 			{/* <DashboardTile.Discord /> */}
