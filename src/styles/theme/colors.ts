@@ -115,17 +115,17 @@ export const colors: Record<Theme, ColorTokens> = {
 	},
 	[Theme.MEAT]: {
 		...commonColors,
-		'core-primary-bg': '#4e1414',
+		'core-primary-bg': '#862020',
 		'core-secondary-bg': '#7e5252',
-		'core-tertiary-bg': '#623131',
+		'core-tertiary-bg': '#691e1e',
 		'core-extra-bg': '#293251',
-		'core-primary-text': '#fedfd6',
+		'core-primary-text': '#ffe7e7',
 		'core-secondary-text': '#f6a593',
 		'core-tertiary-text': '#fffef4',
 
 		'semantic-color--idle': '#2e0a0a',
-		'semantic-color--interactive': '#890000',
-		'semantic-color--active': '#0a0a0a',
+		'semantic-color--interactive': '#ec2e2e',
+		'semantic-color--active': '#ffa5a5',
 		'semantic-color--disabled': '#7b7a8d',
 
 		'semantic-color--warning': '#fdc000',
@@ -142,8 +142,8 @@ export const colors: Record<Theme, ColorTokens> = {
 		'semantic-color--link-hover': 'd0d0d0',
 		'semantic-color--link-visited': 'c0c0c0',
 		'semantic-color--link-muted': 'afafaf',
-		'semantic-color--section-update--bg': '#c91745',
-		'semantic-color--section-update--text': '#f0f0f0',
+		'semantic-color--section-update--bg': '#b2052f',
+		'semantic-color--section-update--text': '#fadcd2',
 
 		'semantic-color--switch-track': '#320303',
 		'semantic-color--switch-thumb': '#f0f0f0',
