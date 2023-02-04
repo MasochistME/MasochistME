@@ -7,7 +7,16 @@ import { useMembers, useLeaderboardsMembers, useTiers } from 'sdk';
 import { useActiveTab } from 'hooks';
 import { TabDict } from 'configuration/tabs';
 import { SubPage, Section, SectionProps } from 'containers';
-import { Flex, Icon, Spinner, IconType, QueryBoundary } from 'components';
+import {
+	Flex,
+	Icon,
+	Spinner,
+	IconType,
+	QueryBoundary,
+	Loader,
+	Skeleton,
+	FetchError,
+} from 'components';
 import { Size } from 'components';
 
 import { LeaderboardsFilterBar } from './LeaderboardsFilterBar';
@@ -21,13 +30,13 @@ const TabLeaderboards = (): JSX.Element => {
 			<StyledLeaderboards>
 				<Info isMobileOnly />
 				<LeaderboardsFilterBar />
-				<QueryBoundary fallback={<Spinner />}>
+				<QueryBoundary
+					fallback={<LeaderboardsListSkeleton />}
+					errorFallback={<FetchError />}>
 					<LeaderboardsList />
 				</QueryBoundary>
 			</StyledLeaderboards>
-			<QueryBoundary fallback={<Spinner />}>
-				<Info isDesktopOnly minWidth="450px" maxWidth="450px" />
-			</QueryBoundary>
+			<Info isDesktopOnly minWidth="450px" maxWidth="450px" />
 		</SubPage>
 	);
 };
@@ -47,7 +56,27 @@ const LeaderboardsList = () => {
 	);
 };
 
-const Info = (props: Partial<SectionProps>): JSX.Element => {
+const LeaderboardsListSkeleton = () => (
+	<Flex column gap={2}>
+		{new Array(10).fill(null).map(() => (
+			<Skeleton width="100%" height="64px" />
+		))}
+	</Flex>
+);
+
+const Info = (props: Partial<SectionProps>) => (
+	<Section
+		title="Game ranking system"
+		content={
+			<QueryBoundary fallback={<Loader />} errorFallback={<FetchError />}>
+				<InfoContent />
+			</QueryBoundary>
+		}
+		{...props}
+	/>
+);
+
+const InfoContent = () => {
 	const {
 		tiersData,
 		isLoading: isTiersLoading,
@@ -60,36 +89,27 @@ const Info = (props: Partial<SectionProps>): JSX.Element => {
 			- {tier?.description}
 		</Flex>
 	));
-
 	return (
-		<Section
-			{...props}
-			title="Game ranking system"
-			content={
-				<Flex column gap={8}>
-					<div>
-						Ranking system utilizes the games&lsquo; score system. Depending on
-						the game&lsquo;s individual difficulty level, it is given one of{' '}
-						{tiersData?.length ?? 'X'} possible marks:
-					</div>
-					{isTiersLoading && <Spinner />}
-					{isTiersFetched && (
-						<StyledTierTypes>{tiersDescriptions}</StyledTierTypes>
-					)}
-					<div>
-						Completing a game might mean earning its most demanding achievement,
-						or getting the in-game 100%; but for the sake of simplicity the
-						ranking system present here assumes that completing a game means
-						earning 100% of its Steam achievements.
-					</div>
-					<div>
-						You are awarded points depending on the completed game&lsquo;s
-						difficulty level, which are later summarized and used to determine
-						your placement on the ranking ladder.
-					</div>
-				</Flex>
-			}
-		/>
+		<Flex column gap={8}>
+			<div>
+				Ranking system utilizes the games&lsquo; score system. Depending on the
+				game&lsquo;s individual difficulty level, it is given one of{' '}
+				{tiersData?.length ?? 'X'} possible marks:
+			</div>
+			{isTiersLoading && <Spinner />}
+			{isTiersFetched && <StyledTierTypes>{tiersDescriptions}</StyledTierTypes>}
+			<div>
+				Completing a game might mean earning its most demanding achievement, or
+				getting the in-game 100%; but for the sake of simplicity the ranking
+				system present here assumes that completing a game means earning 100% of
+				its Steam achievements.
+			</div>
+			<div>
+				You are awarded points depending on the completed game&lsquo;s
+				difficulty level, which are later summarized and used to determine your
+				placement on the ranking ladder.
+			</div>
+		</Flex>
 	);
 };
 

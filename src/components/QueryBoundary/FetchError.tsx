@@ -33,7 +33,8 @@ const StyledWrapper = styled(Flex)<Props>`
 
 const StyledImg = styled.img`
 	width: ${Size.LARGE}px;
-	filter: sepia(50%) opacity(50%);
+	filter: opacity(100%) drop-shadow(1px 1px 0 #555) drop-shadow(-1px 1px 0 #555)
+		drop-shadow(1px -1px 0 #555) drop-shadow(-1px -1px 0 #555);
 `;
 
 const StyledText = styled.div`

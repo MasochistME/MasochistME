@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { useHistory } from 'react-router';
 
-import { sha256 } from 'utils';
 import { fonts, media, useTheme, ColorTokens } from 'styles';
 import { Button } from 'components';
 

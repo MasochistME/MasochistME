@@ -52,9 +52,7 @@ export const App = (): JSX.Element => {
 								</Boundary>
 							</Route>
 							<Route exact path="/leaderboards">
-								<Boundary>
-									<TabLeaderboards />
-								</Boundary>
+								<TabLeaderboards />
 							</Route>
 							<Route exact path="/events">
 								<Boundary>
