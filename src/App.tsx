@@ -7,7 +7,6 @@ import {
 } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { useLoadTiers } from 'hooks';
 import { media, useTheme, ColorTokens } from 'styles';
 import { ErrorFallback, Flex, Loader, QueryBoundary } from 'components';
 import { Footer, Header, Navigation, SubHeader } from 'containers';
@@ -27,7 +26,6 @@ import TabSupport from './pages/TabSupport';
 
 export const App = (): JSX.Element => {
 	const { colorTokens } = useTheme();
-	// useLoadTiers();
 
 	return (
 		<Router>
@@ -55,9 +53,7 @@ export const App = (): JSX.Element => {
 								<TabLeaderboards />
 							</Route>
 							<Route exact path="/events">
-								<Boundary>
-									<TabEvents />
-								</Boundary>
+								<TabEvents />
 							</Route>
 							<Route exact path="/support">
 								<TabSupport />

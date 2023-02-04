@@ -17,19 +17,39 @@ import {
 
 import { useAppContext } from 'context';
 import { useEvents } from 'sdk';
-import { DateBlock, Flex } from 'components';
+import {
+	DateBlock,
+	Flex,
+	QueryBoundary,
+	ErrorFallback,
+	Skeleton,
+} from 'components';
 
 import EventItem from './EventItems';
 import { useTheme, ColorTokens } from 'styles';
 
+const NUMBER_OF_EVENTS = 50;
+
 export const EventsList = () => {
+	return (
+		<StyledEventList>
+			<QueryBoundary
+				fallback={<EventListSkeleton />}
+				errorFallback={<ErrorFallback />}>
+				<EventsListBoundary />
+			</QueryBoundary>
+		</StyledEventList>
+	);
+};
+
+const EventsListBoundary = () => {
 	const { visibleEvents } = useAppContext();
 	const { colorTokens } = useTheme();
 	const { eventsData } = useEvents({
 		sort: { date: 'desc' },
 		// @ts-ignore
 		filter: { type: { $in: visibleEvents } },
-		limit: 50,
+		limit: NUMBER_OF_EVENTS,
 	});
 
 	const identifyEvent = (event: Event): JSX.Element | null => {
@@ -68,7 +88,7 @@ export const EventsList = () => {
 	};
 
 	return (
-		<StyledEventList>
+		<>
 			{eventsData.map((event: Event) => (
 				<StyledEventItem
 					align
@@ -78,9 +98,22 @@ export const EventsList = () => {
 					{identifyEvent(event)}
 				</StyledEventItem>
 			))}
-		</StyledEventList>
+		</>
 	);
 };
+
+const EventListSkeleton = () => (
+	<>
+		{new Array(NUMBER_OF_EVENTS).fill(null).map((_, i: number) => (
+			<Skeleton
+				key={`event-new-${i}`}
+				height={42}
+				width="100%"
+				style={{ marginBottom: '2px' }}
+			/>
+		))}
+	</>
+);
 
 const StyledEventList = styled(Flex)`
 	flex-direction: column;

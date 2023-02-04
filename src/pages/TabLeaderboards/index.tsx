@@ -69,14 +69,14 @@ const Info = (props: Partial<SectionProps>) => (
 		title="Game ranking system"
 		content={
 			<QueryBoundary fallback={<Loader />} errorFallback={<ErrorFallback />}>
-				<InfoContent />
+				<InfoBoundary />
 			</QueryBoundary>
 		}
 		{...props}
 	/>
 );
 
-const InfoContent = () => {
+const InfoBoundary = () => {
 	const {
 		tiersData,
 		isLoading: isTiersLoading,
