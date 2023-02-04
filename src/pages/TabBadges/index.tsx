@@ -27,7 +27,7 @@ export const TabBadges = (): JSX.Element => {
 	return (
 		<SubPage>
 			<StyledBadges>
-				<TabBadgesInfo isMobileOnly />
+				<Info isMobileOnly />
 				<FilterBar>
 					<div />
 					<Button
@@ -36,19 +36,19 @@ export const TabBadges = (): JSX.Element => {
 						label={badgeViewButtonLabel}
 					/>
 				</FilterBar>
-				{badgeListView === BadgeView.TILE && (
+				{badgeListView === BadgeView.TILE && <BadgesTileView />}
+				{badgeListView === BadgeView.TABLE && (
 					<QueryBoundary fallback={<Loader />}>
-						<BadgesTileView />
+						<BadgesTableView />
 					</QueryBoundary>
 				)}
-				{badgeListView === BadgeView.TABLE && <BadgesTableView />}
 			</StyledBadges>
-			<TabBadgesInfo isDesktopOnly minWidth="350px" maxWidth="350px" />
+			<Info isDesktopOnly minWidth="350px" maxWidth="350px" />
 		</SubPage>
 	);
 };
 
-const TabBadgesInfo = (props: Partial<SectionProps>): JSX.Element => {
+const Info = (props: Partial<SectionProps>): JSX.Element => {
 	return (
 		<Section
 			{...props}

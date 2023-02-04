@@ -50,13 +50,19 @@ export const App = (): JSX.Element => {
 								</Boundary>
 							</Route>
 							<Route exact path="/leaderboards">
-								<TabLeaderboards />
+								<Boundary>
+									<TabLeaderboards />
+								</Boundary>
 							</Route>
 							<Route exact path="/events">
-								<TabEvents />
+								<Boundary>
+									<TabEvents />
+								</Boundary>
 							</Route>
 							<Route exact path="/support">
-								<TabSupport />
+								<Boundary>
+									<TabSupport />
+								</Boundary>
 							</Route>
 							<Route exact path="/badges">
 								<Boundary>
@@ -64,9 +70,10 @@ export const App = (): JSX.Element => {
 								</Boundary>
 							</Route>
 							{/* <Route exact path="/races">
-							<Boundary>
-									<TabRaces /></Boundary>
-								</Route> */}
+								<Boundary>
+									<TabRaces />
+								</Boundary>
+							</Route> */}
 							<Route exact path="/profile/:id">
 								<Boundary>
 									<TabProfile />

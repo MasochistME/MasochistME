@@ -12,7 +12,7 @@ type Props = CommonProps & {
 };
 
 export const BadgeThumbnail = (props: Props) => {
-	const { colorTokens, LOGO_URL } = useTheme();
+	const { colorTokens } = useTheme();
 	const {
 		badge,
 		isDisabled,
@@ -22,9 +22,9 @@ export const BadgeThumbnail = (props: Props) => {
 		onClick,
 	} = props;
 
-	if (isLoading) return <Skeleton size={size} />;
+	if (isLoading || !badge) return <Skeleton size={size} />;
 
-	const isNegative = (badge?.points ?? 0) < 0;
+	const isNegative = (badge.points ?? 0) < 0;
 	const badgeComponent = (
 		<StyledBadgeThumbnail
 			size={size}
@@ -32,7 +32,7 @@ export const BadgeThumbnail = (props: Props) => {
 			isNegative={isNegative}
 			colorTokens={colorTokens}
 			onClick={onClick}>
-			<img src={badge?.img ?? LOGO_URL} alt="Badge" loading="lazy" />
+			<img src={badge?.img} alt="Badge" loading="lazy" />
 		</StyledBadgeThumbnail>
 	);
 
