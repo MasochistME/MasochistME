@@ -81,7 +81,7 @@ const BadgesTileViewSkeleton = () => (
 			<Section
 				maxWidth="100%"
 				width="350px"
-				title={<Skeleton width="100px" height="24px" />}
+				title={<Skeleton variant="text" width="100px" height="24px" />}
 				content={<BadgeTile.Skeleton />}
 			/>
 		))}

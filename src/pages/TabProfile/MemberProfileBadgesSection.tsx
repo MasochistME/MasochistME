@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
-import { Flex, Loader } from 'components';
+import { Flex, Loader, QueryBoundary, ErrorFallback } from 'components';
 import { BadgeThumbnail, Section } from 'containers';
 import { useActiveTab, useMemberBadgesFilter } from 'hooks';
 import { TabDict } from 'configuration/tabs';
@@ -13,17 +13,27 @@ type Props = {
 };
 
 export const MemberProfileBadgesSection = (props: Props): JSX.Element => {
+	useActiveTab(TabDict.PROFILE);
+
+	return (
+		<Section
+			title="Badges"
+			width="100%"
+			maxWidth="450px"
+			content={
+				<QueryBoundary fallback={<Loader />} errorFallback={<ErrorFallback />}>
+					<SectionBoundary {...props} />
+				</QueryBoundary>
+			}
+		/>
+	);
+};
+
+const SectionBoundary = (props: Props) => {
 	const { memberId } = props;
 	const history = useHistory();
 
-	useActiveTab(TabDict.PROFILE);
-
-	const { memberBadges, isLoading, isFetched } =
-		useMemberBadgesFilter(memberId);
-
-	const onBadgeClick = (gameId: number | null) => {
-		if (gameId) history.push(`/game/${gameId}`);
-	};
+	const { memberBadges } = useMemberBadgesFilter(memberId);
 
 	const badges = memberBadges.map(badge => (
 		<BadgeThumbnail
@@ -34,20 +44,16 @@ export const MemberProfileBadgesSection = (props: Props): JSX.Element => {
 		/>
 	));
 
+	const onBadgeClick = (gameId: number | null) => {
+		if (gameId) history.push(`/game/${gameId}`);
+	};
+
 	return (
-		<Section
-			title="Badges"
-			width="100%"
-			maxWidth="450px"
-			content={
-				<StyledMemberProfileBadges justify>
-					{isLoading && <Loader />}
-					{isFetched && memberBadges.length === 0
-						? 'This member unlocked no badges yet.'
-						: badges}
-				</StyledMemberProfileBadges>
-			}
-		/>
+		<StyledMemberProfileBadges justify>
+			{memberBadges.length === 0
+				? 'This member unlocked no badges yet.'
+				: badges}
+		</StyledMemberProfileBadges>
 	);
 };
 

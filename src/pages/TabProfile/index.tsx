@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { useMemberById, usePatreonTiers, useMemberLeaderboards } from 'sdk';
-import { Flex, Warning } from 'components';
+import { Flex, Loader, QueryBoundary, Skeleton, Warning } from 'components';
 import { SubPage, Tabs, Tab, TabPanel } from 'containers';
 import { useActiveTab, useMixpanel } from 'hooks';
 import { TabDict } from 'configuration/tabs';
@@ -26,10 +26,25 @@ enum TabsMap {
 
 export const TabProfile = (): JSX.Element => {
 	useActiveTab(TabDict.PROFILE, true);
+	const { id } = useParams<{ id: string }>();
+
+	return (
+		<SubPage>
+			<QueryBoundary fallback={<Loader />}>
+				<ProfileBoundary id={id} />
+			</QueryBoundary>
+			<MemberProfileSidebar column>
+				<MemberProfileBadgesSection memberId={id} />
+				<MemberProfileFeaturedSection memberId={id} />
+			</MemberProfileSidebar>
+		</SubPage>
+	);
+};
+
+const ProfileBoundary = ({ id }: { id: string }) => {
 	const { colorTokens } = useTheme();
 	const { track } = useMixpanel();
 	const [activeTab, setActiveTab] = useState<string>(TabsMap.GAMES);
-	const { id } = useParams<{ id: string }>();
 
 	const { leaderData } = useMemberLeaderboards(id);
 	const { memberData: member, isError } = useMemberById(id);
@@ -70,47 +85,41 @@ export const TabProfile = (): JSX.Element => {
 		);
 
 	return (
-		<SubPage>
-			<Flex column width="100%" gap={16}>
-				<StyledMemberProfileTop
-					colorTokens={colorTokens}
-					isHighestPatronTier={isHighestPatronTier}
-					tierColor={getTierColor()}>
-					<MemberProfileHeader memberId={id} patron={patron} />
-					<MemberProfileStats memberId={id} patron={patron} />
-				</StyledMemberProfileTop>
-				{isUserPrivate && (
-					<Warning description="This user has their profile set to private." />
+		<Flex column width="100%" gap={16}>
+			<StyledMemberProfileTop
+				colorTokens={colorTokens}
+				isHighestPatronTier={isHighestPatronTier}
+				tierColor={getTierColor()}>
+				<MemberProfileHeader memberId={id} patron={patron} />
+				<MemberProfileStats memberId={id} patron={patron} />
+			</StyledMemberProfileTop>
+			{isUserPrivate && (
+				<Warning description="This user has their profile set to private." />
+			)}
+			{isUserNotAMember && (
+				<Warning description="This user is not a member of the curator." />
+			)}
+			<StyledProfile column>
+				{!canNotShowUser && (
+					<>
+						<Tabs value={activeTab} onChange={handleChangeTab}>
+							<Tab label="Games" value={TabsMap.GAMES} />
+							<Tab label="Badges" value={TabsMap.BADGES} />
+							<Tab label="Graphs" value={TabsMap.GRAPHS} />
+						</Tabs>
+						<TabPanel activeTab={activeTab} tabId={TabsMap.GAMES}>
+							<MemberProfileGames memberId={id} />
+						</TabPanel>
+						<TabPanel activeTab={activeTab} tabId={TabsMap.BADGES}>
+							<MemberProfileBadges memberId={id} />
+						</TabPanel>
+						<TabPanel activeTab={activeTab} tabId={TabsMap.GRAPHS}>
+							<MemberProfileGraphs memberId={id} />
+						</TabPanel>
+					</>
 				)}
-				{isUserNotAMember && (
-					<Warning description="This user is not a member of the curator." />
-				)}
-				<StyledProfile column>
-					{!canNotShowUser && (
-						<>
-							<Tabs value={activeTab} onChange={handleChangeTab}>
-								<Tab label="Games" value={TabsMap.GAMES} />
-								<Tab label="Badges" value={TabsMap.BADGES} />
-								<Tab label="Graphs" value={TabsMap.GRAPHS} />
-							</Tabs>
-							<TabPanel activeTab={activeTab} tabId={TabsMap.GAMES}>
-								<MemberProfileGames memberId={id} />
-							</TabPanel>
-							<TabPanel activeTab={activeTab} tabId={TabsMap.BADGES}>
-								<MemberProfileBadges memberId={id} />
-							</TabPanel>
-							<TabPanel activeTab={activeTab} tabId={TabsMap.GRAPHS}>
-								<MemberProfileGraphs memberId={id} />
-							</TabPanel>
-						</>
-					)}
-				</StyledProfile>
-			</Flex>
-			<MemberProfileSidebar column>
-				<MemberProfileBadgesSection memberId={id} />
-				<MemberProfileFeaturedSection memberId={id} />
-			</MemberProfileSidebar>
-		</SubPage>
+			</StyledProfile>
+		</Flex>
 	);
 };
 
