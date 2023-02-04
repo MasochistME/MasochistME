@@ -28,8 +28,9 @@ const StyledHeader = styled(Flex)<{ colorTokens: ColorTokens }>`
 	height: 70px;
 	padding: 12px 32px;
 	justify-content: space-between;
-	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']};
-	color: ${({ colorTokens }) => colorTokens['core-secondary-text']};
+	background-color: ${({ colorTokens }) =>
+		colorTokens['element-color--header-bg']};
+	color: ${({ colorTokens }) => colorTokens['element-color--header-text']};
 	font-family: ${fonts.Raleway};
 `;
 

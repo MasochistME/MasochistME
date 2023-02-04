@@ -54,6 +54,13 @@ export interface ColorTokens extends ColorTokensCommon {
 	'semantic-color--switch-thumb--checked': string;
 	'semantic-color--switch-track--disabled': string;
 	'semantic-color--switch-thumb--disabled': string;
+
+	'element-color--header-bg': string;
+	'element-color--header-text': string;
+
+	'element-color--button-bg': string;
+	'element-color--button-text': string;
+	'element-color--button-border': string;
 }
 
 const commonColors = {
@@ -112,6 +119,13 @@ export const colors: Record<Theme, ColorTokens> = {
 		'semantic-color--switch-thumb--checked': '#f0f0f0',
 		'semantic-color--switch-track--disabled': '#7b7a8d',
 		'semantic-color--switch-thumb--disabled': '#f0f0f0',
+
+		'element-color--header-bg': '#040404',
+		'element-color--header-text': '#BEC9E0',
+
+		'element-color--button-bg': '#0a0a0a',
+		'element-color--button-text': '#9e9db5',
+		'element-color--button-border': '#545281',
 	},
 	[Theme.MEAT]: {
 		...commonColors,
@@ -151,6 +165,13 @@ export const colors: Record<Theme, ColorTokens> = {
 		'semantic-color--switch-thumb--checked': '#f0f0f0',
 		'semantic-color--switch-track--disabled': '#7b7a8d',
 		'semantic-color--switch-thumb--disabled': '#f0f0f0',
+
+		'element-color--header-bg': '#4e1414',
+		'element-color--header-text': '#fedfd6',
+
+		'element-color--button-bg': '#9d3737',
+		'element-color--button-text': '#ffe7e7',
+		'element-color--button-border': '#ec2e2e',
 	},
 	[Theme.DUST]: {
 		...commonColors,
@@ -190,6 +211,13 @@ export const colors: Record<Theme, ColorTokens> = {
 		'semantic-color--switch-thumb--checked': '#f0f0f0',
 		'semantic-color--switch-track--disabled': '#7b7a8d',
 		'semantic-color--switch-thumb--disabled': '#f0f0f0',
+
+		'element-color--header-bg': '#BEC9E0',
+		'element-color--header-text': '#040404',
+
+		'element-color--button-bg': '#9e9db5',
+		'element-color--button-text': '#141620',
+		'element-color--button-border': '#545281',
 	},
 };
 

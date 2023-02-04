@@ -53,7 +53,7 @@ const StyledNavigation = styled.div<{ colorTokens: ColorTokens }>`
 	width: 100%;
 	grid-template-columns: repeat(7, 1fr);
 	background-color: ${({ colorTokens }) => colorTokens['core-secondary-bg']};
-	box-shadow: 0 0 30px ${({ colorTokens }) => colorTokens['core-primary-bg']};
+	box-shadow: 0 10px 10px -10px ${({ colorTokens }) => colorTokens['common-color--shadow']};
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	font-family: ${fonts.Raleway};
 	font-size: 0.9em;
@@ -81,7 +81,8 @@ const StyledTabItem = styled.div.attrs((props: NavItemProps) => {
 	align-items: center;
 	gap: 8px;
 	padding: 24px 0;
-	border-right: 3px solid ${({ colorTokens }) => colorTokens['core-primary-bg']};
+	border-right: 3px solid
+		${({ colorTokens }) => colorTokens['element-color--header-bg']};
 	height: 100%;
 	max-height: 90px;
 	box-sizing: border-box;

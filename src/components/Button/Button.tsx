@@ -65,7 +65,7 @@ const StyledButton = styled.button<{
 	border: ${({ iconOnly, isGolden, colorTokens }) => {
 		if (iconOnly) return 0;
 		if (isGolden) return `1px solid ${colorTokens['semantic-color--tier-4']}`;
-		return `1px solid ${colorTokens['semantic-color--interactive']}`;
+		return `1px solid ${colorTokens['element-color--button-border']}`;
 	}};
 	font-size: ${({ size }) => {
 		if (size === Size.TINY) return '8px';
@@ -79,12 +79,12 @@ const StyledButton = styled.button<{
 	background-color: ${({ iconOnly, isGolden, colorTokens }) => {
 		if (iconOnly) return 'transparent';
 		if (isGolden) return `${colorTokens['core-primary-bg']}99`;
-		return colorTokens['core-tertiary-bg'];
+		return colorTokens['element-color--button-bg'];
 	}};
 	color: ${({ colorTokens, isGolden }) =>
 		isGolden
 			? colorTokens['semantic-color--tier-4']
-			: colorTokens['core-secondary-text']};
+			: colorTokens['element-color--button-text']};
 	cursor: pointer;
 	&:hover {
 		color: ${({ colorTokens, isGolden }) =>
