@@ -6,6 +6,7 @@ import { BadgeTooltip, CommonProps } from 'containers';
 import { QueryBoundary, Size, Skeleton } from 'components';
 import { ColorTokens, useTheme } from 'styles';
 import { Tooltip } from 'components';
+import { getBadgeThumbnail } from 'utils';
 
 type Props = CommonProps & {
 	badge?: Badge;
@@ -23,6 +24,7 @@ export const BadgeThumbnail = (props: Props) => {
 	} = props;
 
 	if (isLoading || !badge) return <Skeleton size={size} />;
+	const badgeUrl = getBadgeThumbnail(badge);
 
 	const isNegative = (badge.points ?? 0) < 0;
 	const badgeComponent = (
@@ -32,7 +34,7 @@ export const BadgeThumbnail = (props: Props) => {
 			isNegative={isNegative}
 			colorTokens={colorTokens}
 			onClick={onClick}>
-			<img src={badge?.img} alt="Badge" loading="lazy" />
+			<img src={badgeUrl} alt="Badge" loading="lazy" />
 		</StyledBadgeThumbnail>
 	);
 

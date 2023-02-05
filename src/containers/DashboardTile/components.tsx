@@ -15,18 +15,19 @@ export const EventCompact = (props: Pick<Props, 'children'>) => {
 	return <StyledEventCompact>{children}</StyledEventCompact>;
 };
 
-const StyledEventCompact = styled(Flex)`
+const StyledEventCompact = styled.div`
+	display: flex;
 	align-items: center;
-	gap: 4px;
 	width: 100%;
 	margin: 0px;
 	box-sizing: border-box;
+	gap: 8px;
 	&(:Icon) {
 		color: red;
 	}
 `;
 
-const EventLink = (props: Props) => {
+EventCompact.Link = (props: Props) => {
 	const { children, style = {}, onClick } = props;
 	const { colorTokens } = useTheme();
 	return (
@@ -47,9 +48,16 @@ const StyledEventLink = styled.span<{ colorTokens: ColorTokens }>`
 	}
 `;
 
-const EventIcon = (props: React.ComponentProps<typeof Icon>) => (
-	<Icon size={Size.MICRO} {...props} />
+EventCompact.Icon = (props: React.ComponentProps<typeof Icon>) => (
+	<Flex flex="0 0 auto">
+		<Icon size={Size.MICRO} {...props} />
+	</Flex>
 );
 
-EventCompact.Icon = EventIcon;
-EventCompact.Link = EventLink;
+EventCompact.Block = styled.div`
+	display: inline-block;
+	text-align: left;
+	& > * {
+		margin-right: 4px;
+	}
+`;

@@ -21,12 +21,15 @@ export const GameRemoveEvent = (props: Props): JSX.Element | null => {
 	const { gamesData: games } = useAllGames();
 
 	const game = games.find((g: Game) => g.id === event.gameId);
-	const iconGameRating = (tiersData.find((tier: Tier) => tier.id === game?.tier)
-		?.icon ?? 'CircleQuestion') as IconType;
-	const iconGameAdd = game ? 'SquareMinus' : 'WarningTriangle';
+	const gameRating = tiersData.find((tier: Tier) => tier.id === game?.tier);
+
+	const iconGameRemove = game ? 'SquareMinus' : 'WarningTriangle';
+	const iconGameRating = (
+		gameRating ? gameRating.icon : 'QuestionCircle'
+	) as IconType;
 
 	const onGameClick = () => {
-		if (game?.id) history.push(`/game/${game.id}`);
+		history.push(`/game/${event.gameId}`);
 	};
 
 	return (
@@ -36,11 +39,11 @@ export const GameRemoveEvent = (props: Props): JSX.Element | null => {
 				<BaseEvent.Link onClick={onGameClick}>
 					{game ? game.title : `Game ${event.gameId}`}
 				</BaseEvent.Link>
-				has been removed from curator!
+				<span>has been removed from curator!</span>
 			</BaseEvent.Description>
 			<BaseEvent.Summary>
 				<BaseEvent.Icons>
-					<Icon icon={iconGameAdd} />
+					<Icon icon={iconGameRemove} />
 					<Icon icon={iconGameRating} />
 				</BaseEvent.Icons>
 				<GameThumbnail game={game} size={Size.SMALL} onClick={onGameClick} />

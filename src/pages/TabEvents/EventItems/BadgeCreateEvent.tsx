@@ -32,6 +32,7 @@ export const BadgeCreateEvent = ({ event }: { event: EventBadgeCreate }) => {
 				</BaseEvent.Link>
 				has gotten a new badge -
 				<BaseEvent.Link onClick={onGameClick}>
+					{' '}
 					{badge?.name ?? event.badgeId}!
 				</BaseEvent.Link>
 			</BaseEvent.Description>
