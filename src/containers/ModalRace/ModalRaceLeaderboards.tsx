@@ -28,7 +28,7 @@ export const ModalRaceLeaderboards = (props: Props) => {
 			place: place + 1,
 		}),
 	);
-	const leaderboardsWithPlacePodium = leaderboardsWithPlace.splice(0, 3);
+	const leaderboardsWithPlacePodium = leaderboardsWithPlace.slice(0, 3);
 
 	const columns: TableColumn<RacePlayer & { place: number }>[] = [
 		{
