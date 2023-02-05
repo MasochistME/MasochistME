@@ -131,7 +131,7 @@ export const colors: Record<Theme, ColorTokens> = {
 		...commonColors,
 		'core-primary-bg': '#862020',
 		'core-secondary-bg': '#5f1919',
-		'core-tertiary-bg': '#691e1e',
+		'core-tertiary-bg': '#501414',
 		'core-extra-bg': '#293251',
 		'core-primary-text': '#ffe7e7',
 		'core-secondary-text': '#f6a593',

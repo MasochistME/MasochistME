@@ -69,9 +69,13 @@ const StyledMemberGame = styled(Flex)<{ colorTokens: ColorTokens }>`
 	gap: 4px;
 	text-align: left;
 	border-bottom: 1px solid
-		${({ colorTokens }) => colorTokens['core-primary-bg']};
+		${({ colorTokens }) => colorTokens['common-color--shadow']}88;
+	border-right: 1px solid
+		${({ colorTokens }) => colorTokens['common-color--shadow']}88;
 	border-top: 1px solid
-		${({ colorTokens }) => colorTokens['semantic-color--interactive']};
+		${({ colorTokens }) => colorTokens['semantic-color--interactive']}99;
+	border-left: 1px solid
+		${({ colorTokens }) => colorTokens['semantic-color--interactive']}99;
 	&:first-child {
 		border-top: none;
 	}

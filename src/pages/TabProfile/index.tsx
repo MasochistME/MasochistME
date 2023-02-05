@@ -125,7 +125,7 @@ const StyledMemberProfileTop = styled(Flex)<{
 	background-color: ${({ colorTokens, isHighestPatronTier }) => {
 		if (isHighestPatronTier)
 			return `${colorTokens['semantic-color--tier-4']}33`;
-		return `${colorTokens['core-tertiary-bg']}}66`;
+		return `${colorTokens['core-tertiary-bg']}cc`;
 	}};
 	border-radius: 16px;
 	${({ tierColor }) => `border: 2px solid ${tierColor}`};

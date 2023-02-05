@@ -86,13 +86,9 @@ export const StyledMemberGameList = styled(Flex)<SummaryProps>`
 	transition: height 1s;
 	width: 100%;
 	box-sizing: border-box;
-	border-left: 1px solid
-		${({ colorTokens }) => colorTokens['core-secondary-bg']};
-	border-right: 1px solid
-		${({ colorTokens }) => colorTokens['core-secondary-bg']};
 	background-color: ${({ isDisabled, colorTokens }) => {
 		if (isDisabled) return `${colorTokens['semantic-color--error-muted']}aa`;
-		return `${colorTokens['core-secondary-bg']}cc`;
+		return `${colorTokens['core-tertiary-bg']}cc`;
 	}};
 	&:first-child {
 		border-top: none;
