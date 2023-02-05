@@ -116,29 +116,33 @@ const StyledLeaderboardsMemberSummary = styled(Flex)<SummaryProps>`
 	background-color: ${({ colorTokens, isDisabled, isHighestPatronTier }) => {
 		if (isDisabled) return `${colorTokens['semantic-color--error-muted']}cc`;
 		if (isHighestPatronTier)
-			return `${colorTokens['semantic-color--tier-4--muted']}bb`;
+			return `${colorTokens['semantic-color--tier-4--muted']}aa`;
 		return `${colorTokens['semantic-color--idle']}bb`;
 	}};
 	border-bottom: 1px solid
-		${({ colorTokens }) => {
+		${({ colorTokens, isHighestPatronTier }) => {
+			if (isHighestPatronTier)
+				return `${colorTokens['common-color--shadow']}88`;
 			return `${colorTokens['common-color--shadow']}88`;
 		}};
 	border-right: 1px solid
-		${({ colorTokens }) => {
+		${({ colorTokens, isHighestPatronTier }) => {
+			if (isHighestPatronTier)
+				return `${colorTokens['common-color--shadow']}88`;
 			return `${colorTokens['common-color--shadow']}88`;
 		}};
 	border-top: 1px solid
 		${({ colorTokens, isDisabled, isHighestPatronTier }) => {
 			if (isDisabled) return colorTokens['semantic-color--error'];
 			if (isHighestPatronTier)
-				return `${colorTokens['semantic-color--tier-4--muted']}66`;
+				return `${colorTokens['semantic-color--tier-4']}88`;
 			return `${colorTokens['semantic-color--interactive']}99`;
 		}};
 	border-left: 1px solid
 		${({ colorTokens, isDisabled, isHighestPatronTier }) => {
 			if (isDisabled) return colorTokens['semantic-color--error'];
 			if (isHighestPatronTier)
-				return `${colorTokens['semantic-color--tier-4--muted']}66`;
+				return `${colorTokens['semantic-color--tier-4']}88`;
 			return `${colorTokens['semantic-color--interactive']}99`;
 		}};
 `;

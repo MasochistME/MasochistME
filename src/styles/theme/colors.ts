@@ -6,15 +6,6 @@ type ColorTokensCommon = {
 	'common-color--red': string;
 	'common-color--shadow': string;
 	'common-color--light': string;
-
-	'semantic-color--tier-4': string;
-	'semantic-color--tier-4--muted': string;
-	'semantic-color--tier-3': string;
-	'semantic-color--tier-3--muted': string;
-	'semantic-color--tier-2': string;
-	'semantic-color--tier-2--muted': string;
-	'semantic-color--tier-1': string;
-	'semantic-color--tier-1--muted': string;
 };
 
 export interface ColorTokens extends ColorTokensCommon {
@@ -25,6 +16,15 @@ export interface ColorTokens extends ColorTokensCommon {
 	'core-primary-text': string; //superLightGrey
 	'core-secondary-text': string; // lightGrey
 	'core-tertiary-text': string; // white
+
+	'semantic-color--tier-4': string;
+	'semantic-color--tier-4--muted': string;
+	'semantic-color--tier-3': string;
+	'semantic-color--tier-3--muted': string;
+	'semantic-color--tier-2': string;
+	'semantic-color--tier-2--muted': string;
+	'semantic-color--tier-1': string;
+	'semantic-color--tier-1--muted': string;
 
 	'semantic-color--idle': string; // newDarkBlue
 	'semantic-color--interactive': string; // newMediumGrey
@@ -69,15 +69,6 @@ const commonColors = {
 	'common-color--red': '#ff0000',
 	'common-color--shadow': '#141414',
 	'common-color--light': '#e0e0e0',
-
-	'semantic-color--tier-4': '#fdc000',
-	'semantic-color--tier-4--muted': '#684f00',
-	'semantic-color--tier-3': '#f5f5f5',
-	'semantic-color--tier-3--muted': '#979797',
-	'semantic-color--tier-2': '#ff6b1f',
-	'semantic-color--tier-2--muted': '#a14719',
-	'semantic-color--tier-1': '#32a042',
-	'semantic-color--tier-1--muted': '#184e20',
 };
 
 export const colors: Record<Theme, ColorTokens> = {
@@ -90,6 +81,15 @@ export const colors: Record<Theme, ColorTokens> = {
 		'core-primary-text': '#BEC9E0',
 		'core-secondary-text': '#9e9db5',
 		'core-tertiary-text': '#f0f0f0',
+
+		'semantic-color--tier-4': '#fdc000',
+		'semantic-color--tier-4--muted': '#684f00',
+		'semantic-color--tier-3': '#f5f5f5',
+		'semantic-color--tier-3--muted': '#979797',
+		'semantic-color--tier-2': '#ff6b1f',
+		'semantic-color--tier-2--muted': '#a14719',
+		'semantic-color--tier-1': '#32a042',
+		'semantic-color--tier-1--muted': '#184e20',
 
 		'semantic-color--idle': '#282f44',
 		'semantic-color--interactive': '#545281',
@@ -137,6 +137,15 @@ export const colors: Record<Theme, ColorTokens> = {
 		'core-secondary-text': '#f6a593',
 		'core-tertiary-text': '#fffef4',
 
+		'semantic-color--tier-4': '#ffe148',
+		'semantic-color--tier-4--muted': '#a58214',
+		'semantic-color--tier-3': '#f5f5f5',
+		'semantic-color--tier-3--muted': '#979797',
+		'semantic-color--tier-2': '#ff6b1f',
+		'semantic-color--tier-2--muted': '#a14719',
+		'semantic-color--tier-1': '#32a042',
+		'semantic-color--tier-1--muted': '#184e20',
+
 		'semantic-color--idle': '#2e0a0a',
 		'semantic-color--interactive': '#ec2e2e',
 		'semantic-color--active': '#ffa5a5',
@@ -182,6 +191,15 @@ export const colors: Record<Theme, ColorTokens> = {
 		'core-primary-bg': '#BEC9E0',
 		'core-secondary-bg': '#c9d6f1',
 		'core-tertiary-bg': '#9e9db5',
+
+		'semantic-color--tier-4': '#fdc000',
+		'semantic-color--tier-4--muted': '#684f00',
+		'semantic-color--tier-3': '#f5f5f5',
+		'semantic-color--tier-3--muted': '#979797',
+		'semantic-color--tier-2': '#ff6b1f',
+		'semantic-color--tier-2--muted': '#a14719',
+		'semantic-color--tier-1': '#32a042',
+		'semantic-color--tier-1--muted': '#184e20',
 
 		'semantic-color--idle': '#838ca7',
 		'semantic-color--interactive': '#545281',
