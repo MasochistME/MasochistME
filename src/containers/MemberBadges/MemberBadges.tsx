@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useMemberBadges, useBadges } from 'sdk';
 import { BadgeThumbnail } from 'containers';
-import { Flex, QueryBoundary, Skeleton } from 'components';
+import { Flex, QueryBoundary, Spinner } from 'components';
 import { Size } from 'components';
 
 type Props = {
@@ -15,7 +15,7 @@ export const MemberBadges = (props: Props) => {
 	const { memberId, gameId, size = Size.MEDIUM } = props;
 	if (!memberId || !gameId) return null;
 	return (
-		<QueryBoundary fallback={<Skeleton />}>
+		<QueryBoundary fallback={<Spinner size={Size.TINY} />}>
 			<MemberBadgesBoundary memberId={memberId} gameId={gameId} size={size} />
 		</QueryBoundary>
 	);
