@@ -4,39 +4,53 @@ import { orderBy } from 'lodash';
 import { PatreonTier } from '@masochistme/sdk/dist/v1/types';
 
 import { usePatreonTiers } from 'sdk';
-import { useActiveTab } from 'hooks';
+import { useActiveTab, useMixpanel } from 'hooks';
 import { TabDict } from 'configuration/tabs';
-import { Flex, Spinner } from 'components';
+import { ErrorFallback, Flex, Loader, QueryBoundary } from 'components';
 import { Section, SectionProps, SubPage } from 'containers';
 
 import { SupportTier } from './SupportTier';
 
-const TabSupport = (): JSX.Element => {
+export const TabSupport = (): JSX.Element => {
 	useActiveTab(TabDict.SUPPORT);
-
-	const { patreonTiersData, isLoading, isFetched } = usePatreonTiers();
-
-	const sortedPatreonTiers = orderBy(patreonTiersData, ['tier'], ['desc']);
 
 	return (
 		<SubPage>
 			<StyledHallOfFame>
-				<TabSupportInfo isMobileOnly />
-				{isLoading && <Spinner />}
-				{isFetched &&
-					sortedPatreonTiers.map((patreonTier: PatreonTier) => (
-						<SupportTier
-							key={`tier-${patreonTier.tier}`}
-							patreonTier={patreonTier}
-						/>
-					))}
+				<Info isMobileOnly />
+				<QueryBoundary fallback={<Loader />} errorFallback={<ErrorFallback />}>
+					<PatronsList />
+				</QueryBoundary>
 			</StyledHallOfFame>
-			<TabSupportInfo isDesktopOnly width="100%" maxWidth="450px" />
+			<Info isDesktopOnly width="100%" maxWidth="450px" />
 		</SubPage>
 	);
 };
 
-const TabSupportInfo = (props: Partial<SectionProps>): JSX.Element => {
+const PatronsList = () => {
+	const { patreonTiersData } = usePatreonTiers();
+	const sortedPatreonTiers = orderBy(patreonTiersData, ['tier'], ['desc']);
+
+	return (
+		<>
+			{sortedPatreonTiers.map((patreonTier: PatreonTier) => (
+				<SupportTier
+					key={`tier-${patreonTier.tier}`}
+					patreonTier={patreonTier}
+				/>
+			))}
+		</>
+	);
+};
+
+const Info = (props: Partial<SectionProps>): JSX.Element => {
+	const { trackLink } = useMixpanel();
+	const idLinkPatreon = 'link--patreon';
+	const idLinkKofi = 'link--kofi';
+
+	trackLink(`#${idLinkPatreon}`, 'link.patreon.click');
+	trackLink(`#${idLinkKofi}`, 'link.kofi.click');
+
 	return (
 		<Section
 			{...props}
@@ -59,7 +73,8 @@ const TabSupportInfo = (props: Partial<SectionProps>): JSX.Element => {
 						<a
 							href="https://www.patreon.com/pointonepercent"
 							rel="noopener noreferrer"
-							target="_blank">
+							target="_blank"
+							id={idLinkPatreon}>
 							<ButtonSupport
 								src="http://cdn.masochist.me/assets/patreon.png"
 								alt="Patreon button"
@@ -68,7 +83,8 @@ const TabSupportInfo = (props: Partial<SectionProps>): JSX.Element => {
 						<a
 							href="https://ko-fi.com/arcyvilk"
 							target="_blank"
-							rel="noopener noreferrer">
+							rel="noopener noreferrer"
+							id={idLinkKofi}>
 							<ButtonSupport
 								src="https://storage.ko-fi.com/cdn/kofi2.png?v=3"
 								alt="Buy Me a Coffee at ko-fi.com"
@@ -80,8 +96,6 @@ const TabSupportInfo = (props: Partial<SectionProps>): JSX.Element => {
 		/>
 	);
 };
-
-export default TabSupport;
 
 const StyledHallOfFame = styled(Flex)`
 	flex-direction: column;

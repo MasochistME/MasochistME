@@ -11,6 +11,7 @@ export * from './Flex';
 export * from './Icon';
 export * from './Loader';
 export * from './Markdown';
+export * from './Modal';
 export * from './Pagination';
 export * from './ProgressBar';
 export * from './Skeleton';
@@ -20,3 +21,5 @@ export * from './Table';
 export * from './ToggleButtons';
 export * from './Tooltip';
 export * from './Warning';
+
+export * from './QueryBoundary';

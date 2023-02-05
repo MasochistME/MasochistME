@@ -6,14 +6,14 @@ import { TableRow, Order } from './types';
 
 type Props<T extends string> = {
 	rows: TableRow[][];
-	page: number;
-	rowsPerPage: number;
-	order: Order;
+	page?: number;
+	rowsPerPage?: number;
+	order?: Order;
 	orderBy?: T;
 };
 
 export const TableBody = <T extends string>(props: Props<T>) => {
-	const { rows, page, rowsPerPage, order, orderBy } = props;
+	const { rows, page = 1, rowsPerPage = 10, order = 'asc', orderBy } = props;
 	const { colorTokens } = useTheme();
 
 	const emptyRows =

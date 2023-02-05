@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router';
 import { Game, GameLeaderboards, Tier } from '@masochistme/sdk/dist/v1/types';
 
 import { useTiers, useLeaderboardsGames } from 'sdk';
@@ -10,10 +10,12 @@ import { GameThumbnail } from 'containers';
 
 type Props = { game: Game };
 
+export const Cell = () => <></>;
+
 /**
  * Cell showing tier of the game
  */
-export const CellTier = (props: Props) => {
+Cell.Tier = (props: Props) => {
 	const { game } = props;
 	const { tiersData } = useTiers();
 
@@ -27,7 +29,7 @@ export const CellTier = (props: Props) => {
 /**
  * Cell showing title of the game
  */
-export const CellTitle = (props: Props) => {
+Cell.Title = (props: Props) => {
 	const { game } = props;
 	const { colorTokens } = useTheme();
 	const history = useHistory();
@@ -48,7 +50,7 @@ export const CellTitle = (props: Props) => {
 /**
  * Cell showing current discount of the game
  */
-export const CellSale = (props: Props) => {
+Cell.Sale = (props: Props) => {
 	const { game } = props;
 	const sale = game.sale ? `${game.sale}%` : '—';
 	return (
@@ -61,7 +63,7 @@ export const CellSale = (props: Props) => {
 /**
  * Cell showing total points of the game (including badges with non-negative values)
  */
-export const CellTotalPoints = (props: Props) => {
+Cell.TotalPoints = (props: Props) => {
 	const { game } = props;
 	const { leaderboardsData, isLoading, isFetched } = useLeaderboardsGames();
 	const { tiersData } = useTiers();
@@ -78,7 +80,7 @@ export const CellTotalPoints = (props: Props) => {
 /**
  * Cell showing number of badges of the game
  */
-export const CellBadges = (props: Props) => {
+Cell.Badges = (props: Props) => {
 	const { game } = props;
 	const { leaderboardsData, isLoading, isFetched } = useLeaderboardsGames();
 	const gameBadgeNumber = getGameBadges(game, leaderboardsData);
@@ -93,7 +95,7 @@ export const CellBadges = (props: Props) => {
 /**
  * Cell showing number of completions of the game
  */
-export const CellCompletions = (props: Props) => {
+Cell.Completions = (props: Props) => {
 	const { game } = props;
 	const { leaderboardsData, isLoading, isFetched } = useLeaderboardsGames();
 	const gameCompletions = getGameCompletions(game, leaderboardsData);
@@ -109,7 +111,7 @@ export const CellCompletions = (props: Props) => {
 /**
  * Cell showing number of owners of the game
  */
-export const CellOwners = (props: Props) => {
+Cell.Owners = (props: Props) => {
 	const { game } = props;
 	const { leaderboardsData, isLoading, isFetched } = useLeaderboardsGames();
 	const gameOwners = getGameOwners(game, leaderboardsData);
@@ -124,7 +126,7 @@ export const CellOwners = (props: Props) => {
 /**
  * Cell showing average playtime of the game
  */
-export const CellAvgPlaytime = (props: Props) => {
+Cell.AvgPlaytime = (props: Props) => {
 	const { game } = props;
 	const { leaderboardsData, isLoading, isFetched } = useLeaderboardsGames();
 	const avgPlaytime = getGameAvgPlaytime(game, leaderboardsData);
@@ -140,7 +142,7 @@ export const CellAvgPlaytime = (props: Props) => {
 /**
  * Cell showing date of latest completion of the game
  */
-export const CellLatestCompletion = (props: Props) => {
+Cell.LatestCompletion = (props: Props) => {
 	const { game } = props;
 	const { leaderboardsData, isLoading, isFetched } = useLeaderboardsGames();
 	const { latestGameCompletionLocale } = getGameLatestCompletion(

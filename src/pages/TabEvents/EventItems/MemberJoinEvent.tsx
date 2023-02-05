@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router';
 import { EventMemberJoin, Member } from '@masochistme/sdk/dist/v1/types';
 
 import { useAllMembers } from 'sdk';

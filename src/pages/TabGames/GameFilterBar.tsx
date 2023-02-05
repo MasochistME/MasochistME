@@ -10,10 +10,12 @@ import {
 	Checkbox,
 	FilterBar,
 	Flex,
-	Spinner,
 	IconType,
+	QueryBoundary,
+	Skeleton,
+	Spinner,
 } from 'components';
-import { useActiveTab, GameView } from 'hooks';
+import { useActiveTab, GameView, useLoadTiers } from 'hooks';
 import { TabDict } from 'configuration/tabs';
 import { useTiers } from 'sdk';
 
@@ -23,16 +25,10 @@ type Props = {
 };
 
 export const GameFilterBar = (props: Props): JSX.Element => {
-	const { gameListView, toggleGameView } = props;
 	useActiveTab(TabDict.GAMES);
 
-	const { queryGame, setQueryGame, visibleTiers, setVisibleTiers } =
-		useAppContext();
-	const {
-		tiersData,
-		isLoading: isTiersLoading,
-		isFetched: isTiersFetched,
-	} = useTiers();
+	const { gameListView, toggleGameView } = props;
+	const { queryGame, setQueryGame } = useAppContext();
 
 	const gameViewButtonIcon = useMemo(() => {
 		if (gameListView === GameView.TILE) return 'Table';
@@ -53,19 +49,9 @@ export const GameFilterBar = (props: Props): JSX.Element => {
 					query={queryGame}
 					setQuery={setQueryGame}
 				/>
-				<StyledGameFilterBarTiers>
-					{isTiersLoading && <Spinner />}
-					{isTiersFetched &&
-						tiersData.map((tier: Tier) => (
-							<Checkbox
-								key={`checkbox-filter-${tier.id}`}
-								icon={tier.icon as IconType}
-								itemType={tier.id}
-								visibleItems={visibleTiers}
-								setVisibleItems={setVisibleTiers}
-							/>
-						))}
-				</StyledGameFilterBarTiers>
+				<QueryBoundary fallback={<Spinner />}>
+					<TierFilterBoundary />
+				</QueryBoundary>
 			</StyledGameFilterBar>
 			<Button
 				onClick={toggleGameView}
@@ -73,6 +59,26 @@ export const GameFilterBar = (props: Props): JSX.Element => {
 				label={gameViewButtonLabel}
 			/>
 		</FilterBar>
+	);
+};
+
+const TierFilterBoundary = () => {
+	useLoadTiers();
+	const { visibleTiers, setVisibleTiers } = useAppContext();
+	const { tiersData } = useTiers();
+
+	return (
+		<StyledGameFilterBarTiers>
+			{tiersData.map((tier: Tier) => (
+				<Checkbox
+					key={`checkbox-filter-${tier.id}`}
+					icon={tier.icon as IconType}
+					itemType={tier.id}
+					visibleItems={visibleTiers}
+					setVisibleItems={setVisibleTiers}
+				/>
+			))}
+		</StyledGameFilterBarTiers>
 	);
 };
 

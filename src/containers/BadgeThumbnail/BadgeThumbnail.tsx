@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Badge } from '@masochistme/sdk/dist/v1/types';
 
 import { BadgeTooltip, CommonProps } from 'containers';
-import { Size } from 'components';
+import { QueryBoundary, Size, Skeleton } from 'components';
 import { ColorTokens, useTheme } from 'styles';
 import { Tooltip } from 'components';
 
@@ -12,10 +12,19 @@ type Props = CommonProps & {
 };
 
 export const BadgeThumbnail = (props: Props) => {
-	const { colorTokens, LOGO_URL } = useTheme();
-	const { badge, isDisabled, size = Size.MEDIUM, title, onClick } = props;
+	const { colorTokens } = useTheme();
+	const {
+		badge,
+		isDisabled,
+		isLoading,
+		size = Size.MEDIUM,
+		title,
+		onClick,
+	} = props;
 
-	const isNegative = (badge?.points ?? 0) < 0;
+	if (isLoading || !badge) return <Skeleton size={size} />;
+
+	const isNegative = (badge.points ?? 0) < 0;
 	const badgeComponent = (
 		<StyledBadgeThumbnail
 			size={size}
@@ -23,12 +32,16 @@ export const BadgeThumbnail = (props: Props) => {
 			isNegative={isNegative}
 			colorTokens={colorTokens}
 			onClick={onClick}>
-			<img src={badge?.img ?? LOGO_URL} alt="Badge" loading="lazy" />
+			<img src={badge?.img} alt="Badge" loading="lazy" />
 		</StyledBadgeThumbnail>
 	);
 
 	if (title) return <Tooltip content={title}>{badgeComponent}</Tooltip>;
-	return <BadgeTooltip badge={badge}>{badgeComponent}</BadgeTooltip>;
+	return (
+		<QueryBoundary fallback={null}>
+			<BadgeTooltip badge={badge}>{badgeComponent}</BadgeTooltip>
+		</QueryBoundary>
+	);
 };
 
 const StyledBadgeThumbnail = styled.div.attrs(

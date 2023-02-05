@@ -23,7 +23,7 @@ enum TabsSeasons {
 	MORE = 'more',
 }
 
-const TabRaces = (): JSX.Element => {
+export const TabRaces = (): JSX.Element => {
 	useActiveTab(TabDict.RACES);
 
 	const [activeTab, setActiveTab] = useState<TabsSeasons>(
@@ -121,8 +121,6 @@ const TabHowToJoinInfo = (props: Partial<SectionProps>): JSX.Element => {
 		/>
 	);
 };
-
-export default TabRaces;
 
 const StyledSeasonsList = styled(Flex)`
 	flex-direction: column;

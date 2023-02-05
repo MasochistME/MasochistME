@@ -8,9 +8,9 @@ import { Order, TableHeaderCell } from './types';
 
 type Props<T extends string> = {
 	tableHeaderCells: TableHeaderCell[];
-	order: Order;
-	orderBy: T | undefined;
-	onRequestSort: (event: React.MouseEvent<unknown>, property: T) => void;
+	order?: Order;
+	orderBy?: T | undefined;
+	onRequestSort?: (event: React.MouseEvent<unknown>, property: T) => void;
 };
 
 export const TableHeader = <T extends string>(props: Props<T>) => {
@@ -19,7 +19,7 @@ export const TableHeader = <T extends string>(props: Props<T>) => {
 
 	const createSortHandler =
 		(property: T) => (event: React.MouseEvent<unknown>) => {
-			onRequestSort(event, property);
+			onRequestSort?.(event, property);
 		};
 
 	return (

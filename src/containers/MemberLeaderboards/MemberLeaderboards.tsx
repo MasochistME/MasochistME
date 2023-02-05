@@ -1,17 +1,13 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { orderBy } from 'lodash';
 import styled from 'styled-components';
 import { MemberGame, TierId } from '@masochistme/sdk/dist/v1/types';
 
-import { useCuratedGames, useMemberGames, useMemberById } from 'sdk';
+import { useCuratedGames, useMemberGames } from 'sdk';
 import { media, useTheme, ColorTokens } from 'styles';
-import { Flex, Loader, Skeleton } from 'components';
+import { Flex, Skeleton, QueryBoundary, ErrorFallback } from 'components';
 
-const MemberLeaderboardsGame = React.lazy(() =>
-	import('./MemberLeaderboardsGame').then(module => ({
-		default: module.MemberLeaderboardsGame,
-	})),
-);
+import { MemberLeaderboardsGame } from './MemberLeaderboardsGame';
 
 type Props = {
 	steamId: string;
@@ -21,18 +17,48 @@ type Props = {
 		isHideUnfinished?: boolean;
 	};
 };
-
 export const MemberLeaderboards = (props: Props): JSX.Element => {
 	const { colorTokens } = useTheme();
+	return (
+		<StyledMemberGameList colorTokens={colorTokens}>
+			<QueryBoundary
+				fallback={<MemberLeaderboardsSkeleton />}
+				errorFallback={<ErrorFallback />}>
+				<MemberLeaderboardsBoundary {...props} />
+			</QueryBoundary>
+		</StyledMemberGameList>
+	);
+};
+
+const MemberLeaderboardsBoundary = (props: Props) => {
+	const filteredGames = useFilteredGames(props);
+	return (
+		<>
+			{filteredGames.map(memberGame => (
+				<MemberLeaderboardsGame
+					steamId={props.steamId}
+					memberGame={memberGame}
+					key={`game-${memberGame.gameId}`}
+				/>
+			))}
+		</>
+	);
+};
+
+const MemberLeaderboardsSkeleton = () => (
+	<Flex column gap={2}>
+		{new Array(5).fill(null).map(() => (
+			<Skeleton width="100%" height="32px" />
+		))}
+	</Flex>
+);
+
+const useFilteredGames = (props: Props) => {
 	const { steamId, filter } = props;
-
 	const { gamesData } = useCuratedGames();
-	const { memberGamesData, isLoading, isFetched } = useMemberGames(steamId);
-	const { memberData } = useMemberById(steamId);
+	const { memberGamesData } = useMemberGames(steamId);
 
-	const isDisabled = memberData?.isPrivate;
-
-	const lazyGameList: MemberGame[] = orderBy(
+	const filteredGames: MemberGame[] = orderBy(
 		memberGamesData.filter(memberGame => {
 			const game = gamesData.find(g => g.id === memberGame.gameId);
 			if (game && (game.isCurated || game.isProtected)) return true;
@@ -55,32 +81,13 @@ export const MemberLeaderboards = (props: Props): JSX.Element => {
 		return shouldFilter;
 	});
 
-	return (
-		<StyledMemberGameList isDisabled={isDisabled} colorTokens={colorTokens}>
-			{isLoading && <Loader />}
-			{isFetched &&
-				lazyGameList.map(memberGame => (
-					<Suspense
-						key={`game-${memberGame.gameId}`}
-						fallback={
-							<Skeleton
-								width="100%"
-								height="20px"
-								style={{ margin: '1px 0' }}
-							/>
-						}>
-						<MemberLeaderboardsGame steamId={steamId} memberGame={memberGame} />
-					</Suspense>
-				))}
-		</StyledMemberGameList>
-	);
+	return filteredGames;
 };
 
 type SummaryProps = {
 	isDisabled?: boolean;
 	colorTokens: ColorTokens;
 };
-
 export const StyledMemberGameList = styled(Flex)<SummaryProps>`
 	flex-direction: column;
 	transition: height 1s;

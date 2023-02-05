@@ -8,7 +8,8 @@ First, you will need to add a configuration file. In the `src` directory, create
 ```
 {
   "PORT": 8081,
-  "API": "http://localhost:3081"
+  "API": "http://localhost:3081",
+  "MIXPANEL_TOKEN": "SUPER_SECRET_MIXPANEL_TOKEN"
 }
 ```
 

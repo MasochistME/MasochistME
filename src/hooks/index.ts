@@ -7,5 +7,6 @@ export * from './useMemberData';
 export * from './useMemberLeaderboardsPoints';
 export * from './useMemberLeaderboardsSummary';
 export * from './useRacesFromSeason';
+export * from './useMixpanel';
 export * from './useScrollToLocation';
 export * from './useToggleView';

@@ -1,11 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Box, Modal } from '@mui/material';
-import { Game } from '@masochistme/sdk/dist/v1/types';
 
-import { useCuratedGames } from 'sdk';
 import { fonts, useTheme, ColorTokens } from 'styles';
-import { Flex } from 'components';
+import { Flex, Loader, QueryBoundary } from 'components';
 import { GameLeaderboards } from 'containers';
 
 import { ModalLeaderboardsBadges } from './ModalLeaderboardsBadges';
@@ -18,11 +16,9 @@ type Props = {
 	setIsModalOpen: (isModalOpen: boolean) => void;
 };
 
-export const ModalLeaderboards = (props: Props): JSX.Element | null => {
-	const { gameId, isCompact, isModalOpen, setIsModalOpen } = props;
+export const ModalLeaderboards = (props: Props) => {
+	const { isModalOpen, setIsModalOpen, ...rest } = props;
 	const { colorTokens } = useTheme();
-	const { gamesData, isFetched: isGameLoaded } = useCuratedGames();
-	const game = gamesData.find((g: Game) => g.id === gameId);
 
 	const handleModalClose = () => {
 		setIsModalOpen(false);
@@ -44,21 +40,28 @@ export const ModalLeaderboards = (props: Props): JSX.Element | null => {
 		<Modal open={isModalOpen} onClose={handleModalClose}>
 			<Box sx={modalStyle}>
 				<WrapperLeaderboards column colorTokens={colorTokens}>
-					{isGameLoaded && game && (
-						<>
-							<Flex column gap={16} padding="16px">
-								<ModalLeaderboardsHeader
-									gameId={gameId}
-									gameTitle={game?.title}
-								/>
-								<ModalLeaderboardsBadges gameId={gameId} isCompact />
-							</Flex>
-							<GameLeaderboards gameId={gameId} isCompact={isCompact} />
-						</>
-					)}
+					<QueryBoundary fallback={<Loader />}>
+						<ModalLeaderboardsBoundary {...rest} />
+					</QueryBoundary>
 				</WrapperLeaderboards>
 			</Box>
 		</Modal>
+	);
+};
+
+const ModalLeaderboardsBoundary = (
+	props: Pick<Props, 'gameId' | 'isCompact'>,
+) => {
+	const { gameId, isCompact } = props;
+
+	return (
+		<>
+			<Flex column gap={16} padding="16px">
+				<ModalLeaderboardsHeader gameId={gameId} />
+				<ModalLeaderboardsBadges gameId={gameId} isCompact={isCompact} />
+			</Flex>
+			<GameLeaderboards gameId={gameId} isCompact={isCompact} />
+		</>
 	);
 };
 

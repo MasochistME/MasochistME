@@ -1,20 +1,23 @@
 import React from 'react';
+import styled from 'styled-components';
 import { Game, TierId } from '@masochistme/sdk/dist/v1/types';
 
-import { useCuratedGames, useTiers } from 'sdk';
+import { useCuratedGames } from 'sdk';
 import { useAppContext } from 'context';
-import { Flex, Loader } from 'components';
+import { QueryBoundary, ErrorFallback } from 'components';
 import { GameTile } from 'containers';
 
-export const GameTileView = (): JSX.Element => {
-	const { visibleTiers, queryGame } = useAppContext();
+export const GameTileView = () => (
+	<QueryBoundary
+		fallback={<GameTileViewSkeleton />}
+		errorFallback={<ErrorFallback />}>
+		<GameTileViewBoundary />
+	</QueryBoundary>
+);
 
-	const {
-		gamesData = [],
-		isLoading: isGamesLoading,
-		isFetched: isGamesFetched,
-	} = useCuratedGames();
-	const { isLoading: isTiersLoading, isFetched: isTiersFetched } = useTiers();
+const GameTileViewBoundary = () => {
+	const { visibleTiers, queryGame } = useAppContext();
+	const { gamesData } = useCuratedGames();
 
 	const filteredGames = gamesData
 		.map((game: Game) => {
@@ -30,14 +33,25 @@ export const GameTileView = (): JSX.Element => {
 		})
 		.filter(Boolean);
 
-	const isFetched = isGamesFetched && isTiersFetched;
-	const isLoading = isGamesLoading && isTiersLoading;
-
 	return (
-		<Flex gap={32} align justify flexWrap="wrap">
-			{isLoading && <Loader />}
-			{isFetched && filteredGames}
-			{isFetched && filteredGames?.length === 0 && 'No results.'}
-		</Flex>
+		<StyledGamesList>
+			{filteredGames?.length === 0 ? 'No results.' : filteredGames}
+		</StyledGamesList>
 	);
 };
+
+const GameTileViewSkeleton = () => (
+	<StyledGamesList>
+		{new Array(12).fill(null).map(() => (
+			<GameTile.Skeleton />
+		))}
+	</StyledGamesList>
+);
+
+const StyledGamesList = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 32px;
+`;

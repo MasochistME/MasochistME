@@ -5,12 +5,24 @@ import { Flex } from 'components';
 
 type Props = {
 	children: string;
+	trackClass?: string;
 };
 export const Markdown = (props: Props) => {
-	const { children } = props;
+	const { children, trackClass } = props;
 	return (
 		<StyledMarkdown column>
-			<ReactMarkdown>{children}</ReactMarkdown>
+			<ReactMarkdown
+				components={{
+					a: ({ node, ...props }) => (
+						<a
+							className={trackClass ?? 'markdown-link'}
+							id={props.children.toString()}
+							{...props}
+						/>
+					),
+				}}>
+				{children}
+			</ReactMarkdown>
 		</StyledMarkdown>
 	);
 };

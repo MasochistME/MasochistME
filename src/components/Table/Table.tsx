@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
+import { Skeleton } from 'components';
 import { Order, TableColumn, TableRow } from './types';
 import { TableHeader } from './TableHeader';
 import { TableBody } from './TableBody';
+import { TableCell } from './TableCell';
 import { TablePagination } from './TablePagination';
 
 type Props<T> = {
@@ -88,6 +90,25 @@ export const Table = <T extends Record<any, any>>(props: Props<T>) => {
 				setRowsPerPage={setRowsPerPage}
 			/>
 		</StyledTable>
+	);
+};
+Table.Skeleton = <T extends Record<any, any>>({
+	columns,
+	style = {},
+}: Pick<Props<T>, 'columns'> & { style?: React.CSSProperties }) => {
+	const mock = columns.map(column => ({
+		...column,
+		value: () => '',
+		render: () => (
+			<TableCell
+				content={
+					<Skeleton height="16px" style={{ flex: '1 1 auto', ...style }} />
+				}
+			/>
+		),
+	}));
+	return (
+		<Table columns={mock} dataset={new Array(10).fill({})} rowsPerPage={10} />
 	);
 };
 

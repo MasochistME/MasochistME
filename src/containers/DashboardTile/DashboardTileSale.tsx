@@ -5,11 +5,18 @@ import { fonts, useTheme, ColorTokens } from 'styles';
 import { useGames } from 'sdk';
 import { getGameThumbnail } from 'utils';
 import { Section, SectionProps } from 'containers';
-import { Flex, Loader, Spinner } from 'components';
+import { Flex, Loader, Spinner, QueryBoundary } from 'components';
 
-export const DashboardTileSale = (
-	props: Omit<SectionProps, 'content' | 'title'>,
-): JSX.Element => {
+type Props = Omit<SectionProps, 'content' | 'title'>;
+export const DashboardTileSale = (props: Props) => {
+	return (
+		<QueryBoundary fallback={null}>
+			<DashboardTileSaleBoundary {...props} />
+		</QueryBoundary>
+	);
+};
+
+const DashboardTileSaleBoundary = (props: Props) => {
 	const { colorTokens } = useTheme();
 	const { gamesData, isLoading, isFetched } = useGames({
 		filter: { isCurated: true, sale: true },

@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import { useFeaturedFiltered, useAllMembers } from 'sdk';
 import { useActiveTab } from 'hooks';
 import { TabDict } from 'configuration/tabs';
-import { Flex, Loader } from 'components';
+import { Flex, Loader, QueryBoundary, ErrorFallback } from 'components';
 import { FeaturedNews, Section, SectionProps, SubPage } from 'containers';
 import {
 	FeaturedNews as TFeaturedNews,
@@ -24,16 +24,72 @@ type Props = {
 	//
 };
 
-const TabChangelog = (props: Props): JSX.Element => {
+export const TabChangelog = (props: Props): JSX.Element => {
 	useActiveTab(TabDict.CHANGELOG);
 
+	return (
+		<SubPage>
+			<StyledContent column>
+				<QueryBoundary fallback={<Loader />} errorFallback={<ErrorFallback />}>
+					<Posts {...props} />
+				</QueryBoundary>
+			</StyledContent>
+			<Info isDesktopOnly width="100%" maxWidth="450px" />
+		</SubPage>
+	);
+};
+
+const Posts = (props: Props) => {
+	const { posts } = usePosts();
+	return (
+		<>
+			{posts.map((post: Post) => (
+				<Section
+					{...props}
+					title={post.title}
+					isCentered={false}
+					anchorId={post.anchorId}
+					fullWidth
+					maxWidth="1000px"
+					content={<FeaturedNews featured={post.data} />}
+				/>
+			))}
+		</>
+	);
+};
+
+type InfoProps = Partial<SectionProps>;
+const Info = (props: InfoProps) => (
+	<Section
+		title="Archive"
+		content={
+			<QueryBoundary fallback={<Loader />} errorFallback={<ErrorFallback />}>
+				<InfoBoundary />
+			</QueryBoundary>
+		}
+		{...props}
+	/>
+);
+
+const InfoBoundary = () => {
+	const { posts } = usePosts();
+	return (
+		<Flex column>
+			{posts.map(post => {
+				const sanitizedAnchorId = post.anchorId?.replace(/[^a-zA-Z0-9]/gm, '');
+				return <a href={`#${sanitizedAnchorId}`}>{post.date}</a>;
+			})}
+		</Flex>
+	);
+};
+
+const usePosts = () => {
 	const { membersData } = useAllMembers();
-	const { featuredData, isLoading } = useFeaturedFiltered({
+	const { featuredData } = useFeaturedFiltered({
 		filter: { type: FeaturedType.NEWS },
 		sort: { date: 'desc' },
 	});
-
-	const postData = (featuredData as TFeaturedNews[]).map(
+	const posts = (featuredData as TFeaturedNews[]).map(
 		(featured: TFeaturedNews) => {
 			const member = membersData.find(
 				(m: Member) =>
@@ -47,57 +103,13 @@ const TabChangelog = (props: Props): JSX.Element => {
 		},
 	);
 
-	return (
-		<SubPage>
-			<StyledContent column>
-				{postData.map((post: Post) => (
-					<Section
-						{...props}
-						title={post.title}
-						isCentered={false}
-						anchorId={post.anchorId}
-						fullWidth
-						maxWidth="1000px"
-						content={
-							isLoading ? <Loader /> : <FeaturedNews featured={post.data} />
-						}
-					/>
-				))}
-			</StyledContent>
-			<TabChangelogInfo
-				posts={postData}
-				isDesktopOnly
-				width="100%"
-				maxWidth="450px"
-			/>
-		</SubPage>
-	);
-};
-
-export default TabChangelog;
-
-const TabChangelogInfo = (
-	props: Partial<SectionProps> & { posts: Post[] },
-): JSX.Element => {
-	const { posts, ...rest } = props;
-	return (
-		<Section
-			{...rest}
-			title="Archive"
-			content={
-				<Flex column>
-					{posts.map(f => {
-						const sanitizedAnchorId = f.anchorId?.replace(/[^a-zA-Z0-9]/gm, '');
-						return <a href={`#${sanitizedAnchorId}`}>{f.date}</a>;
-					})}
-				</Flex>
-			}
-		/>
-	);
+	return { posts };
 };
 
 const StyledContent = styled(Flex)`
 	gap: 12px;
 	justify-content: space-between;
 	height: 100%;
+	width: 1000px;
+	max-width: 100%;
 `;

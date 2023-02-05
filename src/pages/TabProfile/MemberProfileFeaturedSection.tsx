@@ -3,24 +3,41 @@ import styled from 'styled-components';
 import { FeaturedType } from '@masochistme/sdk/dist/v1/types';
 
 import { useFeaturedFiltered, useMembers } from 'sdk';
-import { Flex, Loader, Pagination } from 'components';
-import { Section } from 'containers';
+import {
+	ErrorFallback,
+	Flex,
+	Loader,
+	Pagination,
+	QueryBoundary,
+} from 'components';
+import { Section, SectionProps } from 'containers';
 
 import { FeaturedNews, FeaturedVideo } from 'containers/Featured';
 
-type Props = {
+type Props = Partial<SectionProps> & {
 	memberId: string;
 };
 
 export const MemberProfileFeaturedSection = (props: Props): JSX.Element => {
-	const { memberId } = props;
+	const { memberId, ...rest } = props;
+
+	return (
+		<Section
+			fullWidth
+			title="Featured"
+			content={
+				<QueryBoundary fallback={<Loader />} errorFallback={<ErrorFallback />}>
+					<SectionBoundary memberId={memberId} />
+				</QueryBoundary>
+			}
+			{...rest}
+		/>
+	);
+};
+
+const SectionBoundary = ({ memberId }: Props) => {
 	const [activeIndex, setActiveIndex] = useState(0);
-	const {
-		featuredData: data,
-		isLoading,
-		isFetched,
-		isError,
-	} = useFeaturedFiltered({
+	const { featuredData: data } = useFeaturedFiltered({
 		filter: { isApproved: true, isVisible: true },
 		sort: { date: 'desc' },
 	});
@@ -34,7 +51,7 @@ export const MemberProfileFeaturedSection = (props: Props): JSX.Element => {
 
 	const featuredContent = useMemo(() => {
 		const featured = featuredData?.[activeIndex];
-		if (!featured || !isFetched || isError) return null;
+		if (!featured) return null;
 
 		if (featured.type === FeaturedType.NEWS)
 			return <FeaturedNews featured={featured} isCompact />;
@@ -48,26 +65,18 @@ export const MemberProfileFeaturedSection = (props: Props): JSX.Element => {
 					hideGame
 				/>
 			);
-	}, [featuredData, isFetched, isError, activeIndex]);
+	}, [featuredData, activeIndex]);
 
-	if (!featuredData.length) return <span />;
 	return (
-		<Section
-			fullWidth
-			title="Featured"
-			content={
-				<StyledMemberProfileFeatured column>
-					{isLoading ? <Loader /> : featuredContent}
-					<Pagination
-						isCompact
-						nrOfItems={featuredData.length}
-						activeIndex={activeIndex}
-						setActiveIndex={setActiveIndex}
-					/>
-				</StyledMemberProfileFeatured>
-			}
-			{...props}
-		/>
+		<StyledMemberProfileFeatured column>
+			{featuredContent}
+			<Pagination
+				isCompact
+				nrOfItems={featuredData.length}
+				activeIndex={activeIndex}
+				setActiveIndex={setActiveIndex}
+			/>
+		</StyledMemberProfileFeatured>
 	);
 };
 
