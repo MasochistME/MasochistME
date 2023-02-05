@@ -30,11 +30,14 @@ export const useTheme = () => {
 			setActiveTheme({ theme: Theme.MEAT });
 		}
 		if (activeTheme.theme === Theme.MEAT) {
-			setActiveTheme({ theme: Theme.DUST });
-		}
-		if (activeTheme.theme === Theme.DUST) {
 			setActiveTheme({ theme: Theme.ASH });
 		}
+		// if (activeTheme.theme === Theme.MEAT) {
+		// 	setActiveTheme({ theme: Theme.DUST });
+		// }
+		// if (activeTheme.theme === Theme.DUST) {
+		// 	setActiveTheme({ theme: Theme.ASH });
+		// }
 	};
 
 	return {
