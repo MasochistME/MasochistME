@@ -167,6 +167,10 @@ const StyledMemberProfileTop = styled(Flex)<{
 			return `${colorTokens['semantic-color--tier-4']}33`;
 		return `${colorTokens['core-tertiary-bg']}cc`;
 	}};
+	color: ${({ colorTokens, isHighestPatronTier }) => {
+		if (isHighestPatronTier) return `${colorTokens['semantic-color--tier-4']}`;
+		return `inherit`;
+	}};
 	border-radius: 16px;
 	${({ tierColor }) => `border: 2px solid ${tierColor}`};
 `;
