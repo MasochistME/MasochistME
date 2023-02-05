@@ -147,7 +147,7 @@ export const colors: Record<Theme, ColorTokens> = {
 		'semantic-color--tier-1--muted': '#184e20',
 
 		'semantic-color--idle': '#2e0a0a',
-		'semantic-color--interactive': '#b90f0f',
+		'semantic-color--interactive': '#541717',
 		'semantic-color--active': '#ffa5a5',
 		'semantic-color--disabled': '#7b7a8d',
 
