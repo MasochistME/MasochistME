@@ -1,7 +1,9 @@
 import mixpanel from 'mixpanel-browser';
 import config from 'config.json';
 
-mixpanel.init(config.MIXPANEL_TOKEN, { debug: false });
+if (config.MIXPANEL_TOKEN) {
+	mixpanel.init(config.MIXPANEL_TOKEN, { debug: false });
+}
 
 export const useMixpanel = () => {
 	const track = (event: string, params = {}) => {
