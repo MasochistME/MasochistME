@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { useActiveTab, BadgeView, useToggleView } from 'hooks';
 import { TabDict } from 'configuration/tabs';
-import { Button, FilterBar, Flex, Loader, QueryBoundary } from 'components';
+import { Button, FilterBar, Flex } from 'components';
 import { SubPage, Section, SectionProps } from 'containers';
 
 import { BadgesTableView } from './BadgesTableView';
@@ -37,11 +37,7 @@ export const TabBadges = (): JSX.Element => {
 					/>
 				</FilterBar>
 				{badgeListView === BadgeView.TILE && <BadgesTileView />}
-				{badgeListView === BadgeView.TABLE && (
-					<QueryBoundary fallback={<Loader />}>
-						<BadgesTableView />
-					</QueryBoundary>
-				)}
+				{badgeListView === BadgeView.TABLE && <BadgesTableView />}
 			</StyledBadges>
 			<Info isDesktopOnly minWidth="350px" maxWidth="350px" />
 		</SubPage>

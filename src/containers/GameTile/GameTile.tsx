@@ -48,6 +48,20 @@ export const GameTile = (props: Props) => {
 	);
 };
 
+GameTile.Skeleton = () => {
+	const { colorTokens } = useTheme();
+	return (
+		<StyledGameTile colorTokens={colorTokens}>
+			<Flex column align justify gap={8}>
+				<QueryBoundary fallback={null}>
+					<GameThumbnail />
+				</QueryBoundary>
+			</Flex>
+			<Skeleton width="100%" height="100%" />
+		</StyledGameTile>
+	);
+};
+
 const GameThumbnail = ({ gameId }: Pick<Props, 'gameId'>) => {
 	const { tiersData } = useTiers();
 	const { gamesData } = useCuratedGames();

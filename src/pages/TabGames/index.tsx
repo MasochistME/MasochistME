@@ -4,20 +4,14 @@ import styled from 'styled-components';
 import { useActiveTab, GameView, useToggleView } from 'hooks';
 import { TabDict } from 'configuration/tabs';
 import { SubPage } from 'containers';
-import { Flex, Loader, QueryBoundary } from 'components';
+import { Flex } from 'components';
 
 import { GameTableView } from './GameTableView';
 import { GameFilterBar } from './GameFilterBar';
+import { GameTileView } from './GameTileView';
 
-const GameTileView = React.lazy(() =>
-	import('./GameTileView').then(module => ({
-		default: module.GameTileView,
-	})),
-);
-
-export const TabGames = (): JSX.Element => {
+export const TabGames = () => {
 	useActiveTab(TabDict.GAMES);
-
 	const { gameListView, toggleGameView } = useToggleView();
 
 	return (
@@ -27,11 +21,7 @@ export const TabGames = (): JSX.Element => {
 					gameListView={gameListView}
 					toggleGameView={toggleGameView}
 				/>
-				{gameListView === GameView.TILE && (
-					<QueryBoundary fallback={<Loader />}>
-						<GameTileView />
-					</QueryBoundary>
-				)}
+				{gameListView === GameView.TILE && <GameTileView />}
 				{gameListView === GameView.TABLE && <GameTableView />}
 			</StyledGames>
 		</SubPage>

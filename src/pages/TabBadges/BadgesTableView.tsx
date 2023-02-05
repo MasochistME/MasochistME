@@ -7,7 +7,6 @@ import {
 	TableCell,
 	QueryBoundary,
 	ErrorFallback,
-	Skeleton,
 } from 'components';
 import { BadgeThumbnail } from 'containers';
 import { useBadges } from 'sdk';
