@@ -8,7 +8,6 @@ import {
 	Flex,
 	Icon,
 	IconType,
-	Loader,
 	QueryBoundary,
 	Skeleton,
 } from 'components';
