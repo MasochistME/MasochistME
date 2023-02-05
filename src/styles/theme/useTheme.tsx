@@ -1,5 +1,5 @@
 import { useAppContext } from 'context';
-import { useLocalStorage } from 'hooks';
+import { useLocalStorage, useMixpanel } from 'hooks';
 import { useEffect } from 'react';
 import { assets, colors } from 'styles';
 import { Theme } from 'styles/theme';
@@ -7,6 +7,7 @@ import { Theme } from 'styles/theme';
 const DEFAULT_THEME = { theme: Theme.ASH };
 
 export const useTheme = () => {
+	const { track } = useMixpanel();
 	const [activeTheme, setActiveTheme] = useLocalStorage<Record<string, Theme>>(
 		'MME_THEME',
 		DEFAULT_THEME,
@@ -28,12 +29,15 @@ export const useTheme = () => {
 	const changeTheme = () => {
 		if (activeTheme.theme === Theme.ASH) {
 			setActiveTheme({ theme: Theme.MEAT });
+			track('theme.change', { theme: Theme.MEAT });
 		}
 		if (activeTheme.theme === Theme.MEAT) {
 			setActiveTheme({ theme: Theme.ASH });
+			track('theme.change', { theme: Theme.ASH });
 		}
 		// if (activeTheme.theme === Theme.MEAT) {
 		// 	setActiveTheme({ theme: Theme.DUST });
+		// track('theme.change', { theme: Theme.DUST });
 		// }
 		// if (activeTheme.theme === Theme.DUST) {
 		// 	setActiveTheme({ theme: Theme.ASH });
