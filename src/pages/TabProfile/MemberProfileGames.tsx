@@ -4,13 +4,30 @@ import { Tier, TierId } from '@masochistme/sdk/dist/v1/types';
 
 import { useTiers } from 'sdk';
 import { MemberLeaderboards } from 'containers';
-import { Checkbox, Flex, IconType, Spinner, Switch } from 'components';
+import {
+	Checkbox,
+	ErrorFallback,
+	Flex,
+	IconType,
+	QueryBoundary,
+	Skeleton,
+	Spinner,
+	Switch,
+} from 'components';
 import { fonts, media, useTheme, ColorTokens } from 'styles';
 import { useMixpanel } from 'hooks';
 
 type Props = { memberId: string };
 
-export const MemberProfileGames = (props: Props) => {
+export const MemberProfileGames = (props: Props) => (
+	<QueryBoundary
+		fallback={<MemberProfileGamesSkeleton />}
+		errorFallback={<ErrorFallback />}>
+		<MemberProfileGamesBoundary {...props} />
+	</QueryBoundary>
+);
+
+const MemberProfileGamesBoundary = (props: Props) => {
 	const { memberId } = props;
 	const { colorTokens } = useTheme();
 	const { track } = useMixpanel();
@@ -18,14 +35,12 @@ export const MemberProfileGames = (props: Props) => {
 	const [isHideCompleted, setIsHideCompleted] = useState<boolean>(false);
 	const [isHideUnfinished, setIsHideUnfinished] = useState<boolean>(false);
 
-	const { tiersData, isLoading, isFetched } = useTiers();
+	const { tiersData } = useTiers();
 
 	useEffect(() => {
-		if (isFetched) {
-			const allTiers = tiersData.map(tier => tier.id);
-			setVisibleTiers(allTiers);
-		}
-	}, [isFetched]);
+		const allTiers = tiersData.map(tier => tier.id);
+		setVisibleTiers(allTiers);
+	}, [tiersData]);
 
 	const handleHideCompleted = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setIsHideCompleted(event.target.checked);
@@ -43,16 +58,14 @@ export const MemberProfileGames = (props: Props) => {
 					<StyledFilterGameText colorTokens={colorTokens}>
 						Filter games
 					</StyledFilterGameText>
-					{isLoading && <Spinner />}
-					{isFetched &&
-						tiersData.map((tier: Tier) => (
-							<Checkbox
-								icon={tier.icon as IconType}
-								itemType={tier.id}
-								visibleItems={visibleTiers}
-								setVisibleItems={setVisibleTiers}
-							/>
-						))}
+					{tiersData.map((tier: Tier) => (
+						<Checkbox
+							icon={tier.icon as IconType}
+							itemType={tier.id}
+							visibleItems={visibleTiers}
+							setVisibleItems={setVisibleTiers}
+						/>
+					))}
 				</StyledFilterBar>
 				<StyledFilterGameSwitches column gap={8}>
 					<Flex row align gap={16}>
@@ -72,6 +85,31 @@ export const MemberProfileGames = (props: Props) => {
 				steamId={memberId}
 				filter={{ tiers: visibleTiers, isHideCompleted, isHideUnfinished }}
 			/>
+		</Flex>
+	);
+};
+
+const MemberProfileGamesSkeleton = () => {
+	const { colorTokens } = useTheme();
+	return (
+		<Flex column width="100%">
+			<StyledFilterGame>
+				<StyledFilterBar>
+					<StyledFilterGameText colorTokens={colorTokens}>
+						Filter games
+					</StyledFilterGameText>
+					<Skeleton width="300px" height="42px" />
+				</StyledFilterBar>
+				<StyledFilterGameSwitches column gap={8}>
+					<Flex row align gap={16}>
+						Hide completed <Switch checked={false} />
+					</Flex>
+					<Flex row align gap={16}>
+						Hide unfinished
+						<Switch checked={false} />
+					</Flex>
+				</StyledFilterGameSwitches>
+			</StyledFilterGame>
 		</Flex>
 	);
 };

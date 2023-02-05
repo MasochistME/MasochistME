@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { PatreonTier } from '@masochistme/sdk/dist/v1/types';
 
 import { useMemberById, useMemberLeaderboards } from 'sdk';
-import { Size } from 'components';
+import { Loader, QueryBoundary, Size } from 'components';
 import { media } from 'styles';
 import { Flex, Icon, IconType, Tooltip } from 'components';
 import { MemberAvatar } from 'containers';
@@ -15,7 +15,14 @@ type Props = {
 	patron: Partial<PatreonTier>;
 };
 
-export const MemberProfileHeader = (props: Props): JSX.Element => {
+export const MemberProfileHeader = (props: Props) => {
+	return (
+		<QueryBoundary fallback={<MemberProfileHeaderSkeleton />}>
+			<MemberProfileHeaderBoundary {...props} />
+		</QueryBoundary>
+	);
+};
+const MemberProfileHeaderBoundary = (props: Props) => {
 	const { memberId, patron } = props;
 
 	const { memberData: member, isLoading, isError } = useMemberById(memberId);
@@ -75,6 +82,26 @@ export const MemberProfileHeader = (props: Props): JSX.Element => {
 		</StyledMemberProfileHeader>
 	);
 };
+
+const MemberProfileHeaderSkeleton = () => (
+	<StyledMemberProfileHeader row>
+		<StyledMemberProfileHeaderAvatar>
+			<MemberAvatar size={Size.LARGE} isLoading />
+		</StyledMemberProfileHeaderAvatar>
+		<StyledMemberProfileDetails column>
+			<StyledMemberProfileTopRow>
+				<StyledMemberProfileUsername>
+					<Icon icon="Steam" marginRight="10px" />
+					Loading...
+				</StyledMemberProfileUsername>
+				<MemberProfileUpdate />
+			</StyledMemberProfileTopRow>
+			<StyledMemberProfileDescription>
+				Loading...
+			</StyledMemberProfileDescription>
+		</StyledMemberProfileDetails>
+	</StyledMemberProfileHeader>
+);
 
 const StyledMemberProfileHeader = styled(Flex)`
 	max-width: 100%;

@@ -9,7 +9,7 @@ import { useLeaderboardsMembers, useMemberGames, useTiers } from 'sdk';
 import { useMemberBadgesFilter } from 'hooks';
 import { media } from 'styles';
 import { getPercentage, ColorMap } from 'utils';
-import { Flex, Icon, IconType, Skeleton } from 'components';
+import { Flex, Icon, IconType, Skeleton, QueryBoundary } from 'components';
 import { StatBlock } from 'containers';
 
 type Props = {
@@ -17,24 +17,18 @@ type Props = {
 	patron?: Partial<PatreonTier>;
 };
 
-export const MemberProfileStats = (props: Props) => {
+export const MemberProfileStats = (props: Props) => (
+	<QueryBoundary fallback={<Skeleton width="100%" height="120px" />}>
+		<MemberProfileStatsBoundary {...props} />
+	</QueryBoundary>
+);
+
+const MemberProfileStatsBoundary = (props: Props) => {
 	const { memberId, patron } = props;
 
-	const {
-		tiersData,
-		isLoading: isTiersLoading,
-		isFetched: isTiersFetched,
-	} = useTiers();
-	const {
-		memberGamesData,
-		isLoading: isMemberGamesLoading,
-		isFetched: isMemberGamesFetched,
-	} = useMemberGames(memberId);
-	const {
-		leaderboardsData,
-		isLoading: isLeaderboardsLoading,
-		isFetched: isLeaderboardsFetched,
-	} = useLeaderboardsMembers();
+	const { tiersData } = useTiers();
+	const { memberGamesData } = useMemberGames(memberId);
+	const { leaderboardsData } = useLeaderboardsMembers();
 
 	const getStatTier = () => {
 		if (patron?.id === PatronTier.TIER4) return ColorMap.GOLD;
@@ -42,11 +36,6 @@ export const MemberProfileStats = (props: Props) => {
 	};
 
 	const { memberBadges } = useMemberBadgesFilter(memberId);
-
-	const isLoading =
-		isMemberGamesLoading && isLeaderboardsLoading && isTiersLoading;
-	const isFetched =
-		isMemberGamesFetched && isLeaderboardsFetched && isTiersFetched;
 
 	const memberLeaderData = leaderboardsData.find(
 		leader => leader.memberId === memberId,
@@ -121,92 +110,87 @@ export const MemberProfileStats = (props: Props) => {
 
 	return (
 		<StyledGameProfileStats>
-			{isLoading && <Skeleton width="100%" height="120px" />}
-			{isFetched && (
-				<>
-					<StatBlock
-						title={
-							<Flex column>
-								<StatBlock.Title>
-									Position in the MasochistME leaderboards
-								</StatBlock.Title>
-							</Flex>
-						}
-						label={memberLeaderData?.position ?? '?'}
-						tier={getStatTier()}
-						icon="Hashtag"
-					/>
-					<StatBlock
-						title={
-							<Flex column>
-								<StatBlock.Title>Points total</StatBlock.Title>
-								{pointsTotal}
-								<StatBlock.Title>Badge points</StatBlock.Title>
-								{badgesTotal}
-							</Flex>
-						}
-						label={memberLeaderData?.sum ?? '?'}
-						tier={getStatTier()}
-						sublabel="points total"
-						icon="CirclePlus"
-					/>
-					<StatBlock
-						title={
-							<Flex column>
-								<StatBlock.Title>Curated games completed</StatBlock.Title>
-								{completionsByTier}
-								<StatBlock.Title>Badges unlocked</StatBlock.Title>
-								{badgesUnlocked}
-							</Flex>
-						}
-						label={memberCompletions.length}
-						tier={getStatTier()}
-						sublabel="completions"
-						icon="Trophy"
-					/>
-					<StatBlock
-						title={
-							<Flex column>
-								<StatBlock.Title>
-									Average curated game completion percentage
-								</StatBlock.Title>
-							</Flex>
-						}
-						label={getPercentage(
-							memberCompletions.length,
-							memberGamesStarted.length,
-						)}
-						tier={getStatTier()}
-						sublabel="completion rate"
-						icon="Percent"
-					/>
-					<StatBlock
-						title={
-							<Flex column>
-								<StatBlock.Title>
-									Member's average curated game completion time
-								</StatBlock.Title>
-								<StatBlock.Subtitle>
-									Shortest completion time:{' '}
-									<span style={{ fontWeight: 'bold' }}>
-										{completionTimeShortest} h
-									</span>
-								</StatBlock.Subtitle>
-								<StatBlock.Subtitle>
-									Longest completion time:{' '}
-									<span style={{ fontWeight: 'bold' }}>
-										{completionTimeLongest} h
-									</span>
-								</StatBlock.Subtitle>
-							</Flex>
-						}
-						tier={getStatTier()}
-						label={`${avgPlaytime} h`}
-						sublabel="avg completion time"
-						icon="Clock"
-					/>
-				</>
-			)}
+			<StatBlock
+				title={
+					<Flex column>
+						<StatBlock.Title>
+							Position in the MasochistME leaderboards
+						</StatBlock.Title>
+					</Flex>
+				}
+				label={memberLeaderData?.position ?? '?'}
+				tier={getStatTier()}
+				icon="Hashtag"
+			/>
+			<StatBlock
+				title={
+					<Flex column>
+						<StatBlock.Title>Points total</StatBlock.Title>
+						{pointsTotal}
+						<StatBlock.Title>Badge points</StatBlock.Title>
+						{badgesTotal}
+					</Flex>
+				}
+				label={memberLeaderData?.sum ?? '?'}
+				tier={getStatTier()}
+				sublabel="points total"
+				icon="CirclePlus"
+			/>
+			<StatBlock
+				title={
+					<Flex column>
+						<StatBlock.Title>Curated games completed</StatBlock.Title>
+						{completionsByTier}
+						<StatBlock.Title>Badges unlocked</StatBlock.Title>
+						{badgesUnlocked}
+					</Flex>
+				}
+				label={memberCompletions.length}
+				tier={getStatTier()}
+				sublabel="completions"
+				icon="Trophy"
+			/>
+			<StatBlock
+				title={
+					<Flex column>
+						<StatBlock.Title>
+							Average curated game completion percentage
+						</StatBlock.Title>
+					</Flex>
+				}
+				label={getPercentage(
+					memberCompletions.length,
+					memberGamesStarted.length,
+				)}
+				tier={getStatTier()}
+				sublabel="completion rate"
+				icon="Percent"
+			/>
+			<StatBlock
+				title={
+					<Flex column>
+						<StatBlock.Title>
+							Member's average curated game completion time
+						</StatBlock.Title>
+						<StatBlock.Subtitle>
+							Shortest completion time:{' '}
+							<span style={{ fontWeight: 'bold' }}>
+								{completionTimeShortest} h
+							</span>
+						</StatBlock.Subtitle>
+						<StatBlock.Subtitle>
+							Longest completion time:{' '}
+							<span style={{ fontWeight: 'bold' }}>
+								{completionTimeLongest} h
+							</span>
+						</StatBlock.Subtitle>
+					</Flex>
+				}
+				tier={getStatTier()}
+				label={`${avgPlaytime} h`}
+				sublabel="avg completion time"
+				icon="Clock"
+			/>
 		</StyledGameProfileStats>
 	);
 };
