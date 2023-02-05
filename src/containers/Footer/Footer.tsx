@@ -37,9 +37,11 @@ const StyledFooter = styled(Flex)<{ colorTokens: ColorTokens }>`
 	justify-content: space-between;
 	width: 100%;
 	padding: 0px 24px;
-	box-shadow: 0 0 30px ${({ colorTokens }) => colorTokens['core-primary-bg']};
-	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']};
-	color: ${({ colorTokens }) => colorTokens['semantic-color--disabled']};
+	box-shadow: 0 0 30px
+		${({ colorTokens }) => colorTokens['common-color--shadow']};
+	background-color: ${({ colorTokens }) =>
+		colorTokens['element-color--header-bg']};
+	color: ${({ colorTokens }) => colorTokens['element-color--header-text']};
 	font-family: ${fonts.Raleway};
 	a {
 		color: ${({ colorTokens }) => colorTokens['semantic-color--link-normal']};

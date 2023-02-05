@@ -130,7 +130,7 @@ export const colors: Record<Theme, ColorTokens> = {
 	[Theme.MEAT]: {
 		...commonColors,
 		'core-primary-bg': '#862020',
-		'core-secondary-bg': '#7e5252',
+		'core-secondary-bg': '#5f1919',
 		'core-tertiary-bg': '#691e1e',
 		'core-extra-bg': '#293251',
 		'core-primary-text': '#ffe7e7',
@@ -198,9 +198,9 @@ export const colors: Record<Theme, ColorTokens> = {
 		'semantic-color--progress--track': '#2e0a0a',
 		'semantic-color--progress--thumb': '#890000',
 
-		'semantic-color--link-normal': '#f0f0f0',
-		'semantic-color--link-hover': 'd0d0d0',
-		'semantic-color--link-visited': 'c0c0c0',
+		'semantic-color--link-normal': '#11366e',
+		'semantic-color--link-hover': '11366e',
+		'semantic-color--link-visited': '11186e',
 		'semantic-color--link-muted': 'afafaf',
 		'semantic-color--section-update--bg': '#040404',
 		'semantic-color--section-update--text': '#f0f0f0',

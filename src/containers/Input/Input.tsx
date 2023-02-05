@@ -48,6 +48,9 @@ const StyledInput = styled.input<{ colorTokens: ColorTokens }>`
 		border: 1px solid ${({ colorTokens }) => colorTokens['core-secondary-text']};
 		outline: none;
 	}
+	&::placeholder {
+		color: ${({ colorTokens }) => colorTokens['core-primary-text']}88;
+	}
 	@media (max-width: ${media.tablets}) {
 		margin-bottom: 0;
 	}

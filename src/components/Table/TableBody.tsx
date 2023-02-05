@@ -72,6 +72,6 @@ const StyledTableRow = styled.tr<{ colorTokens: ColorTokens }>`
 
 const StyledTableCell = styled.td<{ colorTokens: ColorTokens }>`
 	text-align: center;
-	border-bottom: 5px solid
-		${({ colorTokens }) => colorTokens['common-color--shadow']};
+	border-bottom: 2px solid
+		${({ colorTokens }) => colorTokens['core-secondary-bg']};
 `;

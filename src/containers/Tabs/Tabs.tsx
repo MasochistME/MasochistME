@@ -22,10 +22,10 @@ const StyledMUITab = styled(MUITab)<{ colortokens: ColorTokens }>`
 	font-weight: bold;
 	font-family: ${fonts.Dosis};
 	font-size: 18px;
-	color: ${({ colortokens }) => colortokens['core-primary-text']};
+	color: ${({ colortokens }) => colortokens['core-secondary-text']};
 	background-color: ${({ colortokens }) => colortokens['core-primary-bg']}99;
 	&.Mui-selected {
-		color: ${({ colortokens }) => colortokens['common-color--light']};
+		color: ${({ colortokens }) => colortokens['core-primary-text']};
 	}
 	&.Mui-focusVisible {
 		background-color: ${({ colortokens }) =>
