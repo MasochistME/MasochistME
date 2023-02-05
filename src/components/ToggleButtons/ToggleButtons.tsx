@@ -54,7 +54,8 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)<{
 	&.MuiToggleButtonGroup-root {
 		border-radius: 32px;
 		overflow: hidden;
-		gap: 4px;
+		border: 2px solid
+			${({ colorTokens }) => colorTokens['common-color--shadow']};
 	}
 `;
 const StyledToggleButton = styled(ToggleButton)<{
