@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { PatreonTier } from '@masochistme/sdk/dist/v1/types';
 
 import { useMemberById, useMemberLeaderboards } from 'sdk';
-import { Loader, QueryBoundary, Size } from 'components';
+import { QueryBoundary, Size } from 'components';
 import { media } from 'styles';
 import { Flex, Icon, IconType, Tooltip } from 'components';
 import { MemberAvatar } from 'containers';

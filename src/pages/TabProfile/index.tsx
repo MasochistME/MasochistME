@@ -8,7 +8,6 @@ import {
 	Flex,
 	Loader,
 	QueryBoundary,
-	Skeleton,
 	Warning,
 } from 'components';
 import { SubPage, Tabs, Tab, TabPanel } from 'containers';
@@ -37,7 +36,7 @@ export const TabProfile = (): JSX.Element => {
 
 	return (
 		<SubPage>
-			{/* <QueryBoundary
+			<QueryBoundary
 				fallback={
 					<Flex align justify width="100%">
 						<Loader />
@@ -45,18 +44,18 @@ export const TabProfile = (): JSX.Element => {
 				}
 				errorFallback={
 					<Warning description={`User with id ${id} does not exist.`} />
-				}> */}
-			<ProfileBoundary id={id} />
-			<MemberProfileSidebar column>
-				<MemberProfileBadgesSection memberId={id} />
-				<MemberProfileFeaturedSection memberId={id} />
-			</MemberProfileSidebar>
-			{/* </QueryBoundary> */}
+				}>
+				<TabProfileBoundary id={id} />
+				<MemberProfileSidebar column>
+					<MemberProfileBadgesSection memberId={id} />
+					<MemberProfileFeaturedSection memberId={id} />
+				</MemberProfileSidebar>
+			</QueryBoundary>
 		</SubPage>
 	);
 };
 
-const ProfileBoundary = ({ id }: { id: string }) => {
+const TabProfileBoundary = ({ id }: { id: string }) => {
 	const { track } = useMixpanel();
 	const { memberData: member } = useMemberById(id);
 
@@ -67,16 +66,16 @@ const ProfileBoundary = ({ id }: { id: string }) => {
 	return (
 		<Flex column width="100%" gap={16}>
 			<QueryBoundary fallback={<Loader />} errorFallback={<ErrorFallback />}>
-				<MemberProfileTopBoundary id={id} />
+				<TabProfileTopBoundary id={id} />
 			</QueryBoundary>
 			<QueryBoundary fallback={<Loader />} errorFallback={<ErrorFallback />}>
-				<MemberProfileTabsBoundary id={id} />
+				<TabProfileTabsBoundary id={id} />
 			</QueryBoundary>
 		</Flex>
 	);
 };
 
-const MemberProfileTopBoundary = ({ id }: { id: string }) => {
+const TabProfileTopBoundary = ({ id }: { id: string }) => {
 	const { colorTokens } = useTheme();
 
 	const { leaderData } = useMemberLeaderboards(id);
@@ -107,7 +106,7 @@ const MemberProfileTopBoundary = ({ id }: { id: string }) => {
 	);
 };
 
-const MemberProfileTabsBoundary = ({ id }: { id: string }) => {
+const TabProfileTabsBoundary = ({ id }: { id: string }) => {
 	const { track } = useMixpanel();
 	const { memberData: member } = useMemberById(id);
 	const [activeTab, setActiveTab] = useState<string>(TabsMap.GAMES);
@@ -146,6 +145,10 @@ const MemberProfileTabsBoundary = ({ id }: { id: string }) => {
 		</StyledProfile>
 	);
 };
+
+/**
+ * COMPONENTS
+ */
 
 const StyledProfile = styled(Flex)`
 	width: 100%;

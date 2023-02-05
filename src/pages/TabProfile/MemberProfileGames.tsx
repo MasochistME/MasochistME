@@ -11,7 +11,6 @@ import {
 	IconType,
 	QueryBoundary,
 	Skeleton,
-	Spinner,
 	Switch,
 } from 'components';
 import { fonts, media, useTheme, ColorTokens } from 'styles';

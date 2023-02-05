@@ -4,15 +4,26 @@ import { Game } from '@masochistme/sdk/dist/v1/types';
 import { useGameCompletion } from 'hooks';
 import { media, useTheme, ColorTokens } from 'styles';
 import { getPercentage } from 'utils';
-import { Flex } from 'components';
+import { Flex, Skeleton, QueryBoundary } from 'components';
 import { StatBlock } from 'containers';
 import { useCuratorMembers, useLeaderboardsGames } from 'sdk';
 
 type Props = {
-	game: Game;
+	game?: Game;
 };
 
 export const GameProfileStats = (props: Props) => {
+	const { game } = props;
+
+	if (!game) return null;
+	return (
+		<QueryBoundary fallback={<Skeleton width="100%" height="120px" />}>
+			<GameProfileStatsBoundary game={game} />
+		</QueryBoundary>
+	);
+};
+
+const GameProfileStatsBoundary = (props: Required<Props>) => {
 	const { colorTokens } = useTheme();
 	const { game } = props;
 
