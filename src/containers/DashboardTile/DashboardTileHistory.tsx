@@ -167,10 +167,12 @@ const useEventComponents = () => {
 			return (
 				<EventCompact key={`sidebar-event-${event._id}`}>
 					<EventCompact.Icon icon={icon} />
-					<EventCompact.Link onClick={onUserClick}>
-						{member.name}
-					</EventCompact.Link>
-					has joined the group!
+					<EventCompact.Block>
+						<EventCompact.Link onClick={onUserClick}>
+							{member.name}
+						</EventCompact.Link>
+						<span>has joined the group!</span>
+					</EventCompact.Block>
 				</EventCompact>
 			);
 	};
@@ -187,10 +189,12 @@ const useEventComponents = () => {
 			return (
 				<EventCompact key={`sidebar-event-${event._id}`}>
 					<EventCompact.Icon icon={icon} />
-					<EventCompact.Link onClick={onUserClick}>
-						{member.name}
-					</EventCompact.Link>
-					has left the group!
+					<EventCompact.Block>
+						<EventCompact.Link onClick={onUserClick}>
+							{member.name}
+						</EventCompact.Link>
+						<span>has left the group!</span>
+					</EventCompact.Block>
 				</EventCompact>
 			);
 	};
@@ -206,10 +210,12 @@ const useEventComponents = () => {
 			return (
 				<EventCompact key={`sidebar-event-${event._id}`}>
 					<EventCompact.Icon icon={icon} />
-					<EventCompact.Link onClick={onGameClick}>
-						{game.title}
-					</EventCompact.Link>
-					has been curated!
+					<EventCompact.Block>
+						<EventCompact.Link onClick={onGameClick}>
+							{game.title}
+						</EventCompact.Link>
+						<span>has been curated!</span>
+					</EventCompact.Block>
 				</EventCompact>
 			);
 	};
@@ -224,8 +230,10 @@ const useEventComponents = () => {
 			return (
 				<EventCompact key={`sidebar-event-${event._id}`}>
 					<EventCompact.Icon icon={icon} />
-					<EventCompact.Link> {game.title}</EventCompact.Link> has been removed
-					from curator!
+					<EventCompact.Block>
+						<EventCompact.Link> {game.title}</EventCompact.Link>
+						<span>has been removed from curator!</span>
+					</EventCompact.Block>
 				</EventCompact>
 			);
 	};
@@ -245,13 +253,15 @@ const useEventComponents = () => {
 			return (
 				<EventCompact key={`sidebar-event-${event._id}`}>
 					<EventCompact.Icon icon={icon} />
-					<EventCompact.Link onClick={onUserClick}>
-						{member.name}
-					</EventCompact.Link>
-					completed
-					<EventCompact.Link onClick={onGameClick}>
-						{game.title}!
-					</EventCompact.Link>
+					<EventCompact.Block>
+						<EventCompact.Link onClick={onUserClick}>
+							{member.name}
+						</EventCompact.Link>
+						<span>completed</span>
+						<EventCompact.Link onClick={onGameClick}>
+							{game.title}!
+						</EventCompact.Link>
+					</EventCompact.Block>
 				</EventCompact>
 			);
 	};
@@ -268,10 +278,12 @@ const useEventComponents = () => {
 			return (
 				<EventCompact key={`sidebar-event-${event._id}`}>
 					<EventCompact.Icon icon={icon} />
-					<EventCompact.Link onClick={onGameClick}>
-						{game.title}
-					</EventCompact.Link>
-					changed its tier to
+					<EventCompact.Block>
+						<EventCompact.Link onClick={onGameClick}>
+							{game.title}
+						</EventCompact.Link>
+						<span>changed its tier to</span>
+					</EventCompact.Block>
 					<Icon size={Size.TINY} icon={getTierIcon(game.tier, tiersData)} />!
 				</EventCompact>
 			);
@@ -290,10 +302,12 @@ const useEventComponents = () => {
 			return (
 				<EventCompact key={`sidebar-event-${event._id}`}>
 					<EventCompact.Icon icon={icon} />
-					<EventCompact.Link onClick={onGameClick}>
-						{game.title}
-					</EventCompact.Link>
-					got a new badge!
+					<EventCompact.Block>
+						<EventCompact.Link onClick={onGameClick}>
+							{game.title}
+						</EventCompact.Link>
+						<span>got a new badge!</span>
+					</EventCompact.Block>
 				</EventCompact>
 			);
 	};
@@ -312,10 +326,12 @@ const useEventComponents = () => {
 			return (
 				<EventCompact key={`sidebar-event-${event._id}`}>
 					<EventCompact.Icon icon={icon} />
-					<EventCompact.Link onClick={onUserClick}>
-						{member.name}
-					</EventCompact.Link>
-					got a new badge - <span>{badge.name}!</span>
+					<EventCompact.Block>
+						<EventCompact.Link onClick={onUserClick}>
+							{member.name}
+						</EventCompact.Link>
+						<span>got a new badge - {badge.name}!</span>
+					</EventCompact.Block>
 				</EventCompact>
 			);
 	};
@@ -333,12 +349,18 @@ const useEventComponents = () => {
 			return (
 				<EventCompact key={`sidebar-event-${event._id}`}>
 					<EventCompact.Icon icon={icon} />
-					<EventCompact.Link onClick={onGameClick}>
-						{game.title}
-					</EventCompact.Link>
-					{event.oldNumber < event.newNumber
-						? `got ${event.newNumber - event.oldNumber} new achievements!`
-						: `had ${event.oldNumber - event.newNumber} achievements removed!`}
+					<EventCompact.Block>
+						<EventCompact.Link onClick={onGameClick}>
+							{game.title}
+						</EventCompact.Link>
+						<span>
+							{event.oldNumber < event.newNumber
+								? `got ${event.newNumber - event.oldNumber} new achievements!`
+								: `had ${
+										event.oldNumber - event.newNumber
+								  } achievements removed!`}
+						</span>
+					</EventCompact.Block>
 				</EventCompact>
 			);
 	};
@@ -361,13 +383,15 @@ const useEventComponents = () => {
 			<EventCompact key={`sidebar-event-${event._id}`}>
 				<EventCompact.Icon icon={icon} />
 				{/**TODO this icon type does not match */}
-				{text &&
-					text.split('#').map((str: string, index: number) => {
-						if (index % 2 === 1) {
-							return <span>{str}</span>;
-						}
-						return str;
-					})}
+				<span>
+					{text &&
+						text.split('#').map((str: string, index: number) => {
+							if (index % 2 === 1) {
+								return <span>{str}</span>;
+							}
+							return str;
+						})}
+				</span>
 			</EventCompact>
 		);
 	};

@@ -45,6 +45,8 @@ const StyledSVG = styled.span<{
 	spin: boolean;
 	shadowColor?: ColorTokens | string;
 }>`
+	min-height: ${({ size }) => size}px;
+	max-height: ${({ size }) => size}px;
 	svg {
 		${({ spin }) => spin && `animation: rotation 2s infinite linear;`}
 		display: block;
