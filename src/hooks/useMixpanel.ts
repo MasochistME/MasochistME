@@ -1,7 +1,7 @@
 import mixpanel from 'mixpanel-browser';
 import config from 'config.json';
 
-if (config.MIXPANEL_TOKEN) {
+if (config?.MIXPANEL_TOKEN) {
 	mixpanel.init(config.MIXPANEL_TOKEN, { debug: false });
 }
 
