@@ -49,9 +49,7 @@ export const GameFilterBar = (props: Props): JSX.Element => {
 					query={queryGame}
 					setQuery={setQueryGame}
 				/>
-				<QueryBoundary
-					fallback={<Spinner />}
-					errorFallback={<>Could not load :c</>}>
+				<QueryBoundary fallback={<Spinner />}>
 					<TierFilterBoundary />
 				</QueryBoundary>
 			</StyledGameFilterBar>
