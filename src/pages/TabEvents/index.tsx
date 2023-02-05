@@ -1,67 +1,59 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { useEvents } from 'sdk';
 import { SubPage, Section, SectionProps } from 'containers';
-import { Flex, Icon, Spinner } from 'components';
+import { Flex, Icon, Loader, QueryBoundary, ErrorFallback } from 'components';
 import { useActiveTab } from 'hooks';
 import { TabDict, EventsDict } from 'configuration';
 
 import { EventsList } from './EventsList';
 import { EventsFilterBar } from './EventsFilterBar';
 
-const TabEvents = (): JSX.Element => {
+export const TabEvents = (): JSX.Element => {
 	useActiveTab(TabDict.EVENTS);
-
-	const { isLoading, isFetched } = useEvents({
-		sort: { date: 'desc' },
-		limit: 50,
-	});
 
 	return (
 		<SubPage>
 			<StyledEventsList column>
-				<TabEventsInfo isMobileOnly />
-				<EventsFilterBar />
-				{isLoading && <Spinner />}
-				{isFetched && <EventsList />}
+				<Info isMobileOnly />
+				<QueryBoundary fallback={<Loader />} errorFallback={<ErrorFallback />}>
+					<EventsFilterBar />
+				</QueryBoundary>
+				<QueryBoundary fallback={<Loader />} errorFallback={<ErrorFallback />}>
+					<EventsList />
+				</QueryBoundary>
 			</StyledEventsList>
-			<TabEventsInfo isDesktopOnly width="100%" maxWidth="450px" />
+			<Info isDesktopOnly width="100%" maxWidth="450px" />
 		</SubPage>
 	);
 };
 
-const TabEventsInfo = (props: Partial<SectionProps>): JSX.Element => {
-	const { isLoading, isFetched } = useEvents({
-		sort: { date: 'desc' },
-		limit: 50,
-	});
+const Info = (props: Partial<SectionProps>): JSX.Element => (
+	<Section
+		{...props}
+		title="Community events"
+		content={
+			<QueryBoundary fallback={<Loader />} errorFallback={<ErrorFallback />}>
+				<InfoBoundary />
+			</QueryBoundary>
+		}
+	/>
+);
 
+const InfoBoundary = () => {
 	const eventsDescriptions = EventsDict.map((event, index: number) => (
 		<Flex key={`event-desc-${index}`} gap={4}>
 			<Icon icon={event.icon} /> - {event.description},
 		</Flex>
 	));
-
 	return (
-		<Section
-			{...props}
-			title="Community events"
-			content={
-				<Flex column gap={8}>
-					<div>This is the list showcasing the last 100 events.</div>
-					<div>There are {EventsDict.length} different types of events:</div>
-					{isLoading && <Spinner />}
-					{isFetched && (
-						<StyledEventTypes>{eventsDescriptions}</StyledEventTypes>
-					)}
-				</Flex>
-			}
-		/>
+		<Flex column gap={8}>
+			<div>This is the list showcasing the last 100 events.</div>
+			<div>There are {EventsDict.length} different types of events:</div>
+			<StyledEventTypes>{eventsDescriptions}</StyledEventTypes>
+		</Flex>
 	);
 };
-
-export default TabEvents;
 
 const StyledEventsList = styled(Flex)`
 	width: 100%;

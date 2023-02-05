@@ -3,18 +3,18 @@ import { Game, TierId } from '@masochistme/sdk/dist/v1/types';
 
 import { useCuratedGames, useLeaderboardsGames, useTiers } from 'sdk';
 import { useAppContext } from 'context';
-import { Flex, Icon, Size, Spinner, Table, TableColumn } from 'components';
+import {
+	Flex,
+	Icon,
+	Size,
+	Table,
+	TableColumn,
+	QueryBoundary,
+	ErrorFallback,
+} from 'components';
 
 import {
-	CellTier,
-	CellTitle,
-	CellTotalPoints,
-	CellSale,
-	CellBadges,
-	CellCompletions,
-	CellOwners,
-	CellAvgPlaytime,
-	CellLatestCompletion,
+	Cell,
 	getGameTotalPoints,
 	getGameCompletions,
 	getGameBadges,
@@ -36,10 +36,30 @@ enum Columns {
 	SALE = 'Sale',
 }
 
-export const GameTableView = (): JSX.Element => {
-	const { visibleTiers, queryGame } = useAppContext();
+export const GameTableView = () => {
+	const columns = Object.values(Columns).map(c => ({
+		key: c,
+		title: c,
+		value: () => '',
+		render: () => null,
+	}));
+	return (
+		<QueryBoundary
+			fallback={
+				<Table.Skeleton
+					columns={columns}
+					style={{ height: '36px', margin: '6px 0' }}
+				/>
+			}
+			errorFallback={<ErrorFallback />}>
+			<GameTableViewBoundary />
+		</QueryBoundary>
+	);
+};
 
-	const { gamesData, isLoading, isFetched } = useCuratedGames();
+const GameTableViewBoundary = () => {
+	const { visibleTiers, queryGame } = useAppContext();
+	const { gamesData } = useCuratedGames();
 	const { leaderboardsData } = useLeaderboardsGames();
 	const { tiersData } = useTiers();
 
@@ -54,14 +74,14 @@ export const GameTableView = (): JSX.Element => {
 			key: Columns.TIER,
 			title: Columns.TIER,
 			value: (game: Game) => game.tier,
-			render: (game: Game) => <CellTier game={game} />,
+			render: (game: Game) => <Cell.Tier game={game} />,
 			style: { width: '30px' },
 		},
 		{
 			key: Columns.TITLE,
 			title: Columns.TITLE,
 			value: (game: Game) => game.title,
-			render: (game: Game) => <CellTitle game={game} />,
+			render: (game: Game) => <Cell.Title game={game} />,
 			style: { width: '35%' },
 		},
 		{
@@ -78,7 +98,7 @@ export const GameTableView = (): JSX.Element => {
 			),
 			value: (game: Game) =>
 				getGameTotalPoints(game, leaderboardsData, tiersData),
-			render: (game: Game) => <CellTotalPoints game={game} />,
+			render: (game: Game) => <Cell.TotalPoints game={game} />,
 		},
 		{
 			key: Columns.ACHIEVEMENTS,
@@ -94,19 +114,19 @@ export const GameTableView = (): JSX.Element => {
 			key: Columns.BADGES,
 			title: Columns.BADGES,
 			value: (game: Game) => getGameBadges(game, leaderboardsData),
-			render: (game: Game) => <CellBadges game={game} />,
+			render: (game: Game) => <Cell.Badges game={game} />,
 		},
 		{
 			key: Columns.COMPLETIONS,
 			title: Columns.COMPLETIONS,
 			value: (game: Game) => getGameCompletions(game, leaderboardsData),
-			render: (game: Game) => <CellCompletions game={game} />,
+			render: (game: Game) => <Cell.Completions game={game} />,
 		},
 		{
 			key: Columns.OWNERS,
 			title: Columns.OWNERS,
 			value: (game: Game) => getGameOwners(game, leaderboardsData),
-			render: (game: Game) => <CellOwners game={game} />,
+			render: (game: Game) => <Cell.Owners game={game} />,
 		},
 		{
 			key: Columns.AVG_PLAYTIME,
@@ -121,7 +141,7 @@ export const GameTableView = (): JSX.Element => {
 				</Flex>
 			),
 			value: (game: Game) => getGameAvgPlaytime(game, leaderboardsData),
-			render: (game: Game) => <CellAvgPlaytime game={game} />,
+			render: (game: Game) => <Cell.AvgPlaytime game={game} />,
 		},
 		{
 			key: Columns.LATEST_COMPLETION,
@@ -133,20 +153,19 @@ export const GameTableView = (): JSX.Element => {
 				);
 				return latestGameCompletion;
 			},
-			render: (game: Game) => <CellLatestCompletion game={game} />,
+			render: (game: Game) => <Cell.LatestCompletion game={game} />,
 		},
 		{
 			key: Columns.SALE,
 			title: Columns.SALE,
 			value: (game: Game) => game?.sale ?? 0,
-			render: (game: Game) => <CellSale game={game} />,
+			render: (game: Game) => <Cell.Sale game={game} />,
 		},
 	];
 
 	return (
 		<Flex width="100%">
-			{isLoading && <Spinner />}
-			{isFetched && <Table columns={columns} dataset={games} />}
+			<Table columns={columns} dataset={games} />
 		</Flex>
 	);
 };

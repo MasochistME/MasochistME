@@ -2,17 +2,27 @@ import React from 'react';
 
 import { useMemberBadges, useBadges } from 'sdk';
 import { BadgeThumbnail } from 'containers';
-import { Flex } from 'components';
+import { Flex, QueryBoundary, Skeleton } from 'components';
 import { Size } from 'components';
 
 type Props = {
 	size?: Size;
-	memberId: string;
-	gameId: number;
+	memberId?: string;
+	gameId?: number;
 };
 
-export const MemberBadges = (props: Props): JSX.Element => {
-	const { size = Size.MEDIUM, memberId, gameId } = props;
+export const MemberBadges = (props: Props) => {
+	const { memberId, gameId, size = Size.MEDIUM } = props;
+	if (!memberId || !gameId) return null;
+	return (
+		<QueryBoundary fallback={<Skeleton />}>
+			<MemberBadgesBoundary memberId={memberId} gameId={gameId} size={size} />
+		</QueryBoundary>
+	);
+};
+
+const MemberBadgesBoundary = (props: Required<Props>) => {
+	const { size, memberId, gameId } = props;
 
 	const { memberBadgesData } = useMemberBadges(memberId);
 	const { badgesData } = useBadges();

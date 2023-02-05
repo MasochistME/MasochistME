@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router';
 import { EventBadgeCreate, Badge, Game } from '@masochistme/sdk/dist/v1/types';
 
 import { Icon } from 'components';

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Featured, FeaturedType } from '@masochistme/sdk/dist/v1/types';
 
 import { Section, SectionProps } from 'containers';
-import { Flex, Loader, Pagination } from 'components';
+import { ErrorFallback, Flex, Loader, Pagination, Skeleton } from 'components';
 
 import { FeaturedNews, FeaturedVideo } from 'containers/Featured';
 
@@ -15,6 +15,7 @@ type Props = Omit<SectionProps, 'content' | 'title'> & {
 	activeIndex: number;
 	setActiveIndex: (activeIndex: number) => void;
 };
+
 export const DashboardTileFeatured = (props: Props): JSX.Element => {
 	const {
 		featuredData,
@@ -59,3 +60,31 @@ const StyledContent = styled(Flex)`
 	justify-content: space-between;
 	height: 100%;
 `;
+
+DashboardTileFeatured.Skeleton = (
+	props: Omit<SectionProps, 'content' | 'title'>,
+) => (
+	<Section
+		title="Featured"
+		content={
+			<StyledContent column align>
+				<Skeleton width="840px" height="440px" />
+			</StyledContent>
+		}
+		{...props}
+	/>
+);
+
+DashboardTileFeatured.Error = (
+	props: Omit<SectionProps, 'content' | 'title'>,
+) => (
+	<Section
+		title="Featured"
+		content={
+			<StyledContent column align>
+				<ErrorFallback width="840px" height="440px" maxWidth="100%" />
+			</StyledContent>
+		}
+		{...props}
+	/>
+);

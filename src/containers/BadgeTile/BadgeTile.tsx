@@ -4,16 +4,17 @@ import { Badge } from '@masochistme/sdk/dist/v1/types';
 
 import { fonts, useTheme, ColorTokens } from 'styles';
 import { BadgeThumbnail } from 'containers';
-import { Flex, Icon, Size } from 'components';
+import { Flex, Icon, Size, Skeleton } from 'components';
 
 type Props = {
-	badge: Badge;
+	badge?: Badge;
 };
 
 export const BadgeTile = (props: Props) => {
 	const { colorTokens } = useTheme();
 	const { badge } = props;
 
+	if (!badge) return <BadgeTile.Skeleton />;
 	return (
 		<StyledBadge colorTokens={colorTokens}>
 			<Flex column align justify gap={8}>
@@ -34,12 +35,25 @@ export const BadgeTile = (props: Props) => {
 	);
 };
 
+BadgeTile.Skeleton = () => {
+	const { colorTokens } = useTheme();
+	return (
+		<StyledBadge colorTokens={colorTokens}>
+			<Flex column align justify gap={8}>
+				<BadgeThumbnail />
+				<BadgePoints />
+			</Flex>
+			<Skeleton width="100%" height="80px" />
+		</StyledBadge>
+	);
+};
+
 export const BadgePoints = (props: Props) => {
 	const { badge } = props;
 
 	return (
 		<Flex align gap={4} fontSize="18px" fontFamily={fonts.Dosis}>
-			{badge.points}
+			{badge?.points ?? <Skeleton size={Size.TINY} />}
 			<Icon icon="CirclePlus" size={Size.MICRO} />
 		</Flex>
 	);

@@ -1,23 +1,17 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import { useActiveTab, GameView, useToggleView } from 'hooks';
 import { TabDict } from 'configuration/tabs';
 import { SubPage } from 'containers';
-import { Flex, Loader } from 'components';
+import { Flex } from 'components';
 
 import { GameTableView } from './GameTableView';
 import { GameFilterBar } from './GameFilterBar';
+import { GameTileView } from './GameTileView';
 
-const GameTileView = React.lazy(() =>
-	import('./GameTileView').then(module => ({
-		default: module.GameTileView,
-	})),
-);
-
-const TabGames = (): JSX.Element => {
+export const TabGames = () => {
 	useActiveTab(TabDict.GAMES);
-
 	const { gameListView, toggleGameView } = useToggleView();
 
 	return (
@@ -27,11 +21,7 @@ const TabGames = (): JSX.Element => {
 					gameListView={gameListView}
 					toggleGameView={toggleGameView}
 				/>
-				{gameListView === GameView.TILE && (
-					<Suspense fallback={<Loader />}>
-						<GameTileView />
-					</Suspense>
-				)}
+				{gameListView === GameView.TILE && <GameTileView />}
 				{gameListView === GameView.TABLE && <GameTableView />}
 			</StyledGames>
 		</SubPage>
@@ -68,8 +58,6 @@ const TabGames = (): JSX.Element => {
 // 		/>
 // 	);
 // };
-
-export default TabGames;
 
 const StyledGames = styled(Flex)`
 	width: 100%;

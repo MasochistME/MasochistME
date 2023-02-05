@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import {
 	BrowserRouter as Router,
 	Switch,
@@ -7,27 +7,25 @@ import {
 } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { useLoadTiers } from 'hooks';
 import { media, useTheme, ColorTokens } from 'styles';
-import { Loader, Flex } from 'components';
+import { ErrorFallback, Flex, Loader, QueryBoundary } from 'components';
 import { Footer, Header, Navigation, SubHeader } from 'containers';
 
 import { NotFound } from 'pages';
 
-const TabBadges = React.lazy(() => import('./pages/TabBadges'));
-const TabEvents = React.lazy(() => import('./pages/TabEvents'));
-const TabGame = React.lazy(() => import('./pages/TabGame'));
-const TabGames = React.lazy(() => import('./pages/TabGames'));
-const TabHome = React.lazy(() => import('./pages/TabHome'));
-const TabLeaderboards = React.lazy(() => import('./pages/TabLeaderboards'));
-const TabProfile = React.lazy(() => import('./pages/TabProfile'));
-const TabSupport = React.lazy(() => import('./pages/TabSupport'));
-const TabChangelog = React.lazy(() => import('./pages/TabChangelog'));
-// const TabRaces = React.lazy(() => import('./pages/TabRaces'));
+import { TabBadges } from './pages/TabBadges';
+import { TabChangelog } from './pages/TabChangelog';
+import { TabEvents } from './pages/TabEvents';
+import { TabGame } from './pages/TabGame';
+import { TabGames } from './pages/TabGames';
+import { TabHome } from './pages/TabHome';
+import { TabLeaderboards } from './pages/TabLeaderboards';
+import { TabProfile } from './pages/TabProfile';
+import { TabSupport } from './pages/TabSupport';
+// import TabRaces from 'pages/TabRaces';
 
 export const App = (): JSX.Element => {
 	const { colorTokens } = useTheme();
-	useLoadTiers();
 
 	return (
 		<Router>
@@ -39,57 +37,57 @@ export const App = (): JSX.Element => {
 						<SubHeader />
 						<Switch>
 							<Route exact path="/">
-								<Suspense fallback={<Loader />}>
+								<Boundary>
 									<TabHome />
-								</Suspense>
+								</Boundary>
 							</Route>
 							<Route exact path="/home">
 								<Redirect to="/" />
 							</Route>
 							<Route exact path="/games">
-								<Suspense fallback={<Loader />}>
+								<Boundary>
 									<TabGames />
-								</Suspense>
+								</Boundary>
 							</Route>
 							<Route exact path="/leaderboards">
-								<Suspense fallback={<Loader />}>
+								<Boundary>
 									<TabLeaderboards />
-								</Suspense>
+								</Boundary>
 							</Route>
 							<Route exact path="/events">
-								<Suspense fallback={<Loader />}>
+								<Boundary>
 									<TabEvents />
-								</Suspense>
+								</Boundary>
 							</Route>
 							<Route exact path="/support">
-								<Suspense fallback={<Loader />}>
+								<Boundary>
 									<TabSupport />
-								</Suspense>
+								</Boundary>
 							</Route>
 							<Route exact path="/badges">
-								<Suspense fallback={<Loader />}>
+								<Boundary>
 									<TabBadges />
-								</Suspense>
+								</Boundary>
 							</Route>
 							{/* <Route exact path="/races">
-								<Suspense fallback={<Loader />}>
+								<Boundary>
 									<TabRaces />
-								</Suspense>
+								</Boundary>
 							</Route> */}
 							<Route exact path="/profile/:id">
-								<Suspense fallback={<Loader />}>
+								<Boundary>
 									<TabProfile />
-								</Suspense>
+								</Boundary>
 							</Route>
 							<Route exact path="/game/:id">
-								<Suspense fallback={<Loader />}>
+								<Boundary>
 									<TabGame />
-								</Suspense>
+								</Boundary>
 							</Route>
 							<Route exact path="/changelog">
-								<Suspense fallback={<Loader />}>
+								<Boundary>
 									<TabChangelog />
-								</Suspense>
+								</Boundary>
 							</Route>
 							<Route>
 								<NotFound />
@@ -102,6 +100,12 @@ export const App = (): JSX.Element => {
 		</Router>
 	);
 };
+
+const Boundary = ({ children }: React.PropsWithChildren<unknown>) => (
+	<QueryBoundary fallback={<Loader />} errorFallback={<ErrorFallback />}>
+		{children}
+	</QueryBoundary>
+);
 
 const PageWrapper = styled(Flex)`
 	box-sizing: border-box;

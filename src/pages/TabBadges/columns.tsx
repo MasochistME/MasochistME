@@ -1,5 +1,5 @@
 import { Badge } from '@masochistme/sdk/dist/v1/types';
-import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router';
 
 import { TableCell, TableLink } from 'components';
 import { useCuratedGames } from 'sdk';

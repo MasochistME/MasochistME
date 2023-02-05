@@ -1,15 +1,15 @@
-import { useMemo, Suspense } from 'react';
+import { useMemo } from 'react';
 import styled from 'styled-components';
 
 import { useActiveTab, BadgeView, useToggleView } from 'hooks';
 import { TabDict } from 'configuration/tabs';
-import { Button, FilterBar, Flex, Loader } from 'components';
+import { Button, FilterBar, Flex } from 'components';
 import { SubPage, Section, SectionProps } from 'containers';
 
 import { BadgesTableView } from './BadgesTableView';
 import { BadgesTileView } from './BadgesTileView';
 
-const TabBadges = (): JSX.Element => {
+export const TabBadges = (): JSX.Element => {
 	useActiveTab(TabDict.BADGES);
 	const { badgeListView, toggleBadgeView } = useToggleView();
 
@@ -27,7 +27,7 @@ const TabBadges = (): JSX.Element => {
 	return (
 		<SubPage>
 			<StyledBadges>
-				<TabBadgesInfo isMobileOnly />
+				<Info isMobileOnly />
 				<FilterBar>
 					<div />
 					<Button
@@ -36,19 +36,15 @@ const TabBadges = (): JSX.Element => {
 						label={badgeViewButtonLabel}
 					/>
 				</FilterBar>
-				{badgeListView === BadgeView.TILE && (
-					<Suspense fallback={<Loader />}>
-						<BadgesTileView />
-					</Suspense>
-				)}
+				{badgeListView === BadgeView.TILE && <BadgesTileView />}
 				{badgeListView === BadgeView.TABLE && <BadgesTableView />}
 			</StyledBadges>
-			<TabBadgesInfo isDesktopOnly minWidth="350px" maxWidth="350px" />
+			<Info isDesktopOnly minWidth="350px" maxWidth="350px" />
 		</SubPage>
 	);
 };
 
-const TabBadgesInfo = (props: Partial<SectionProps>): JSX.Element => {
+const Info = (props: Partial<SectionProps>): JSX.Element => {
 	return (
 		<Section
 			{...props}
@@ -74,8 +70,6 @@ const TabBadgesInfo = (props: Partial<SectionProps>): JSX.Element => {
 		/>
 	);
 };
-
-export default TabBadges;
 
 const StyledBadges = styled(Flex)`
 	flex-direction: column;

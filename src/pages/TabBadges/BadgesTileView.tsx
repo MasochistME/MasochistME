@@ -3,10 +3,25 @@ import styled from 'styled-components';
 
 import { dedupArray, stringCompare } from 'utils';
 import { useBadges, useCuratedGames, useTiers } from 'sdk';
-import { Flex, Icon, IconType } from 'components';
+import {
+	ErrorFallback,
+	Flex,
+	Icon,
+	IconType,
+	QueryBoundary,
+	Skeleton,
+} from 'components';
 import { BadgeTile, Section } from 'containers';
 
-export const BadgesTileView = () => {
+export const BadgesTileView = () => (
+	<QueryBoundary
+		fallback={<BadgesTileViewSkeleton />}
+		errorFallback={<ErrorFallback />}>
+		<BadgesTileViewBoundary />
+	</QueryBoundary>
+);
+
+const BadgesTileViewBoundary = () => {
 	const { gamesData: games } = useCuratedGames();
 	const { badgesData } = useBadges({ sort: { points: 'desc' } });
 	const { tiersData } = useTiers();
@@ -58,6 +73,20 @@ export const BadgesTileView = () => {
 
 	return <StyledBadgesList>{badgesByGames}</StyledBadgesList>;
 };
+
+const BadgesTileViewSkeleton = () => (
+	<StyledBadgesList>
+		{new Array(9).fill(null).map(() => (
+			<Section
+				maxWidth="100%"
+				width="350px"
+				title={<Skeleton variant="text" width="100px" height="24px" />}
+				content={<BadgeTile.Skeleton />}
+			/>
+		))}
+	</StyledBadgesList>
+);
+
 const StyledBadgesList = styled(Flex)`
 	flex-wrap: wrap;
 	align-items: flex-start;

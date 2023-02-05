@@ -19,6 +19,7 @@ export const useLeaderboardsMembers = (limit?: number) => {
 		isLoading,
 		isFetched,
 		isError,
+		error,
 	} = useQuery(
 		[
 			'masochist',
@@ -37,6 +38,8 @@ export const useLeaderboardsMembers = (limit?: number) => {
 			}),
 	);
 
+	if (isError) throw error;
+
 	return { leaderboardsData, isLoading, isFetched, isError };
 };
 
@@ -51,10 +54,13 @@ export const useLeaderboardsGames = (limit?: number) => {
 		isLoading,
 		isFetched,
 		isError,
+		error,
 	} = useQuery(
 		['masochist', 'leaderboards', 'games', `limit-${limit ?? 1000}`],
 		() => sdk.getLeaderboardsGamesList({}),
 	);
+
+	if (isError) throw error;
 
 	return { leaderboardsData, isLoading, isFetched, isError };
 };
@@ -70,11 +76,14 @@ export const useMemberLeaderboards = (steamId?: string) => {
 		isLoading,
 		isFetched,
 		isError,
+		error,
 	} = useQuery(
 		['masochist', 'leaderboards', steamId],
 		() => sdk.getMemberLeaderboardsPositionById({ memberId: steamId! }),
 		{ enabled: !!steamId },
 	);
+
+	if (isError) throw error;
 
 	return { leaderData, isLoading, isFetched, isError };
 };
