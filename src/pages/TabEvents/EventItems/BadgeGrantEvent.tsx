@@ -32,7 +32,7 @@ export const BadgeGrantEvent = ({ event }: { event: EventBadgeGet }) => {
 					{member?.name ?? `User ${event.memberId}`}
 				</BaseEvent.Link>
 				has earned a new badge -
-				<BaseEvent.Link>{badge?.name ?? event.badgeId}!</BaseEvent.Link>
+				<BaseEvent.Link> {badge?.name ?? event.badgeId}!</BaseEvent.Link>
 			</BaseEvent.Description>
 			<BaseEvent.Summary>
 				<BaseEvent.Icons>

@@ -14,7 +14,13 @@ type Props = CommonProps & {
 export const GameThumbnail = (props: Props) => {
 	const { colorTokens } = useTheme();
 	const { game, size = Size.MEDIUM, title, isLoading, onClick } = props;
-	const gameThumbnail = getGameThumbnail(game?.id);
+	const gameSrc = getGameThumbnail(game?.id);
+
+	const gameThumbnail = isLoading ? (
+		<Skeleton size={size} />
+	) : (
+		<img src={gameSrc} alt="Game" loading="lazy" />
+	);
 
 	return title ? (
 		<Tooltip content={title}>
@@ -22,11 +28,7 @@ export const GameThumbnail = (props: Props) => {
 				onClick={onClick}
 				size={size}
 				colorTokens={colorTokens}>
-				{isLoading ? (
-					<Skeleton size={size} />
-				) : (
-					<img src={gameThumbnail} alt="Game" loading="lazy" />
-				)}
+				{gameThumbnail}
 			</StyledGameThumbnail>
 		</Tooltip>
 	) : (
@@ -35,11 +37,7 @@ export const GameThumbnail = (props: Props) => {
 				onClick={onClick}
 				size={size}
 				colorTokens={colorTokens}>
-				{isLoading ? (
-					<Skeleton size={size} />
-				) : (
-					<img src={gameThumbnail} alt="Game" loading="lazy" />
-				)}
+				{gameThumbnail}
 			</StyledGameThumbnail>
 		</GameTooltip>
 	);

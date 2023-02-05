@@ -29,7 +29,7 @@ export const GameAddEvent = (props: Props): JSX.Element | null => {
 	) as IconType;
 
 	const onGameClick = () => {
-		if (game?.id) history.push(`/game/${game.id}`);
+		history.push(`/game/${event.gameId}`);
 	};
 
 	return (
@@ -38,8 +38,8 @@ export const GameAddEvent = (props: Props): JSX.Element | null => {
 			<BaseEvent.Description>
 				<BaseEvent.Link onClick={onGameClick}>
 					{game ? game.title : `Game ${event.gameId}`}
-				</BaseEvent.Link>{' '}
-				has been curated!
+				</BaseEvent.Link>
+				<span>has been curated!</span>
 			</BaseEvent.Description>
 			<BaseEvent.Summary>
 				<BaseEvent.Icons>

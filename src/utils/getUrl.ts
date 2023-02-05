@@ -1,10 +1,14 @@
-// import { LOGO } from 'shared/consts';
+import { Badge } from '@masochistme/sdk/dist/v1/types';
 
 export const getGameThumbnail = (gameId?: number) => {
 	if (gameId)
 		return `https://cdn.akamai.steamstatic.com/steam/apps/${gameId}/header.jpg`;
-	else return '';
-	// else return LOGO; // TODO
+	else return 'http://cdn.masochist.me/files/no_game_img.png';
+};
+
+export const getBadgeThumbnail = (badge?: Badge) => {
+	if (badge?.img) return badge.img;
+	else return 'http://cdn.masochist.me/files/no_game_img.png';
 };
 
 export const getGameSteamUrl = (gameId: number): string => {

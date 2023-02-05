@@ -35,11 +35,17 @@ export const TierChangeEvent = (props: Props): JSX.Element | null => {
 			<BaseEvent.Logo />
 			<BaseEvent.Description>
 				<BaseEvent.Link onClick={onGameClick}>
-					{game?.title ?? `Game ${event.gameId}`} has been
+					{game?.title ?? `Game ${event.gameId}`}
 				</BaseEvent.Link>
-				{isDemoted ? ' demoted ' : ' promoted '}
-				from <Icon icon={getTierIcon(event.oldTier, tiersData)} /> to
-				<Icon icon={getTierIcon(event.newTier, tiersData)} />!
+				<span>
+					has been
+					{isDemoted ? ' demoted ' : ' promoted '}
+					from
+				</span>
+				<BaseEvent.Icon icon={getTierIcon(event.oldTier, tiersData)} />
+				<span>to</span>
+				<BaseEvent.Icon icon={getTierIcon(event.newTier, tiersData)} />
+				<span>!</span>
 			</BaseEvent.Description>
 			<BaseEvent.Summary>
 				<BaseEvent.Icons>

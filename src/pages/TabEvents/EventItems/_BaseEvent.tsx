@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Flex } from 'components';
+import { Flex, Icon, IconType } from 'components';
 import { Size } from 'components';
 import { media, ColorTokens, useTheme } from 'styles';
 
@@ -17,7 +17,7 @@ export const BaseEvent = (props: Pick<Props, 'children'>) => {
 	);
 };
 
-const BaseEventLink = (props: Props) => {
+BaseEvent.Link = (props: Props) => {
 	const { children, onClick } = props;
 	const { colorTokens } = useTheme();
 	return (
@@ -35,8 +35,6 @@ const StyledBaseEventLink = styled.span<{ colorTokens: ColorTokens }>`
 	}
 `;
 
-BaseEvent.Link = BaseEventLink;
-
 BaseEvent.Logo = () => {
 	const { LOGO_URL } = useTheme();
 	return <BaseEvent.Image alt="masochistme-logo" src={LOGO_URL} />;
@@ -47,11 +45,16 @@ BaseEvent.Image = styled.img`
 	max-height: ${Size.SMALL}px;
 `;
 
-BaseEvent.Description = styled(Flex)`
+BaseEvent.Description = styled.div`
+	display: inline-block;
 	width: 100%;
-	align-items: center;
+	line-height: 15px;
 	text-align: left;
 	gap: 4px;
+	& > * {
+		margin-right: 4px;
+		vertical-align: middle;
+	}
 	@media (max-width: ${media.bigPhones}) {
 		display: none;
 	}
@@ -72,6 +75,12 @@ BaseEvent.Summary = styled(Flex)`
 		box-sizing: border-box;
 	}
 `;
+
+BaseEvent.Icon = (props: React.ComponentProps<typeof Icon>) => (
+	<div style={{ display: 'inline-block' }}>
+		<Icon size={Size.MICRO} {...props} />
+	</div>
+);
 
 BaseEvent.Icons = styled(Flex)`
 	gap: 8px;
