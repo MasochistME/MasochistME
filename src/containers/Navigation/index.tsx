@@ -9,8 +9,9 @@ import { tabs, Tab } from 'configuration/tabs';
 
 export const Navigation = (): JSX.Element => {
 	const { colorTokens } = useTheme();
+	const nrOfTabs = tabs.filter(t => t.visible).length;
 	return (
-		<StyledNavigation colorTokens={colorTokens}>
+		<StyledNavigation colorTokens={colorTokens} nrOfTabs={nrOfTabs}>
 			{tabs.map(
 				(tab: Tab, index: number) =>
 					tab.visible && <NavigationItem key={`nav-${index} `} tab={tab} />,
@@ -48,10 +49,13 @@ const NavigationItem = (props: Props): JSX.Element => {
 	);
 };
 
-const StyledNavigation = styled.div<{ colorTokens: ColorTokens }>`
+const StyledNavigation = styled.div<{
+	colorTokens: ColorTokens;
+	nrOfTabs: number;
+}>`
 	display: grid;
 	width: 100%;
-	grid-template-columns: repeat(7, 1fr);
+	grid-template-columns: repeat(${({ nrOfTabs }) => nrOfTabs}, 1fr);
 	background-color: ${({ colorTokens }) => colorTokens['core-secondary-bg']};
 	box-shadow: 0 10px 10px -10px ${({ colorTokens }) => colorTokens['common-color--shadow']};
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
