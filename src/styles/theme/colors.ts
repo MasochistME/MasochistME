@@ -83,7 +83,7 @@ export const colors: Record<Theme, ColorTokens> = {
 		'core-tertiary-text': '#f0f0f0',
 
 		'semantic-color--tier-4': '#fdc000',
-		'semantic-color--tier-4--muted': '#684f00',
+		'semantic-color--tier-4--muted': '#8e6c00',
 		'semantic-color--tier-3': '#f5f5f5',
 		'semantic-color--tier-3--muted': '#979797',
 		'semantic-color--tier-2': '#ff6b1f',

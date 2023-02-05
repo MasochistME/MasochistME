@@ -82,6 +82,7 @@ export const LeaderboardsMemberSummary = (props: Props): JSX.Element | null => {
 					icon={isExpanded ? 'ChevronDown' : 'ChevronUp'}
 					size={Size.MEDIUM}
 					onClick={onShowDetailsClick}
+					isGolden={member.isHighestPatronTier}
 				/>
 				<StyledLeaderboardsMemberUsername
 					to={`/profile/${steamId}`}
