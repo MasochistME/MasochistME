@@ -3,22 +3,24 @@ import styled from 'styled-components';
 import { FeaturedType } from '@masochistme/sdk/dist/v1/types';
 
 import { useFeaturedFiltered } from 'sdk';
-import { Flex } from 'components';
+import { Flex, QueryBoundary, Spinner } from 'components';
 
 import { FeaturedNews, FeaturedVideo } from 'containers/Featured';
 import { ColorTokens, useTheme } from 'styles';
 
 type Props = { gameId: number };
 
-export const GameProfileFeatured = (props: Props) => {
+export const GameProfileFeatured = (props: Props) => (
+	<QueryBoundary fallback={<Spinner />}>
+		<GameProfileFeaturedBoundary {...props} />
+	</QueryBoundary>
+);
+
+const GameProfileFeaturedBoundary = (props: Props) => {
 	const { gameId } = props;
 	const { colorTokens } = useTheme();
 
-	const {
-		featuredData: data,
-		isFetched,
-		isError,
-	} = useFeaturedFiltered({
+	const { featuredData: data } = useFeaturedFiltered({
 		filter: { isApproved: true, isVisible: true },
 		sort: { date: 'desc' },
 	});
@@ -26,7 +28,7 @@ export const GameProfileFeatured = (props: Props) => {
 
 	const featuredContent = useMemo(() => {
 		return featuredData.map(featured => {
-			if (!featured || !isFetched || isError) return null;
+			if (!featured) return null;
 
 			if (featured.type === FeaturedType.NEWS)
 				return (
@@ -41,10 +43,14 @@ export const GameProfileFeatured = (props: Props) => {
 					</StyledGameProfileFeaturedItem>
 				);
 		});
-	}, [featuredData, isFetched, isError]);
+	}, [featuredData]);
 
 	return (
-		<StyledGameProfileFeatured>{featuredContent}</StyledGameProfileFeatured>
+		<StyledGameProfileFeatured>
+			{featuredData.length
+				? featuredContent
+				: 'There is no featured content for this game!'}
+		</StyledGameProfileFeatured>
 	);
 };
 

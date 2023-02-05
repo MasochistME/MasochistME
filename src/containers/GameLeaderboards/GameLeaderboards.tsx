@@ -4,7 +4,15 @@ import styled from 'styled-components';
 import { Member, MemberGame } from '@masochistme/sdk/dist/v1/types';
 
 import { useGameCompletion, GameCompletion } from 'hooks';
-import { DateBlock, Flex, ProgressBar } from 'components';
+import {
+	DateBlock,
+	ErrorFallback,
+	Flex,
+	Loader,
+	ProgressBar,
+	QueryBoundary,
+	Skeleton,
+} from 'components';
 import { MemberBadges, MemberAvatar } from 'containers';
 import { ColorTokens, useTheme, media, fonts } from 'styles';
 import { Size } from 'components';
@@ -19,7 +27,15 @@ type Props = {
 	isCompact?: boolean;
 };
 
-export const GameLeaderboards = (props: Props) => {
+export const GameLeaderboards = (props: Props) => (
+	<QueryBoundary
+		fallback={<GameLeaderboardsSkeleton />}
+		errorFallback={<ErrorFallback />}>
+		<GameLeaderboardsBoundary {...props} />
+	</QueryBoundary>
+);
+
+const GameLeaderboardsBoundary = (props: Props) => {
 	const { gameId, isCompact } = props;
 	const { colorTokens } = useTheme();
 	const history = useHistory();
@@ -82,6 +98,22 @@ export const GameLeaderboards = (props: Props) => {
 	return (
 		<StyledGameLeaderboards column colorTokens={colorTokens}>
 			{leaderboardsList}
+		</StyledGameLeaderboards>
+	);
+};
+
+const GameLeaderboardsSkeleton = () => {
+	const { colorTokens } = useTheme();
+	return (
+		<StyledGameLeaderboards column colorTokens={colorTokens}>
+			{new Array(10).fill(null).map((_: null, i: number) => (
+				<StyledGameLeaderboardsMember
+					isCompact
+					colorTokens={colorTokens}
+					key={i}>
+					<Skeleton width="100%" />
+				</StyledGameLeaderboardsMember>
+			))}
 		</StyledGameLeaderboards>
 	);
 };

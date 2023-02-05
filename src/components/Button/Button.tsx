@@ -27,6 +27,7 @@ export const Button = (props: Props) => {
 		onClick,
 	} = props;
 	const { colorTokens } = useTheme();
+
 	return (
 		<Tooltip content={tooltip}>
 			<StyledButton

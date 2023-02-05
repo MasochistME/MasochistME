@@ -4,7 +4,7 @@ import { Game } from '@masochistme/sdk/dist/v1/types';
 
 import { useTiers, useCuratedGames } from 'sdk';
 import { getTierIcon, getGameThumbnail } from 'utils';
-import { Flex, Icon, Skeleton, Tooltip, Size } from 'components';
+import { Flex, Icon, Skeleton, Tooltip, Size, QueryBoundary } from 'components';
 import { ModalLeaderboards } from 'containers';
 import { useTheme, ColorTokens } from 'styles';
 
@@ -14,22 +14,16 @@ type Props = {
 	isLoading?: boolean;
 };
 
-export const GameTile = (props: Props): JSX.Element => {
-	const { colorTokens } = useTheme();
+export const GameTile = (props: Props) => {
 	const { gameId, title, isLoading } = props;
+	const { colorTokens } = useTheme();
 	const [isModalOpen, setIsModalOpen] = useState(false);
-
-	const { tiersData, isLoading: isTiersLoading } = useTiers();
-	const { gamesData, isLoading: isGamesLoading } = useCuratedGames();
-
-	const game = gamesData.find((g: Game) => g.id === gameId);
-
-	const isDataLoading = isTiersLoading && isGamesLoading;
 
 	const onShowModal = () => {
 		if (gameId) setIsModalOpen(!isModalOpen);
 	};
 
+	if (isLoading) return <Skeleton width={300} height={145} />;
 	return (
 		<Tooltip content={title}>
 			<StyledGameTile
@@ -38,25 +32,9 @@ export const GameTile = (props: Props): JSX.Element => {
 				justify
 				onClick={onShowModal}
 				colorTokens={colorTokens}>
-				{game &&
-					(isDataLoading || isLoading ? (
-						<Skeleton width={300} height={145} />
-					) : (
-						<StyledGameThumbnail
-							className={`game-tier-${game.tier}`}
-							src={getGameThumbnail(game.id)}>
-							<StyledGameHiddenInfo column align colorTokens={colorTokens}>
-								<Icon
-									icon={getTierIcon(game.tier, tiersData)}
-									size={Size.MICRO}
-								/>
-								<h3>{game.title}</h3>
-								<p style={{ margin: '0', fontSize: '0.85em' }}>
-									{game.description}
-								</p>
-							</StyledGameHiddenInfo>
-						</StyledGameThumbnail>
-					))}
+				<QueryBoundary fallback={null}>
+					<GameThumbnail gameId={gameId} />
+				</QueryBoundary>
 				{gameId && (
 					<ModalLeaderboards
 						gameId={gameId}
@@ -67,6 +45,41 @@ export const GameTile = (props: Props): JSX.Element => {
 				)}
 			</StyledGameTile>
 		</Tooltip>
+	);
+};
+
+GameTile.Skeleton = () => {
+	const { colorTokens } = useTheme();
+	return (
+		<StyledGameTile colorTokens={colorTokens}>
+			<Flex column align justify gap={8}>
+				<QueryBoundary fallback={null}>
+					<GameThumbnail />
+				</QueryBoundary>
+			</Flex>
+			<Skeleton width="100%" height="100%" />
+		</StyledGameTile>
+	);
+};
+
+const GameThumbnail = ({ gameId }: Pick<Props, 'gameId'>) => {
+	const { tiersData } = useTiers();
+	const { gamesData } = useCuratedGames();
+	const { colorTokens } = useTheme();
+
+	const game = gamesData.find((g: Game) => g.id === gameId);
+
+	if (!game) return null;
+	return (
+		<StyledGameThumbnail
+			className={`game-tier-${game.tier}`}
+			src={getGameThumbnail(game.id)}>
+			<StyledGameHiddenInfo column align colorTokens={colorTokens}>
+				<Icon icon={getTierIcon(game.tier, tiersData)} size={Size.MICRO} />
+				<h3>{game.title}</h3>
+				<p style={{ margin: '0', fontSize: '0.85em' }}>{game.description}</p>
+			</StyledGameHiddenInfo>
+		</StyledGameThumbnail>
 	);
 };
 

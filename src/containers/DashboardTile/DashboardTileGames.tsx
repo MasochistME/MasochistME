@@ -5,36 +5,38 @@ import { EventGameAdd, EventType } from '@masochistme/sdk/dist/v1/types';
 
 import { useCuratedGames, useEvents } from 'sdk';
 import { Section, SectionProps, GameTile } from 'containers';
-import { Flex } from 'components';
+import { Flex, ErrorFallback, QueryBoundary } from 'components';
 
 const NUMBER_OF_GAMES = 3;
 
-export const DashboardTileGames = (
-	props: Omit<SectionProps, 'content' | 'title'>,
-): JSX.Element => {
-	const {
-		gamesData,
-		isLoading: isGamesLoading,
-		isFetched: isGamesFetched,
-	} = useCuratedGames();
-	const {
-		eventsData,
-		isLoading: isEventsLoading,
-		isFetched: isEventsFetched,
-	} = useEvents({
+type Props = Omit<SectionProps, 'content' | 'title'>;
+export const DashboardTileGames = (props: Props): JSX.Element => {
+	const games = new Array(NUMBER_OF_GAMES)
+		.fill(null)
+		.map((_, i: number) => <GameTile key={`game-new-${i}`} isLoading />);
+
+	return (
+		<QueryBoundary
+			fallback={<Content content={games} />}
+			errorFallback={<Content content={<ErrorFallback />} />}>
+			<DashboardTileGamesBoundary {...props} />
+		</QueryBoundary>
+	);
+};
+
+const DashboardTileGamesBoundary = (props: Props): JSX.Element => {
+	const { gamesData } = useCuratedGames();
+	const { eventsData } = useEvents({
 		limit: NUMBER_OF_GAMES,
 		sort: { date: 'desc' },
 		filter: { type: EventType.GAME_ADD },
 	});
 
-	const isLoading = isEventsLoading && isGamesLoading;
-	const isFetched = isEventsFetched && isGamesFetched;
-
 	const gameEvents = eventsData.filter(
 		event => event.type === EventType.GAME_ADD,
 	) as unknown as EventGameAdd[];
 
-	const newestGames = gameEvents.map(event => {
+	const games = gameEvents.map(event => {
 		const game = gamesData.find(game => game.id === event.gameId);
 		if (game)
 			return (
@@ -46,26 +48,18 @@ export const DashboardTileGames = (
 			);
 	});
 
-	const loadingGames = new Array(NUMBER_OF_GAMES)
-		.fill(null)
-		.map((_, i: number) => (
-			<GameTile key={`new-game-${i}`} isLoading={isLoading} />
-		));
-
-	return (
-		<Section
-			title="Recent curations"
-			maxWidth="100%"
-			content={
-				<StyledNewGammes>
-					{isLoading && loadingGames}
-					{isFetched && newestGames}
-				</StyledNewGammes>
-			}
-			{...props}
-		/>
-	);
+	return <Content content={games} {...props} />;
 };
+
+type ContentProps = Props & { content: React.ReactNode };
+const Content = ({ content, ...props }: ContentProps) => (
+	<Section
+		title="Recent curations"
+		maxWidth="100%"
+		content={<StyledNewGammes>{content}</StyledNewGammes>}
+		{...props}
+	/>
+);
 
 const StyledNewGammes = styled(Flex)`
 	align-items: center;

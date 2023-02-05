@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { useMemberById, usePatreonTiers, useMemberLeaderboards } from 'sdk';
-import { Flex, Warning } from 'components';
+import {
+	ErrorFallback,
+	Flex,
+	Loader,
+	QueryBoundary,
+	Warning,
+} from 'components';
 import { SubPage, Tabs, Tab, TabPanel } from 'containers';
-import { useActiveTab } from 'hooks';
+import { useActiveTab, useMixpanel } from 'hooks';
 import { TabDict } from 'configuration/tabs';
 import { useTheme, ColorTokens } from 'styles';
 
@@ -24,14 +30,55 @@ enum TabsMap {
 	GAMES = 'games',
 }
 
-const TabProfile = (): JSX.Element => {
-	useActiveTab(TabDict.PROFILE);
-	const { colorTokens } = useTheme();
-	const [activeTab, setActiveTab] = useState<string>(TabsMap.GAMES);
+export const TabProfile = (): JSX.Element => {
+	useActiveTab(TabDict.PROFILE, true);
 	const { id } = useParams<{ id: string }>();
 
+	return (
+		<SubPage>
+			<QueryBoundary
+				fallback={
+					<Flex align justify width="100%">
+						<Loader />
+					</Flex>
+				}
+				errorFallback={
+					<Warning description={`User with id ${id} does not exist.`} />
+				}>
+				<TabProfileBoundary id={id} />
+				<MemberProfileSidebar column>
+					<MemberProfileBadgesSection memberId={id} />
+					<MemberProfileFeaturedSection memberId={id} />
+				</MemberProfileSidebar>
+			</QueryBoundary>
+		</SubPage>
+	);
+};
+
+const TabProfileBoundary = ({ id }: { id: string }) => {
+	const { track } = useMixpanel();
+	const { memberData: member } = useMemberById(id);
+
+	useEffect(() => {
+		if (member?.name) track('tab.profile.visit', { name: member.name, id });
+	}, [member]);
+
+	return (
+		<Flex column width="100%" gap={16}>
+			<QueryBoundary fallback={<Loader />} errorFallback={<ErrorFallback />}>
+				<TabProfileTopBoundary id={id} />
+			</QueryBoundary>
+			<QueryBoundary fallback={<Loader />} errorFallback={<ErrorFallback />}>
+				<TabProfileTabsBoundary id={id} />
+			</QueryBoundary>
+		</Flex>
+	);
+};
+
+const TabProfileTopBoundary = ({ id }: { id: string }) => {
+	const { colorTokens } = useTheme();
+
 	const { leaderData } = useMemberLeaderboards(id);
-	const { memberData: member, isError } = useMemberById(id);
 	const { patreonTiersData } = usePatreonTiers();
 
 	const patron = (patreonTiersData.find(
@@ -48,67 +95,60 @@ const TabProfile = (): JSX.Element => {
 		return null;
 	};
 
-	const isUserPrivate = member?.isPrivate;
-	const isUserNotAMember = member && !member.isMember && !member.isProtected;
-	const canNotShowUser = isUserPrivate || isUserNotAMember;
-
-	const handleChangeTab = (_e: React.SyntheticEvent, newTab: TabsMap) => {
-		setActiveTab(newTab);
-	};
-
-	if (isError)
-		return (
-			<SubPage>
-				<Warning description={`User with id ${id} does not exist.`} />
-			</SubPage>
-		);
-
 	return (
-		<SubPage>
-			<Flex column width="100%" gap={16}>
-				<StyledMemberProfileTop
-					colorTokens={colorTokens}
-					isHighestPatronTier={isHighestPatronTier}
-					tierColor={getTierColor()}>
-					<MemberProfileHeader memberId={id} patron={patron} />
-					<MemberProfileStats memberId={id} patron={patron} />
-				</StyledMemberProfileTop>
-				{isUserPrivate && (
-					<Warning description="This user has their profile set to private." />
-				)}
-				{isUserNotAMember && (
-					<Warning description="This user is not a member of the curator." />
-				)}
-				<StyledProfile column>
-					{!canNotShowUser && (
-						<>
-							<Tabs value={activeTab} onChange={handleChangeTab}>
-								<Tab label="Games" value={TabsMap.GAMES} />
-								<Tab label="Badges" value={TabsMap.BADGES} />
-								<Tab label="Graphs" value={TabsMap.GRAPHS} />
-							</Tabs>
-							<TabPanel activeTab={activeTab} tabId={TabsMap.GAMES}>
-								<MemberProfileGames memberId={id} />
-							</TabPanel>
-							<TabPanel activeTab={activeTab} tabId={TabsMap.BADGES}>
-								<MemberProfileBadges memberId={id} />
-							</TabPanel>
-							<TabPanel activeTab={activeTab} tabId={TabsMap.GRAPHS}>
-								<MemberProfileGraphs memberId={id} />
-							</TabPanel>
-						</>
-					)}
-				</StyledProfile>
-			</Flex>
-			<MemberProfileSidebar column>
-				<MemberProfileBadgesSection memberId={id} />
-				<MemberProfileFeaturedSection memberId={id} />
-			</MemberProfileSidebar>
-		</SubPage>
+		<StyledMemberProfileTop
+			colorTokens={colorTokens}
+			isHighestPatronTier={isHighestPatronTier}
+			tierColor={getTierColor()}>
+			<MemberProfileHeader memberId={id} patron={patron} />
+			<MemberProfileStats memberId={id} patron={patron} />
+		</StyledMemberProfileTop>
 	);
 };
 
-export default TabProfile;
+const TabProfileTabsBoundary = ({ id }: { id: string }) => {
+	const { track } = useMixpanel();
+	const { memberData: member } = useMemberById(id);
+	const [activeTab, setActiveTab] = useState<string>(TabsMap.GAMES);
+
+	const isUserPrivate = member?.isPrivate;
+	const isUserNotAMember = member && !member.isMember && !member.isProtected;
+
+	const handleChangeTab = (_e: React.SyntheticEvent, newTab: TabsMap) => {
+		setActiveTab(newTab);
+		track('page.user.tab', { tab: newTab });
+	};
+
+	if (isUserPrivate)
+		return (
+			<Warning description="This user has their profile set to private." />
+		);
+	if (isUserNotAMember)
+		return <Warning description="This user is not a member of the curator." />;
+
+	return (
+		<StyledProfile column>
+			<Tabs value={activeTab} onChange={handleChangeTab}>
+				<Tab label="Games" value={TabsMap.GAMES} />
+				<Tab label="Badges" value={TabsMap.BADGES} />
+				<Tab label="Graphs" value={TabsMap.GRAPHS} />
+			</Tabs>
+			<TabPanel activeTab={activeTab} tabId={TabsMap.GAMES}>
+				<MemberProfileGames memberId={id} />
+			</TabPanel>
+			<TabPanel activeTab={activeTab} tabId={TabsMap.BADGES}>
+				<MemberProfileBadges memberId={id} />
+			</TabPanel>
+			<TabPanel activeTab={activeTab} tabId={TabsMap.GRAPHS}>
+				<MemberProfileGraphs memberId={id} />
+			</TabPanel>
+		</StyledProfile>
+	);
+};
+
+/**
+ * COMPONENTS
+ */
 
 const StyledProfile = styled(Flex)`
 	width: 100%;
