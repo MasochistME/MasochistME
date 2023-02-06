@@ -5,6 +5,7 @@ import { default as BirthdayCake } from './BirthdayCake';
 import { default as Bolt } from './Bolt';
 import { default as Bookmark } from './Bookmark';
 import { default as Calendar } from './Calendar';
+import { ReactComponent as CalendarCheck } from './CalendarCheck.svg';
 import { default as Checklist } from './Checklist';
 import { default as ChevronDown } from './ChevronDown';
 import { default as ChevronUp } from './ChevronUp';
@@ -23,6 +24,7 @@ import { default as Hashtag } from './Hashtag';
 import { default as Heart } from './Heart';
 import { default as History } from './History';
 import { default as Home } from './Home';
+import { ReactComponent as HourglassHalf } from './HourglassHalf.svg';
 import { default as IDCard } from './IDCard';
 import { default as Link } from './Link';
 import { default as Medal } from './Medal';
@@ -60,6 +62,7 @@ const icons = {
 	Bolt,
 	Bookmark,
 	Calendar,
+	CalendarCheck,
 	Checklist,
 	ChevronDown,
 	ChevronUp,
@@ -78,6 +81,7 @@ const icons = {
 	Heart,
 	History,
 	Home,
+	HourglassHalf,
 	Link,
 	IDCard,
 	Medal,

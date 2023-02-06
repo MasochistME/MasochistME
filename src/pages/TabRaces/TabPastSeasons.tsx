@@ -7,7 +7,7 @@ import { ColorTokens, useTheme } from 'styles';
 import { SingleSeason } from './SingleSeason';
 
 export const TabPastSeasons = (): JSX.Element => {
-	const { pastSeasons, pastSeasonRaces, isLoading } = useRacesFromPastSeasons();
+	const { pastSeasons, pastSeasonRaces } = useRacesFromPastSeasons();
 	const { colorTokens } = useTheme();
 
 	return (
@@ -16,13 +16,7 @@ export const TabPastSeasons = (): JSX.Element => {
 				const seasonRaces = pastSeasonRaces.filter(
 					race => race.season === String(season._id),
 				);
-				return (
-					<SingleSeason
-						season={season}
-						races={seasonRaces}
-						isLoading={isLoading}
-					/>
-				);
+				return <SingleSeason season={season} races={seasonRaces} />;
 			})}
 		</StyledPastSeasons>
 	);

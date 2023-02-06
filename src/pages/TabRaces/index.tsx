@@ -1,60 +1,74 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 import { useActiveTab } from 'hooks';
 import { TabDict } from 'configuration/tabs';
-import { Flex } from 'components';
-import {
-	Section,
-	SectionProps,
-	SubPage,
-	Tabs,
-	Tab,
-	TabPanel,
-} from 'containers';
+import { FilterBar, Flex, Icon, Select } from 'components';
+import { Section, SectionProps, SubPage } from 'containers';
 
-import { TabCurrentSeason } from './TabCurrentSeason';
-import { TabPastSeasons } from './TabPastSeasons';
-import { TabRacesMore } from './TabRacesMore';
-
-enum TabsSeasons {
-	CURRENT_SEASONS = 'current_seasons',
-	PAST_SEASONS = 'past_seasons',
-	MORE = 'more',
-}
+import { SingleSeason } from './SingleSeason';
+import { useRaces, useSeasons } from 'sdk';
+import { media } from 'styles';
 
 export const TabRaces = (): JSX.Element => {
 	useActiveTab(TabDict.RACES);
+	const { seasonsData } = useSeasons({ sort: { startDate: 'desc' } });
+	const [selectedSeason, setSelectedSeason] = useState<string>('');
 
-	const [activeTab, setActiveTab] = useState<TabsSeasons>(
-		TabsSeasons.PAST_SEASONS, // TODO change to CURRENT_SEASONS
-	);
+	const season = useMemo(() => {
+		return seasonsData.find(season => String(season._id) === selectedSeason);
+	}, [selectedSeason]);
 
-	const handleChangeTab = (_e: React.SyntheticEvent, newTab: TabsSeasons) => {
-		setActiveTab(newTab);
-	};
+	const { racesData } = useRaces({ filter: { season: selectedSeason } });
+
+	const optionsSeasonsActive = seasonsData
+		.filter(season => !season.endDate)
+		.map(season => ({
+			render: (
+				<StyledOption>
+					<Icon icon="HourglassHalf" /> {season.name}
+				</StyledOption>
+			),
+			value: String(season._id),
+			isSubheader: false,
+		}));
+	const optionsSeasonsDone = seasonsData
+		.filter(season => season.endDate)
+		.map(season => ({
+			render: (
+				<StyledOption>
+					<Icon icon="CalendarCheck" /> {season.name}
+				</StyledOption>
+			),
+			value: String(season._id),
+			isSubheader: false,
+		}));
+
+	const options = [
+		{ value: 'Active seasons', isSubheader: true },
+		...optionsSeasonsActive,
+		{ value: 'Past seasons', isSubheader: true },
+		...optionsSeasonsDone,
+	];
 
 	return (
 		<SubPage>
 			<StyledSeasonsList>
-				<Tabs value={activeTab} onChange={handleChangeTab}>
-					<Tab label="Current seasons" value={TabsSeasons.CURRENT_SEASONS} />
-					<Tab label="Past seasons" value={TabsSeasons.PAST_SEASONS} />
-					<Tab label="More" value={TabsSeasons.MORE} />
-				</Tabs>
-				<TabPanel activeTab={activeTab} tabId={TabsSeasons.CURRENT_SEASONS}>
-					<TabCurrentSeason />
-				</TabPanel>
-				<TabPanel activeTab={activeTab} tabId={TabsSeasons.PAST_SEASONS}>
-					<TabPastSeasons />
-				</TabPanel>
-				<TabPanel activeTab={activeTab} tabId={TabsSeasons.MORE}>
-					<TabRacesMore />
-				</TabPanel>
+				<FilterBar>
+					<div />
+					<SelectWrapper>
+						<Select
+							options={options}
+							selectedOption={selectedSeason}
+							setSelectedOption={setSelectedSeason}
+							placeholder="Select season..."
+						/>
+					</SelectWrapper>
+				</FilterBar>
+				<SingleSeason season={season} races={racesData} />
 			</StyledSeasonsList>
 			<Flex column width="100%" maxWidth="450px" gap={16}>
 				<TabRaceInfo isDesktopOnly width="100%" maxWidth="450px" />
-				<TabHowToJoinInfo isDesktopOnly width="100%" maxWidth="450px" />
 			</Flex>
 		</SubPage>
 	);
@@ -88,19 +102,6 @@ const TabRaceInfo = (props: Partial<SectionProps>): JSX.Element => {
 						races and takes into consideration 8 best results of all
 						participants.
 					</div>
-				</Flex>
-			}
-		/>
-	);
-};
-
-const TabHowToJoinInfo = (props: Partial<SectionProps>): JSX.Element => {
-	return (
-		<Section
-			{...props}
-			title="How to join"
-			content={
-				<Flex column gap={8}>
 					<div>
 						Races take place in{' '}
 						<a href="https://discord.com/invite/NjAeT53kVb" target="_blank">
@@ -126,4 +127,16 @@ const StyledSeasonsList = styled(Flex)`
 	flex-direction: column;
 	flex: 1 1 100%;
 	width: 100%;
+`;
+
+const StyledOption = styled(Flex)`
+	align-items: center;
+	gap: 8px;
+`;
+
+const SelectWrapper = styled(Flex)`
+	width: 50%;
+	@media (max-width: ${media.smallNetbooks}) {
+		width: 100%;
+	}
 `;

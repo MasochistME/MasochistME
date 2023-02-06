@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { RaceWithSummary, Season } from '@masochistme/sdk/dist/v1/types';
 
-import { Flex, Skeleton } from 'components';
+import { ErrorFallback, Flex } from 'components';
 import { StatBlock, Tabs, Tab, TabPanel } from 'containers';
 import { getHumanReadableDate } from 'utils';
 
@@ -15,13 +15,12 @@ enum TabsSeasonDetails {
 }
 
 type SingleSeasonProps = {
-	season: Season;
+	season?: Season;
 	races: RaceWithSummary[];
-	isLoading: boolean;
 };
 
 export const SingleSeason = (props: SingleSeasonProps) => {
-	const { season, races, isLoading } = props;
+	const { season, races } = props;
 
 	const [activeTab, setActiveTab] = useState<TabsSeasonDetails>(
 		TabsSeasonDetails.RACES,
@@ -44,40 +43,35 @@ export const SingleSeason = (props: SingleSeasonProps) => {
 		setActiveTab(newTab);
 	};
 
+	if (!season) return <ErrorFallback />; // TODO something else
 	return (
 		<StyledSeasonWrapper column>
-			<StyledSeasonTitle>
-				{isLoading ? <Skeleton width="300px" /> : season.name}
-			</StyledSeasonTitle>
-			{isLoading ? <Skeleton width="100%" /> : <div>{season.description}</div>}
+			<StyledSeasonTitle>{season.name}</StyledSeasonTitle>
+			<div>{season.description}</div>
 			<Flex align justifyContent="space-evenly" gap={16}>
 				<StatBlock
 					label={races.length ?? '—'}
 					sublabel="races total"
 					title={<StatBlock.Title>Races total</StatBlock.Title>}
 					icon="Finish"
-					isLoading={isLoading}
 				/>
 				<StatBlock
 					label={getHumanReadableDate(season.startDate)}
 					sublabel="season start date"
 					title={<StatBlock.Title>Season start date</StatBlock.Title>}
 					icon="Finish"
-					isLoading={isLoading}
 				/>
 				<StatBlock
 					label={getHumanReadableDate(season.endDate)}
 					sublabel="season end date"
 					title={<StatBlock.Title>Season end date</StatBlock.Title>}
 					icon="Finish"
-					isLoading={isLoading}
 				/>
 				<StatBlock
 					label={uniqueParticipants}
 					sublabel="unique participants"
 					title={<StatBlock.Title>Unique participants</StatBlock.Title>}
 					icon="Finish"
-					isLoading={isLoading}
 				/>
 			</Flex>
 			<StyledRacesList>
