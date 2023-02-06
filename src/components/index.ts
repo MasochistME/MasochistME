@@ -14,6 +14,7 @@ export * from './Markdown';
 export * from './Modal';
 export * from './Pagination';
 export * from './ProgressBar';
+export * from './Select';
 export * from './Skeleton';
 export * from './Spinner';
 export * from './Switch';
