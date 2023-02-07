@@ -625,6 +625,8 @@ const getCuratorGameDetails = async (
     title: details?.name ?? null,
     description: game.description ?? null,
     achievementsTotal: details?.achievements?.total ?? 0,
+    price: details?.price_overview?.initial ?? 0,
+    currency: details?.price_overview?.currency ?? 'USD',
     sale: details?.price_overview?.discount_percent ?? 0,
     // @ts-ignore
     tier: getGameTier(game.description, tiers),
