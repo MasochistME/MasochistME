@@ -41,6 +41,14 @@ export interface Game extends WithId {
 	 */
 	achievementsTotal: number;
 	/**
+	 * Full price of the game in whatever currency is detected.
+	 */
+	price: number | null;
+	/**
+	 * Currency of the game's price.
+	 */
+	currency: string | null;
+	/**
 	 * When the game is on sale, this field shows the % discount.
 	 */
 	sale: number | null;
