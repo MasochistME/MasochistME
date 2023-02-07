@@ -13,7 +13,7 @@ type Props = CommonProps & {
 };
 
 export const PodiumAvatar = (props: Props) => {
-	const { colorTokens, LOGO_URL } = useTheme();
+	const { colorTokens, LOGO_URL_STATIC } = useTheme();
 	const {
 		member = { name: 'Loading...' },
 		place,
@@ -50,7 +50,11 @@ export const PodiumAvatar = (props: Props) => {
 					<BrokenImage size={size} title="Could not load the avatar." />
 				)}
 				{!isLoading && !isError && avatarUrl && (
-					<img src={avatarUrl ?? LOGO_URL} alt="Member avatar" loading="lazy" />
+					<img
+						src={avatarUrl ?? LOGO_URL_STATIC}
+						alt="Member avatar"
+						loading="lazy"
+					/>
 				)}
 			</StyledMemberAvatar>
 		</Tooltip>

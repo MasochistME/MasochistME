@@ -15,7 +15,7 @@ type Props = {
 };
 
 export const CustomEvent = (props: Props): JSX.Element | null => {
-	const { LOGO_URL } = useTheme();
+	const { LOGO_URL_STATIC } = useTheme();
 	const { event } = props;
 	const { text = null, icon = 'BirthdayCake', memberId = null } = event.content;
 
@@ -38,7 +38,7 @@ export const CustomEvent = (props: Props): JSX.Element | null => {
 					<Icon icon={icon as IconType} />{' '}
 					{/** TODO incompatible icon types possible */}
 				</BaseEvent.Icons>
-				<BaseEvent.Image alt="custom-img" src={LOGO_URL} />
+				<BaseEvent.Image alt="custom-img" src={LOGO_URL_STATIC} />
 			</BaseEvent.Summary>
 		</BaseEvent>
 	);
