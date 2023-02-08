@@ -13,6 +13,8 @@ import { ReactComponent as CircleInfo } from './CircleInfo.svg';
 import { ReactComponent as CirclePlus } from './CirclePlus.svg';
 import { ReactComponent as Clock } from './Clock.svg';
 import { ReactComponent as ClockEmpty } from './ClockEmpty.svg';
+import { ReactComponent as Coin } from './Coin.svg';
+import { ReactComponent as CoinStack } from './CoinStack.svg';
 import { ReactComponent as Crown } from './Crown.svg';
 import { ReactComponent as Discord } from './Discord.svg';
 import { ReactComponent as Donation } from './Donation.svg';
@@ -70,6 +72,8 @@ const icons = {
 	CirclePlus,
 	Clock,
 	ClockEmpty,
+	Coin,
+	CoinStack,
 	Crown,
 	Discord,
 	Donation,
