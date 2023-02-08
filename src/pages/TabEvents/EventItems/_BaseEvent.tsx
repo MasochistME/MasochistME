@@ -36,8 +36,8 @@ const StyledBaseEventLink = styled.span<{ colorTokens: ColorTokens }>`
 `;
 
 BaseEvent.Logo = () => {
-	const { LOGO_URL } = useTheme();
-	return <BaseEvent.Image alt="masochistme-logo" src={LOGO_URL} />;
+	const { LOGO_URL_STATIC } = useTheme();
+	return <BaseEvent.Image alt="masochistme-logo" src={LOGO_URL_STATIC} />;
 };
 
 BaseEvent.Image = styled.img`

@@ -13,7 +13,7 @@ type Props = CommonProps & {
 };
 
 export const MemberAvatar = (props: Props) => {
-	const { colorTokens, LOGO_URL } = useTheme();
+	const { colorTokens, LOGO_URL_STATIC } = useTheme();
 	const {
 		member = { name: 'Loading...' },
 		patronTier,
@@ -50,7 +50,11 @@ export const MemberAvatar = (props: Props) => {
 					<BrokenImage size={size} title="Could not load the avatar." />
 				)}
 				{!isError && avatarUrl && (
-					<img src={avatarUrl ?? LOGO_URL} alt="Member avatar" loading="lazy" />
+					<img
+						src={avatarUrl ?? LOGO_URL_STATIC}
+						alt="Member avatar"
+						loading="lazy"
+					/>
 				)}
 			</StyledMemberAvatar>
 		</Tooltip>

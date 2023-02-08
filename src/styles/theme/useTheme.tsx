@@ -22,6 +22,7 @@ export const useTheme = () => {
 
 	const colorTokens = colors[_activeTheme];
 	const assetTokens = assets[_activeTheme];
+	const LOGO_URL_STATIC = 'http://cdn.masochist.me/files/LOGO.png';
 	const LOGO_URL = assets[_activeTheme]['core-logo'];
 	const BG_URL = assets[_activeTheme]['core-background'];
 	const SH_URL = assets[_activeTheme]['core-subheader'];
@@ -49,6 +50,7 @@ export const useTheme = () => {
 		changeTheme,
 		colorTokens,
 		assetTokens,
+		LOGO_URL_STATIC,
 		LOGO_URL,
 		BG_URL,
 		SH_URL,
