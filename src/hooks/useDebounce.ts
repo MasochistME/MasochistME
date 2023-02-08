@@ -5,12 +5,14 @@ export const useDebounce = <T>(
 	debouncedValue: T,
 	setDebouncedValue: (debouncedValue: T) => void,
 	delay = 500,
+	track?: () => void,
 ) => {
 	useEffect(
 		() => {
 			// Update debounced value after delay
 			const handler = setTimeout(() => {
 				setDebouncedValue(value);
+				if (track) track();
 			}, delay);
 
 			// Cancel the timeout if value changes (also on delay change or unmount)
