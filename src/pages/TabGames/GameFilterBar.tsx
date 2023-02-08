@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { Tier } from '@masochistme/sdk/dist/v1/types';
 
@@ -12,23 +12,28 @@ import {
 	Flex,
 	IconType,
 	QueryBoundary,
-	Skeleton,
+	Slider,
 	Spinner,
 } from 'components';
-import { useActiveTab, GameView, useLoadTiers } from 'hooks';
+import { useActiveTab, GameView, useLoadTiers, useDebounce } from 'hooks';
 import { TabDict } from 'configuration/tabs';
 import { useTiers } from 'sdk';
+
+const DEFAULT_PRICES = [0, 1000];
 
 type Props = {
 	gameListView: GameView;
 	toggleGameView: () => void;
 };
-
 export const GameFilterBar = (props: Props): JSX.Element => {
 	useActiveTab(TabDict.GAMES);
 
 	const { gameListView, toggleGameView } = props;
-	const { queryGame, setQueryGame } = useAppContext();
+	const { queryGame, setQueryGame, visiblePrices, setVisiblePrices } =
+		useAppContext();
+	const [prices, setPrices] = useState<number[]>(DEFAULT_PRICES);
+
+	useDebounce(prices, visiblePrices, setVisiblePrices, 500);
 
 	const gameViewButtonIcon = useMemo(() => {
 		if (gameListView === GameView.TILE) return 'Table';
@@ -48,6 +53,14 @@ export const GameFilterBar = (props: Props): JSX.Element => {
 					placeholder="Search games"
 					query={queryGame}
 					setQuery={setQueryGame}
+				/>
+				<Slider
+					defaultValue={DEFAULT_PRICES}
+					setValue={setPrices}
+					label="Price"
+					iconLeft="Coin"
+					iconRight="CoinStack"
+					step={1}
 				/>
 				<QueryBoundary fallback={<Spinner />}>
 					<TierFilterBoundary />
@@ -83,8 +96,9 @@ const TierFilterBoundary = () => {
 };
 
 const StyledGameFilterBar = styled(Flex)`
-	gap: 16px;
+	gap: 32px;
 	flex-wrap: wrap;
+	align-items: center;
 	@media (max-width: ${media.smallNetbooks}) {
 		justify-content: center;
 	}

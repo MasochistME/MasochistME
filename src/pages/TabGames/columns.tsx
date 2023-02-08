@@ -48,6 +48,19 @@ Cell.Title = (props: Props) => {
 };
 
 /**
+ * Cell showing current price of the game
+ */
+Cell.Price = (props: Props) => {
+	const { game } = props;
+	const price = game.price ? `${game.price / 100}€` : 'Free';
+	return (
+		<Flex row align justify>
+			{price}
+		</Flex>
+	);
+};
+
+/**
  * Cell showing current discount of the game
  */
 Cell.Sale = (props: Props) => {

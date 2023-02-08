@@ -22,6 +22,8 @@ type ContextType = {
 	setActiveTab: (activeTab: TabDict) => void;
 	visibleTiers: TierId[];
 	setVisibleTiers: (visibleTiers: TierId[]) => void;
+	visiblePrices: number[];
+	setVisiblePrices: (visiblePrices: number[]) => void;
 	visibleEvents: EventType[];
 	setVisibleEvents: (visibleEvents: EventType[]) => void;
 
@@ -49,14 +51,17 @@ export const AppContextProvider = ({
 	const [_badgeListView, _setBadgeListView] = useState<BadgeView>(
 		BadgeView.TILE,
 	);
-	const [visibleTiers, setVisibleTiers] = useState<TierId[]>([]);
-	const [visibleEvents, setVisibleEvents] = useState<EventType[]>(
-		EventsDict.map(e => e.type),
-	);
+
 	const [queryGame, setQueryGame] = useState<string>('');
 	const [queryMember, setQueryMember] = useState<string>('');
 	const [queryLeaderboardPeriod, setQueryLeaderboardPeriod] =
 		useState<TimePeriod>(TimePeriod.ALL);
+
+	const [visibleTiers, setVisibleTiers] = useState<TierId[]>([]);
+	const [visibleEvents, setVisibleEvents] = useState<EventType[]>(
+		EventsDict.map(e => e.type),
+	);
+	const [visiblePrices, setVisiblePrices] = useState<number[]>([0, 1000]);
 
 	const path = config.API;
 	const sdk = new SDK({
@@ -75,6 +80,8 @@ export const AppContextProvider = ({
 		setActiveTab,
 		visibleTiers,
 		setVisibleTiers,
+		visiblePrices,
+		setVisiblePrices,
 		visibleEvents,
 		setVisibleEvents,
 

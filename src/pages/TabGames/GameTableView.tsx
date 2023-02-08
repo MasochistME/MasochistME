@@ -33,6 +33,7 @@ enum Columns {
 	OWNERS = 'Owners',
 	AVG_PLAYTIME = 'Avg playtime',
 	LATEST_COMPLETION = 'Latest completion',
+	PRICE = 'Full price',
 	SALE = 'Sale',
 }
 
@@ -58,16 +59,24 @@ export const GameTableView = () => {
 };
 
 const GameTableViewBoundary = () => {
-	const { visibleTiers, queryGame } = useAppContext();
+	const { visibleTiers, visiblePrices, queryGame } = useAppContext();
 	const { gamesData } = useCuratedGames();
 	const { leaderboardsData } = useLeaderboardsGames();
 	const { tiersData } = useTiers();
 
-	const games = gamesData.filter(
-		(game: Game) =>
-			game?.title.toLowerCase().includes(queryGame.toLowerCase()) &&
-			visibleTiers.find((tier: TierId) => tier === game.tier),
-	);
+	const games = gamesData.filter((game: Game) => {
+		const includesNameQuery = game?.title
+			.toLowerCase()
+			.includes(queryGame.toLowerCase());
+		const includesTierFilter = visibleTiers.find(
+			(tier: TierId) => tier === game.tier,
+		);
+		const isInPriceRange =
+			game.price !== null &&
+			game.price / 100 >= visiblePrices[0] &&
+			game.price / 100 <= visiblePrices[1];
+		return includesNameQuery && includesTierFilter && isInPriceRange;
+	});
 
 	const columns: TableColumn<Game>[] = [
 		{
@@ -154,6 +163,21 @@ const GameTableViewBoundary = () => {
 				return latestGameCompletion;
 			},
 			render: (game: Game) => <Cell.LatestCompletion game={game} />,
+		},
+		{
+			key: Columns.PRICE,
+			title: (
+				<Flex row align justify gap={4}>
+					{Columns.PRICE}
+					<Icon
+						size={Size.MICRO}
+						icon="QuestionCircle"
+						hoverText="Full price in EUR (€) not counting any discounts"
+					/>
+				</Flex>
+			),
+			value: (game: Game) => game?.price ?? 0,
+			render: (game: Game) => <Cell.Price game={game} />,
 		},
 		{
 			key: Columns.SALE,

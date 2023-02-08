@@ -9,12 +9,19 @@ type Props = {
 	iconLeft?: IconType;
 	iconRight?: IconType;
 	step?: number;
-	value: number[];
+	defaultValue: number[];
 	setValue: (value: number[]) => void;
 };
 export const Slider = (props: Props) => {
 	const { colorTokens } = useTheme();
-	const { label, step = 10, iconLeft, iconRight, value, setValue } = props;
+	const {
+		label,
+		step = 10,
+		iconLeft,
+		iconRight,
+		defaultValue,
+		setValue,
+	} = props;
 
 	const handleChange = (_event: Event, newValue: number | number[]) => {
 		setValue(newValue as number[]);
@@ -24,8 +31,8 @@ export const Slider = (props: Props) => {
 		<Wrapper>
 			{iconLeft && <Icon icon={iconLeft} size={Size.TINY} />}
 			<StyledSlider
+				defaultValue={defaultValue}
 				getAriaLabel={() => label}
-				value={value}
 				onChange={handleChange}
 				valueLabelDisplay="auto"
 				step={step}

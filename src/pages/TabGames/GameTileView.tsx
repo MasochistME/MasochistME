@@ -16,7 +16,7 @@ export const GameTileView = () => (
 );
 
 const GameTileViewBoundary = () => {
-	const { visibleTiers, queryGame } = useAppContext();
+	const { visibleTiers, visiblePrices, queryGame } = useAppContext();
 	const { gamesData } = useCuratedGames();
 
 	const filteredGames = gamesData
@@ -27,7 +27,11 @@ const GameTileViewBoundary = () => {
 			const includesTierFilter = visibleTiers.find(
 				(tier: TierId) => tier === game.tier,
 			);
-			if (includesNameQuery && includesTierFilter)
+			const isInPriceRange =
+				game.price !== null &&
+				game.price / 100 >= visiblePrices[0] &&
+				game.price / 100 <= visiblePrices[1];
+			if (includesNameQuery && includesTierFilter && isInPriceRange)
 				return <GameTile key={`id-game-${game.id}`} gameId={game.id} />;
 			else return null;
 		})
