@@ -12,6 +12,7 @@ import {
 	Flex,
 	IconType,
 	QueryBoundary,
+	Size,
 	Slider,
 	Spinner,
 } from 'components';
@@ -39,6 +40,7 @@ export const GameFilterBar = (props: Props): JSX.Element => {
 	const { queryGame, setQueryGame, visiblePrices, setVisiblePrices } =
 		useAppContext();
 	const [prices, setPrices] = useState<number[]>(DEFAULT_PRICES);
+	const [showSlider, setShowSlider] = useState<boolean>(false);
 
 	const trackPriceChange = () => {
 		track('games.price.change', {
@@ -59,6 +61,10 @@ export const GameFilterBar = (props: Props): JSX.Element => {
 		else return 'Toggle grid view';
 	}, [gameListView]);
 
+	const handleShowSliderClick = () => {
+		setShowSlider(!showSlider);
+	};
+
 	return (
 		<FilterBar>
 			<StyledGameFilterBar>
@@ -67,23 +73,33 @@ export const GameFilterBar = (props: Props): JSX.Element => {
 					query={queryGame}
 					setQuery={setQueryGame}
 				/>
-				<Slider
-					defaultValue={DEFAULT_PRICES}
-					setValue={setPrices}
-					label="Price"
-					iconLeft="Coin"
-					iconRight="CoinStack"
-					step={1}
-				/>
 				<QueryBoundary fallback={<Spinner />}>
 					<TierFilterBoundary />
 				</QueryBoundary>
 			</StyledGameFilterBar>
-			<Button
-				onClick={toggleGameView}
-				icon={gameViewButtonIcon}
-				label={gameViewButtonLabel}
-			/>
+			<StyledGameFilterBar>
+				<Flex align gap={16}>
+					<SliderExpand className={showSlider ? 'expanded' : ''}>
+						<Slider
+							defaultValue={DEFAULT_PRICES}
+							setValue={setPrices}
+							getValueLabelFormat={(price: number) => `${price} €`}
+							step={1}
+						/>
+					</SliderExpand>
+					<Button
+						icon="CoinStack"
+						size={Size.BIG}
+						toggled={showSlider}
+						onClick={handleShowSliderClick}
+					/>
+				</Flex>
+				<Button
+					onClick={toggleGameView}
+					icon={gameViewButtonIcon}
+					label={gameViewButtonLabel}
+				/>
+			</StyledGameFilterBar>
 		</FilterBar>
 	);
 };
@@ -120,4 +136,16 @@ const StyledGameFilterBar = styled(Flex)`
 const StyledGameFilterBarTiers = styled(Flex)`
 	justify-content: center;
 	gap: 24px;
+`;
+
+const SliderExpand = styled.div`
+	width: 32px;
+	opacity: 0;
+	transition: width 0.1s linear, opacity 0.15s linear;
+	/* overflow: hidden; */
+
+	&.expanded {
+		width: 200px;
+		opacity: 1;
+	}
 `;

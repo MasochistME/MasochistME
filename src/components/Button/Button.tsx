@@ -9,6 +9,7 @@ type Props = {
 	icon?: IconType;
 	iconPlacement?: 'left' | 'right';
 	disabled?: boolean;
+	toggled?: boolean;
 	tooltip?: React.ReactNode;
 	size?: Size;
 	isGolden?: boolean;
@@ -21,6 +22,7 @@ export const Button = (props: Props) => {
 		icon,
 		iconPlacement = 'left',
 		disabled = false,
+		toggled = false,
 		tooltip,
 		isGolden = false,
 		size = Size.MEDIUM,
@@ -34,6 +36,7 @@ export const Button = (props: Props) => {
 				iconOnly={!label}
 				size={size}
 				disabled={disabled}
+				toggled={toggled}
 				colorTokens={colorTokens}
 				isGolden={isGolden}
 				onClick={onClick}>
@@ -51,6 +54,7 @@ export const Button = (props: Props) => {
 
 const StyledButton = styled.button<{
 	size: Size;
+	toggled: boolean;
 	iconOnly: boolean;
 	isGolden: boolean;
 	colorTokens: ColorTokens;
@@ -82,10 +86,12 @@ const StyledButton = styled.button<{
 		if (isGolden) return `${colorTokens['core-primary-bg']}99`;
 		return colorTokens['element-color--button-bg'];
 	}};
-	color: ${({ colorTokens, isGolden }) =>
-		isGolden
-			? colorTokens['semantic-color--tier-4']
-			: colorTokens['element-color--button-text']};
+	color: ${({ colorTokens, isGolden, toggled }) => {
+		if (isGolden) return colorTokens['semantic-color--tier-4'];
+		if (toggled) return colorTokens['core-primary-text'];
+		return colorTokens['element-color--button-text'];
+	}};
+
 	cursor: pointer;
 	&:hover {
 		color: ${({ colorTokens, isGolden }) =>

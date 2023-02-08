@@ -5,7 +5,7 @@ import { Flex, Icon, IconType, Size } from 'components';
 import { ColorTokens, useTheme } from 'styles';
 
 type Props = {
-	label: string;
+	getValueLabelFormat?: (value: number) => string;
 	iconLeft?: IconType;
 	iconRight?: IconType;
 	step?: number;
@@ -15,16 +15,21 @@ type Props = {
 export const Slider = (props: Props) => {
 	const { colorTokens } = useTheme();
 	const {
-		label,
 		step = 10,
 		iconLeft,
 		iconRight,
 		defaultValue,
 		setValue,
+		getValueLabelFormat,
 	} = props;
 
 	const handleChange = (_event: Event, newValue: number | number[]) => {
 		setValue(newValue as number[]);
+	};
+
+	const optionalProps = {
+		...(getValueLabelFormat && { getAriaValueText: getValueLabelFormat }),
+		...(getValueLabelFormat && { valueLabelFormat: getValueLabelFormat }),
 	};
 
 	return (
@@ -32,11 +37,11 @@ export const Slider = (props: Props) => {
 			{iconLeft && <Icon icon={iconLeft} size={Size.TINY} />}
 			<StyledSlider
 				defaultValue={defaultValue}
-				getAriaLabel={() => label}
 				onChange={handleChange}
-				valueLabelDisplay="auto"
 				step={step}
 				colorTokens={colorTokens}
+				valueLabelDisplay="auto"
+				{...optionalProps}
 			/>
 			{iconRight && <Icon icon={iconRight} size={Size.TINY} />}
 		</Wrapper>
@@ -46,12 +51,18 @@ export const Slider = (props: Props) => {
 const Wrapper = styled(Flex)`
 	flex: 1 1 auto;
 	width: 250px;
-	max-width: 250px;
+	max-width: 100%;
 	height: 100%;
 	align-items: center;
 	justify-content: space-between;
 	gap: 16px;
+	padding: 0 16px;
 `;
+
 const StyledSlider = styled(MuiSlider)<{ colorTokens: ColorTokens }>`
 	color: ${({ colorTokens }) => colorTokens['semantic-color--active']};
+
+	& .MuiSlider-valueLabel {
+		//
+	}
 `;

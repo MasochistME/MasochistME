@@ -32,6 +32,7 @@ export const TabRaces = (): JSX.Element => {
 			value: String(season._id),
 			isSubheader: false,
 		}));
+
 	const optionsSeasonsDone = seasonsData
 		.filter(season => season.endDate)
 		.map(season => ({
@@ -59,6 +60,7 @@ export const TabRaces = (): JSX.Element => {
 					<SelectWrapper>
 						<Select
 							options={options}
+							defaultSelection={optionsSeasonsActive[0]?.value ?? undefined}
 							selectedOption={selectedSeason}
 							setSelectedOption={setSelectedSeason}
 							placeholder="Select season..."
