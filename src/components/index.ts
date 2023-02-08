@@ -16,6 +16,7 @@ export * from './Pagination';
 export * from './ProgressBar';
 export * from './Select';
 export * from './Skeleton';
+export * from './Slider';
 export * from './Spinner';
 export * from './Switch';
 export * from './Table';
