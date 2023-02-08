@@ -32,8 +32,8 @@ export const Input = <T extends string>(props: Props<T>): JSX.Element => {
 const StyledInput = styled.input<{ colorTokens: ColorTokens }>`
 	flex: 1 1 auto;
 	height: 44px;
-	width: 350px;
-	max-width: 350px;
+	width: 300px;
+	max-width: 300px;
 	padding: 4px 12px;
 	font-size: 1.2em;
 	font-family: ${fonts.Raleway};
