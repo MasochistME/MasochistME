@@ -434,6 +434,8 @@ export const updateCuratorLogic = async (
           gamePrev.description !== gameNew.description ||
           gamePrev.tier !== gameNew.tier ||
           gamePrev.sale !== gameNew.sale ||
+          gamePrev.price !== gameNew.price ||
+          gamePrev.currency !== gameNew.currency ||
           gamePrev.achievementsTotal !== gameNew.achievementsTotal
         );
       });
@@ -457,6 +459,8 @@ export const updateCuratorLogic = async (
                 tier: game.tier,
               }),
               sale: game.sale,
+              price: game.price,
+              currency: game.currency,
               achievementsTotal: game.achievementsTotal,
             },
           },
