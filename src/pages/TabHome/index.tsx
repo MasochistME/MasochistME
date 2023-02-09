@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { media } from 'styles';
+import { fonts, media } from 'styles';
 import { useFeatured } from 'sdk/featured';
 import { chooseRandomIndex } from 'utils';
 import { useActiveTab } from 'hooks';
 import { TabDict } from 'configuration/tabs';
-import { Flex, QueryBoundary } from 'components';
+import { Button, Flex, QueryBoundary, Size } from 'components';
 import { SubPage, DashboardTile } from 'containers';
 import { Featured } from '@masochistme/sdk/dist/v1/types';
+import { useHistory } from 'react-router';
+import { Variant } from 'components/Button/types';
+import { CommunityInfo } from './CommunityInfo';
 
 export enum SectionMap {
 	WELCOME = 'welcome',
@@ -28,6 +31,7 @@ export const TabHome = (): JSX.Element => {
 	return (
 		<SubPage>
 			<StyledDashboard column justify align>
+				<CommunityInfo />
 				<QueryBoundary
 					fallback={<DashboardTile.Featured.Skeleton isMobileOnly />}
 					errorFallback={<DashboardTile.Featured.Error isMobileOnly />}>

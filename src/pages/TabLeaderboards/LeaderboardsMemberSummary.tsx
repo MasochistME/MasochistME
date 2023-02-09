@@ -14,6 +14,7 @@ import {
 	LeaderboardsMemberIconOutdated,
 	LeaderboardsMemberIconDummy,
 } from './LeaderboardsMemberIcons';
+import { Variant } from 'components/Button/types';
 
 type Props = {
 	steamId: string;
@@ -34,6 +35,7 @@ export const LeaderboardsMemberSummary = (props: Props): JSX.Element | null => {
 	} = useMemberLeaderboardsSummary(steamId);
 
 	const size = Size.BIG;
+	const variant = member.isHighestPatronTier ? Variant.GOLDEN : Variant.DEFAULT;
 
 	const infoIcon = useMemo(() => {
 		if (member?.isPrivate) return <LeaderboardsMemberIconPrivate />;
@@ -82,7 +84,7 @@ export const LeaderboardsMemberSummary = (props: Props): JSX.Element | null => {
 					icon={isExpanded ? 'ChevronDown' : 'ChevronUp'}
 					size={Size.MEDIUM}
 					onClick={onShowDetailsClick}
-					isGolden={member.isHighestPatronTier}
+					variant={variant}
 				/>
 				<StyledLeaderboardsMemberUsername
 					to={`/profile/${steamId}`}

@@ -8,6 +8,7 @@ import { useUpdateMemberMutation, useMemberLeaderboards } from 'sdk';
 import { media } from 'styles';
 import { getHumanReadableDate } from 'utils';
 import { Alert, Flex, Tooltip, Button } from 'components';
+import { Variant } from 'components/Button/types';
 
 type Props = {
 	member?: Member;
@@ -28,6 +29,7 @@ export const MemberProfileUpdate = (props: Props) => {
 	);
 
 	const isHighestPatronTier = leaderData?.patreonTier === PatronTier.TIER4;
+	const variant = isHighestPatronTier ? Variant.GOLDEN : Variant.DEFAULT;
 
 	useEffect(() => {
 		const response = memberUpdateData?.message ?? 'Please wait...';
@@ -55,7 +57,7 @@ export const MemberProfileUpdate = (props: Props) => {
 			<Button
 				label="Update"
 				icon="Refresh"
-				isGolden={isHighestPatronTier}
+				variant={variant}
 				onClick={handleMemberUpdate}
 			/>
 			<Alert
