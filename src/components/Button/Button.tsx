@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { fonts, useTheme, ColorTokens } from 'styles';
 import { Icon, IconType, Tooltip } from 'components';
 import { Size } from 'components';
+import { Variant } from './types';
 
 type Props = {
 	label?: string;
@@ -12,7 +13,7 @@ type Props = {
 	toggled?: boolean;
 	tooltip?: React.ReactNode;
 	size?: Size;
-	isGolden?: boolean;
+	variant?: Variant;
 	onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 };
 
@@ -24,8 +25,8 @@ export const Button = (props: Props) => {
 		disabled = false,
 		toggled = false,
 		tooltip,
-		isGolden = false,
 		size = Size.MEDIUM,
+		variant = Variant.DEFAULT,
 		onClick,
 	} = props;
 	const { colorTokens } = useTheme();
@@ -38,7 +39,7 @@ export const Button = (props: Props) => {
 				disabled={disabled}
 				toggled={toggled}
 				colorTokens={colorTokens}
-				isGolden={isGolden}
+				variant={variant}
 				onClick={onClick}>
 				{icon && iconPlacement === 'left' && (
 					<Icon icon={icon} size={size / 3} />
@@ -54,22 +55,25 @@ export const Button = (props: Props) => {
 
 const StyledButton = styled.button<{
 	size: Size;
+	variant: Variant;
 	toggled: boolean;
 	iconOnly: boolean;
-	isGolden: boolean;
 	colorTokens: ColorTokens;
 }>`
+	cursor: pointer;
 	display: flex;
 	align-items: center;
 	margin: 0;
 	padding: 0;
-	border: none;
 	gap: 4px;
-	padding: ${({ iconOnly }) => (iconOnly ? `8px` : '4px 12px')};
+	font-family: ${fonts.Raleway};
 	border-radius: 4px;
-	border: ${({ iconOnly, isGolden, colorTokens }) => {
+	padding: ${({ iconOnly }) => (iconOnly ? `8px` : '4px 12px')};
+	border: ${({ iconOnly, variant, colorTokens }) => {
 		if (iconOnly) return 0;
-		if (isGolden) return `1px solid ${colorTokens['semantic-color--tier-4']}`;
+		if (variant === Variant.GOLDEN) {
+			return `1px solid ${colorTokens['semantic-color--tier-4']}`;
+		}
 		return `1px solid ${colorTokens['element-color--button-border']}`;
 	}};
 	font-size: ${({ size }) => {
@@ -80,24 +84,32 @@ const StyledButton = styled.button<{
 		if (size === Size.LARGE) return '32px';
 		return '18px';
 	}};
-	font-family: ${fonts.Raleway};
-	background-color: ${({ iconOnly, isGolden, colorTokens }) => {
+	background-color: ${({ iconOnly, variant, colorTokens }) => {
 		if (iconOnly) return 'transparent';
-		if (isGolden) return `${colorTokens['core-primary-bg']}99`;
-		return colorTokens['element-color--button-bg'];
+		if (variant === Variant.DEFAULT)
+			return colorTokens['element-color--button-bg'];
+		if (variant === Variant.PRIMARY)
+			return colorTokens['element-color--button-text'];
+		if (variant === Variant.GOLDEN)
+			return `${colorTokens['core-primary-bg']}99`;
 	}};
-	color: ${({ colorTokens, isGolden, toggled }) => {
-		if (isGolden) return colorTokens['semantic-color--tier-4'];
+	color: ${({ colorTokens, variant, toggled }) => {
 		if (toggled) return colorTokens['core-primary-text'];
-		return colorTokens['element-color--button-text'];
+		if (variant === Variant.DEFAULT)
+			return colorTokens['element-color--button-text'];
+		if (variant === Variant.PRIMARY)
+			return colorTokens['element-color--button-bg'];
+		if (variant === Variant.GOLDEN)
+			return colorTokens['semantic-color--tier-4'];
 	}};
 
-	cursor: pointer;
 	&:hover {
-		color: ${({ colorTokens, isGolden }) =>
-			isGolden
-				? colorTokens['core-tertiary-text']
-				: colorTokens['core-primary-text']};
+		color: ${({ colorTokens, variant }) => {
+			if (variant === Variant.DEFAULT) return colorTokens['core-primary-text'];
+			if (variant === Variant.PRIMARY)
+				return colorTokens['element-color--button-bg'];
+			if (variant === Variant.GOLDEN) return colorTokens['core-tertiary-text'];
+		}};
 	}
 	& > *:not(:last-child) {
 		margin-right: 8px;
