@@ -16,6 +16,7 @@ import {
 import { MemberBadges, MemberAvatar } from 'containers';
 import { ColorTokens, useTheme, media, fonts } from 'styles';
 import { Size } from 'components';
+import { useAppContext } from 'context';
 
 type Completion = Omit<MemberGame, '_id' | 'memberId' | 'playtime'> & {
 	member: Member;
@@ -38,6 +39,7 @@ export const GameLeaderboards = (props: Props) => (
 const GameLeaderboardsBoundary = (props: Props) => {
 	const { gameId, isCompact } = props;
 	const { colorTokens } = useTheme();
+	const { dev } = useAppContext();
 	const history = useHistory();
 
 	const { gameCompletions } = useGameCompletion(gameId);
@@ -90,6 +92,11 @@ const GameLeaderboardsBoundary = (props: Props) => {
 					<ProgressBar
 						percentage={Math.floor(memberCompletion.completionPercentage)}
 					/>
+					{dev > 10 && (
+						<span style={{ width: '80px', textAlign: 'right' }}>
+							{memberCompletion.playTime} h
+						</span>
+					)}
 				</StyledGameLeaderboardsMember>
 			);
 		},
