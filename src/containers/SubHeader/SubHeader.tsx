@@ -46,7 +46,7 @@ const StyledTitle = styled(Flex)<{ colorTokens: ColorTokens; shUrl: string }>`
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	font-family: ${fonts.Cinzel};
 
-	letter-spacing: 0.3em;
+	letter-spacing: 0.2em;
 	font-size: 2em;
 	flex: 1 1 100%;
 	height: 100%;

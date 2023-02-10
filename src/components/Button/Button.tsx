@@ -4,6 +4,7 @@ import { fonts, useTheme, ColorTokens } from 'styles';
 import { Icon, IconType, Tooltip } from 'components';
 import { Size } from 'components';
 import { Variant } from './types';
+import React from 'react';
 
 type Props = {
 	label?: string;
@@ -14,6 +15,7 @@ type Props = {
 	tooltip?: React.ReactNode;
 	size?: Size;
 	variant?: Variant;
+	className?: string;
 	onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 };
 
@@ -27,6 +29,7 @@ export const Button = (props: Props) => {
 		tooltip,
 		size = Size.MEDIUM,
 		variant = Variant.DEFAULT,
+		className,
 		onClick,
 	} = props;
 	const { colorTokens } = useTheme();
@@ -40,7 +43,8 @@ export const Button = (props: Props) => {
 				toggled={toggled}
 				colorTokens={colorTokens}
 				variant={variant}
-				onClick={onClick}>
+				onClick={onClick}
+				className={className}>
 				{icon && iconPlacement === 'left' && (
 					<Icon icon={icon} size={size / 3} />
 				)}
@@ -53,14 +57,19 @@ export const Button = (props: Props) => {
 	);
 };
 
-const StyledButton = styled.button<{
+type StyledButtonProps = {
 	size: Size;
 	variant: Variant;
 	toggled: boolean;
 	iconOnly: boolean;
 	colorTokens: ColorTokens;
-}>`
-	cursor: pointer;
+};
+const StyledButton = styled.button.attrs((props: Props) => {
+	const style: React.CSSProperties = {
+		cursor: props.disabled ? `not-allowed` : 'pointer',
+	};
+	return { style };
+})<StyledButtonProps>`
 	display: flex;
 	align-items: center;
 	margin: 0;
@@ -69,8 +78,10 @@ const StyledButton = styled.button<{
 	font-family: ${fonts.Raleway};
 	border-radius: 4px;
 	padding: ${({ iconOnly }) => (iconOnly ? `8px` : '4px 12px')};
-	border: ${({ iconOnly, variant, colorTokens }) => {
+	border: ${({ iconOnly, variant, disabled, colorTokens }) => {
 		if (iconOnly) return 0;
+		if (disabled)
+			return `1px solid ${colorTokens['semantic-color--disabled']}55`;
 		if (variant === Variant.GOLDEN) {
 			return `1px solid ${colorTokens['semantic-color--tier-4']}`;
 		}
@@ -93,7 +104,8 @@ const StyledButton = styled.button<{
 		if (variant === Variant.GOLDEN)
 			return `${colorTokens['core-primary-bg']}99`;
 	}};
-	color: ${({ colorTokens, variant, toggled }) => {
+	color: ${({ colorTokens, variant, disabled, toggled }) => {
+		if (disabled) return colorTokens['semantic-color--disabled'];
 		if (toggled) return colorTokens['core-primary-text'];
 		if (variant === Variant.DEFAULT)
 			return colorTokens['element-color--button-text'];
@@ -104,7 +116,8 @@ const StyledButton = styled.button<{
 	}};
 
 	&:hover {
-		color: ${({ colorTokens, variant }) => {
+		color: ${({ colorTokens, disabled, variant }) => {
+			if (disabled) return;
 			if (variant === Variant.DEFAULT) return colorTokens['core-primary-text'];
 			if (variant === Variant.PRIMARY)
 				return colorTokens['element-color--button-bg'];
