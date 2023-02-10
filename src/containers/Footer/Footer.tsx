@@ -7,9 +7,11 @@ import { ButtonsSocialMedia } from 'containers';
 import { Size } from 'components';
 import { Link } from 'react-router-dom';
 import { useAppContext } from 'context';
+import { useMixpanel } from 'hooks';
 
 export const Footer = () => {
 	const { colorTokens } = useTheme();
+	const { track } = useMixpanel();
 	const { dev, setDev } = useAppContext();
 
 	return (
@@ -29,6 +31,7 @@ export const Footer = () => {
 				<div
 					style={{ width: Size.SMALL, height: Size.SMALL }}
 					onClick={() => {
+						track('dev');
 						setDev(dev + 1);
 					}}
 				/>
