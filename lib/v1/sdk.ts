@@ -6,6 +6,7 @@ import {
 	getGameCompletionList,
 } from 'v1/api/games';
 import { getTiersList } from 'v1/api/tiers';
+import { getCandidateSummary } from 'v1/api/candidates';
 import {
 	getMembersList,
 	getMemberById,
@@ -269,4 +270,12 @@ export class SDK {
 		args: Head<T>,
 	) => updatePatronById(args, this.BASE_URL);
 	public getPatreonTierList = () => getPatreonTierList(this.BASE_URL);
+
+	/**************************
+	 *       CANDIDATES       *
+	 **************************/
+
+	public getCandidateSummary = <T extends typeof getCandidateSummary>(
+		args: Head<T>,
+	) => getCandidateSummary(args, this.BASE_URL);
 }

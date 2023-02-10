@@ -5,6 +5,7 @@
 
 export * from './__Helpers';
 export * from './Badge';
+export * from './Candidate';
 export * from './Event';
 export * from './Featured';
 export * from './Game';
