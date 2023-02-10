@@ -19,6 +19,7 @@ import { TabEvents } from './pages/TabEvents';
 import { TabGame } from './pages/TabGame';
 import { TabGames } from './pages/TabGames';
 import { TabHome } from './pages/TabHome';
+import { TabJoin } from './pages/TabJoin';
 import { TabLeaderboards } from './pages/TabLeaderboards';
 import { TabProfile } from './pages/TabProfile';
 import { TabSupport } from './pages/TabSupport';
@@ -82,6 +83,11 @@ export const App = (): JSX.Element => {
 							<Route exact path="/game/:id">
 								<Boundary>
 									<TabGame />
+								</Boundary>
+							</Route>
+							<Route exact path="/join">
+								<Boundary>
+									<TabJoin />
 								</Boundary>
 							</Route>
 							<Route exact path="/changelog">

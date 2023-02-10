@@ -32,7 +32,7 @@ export const CommunityInfo = () => {
 			<Flex gap={16}>
 				<Button
 					label="How to join"
-					icon="UserPlus"
+					icon="DoorOpen"
 					variant={Variant.PRIMARY}
 					onClick={onButtonJoinClick}
 				/>

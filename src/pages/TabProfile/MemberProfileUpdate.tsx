@@ -18,10 +18,6 @@ export const MemberProfileUpdate = (props: Props) => {
 	const { member } = props;
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const [message, setMessage] = useState<string>('');
-	const handleMemberUpdate = () => {
-		mutate({ shouldUpdate: true });
-		setIsOpen(true);
-	};
 
 	const { leaderData } = useMemberLeaderboards(member?.steamId);
 	const { mutate, data: memberUpdateData } = useUpdateMemberMutation(
@@ -35,6 +31,11 @@ export const MemberProfileUpdate = (props: Props) => {
 		const response = memberUpdateData?.message ?? 'Please wait...';
 		if (response) setMessage(response);
 	}, [memberUpdateData]);
+
+	const handleMemberUpdate = () => {
+		mutate({ shouldUpdate: true });
+		setIsOpen(true);
+	};
 
 	const lastUpdate =
 		new Date(member?.lastUpdated ?? 0).getTime() === 0

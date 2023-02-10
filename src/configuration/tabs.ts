@@ -10,6 +10,7 @@ export enum TabDict {
 	RACES = 'races',
 	BADGES = 'badges',
 	SUPPORT = 'support',
+	JOIN = 'join',
 	CHANGELOG = 'changelog',
 }
 
@@ -93,6 +94,14 @@ export const tabs: Tab[] = [
 		text: 'game',
 		icon: 'Puzzle',
 		link: 'game',
+		visible: false,
+		external: false,
+	},
+	{
+		id: TabDict.JOIN,
+		text: 'How to join',
+		icon: 'DoorOpen',
+		link: 'join',
 		visible: false,
 		external: false,
 	},

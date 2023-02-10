@@ -4,6 +4,7 @@ export * from './TabEvents';
 export * from './TabGame';
 export * from './TabGames';
 export * from './TabHome';
+export * from './TabJoin';
 export * from './TabLeaderboards';
 export * from './TabProfile';
 export * from './TabRaces';
