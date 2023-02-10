@@ -12,9 +12,13 @@ import { TimePeriod } from 'utils/getTimePeriod';
 import config from 'config.json';
 
 type ContextType = {
+	// DEV
+	dev: number;
+	setDev: (dev: number) => void;
 	sdk: SDK;
 	path: string;
 
+	// REST
 	_activeTheme: Theme;
 	_setActiveTheme: (activeTheme: Theme) => void;
 
@@ -45,6 +49,10 @@ export const AppContextProvider = ({
 }: {
 	children: React.ReactNode;
 }): JSX.Element => {
+	// DEV
+	const [dev, setDev] = useState<number>(0);
+
+	// REST
 	const [activeTab, setActiveTab] = useState<TabDict>(TabDict.HOME);
 	const [_activeTheme, _setActiveTheme] = useState<Theme>(Theme.ASH);
 	const [_gameListView, _setGameListView] = useState<GameView>(GameView.TILE);
@@ -70,6 +78,9 @@ export const AppContextProvider = ({
 	});
 
 	const value = {
+		// DEV
+		dev,
+		setDev,
 		path,
 		sdk,
 

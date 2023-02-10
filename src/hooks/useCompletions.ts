@@ -30,6 +30,7 @@ export const useGameCompletion = (gameId: number) => {
 					gameId: completion.gameId,
 					mostRecentAchievementDate: completion.mostRecentAchievementDate,
 					completionPercentage: completion.completionPercentage,
+					playTime: completion.playTime,
 					trophy: null,
 				} as unknown as GameCompletion;
 			})

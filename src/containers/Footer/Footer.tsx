@@ -6,9 +6,11 @@ import { fonts, media, useTheme, ColorTokens } from 'styles';
 import { ButtonsSocialMedia } from 'containers';
 import { Size } from 'components';
 import { Link } from 'react-router-dom';
+import { useAppContext } from 'context';
 
 export const Footer = () => {
 	const { colorTokens } = useTheme();
+	const { dev, setDev } = useAppContext();
 
 	return (
 		<StyledFooter align colorTokens={colorTokens}>
@@ -24,6 +26,12 @@ export const Footer = () => {
 				<div>
 					<Link to="/changelog">Changelog</Link>
 				</div>
+				<div
+					style={{ width: Size.SMALL, height: Size.SMALL }}
+					onClick={() => {
+						setDev(dev + 1);
+					}}
+				/>
 			</StyledFooterText>
 			<ButtonsSocialMedia size={Size.MEDIUM} />
 		</StyledFooter>
