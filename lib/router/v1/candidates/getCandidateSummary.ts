@@ -18,13 +18,9 @@ export const getCandidateSummary = async (
 ): Promise<void> => {
   try {
     // Validate provided Steam name.
-    const { steamName } = req.params;
+    const { steamUrl } = req.body;
 
-    const error =
-      'Please enter an account name that is at least 3 characters long and uses only a-z, A-Z, 0-9 or _ characters.';
-    const steamNameValidator = new RegExp(/^[a-zA-Z0-9_]*$/i);
-    const hasError =
-      !steamName || steamName.length < 3 || !steamNameValidator.test(steamName);
+    const { hasError, error } = validateSteamUrl(steamUrl);
 
     if (hasError) {
       res.status(400).send({ error });
@@ -43,21 +39,25 @@ export const getCandidateSummary = async (
     });
 
     // Scrape a list of scouted Steam user's perfected games.
-    const candidateUrl = `https://steamcommunity.com/id/${steamName}/games?tab=perfect`;
+    const candidateUrl = `${steamUrl}/games?tab=perfect`;
     const perfectGamesDataRaw = (await axios.get(candidateUrl))?.data ?? '{}';
+
+    console.log(candidateUrl);
 
     if (
       perfectGamesDataRaw.includes('The specified profile could not be found.')
     ) {
       res.status(404).send({
-        error: 'User with this Steam name does not exist.',
+        error: 'User with this Steam ID does not exist.',
       });
       return;
     }
     const profileRegex = new RegExp(/(?<=var rgGames = )(.*)(?=[}}])/i);
     // Important - this can return undefined, if user privated only their game list
     // Handle this by returning an info about it
+    console.log(profileRegex.exec(perfectGamesDataRaw));
     const perfectGamesDataMatched = profileRegex.exec(perfectGamesDataRaw)?.[0];
+    console.log(perfectGamesDataMatched);
     const perfectGamesDataFixed = perfectGamesDataMatched
       ? perfectGamesDataMatched + '}]'
       : '[]';
@@ -91,6 +91,7 @@ export const getCandidateSummary = async (
         return {
           id: curatedGame.id,
           title: curatedGame.title,
+          tier: curatedGame.tier,
           pts,
         };
       })
@@ -101,4 +102,23 @@ export const getCandidateSummary = async (
     log.WARN(err);
     res.status(500).send({ error: err.message ?? 'Internal server error' });
   }
+};
+
+const validateSteamUrl = (steamUrl?: string) => {
+  const error =
+    'Steam profile link must follow one of two formats: https://steamcommunity.com/id/ + your unique ID, which consists of letters, numbers and symbol _; or https://steamcommunity.com/profiles/ + your numeric ID.';
+
+  const steamUrlWithIdValidator = new RegExp(
+    /^(https:\/\/steamcommunity.com\/id\/)[a-zA-Z0-9_]*$/i,
+  );
+  const steamUrlWithProfileValidator = new RegExp(
+    /^(https:\/\/steamcommunity.com\/profiles\/)[0-9]*$/i,
+  );
+
+  const hasErrorId = !!steamUrl && !steamUrlWithIdValidator.test(steamUrl);
+  const hasErrorProfiles =
+    !!steamUrl && !steamUrlWithProfileValidator.test(steamUrl);
+  const hasError = !steamUrl || (hasErrorId && hasErrorProfiles);
+
+  return { hasError, error };
 };

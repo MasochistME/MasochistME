@@ -84,15 +84,18 @@ export const getLeaderboardsGamesList = async (
       const owners =
         membersGames.filter(memberGame => memberGame.gameId === game.id) ?? [];
       const completions = owners.filter(
-        owner => owner.achievementsUnlocked / game.achievementsTotal >= 1,
+        owner =>
+          owner.achievementsUnlocked / game.achievementsTotal >= 1 &&
+          !!owner.playTime,
       );
-      const avgPlaytime =
-        (completions.reduce((sum, owner) => {
-          const ownerPlayTime = !Number.isNaN(Number(owner.playTime))
-            ? owner.playTime
-            : 0;
-          return (sum += ownerPlayTime);
-        }, 0) ?? 0) / completions.length;
+      const avgPlaytime = completions?.length
+        ? completions.reduce((sum, owner) => {
+            const ownerPlayTime = !Number.isNaN(Number(owner.playTime))
+              ? owner.playTime
+              : 0;
+            return (sum += ownerPlayTime);
+          }, 0) / completions.length
+        : 0;
 
       const newestCompletion =
         Math.max(

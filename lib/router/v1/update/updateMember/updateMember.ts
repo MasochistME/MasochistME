@@ -218,7 +218,10 @@ export const updateMember = async (
           // If we check inequality instead of lesser than, the old values get reset.
           memberGameOld.achievementsUnlocked <
             memberGame.achievementsUnlocked ||
-          memberGameOld.playTime < memberGame.playTime ||
+          // this is an exception for now because some members need to have their hours divided by 10
+          // when the entire database gets updated then it can go back to lesser than
+          (memberGameOld.playTime === 0 &&
+            memberGameOld.playTime !== memberGame.playTime) ||
           memberGameOld.mostRecentAchievementDate.getTime() <
             memberGame.mostRecentAchievementDate.getTime()
         ) {

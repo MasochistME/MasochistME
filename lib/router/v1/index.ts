@@ -19,7 +19,8 @@ routerV1.put('/members/member/:memberId/update', updateMember);
 
 import { getCandidateSummary } from './candidates';
 
-routerV1.get('/candidate/:steamName/scout', getCandidateSummary);
+// TODO hide this behind CAPTCHA
+routerV1.post('/candidate/scout', getCandidateSummary);
 
 /***************************
  *         MEMBERS         *
