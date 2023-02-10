@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import axios from 'axios';
-import { Game } from '@masochistme/sdk/dist/v1/types';
+import { Game, Tier } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
 import { mongoInstance } from 'index';
@@ -33,14 +33,12 @@ export const getCandidateSummary = async (
 
     // Get a list of curated games.
     const { db } = mongoInstance.getDb();
-    const collection = db.collection<Game>('games');
+    const collectionGames = db.collection<Game>('games');
     const curatedGames: Game[] = [];
-
-    const cursor = collection.find({
+    const cursorGames = collectionGames.find({
       $or: [{ isCurated: true }, { isProtected: true }],
     });
-
-    await cursor.forEach((el: Game) => {
+    await cursorGames.forEach((el: Game) => {
       curatedGames.push(el);
     });
 
@@ -76,12 +74,27 @@ export const getCandidateSummary = async (
       perfectGamesDataFixed,
     );
 
+    // Get a list of MasochistME tiers
+    const collectionTiers = db.collection<Tier>('tiers');
+    const tiers: Tier[] = [];
+    const cursorTiers = collectionTiers.find();
+    await cursorTiers.forEach((el: Tier) => {
+      tiers.push(el);
+    });
+
     const perfectGamesData = perfectGamesDataParsed
-      .filter(game => {
-        const isCurated = curatedGames.find(g => g.id === game.appid);
-        return !!isCurated;
+      .map(game => {
+        const curatedGame = curatedGames.find(g => g.id === game.appid);
+        if (!curatedGame) return null;
+        const pts =
+          tiers.find(tier => tier.id === curatedGame.tier)?.score ?? 0;
+        return {
+          id: curatedGame.id,
+          title: curatedGame.title,
+          pts,
+        };
       })
-      .map(game => game.appid);
+      .filter(Boolean);
 
     res.status(200).send(perfectGamesData);
   } catch (err: any) {
