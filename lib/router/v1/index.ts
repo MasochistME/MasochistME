@@ -13,6 +13,14 @@ routerV1.get('/update', getUpdateCuratorStatus);
 routerV1.put('/update', updateCurator);
 routerV1.put('/members/member/:memberId/update', updateMember);
 
+/******************************
+ *         CANDIDATES         *
+ ******************************/
+
+import { getCandidateSummary } from './candidates';
+
+routerV1.get('/candidate/:steamName/scout', getCandidateSummary);
+
 /***************************
  *         MEMBERS         *
  ***************************/
