@@ -67,7 +67,6 @@ const GameProfileStatsBoundary = (props: Required<Props>) => {
 				label={gameLeaderboards?.completions?.base ?? '—'}
 				sublabel="completions"
 				icon="Trophy"
-				isLoading={isLoading}
 			/>
 			<StatBlock
 				title={
@@ -87,7 +86,6 @@ const GameProfileStatsBoundary = (props: Required<Props>) => {
 				label={getPercentage(gameLeaderboards?.owners ?? 0, membersAll.length)}
 				sublabel="owned by"
 				icon="UserCheck"
-				isLoading={isLoading}
 			/>
 			<StatBlock
 				title={
@@ -107,7 +105,6 @@ const GameProfileStatsBoundary = (props: Required<Props>) => {
 				label={completionPercentage}
 				sublabel="completion rate"
 				icon="Percent"
-				isLoading={isLoading}
 			/>
 			<StatBlock
 				title={
@@ -132,7 +129,6 @@ const GameProfileStatsBoundary = (props: Required<Props>) => {
 				label={avgPlaytime}
 				sublabel="avg completion time"
 				icon="Clock"
-				isLoading={isLoading}
 			/>
 		</StyledGameProfileStats>
 	);

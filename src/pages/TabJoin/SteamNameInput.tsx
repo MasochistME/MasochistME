@@ -8,10 +8,10 @@ import { validateSteamName } from 'pages/TabJoin/utils';
 
 type Props = {
 	setSteamName: (steamName: string) => void;
-	onButtonGoClick: () => void;
+	setIsServerError: (isServerError: boolean) => void;
 };
 export const SteamNameInput = (props: Props) => {
-	const { setSteamName, onButtonGoClick } = props;
+	const { setSteamName, setIsServerError } = props;
 	const { colorTokens } = useTheme();
 
 	const [inputValue, setInputValue] = useState<string>('');
@@ -19,7 +19,7 @@ export const SteamNameInput = (props: Props) => {
 
 	const onGo = () => {
 		setSteamName(inputValue);
-		onButtonGoClick();
+		setIsServerError(false);
 	};
 
 	return (

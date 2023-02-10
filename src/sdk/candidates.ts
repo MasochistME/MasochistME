@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { ResponseError, TierId } from '@masochistme/sdk/dist/v1/types';
 import axios, { AxiosResponse } from 'axios';
 
@@ -16,7 +16,7 @@ export const useCandidateSummary = (steamName: string) => {
 		queryKey,
 		() => getCandidateSummary({ steamName }, BASE_URL),
 		{
-			enabled: !!steamName,
+			enabled: !!steamName?.length,
 		},
 	);
 };

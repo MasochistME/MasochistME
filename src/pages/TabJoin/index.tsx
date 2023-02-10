@@ -3,31 +3,20 @@ import { useHistory } from 'react-router';
 
 import styled from 'styled-components';
 
-import { useTheme } from 'styles';
 import { useActiveTab } from 'hooks';
 import { TabDict } from 'configuration/tabs';
-import { Alert, Button, Flex, Icon } from 'components';
+import { Button, Flex, Icon } from 'components';
 import { Variant } from 'components/Button/types';
 import { SubPage, Section, SectionProps } from 'containers';
 
-import { validateSteamName } from './utils';
 import { CandidateSummary } from './CandidateSummary';
 import { SteamNameInput } from './SteamNameInput';
 
 export const TabJoin = () => {
 	useActiveTab(TabDict.JOIN);
-	const { colorTokens } = useTheme();
+	// const { colorTokens } = useTheme();
+	const [isServerError, setIsServerError] = useState<boolean>(false);
 	const [steamName, setSteamName] = useState<string>('');
-	const [isAlertOpen, setIsAlertOpen] = useState<boolean>(false);
-
-	const { hasError, error } = validateSteamName(steamName);
-
-	const onButtonGoClick = () => {
-		if (hasError) {
-			setIsAlertOpen(true);
-			return;
-		}
-	};
 
 	return (
 		<SubPage>
@@ -42,15 +31,13 @@ export const TabJoin = () => {
 				</StyledTitle>
 				<SteamNameInput
 					setSteamName={setSteamName}
-					onButtonGoClick={onButtonGoClick}
+					setIsServerError={setIsServerError}
 				/>
-				<Alert
-					message={error}
-					severity="error"
-					isOpen={isAlertOpen}
-					setIsOpen={setIsAlertOpen}
+				<CandidateSummary
+					steamName={steamName}
+					isServerError={isServerError}
+					setIsServerError={setIsServerError}
 				/>
-				<CandidateSummary steamName={steamName} />
 			</StyledWrapper>
 			<Info isDesktopOnly width="100%" maxWidth="450px" />
 		</SubPage>

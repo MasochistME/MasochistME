@@ -1,5 +1,5 @@
 import React, { Suspense, useState } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
+import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import styled from 'styled-components';
 import Collapse from '@mui/material/Collapse';
@@ -8,12 +8,15 @@ import { Button } from 'components/Button';
 import { Modal } from 'components/Modal';
 import { AxiosError } from 'axios';
 import { Size } from 'components/__utils';
+import { useLocation } from 'react-router';
 
 type Props = {
 	fallback?: React.ReactNode;
-	errorFallback?: React.ReactElement;
+	errorFallback?: React.ReactElement | null;
 	displayError?: boolean;
 	children?: React.ReactNode;
+	onReset?: () => void;
+	onError?: (error: Error) => void;
 };
 
 export const QueryBoundary = (props: Props) => {
@@ -22,33 +25,31 @@ export const QueryBoundary = (props: Props) => {
 		errorFallback = null,
 		displayError = false,
 		children,
+		onReset,
+		onError,
 	} = props;
-	const [showErrorModal, setShowErrorModal] = useState(false);
-	const [error, setError] = useState<Error | null>(null);
+	const location = useLocation();
 
-	const getErrorFallback = () => {
-		if (errorFallback) return errorFallback;
-		if (displayError && error)
-			return (
-				<ErrorModal
-					error={error}
-					showErrorModal={showErrorModal}
-					setShowErrorModal={setShowErrorModal}
-				/>
-			);
-		return <></>;
-	};
+	const [error, setError] = useState<Error | null>(null);
 
 	return (
 		<QueryErrorResetBoundary>
 			{({ reset }) => (
 				<ErrorBoundary
-					fallback={getErrorFallback()}
+					key={location.pathname}
 					onReset={reset}
 					onError={(e: Error) => {
-						setShowErrorModal(true);
+						if (onError) onError(e);
 						setError(e);
-					}}>
+					}}
+					FallbackComponent={({ error, resetErrorBoundary }) =>
+						ErrorFallback({
+							error,
+							resetErrorBoundary,
+							errorFallback,
+							displayError,
+						})
+					}>
 					<Suspense fallback={fallback}>{children}</Suspense>
 				</ErrorBoundary>
 			)}
@@ -56,13 +57,36 @@ export const QueryBoundary = (props: Props) => {
 	);
 };
 
+const ErrorFallback = ({
+	error,
+	resetErrorBoundary,
+	errorFallback,
+	displayError,
+}: FallbackProps & Pick<Props, 'errorFallback' | 'displayError'>) => {
+	const [showErrorModal, setShowErrorModal] = useState(false);
+
+	if (errorFallback) return errorFallback;
+	if (displayError && error)
+		return (
+			<ErrorModal
+				error={error}
+				showErrorModal={showErrorModal}
+				setShowErrorModal={setShowErrorModal}
+				resetErrorBoundary={resetErrorBoundary}
+			/>
+		);
+	return null;
+};
+
 type ErrorModalProps = {
 	error: Error | AxiosError;
 	showErrorModal: boolean;
 	setShowErrorModal: (showErrorModal: boolean) => void;
+	resetErrorBoundary: FallbackProps['resetErrorBoundary'];
 };
 const ErrorModal = (props: ErrorModalProps) => {
-	const { error, showErrorModal, setShowErrorModal } = props;
+	const { error, showErrorModal, setShowErrorModal, resetErrorBoundary } =
+		props;
 	const [showCollapse, setShowCollapse] = useState(false);
 
 	const changeDetailsVisibility = () => {
@@ -79,6 +103,11 @@ const ErrorModal = (props: ErrorModalProps) => {
 						size={Size.SMALL}
 						label="Show details"
 						onClick={changeDetailsVisibility}
+					/>
+					<Button
+						size={Size.SMALL}
+						label="Reload page"
+						onClick={resetErrorBoundary}
 					/>
 				</div>
 				<Collapse

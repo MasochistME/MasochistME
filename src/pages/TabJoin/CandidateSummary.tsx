@@ -1,8 +1,10 @@
 import styled from 'styled-components';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 import { useCandidateSummary, useTiers } from 'sdk';
+import { StatBlock } from 'containers';
 import {
+	Alert,
 	ErrorFallback,
 	Flex,
 	Icon,
@@ -11,19 +13,53 @@ import {
 	QueryBoundary,
 	Size,
 } from 'components';
+import { validateSteamName } from './utils';
+import { media, useTheme } from 'styles';
+import { ColorMap } from 'utils';
 
 type Props = {
 	steamName: string;
+	isServerError: boolean;
+	setIsServerError: (isServerError: boolean) => void;
 };
-export const CandidateSummary = ({ steamName }: Props) => (
-	<QueryBoundary
-		fallback={<CandidateSummaryLoader />}
-		errorFallback={<ErrorFallback />}>
-		<CandidateSummaryBoundary steamName={steamName} />
-	</QueryBoundary>
-);
+export const CandidateSummary = ({
+	steamName,
+	// isServerError,
+	setIsServerError,
+}: Props) => {
+	const [isAlertOpen, setIsAlertOpen] = useState<boolean>(false);
+	const [serverError, setServerError] = useState<Error>();
 
-const CandidateSummaryBoundary = ({ steamName }: Props) => {
+	const { error } = validateSteamName(steamName);
+
+	const onReset = () => {
+		setIsServerError(false);
+	};
+	const onError = (e: Error) => {
+		setServerError(e);
+	};
+
+	if (!steamName.length) return null;
+	return (
+		<QueryBoundary
+			fallback={<CandidateSummaryLoader />}
+			errorFallback={<CandidateSummaryError error={serverError} />}
+			displayError
+			onReset={onReset}
+			onError={onError}>
+			<CandidateSummaryBoundary steamName={steamName} />
+			<Alert
+				severity="error"
+				message={error}
+				isOpen={isAlertOpen}
+				setIsOpen={setIsAlertOpen}
+			/>
+		</QueryBoundary>
+	);
+};
+
+const CandidateSummaryBoundary = ({ steamName }: Pick<Props, 'steamName'>) => {
+	const { LOGO_URL_STATIC } = useTheme();
 	const { data = [] } = useCandidateSummary(steamName);
 	const { tiersData } = useTiers();
 
@@ -36,22 +72,60 @@ const CandidateSummaryBoundary = ({ steamName }: Props) => {
 			0,
 		),
 	}));
+	const isEligible = (pointsSum ?? 0) >= 20;
 
-	const groupedTierPoints = useMemo(() => {
-		return Object.values(tiersSum).map(tier => {
-			return (
-				<StyledScore>
-					<Icon icon={tier.icon as IconType} size={Size.MICRO} />
-					{tier?.pts}
-				</StyledScore>
-			);
-		});
-	}, [tiersSum]);
+	const groupedTierPoints = useMemo(
+		() => (
+			<Flex row gap={8}>
+				{Object.values(tiersSum).map(tier => (
+					<StatBlock
+						sublabel="points in tier"
+						label={tier.pts ?? 0}
+						icon={tier.icon as IconType}
+					/>
+				))}
+			</Flex>
+		),
+		[tiersSum],
+	);
+
+	const avatarUrl = null;
 
 	if (!data) return null;
 	return (
-		<Flex>
-			<div>{pointsSum} pts</div>
+		<Flex column>
+			<StyledCandidateHeader row align>
+				<Flex align gap={16}>
+					<StyledCandidateAvatar
+						src={avatarUrl ?? LOGO_URL_STATIC}
+						imgSize={Size.BIG}
+						alt="Member avatar"
+						loading="lazy"
+					/>
+					<a
+						href={`https://steamcommunity.com/id/${steamName}`}
+						target="_blank"
+						rel="noopener noreferrer">
+						<StyledCandidateUsername>
+							<Icon icon="Steam" marginRight="10px" />
+							{steamName}
+						</StyledCandidateUsername>
+					</a>
+				</Flex>
+				<StatBlock
+					title={
+						<StatBlock.Title>
+							{isEligible
+								? 'You are eligible to join!'
+								: 'You are not eligible to join yet!'}
+						</StatBlock.Title>
+					}
+					label={pointsSum ?? 0}
+					sublabel="points total"
+					icon={isEligible ? 'SquareCheck' : 'SquareX'}
+					tier={isEligible ? ColorMap.SUCCESS : ColorMap.ERROR}
+				/>
+			</StyledCandidateHeader>
 			{groupedTierPoints}
 		</Flex>
 	);
@@ -66,15 +140,41 @@ const CandidateSummaryLoader = () => {
 	);
 };
 
-const StyledScore = styled(Flex)`
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	gap: 4px;
-	width: 20px;
+const CandidateSummaryError = ({ error }: { error?: Error }) => {
+	console.log(error);
+	return <ErrorFallback />;
+};
 
-	i {
-		margin: 0;
-		padding: 0;
+const StyledCandidateHeader = styled(Flex)`
+	max-width: 100%;
+	padding: 8px;
+	gap: 8px;
+	justify-content: space-between;
+	align-items: flex-start;
+`;
+
+const StyledCandidateAvatar = styled.img.attrs(
+	({ imgSize }: { imgSize: Size }) => {
+		const style: React.CSSProperties = {
+			width: `${imgSize}px`,
+			height: `${imgSize}px`,
+		};
+		return style;
+	},
+)`
+	object-fit: contain;
+	@media (max-width: ${media.tablets}) {
+		display: none;
 	}
+`;
+
+const StyledCandidateUsername = styled.h2`
+	display: flex;
+	align-items: center;
+	margin: 0;
+	max-width: 600px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: 24px;
 `;

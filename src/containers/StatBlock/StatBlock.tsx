@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { fonts, media, useTheme, ColorTokens } from 'styles';
-import { Flex, Icon, IconType, Tooltip, Skeleton, Size } from 'components';
+import { Flex, Icon, IconType, Tooltip, Size } from 'components';
 import { ColorMap } from 'utils';
 
 type Props = {
@@ -9,40 +9,37 @@ type Props = {
 	sublabel?: React.ReactNode;
 	title?: React.ReactNode;
 	icon?: IconType;
-	isLoading?: boolean;
 	tier?: ColorMap;
 };
 export const StatBlock = (props: Props) => {
 	const { colorTokens } = useTheme();
-	const {
-		label,
-		sublabel,
-		icon,
-		title,
-		isLoading,
-		tier = ColorMap.DEFAULT,
-	} = props;
+	const { label, sublabel, icon, title, tier = ColorMap.DEFAULT } = props;
 
 	const getTierColor = () => {
 		if (tier === ColorMap.GOLD) return colorTokens['semantic-color--tier-4'];
+		if (tier === ColorMap.WARNING)
+			return colorTokens['semantic-color--warning-strong'];
+		if (tier === ColorMap.SUCCESS) return colorTokens['semantic-color--tier-4'];
+		if (tier === ColorMap.ERROR)
+			return colorTokens['semantic-color--error-strong'];
 		return colorTokens['semantic-color--active']; // Normal, default color
 	};
 
 	return (
 		<Tooltip content={title}>
-			<StyledStatBlock colorTokens={colorTokens} tierColor={getTierColor()}>
+			<StyledStatBlock
+				colorTokens={colorTokens}
+				tierColor={getTierColor()}
+				hasTooltip={!!title}>
 				{icon && <Icon icon={icon} size={Size.TINY} />}
-				{isLoading && <Skeleton width="100px" />}
-				{!isLoading && (
-					<Flex column align>
-						<StyledStatBlockLabel>{label}</StyledStatBlockLabel>
-						{sublabel && (
-							<StyledStatBlockSublabel tierColor={getTierColor()}>
-								{sublabel}
-							</StyledStatBlockSublabel>
-						)}
-					</Flex>
-				)}
+				<Flex column align>
+					<StyledStatBlockLabel>{label}</StyledStatBlockLabel>
+					{sublabel && (
+						<StyledStatBlockSublabel tierColor={getTierColor()}>
+							{sublabel}
+						</StyledStatBlockSublabel>
+					)}
+				</Flex>
 			</StyledStatBlock>
 		</Tooltip>
 	);
@@ -51,6 +48,7 @@ export const StatBlock = (props: Props) => {
 const StyledStatBlock = styled(Flex)<{
 	colorTokens: ColorTokens;
 	tierColor: string;
+	hasTooltip: boolean;
 }>`
 	gap: 8px;
 	flex-direction: row;
@@ -61,7 +59,7 @@ const StyledStatBlock = styled(Flex)<{
 	border: 2px solid ${({ tierColor }) => tierColor}66;
 	color: ${({ tierColor }) => tierColor};
 	font-family: ${fonts.Dosis};
-	cursor: help;
+	cursor: ${({ hasTooltip }) => (hasTooltip ? 'help' : 'inherit')};
 	@media (max-width: ${media.tablets}) {
 		padding: 4px 8px;
 		i {

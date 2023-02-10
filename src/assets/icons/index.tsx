@@ -40,6 +40,7 @@ import { ReactComponent as Spin } from './Spin.svg';
 import { ReactComponent as SquareCheck } from './SquareCheck.svg';
 import { ReactComponent as SquareMinus } from './SquareMinus.svg';
 import { ReactComponent as SquarePlus } from './SquarePlus.svg';
+import { ReactComponent as SquareX } from './SquareX.svg';
 import { ReactComponent as StarBlack } from './StarBlack.svg';
 import { ReactComponent as StarCheck } from './StarCheck.svg';
 import { ReactComponent as StarEmpty } from './StarEmpty.svg';
@@ -100,6 +101,7 @@ const icons = {
 	SquareCheck,
 	SquareMinus,
 	SquarePlus,
+	SquareX,
 	StarBlack,
 	StarCheck,
 	StarEmpty,
