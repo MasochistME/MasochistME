@@ -19,7 +19,9 @@ export const TabRaces = (): JSX.Element => {
 		return seasonsData.find(season => String(season._id) === selectedSeason);
 	}, [selectedSeason]);
 
-	const { racesData } = useRaces({ filter: { season: selectedSeason } });
+	const { racesData } = useRaces({
+		filter: { season: selectedSeason, isDone: true },
+	});
 
 	const optionsSeasonsActive = seasonsData
 		.filter(season => !season.endDate)
