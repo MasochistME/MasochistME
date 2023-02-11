@@ -11,7 +11,7 @@ import { useRaces, useSeasons } from 'sdk';
 import { media } from 'styles';
 
 export const TabRaces = (): JSX.Element => {
-	useActiveTab(TabDict.RACES);
+	useActiveTab(TabDict.EVENTS);
 	const { seasonsData } = useSeasons({ sort: { startDate: 'desc' } });
 	const [selectedSeason, setSelectedSeason] = useState<string>('');
 

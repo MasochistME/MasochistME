@@ -1,5 +1,5 @@
 export * from './badges';
-export * from './events';
+export * from './logs';
 export * from './games';
 export * from './featured';
 export * from './leaderboards';

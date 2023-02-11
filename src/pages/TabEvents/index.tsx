@@ -1,69 +1,115 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import { SubPage, Section, SectionProps } from 'containers';
-import { Flex, Icon, Loader, QueryBoundary, ErrorFallback } from 'components';
 import { useActiveTab } from 'hooks';
-import { TabDict, EventsDict } from 'configuration';
+import { TabDict } from 'configuration/tabs';
+import { Flex } from 'components';
+import {
+	Section,
+	SectionProps,
+	SubPage,
+	Tabs,
+	Tab,
+	TabPanel,
+} from 'containers';
 
-import { EventsList } from './EventsList';
-import { EventsFilterBar } from './EventsFilterBar';
+import { TabCurrentSeason } from './TabCurrentSeason';
+import { TabPastSeasons } from './TabPastSeasons';
+import { TabRacesMore } from './TabRacesMore';
 
-export const TabEvents = (): JSX.Element => {
+enum TabsSeasons {
+	CURRENT_SEASONS = 'current_seasons',
+	PAST_SEASONS = 'past_seasons',
+	MORE = 'more',
+}
+
+export const TabRaces = (): JSX.Element => {
 	useActiveTab(TabDict.EVENTS);
+
+	const [activeTab, setActiveTab] = useState<TabsSeasons>(
+		TabsSeasons.CURRENT_SEASONS,
+	);
+
+	const handleChangeTab = (_e: React.SyntheticEvent, newTab: TabsSeasons) => {
+		setActiveTab(newTab);
+	};
 
 	return (
 		<SubPage>
-			<StyledEventsList column>
-				<Info isMobileOnly />
-				<QueryBoundary fallback={<Loader />} errorFallback={<ErrorFallback />}>
-					<EventsFilterBar />
-				</QueryBoundary>
-				<QueryBoundary fallback={<Loader />} errorFallback={<ErrorFallback />}>
-					<EventsList />
-				</QueryBoundary>
-			</StyledEventsList>
-			<Info isDesktopOnly width="100%" maxWidth="450px" />
+			<StyledSeasonsList>
+				<Tabs value={activeTab} onChange={handleChangeTab}>
+					<Tab label="Current seasons" value={TabsSeasons.CURRENT_SEASONS} />
+					<Tab label="Past seasons" value={TabsSeasons.PAST_SEASONS} />
+					<Tab label="More" value={TabsSeasons.MORE} />
+				</Tabs>
+				<TabPanel activeTab={activeTab} tabId={TabsSeasons.CURRENT_SEASONS}>
+					<TabCurrentSeason />
+				</TabPanel>
+				<TabPanel activeTab={activeTab} tabId={TabsSeasons.PAST_SEASONS}>
+					<TabPastSeasons />
+				</TabPanel>
+				<TabPanel activeTab={activeTab} tabId={TabsSeasons.MORE}>
+					<TabRacesMore />
+				</TabPanel>
+			</StyledSeasonsList>
+			<Flex column width="100%" maxWidth="450px" gap={16}>
+				<TabRaceInfo isDesktopOnly width="100%" maxWidth="450px" />
+			</Flex>
 		</SubPage>
 	);
 };
 
-const Info = (props: Partial<SectionProps>): JSX.Element => (
-	<Section
-		{...props}
-		title="Community events"
-		content={
-			<QueryBoundary fallback={<Loader />} errorFallback={<ErrorFallback />}>
-				<InfoBoundary />
-			</QueryBoundary>
-		}
-	/>
-);
-
-const InfoBoundary = () => {
-	const eventsDescriptions = EventsDict.map((event, index: number) => (
-		<Flex key={`event-desc-${index}`} gap={4}>
-			<Icon icon={event.icon} /> - {event.description},
-		</Flex>
-	));
+const TabRaceInfo = (props: Partial<SectionProps>): JSX.Element => {
 	return (
-		<Flex column gap={8}>
-			<div>This is the list showcasing the last 100 events.</div>
-			<div>There are {EventsDict.length} different types of events:</div>
-			<StyledEventTypes>{eventsDescriptions}</StyledEventTypes>
-		</Flex>
+		<Section
+			{...props}
+			title="Races"
+			content={
+				<Flex column gap={8}>
+					<div>
+						Races are community events (usually happening over the weekend),
+						where you have to blindly complete a short secret game and get the
+						best possible score.
+					</div>
+					<div> There are two types of races:</div>
+					<ul>
+						<li>
+							<span style={{ fontWeight: 600 }}>time based</span> - you have to
+							complete the game in the shortest time possible,
+						</li>
+						<li>
+							<span style={{ fontWeight: 600 }}>score based</span> - you have to
+							get the highest score within a limited time frame.
+						</li>
+					</ul>
+					<div>
+						Races are organized into seasons. A season typically consists of 10
+						races and takes into consideration 8 best results of all
+						participants.
+					</div>
+					<div>
+						Races take place in{' '}
+						<a href="https://discord.com/invite/NjAeT53kVb" target="_blank">
+							our Discord server
+						</a>{' '}
+						and require you to be a member of MasochistME community.
+					</div>
+					<div>
+						<a
+							href="https://abiding-washer-fc3.notion.site/Races-6fe4971a56194039b85807adf2077262"
+							target="_blank">
+							This link talks about joining and participating in more detail
+						</a>
+						.
+					</div>
+				</Flex>
+			}
+		/>
 	);
 };
 
-const StyledEventsList = styled(Flex)`
-	width: 100%;
-`;
-
-const StyledEventTypes = styled(Flex)`
+const StyledSeasonsList = styled(Flex)`
 	flex-direction: column;
-	align-items: flex-start;
-	gap: 8px;
-	margin-left: 12px;
-	line-height: 1.5em;
-	text-align: left;
+	flex: 1 1 100%;
+	width: 100%;
 `;
