@@ -15,7 +15,7 @@ enum TabsSeasonDetails {
 }
 
 type SingleSeasonProps = {
-	season?: Season;
+	season?: Season | null;
 	races: RaceWithSummary[];
 };
 
@@ -46,7 +46,7 @@ export const SingleSeason = (props: SingleSeasonProps) => {
 	return (
 		<StyledSeasonWrapper column>
 			<div>{season.description}</div>
-			<Flex align justifyContent="space-evenly" gap={16}>
+			<Flex align justifyContent="space-evenly" flexWrap="wrap" gap={16}>
 				<StatBlock
 					label={races.length ?? '—'}
 					sublabel="races total"

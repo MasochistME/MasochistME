@@ -48,7 +48,7 @@ const StyledHeaderTitle = styled.h1`
 `;
 
 const StyledHeaderSubTitle = styled.span`
-	@media (max-width: ${media.smallTablets}) {
+	@media (max-width: ${media.tablets}) {
 		display: none;
 	}
 `;

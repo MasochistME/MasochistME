@@ -49,9 +49,7 @@ export const SingleSeasonRaces = (props: Props): JSX.Element => {
 			title: Columns.DATE,
 			value: (race: RaceWithSummary) => new Date(race.startDate ?? 0).getTime(),
 			render: (race: RaceWithSummary) => (
-				<TableCell
-					content={<DateBlock date={race.startDate} withHours={false} />}
-				/>
+				<DateBlock date={race.startDate} withHours={false} shouldHide={false} />
 			),
 			style: { width: '90px' },
 		},

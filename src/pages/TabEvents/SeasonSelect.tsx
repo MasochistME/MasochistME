@@ -1,17 +1,36 @@
 import styled from 'styled-components';
 
-import { Icon, Menu, Size } from 'components';
-import { media } from 'styles';
+import { Icon, Menu, QueryBoundary, Size, Skeleton, Warning } from 'components';
+import { ColorTokens, fonts, media, useTheme } from 'styles';
 import { useRacesFromSeason } from 'hooks';
+import { useEffect } from 'react';
 
 type Props = {
-	selectedSeasonId: string;
+	selectedSeasonId: string | null;
 	setSelectedSeasonId: (selectedSeason: string) => void;
 };
 export const SeasonSelect = (props: Props) => {
+	return (
+		<StyledSelectWrapper>
+			<QueryBoundary
+				fallback={<Skeleton />}
+				errorFallback={<Warning description="Could not load season list" />}>
+				<SeasonSelectBoundary {...props} />
+			</QueryBoundary>
+		</StyledSelectWrapper>
+	);
+};
+
+const SeasonSelectBoundary = (props: Props) => {
 	const { selectedSeasonId, setSelectedSeasonId } = props;
+	const { colorTokens } = useTheme();
 	const { season, seasonsActive, seasonsDone } =
 		useRacesFromSeason(selectedSeasonId);
+
+	useEffect(() => {
+		const activeSeasonId = String(seasonsActive[0]?._id);
+		setSelectedSeasonId(activeSeasonId);
+	}, [seasonsActive]);
 
 	const optionsSeasonsActive = seasonsActive.map(season => ({
 		render: (
@@ -43,19 +62,17 @@ export const SeasonSelect = (props: Props) => {
 	];
 
 	return (
-		<StyledSelectWrapper>
-			<Menu
-				options={options}
-				setSelectedOption={setSelectedSeasonId}
-				placeholder="Select season..."
-				anchorElement={(isOpen: boolean) => (
-					<StyledSeasonTitle>
-						{season?.name ?? 'Select season'}
-						<StyledIcon icon="ChevronDown" size={Size.TINY} isOpen={isOpen} />
-					</StyledSeasonTitle>
-				)}
-			/>
-		</StyledSelectWrapper>
+		<Menu
+			options={options}
+			setSelectedOption={setSelectedSeasonId}
+			placeholder="Select season..."
+			anchorElement={(isOpen: boolean) => (
+				<StyledSeasonTitle colorTokens={colorTokens}>
+					{season?.name ?? <Skeleton width="200px" height="32px" />}
+					<StyledIcon icon="ChevronDown" size={Size.TINY} isOpen={isOpen} />
+				</StyledSeasonTitle>
+			)}
+		/>
 	);
 };
 
@@ -73,12 +90,18 @@ const StyledOption = styled.div`
 	gap: 8px;
 `;
 
-const StyledSeasonTitle = styled.h2`
+const StyledSeasonTitle = styled.h2<{ colorTokens: ColorTokens }>`
+	font-family: ${fonts.Dosis};
 	display: flex;
 	margin: 0;
 	align-items: center;
 	font-size: 24px;
+	text-align: left;
 	gap: 16px;
+	padding: 8px 16px;
+	border-radius: 64px;
+	background-color: ${({ colorTokens }) =>
+		colorTokens['semantic-color--interactive']};
 `;
 
 const StyledIcon = styled(Icon)<{ isOpen: boolean }>`

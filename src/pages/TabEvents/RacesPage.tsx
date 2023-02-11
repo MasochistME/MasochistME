@@ -22,7 +22,7 @@ export const RacesPage = (): JSX.Element => {
 };
 
 const SeasonBoundary = () => {
-	const [selectedSeasonId, setSelectedSeasonId] = useState<string>('');
+	const [selectedSeasonId, setSelectedSeasonId] = useState<string | null>(null);
 	const { season, races } = useRacesFromSeason(selectedSeasonId);
 	return (
 		<>
