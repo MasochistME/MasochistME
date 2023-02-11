@@ -5,8 +5,8 @@ import {
   Member,
   MemberAchievement,
   MemberGame,
-  EventType,
-  EventComplete,
+  LogType,
+  LogComplete,
 } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
@@ -281,20 +281,19 @@ export const updateMember = async (
     });
 
     /**
-     * Add event when member completed a new game.
+     * Add log when member completed a new game.
      */
     const newlyCompletedGames = memberGamesToUpdate.filter(
       game => game.completionPercentage === 100,
     );
     if (newlyCompletedGames.length) {
-      const collectionEvents =
-        db.collection<Omit<EventComplete, '_id'>>('events');
+      const collectionLogs = db.collection<Omit<LogComplete, '_id'>>('logs');
       newlyCompletedGames.forEach(async newCompletion => {
         log.INFO(
           `--> [UPDATE] user ${memberId} --> new hundo detected - ${newCompletion.gameId}`,
         );
-        await collectionEvents.insertOne({
-          type: EventType.COMPLETE,
+        await collectionLogs.insertOne({
+          type: LogType.COMPLETE,
           memberId: newCompletion.memberId,
           gameId: newCompletion.gameId,
           date: newCompletion.mostRecentAchievementDate,

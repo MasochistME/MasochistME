@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import {
   Badge,
-  Event,
-  EventType,
-  EventBadgeCreate,
+  Log,
+  LogType,
+  LogBadgeCreate,
 } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
@@ -21,7 +21,7 @@ export const createBadge = async (
 ): Promise<void> => {
   try {
     const { db } = mongoInstance.getDb();
-    const collectionEvents = db.collection<Omit<Event, '_id'>>('events');
+    const collectionLogs = db.collection<Omit<Log, '_id'>>('logs');
     const collection = db.collection<Omit<Badge, '_id'>>('badges');
     const badge = req.body; // TODO Add Request<Badge> body validation
 
@@ -32,21 +32,21 @@ export const createBadge = async (
       return;
     }
     /**
-     * Create a "badge created" event
+     * Create a "badge created" log
      */
-    const badgeCreateEvent: Omit<EventBadgeCreate, '_id'> = {
-      type: EventType.BADGE_CREATE,
+    const badgeCreateLog: Omit<LogBadgeCreate, '_id'> = {
+      type: LogType.BADGE_CREATE,
       date: new Date(),
       badgeId: String(responseBadgeCreate.insertedId),
       gameId: badge.gameId ?? badge.title ?? 'UNKNOWN',
     };
-    const responseBadgeGrantEvent = await collectionEvents.insertOne(
-      badgeCreateEvent,
+    const responseBadgeGrantLog = await collectionLogs.insertOne(
+      badgeCreateLog,
     );
 
     if (
       !responseBadgeCreate.acknowledged ||
-      !responseBadgeGrantEvent.acknowledged
+      !responseBadgeGrantLog.acknowledged
     ) {
       res.status(400).send({ error: 'Could not create the badge.' });
     } else {

@@ -107,13 +107,13 @@ routerV1.put('/badges/badge/:badgeId', apiV1Auth, updateBadgeById);
 routerV1.delete('/badges/badge/:badgeId', apiV1Auth, deleteBadgeById);
 
 /*************************
- *         EVENTS         *
+ *         LOGS         *
  *************************/
 
-import { getEventsList, createEvent } from './events';
+import { getLogList, createLog } from './logs';
 
-routerV1.post('/events/list', getEventsList);
-routerV1.post('/events', apiV1Auth, createEvent);
+routerV1.post('/logs/list', getLogList);
+routerV1.post('/logs', apiV1Auth, createLog);
 
 /*************************
  *         TIERS         *

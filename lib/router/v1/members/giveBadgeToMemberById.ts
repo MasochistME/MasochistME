@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import {
-  Event,
-  EventBadgeGet,
-  EventType,
+  Log,
+  LogBadgeGet,
+  LogType,
   MemberBadge,
 } from '@masochistme/sdk/dist/v1/types';
 
@@ -21,7 +21,7 @@ export const giveBadgeToMemberById = async (
 ): Promise<void> => {
   try {
     const { db } = mongoInstance.getDb();
-    const collectionEvents = db.collection<Omit<Event, '_id'>>('events');
+    const collectionLogs = db.collection<Omit<Log, '_id'>>('logs');
     const collectionMemberBadges =
       db.collection<Omit<MemberBadge, '_id'>>('memberBadges');
     const { badgeId, memberId } = req.params;
@@ -51,21 +51,19 @@ export const giveBadgeToMemberById = async (
     );
 
     /**
-     * Create a "badge granted" event
+     * Create a "badge granted" log
      */
-    const badgeGrantEvent: Omit<EventBadgeGet, '_id'> = {
-      type: EventType.BADGE_GET,
+    const badgeGrantLog: Omit<LogBadgeGet, '_id'> = {
+      type: LogType.BADGE_GET,
       date: new Date(),
       badgeId,
       memberId,
     };
-    const responseBadgeGrantEvent = await collectionEvents.insertOne(
-      badgeGrantEvent,
-    );
+    const responseBadgeGrantLog = await collectionLogs.insertOne(badgeGrantLog);
 
     if (
       !responseBadgeGrant.acknowledged ||
-      !responseBadgeGrantEvent.acknowledged
+      !responseBadgeGrantLog.acknowledged
     ) {
       res.status(400).send({ error: 'Could not give this badge to member.' });
     } else {
