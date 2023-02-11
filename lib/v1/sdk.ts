@@ -24,7 +24,7 @@ import {
 	updateBadgeById,
 	deleteBadgeById,
 } from 'v1/api/badges';
-import { createEvent, getEventsList } from 'v1/api/events';
+import { createLog, getLogList } from 'v1/api/logs';
 import {
 	createRace,
 	deleteRaceById,
@@ -162,14 +162,14 @@ export class SDK {
 		args: Head<T>,
 	) => revokeBadgeFromMemberById(args, this.BASE_URL);
 
-	/**********************
-	 *       EVENTS       *
-	 *********************/
+	/********************
+	 *       LOGS       *
+	 *******************/
 
-	public createEvent = <T extends typeof createEvent>(args: Head<T>) =>
-		createEvent(args, this.BASE_URL);
-	public getEventsList = <T extends typeof getEventsList>(args: Head<T>) =>
-		getEventsList(args, this.BASE_URL);
+	public createLog = <T extends typeof createLog>(args: Head<T>) =>
+		createLog(args, this.BASE_URL);
+	public getLogList = <T extends typeof getLogList>(args: Head<T>) =>
+		getLogList(args, this.BASE_URL);
 
 	/*********************
 	 *       RACES       *
