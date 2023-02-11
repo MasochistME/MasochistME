@@ -42,8 +42,6 @@ export const getCandidateSummary = async (
     const candidateUrl = `${steamUrl}/games?tab=perfect`;
     const perfectGamesDataRaw = (await axios.get(candidateUrl))?.data ?? '{}';
 
-    console.log(candidateUrl);
-
     if (
       perfectGamesDataRaw.includes('The specified profile could not be found.')
     ) {
@@ -55,9 +53,7 @@ export const getCandidateSummary = async (
     const profileRegex = new RegExp(/(?<=var rgGames = )(.*)(?=[}}])/i);
     // Important - this can return undefined, if user privated only their game list
     // Handle this by returning an info about it
-    console.log(profileRegex.exec(perfectGamesDataRaw));
     const perfectGamesDataMatched = profileRegex.exec(perfectGamesDataRaw)?.[0];
-    console.log(perfectGamesDataMatched);
     const perfectGamesDataFixed = perfectGamesDataMatched
       ? perfectGamesDataMatched + '}]'
       : '[]';

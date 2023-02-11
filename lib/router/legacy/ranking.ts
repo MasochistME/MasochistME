@@ -286,7 +286,7 @@ export const getTierDetails = async (
   res: Response,
 ): Promise<void> => {
   try {
-    console.log('dupa');
+    console.log('test');
   } catch (err) {
     res.sendStatus(500);
   }
