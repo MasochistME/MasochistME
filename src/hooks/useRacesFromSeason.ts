@@ -1,64 +1,24 @@
 import { useMemo } from 'react';
-import { useSeasons, useRaces } from 'sdk';
+import { useRaces, useSeasons } from 'sdk';
 
-/**
- * Returns a list of races belonging to currently active seasons
- */
-export const useRacesFromActiveSeasons = () => {
-	const {
-		seasonsData: activeSeasons,
-		isLoading: isSeasonsLoading,
-		isFetched: isSeasonsFetched,
-	} = useSeasons({
-		filter: { active: true },
-		sort: { startDate: 'desc' },
+export const useRacesFromSeason = (selectedSeasonId: string) => {
+	const { seasonsData } = useSeasons({ sort: { startDate: 'desc' } });
+
+	const season = useMemo(() => {
+		return seasonsData.find(season => String(season._id) === selectedSeasonId);
+	}, [selectedSeasonId]);
+
+	const { data: races = [] } = useRaces({
+		filter: { season: selectedSeasonId, isDone: true },
 	});
-	const {
-		racesData,
-		isLoading: isRacesLoading,
-		isFetched: isRacesFetched,
-	} = useRaces({ filter: { isActive: false }, sort: { startDate: 'desc' } });
 
-	const isLoading = isRacesLoading && isSeasonsLoading;
-	const isFetched = isRacesFetched && isSeasonsFetched;
+	const seasonsActive = seasonsData.filter(season => !season.endDate);
+	const seasonsDone = seasonsData.filter(season => season.endDate);
 
-	const currentSeasonRaces = useMemo(() => {
-		const activeSeasonIds = activeSeasons.map(season => String(season._id));
-		return racesData.filter(
-			race => race.season && activeSeasonIds.includes(race.season),
-		);
-	}, [activeSeasons, racesData]);
-
-	return { activeSeasons, currentSeasonRaces, isLoading, isFetched };
-};
-
-/**
- * Returns a list of races belonging to all already finished seasons
- */
-export const useRacesFromPastSeasons = () => {
-	const {
-		seasonsData: pastSeasons,
-		isLoading: isSeasonsLoading,
-		isFetched: isSeasonsFetched,
-	} = useSeasons({
-		filter: { finished: true },
-		sort: { startDate: 'desc' },
-	});
-	const {
-		racesData,
-		isLoading: isRacesLoading,
-		isFetched: isRacesFetched,
-	} = useRaces({ filter: { isActive: false }, sort: { startDate: 'desc' } });
-
-	const isLoading = isRacesLoading && isSeasonsLoading;
-	const isFetched = isRacesFetched && isSeasonsFetched;
-
-	const pastSeasonRaces = useMemo(() => {
-		const pastSeasonIds = pastSeasons.map(season => String(season._id));
-		return racesData.filter(
-			race => race.season && pastSeasonIds.includes(race.season),
-		);
-	}, [pastSeasons, racesData]);
-
-	return { pastSeasons, pastSeasonRaces, isLoading, isFetched };
+	return {
+		races,
+		season,
+		seasonsActive,
+		seasonsDone,
+	};
 };

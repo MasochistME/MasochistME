@@ -21,7 +21,6 @@ type SingleSeasonProps = {
 
 export const SingleSeason = (props: SingleSeasonProps) => {
 	const { season, races } = props;
-
 	const [activeTab, setActiveTab] = useState<TabsSeasonDetails>(
 		TabsSeasonDetails.RACES,
 	);
@@ -46,7 +45,6 @@ export const SingleSeason = (props: SingleSeasonProps) => {
 	if (!season) return <ErrorFallback />; // TODO something else
 	return (
 		<StyledSeasonWrapper column>
-			<StyledSeasonTitle>{season.name}</StyledSeasonTitle>
 			<div>{season.description}</div>
 			<Flex align justifyContent="space-evenly" gap={16}>
 				<StatBlock
@@ -93,13 +91,6 @@ export const SingleSeason = (props: SingleSeasonProps) => {
 const StyledSeasonWrapper = styled(Flex)`
 	gap: 16px;
 	width: 100%;
-`;
-
-const StyledSeasonTitle = styled.h2`
-	display: flex;
-	margin: 0;
-	align-items: center;
-	font-size: 24px;
 `;
 
 const StyledRacesList = styled(Flex)`

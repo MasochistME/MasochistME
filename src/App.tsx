@@ -22,7 +22,7 @@ import { TabHome } from './pages/TabHome';
 import { TabLeaderboards } from './pages/TabLeaderboards';
 import { TabProfile } from './pages/TabProfile';
 import { TabSupport } from './pages/TabSupport';
-import { TabRaces } from 'pages/TabEvents';
+import { TabEvents } from 'pages/TabEvents';
 
 export const App = (): JSX.Element => {
 	const { colorTokens } = useTheme();
@@ -71,7 +71,7 @@ export const App = (): JSX.Element => {
 							</Route>
 							<Route exact path="/events">
 								<Boundary>
-									<TabRaces />
+									<TabEvents />
 								</Boundary>
 							</Route>
 							<Route exact path="/profile/:id">

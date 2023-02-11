@@ -10,17 +10,10 @@ import { useAppContext } from 'context';
 export const useRaces = (params?: RaceListParams) => {
 	const { sdk } = useAppContext();
 
-	const {
-		data: racesData = [],
-		isLoading,
-		isFetched,
-		isError,
-	} = useQuery(
+	return useQuery(
 		['masochist', 'races', params ? JSON.stringify(params) : ''],
 		() => sdk.getRaceList({ ...(params ?? {}) }),
 	);
-
-	return { racesData, isLoading, isFetched, isError };
 };
 
 /**

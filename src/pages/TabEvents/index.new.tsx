@@ -19,7 +19,7 @@ export const TabRaces = (): JSX.Element => {
 		return seasonsData.find(season => String(season._id) === selectedSeason);
 	}, [selectedSeason]);
 
-	const { racesData } = useRaces({
+	const { data: races = [] } = useRaces({
 		filter: { season: selectedSeason, isDone: true },
 	});
 
@@ -69,7 +69,7 @@ export const TabRaces = (): JSX.Element => {
 						/>
 					</SelectWrapper>
 				</FilterBar>
-				<SingleSeason season={season} races={racesData} />
+				<SingleSeason season={season} races={races} />
 			</StyledSeasonsList>
 			<Flex column width="100%" maxWidth="450px" gap={16}>
 				<TabRaceInfo isDesktopOnly width="100%" maxWidth="450px" />

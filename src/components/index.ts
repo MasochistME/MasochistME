@@ -11,6 +11,7 @@ export * from './Flex';
 export * from './Icon';
 export * from './Loader';
 export * from './Markdown';
+export * from './Menu';
 export * from './Modal';
 export * from './Pagination';
 export * from './ProgressBar';
