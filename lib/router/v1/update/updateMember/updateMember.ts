@@ -264,10 +264,7 @@ export const updateMember = async (
           );
           // This achievement is not registered in DB - add it
           if (!memberAchievementOld) return true;
-          // This game is registered in DB and changed - update it
-          if (memberAchievementOld.unlockTime !== memberAchievement.unlockTime)
-            return true;
-          // This game is registered in DB and unchanged - continue with no changes
+          // This game is registered in DB - continue with no changes
           return false;
         },
       );
@@ -295,12 +292,25 @@ export const updateMember = async (
         log.INFO(
           `--> [UPDATE] user ${memberId} --> new hundo detected - ${newCompletion.gameId}`,
         );
-        await collectionLogs.insertOne({
-          type: LogType.COMPLETE,
-          memberId: newCompletion.memberId,
-          gameId: newCompletion.gameId,
-          date: newCompletion.mostRecentAchievementDate,
-        });
+        // This is a bit complicated - a hacky way to ensure that hundos are not re-logged
+        // every time something else changes in the newCompletion object, for example playtime.
+        await collectionLogs.updateOne(
+          {
+            type: LogType.COMPLETE,
+            memberId: newCompletion.memberId,
+            gameId: newCompletion.gameId,
+            date: newCompletion.mostRecentAchievementDate,
+          },
+          {
+            $set: {
+              type: LogType.COMPLETE,
+              memberId: newCompletion.memberId,
+              gameId: newCompletion.gameId,
+              date: newCompletion.mostRecentAchievementDate,
+            },
+          },
+          { upsert: true },
+        );
       });
     }
 
