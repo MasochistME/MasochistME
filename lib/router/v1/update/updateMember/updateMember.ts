@@ -68,9 +68,10 @@ export const updateMember = async (
 
     /**
      * Check if a member was recently updated.
-     * If yes, do not proceed.
+     * If yes, do not proceed (unless it's dev environment).
      */
     if (
+      !process.env.DEV &&
       member?.lastUpdated &&
       Date.now() - new Date(member.lastUpdated).getTime() < 3600000
     ) {
