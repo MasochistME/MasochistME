@@ -1,7 +1,7 @@
 import { RacePlayer, RaceType } from '@masochistme/sdk/dist/v1/types';
 
 import { useRaceById } from 'sdk';
-import { Flex, Spinner, Table, TableCell, TableColumn } from 'components';
+import { Flex, Table, TableCell, TableColumn } from 'components';
 import { Podium, WinnerLink } from 'containers';
 
 type Props = {
@@ -19,13 +19,13 @@ enum Columns {
 
 export const ModalRaceLeaderboards = (props: Props) => {
 	const { raceId } = props;
-	const { raceData: race, isLoading, isFetched } = useRaceById(raceId);
+	const { raceData: race } = useRaceById(raceId);
 	const leaderboards = race?.leaderboards ?? [];
 
 	const leaderboardsWithPlace = leaderboards.map(
 		(p: RacePlayer, place: number) => ({
 			...p,
-			place: place + 1,
+			place: (place + 1) as 1 | 2 | 3,
 		}),
 	);
 	const leaderboardsWithPlacePodium = leaderboardsWithPlace.slice(0, 3);
@@ -83,13 +83,12 @@ export const ModalRaceLeaderboards = (props: Props) => {
 
 	return (
 		<Flex column width="100%" gap={16}>
-			{isLoading && <Spinner />}
-			{isFetched && (
-				<>
-					<Podium podium={leaderboardsWithPlacePodium} />
-					<Table columns={columns} dataset={leaderboardsWithPlace} />
-				</>
-			)}
+			<Podium podium={leaderboardsWithPlacePodium} />
+			<Table
+				columns={columns}
+				dataset={leaderboardsWithPlace}
+				rowsPerPage={10}
+			/>
 		</Flex>
 	);
 };

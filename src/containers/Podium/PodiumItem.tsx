@@ -1,18 +1,23 @@
 import { RacePlayer } from '@masochistme/sdk/dist/v1/types';
-import { Icon, Size } from 'components';
 import { Link } from 'react-router-dom';
-import { useMembers } from 'sdk';
 import styled from 'styled-components';
+
+import { useMembers } from 'sdk';
+import { Icon, Size } from 'components';
 import { ColorTokens, fonts, useTheme } from 'styles';
+
 import { PodiumAvatar } from './PodiumAvatar';
+import { usePodiumColor } from './hooks';
 
 type Props = {
-	player: RacePlayer & { place: number };
+	player: RacePlayer & { place: 1 | 2 | 3 };
 };
 export const PodiumItem = (props: Props) => {
 	const { player } = props;
 	const { colorTokens } = useTheme();
 	const { membersData } = useMembers();
+
+	const podiumColor = usePodiumColor(player.place) ?? 'common-color--shadow';
 
 	const member = membersData.find(m => m.discordId === player.discordId);
 	const iconSize =
@@ -26,7 +31,7 @@ export const PodiumItem = (props: Props) => {
 						icon="Bookmark"
 						size={iconSize}
 						className="place--icon"
-						color={colorTokens['semantic-color--tier-4']}
+						color={podiumColor}
 					/>
 					<span className="place--number">{player.place}</span>
 				</PodiumItem.Place>
@@ -92,9 +97,9 @@ PodiumItem.Place = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	right: 2px;
-	top: 7px;
-	filter: drop-shadow(0 0 10px #000);
+	right: -2px;
+	top: 1px;
+	filter: drop-shadow(-5px 7px 5px #000);
 	& .place--number {
 		position: absolute;
 		font-family: ${fonts.Dosis};

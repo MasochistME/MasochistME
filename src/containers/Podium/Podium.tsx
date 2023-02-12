@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { PodiumItem } from './PodiumItem';
 
 type Props = {
-	podium: (RacePlayer & { place: number })[];
+	podium: (RacePlayer & { place: 1 | 2 | 3 })[];
 };
 
 export const Podium = (props: Props) => {
