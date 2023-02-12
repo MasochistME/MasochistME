@@ -36,6 +36,16 @@ export const ModalRaceHeader = (props: Props) => {
 			<p>
 				<span style={{ fontWeight: 600 }}>Objectives:</span> {race.objectives}
 			</p>
+			<Flex align width="100%" justifyContent="space-around">
+				<Flex column align>
+					<span style={{ fontWeight: 600 }}>Download grace time</span>
+					{race.downloadGrace}s
+				</Flex>
+				<Flex column align>
+					<span style={{ fontWeight: 600 }}>Proof upload grace time:</span>
+					{race.uploadGrace}s
+				</Flex>
+			</Flex>
 		</StyledModalRaceHeader>
 	);
 };

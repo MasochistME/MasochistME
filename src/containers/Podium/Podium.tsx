@@ -20,6 +20,7 @@ export const Podium = (props: Props) => {
 
 const StyledPodium = styled.div`
 	display: grid;
-	align-items: flex-end;
+	align-items: center;
 	grid-template-columns: 3fr 1;
+	padding: 0 32px;
 `;

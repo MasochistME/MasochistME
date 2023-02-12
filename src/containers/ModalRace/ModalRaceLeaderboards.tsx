@@ -73,6 +73,7 @@ export const ModalRaceLeaderboards = (props: Props) => {
 			value: (player: RacePlayer) => String(player.score),
 			render: (player: RacePlayer) => (
 				<TableCell
+					justifyContent="flex-end"
 					content={
 						<StyledPlayerScore>
 							{player.score}
@@ -91,6 +92,7 @@ export const ModalRaceLeaderboards = (props: Props) => {
 			value: (player: RacePlayer) => String(player.score),
 			render: (player: RacePlayer) => (
 				<TableCell
+					justifyContent="flex-end"
 					content={
 						<StyledPlayerScore>
 							{player.score}

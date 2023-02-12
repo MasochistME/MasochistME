@@ -24,7 +24,7 @@ export const PodiumItem = (props: Props) => {
 		player.place === 1 ? (Size.BIG / 4) * 3 : (Size.MEDIUM / 4) * 3;
 
 	return (
-		<StyledPodiumItem>
+		<StyledPodiumItem colorTokens={colorTokens}>
 			<PodiumItem.Avatar>
 				<PodiumItem.Place>
 					<Icon
@@ -43,7 +43,8 @@ export const PodiumItem = (props: Props) => {
 			</PodiumItem.Avatar>
 			<PodiumItem.Username
 				to={`/profile/${member?.steamId}`}
-				colorTokens={colorTokens}>
+				colorTokens={colorTokens}
+				place={player.place as 1 | 2 | 3}>
 				{member?.name}
 			</PodiumItem.Username>
 			<PodiumItem.Score colorTokens={colorTokens}>
@@ -53,16 +54,21 @@ export const PodiumItem = (props: Props) => {
 	);
 };
 
-const WIDTH = 128;
-
-const StyledPodiumItem = styled.div`
+const StyledPodiumItem = styled.div<{ colorTokens: ColorTokens }>`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	gap: 8px;
+	box-shadow: 0 0 10px
+		${({ colorTokens }) => colorTokens['common-color--shadow']};
+	padding: 32px 0;
+	background-color: ${({ colorTokens }) => colorTokens['semantic-color--idle']};
 	&:nth-child(1) {
 		grid-column: 2;
 		grid-row: 1;
+		height: 100%;
+		z-index: 10;
+		font-size: 1.2rem;
 		& .place--number {
 			color: black;
 			font-size: 2rem;
@@ -71,8 +77,8 @@ const StyledPodiumItem = styled.div`
 	}
 	&:nth-child(2) {
 		grid-column: 1;
-		grid-row: 2;
-		margin-top: -${(WIDTH / 4) * 4}px;
+		grid-row: 1;
+		height: 80%;
 		& .place--number {
 			color: black;
 			font-size: 1.1rem;
@@ -81,8 +87,8 @@ const StyledPodiumItem = styled.div`
 	}
 	&:nth-child(3) {
 		grid-column: 3;
-		grid-row: 2;
-		margin-top: -${(WIDTH / 4) * 4}px;
+		grid-row: 1;
+		height: 80%;
 		& .place--number {
 			color: black;
 			font-size: 1.1rem;
@@ -110,20 +116,19 @@ PodiumItem.Place = styled.div`
 	}
 `;
 
-PodiumItem.Username = styled(Link)<{ colorTokens: ColorTokens }>`
+PodiumItem.Username = styled(Link)<{
+	colorTokens: ColorTokens;
+	place: 1 | 2 | 3;
+}>`
 	font-family: ${fonts.Dosis};
-	font-size: 1.3rem;
+	font-size: ${({ place }) => (place === 1 ? '1.5em' : '1.3em')};
 	color: ${({ colorTokens }) => colorTokens['core-tertiary-text']};
 	letter-spacing: 0.5px;
 `;
 
 PodiumItem.Score = styled.span<{ colorTokens: ColorTokens }>`
 	font-size: 1.5em;
-	/* font-weight: bold; */
+	font-weight: bold;
 	font-family: ${fonts.Dosis};
-	padding: 2px 12px;
 	border-radius: 32px;
-	background-color: ${({ colorTokens }) =>
-		colorTokens['semantic-color--interactive']};
-	color: ${({ colorTokens }) => colorTokens['core-tertiary-text']};
 `;
