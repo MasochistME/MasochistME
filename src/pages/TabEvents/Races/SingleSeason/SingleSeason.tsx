@@ -42,7 +42,10 @@ export const SingleSeason = (props: SingleSeasonProps) => {
 		setActiveTab(newTab);
 	};
 
-	if (!season) return <ErrorFallback />; // TODO something else
+	// TODO This shows error fallback component for a split second
+	// after the query boundary loads and before season loads
+	// fix pls
+	if (!season) return <ErrorFallback />;
 	return (
 		<StyledSeasonWrapper column>
 			<div>{season.description}</div>

@@ -54,7 +54,7 @@ const HeaderBoundary = (props: Props) => {
 			</p>
 			<Flex align width="100%" justifyContent="space-around">
 				<Flex column align>
-					<span style={{ fontWeight: 600 }}>Download grace time</span>
+					<span style={{ fontWeight: 600 }}>Download grace time:</span>
 					{race.downloadGrace}s
 				</Flex>
 				<Flex column align>
