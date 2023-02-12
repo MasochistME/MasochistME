@@ -9,11 +9,16 @@ import { SeasonSelect } from './SeasonSelect';
 import { useState } from 'react';
 
 export const RacesPage = (): JSX.Element => {
+	const [selectedSeasonId, setSelectedSeasonId] = useState<string | null>(null);
 	return (
 		<StyledWrapper>
 			<Flex column gap={24} width="100%">
+				<SeasonSelect
+					selectedSeasonId={selectedSeasonId}
+					setSelectedSeasonId={setSelectedSeasonId}
+				/>
 				<QueryBoundary fallback={<Loader />} errorFallback={<ErrorFallback />}>
-					<SeasonBoundary />
+					<SeasonBoundary selectedSeasonId={selectedSeasonId} />
 				</QueryBoundary>
 			</Flex>
 			<RacesInfo isDesktopOnly width="100%" maxWidth="450px" />
@@ -21,18 +26,12 @@ export const RacesPage = (): JSX.Element => {
 	);
 };
 
-const SeasonBoundary = () => {
-	const [selectedSeasonId, setSelectedSeasonId] = useState<string | null>(null);
+type Props = {
+	selectedSeasonId: string | null;
+};
+const SeasonBoundary = ({ selectedSeasonId }: Props) => {
 	const { season, races } = useRacesFromSeason(selectedSeasonId);
-	return (
-		<>
-			<SeasonSelect
-				selectedSeasonId={selectedSeasonId}
-				setSelectedSeasonId={setSelectedSeasonId}
-			/>
-			<SingleSeason season={season} races={races} />
-		</>
-	);
+	return <SingleSeason season={season} races={races} />;
 };
 
 const RacesInfo = (props: Partial<SectionProps>): JSX.Element => {

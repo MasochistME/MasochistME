@@ -10,10 +10,24 @@ type Props = {
 	setSelectedSeasonId: (selectedSeason: string) => void;
 };
 export const SeasonSelect = (props: Props) => {
+	const { colorTokens } = useTheme();
 	return (
 		<StyledSelectWrapper>
 			<QueryBoundary
-				fallback={<Skeleton />}
+				fallback={
+					<Menu
+						anchorElement={() => (
+							<StyledSeasonTitle colorTokens={colorTokens}>
+								Loading seasons...
+								<StyledIcon
+									icon="ChevronDown"
+									size={Size.TINY}
+									isOpen={false}
+								/>
+							</StyledSeasonTitle>
+						)}
+					/>
+				}
 				errorFallback={<Warning description="Could not load season list" />}>
 				<SeasonSelectBoundary {...props} />
 			</QueryBoundary>
@@ -66,9 +80,10 @@ const SeasonSelectBoundary = (props: Props) => {
 			options={options}
 			setSelectedOption={setSelectedSeasonId}
 			placeholder="Select season..."
+			loadElement="Loading seasons..."
 			anchorElement={(isOpen: boolean) => (
 				<StyledSeasonTitle colorTokens={colorTokens}>
-					{season?.name ?? <Skeleton width="200px" height="32px" />}
+					{season?.name ?? 'Loading seasons...'}
 					<StyledIcon icon="ChevronDown" size={Size.TINY} isOpen={isOpen} />
 				</StyledSeasonTitle>
 			)}

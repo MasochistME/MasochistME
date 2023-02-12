@@ -12,12 +12,13 @@ type Option = {
 };
 
 type Props = {
-	options: Option[];
-	setSelectedOption: (selectedOption: string) => void;
+	loadElement?: React.ReactNode;
+	options?: Option[];
+	setSelectedOption?: (selectedOption: string) => void;
 	anchorElement: (isOpen: boolean) => React.ReactNode;
 } & Partial<MenuProps>;
 export const Menu = (props: Props) => {
-	const { options, anchorElement, open: _, ...muiProps } = props;
+	const { loadElement, options, anchorElement, open: _, ...muiProps } = props;
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const isOpen = Boolean(anchorEl);
 
@@ -28,15 +29,16 @@ export const Menu = (props: Props) => {
 		setAnchorEl(null);
 	};
 
-	const renderOptions = options.map((option: Option) => {
-		if (option.isSubheader)
-			return <ListSubheader>{option.value}</ListSubheader>;
-		return (
-			<MuiMenuItem value={option.value} onClick={option.onSelect}>
-				{option.render ?? option.value}
-			</MuiMenuItem>
-		);
-	});
+	const renderOptions =
+		options?.map((option: Option) => {
+			if (option.isSubheader)
+				return <ListSubheader>{option.value}</ListSubheader>;
+			return (
+				<MuiMenuItem value={option.value} onClick={option.onSelect}>
+					{option.render ?? option.value}
+				</MuiMenuItem>
+			);
+		}) ?? [];
 
 	return (
 		<div>
@@ -52,7 +54,7 @@ export const Menu = (props: Props) => {
 					'aria-labelledby': 'basic-button',
 				}}
 				{...muiProps}>
-				{renderOptions}
+				{renderOptions && renderOptions?.length !== 0 && renderOptions}
 			</MuiMenu>
 		</div>
 	);
