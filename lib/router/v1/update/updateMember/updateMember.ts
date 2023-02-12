@@ -264,8 +264,11 @@ export const updateMember = async (
           );
           // This achievement is not registered in DB - add it
           if (!memberAchievementOld) return true;
-          // This game is registered in DB and changed - proceed
-          return true;
+          // This game is registered in DB and changed - update it
+          if (memberAchievementOld.unlockTime !== memberAchievement.unlockTime)
+            return true;
+          // This game is registered in DB and unchanged - continue with no changes
+          return false;
         },
       );
 
