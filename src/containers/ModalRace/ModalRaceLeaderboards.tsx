@@ -2,9 +2,9 @@ import { RacePlayer, RaceType } from '@masochistme/sdk/dist/v1/types';
 import styled from 'styled-components';
 
 import { useRaceById } from 'sdk';
-import { Flex, Icon, Table, TableCell, TableColumn, Tooltip } from 'components';
+import { Flex, Icon, Table, TableCell, TableColumn } from 'components';
 import { Podium, WinnerLink } from 'containers';
-import { fonts } from 'styles';
+import { fonts, media } from 'styles';
 import dayjs from 'dayjs';
 
 type Props = {
@@ -138,10 +138,13 @@ const StyledPlayerScore = styled.div`
 	display: flex;
 	align-items: center;
 	gap: 4px;
-	padding: 8px 32px;
 	font-size: 1.3em;
 	font-weight: bold;
 	font-family: ${fonts.Dosis};
+	padding: 8px 32px;
+	@media (max-width: ${media.tablets}) {
+		padding: 8px;
+	}
 `;
 
 const StyledScoreDetails = styled.ul`
