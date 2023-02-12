@@ -49,7 +49,12 @@ export const joinRaceByParticipantId = async (
       ...(race.type === RaceType.SCORE_BASED && { score: null }),
     };
 
-    const response = await racePlayerCollection.insertOne(newParticipant);
+    // We upsert this to avoid people participating more than once
+    const response = await racePlayerCollection.updateOne(
+      { discordId, raceId },
+      { $set: newParticipant },
+      { upsert: true },
+    );
 
     if (!response.acknowledged) {
       res
