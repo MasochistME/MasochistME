@@ -18,6 +18,17 @@ export const Podium = (props: Props) => {
 	);
 };
 
+Podium.Skeleton = () => {
+	const podium: (1 | 2 | 3)[] = [1, 2, 3];
+	return (
+		<StyledPodium>
+			{podium.map(() => (
+				<PodiumItem.Skeleton />
+			))}
+		</StyledPodium>
+	);
+};
+
 const StyledPodium = styled.div`
 	display: grid;
 	align-items: center;

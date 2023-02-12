@@ -2,7 +2,15 @@ import { RacePlayer, RaceType } from '@masochistme/sdk/dist/v1/types';
 import styled from 'styled-components';
 
 import { useRaceById } from 'sdk';
-import { Flex, Icon, Table, TableCell, TableColumn } from 'components';
+import {
+	ErrorFallback,
+	Flex,
+	Icon,
+	QueryBoundary,
+	Table,
+	TableCell,
+	TableColumn,
+} from 'components';
 import { Podium, WinnerLink } from 'containers';
 import { fonts, media } from 'styles';
 import dayjs from 'dayjs';
@@ -16,11 +24,33 @@ enum Columns {
 	USERNAME = 'Username',
 	SCORE = 'Score',
 	TIME = 'Time',
-	DNF = 'DNF',
-	DISQUALIFIED = 'Disqualified',
 }
 
 export const ModalRaceLeaderboards = (props: Props) => {
+	const columns = Object.values(Columns).map(c => ({
+		key: c,
+		title: c,
+		value: () => '',
+		render: () => null,
+	}));
+	return (
+		<QueryBoundary
+			fallback={
+				<Flex column width="100%" gap={16}>
+					<Podium.Skeleton />
+					<Table.Skeleton
+						columns={columns}
+						style={{ height: '36px', margin: '6px 0' }}
+					/>
+				</Flex>
+			}
+			errorFallback={<ErrorFallback />}>
+			<LeaderboardsBoundary {...props} />
+		</QueryBoundary>
+	);
+};
+
+const LeaderboardsBoundary = (props: Props) => {
 	const { raceId } = props;
 	const { raceData: race } = useRaceById(raceId);
 	const leaderboards = race?.leaderboards ?? [];

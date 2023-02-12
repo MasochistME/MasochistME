@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { useMembers } from 'sdk';
-import { Icon, Size } from 'components';
+import { Icon, Size, Skeleton } from 'components';
 import { ColorTokens, fonts, useTheme } from 'styles';
 
 import { PodiumAvatar } from './PodiumAvatar';
@@ -50,6 +50,15 @@ export const PodiumItem = (props: Props) => {
 			<PodiumItem.Score colorTokens={colorTokens}>
 				{player.score}
 			</PodiumItem.Score>
+		</StyledPodiumItem>
+	);
+};
+
+PodiumItem.Skeleton = () => {
+	const { colorTokens } = useTheme();
+	return (
+		<StyledPodiumItem colorTokens={colorTokens}>
+			<Skeleton width={Size.LARGE} height={Size.LARGE} />
 		</StyledPodiumItem>
 	);
 };

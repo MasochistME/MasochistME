@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { Box, Modal } from '@mui/material';
 
-import { useRaceById } from 'sdk';
 import { fonts, useTheme, ColorTokens } from 'styles';
 import { Flex } from 'components';
 
@@ -18,7 +17,6 @@ type Props = {
 export const ModalRace = (props: Props): JSX.Element | null => {
 	const { raceId, isModalOpen, setIsModalOpen } = props;
 	const { colorTokens } = useTheme();
-	const { raceData: race, isFetched } = useRaceById(raceId);
 
 	const handleModalClose = () => {
 		setIsModalOpen(false);
@@ -40,12 +38,8 @@ export const ModalRace = (props: Props): JSX.Element | null => {
 		<Modal open={isModalOpen && !!raceId} onClose={handleModalClose}>
 			<Box sx={modalStyle}>
 				<WrapperRace column colorTokens={colorTokens}>
-					{isFetched && race && (
-						<>
-							<ModalRaceHeader raceId={raceId} />
-							<ModalRaceLeaderboards raceId={raceId} />
-						</>
-					)}
+					<ModalRaceHeader raceId={raceId} />
+					<ModalRaceLeaderboards raceId={raceId} />
 				</WrapperRace>
 			</Box>
 		</Modal>
