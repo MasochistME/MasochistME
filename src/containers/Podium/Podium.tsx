@@ -20,5 +20,6 @@ export const Podium = (props: Props) => {
 
 const StyledPodium = styled.div`
 	display: grid;
+	align-items: flex-end;
 	grid-template-columns: 3fr 1;
 `;

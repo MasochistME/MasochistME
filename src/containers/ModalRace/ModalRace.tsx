@@ -55,7 +55,7 @@ export const ModalRace = (props: Props): JSX.Element | null => {
 export const WrapperRace = styled(Flex)<{ colorTokens: ColorTokens }>`
 	box-sizing: border-box;
 	text-align: center;
-	width: 700px;
+	width: 600px;
 	max-width: 100%;
 	height: auto;
 	gap: 16px;

@@ -21,7 +21,7 @@ export const PodiumItem = (props: Props) => {
 
 	const member = membersData.find(m => m.discordId === player.discordId);
 	const iconSize =
-		player.place === 1 ? (Size.BIG / 4) * 3 : (Size.MEDIUM / 4) * 2.5;
+		player.place === 1 ? (Size.BIG / 4) * 3 : (Size.MEDIUM / 4) * 3;
 
 	return (
 		<StyledPodiumItem>
@@ -38,7 +38,7 @@ export const PodiumItem = (props: Props) => {
 				<PodiumItem.Image
 					member={member}
 					place={player.place as 1 | 2 | 3}
-					size={player.place === 1 ? Size.LARGE : Size.BIG}
+					size={player.place === 1 ? Size.LARGE : (Size.LARGE * 2) / 3}
 				/>
 			</PodiumItem.Avatar>
 			<PodiumItem.Username
@@ -46,7 +46,9 @@ export const PodiumItem = (props: Props) => {
 				colorTokens={colorTokens}>
 				{member?.name}
 			</PodiumItem.Username>
-			<PodiumItem.Score>{player.score}</PodiumItem.Score>
+			<PodiumItem.Score colorTokens={colorTokens}>
+				{player.score}
+			</PodiumItem.Score>
 		</StyledPodiumItem>
 	);
 };
@@ -57,6 +59,7 @@ const StyledPodiumItem = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	gap: 8px;
 	&:nth-child(1) {
 		grid-column: 2;
 		grid-row: 1;
@@ -109,9 +112,18 @@ PodiumItem.Place = styled.div`
 
 PodiumItem.Username = styled(Link)<{ colorTokens: ColorTokens }>`
 	font-family: ${fonts.Dosis};
-	font-size: 1.5rem;
+	font-size: 1.3rem;
 	color: ${({ colorTokens }) => colorTokens['core-tertiary-text']};
 	letter-spacing: 0.5px;
 `;
 
-PodiumItem.Score = styled.div``;
+PodiumItem.Score = styled.span<{ colorTokens: ColorTokens }>`
+	font-size: 1.5em;
+	/* font-weight: bold; */
+	font-family: ${fonts.Dosis};
+	padding: 2px 12px;
+	border-radius: 32px;
+	background-color: ${({ colorTokens }) =>
+		colorTokens['semantic-color--interactive']};
+	color: ${({ colorTokens }) => colorTokens['core-tertiary-text']};
+`;

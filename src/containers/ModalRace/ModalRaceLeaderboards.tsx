@@ -1,8 +1,11 @@
 import { RacePlayer, RaceType } from '@masochistme/sdk/dist/v1/types';
+import styled from 'styled-components';
 
 import { useRaceById } from 'sdk';
-import { Flex, Table, TableCell, TableColumn } from 'components';
+import { Flex, Icon, Table, TableCell, TableColumn, Tooltip } from 'components';
 import { Podium, WinnerLink } from 'containers';
+import { fonts } from 'styles';
+import dayjs from 'dayjs';
 
 type Props = {
 	raceId?: string | null;
@@ -36,7 +39,9 @@ export const ModalRaceLeaderboards = (props: Props) => {
 			title: Columns.PLACE,
 			value: (player: RacePlayer & { place: number }) => player.place,
 			render: (player: RacePlayer & { place: number }) => (
-				<TableCell content={String(player.place)} />
+				<TableCell
+					content={<StyledPlayerScore>{player.place}</StyledPlayerScore>}
+				/>
 			),
 			style: { width: '100px' },
 		},
@@ -46,11 +51,13 @@ export const ModalRaceLeaderboards = (props: Props) => {
 			value: (player: RacePlayer) => String(player.discordId),
 			render: (player: RacePlayer) => (
 				<TableCell
+					isCentered={false}
 					content={
 						<WinnerLink
 							discordId={player.discordId}
 							raceId={raceId}
 							isCompact
+							hasAvatar
 						/>
 					}
 				/>
@@ -65,7 +72,14 @@ export const ModalRaceLeaderboards = (props: Props) => {
 			title: Columns.SCORE,
 			value: (player: RacePlayer) => String(player.score),
 			render: (player: RacePlayer) => (
-				<TableCell content={String(player.score)} />
+				<TableCell
+					content={
+						<StyledPlayerScore>
+							{player.score}
+							<ScoreDetails player={player} />
+						</StyledPlayerScore>
+					}
+				/>
 			),
 			style: { width: '100px' },
 		});
@@ -76,7 +90,14 @@ export const ModalRaceLeaderboards = (props: Props) => {
 			title: Columns.TIME,
 			value: (player: RacePlayer) => String(player.score),
 			render: (player: RacePlayer) => (
-				<TableCell content={String(player.score)} />
+				<TableCell
+					content={
+						<StyledPlayerScore>
+							{player.score}
+							<ScoreDetails player={player} />
+						</StyledPlayerScore>
+					}
+				/>
 			),
 			style: { width: '100px' },
 		});
@@ -92,3 +113,39 @@ export const ModalRaceLeaderboards = (props: Props) => {
 		</Flex>
 	);
 };
+
+const ScoreDetails = ({ player }: { player: RacePlayer }) => (
+	<Icon
+		icon="CircleInfo"
+		hoverText={
+			<StyledScoreDetails>
+				<li>{getTimeWithMs(player.revealDate)} - reveal time</li>
+				<li>{getTimeWithMs(player.startDate)} - start time</li>
+				<li>{getTimeWithMs(player.endDate)} - end time</li>
+				<li>{getTimeWithMs(player.proofDate)} - proof time</li>
+			</StyledScoreDetails>
+		}
+	/>
+);
+
+export const getTimeWithMs = (date: Date | number | null | undefined) => {
+	if (date === null) return '—';
+	const format = 'H:mm:ss:SSS';
+	return <code>{dayjs(date).format(format)}</code>;
+};
+
+const StyledPlayerScore = styled.div`
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	padding: 8px 32px;
+	font-size: 1.3em;
+	font-weight: bold;
+	font-family: ${fonts.Dosis};
+`;
+
+const StyledScoreDetails = styled.ul`
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+`;

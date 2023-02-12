@@ -25,15 +25,9 @@ export const PodiumAvatar = (props: Props) => {
 		onClick,
 	} = props;
 
-	const avatarSize = useMemo(() => {
-		if (size === Size.BIG || size === Size.LARGE) return '_full';
-		if (size === Size.MEDIUM) return '_medium';
-		return '';
-	}, [size]);
-
 	const avatarUrl = useMemo(() => {
 		if (member.avatarHash)
-			return `https://avatars.akamai.steamstatic.com/${member.avatarHash}${avatarSize}.jpg`;
+			return `https://avatars.akamai.steamstatic.com/${member.avatarHash}_full.jpg`;
 		if (member.avatar) return member.avatar;
 		return null;
 	}, [member]);

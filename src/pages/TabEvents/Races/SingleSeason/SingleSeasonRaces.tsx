@@ -5,6 +5,7 @@ import {
 	DateBlock,
 	Flex,
 	Icon,
+	Size,
 	Table,
 	TableCell,
 	TableColumn,
@@ -12,6 +13,7 @@ import {
 import { ModalRace, WinnerLink } from 'containers';
 import styled from 'styled-components';
 import { getRaceTypeIcon } from 'utils/getIcon';
+import { fonts } from 'styles';
 
 type Props = {
 	races: Race[];
@@ -59,9 +61,11 @@ export const SingleSeasonRaces = (props: Props): JSX.Element => {
 			value: (race: RaceWithSummary) => race.type,
 			render: (race: RaceWithSummary) => (
 				<TableCell
+					padding="8px 0"
 					content={
 						<Icon
 							icon={getRaceTypeIcon(race)}
+							size={Size.SMALL}
 							hoverText={`${race.type.toUpperCase()} based race`}
 						/>
 					}
@@ -146,6 +150,8 @@ export const SingleSeasonRaces = (props: Props): JSX.Element => {
 };
 
 const TableCellRaceName = styled(Flex)`
+	font-size: 1.3em;
+	font-family: ${fonts.Dosis};
 	&:hover {
 		color: white;
 	}
