@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { Flex, Icon, IconType, Size } from 'components';
 import { ColorTokens, useTheme } from 'styles';
+import { SliderExpand } from './SliderExpand';
 
 type Props = {
 	getValueLabelFormat?: (value: number) => string;
@@ -47,6 +48,8 @@ export const Slider = (props: Props) => {
 		</Wrapper>
 	);
 };
+
+Slider.Expand = SliderExpand;
 
 const Wrapper = styled(Flex)`
 	flex: 1 1 auto;

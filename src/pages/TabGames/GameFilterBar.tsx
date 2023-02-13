@@ -78,22 +78,17 @@ export const GameFilterBar = (props: Props): JSX.Element => {
 				</QueryBoundary>
 			</StyledGameFilterBar>
 			<StyledGameFilterBar>
-				<Flex align gap={16}>
-					<SliderExpand className={showSlider ? 'expanded' : ''}>
-						<Slider
-							defaultValue={DEFAULT_PRICES}
-							setValue={setPrices}
-							getValueLabelFormat={(price: number) => `${price} €`}
-							step={1}
-						/>
-					</SliderExpand>
-					<Button
-						icon="CoinStack"
-						size={Size.BIG}
-						toggled={showSlider}
-						onClick={handleShowSliderClick}
+				<Slider.Expand
+					iconExpand="CoinStack"
+					showSlider={showSlider}
+					setShowSlider={setShowSlider}>
+					<Slider
+						defaultValue={DEFAULT_PRICES}
+						setValue={setPrices}
+						getValueLabelFormat={(price: number) => `${price} €`}
+						step={1}
 					/>
-				</Flex>
+				</Slider.Expand>
 				<Button
 					onClick={toggleGameView}
 					icon={gameViewButtonIcon}
@@ -138,13 +133,26 @@ const StyledGameFilterBarTiers = styled(Flex)`
 	gap: 24px;
 `;
 
+const SliderWrapper = styled.div`
+	display: flex;
+	align-items: center;
+	background-color: #fff;
+	padding: 4px;
+	border-radius: 32px;
+	&.expanded {
+		gap: 4px;
+	}
+`;
+
 const SliderExpand = styled.div`
-	width: 32px;
+	visibility: hidden;
+	width: 0;
 	opacity: 0;
-	transition: width 0.1s linear, opacity 0.15s linear;
+	transition: width 0.1s linear, opacity 0.1s linear;
 	/* overflow: hidden; */
 
 	&.expanded {
+		visibility: visible;
 		width: 200px;
 		opacity: 1;
 	}
