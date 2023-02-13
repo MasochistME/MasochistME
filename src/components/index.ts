@@ -9,6 +9,7 @@ export * from './Loader';
 export * from './FilterBar';
 export * from './Flex';
 export * from './Icon';
+export * from './Input';
 export * from './Loader';
 export * from './Markdown';
 export * from './Modal';

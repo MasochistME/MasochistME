@@ -21,7 +21,6 @@ export * from './ModalRace';
 export * from './Navigation';
 export * from './Podium';
 export * from './Section';
-export * from './Input';
 export * from './StatBlock';
 export * from './SubHeader';
 export * from './SubPage';
