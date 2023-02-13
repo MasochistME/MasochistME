@@ -12,7 +12,6 @@ import {
 	Flex,
 	IconType,
 	QueryBoundary,
-	Size,
 	Slider,
 	Spinner,
 } from 'components';
@@ -60,10 +59,6 @@ export const GameFilterBar = (props: Props): JSX.Element => {
 		if (gameListView === GameView.TILE) return 'Toggle table view';
 		else return 'Toggle grid view';
 	}, [gameListView]);
-
-	const handleShowSliderClick = () => {
-		setShowSlider(!showSlider);
-	};
 
 	return (
 		<FilterBar>
@@ -131,29 +126,4 @@ const StyledGameFilterBar = styled(Flex)`
 const StyledGameFilterBarTiers = styled(Flex)`
 	justify-content: center;
 	gap: 24px;
-`;
-
-const SliderWrapper = styled.div`
-	display: flex;
-	align-items: center;
-	background-color: #fff;
-	padding: 4px;
-	border-radius: 32px;
-	&.expanded {
-		gap: 4px;
-	}
-`;
-
-const SliderExpand = styled.div`
-	visibility: hidden;
-	width: 0;
-	opacity: 0;
-	transition: width 0.1s linear, opacity 0.1s linear;
-	/* overflow: hidden; */
-
-	&.expanded {
-		visibility: visible;
-		width: 200px;
-		opacity: 1;
-	}
 `;
