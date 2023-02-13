@@ -1,8 +1,7 @@
 import React from 'react';
 
 import { useAppContext } from 'context';
-import { Input } from 'containers';
-import { FilterBar, ToggleButtons } from 'components';
+import { FilterBar, Input, ToggleButtons } from 'components';
 import { TimePeriod } from 'utils/getTimePeriod';
 
 export const LeaderboardsFilterBar = (): JSX.Element => {
@@ -38,6 +37,7 @@ export const LeaderboardsFilterBar = (): JSX.Element => {
 				placeholder="Search members"
 				query={queryMember}
 				setQuery={setQueryMember}
+				icon="Search"
 			/>
 			<ToggleButtons
 				options={options}

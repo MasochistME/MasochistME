@@ -4,13 +4,13 @@ import { Tier } from '@masochistme/sdk/dist/v1/types';
 
 import { media } from 'styles';
 import { useAppContext } from 'context';
-import { Input } from 'containers';
 import {
 	Button,
 	Checkbox,
 	FilterBar,
 	Flex,
 	IconType,
+	Input,
 	QueryBoundary,
 	Slider,
 	Spinner,
@@ -67,6 +67,7 @@ export const GameFilterBar = (props: Props): JSX.Element => {
 					placeholder="Search games"
 					query={queryGame}
 					setQuery={setQueryGame}
+					icon="Search"
 				/>
 				<QueryBoundary fallback={<Spinner />}>
 					<TierFilterBoundary />
