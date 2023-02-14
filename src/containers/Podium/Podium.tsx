@@ -5,7 +5,7 @@ import { media } from 'styles';
 import { PodiumItem } from './PodiumItem';
 
 type Props = {
-	podium: (RacePlayer & { place: 1 | 2 | 3 })[];
+	podium: RacePlayer[];
 };
 
 export const Podium = (props: Props) => {

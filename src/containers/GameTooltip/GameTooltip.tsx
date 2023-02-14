@@ -12,7 +12,7 @@ type Props = {
 export const GameTooltip = (props: Props) => {
 	const { game, children } = props;
 
-	const gameTitle = (game?.title ?? 'UNKNOWN GAME').toUpperCase();
+	const gameTitle = (game?.title ?? '—').toUpperCase();
 
 	return (
 		<Tooltip

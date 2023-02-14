@@ -55,22 +55,18 @@ const LeaderboardsBoundary = (props: Props) => {
 	const { raceData: race } = useRaceById(raceId);
 	const leaderboards = race?.leaderboards ?? [];
 
-	const leaderboardsWithPlace = leaderboards.map(
-		(p: RacePlayer, place: number) => ({
-			...p,
-			place: (place + 1) as 1 | 2 | 3,
-		}),
-	);
-	const leaderboardsWithPlacePodium = leaderboardsWithPlace.slice(0, 3);
+	const leaderboardsPodium = leaderboards.slice(0, 3);
 
-	const columns: TableColumn<RacePlayer & { place: number }>[] = [
+	const columns: TableColumn<RacePlayer>[] = [
 		{
 			key: Columns.PLACE,
 			title: Columns.PLACE,
-			value: (player: RacePlayer & { place: number }) => player.place,
-			render: (player: RacePlayer & { place: number }) => (
+			value: (player: RacePlayer) => player?.place ?? 0,
+			render: (player: RacePlayer) => (
 				<TableCell
-					content={<StyledPlayerScore>{player.place}</StyledPlayerScore>}
+					content={
+						<StyledPlayerScore>{player?.place ?? '—'}</StyledPlayerScore>
+					}
 				/>
 			),
 			style: { width: '100px' },
@@ -136,12 +132,8 @@ const LeaderboardsBoundary = (props: Props) => {
 
 	return (
 		<Flex column width="100%" gap={16}>
-			<Podium podium={leaderboardsWithPlacePodium} />
-			<Table
-				columns={columns}
-				dataset={leaderboardsWithPlace}
-				rowsPerPage={10}
-			/>
+			<Podium podium={leaderboardsPodium} />
+			<Table columns={columns} dataset={leaderboards} rowsPerPage={10} />
 		</Flex>
 	);
 };

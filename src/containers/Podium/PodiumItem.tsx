@@ -10,14 +10,14 @@ import { PodiumAvatar } from './PodiumAvatar';
 import { usePodiumColor } from './hooks';
 
 type Props = {
-	player: RacePlayer & { place: 1 | 2 | 3 };
+	player: RacePlayer;
 };
 export const PodiumItem = (props: Props) => {
 	const { player } = props;
 	const { colorTokens } = useTheme();
 	const { membersData } = useMembers();
 
-	const podiumColor = usePodiumColor(player.place) ?? 'common-color--shadow';
+	const podiumColor = usePodiumColor(player?.place as 1 | 2 | 3);
 
 	const member = membersData.find(m => m.discordId === player.discordId);
 	const iconSize =

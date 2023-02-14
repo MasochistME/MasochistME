@@ -32,7 +32,7 @@ export const GameProfileGraphs = (props: Props) => {
 			<Section
 				fullWidth
 				title={`Completions: ${
-					gameCompletions?.length ?? 'unknown'
+					gameCompletions?.length ?? '—'
 				} • Average completion time: ${gameAvgPlaytime} h`}
 				content={
 					<BarChart
