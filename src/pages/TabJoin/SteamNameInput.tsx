@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import { Button, Size } from 'components';
-import { Input } from 'containers';
+import { Button, Input, Size } from 'components';
 import { useTheme, ColorTokens } from 'styles';
 import { validateSteamName } from 'pages/TabJoin/utils';
 
