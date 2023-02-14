@@ -121,11 +121,19 @@ export const getPlayersPointsPerRace = (
   // We must add owner here so their points also contribute to sorting.
   const raceOwner = getRaceOwner(race);
   const playersWithOwner = [...racePlayers, raceOwner];
+  const participantIds = playersWithOwner.map(player => player.discordId);
   const playersWithScore = playersWithOwner.map(player => ({
     ...player,
     score: getPlayerScore(race, player),
   }));
-  const sortedPlayers = playersWithScore
+  const sortedPlayersValid = playersWithScore.filter(
+    p => !p.dnf && !p.disqualified,
+  );
+  const sortedPlayersInvalid = playersWithScore.filter(
+    p => p.dnf || p.disqualified,
+  );
+
+  const sortedPlayersValidWithPoints = sortedPlayersValid
     .sort((playerA, playerB) => {
       // If race is time based, wins person with lowest time;
       // otherwise person with highest score wins.
@@ -141,25 +149,35 @@ export const getPlayersPointsPerRace = (
       disqualified: player.disqualified,
     }));
 
+  const sortedPlayersInvalidWithPoints = sortedPlayersInvalid.map(player => ({
+    raceId,
+    discordId: player.discordId,
+    points: sortedPlayersValid.length,
+    dnf: player.dnf,
+    disqualified: player.disqualified,
+  }));
+
+  const sortedPlayersWithPoints = [
+    ...sortedPlayersValidWithPoints,
+    ...sortedPlayersInvalidWithPoints,
+  ];
+
   // Here we also include players who participated in any race in the season,
   // but did not play this particular race.
   const uniqueParticipantIds = [
     ...new Set(allPlayers.map(player => player.discordId)),
   ];
-  const notParticipatingPlayers = uniqueParticipantIds
-    .filter(
-      discordId =>
-        !sortedPlayers.find(player => player.discordId === discordId),
-    )
+  const leftoverPlayers = uniqueParticipantIds
+    .filter(discordId => !participantIds.includes(discordId))
     .map(discordId => ({
       raceId,
       discordId,
-      points: sortedPlayers.length,
+      points: sortedPlayersValid.length,
       dnf: true,
       disqualified: false,
     }));
 
-  return [...sortedPlayers, ...notParticipatingPlayers];
+  return [...sortedPlayersWithPoints, ...leftoverPlayers];
 };
 
 const getPlayerScore = (race: Race, player: Omit<RacePlayer, '_id'>) => {
