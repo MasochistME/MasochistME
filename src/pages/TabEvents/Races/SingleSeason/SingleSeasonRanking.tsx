@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { Member, SeasonLeaderboardEntry } from '@masochistme/sdk/dist/v1/types';
 import {
+	Button,
 	ErrorFallback,
 	Flex,
 	Loader,
@@ -10,6 +12,7 @@ import {
 } from 'components';
 import { WinnerLink } from 'containers';
 import { useCuratorMembers, useSeasonLeaderboards } from 'sdk';
+import { ModalParticipant } from './ModalParticipant';
 
 type Props = { seasonId: string };
 export const SingleSeasonRanking = (props: Props) => (
@@ -27,11 +30,22 @@ enum Columns {
 	BRONZE = 'Bronze medals',
 	PARTICIPATIONS = 'Participations',
 	DNF = 'DNF',
+	MORE = '',
 }
 
 const RankingBoundary = ({ seasonId }: Props) => {
 	const { data = [] } = useSeasonLeaderboards({ seasonId });
 	const participants = useSeasonParticipants(data);
+	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+	const [selectedParticipant, setSelectedParticipant] =
+		useState<SeasonSummary | null>(null);
+
+	const onMoreClick = (participant: SeasonSummary) => {
+		if (participant) {
+			setIsModalOpen(!isModalOpen);
+			setSelectedParticipant(participant);
+		}
+	};
 
 	const columns: TableColumn<SeasonSummary>[] = [
 		{
@@ -98,21 +112,32 @@ const RankingBoundary = ({ seasonId }: Props) => {
 			render: (participant: SeasonSummary) => participant.dnfsTotal,
 			style: { width: '90px' },
 		},
+		{
+			key: Columns.MORE,
+			title: Columns.MORE,
+			value: () => 0,
+			render: (participant: SeasonSummary) => (
+				<Button
+					icon="EllipsisVertical"
+					onClick={() => onMoreClick(participant)}
+				/>
+			),
+		},
 	];
-
 	return (
 		<Flex column width="100%">
 			<Table columns={columns} dataset={participants} rowsPerPage={10} />
-			{/* <ModalRace
-				raceId={selectedRaceId}
+			<ModalParticipant
+				participant={selectedParticipant}
+				seasonId={seasonId}
 				isModalOpen={isModalOpen}
 				setIsModalOpen={setIsModalOpen}
-			/> */}
+			/>
 		</Flex>
 	);
 };
 
-type SeasonSummary = {
+export type SeasonSummary = {
 	discordId: string;
 	member?: Member;
 	pointsTotal: number;
