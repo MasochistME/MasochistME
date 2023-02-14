@@ -291,7 +291,7 @@ export const updateMember = async (
       const collectionLogs = db.collection<Omit<LogComplete, '_id'>>('logs');
       newlyCompletedGames.forEach(async newCompletion => {
         log.INFO(
-          `--> [UPDATE] user ${memberId} --> new hundo detected - ${newCompletion.gameId}`,
+          `--> [UPDATE] user ${memberId} --> hundo detected - ${newCompletion.gameId}`,
         );
         // This is a bit complicated - a hacky way to ensure that hundos are not re-logged
         // every time something else changes in the newCompletion object, for example playtime.
