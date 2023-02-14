@@ -46,6 +46,7 @@ import {
 	endSeasonById,
 	getSeasonsList,
 	getSeasonById,
+	getSeasonLeaderboardsById,
 } from 'v1/api/seasons';
 import {
 	getLeaderboardsMembersList,
@@ -223,6 +224,11 @@ export class SDK {
 		endSeasonById(args, this.BASE_URL);
 	public getSeasonsList = <T extends typeof getSeasonsList>(args: Head<T>) =>
 		getSeasonsList(args, this.BASE_URL);
+	public getSeasonLeaderboardsById = <
+		T extends typeof getSeasonLeaderboardsById,
+	>(
+		args: Head<T>,
+	) => getSeasonLeaderboardsById(args, this.BASE_URL);
 
 	/****************************
 	 *       LEADERBOARDS       *

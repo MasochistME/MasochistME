@@ -5,7 +5,7 @@
 import { WithId } from 'v1/types/__Helpers';
 
 /**
- * This is a type of a single object within the collection "seasons".
+ * This is a type of a single object within the collection seasons.
  * A single object describes a single race season.
  */
 export interface Season extends WithId {
@@ -33,4 +33,27 @@ export interface Season extends WithId {
 	 * Indicates if this is a special season.
 	 */
 	isSpecial: boolean;
+}
+
+export interface SeasonLeaderboardEntry {
+	/**
+	 * ID of the race belonging to the season
+	 */
+	raceId: string;
+	/**
+	 * ID of a participant in that race
+	 */
+	discordId: string;
+	/**
+	 * Points that participant earned for this particular race
+	 */
+	points: number;
+	/**
+	 * DNF of participant in that race
+	 */
+	dnf: boolean;
+	/**
+	 * Disqualification of participant in that race
+	 */
+	disqualified: boolean;
 }
