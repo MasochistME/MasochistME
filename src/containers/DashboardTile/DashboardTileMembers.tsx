@@ -2,10 +2,10 @@ import React from 'react';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
-import { EventMemberJoin, EventType } from '@masochistme/sdk/dist/v1/types';
+import { LogMemberJoin, LogType } from '@masochistme/sdk/dist/v1/types';
 
 import { media } from 'styles';
-import { useCuratorMembers, useEvents } from 'sdk';
+import { useCuratorMembers, useLogs } from 'sdk';
 import { MemberAvatar, Section, SectionProps } from 'containers';
 import { Flex, ErrorFallback, QueryBoundary } from 'components';
 import { Size } from 'components';
@@ -34,24 +34,22 @@ export const DashboardTileMembers = (props: Props) => {
 const DashboardTileMembersBoundary = (props: Props) => {
 	const history = useHistory();
 	const { membersData } = useCuratorMembers();
-	const { eventsData } = useEvents({
+	const { data: logs = [] } = useLogs({
 		limit: NUMBER_OF_MEMBERS,
 		sort: { date: 'desc' },
-		filter: { type: EventType.MEMBER_JOIN },
+		filter: { type: LogType.MEMBER_JOIN },
 	});
 
 	const onMemberClick = (memberId?: string) => {
 		if (memberId) history.push(`/profile/${memberId}`);
 	};
 
-	const memberEvents = eventsData.filter(
-		event => event.type === EventType.MEMBER_JOIN,
-	) as unknown as EventMemberJoin[];
+	const memberLogs = logs.filter(
+		log => log.type === LogType.MEMBER_JOIN,
+	) as unknown as LogMemberJoin[];
 
-	const members = memberEvents.map(event => {
-		const member = membersData.find(
-			member => member.steamId === event.memberId,
-		);
+	const members = memberLogs.map(log => {
+		const member = membersData.find(member => member.steamId === log.memberId);
 		if (member)
 			return (
 				<MemberAvatar
@@ -62,7 +60,7 @@ const DashboardTileMembersBoundary = (props: Props) => {
 					title={
 						<Flex column>
 							<span style={{ fontWeight: 'bold' }}>{member.name}</span>
-							<span>Joined {dayjs(event.date).fromNow()}</span>
+							<span>Joined {dayjs(log.date).fromNow()}</span>
 						</Flex>
 					}
 				/>

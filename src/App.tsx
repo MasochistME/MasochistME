@@ -15,15 +15,15 @@ import { NotFound } from 'pages';
 
 import { TabBadges } from './pages/TabBadges';
 import { TabChangelog } from './pages/TabChangelog';
-import { TabEvents } from './pages/TabEvents';
 import { TabGame } from './pages/TabGame';
 import { TabGames } from './pages/TabGames';
+import { TabHistory } from './pages/TabHistory';
 import { TabHome } from './pages/TabHome';
 import { TabJoin } from './pages/TabJoin';
 import { TabLeaderboards } from './pages/TabLeaderboards';
 import { TabProfile } from './pages/TabProfile';
 import { TabSupport } from './pages/TabSupport';
-import { TabRaces } from 'pages/TabRaces';
+import { TabEvents } from 'pages/TabEvents';
 
 export const App = (): JSX.Element => {
 	const { colorTokens } = useTheme();
@@ -55,9 +55,9 @@ export const App = (): JSX.Element => {
 									<TabLeaderboards />
 								</Boundary>
 							</Route>
-							<Route exact path="/events">
+							<Route exact path="/history">
 								<Boundary>
-									<TabEvents />
+									<TabHistory />
 								</Boundary>
 							</Route>
 							<Route exact path="/support">
@@ -70,9 +70,9 @@ export const App = (): JSX.Element => {
 									<TabBadges />
 								</Boundary>
 							</Route>
-							<Route exact path="/races">
+							<Route exact path="/events">
 								<Boundary>
-									<TabRaces />
+									<TabEvents />
 								</Boundary>
 							</Route>
 							<Route exact path="/profile/:id">

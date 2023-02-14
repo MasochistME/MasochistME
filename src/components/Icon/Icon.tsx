@@ -7,7 +7,7 @@ import { Size, Tooltip } from 'components';
 
 type Props = {
 	className?: string;
-	hoverText?: string;
+	hoverText?: React.ReactNode;
 	spin?: boolean;
 	icon: AssetIconType;
 	size?: Size | number;

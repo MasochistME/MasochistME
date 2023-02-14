@@ -3,13 +3,7 @@ import styled from 'styled-components';
 import { FeaturedType } from '@masochistme/sdk/dist/v1/types';
 
 import { useFeaturedFiltered, useMembers } from 'sdk';
-import {
-	ErrorFallback,
-	Flex,
-	Loader,
-	Pagination,
-	QueryBoundary,
-} from 'components';
+import { ErrorFallback, Loader, Pagination, QueryBoundary } from 'components';
 import { Section, SectionProps } from 'containers';
 
 import { FeaturedNews, FeaturedVideo } from 'containers/Featured';
@@ -49,6 +43,8 @@ const SectionBoundary = ({ memberId }: Props) => {
 		f => f.memberId === discordId || f.memberId === memberId,
 	);
 
+	const hasFeatured = featuredData.length > 0;
+
 	const featuredContent = useMemo(() => {
 		const featured = featuredData?.[activeIndex];
 		if (!featured) return null;
@@ -68,21 +64,30 @@ const SectionBoundary = ({ memberId }: Props) => {
 	}, [featuredData, activeIndex]);
 
 	return (
-		<StyledMemberProfileFeatured column>
-			{featuredContent}
-			<Pagination
-				isCompact
-				nrOfItems={featuredData.length}
-				activeIndex={activeIndex}
-				setActiveIndex={setActiveIndex}
-			/>
+		<StyledMemberProfileFeatured>
+			{hasFeatured ? (
+				<>
+					{featuredContent}
+					<Pagination
+						isCompact
+						nrOfItems={featuredData.length}
+						activeIndex={activeIndex}
+						setActiveIndex={setActiveIndex}
+					/>
+				</>
+			) : (
+				'This member featured no content yet.'
+			)}
 		</StyledMemberProfileFeatured>
 	);
 };
 
-const StyledMemberProfileFeatured = styled(Flex)`
+const StyledMemberProfileFeatured = styled.div`
+	display: flex;
+	flex-direction: column;
+	flex-flow: row wrap;
+	justify-content: center;
+	align-items: center;
 	gap: 8px;
 	width: 100%;
-	flex-flow: row wrap;
-	justify-content: space-between;
 `;

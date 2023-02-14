@@ -36,6 +36,7 @@ import { ReactComponent as Percent } from './Percent.svg';
 import { ReactComponent as Puzzle } from './Puzzle.svg';
 import { ReactComponent as Refresh } from './Refresh.svg';
 import { ReactComponent as QuestionCircle } from './QuestionCircle.svg';
+import { ReactComponent as Search } from './Search.svg';
 import { ReactComponent as Spin } from './Spin.svg';
 import { ReactComponent as SquareCheck } from './SquareCheck.svg';
 import { ReactComponent as SquareMinus } from './SquareMinus.svg';
@@ -97,6 +98,7 @@ const icons = {
 	Puzzle,
 	Refresh,
 	QuestionCircle,
+	Search,
 	Spin,
 	SquareCheck,
 	SquareMinus,

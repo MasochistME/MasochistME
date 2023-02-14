@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
 import { SDK } from '@masochistme/sdk/dist/v1/sdk';
-import { TierId, EventType } from '@masochistme/sdk/dist/v1/types';
+import { TierId, LogType } from '@masochistme/sdk/dist/v1/types';
 
 import { TabDict } from 'configuration/tabs';
-import { EventsDict } from 'configuration/events';
+import { LogDictionary } from 'configuration/logs';
 
 import { Theme } from 'styles';
 import { GameView, BadgeView } from 'hooks';
@@ -28,8 +28,8 @@ type ContextType = {
 	setVisibleTiers: (visibleTiers: TierId[]) => void;
 	visiblePrices: number[];
 	setVisiblePrices: (visiblePrices: number[]) => void;
-	visibleEvents: EventType[];
-	setVisibleEvents: (visibleEvents: EventType[]) => void;
+	visibleLogs: LogType[];
+	setVisibleLogs: (visibleEvents: LogType[]) => void;
 
 	_gameListView: GameView;
 	_setGameListView: (gameListView: GameView) => void;
@@ -66,8 +66,8 @@ export const AppContextProvider = ({
 		useState<TimePeriod>(TimePeriod.ALL);
 
 	const [visibleTiers, setVisibleTiers] = useState<TierId[]>([]);
-	const [visibleEvents, setVisibleEvents] = useState<EventType[]>(
-		EventsDict.map(e => e.type),
+	const [visibleLogs, setVisibleLogs] = useState<LogType[]>(
+		LogDictionary.map(e => e.type),
 	);
 	const [visiblePrices, setVisiblePrices] = useState<number[]>([0, 1000]);
 
@@ -93,8 +93,8 @@ export const AppContextProvider = ({
 		setVisibleTiers,
 		visiblePrices,
 		setVisiblePrices,
-		visibleEvents,
-		setVisibleEvents,
+		visibleLogs,
+		setVisibleLogs,
 
 		_gameListView,
 		_setGameListView,

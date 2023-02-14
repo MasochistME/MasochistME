@@ -7,6 +7,6 @@ export * from './TabHome';
 export * from './TabJoin';
 export * from './TabLeaderboards';
 export * from './TabProfile';
-export * from './TabRaces';
+export * from './TabEvents';
 export * from './TabSupport';
 export * from './NotFound';

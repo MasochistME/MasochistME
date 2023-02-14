@@ -4,7 +4,7 @@ import { MemberBadge, Game } from '@masochistme/sdk/dist/v1/types';
 
 import { useAllGames, useBadges, useMemberBadges } from 'sdk';
 import { BadgeTile } from 'containers';
-import { Flex } from 'components';
+import { Flex, Warning } from 'components';
 
 type Props = { memberId: string };
 
@@ -14,6 +14,8 @@ export const MemberProfileBadges = (props: Props) => {
 	const { gamesData: games } = useAllGames();
 	const { badgesData } = useBadges({ sort: { points: 'desc' } });
 	const { memberBadgesData = [] } = useMemberBadges(memberId);
+
+	const hasBadges = memberBadgesData.length > 0;
 
 	const memberBadges = badgesData
 		.filter(badge => {
@@ -32,7 +34,15 @@ export const MemberProfileBadges = (props: Props) => {
 		})
 		.filter(Boolean);
 
-	return <StyledMemberProfileBadges>{memberBadges}</StyledMemberProfileBadges>;
+	return (
+		<StyledMemberProfileBadges>
+			{hasBadges ? (
+				memberBadges
+			) : (
+				<Warning description="This user has no badges yet!" />
+			)}
+		</StyledMemberProfileBadges>
+	);
 };
 
 const StyledMemberProfileBadges = styled(Flex)`

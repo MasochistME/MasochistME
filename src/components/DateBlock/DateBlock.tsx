@@ -9,10 +9,11 @@ import { Flex } from '../Flex';
 type Props = {
 	date?: Date | number;
 	withHours?: boolean;
+	shouldHide?: boolean;
 } & React.CSSProperties;
 
 export const DateBlock = (props: Props) => {
-	const { date, withHours = true, ...style } = props;
+	const { date, withHours = true, shouldHide = true, ...style } = props;
 
 	const fixedDate = useMemo(() => {
 		return getHumanReadableDate(date);
@@ -22,7 +23,7 @@ export const DateBlock = (props: Props) => {
 	}, [date]);
 
 	return (
-		<StyledDateBlock style={style}>
+		<StyledDateBlock style={style} shouldHide={shouldHide}>
 			{!date && (
 				<Flex justify align width="100%">
 					—
@@ -38,7 +39,7 @@ export const DateBlock = (props: Props) => {
 	);
 };
 
-const StyledDateBlock = styled(Flex)`
+const StyledDateBlock = styled(Flex)<{ shouldHide: boolean }>`
 	flex: 1 0 90px;
 	flex-wrap: nowrap;
 	flex-direction: column;
@@ -47,6 +48,6 @@ const StyledDateBlock = styled(Flex)`
 	font-family: ${fonts.Dosis};
 	line-height: 1.2em;
 	@media (max-width: ${media.tablets}) {
-		display: none !important;
+		display: ${({ shouldHide }) => (shouldHide ? 'none !important' : 'flex')};
 	}
 `;

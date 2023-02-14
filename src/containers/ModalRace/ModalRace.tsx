@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { Box, Modal } from '@mui/material';
 
-import { useRaceById } from 'sdk';
 import { fonts, useTheme, ColorTokens } from 'styles';
 import { Flex } from 'components';
 
@@ -18,7 +17,6 @@ type Props = {
 export const ModalRace = (props: Props): JSX.Element | null => {
 	const { raceId, isModalOpen, setIsModalOpen } = props;
 	const { colorTokens } = useTheme();
-	const { raceData: race, isFetched } = useRaceById(raceId);
 
 	const handleModalClose = () => {
 		setIsModalOpen(false);
@@ -40,12 +38,8 @@ export const ModalRace = (props: Props): JSX.Element | null => {
 		<Modal open={isModalOpen && !!raceId} onClose={handleModalClose}>
 			<Box sx={modalStyle}>
 				<WrapperRace column colorTokens={colorTokens}>
-					{isFetched && race && (
-						<>
-							<ModalRaceHeader raceId={raceId} />
-							<ModalRaceLeaderboards raceId={raceId} />
-						</>
-					)}
+					<ModalRaceHeader raceId={raceId} />
+					<ModalRaceLeaderboards raceId={raceId} />
 				</WrapperRace>
 			</Box>
 		</Modal>
@@ -55,12 +49,12 @@ export const ModalRace = (props: Props): JSX.Element | null => {
 export const WrapperRace = styled(Flex)<{ colorTokens: ColorTokens }>`
 	box-sizing: border-box;
 	text-align: center;
-	width: 700px;
+	width: 600px;
 	max-width: 100%;
 	height: auto;
 	gap: 16px;
 	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']}ee;
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	font-family: ${fonts.Raleway};
-	padding: 16px;
+	/* padding: 16px; */
 `;

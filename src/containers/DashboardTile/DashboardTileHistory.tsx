@@ -3,32 +3,26 @@ import { useHistory } from 'react-router';
 import styled from 'styled-components';
 import {
 	Badge,
-	Event,
-	EventAchievementNumberChange,
-	EventBadgeCreate,
-	EventBadgeGet,
-	EventComplete,
-	EventCustom,
-	EventGameAdd,
-	EventGameRemove,
-	EventGameTierChange,
-	EventMemberJoin,
-	EventMemberLeave,
-	EventType,
+	Log,
+	LogAchievementNumberChange,
+	LogBadgeCreate,
+	LogBadgeGet,
+	LogComplete,
+	LogCustom,
+	LogGameAdd,
+	LogGameRemove,
+	LogGameTierChange,
+	LogMemberJoin,
+	LogMemberLeave,
+	LogType,
 	Game,
 	Member,
 } from '@masochistme/sdk/dist/v1/types';
 
-import {
-	useBadges,
-	useEvents,
-	useTiers,
-	useAllMembers,
-	useAllGames,
-} from 'sdk';
+import { useBadges, useLogs, useTiers, useAllMembers, useAllGames } from 'sdk';
 import { media } from 'styles';
 import { getTierIcon } from 'utils';
-import { EventsDict } from 'configuration';
+import { LogDictionary } from 'configuration';
 import { Section, SectionProps } from 'containers';
 import {
 	Flex,
@@ -40,21 +34,21 @@ import {
 	ErrorFallback,
 } from 'components';
 
-import { EventCompact } from './components';
+import { LogCompact } from './components';
 
-const NUMBER_OF_EVENTS = 15;
+const NUMBER_OF_LOGS = 15;
 
 type Props = Omit<SectionProps, 'content' | 'title'>;
 export const DashboardTileHistory = (props: Props) => {
-	const events = new Array(NUMBER_OF_EVENTS)
+	const logs = new Array(NUMBER_OF_LOGS)
 		.fill(null)
 		.map((_, i: number) => (
-			<Skeleton key={`event-new-${i}`} height={22} width="100%" />
+			<Skeleton key={`logs-new-${i}`} height={22} width="100%" />
 		));
 
 	return (
 		<QueryBoundary
-			fallback={<Content content={events} />}
+			fallback={<Content content={logs} />}
 			errorFallback={<Content content={<ErrorFallback />} />}>
 			<DashboardTileHistoryBoundary {...props} />
 		</QueryBoundary>
@@ -62,58 +56,58 @@ export const DashboardTileHistory = (props: Props) => {
 };
 
 export const DashboardTileHistoryBoundary = (props: Props) => {
-	const { eventsData } = useEvents({
+	const { data: logs = [] } = useLogs({
 		sort: { date: 'desc' },
-		limit: NUMBER_OF_EVENTS,
+		limit: NUMBER_OF_LOGS,
 	});
 	const {
-		getEventMemberJoin,
-		getEventMemberLeave,
-		getEventGameAdd,
-		getEventGameRemove,
-		getEventComplete,
-		getEventGameTierChange,
-		getEventBadgeCreate,
-		getEventBadgeGiven,
-		getEventGameAchievementNumberChange,
-		getEventCustom,
-	} = useEventComponents();
+		getLogMemberJoin,
+		getLogMemberLeave,
+		getLogGameAdd,
+		getLogGameRemove,
+		getLogComplete,
+		getLogGameTierChange,
+		getLogBadgeCreate,
+		getLogBadgeGiven,
+		getLogGameAchievementNumberChange,
+		getLogCustom,
+	} = useLogComponents();
 
-	const classifyEvents = (event: Event) => {
-		const type: EventType = event.type;
+	const classifyLogs = (log: Log) => {
+		const type: LogType = log.type;
 
 		switch (type) {
-			case EventType.MEMBER_JOIN: {
-				return getEventMemberJoin(event as EventMemberJoin);
+			case LogType.MEMBER_JOIN: {
+				return getLogMemberJoin(log as LogMemberJoin);
 			}
-			case EventType.MEMBER_LEAVE: {
-				return getEventMemberLeave(event as EventMemberLeave);
+			case LogType.MEMBER_LEAVE: {
+				return getLogMemberLeave(log as LogMemberLeave);
 			}
-			case EventType.GAME_ADD: {
-				return getEventGameAdd(event as EventGameAdd);
+			case LogType.GAME_ADD: {
+				return getLogGameAdd(log as LogGameAdd);
 			}
-			case EventType.GAME_REMOVE: {
-				return getEventGameRemove(event as EventGameRemove);
+			case LogType.GAME_REMOVE: {
+				return getLogGameRemove(log as LogGameRemove);
 			}
-			case EventType.COMPLETE: {
-				return getEventComplete(event as EventComplete);
+			case LogType.COMPLETE: {
+				return getLogComplete(log as LogComplete);
 			}
-			case EventType.GAME_TIER_CHANGE: {
-				return getEventGameTierChange(event as EventGameTierChange);
+			case LogType.GAME_TIER_CHANGE: {
+				return getLogGameTierChange(log as LogGameTierChange);
 			}
-			case EventType.BADGE_CREATE: {
-				return getEventBadgeCreate(event as EventBadgeCreate);
+			case LogType.BADGE_CREATE: {
+				return getLogBadgeCreate(log as LogBadgeCreate);
 			}
-			case EventType.BADGE_GET: {
-				return getEventBadgeGiven(event as EventBadgeGet);
+			case LogType.BADGE_GET: {
+				return getLogBadgeGiven(log as LogBadgeGet);
 			}
-			case EventType.ACHIEVEMENTS_CHANGE: {
-				return getEventGameAchievementNumberChange(
-					event as EventAchievementNumberChange,
+			case LogType.ACHIEVEMENTS_CHANGE: {
+				return getLogGameAchievementNumberChange(
+					log as LogAchievementNumberChange,
 				);
 			}
-			case EventType.CUSTOM: {
-				return getEventCustom(event as EventCustom);
+			case LogType.CUSTOM: {
+				return getLogCustom(log as LogCustom);
 			}
 			default:
 				return null;
@@ -121,10 +115,7 @@ export const DashboardTileHistoryBoundary = (props: Props) => {
 	};
 
 	return (
-		<Content
-			content={eventsData.map((event: Event) => classifyEvents(event))}
-			{...props}
-		/>
+		<Content content={logs.map((log: Log) => classifyLogs(log))} {...props} />
 	);
 };
 
@@ -133,7 +124,7 @@ const Content = ({ content, ...props }: ContentProps) => (
 	<Section
 		width="100%"
 		maxWidth="450px"
-		title="Last events"
+		title="History"
 		content={<StyledSectionHistory>{content}</StyledSectionHistory>}
 		{...props}
 	/>
@@ -147,7 +138,7 @@ const StyledSectionHistory = styled(Flex)`
 	}
 `;
 
-const useEventComponents = () => {
+const useLogComponents = () => {
 	const history = useHistory();
 
 	const { gamesData: games } = useAllGames();
@@ -155,95 +146,95 @@ const useEventComponents = () => {
 	const { badgesData: badges } = useBadges();
 	const { tiersData } = useTiers();
 
-	const getEventMemberJoin = (event: EventMemberJoin) => {
+	const getLogMemberJoin = (log: LogMemberJoin) => {
 		const icon =
-			EventsDict.find(e => e.type === EventType.MEMBER_JOIN)?.icon ??
+			LogDictionary.find(e => e.type === LogType.MEMBER_JOIN)?.icon ??
 			'QuestionCircle';
-		const member = members.find((m: Member) => m.steamId === event.memberId);
+		const member = members.find((m: Member) => m.steamId === log.memberId);
 		const onUserClick = () =>
 			member?.steamId && history.push(`/profile/${member.steamId}`);
 
 		if (member)
 			return (
-				<EventCompact key={`sidebar-event-${event._id}`}>
-					<EventCompact.Icon icon={icon} />
-					<EventCompact.Block>
-						<EventCompact.Link onClick={onUserClick}>
+				<LogCompact key={`sidebar-log-${log._id}`}>
+					<LogCompact.Icon icon={icon} />
+					<LogCompact.Block>
+						<LogCompact.Link onClick={onUserClick}>
 							{member.name}
-						</EventCompact.Link>
+						</LogCompact.Link>
 						<span>has joined the group!</span>
-					</EventCompact.Block>
-				</EventCompact>
+					</LogCompact.Block>
+				</LogCompact>
 			);
 	};
 
-	const getEventMemberLeave = (event: EventMemberLeave) => {
+	const getLogMemberLeave = (log: LogMemberLeave) => {
 		const icon =
-			EventsDict.find(e => e.type === EventType.MEMBER_LEAVE)?.icon ??
+			LogDictionary.find(e => e.type === LogType.MEMBER_LEAVE)?.icon ??
 			'QuestionCircle';
-		const member = members.find((m: Member) => m.steamId === event.memberId);
+		const member = members.find((m: Member) => m.steamId === log.memberId);
 		const onUserClick = () =>
 			member?.steamId && history.push(`/profile/${member.steamId}`);
 
 		if (member)
 			return (
-				<EventCompact key={`sidebar-event-${event._id}`}>
-					<EventCompact.Icon icon={icon} />
-					<EventCompact.Block>
-						<EventCompact.Link onClick={onUserClick}>
+				<LogCompact key={`sidebar-log-${log._id}`}>
+					<LogCompact.Icon icon={icon} />
+					<LogCompact.Block>
+						<LogCompact.Link onClick={onUserClick}>
 							{member.name}
-						</EventCompact.Link>
+						</LogCompact.Link>
 						<span>has left the group!</span>
-					</EventCompact.Block>
-				</EventCompact>
+					</LogCompact.Block>
+				</LogCompact>
 			);
 	};
 
-	const getEventGameAdd = (event: EventGameAdd) => {
+	const getLogGameAdd = (log: LogGameAdd) => {
 		const icon =
-			EventsDict.find(e => e.type === EventType.GAME_ADD)?.icon ??
+			LogDictionary.find(e => e.type === LogType.GAME_ADD)?.icon ??
 			'QuestionCircle';
-		const game = games.find((g: Game) => g.id === event.gameId);
+		const game = games.find((g: Game) => g.id === log.gameId);
 		const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
 
 		if (game)
 			return (
-				<EventCompact key={`sidebar-event-${event._id}`}>
-					<EventCompact.Icon icon={icon} />
-					<EventCompact.Block>
-						<EventCompact.Link onClick={onGameClick}>
+				<LogCompact key={`sidebar-log-${log._id}`}>
+					<LogCompact.Icon icon={icon} />
+					<LogCompact.Block>
+						<LogCompact.Link onClick={onGameClick}>
 							{game.title}
-						</EventCompact.Link>
+						</LogCompact.Link>
 						<span>has been curated!</span>
-					</EventCompact.Block>
-				</EventCompact>
+					</LogCompact.Block>
+				</LogCompact>
 			);
 	};
 
-	const getEventGameRemove = (event: EventGameRemove) => {
+	const getLogGameRemove = (log: LogGameRemove) => {
 		const icon =
-			EventsDict.find(e => e.type === EventType.GAME_REMOVE)?.icon ??
+			LogDictionary.find(e => e.type === LogType.GAME_REMOVE)?.icon ??
 			'QuestionCircle';
-		const game = games.find((g: Game) => g.id === event.gameId);
+		const game = games.find((g: Game) => g.id === log.gameId);
 
 		if (game)
 			return (
-				<EventCompact key={`sidebar-event-${event._id}`}>
-					<EventCompact.Icon icon={icon} />
-					<EventCompact.Block>
-						<EventCompact.Link> {game.title}</EventCompact.Link>
+				<LogCompact key={`sidebar-log-${log._id}`}>
+					<LogCompact.Icon icon={icon} />
+					<LogCompact.Block>
+						<LogCompact.Link> {game.title}</LogCompact.Link>
 						<span>has been removed from curator!</span>
-					</EventCompact.Block>
-				</EventCompact>
+					</LogCompact.Block>
+				</LogCompact>
 			);
 	};
 
-	const getEventComplete = (event: EventComplete) => {
+	const getLogComplete = (log: LogComplete) => {
 		const icon =
-			EventsDict.find(e => e.type === EventType.COMPLETE)?.icon ??
+			LogDictionary.find(e => e.type === LogType.COMPLETE)?.icon ??
 			'QuestionCircle';
-		const member = members.find((m: Member) => m.steamId === event.memberId);
-		const game = games.find((g: Game) => g.id === event.gameId);
+		const member = members.find((m: Member) => m.steamId === log.memberId);
+		const game = games.find((g: Game) => g.id === log.gameId);
 
 		const onUserClick = () =>
 			member?.steamId && history.push(`/profile/${member.steamId}`);
@@ -251,122 +242,120 @@ const useEventComponents = () => {
 
 		if (member && game)
 			return (
-				<EventCompact key={`sidebar-event-${event._id}`}>
-					<EventCompact.Icon icon={icon} />
-					<EventCompact.Block>
-						<EventCompact.Link onClick={onUserClick}>
+				<LogCompact key={`sidebar-log-${log._id}`}>
+					<LogCompact.Icon icon={icon} />
+					<LogCompact.Block>
+						<LogCompact.Link onClick={onUserClick}>
 							{member.name}
-						</EventCompact.Link>
+						</LogCompact.Link>
 						<span>completed</span>
-						<EventCompact.Link onClick={onGameClick}>
+						<LogCompact.Link onClick={onGameClick}>
 							{game.title}!
-						</EventCompact.Link>
-					</EventCompact.Block>
-				</EventCompact>
+						</LogCompact.Link>
+					</LogCompact.Block>
+				</LogCompact>
 			);
 	};
 
-	const getEventGameTierChange = (event: EventGameTierChange) => {
+	const getLogGameTierChange = (log: LogGameTierChange) => {
 		const icon =
-			EventsDict.find(e => e.type === EventType.GAME_TIER_CHANGE)?.icon ??
+			LogDictionary.find(e => e.type === LogType.GAME_TIER_CHANGE)?.icon ??
 			'QuestionCircle';
-		const game = games.find((g: Game) => g.id === event.gameId);
+		const game = games.find((g: Game) => g.id === log.gameId);
 
 		const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
 
 		if (game)
 			return (
-				<EventCompact key={`sidebar-event-${event._id}`}>
-					<EventCompact.Icon icon={icon} />
-					<EventCompact.Block>
-						<EventCompact.Link onClick={onGameClick}>
+				<LogCompact key={`sidebar-log-${log._id}`}>
+					<LogCompact.Icon icon={icon} />
+					<LogCompact.Block>
+						<LogCompact.Link onClick={onGameClick}>
 							{game.title}
-						</EventCompact.Link>
+						</LogCompact.Link>
 						<span>changed its tier to</span>
-					</EventCompact.Block>
+					</LogCompact.Block>
 					<Icon size={Size.TINY} icon={getTierIcon(game.tier, tiersData)} />!
-				</EventCompact>
+				</LogCompact>
 			);
 	};
 
-	const getEventBadgeCreate = (event: EventBadgeCreate) => {
+	const getLogBadgeCreate = (log: LogBadgeCreate) => {
 		const icon =
-			EventsDict.find(e => e.type === EventType.BADGE_CREATE)?.icon ??
+			LogDictionary.find(e => e.type === LogType.BADGE_CREATE)?.icon ??
 			'QuestionCircle';
-		const game = games.find((g: Game) => g.id === Number(event.gameId));
-		const badge = badges.find((b: Badge) => String(b._id) === event.badgeId);
+		const game = games.find((g: Game) => g.id === Number(log.gameId));
+		const badge = badges.find((b: Badge) => String(b._id) === log.badgeId);
 
 		const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
 
 		if (game && badge)
 			return (
-				<EventCompact key={`sidebar-event-${event._id}`}>
-					<EventCompact.Icon icon={icon} />
-					<EventCompact.Block>
-						<EventCompact.Link onClick={onGameClick}>
+				<LogCompact key={`sidebar-log-${log._id}`}>
+					<LogCompact.Icon icon={icon} />
+					<LogCompact.Block>
+						<LogCompact.Link onClick={onGameClick}>
 							{game.title}
-						</EventCompact.Link>
+						</LogCompact.Link>
 						<span>got a new badge!</span>
-					</EventCompact.Block>
-				</EventCompact>
+					</LogCompact.Block>
+				</LogCompact>
 			);
 	};
 
-	const getEventBadgeGiven = (event: EventBadgeGet) => {
+	const getLogBadgeGiven = (log: LogBadgeGet) => {
 		const icon =
-			EventsDict.find(e => e.type === EventType.BADGE_GET)?.icon ??
+			LogDictionary.find(e => e.type === LogType.BADGE_GET)?.icon ??
 			'QuestionCircle';
-		const badge = badges.find((b: Badge) => String(b._id) === event.badgeId);
-		const member = members.find((m: Member) => m.steamId === event.memberId);
+		const badge = badges.find((b: Badge) => String(b._id) === log.badgeId);
+		const member = members.find((m: Member) => m.steamId === log.memberId);
 
 		const onUserClick = () =>
 			member?.steamId && history.push(`/profile/${member.steamId}`);
 
 		if (member && badge)
 			return (
-				<EventCompact key={`sidebar-event-${event._id}`}>
-					<EventCompact.Icon icon={icon} />
-					<EventCompact.Block>
-						<EventCompact.Link onClick={onUserClick}>
+				<LogCompact key={`sidebar-log-${log._id}`}>
+					<LogCompact.Icon icon={icon} />
+					<LogCompact.Block>
+						<LogCompact.Link onClick={onUserClick}>
 							{member.name}
-						</EventCompact.Link>
+						</LogCompact.Link>
 						<span>got a new badge - {badge.name}!</span>
-					</EventCompact.Block>
-				</EventCompact>
+					</LogCompact.Block>
+				</LogCompact>
 			);
 	};
 
-	const getEventGameAchievementNumberChange = (
-		event: EventAchievementNumberChange,
+	const getLogGameAchievementNumberChange = (
+		log: LogAchievementNumberChange,
 	) => {
 		const icon =
-			EventsDict.find(e => e.type === EventType.ACHIEVEMENTS_CHANGE)?.icon ??
+			LogDictionary.find(e => e.type === LogType.ACHIEVEMENTS_CHANGE)?.icon ??
 			'QuestionCircle';
-		const game = games.find((g: Game) => g.id === event.gameId);
+		const game = games.find((g: Game) => g.id === log.gameId);
 		const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
 
 		if (game)
 			return (
-				<EventCompact key={`sidebar-event-${event._id}`}>
-					<EventCompact.Icon icon={icon} />
-					<EventCompact.Block>
-						<EventCompact.Link onClick={onGameClick}>
+				<LogCompact key={`sidebar-log-${log._id}`}>
+					<LogCompact.Icon icon={icon} />
+					<LogCompact.Block>
+						<LogCompact.Link onClick={onGameClick}>
 							{game.title}
-						</EventCompact.Link>
+						</LogCompact.Link>
 						<span>
-							{event.oldNumber < event.newNumber
-								? `got ${event.newNumber - event.oldNumber} new achievements!`
-								: `had ${
-										event.oldNumber - event.newNumber
-								  } achievements removed!`}
+							{log.oldNumber < log.newNumber
+								? `got ${log.newNumber - log.oldNumber} new achievements!`
+								: `had ${log.oldNumber - log.newNumber} achievements removed!`}
 						</span>
-					</EventCompact.Block>
-				</EventCompact>
+					</LogCompact.Block>
+				</LogCompact>
 			);
 	};
 
-	const getEventCustom = (event: EventCustom) => {
-		const { content } = event;
+	const getLogCustom = (log: LogCustom) => {
+		const { content } = log;
 		if (!content) {
 			return null;
 		}
@@ -376,12 +365,12 @@ const useEventComponents = () => {
 		}
 		const icon =
 			(contentIcon as IconType) ??
-			EventsDict.find(e => e.type === EventType.CUSTOM)?.icon ??
+			LogDictionary.find(e => e.type === LogType.CUSTOM)?.icon ??
 			'QuestionCircle';
 
 		return (
-			<EventCompact key={`sidebar-event-${event._id}`}>
-				<EventCompact.Icon icon={icon} />
+			<LogCompact key={`sidebar-log-${log._id}`}>
+				<LogCompact.Icon icon={icon} />
 				{/**TODO this icon type does not match */}
 				<span>
 					{text &&
@@ -392,20 +381,20 @@ const useEventComponents = () => {
 							return str;
 						})}
 				</span>
-			</EventCompact>
+			</LogCompact>
 		);
 	};
 
 	return {
-		getEventMemberJoin,
-		getEventMemberLeave,
-		getEventGameAdd,
-		getEventGameRemove,
-		getEventComplete,
-		getEventGameTierChange,
-		getEventBadgeCreate,
-		getEventBadgeGiven,
-		getEventGameAchievementNumberChange,
-		getEventCustom,
+		getLogMemberJoin,
+		getLogMemberLeave,
+		getLogGameAdd,
+		getLogGameRemove,
+		getLogComplete,
+		getLogGameTierChange,
+		getLogBadgeCreate,
+		getLogBadgeGiven,
+		getLogGameAchievementNumberChange,
+		getLogCustom,
 	};
 };

@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
-import { EventGameAdd, EventType } from '@masochistme/sdk/dist/v1/types';
+import { LogGameAdd, LogType } from '@masochistme/sdk/dist/v1/types';
 
-import { useCuratedGames, useEvents } from 'sdk';
+import { useCuratedGames, useLogs } from 'sdk';
 import { Section, SectionProps, GameTile } from 'containers';
 import { Flex, ErrorFallback, QueryBoundary } from 'components';
 
@@ -26,24 +26,24 @@ export const DashboardTileGames = (props: Props): JSX.Element => {
 
 const DashboardTileGamesBoundary = (props: Props): JSX.Element => {
 	const { gamesData } = useCuratedGames();
-	const { eventsData } = useEvents({
+	const { data: logs = [] } = useLogs({
 		limit: NUMBER_OF_GAMES,
 		sort: { date: 'desc' },
-		filter: { type: EventType.GAME_ADD },
+		filter: { type: LogType.GAME_ADD },
 	});
 
-	const gameEvents = eventsData.filter(
-		event => event.type === EventType.GAME_ADD,
-	) as unknown as EventGameAdd[];
+	const gameLogs = logs.filter(
+		log => log.type === LogType.GAME_ADD,
+	) as unknown as LogGameAdd[];
 
-	const games = gameEvents.map(event => {
-		const game = gamesData.find(game => game.id === event.gameId);
+	const games = gameLogs.map(log => {
+		const game = gamesData.find(game => game.id === log.gameId);
 		if (game)
 			return (
 				<GameTile
 					key={`new-game-${game.id}`}
 					gameId={game.id}
-					title={<div>Curated {dayjs(event.date).fromNow()}</div>}
+					title={<div>Curated {dayjs(log.date).fromNow()}</div>}
 				/>
 			);
 	});

@@ -1,2 +1,2 @@
 export * from './tabs';
-export * from './events';
+export * from './logs';

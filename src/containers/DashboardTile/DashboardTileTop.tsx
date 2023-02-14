@@ -6,7 +6,7 @@ import { useLeaderboardsMembers, useCuratorMembers } from 'sdk';
 import { Section, SectionProps } from 'containers';
 import { Flex, Skeleton } from 'components';
 
-import { EventCompact } from './components';
+import { LogCompact } from './components';
 
 const NUMBER_OF_LEADERS = 10;
 
@@ -48,7 +48,7 @@ export const DashboardTileTop = (
 		return (
 			<StyledSectionTopMember row align key={`leaderboards-${leader.memberId}`}>
 				<div>{leader.position}.</div>
-				<EventCompact.Link
+				<LogCompact.Link
 					onClick={onUserClick}
 					style={{
 						overflow: 'hidden',
@@ -56,7 +56,7 @@ export const DashboardTileTop = (
 						whiteSpace: 'nowrap',
 					}}>
 					<span>{leader.name}</span>
-				</EventCompact.Link>
+				</LogCompact.Link>
 				<div style={{ whiteSpace: 'nowrap' }}>{leader.sum} pts</div>
 			</StyledSectionTopMember>
 		);

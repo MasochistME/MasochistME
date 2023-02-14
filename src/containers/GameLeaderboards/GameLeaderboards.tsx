@@ -8,7 +8,6 @@ import {
 	DateBlock,
 	ErrorFallback,
 	Flex,
-	Loader,
 	ProgressBar,
 	QueryBoundary,
 	Skeleton,

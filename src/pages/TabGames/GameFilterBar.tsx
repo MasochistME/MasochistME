@@ -4,15 +4,14 @@ import { Tier } from '@masochistme/sdk/dist/v1/types';
 
 import { media } from 'styles';
 import { useAppContext } from 'context';
-import { Input } from 'containers';
 import {
 	Button,
 	Checkbox,
 	FilterBar,
 	Flex,
 	IconType,
+	Input,
 	QueryBoundary,
-	Size,
 	Slider,
 	Spinner,
 } from 'components';
@@ -61,10 +60,6 @@ export const GameFilterBar = (props: Props): JSX.Element => {
 		else return 'Toggle grid view';
 	}, [gameListView]);
 
-	const handleShowSliderClick = () => {
-		setShowSlider(!showSlider);
-	};
-
 	return (
 		<FilterBar>
 			<StyledGameFilterBar>
@@ -72,28 +67,24 @@ export const GameFilterBar = (props: Props): JSX.Element => {
 					placeholder="Search games"
 					query={queryGame}
 					setQuery={setQueryGame}
+					icon="Search"
 				/>
 				<QueryBoundary fallback={<Spinner />}>
 					<TierFilterBoundary />
 				</QueryBoundary>
 			</StyledGameFilterBar>
 			<StyledGameFilterBar>
-				<Flex align gap={16}>
-					<SliderExpand className={showSlider ? 'expanded' : ''}>
-						<Slider
-							defaultValue={DEFAULT_PRICES}
-							setValue={setPrices}
-							getValueLabelFormat={(price: number) => `${price} €`}
-							step={1}
-						/>
-					</SliderExpand>
-					<Button
-						icon="CoinStack"
-						size={Size.BIG}
-						toggled={showSlider}
-						onClick={handleShowSliderClick}
+				<Slider.Expand
+					iconExpand="CoinStack"
+					showSlider={showSlider}
+					setShowSlider={setShowSlider}>
+					<Slider
+						defaultValue={DEFAULT_PRICES}
+						setValue={setPrices}
+						getValueLabelFormat={(price: number) => `${price} €`}
+						step={1}
 					/>
-				</Flex>
+				</Slider.Expand>
 				<Button
 					onClick={toggleGameView}
 					icon={gameViewButtonIcon}
@@ -136,16 +127,4 @@ const StyledGameFilterBar = styled(Flex)`
 const StyledGameFilterBarTiers = styled(Flex)`
 	justify-content: center;
 	gap: 24px;
-`;
-
-const SliderExpand = styled.div`
-	width: 32px;
-	opacity: 0;
-	transition: width 0.1s linear, opacity 0.15s linear;
-	/* overflow: hidden; */
-
-	&.expanded {
-		width: 200px;
-		opacity: 1;
-	}
 `;

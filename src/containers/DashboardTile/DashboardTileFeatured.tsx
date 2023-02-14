@@ -66,6 +66,7 @@ DashboardTileFeatured.Skeleton = (
 ) => (
 	<Section
 		title="Featured"
+		fullWidth
 		content={
 			<StyledContent column align>
 				<Skeleton width="840px" height="440px" />
@@ -80,9 +81,10 @@ DashboardTileFeatured.Error = (
 ) => (
 	<Section
 		title="Featured"
+		fullWidth
 		content={
 			<StyledContent column align>
-				<ErrorFallback width="840px" height="440px" maxWidth="100%" />
+				<ErrorFallback height="440px" />
 			</StyledContent>
 		}
 		{...props}
