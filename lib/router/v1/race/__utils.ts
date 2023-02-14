@@ -97,16 +97,18 @@ export const sortPlayersByResult = (
         return playerA.score - playerB.score;
       return playerB.score - playerA.score;
     })
-    .map(player => {
-      return {
-        ...player,
-        score:
-          race.type === RaceType.TIME_BASED
-            ? dayjs.duration(player.score).format('H:mm:ss.SSS')
-            : player.score ?? 0,
-      };
-    });
-  return sortedPlayers;
+    .map(player => ({
+      ...player,
+      score:
+        race.type === RaceType.TIME_BASED
+          ? dayjs.duration(player.score).format('H:mm:ss.SSS')
+          : player.score ?? 0,
+    }));
+  const sortedPlayersWithPlace = sortedPlayers.map((player, index) => ({
+    ...player,
+    place: getPlayerPlace(sortedPlayers, index),
+  }));
+  return sortedPlayersWithPlace;
 };
 
 /**
@@ -133,7 +135,7 @@ export const getPlayersPointsPerRace = (
     .map((player, index: number) => ({
       raceId: player.raceId,
       discordId: player.discordId,
-      points: index,
+      points: getPlayerPlace(players, index),
     }));
   const disqualifiedPlayers = allPlayers
     .filter(player => player.dnf || player.disqualified)
@@ -144,4 +146,19 @@ export const getPlayersPointsPerRace = (
     }));
   const allPlayersWithPoints = [...sortedPlayers, ...disqualifiedPlayers];
   return allPlayersWithPoints;
+};
+
+const getPlayerPlace = (
+  players: (Omit<RacePlayer, '_id' | 'score'> & { score: string | number })[],
+  index: number,
+) => {
+  const currPlayer = players[index];
+  const prevPlayerIndex = players.findIndex(
+    player => player.score === currPlayer.score,
+  );
+  // We check if there was a player with the same score higher on the leaderboards.
+  // This player's index will always equal points, because even if it's the same
+  // player, it will return their own index
+  const place = prevPlayerIndex + 1;
+  return place;
 };

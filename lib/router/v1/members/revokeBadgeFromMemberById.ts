@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { MemberBadge, Event } from '@masochistme/sdk/dist/v1/types';
+import { MemberBadge, Log } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
 import { mongoInstance } from 'index';
@@ -16,7 +16,7 @@ export const revokeBadgeFromMemberById = async (
 ): Promise<void> => {
   try {
     const { db } = mongoInstance.getDb();
-    const collectionEvents = db.collection<Omit<Event, '_id'>>('events');
+    const collectionLogs = db.collection<Omit<Log, '_id'>>('logs');
     const collectionMemberBadges =
       db.collection<Omit<MemberBadge, '_id'>>('memberBadges');
     const { badgeId, memberId } = req.params;
@@ -41,16 +41,16 @@ export const revokeBadgeFromMemberById = async (
     });
 
     /**
-     * Remove event with badge grant
+     * Remove log with badge grant
      */
-    const responseBadgeRevokeEvent = await collectionEvents.deleteOne({
+    const responseBadgeRevokeLog = await collectionLogs.deleteOne({
       badgeId,
       memberId,
     });
 
     if (
       !responseBadgeRevoke.acknowledged ||
-      !responseBadgeRevokeEvent.acknowledged
+      !responseBadgeRevokeLog.acknowledged
     ) {
       res
         .status(400)

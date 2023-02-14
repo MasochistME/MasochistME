@@ -5,8 +5,8 @@ import {
   Member,
   MemberAchievement,
   MemberGame,
-  EventType,
-  EventComplete,
+  LogType,
+  LogComplete,
 } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
@@ -68,9 +68,10 @@ export const updateMember = async (
 
     /**
      * Check if a member was recently updated.
-     * If yes, do not proceed.
+     * If yes, do not proceed (unless it's dev environment).
      */
     if (
+      process.env.ENV !== 'dev' &&
       member?.lastUpdated &&
       Date.now() - new Date(member.lastUpdated).getTime() < 3600000
     ) {
@@ -264,8 +265,8 @@ export const updateMember = async (
           );
           // This achievement is not registered in DB - add it
           if (!memberAchievementOld) return true;
-          // This game is registered in DB and changed - proceed
-          return true;
+          // This game is registered in DB - continue with no changes
+          return false;
         },
       );
 
@@ -281,24 +282,36 @@ export const updateMember = async (
     });
 
     /**
-     * Add event when member completed a new game.
+     * Add log when member completed a new game.
      */
     const newlyCompletedGames = memberGamesToUpdate.filter(
       game => game.completionPercentage === 100,
     );
     if (newlyCompletedGames.length) {
-      const collectionEvents =
-        db.collection<Omit<EventComplete, '_id'>>('events');
+      const collectionLogs = db.collection<Omit<LogComplete, '_id'>>('logs');
       newlyCompletedGames.forEach(async newCompletion => {
         log.INFO(
-          `--> [UPDATE] user ${memberId} --> new hundo detected - ${newCompletion.gameId}`,
+          `--> [UPDATE] user ${memberId} --> hundo detected - ${newCompletion.gameId}`,
         );
-        await collectionEvents.insertOne({
-          type: EventType.COMPLETE,
-          memberId: newCompletion.memberId,
-          gameId: newCompletion.gameId,
-          date: newCompletion.mostRecentAchievementDate,
-        });
+        // This is a bit complicated - a hacky way to ensure that hundos are not re-logged
+        // every time something else changes in the newCompletion object, for example playtime.
+        await collectionLogs.updateOne(
+          {
+            type: LogType.COMPLETE,
+            memberId: newCompletion.memberId,
+            gameId: newCompletion.gameId,
+            date: newCompletion.mostRecentAchievementDate,
+          },
+          {
+            $set: {
+              type: LogType.COMPLETE,
+              memberId: newCompletion.memberId,
+              gameId: newCompletion.gameId,
+              date: newCompletion.mostRecentAchievementDate,
+            },
+          },
+          { upsert: true },
+        );
       });
     }
 

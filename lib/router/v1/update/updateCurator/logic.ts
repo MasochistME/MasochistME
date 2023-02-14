@@ -3,13 +3,13 @@ import { Response } from 'express';
 import {
   Member,
   Game,
-  EventType,
-  EventMemberJoin,
-  EventMemberLeave,
-  EventGameRemove,
-  EventGameAdd,
-  EventGameTierChange,
-  EventAchievementNumberChange,
+  LogType,
+  LogMemberJoin,
+  LogMemberLeave,
+  LogGameRemove,
+  LogGameAdd,
+  LogGameTierChange,
+  LogAchievementNumberChange,
   Tier,
 } from '@masochistme/sdk/dist/v1/types';
 
@@ -123,17 +123,17 @@ export const updateCuratorLogic = async (
         }]`,
       );
 
-      const collectionEventsMemberLeave =
-        db.collection<Omit<EventMemberLeave, '_id'>>('events');
+      const collectionLogsMemberLeave =
+        db.collection<Omit<LogMemberLeave, '_id'>>('logs');
       membersWhoLeft.forEach(async memberId => {
-        const responseEvent = await collectionEventsMemberLeave.insertOne({
-          type: EventType.MEMBER_LEAVE,
+        const responseLog = await collectionLogsMemberLeave.insertOne({
+          type: LogType.MEMBER_LEAVE,
           memberId,
           date: new Date(),
         });
         log.INFO(
-          `--> [UPDATE] main update --> generating MemberLeave events [${
-            responseEvent.acknowledged ? 'SUCCESS' : 'ERROR'
+          `--> [UPDATE] main update --> generating MemberLeave logs [${
+            responseLog.acknowledged ? 'SUCCESS' : 'ERROR'
           }]`,
         );
       });
@@ -197,11 +197,11 @@ export const updateCuratorLogic = async (
         curatorNewMembersDetails,
       );
 
-      const collectionEventsMemberJoin =
-        db.collection<Omit<EventMemberJoin, '_id'>>('events');
+      const collectionLogsMemberJoin =
+        db.collection<Omit<LogMemberJoin, '_id'>>('logs');
       membersWhoJoined.forEach(async memberId => {
-        await collectionEventsMemberJoin.insertOne({
-          type: EventType.MEMBER_JOIN,
+        await collectionLogsMemberJoin.insertOne({
+          type: LogType.MEMBER_JOIN,
           memberId,
           date: new Date(),
         });
@@ -358,18 +358,18 @@ export const updateCuratorLogic = async (
         }]`,
       );
 
-      const collectionEventsGamesRemoved =
-        db.collection<Omit<EventGameRemove, '_id'>>('events');
+      const collectionLogsGamesRemoved =
+        db.collection<Omit<LogGameRemove, '_id'>>('logs');
 
       gamesThatGotRemoved.forEach(async gameId => {
-        const responseEvent = await collectionEventsGamesRemoved.insertOne({
-          type: EventType.GAME_REMOVE,
+        const responseLog = await collectionLogsGamesRemoved.insertOne({
+          type: LogType.GAME_REMOVE,
           gameId,
           date: new Date(),
         });
         log.INFO(
-          `--> [UPDATE] main update --> generating GameRemove events [${
-            responseEvent.acknowledged ? 'SUCCESS' : 'ERROR'
+          `--> [UPDATE] main update --> generating GameRemove logs [${
+            responseLog.acknowledged ? 'SUCCESS' : 'ERROR'
           }]`,
         );
       });
@@ -402,12 +402,12 @@ export const updateCuratorLogic = async (
         curatorNewGamesDetails,
       );
 
-      const collectionEventsGamesAdd =
-        db.collection<Omit<EventGameAdd, '_id'>>('events');
+      const collectionLogsGamesAdd =
+        db.collection<Omit<LogGameAdd, '_id'>>('logs');
 
       gamesThatGotAdded.forEach(async gameId => {
-        await collectionEventsGamesAdd.insertOne({
-          type: EventType.GAME_ADD,
+        await collectionLogsGamesAdd.insertOne({
+          type: LogType.GAME_ADD,
           gameId,
           date: new Date(),
         });
@@ -472,27 +472,27 @@ export const updateCuratorLogic = async (
         );
 
         /**
-         * Add events for games.
+         * Add logs for games.
          */
         const gamePrev = oldGames.find(g => g.id === game.id);
-        // Create ACHIEVEMENT NUMBER CHANGE event
+        // Create ACHIEVEMENT NUMBER CHANGE log
         if (gamePrev?.achievementsTotal !== game.achievementsTotal) {
-          const collectionEventsAchievementsChange =
-            db.collection<Omit<EventAchievementNumberChange, '_id'>>('events');
-          await collectionEventsAchievementsChange.insertOne({
-            type: EventType.ACHIEVEMENTS_CHANGE,
+          const collectionLogsAchievementsChange =
+            db.collection<Omit<LogAchievementNumberChange, '_id'>>('logs');
+          await collectionLogsAchievementsChange.insertOne({
+            type: LogType.ACHIEVEMENTS_CHANGE,
             gameId: game.id,
             oldNumber: gamePrev?.achievementsTotal ?? 0,
             newNumber: game?.achievementsTotal ?? 0,
             date: new Date(),
           });
         }
-        // Create GAME TIER CHANGE event
+        // Create GAME TIER CHANGE log
         if (gamePrev?.tier !== game.tier) {
-          const collectionEventsTierChange =
-            db.collection<Omit<EventGameTierChange, '_id'>>('events');
-          await collectionEventsTierChange.insertOne({
-            type: EventType.GAME_TIER_CHANGE,
+          const collectionLogsTierChange =
+            db.collection<Omit<LogGameTierChange, '_id'>>('logs');
+          await collectionLogsTierChange.insertOne({
+            type: LogType.GAME_TIER_CHANGE,
             gameId: game.id,
             oldTier: gamePrev?.tier ?? 'UNKNOWN',
             newTier: game?.tier ?? 'UNKNOWN',
