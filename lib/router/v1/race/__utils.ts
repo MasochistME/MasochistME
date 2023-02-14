@@ -111,41 +111,63 @@ export const sortPlayersByResult = (
   return sortedPlayersWithPlace;
 };
 
-/**
- *
- * @param race
- * @param players
- * @returns
- */
 export const getPlayersPointsPerRace = (
   race: Race,
-  players: (RacePlayer & { score: number })[],
+  allPlayers: RacePlayer[],
 ) => {
+  const raceId = String(race._id);
+  const racePlayers = allPlayers.filter(player => player.raceId === raceId);
+
+  // We must add owner here so their points also contribute to sorting.
   const raceOwner = getRaceOwner(race);
-  const allPlayers = [...players, raceOwner];
-  const sortedPlayers = allPlayers
-    .filter(player => !player.dnf && !player.disqualified)
+  const playersWithOwner = [...racePlayers, raceOwner];
+  const playersWithScore = playersWithOwner.map(player => ({
+    ...player,
+    score: getPlayerScore(race, player),
+  }));
+  const sortedPlayers = playersWithScore
     .sort((playerA, playerB) => {
       // If race is time based, wins person with lowest time;
       // otherwise person with highest score wins.
       if (race.type === RaceType.TIME_BASED)
-        return playerA.score - playerB.score;
-      return playerB.score - playerA.score;
+        return (playerA.score as number) - (playerB.score as number);
+      return (playerB.score as number) - (playerA.score as number);
     })
     .map((player, index: number) => ({
-      raceId: player.raceId,
+      raceId,
       discordId: player.discordId,
-      points: getPlayerPlace(players, index),
+      points: getPlayerPlace(playersWithScore, index),
+      dnf: player.dnf,
+      disqualified: player.disqualified,
     }));
-  const disqualifiedPlayers = allPlayers
-    .filter(player => player.dnf || player.disqualified)
-    .map(player => ({
-      raceId: player.raceId,
-      discordId: player.discordId,
+
+  // Here we also include players who participated in any race in the season,
+  // but did not play this particular race.
+  const uniqueParticipantIds = [
+    ...new Set(allPlayers.map(player => player.discordId)),
+  ];
+  const notParticipatingPlayers = uniqueParticipantIds
+    .filter(
+      discordId =>
+        !sortedPlayers.find(player => player.discordId === discordId),
+    )
+    .map(discordId => ({
+      raceId,
+      discordId,
       points: sortedPlayers.length,
+      dnf: true,
+      disqualified: false,
     }));
-  const allPlayersWithPoints = [...sortedPlayers, ...disqualifiedPlayers];
-  return allPlayersWithPoints;
+
+  return [...sortedPlayers, ...notParticipatingPlayers];
+};
+
+const getPlayerScore = (race: Race, player: Omit<RacePlayer, '_id'>) => {
+  return race.type === RaceType.TIME_BASED
+    ? player?.score
+      ? dayjs.duration(player.score).format('H:mm:ss.SSS')
+      : 0
+    : player?.score ?? 0;
 };
 
 const getPlayerPlace = (

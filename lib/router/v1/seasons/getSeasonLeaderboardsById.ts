@@ -52,20 +52,13 @@ export const getSeasonLeaderboardsById = async (
     });
 
     // Sort all the race participants by the place they have gotten in their respective race
-    const raceLeaderboards = races
+    const seasonLeaderboards = races
       .filter(r => !r.isActive && r.isDone)
-      .map(r => {
-        const raceId = String(r._id);
-        const racePlayers = players.filter(p => p.raceId === raceId);
-        const playerPointsPerRace = getPlayersPointsPerRace(r, racePlayers);
-        return playerPointsPerRace;
-      })
+      .map(r => getPlayersPointsPerRace(r, players))
       .flat();
-    // TODO
-    // .reduce((sum, current) => sum + current, []);
 
     // at the very end
-    res.status(200).send(raceLeaderboards);
+    res.status(200).send(seasonLeaderboards);
   } catch (err: any) {
     log.WARN(err);
     res.status(500).send({ error: err.message ?? 'Internal server error' });
