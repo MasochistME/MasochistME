@@ -113,7 +113,7 @@ export const sortPlayersByResult = (
 
 export const getPlayersPointsPerRace = (
   race: Race,
-  allPlayers: RacePlayer[],
+  allPlayers: (RacePlayer & { score: number })[],
 ) => {
   const raceId = String(race._id);
   const racePlayers = allPlayers.filter(player => player.raceId === raceId);
@@ -121,33 +121,28 @@ export const getPlayersPointsPerRace = (
   // We must add owner here so their points also contribute to sorting.
   const raceOwner = getRaceOwner(race);
   const playersWithOwner = [...racePlayers, raceOwner];
-  const participantIds = playersWithOwner.map(player => player.discordId);
-  const playersWithScore = playersWithOwner.map(player => ({
-    ...player,
-    score: getPlayerScore(race, player),
-  }));
-  const sortedPlayersValid = playersWithScore.filter(
+  const sortedPlayersValid = playersWithOwner.filter(
     p => !p.dnf && !p.disqualified,
   );
-  const sortedPlayersInvalid = playersWithScore.filter(
+  const sortedPlayersInvalid = playersWithOwner.filter(
     p => p.dnf || p.disqualified,
   );
 
-  const sortedPlayersValidWithPoints = sortedPlayersValid
-    .sort((playerA, playerB) => {
-      // If race is time based, wins person with lowest time;
-      // otherwise person with highest score wins.
-      if (race.type === RaceType.TIME_BASED)
-        return (playerA.score as number) - (playerB.score as number);
-      return (playerB.score as number) - (playerA.score as number);
-    })
-    .map((player, index: number) => ({
+  const sortedPlayers = sortedPlayersValid.sort((playerA, playerB) => {
+    // If race is time based, wins person with lowest time;
+    // otherwise person with highest score wins.
+    if (race.type === RaceType.TIME_BASED) return playerA.score - playerB.score;
+    return playerB.score - playerA.score;
+  });
+  const sortedPlayersValidWithPoints = sortedPlayers.map(
+    (player, index: number) => ({
       raceId,
       discordId: player.discordId,
-      points: getPlayerPlace(playersWithScore, index) - 1,
+      points: getPlayerPlace(sortedPlayers, index) - 1,
       dnf: player.dnf,
       disqualified: player.disqualified,
-    }));
+    }),
+  );
 
   const sortedPlayersInvalidWithPoints = sortedPlayersInvalid.map(player => ({
     raceId,
@@ -164,6 +159,7 @@ export const getPlayersPointsPerRace = (
 
   // Here we also include players who participated in any race in the season,
   // but did not play this particular race.
+  const participantIds = playersWithOwner.map(player => player.discordId);
   const uniqueParticipantIds = [
     ...new Set(allPlayers.map(player => player.discordId)),
   ];
@@ -182,9 +178,7 @@ export const getPlayersPointsPerRace = (
 
 const getPlayerScore = (race: Race, player: Omit<RacePlayer, '_id'>) => {
   return race.type === RaceType.TIME_BASED
-    ? player?.score
-      ? dayjs.duration(player.score).format('H:mm:ss.SSS')
-      : 0
+    ? dayjs.duration(player?.score ?? 0).format('H:mm:ss.SSS')
     : player?.score ?? 0;
 };
 
