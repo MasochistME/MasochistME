@@ -34,4 +34,5 @@ const StyledPodium = styled.div`
 	align-items: center;
 	grid-template-columns: 3fr 1;
 	padding: 0 32px;
+	height: 300px;
 `;
