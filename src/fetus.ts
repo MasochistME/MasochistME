@@ -1,11 +1,6 @@
 import * as dotenv from "dotenv";
 import { Arcybot, log } from "arcybot";
-import {
-  CacheType,
-  GatewayIntentBits,
-  Interaction,
-  Partials,
-} from "discord.js";
+import { GatewayIntentBits, Partials } from "discord.js";
 import { SDK } from "@masochistme/sdk/dist/v1/sdk";
 
 import { getOption, Database } from "utils";

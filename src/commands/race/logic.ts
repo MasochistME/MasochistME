@@ -61,9 +61,9 @@ const getFinishedRaceEmbed = (
 ) => {
   const raceParticipants = (race.leaderboards ?? []).map((leader, index) => {
     const isLeader = leader.discordId === race.owner ? "(owner)" : "";
-    return `\`\`#${index + 1}\`\` - \`\`${leader.score}\`\` - <@${
-      leader.discordId
-    }> ${getMedal(index)} ${isLeader}`;
+    return `\`\`#${leader.place ?? index + 1}\`\` - \`\`${
+      leader.score
+    }\`\` - <@${leader.discordId}> ${getMedal(index)} ${isLeader}`;
   });
   const raceParticipantsChunks = splitArrayToChunks(raceParticipants, 5);
   const fields: APIEmbedField[] = raceParticipantsChunks.map(chunk => ({
