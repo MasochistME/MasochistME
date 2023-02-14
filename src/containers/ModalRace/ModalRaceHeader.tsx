@@ -80,6 +80,7 @@ const StyledModalRaceHeader = styled(Flex)`
 	justify-content: space-between;
 	text-align: left;
 	gap: 8px;
+	padding: 8px;
 	p,
 	h2 {
 		margin: 0;

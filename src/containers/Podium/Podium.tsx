@@ -38,6 +38,6 @@ const StyledPodium = styled.div`
 	height: 300px;
 
 	@media (max-width: ${media.tablets}) {
-		padding: 0px;
+		padding: 0 8px;
 	}
 `;

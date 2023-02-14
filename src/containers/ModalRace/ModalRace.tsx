@@ -56,5 +56,5 @@ export const WrapperRace = styled(Flex)<{ colorTokens: ColorTokens }>`
 	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']}ee;
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	font-family: ${fonts.Raleway};
-	padding: 16px;
+	/* padding: 16px; */
 `;
