@@ -57,6 +57,10 @@ interface BaseRacePlayer extends WithId {
 	 * Reason for disqualification.
 	 */
 	disqualificationReason: string | null;
+	/**
+	 * Calculated place of a player in a particular race (not stored in database)
+	 */
+	place?: number;
 }
 
 /**
