@@ -178,5 +178,5 @@ const StyledMemberProfileTop = styled(Flex)<{
 const MemberProfileSidebar = styled(Flex)`
 	width: 100%;
 	max-width: 450px;
-	gap: 8px;
+	gap: 16px;
 `;
