@@ -136,7 +136,7 @@ export const getPlayersPointsPerRace = (
     .map((player, index: number) => ({
       raceId,
       discordId: player.discordId,
-      points: getPlayerPlace(playersWithScore, index),
+      points: getPlayerPlace(playersWithScore, index) - 1,
       dnf: player.dnf,
       disqualified: player.disqualified,
     }));
