@@ -85,7 +85,7 @@ export const SingleSeason = (props: SingleSeasonProps) => {
 					<Tab label="Races" value={TabsSeasonDetails.RACES} />
 				</Tabs>
 				<TabPanel activeTab={activeTab} tabId={TabsSeasonDetails.RANKING}>
-					<SingleSeasonRanking />
+					<SingleSeasonRanking seasonId={String(season._id)} />
 				</TabPanel>
 				<TabPanel activeTab={activeTab} tabId={TabsSeasonDetails.RACES}>
 					<SingleSeasonRaces races={races} />
