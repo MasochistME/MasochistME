@@ -6,6 +6,7 @@ import { Size } from 'components';
 import { useTheme, ColorTokens } from 'styles';
 import { CommonProps } from 'containers';
 import { BrokenImage, Flex, Skeleton, Tooltip } from 'components';
+import { usePodiumColor } from './hooks';
 
 type Props = CommonProps & {
 	member?: Partial<Member>;
@@ -24,18 +25,14 @@ export const PodiumAvatar = (props: Props) => {
 		onClick,
 	} = props;
 
-	const avatarSize = useMemo(() => {
-		if (size === Size.BIG || size === Size.LARGE) return '_full';
-		if (size === Size.MEDIUM) return '_medium';
-		return '';
-	}, [size]);
-
 	const avatarUrl = useMemo(() => {
 		if (member.avatarHash)
-			return `https://avatars.akamai.steamstatic.com/${member.avatarHash}${avatarSize}.jpg`;
+			return `https://avatars.akamai.steamstatic.com/${member.avatarHash}_full.jpg`;
 		if (member.avatar) return member.avatar;
 		return null;
 	}, [member]);
+
+	const podiumColor = usePodiumColor(place) ?? 'common-color--shadow';
 
 	return (
 		<Tooltip content={title ?? <Flex column>{member.name}</Flex>}>
@@ -43,8 +40,9 @@ export const PodiumAvatar = (props: Props) => {
 				onClick={onClick}
 				size={size}
 				place={place}
-				isEmpty={!avatarUrl}
-				colorTokens={colorTokens}>
+				podiumColor={podiumColor}
+				colorTokens={colorTokens}
+				isEmpty={!avatarUrl}>
 				{isLoading && <Skeleton size={size} />}
 				{!isLoading && (isError || !avatarUrl) && (
 					<BrokenImage size={size} title="Could not load the avatar." />
@@ -63,12 +61,13 @@ export const PodiumAvatar = (props: Props) => {
 
 const StyledMemberAvatar = styled.div.attrs(
 	(
-		props: Pick<Props, 'size' | 'place' | 'onClick'> & {
+		props: Pick<Props, 'size' | 'onClick'> & {
 			isEmpty: boolean;
+			podiumColor: string;
 			colorTokens: ColorTokens;
 		},
 	) => {
-		const { size, place, colorTokens, onClick } = props;
+		const { size, podiumColor, onClick } = props;
 		const style: React.CSSProperties = {
 			minWidth: size,
 			minHeight: size,
@@ -76,20 +75,13 @@ const StyledMemberAvatar = styled.div.attrs(
 			maxHeight: size,
 			cursor: onClick ? 'pointer' : 'help',
 		};
-		if (place === 1) {
-			style.border = `5px solid ${colorTokens['semantic-color--tier-4']}`;
-		}
-		if (place === 2) {
-			style.border = `5px solid ${colorTokens['semantic-color--tier-3']}`;
-		}
-		if (place === 3) {
-			style.border = `5px solid ${colorTokens['semantic-color--tier-2']}`;
-		}
+		style.border = `5px solid ${podiumColor}`;
 		return { style };
 	},
 )<
 	Pick<Props, 'size' | 'place' | 'onClick'> & {
 		isEmpty: boolean;
+		podiumColor: string;
 		colorTokens: ColorTokens;
 	}
 >`

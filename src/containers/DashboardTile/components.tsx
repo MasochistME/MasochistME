@@ -10,12 +10,12 @@ type Props = {
 	style?: React.CSSProperties;
 };
 
-export const EventCompact = (props: Pick<Props, 'children'>) => {
+export const LogCompact = (props: Pick<Props, 'children'>) => {
 	const { children } = props;
-	return <StyledEventCompact>{children}</StyledEventCompact>;
+	return <StyledLogCompact>{children}</StyledLogCompact>;
 };
 
-const StyledEventCompact = styled.div`
+const StyledLogCompact = styled.div`
 	display: flex;
 	align-items: center;
 	width: 100%;
@@ -27,20 +27,20 @@ const StyledEventCompact = styled.div`
 	}
 `;
 
-EventCompact.Link = (props: Props) => {
+LogCompact.Link = (props: Props) => {
 	const { children, style = {}, onClick } = props;
 	const { colorTokens } = useTheme();
 	return (
-		<StyledEventLink
+		<StyledLogLink
 			colorTokens={colorTokens}
 			style={style}
 			{...(onClick && { onClick })}>
 			{children}
-		</StyledEventLink>
+		</StyledLogLink>
 	);
 };
 
-const StyledEventLink = styled.span<{ colorTokens: ColorTokens }>`
+const StyledLogLink = styled.span<{ colorTokens: ColorTokens }>`
 	cursor: pointer;
 	font-weight: bold;
 	&:hover {
@@ -48,13 +48,13 @@ const StyledEventLink = styled.span<{ colorTokens: ColorTokens }>`
 	}
 `;
 
-EventCompact.Icon = (props: React.ComponentProps<typeof Icon>) => (
+LogCompact.Icon = (props: React.ComponentProps<typeof Icon>) => (
 	<Flex flex="0 0 auto">
 		<Icon size={Size.MICRO} {...props} />
 	</Flex>
 );
 
-EventCompact.Block = styled.div`
+LogCompact.Block = styled.div`
 	display: inline-block;
 	text-align: left;
 	& > * {

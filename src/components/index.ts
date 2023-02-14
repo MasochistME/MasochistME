@@ -12,6 +12,7 @@ export * from './Icon';
 export * from './Input';
 export * from './Loader';
 export * from './Markdown';
+export * from './Menu';
 export * from './Modal';
 export * from './Pagination';
 export * from './ProgressBar';

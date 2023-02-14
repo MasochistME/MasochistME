@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { EventBadgeCreate, EventType } from '@masochistme/sdk/dist/v1/types';
+import { LogBadgeCreate, LogType } from '@masochistme/sdk/dist/v1/types';
 
 import { media } from 'styles';
-import { useBadges, useEvents } from 'sdk';
+import { useBadges, useLogs } from 'sdk';
 import { BadgeThumbnail, Section, SectionProps } from 'containers';
 import { Flex, ErrorFallback, QueryBoundary } from 'components';
 import { Size } from 'components';
@@ -40,18 +40,18 @@ const Content = ({ content, ...props }: ContentProps) => (
 
 const DashboardTileBadgesBoundary = (props: Props) => {
 	const { badgesData } = useBadges();
-	const { eventsData } = useEvents({
-		filter: { type: EventType.BADGE_CREATE },
+	const { data: logs = [] } = useLogs({
+		filter: { type: LogType.BADGE_CREATE },
 		sort: { date: 'desc' },
 		limit: NUMBER_OF_BADGES,
 	});
 
-	const badgeEvents = eventsData.filter(
-		event => event.type === EventType.BADGE_CREATE,
-	) as unknown as EventBadgeCreate[];
+	const badgeLogs = logs.filter(
+		log => log.type === LogType.BADGE_CREATE,
+	) as unknown as LogBadgeCreate[];
 
-	const badges = badgeEvents.map(event => {
-		const badge = badgesData.find(badge => String(badge._id) === event.badgeId);
+	const badges = badgeLogs.map(log => {
+		const badge = badgesData.find(badge => String(badge._id) === log.badgeId);
 		if (badge)
 			return (
 				<BadgeThumbnail

@@ -24,7 +24,7 @@ export const MemberLeaderboardsGame = (props: Props): JSX.Element => {
 	const gameData = gamesData.find((g: Game) => g.id === memberGame.gameId);
 
 	const gameCompletionDate = memberGame?.mostRecentAchievementDate;
-	const gameTitle = gameData?.title ?? 'unknown';
+	const gameTitle = gameData?.title ?? '—';
 	const gameTierIcon = (tiersData.find(
 		(tier: Tier) => tier.id === gameData?.tier,
 	)?.icon ?? 'Spin') as IconType;

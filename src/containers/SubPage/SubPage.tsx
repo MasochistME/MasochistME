@@ -24,8 +24,13 @@ const StyledSubPage = styled(Flex)`
 	width: 100%;
 	gap: 16px;
 	box-sizing: border-box;
+
 	@media (max-width: ${media.netbooks}) {
 		flex-direction: column;
 		align-items: center;
+	}
+
+	@media (max-width: ${media.smallTablets}) {
+		padding: 8px;
 	}
 `;

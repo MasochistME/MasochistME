@@ -1,61 +1,61 @@
-import { EventType } from '@masochistme/sdk/dist/v1/types';
+import { LogType } from '@masochistme/sdk/dist/v1/types';
 import { IconType } from 'components';
 
-export type EventDict = {
-	type: EventType;
+export type SingleLog = {
+	type: LogType;
 	icon: IconType;
 	description: string;
 };
 
-export const EventsDict: EventDict[] = [
+export const LogDictionary: SingleLog[] = [
 	{
 		icon: 'UserPlus',
 		description: 'new member joining the community',
-		type: EventType.MEMBER_JOIN,
+		type: LogType.MEMBER_JOIN,
 	},
 	{
 		icon: 'UserMinus',
 		description: 'member leaving the community',
-		type: EventType.MEMBER_LEAVE,
+		type: LogType.MEMBER_LEAVE,
 	},
 	{
 		icon: 'SquareCheck',
 		description: 'member completing a curated game',
-		type: EventType.COMPLETE,
+		type: LogType.COMPLETE,
 	},
 	{
 		icon: 'SquarePlus',
 		description: 'new game being curated',
-		type: EventType.GAME_ADD,
+		type: LogType.GAME_ADD,
 	},
 	{
 		icon: 'SquareMinus',
 		description: 'game being removed from curator',
-		type: EventType.GAME_REMOVE,
+		type: LogType.GAME_REMOVE,
 	},
 	{
 		icon: 'Bolt',
 		description: 'game changing its tier',
-		type: EventType.GAME_TIER_CHANGE,
+		type: LogType.GAME_TIER_CHANGE,
 	},
 	{
 		icon: 'Badge',
 		description: 'game getting a new badge',
-		type: EventType.BADGE_CREATE,
+		type: LogType.BADGE_CREATE,
 	},
 	{
 		icon: 'Medal',
 		description: 'member earning a new badge',
-		type: EventType.BADGE_GET,
+		type: LogType.BADGE_GET,
 	},
 	{
 		icon: 'Checklist',
 		description: 'game having achievements added or removed',
-		type: EventType.ACHIEVEMENTS_CHANGE,
+		type: LogType.ACHIEVEMENTS_CHANGE,
 	},
 	{
 		icon: 'Heart',
 		description: 'custom event',
-		type: EventType.CUSTOM,
+		type: LogType.CUSTOM,
 	},
 ];

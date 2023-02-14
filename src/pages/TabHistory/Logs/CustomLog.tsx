@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import { EventCustom, Member } from '@masochistme/sdk/dist/v1/types';
+import { LogCustom, Member } from '@masochistme/sdk/dist/v1/types';
 
 import { useAllMembers } from 'sdk';
 import { useTheme } from 'styles';
@@ -8,16 +8,16 @@ import { Icon, IconType } from 'components';
 import { MemberAvatar } from 'containers';
 import { Size } from 'components';
 
-import { BaseEvent } from './_BaseEvent';
+import { HistoryLog } from '.';
 
 type Props = {
-	event: EventCustom;
+	log: LogCustom;
 };
 
-export const CustomEvent = (props: Props): JSX.Element | null => {
+export const CustomLog = (props: Props): JSX.Element | null => {
 	const { LOGO_URL_STATIC } = useTheme();
-	const { event } = props;
-	const { text = null, icon = 'BirthdayCake', memberId = null } = event.content;
+	const { log } = props;
+	const { text = null, icon = 'BirthdayCake', memberId = null } = log.content;
 
 	const { membersData } = useAllMembers();
 
@@ -25,21 +25,21 @@ export const CustomEvent = (props: Props): JSX.Element | null => {
 		(m: Member) => Number(m.steamId) === Number(memberId),
 	);
 
-	if (!event.content) return null;
+	if (!log.content) return null;
 
 	return (
-		<BaseEvent>
+		<HistoryLog>
 			<MemberAvatar member={member} size={Size.SMALL} />
-			<BaseEvent.Description>
+			<HistoryLog.Description>
 				{text && <ReactMarkdown>{text}</ReactMarkdown>}
-			</BaseEvent.Description>
-			<BaseEvent.Summary>
-				<BaseEvent.Icons>
+			</HistoryLog.Description>
+			<HistoryLog.Summary>
+				<HistoryLog.Icons>
 					<Icon icon={icon as IconType} />{' '}
 					{/** TODO incompatible icon types possible */}
-				</BaseEvent.Icons>
-				<BaseEvent.Image alt="custom-img" src={LOGO_URL_STATIC} />
-			</BaseEvent.Summary>
-		</BaseEvent>
+				</HistoryLog.Icons>
+				<HistoryLog.Image alt="custom-img" src={LOGO_URL_STATIC} />
+			</HistoryLog.Summary>
+		</HistoryLog>
 	);
 };

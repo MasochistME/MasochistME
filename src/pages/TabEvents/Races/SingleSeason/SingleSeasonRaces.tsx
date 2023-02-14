@@ -5,6 +5,7 @@ import {
 	DateBlock,
 	Flex,
 	Icon,
+	Size,
 	Table,
 	TableCell,
 	TableColumn,
@@ -12,6 +13,7 @@ import {
 import { ModalRace, WinnerLink } from 'containers';
 import styled from 'styled-components';
 import { getRaceTypeIcon } from 'utils/getIcon';
+import { fonts, media } from 'styles';
 
 type Props = {
 	races: Race[];
@@ -49,9 +51,7 @@ export const SingleSeasonRaces = (props: Props): JSX.Element => {
 			title: Columns.DATE,
 			value: (race: RaceWithSummary) => new Date(race.startDate ?? 0).getTime(),
 			render: (race: RaceWithSummary) => (
-				<TableCell
-					content={<DateBlock date={race.startDate} withHours={false} />}
-				/>
+				<DateBlock date={race.startDate} withHours={false} shouldHide={false} />
 			),
 			style: { width: '90px' },
 		},
@@ -61,11 +61,24 @@ export const SingleSeasonRaces = (props: Props): JSX.Element => {
 			value: (race: RaceWithSummary) => race.type,
 			render: (race: RaceWithSummary) => (
 				<TableCell
+					padding="8px 0"
 					content={
-						<Icon
-							icon={getRaceTypeIcon(race)}
-							hoverText={`${race.type.toUpperCase()} based race`}
-						/>
+						<CellResponsive>
+							<span className="icon__mobile">
+								<Icon
+									icon={getRaceTypeIcon(race)}
+									size={Size.SMALL}
+									hoverText={`${race.type.toUpperCase()} based race`}
+								/>
+							</span>
+							<span className="icon__desktop">
+								<Icon
+									icon={getRaceTypeIcon(race)}
+									size={Size.MICRO}
+									hoverText={`${race.type.toUpperCase()} based race`}
+								/>
+							</span>
+						</CellResponsive>
 					}
 				/>
 			),
@@ -148,7 +161,25 @@ export const SingleSeasonRaces = (props: Props): JSX.Element => {
 };
 
 const TableCellRaceName = styled(Flex)`
+	font-size: 1.3em;
+	font-family: ${fonts.Dosis};
 	&:hover {
 		color: white;
+	}
+	@media (max-width: ${media.smallNetbooks}) {
+		font-size: 1em;
+	}
+`;
+
+const CellResponsive = styled.div`
+	& .icon__mobile {
+		@media (max-width: ${media.smallNetbooks}) {
+			display: none;
+		}
+	}
+	& .icon__desktop {
+		@media (min-width: ${media.smallNetbooks}) {
+			display: none;
+		}
 	}
 `;

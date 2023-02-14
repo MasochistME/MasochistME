@@ -118,7 +118,7 @@ const MemberProfileStatsBoundary = (props: Props) => {
 						</StatBlock.Title>
 					</Flex>
 				}
-				label={memberLeaderData?.position ?? '?'}
+				label={memberLeaderData?.position ?? '—'}
 				tier={getStatTier()}
 				icon="Hashtag"
 			/>
@@ -131,7 +131,7 @@ const MemberProfileStatsBoundary = (props: Props) => {
 						{badgesTotal}
 					</Flex>
 				}
-				label={memberLeaderData?.sum ?? '?'}
+				label={memberLeaderData?.sum ?? '—'}
 				tier={getStatTier()}
 				sublabel="points total"
 				icon="CirclePlus"

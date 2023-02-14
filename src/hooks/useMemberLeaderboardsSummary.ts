@@ -18,8 +18,8 @@ export const useMemberLeaderboardsSummary = (memberId: string) => {
 	const memberLeaderboardsSummary = useMemo(() => {
 		return {
 			...leaderData,
-			name: memberData?.name ?? 'UNKNOWN',
-			avatar: memberData?.avatar ?? 'UNKNOWN',
+			name: memberData?.name ?? '—',
+			avatar: memberData?.avatar ?? '—',
 			isPrivate: memberData?.isPrivate ?? true,
 			lastUpdated: memberData?.lastUpdated ?? 0,
 			isDisabled: memberData?.isPrivate,

@@ -6,6 +6,6 @@ export * from './TabGames';
 export * from './TabHome';
 export * from './TabLeaderboards';
 export * from './TabProfile';
-export * from './TabRaces';
+export * from './TabEvents';
 export * from './TabSupport';
 export * from './NotFound';

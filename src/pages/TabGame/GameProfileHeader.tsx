@@ -48,7 +48,7 @@ export const GameProfileHeader = (props: Props): JSX.Element => {
 
 const GameHeaderTier = ({ gameTier }: { gameTier?: Tier }) => {
 	const gameIcon = (gameTier?.icon ?? 'QuestionCircle') as IconType;
-	const gameTooltip = `This game is worth ${gameTier?.score ?? '?'} pts.`;
+	const gameTooltip = `This game is worth ${gameTier?.score ?? '—'} pts.`;
 	return (
 		<Tooltip content={gameTooltip}>
 			<span>

@@ -3,14 +3,30 @@ import styled from 'styled-components';
 import { RaceType } from '@masochistme/sdk/dist/v1/types';
 
 import { useRaceById } from 'sdk';
-import { Flex, Icon, Size, Spinner } from 'components';
+import {
+	ErrorFallback,
+	Flex,
+	Icon,
+	QueryBoundary,
+	Size,
+	Skeleton,
+	Spinner,
+} from 'components';
 import { getRaceTypeIcon } from 'utils';
 
 type Props = {
 	raceId?: string | null;
 };
 
-export const ModalRaceHeader = (props: Props) => {
+export const ModalRaceHeader = (props: Props) => (
+	<QueryBoundary
+		fallback={<ModalRaceSkeleton />}
+		errorFallback={<ErrorFallback />}>
+		<HeaderBoundary {...props} />
+	</QueryBoundary>
+);
+
+const HeaderBoundary = (props: Props) => {
 	const { raceId } = props;
 	const { raceData: race } = useRaceById(raceId);
 	if (!race) return <Spinner />;
@@ -36,14 +52,35 @@ export const ModalRaceHeader = (props: Props) => {
 			<p>
 				<span style={{ fontWeight: 600 }}>Objectives:</span> {race.objectives}
 			</p>
+			<Flex align width="100%" justifyContent="space-around">
+				<Flex column align>
+					<span style={{ fontWeight: 600 }}>Download grace time:</span>
+					{race.downloadGrace}s
+				</Flex>
+				<Flex column align>
+					<span style={{ fontWeight: 600 }}>Proof upload grace time:</span>
+					{race.uploadGrace}s
+				</Flex>
+			</Flex>
 		</StyledModalRaceHeader>
 	);
 };
+
+const ModalRaceSkeleton = () => (
+	<StyledModalRaceHeader column>
+		<Flex align gap={8}>
+			<Skeleton />
+			<Skeleton width="100%" />
+		</Flex>
+		<Skeleton width="100%" height="200px" />
+	</StyledModalRaceHeader>
+);
 
 const StyledModalRaceHeader = styled(Flex)`
 	justify-content: space-between;
 	text-align: left;
 	gap: 8px;
+	padding: 8px;
 	p,
 	h2 {
 		margin: 0;
