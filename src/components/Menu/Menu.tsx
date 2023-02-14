@@ -18,7 +18,7 @@ type Props = {
 	anchorElement: (isOpen: boolean) => React.ReactNode;
 } & Partial<MenuProps>;
 export const Menu = (props: Props) => {
-	const { loadElement, options, anchorElement, open: _, ...muiProps } = props;
+	const { options, anchorElement, open: _, ...muiProps } = props;
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const isOpen = Boolean(anchorEl);
 

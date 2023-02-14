@@ -13,7 +13,7 @@ import {
 import { ModalRace, WinnerLink } from 'containers';
 import styled from 'styled-components';
 import { getRaceTypeIcon } from 'utils/getIcon';
-import { fonts } from 'styles';
+import { fonts, media } from 'styles';
 
 type Props = {
 	races: Race[];
@@ -63,11 +63,22 @@ export const SingleSeasonRaces = (props: Props): JSX.Element => {
 				<TableCell
 					padding="8px 0"
 					content={
-						<Icon
-							icon={getRaceTypeIcon(race)}
-							size={Size.SMALL}
-							hoverText={`${race.type.toUpperCase()} based race`}
-						/>
+						<CellResponsive>
+							<span className="icon__mobile">
+								<Icon
+									icon={getRaceTypeIcon(race)}
+									size={Size.SMALL}
+									hoverText={`${race.type.toUpperCase()} based race`}
+								/>
+							</span>
+							<span className="icon__desktop">
+								<Icon
+									icon={getRaceTypeIcon(race)}
+									size={Size.MICRO}
+									hoverText={`${race.type.toUpperCase()} based race`}
+								/>
+							</span>
+						</CellResponsive>
 					}
 				/>
 			),
@@ -154,5 +165,21 @@ const TableCellRaceName = styled(Flex)`
 	font-family: ${fonts.Dosis};
 	&:hover {
 		color: white;
+	}
+	@media (max-width: ${media.smallNetbooks}) {
+		font-size: 1em;
+	}
+`;
+
+const CellResponsive = styled.div`
+	& .icon__mobile {
+		@media (max-width: ${media.smallNetbooks}) {
+			display: none;
+		}
+	}
+	& .icon__desktop {
+		@media (min-width: ${media.smallNetbooks}) {
+			display: none;
+		}
 	}
 `;

@@ -8,6 +8,7 @@ import { getHumanReadableDate } from 'utils';
 
 import { SingleSeasonRanking } from './SingleSeasonRanking';
 import { SingleSeasonRaces } from './SingleSeasonRaces';
+import { ColorTokens, useTheme } from 'styles';
 
 enum TabsSeasonDetails {
 	RANKING = 'ranking',
@@ -21,6 +22,7 @@ type SingleSeasonProps = {
 
 export const SingleSeason = (props: SingleSeasonProps) => {
 	const { season, races } = props;
+	const { colorTokens } = useTheme();
 	const [activeTab, setActiveTab] = useState<TabsSeasonDetails>(
 		TabsSeasonDetails.RACES,
 	);
@@ -48,33 +50,35 @@ export const SingleSeason = (props: SingleSeasonProps) => {
 	if (!season) return <ErrorFallback />;
 	return (
 		<StyledSeasonWrapper column>
-			<div>{season.description}</div>
-			<Flex align justifyContent="space-evenly" flexWrap="wrap" gap={16}>
-				<StatBlock
-					label={races.length ?? '—'}
-					sublabel="races total"
-					title={<StatBlock.Title>Races total</StatBlock.Title>}
-					icon="Finish"
-				/>
-				<StatBlock
-					label={getHumanReadableDate(season.startDate)}
-					sublabel="season start date"
-					title={<StatBlock.Title>Season start date</StatBlock.Title>}
-					icon="Finish"
-				/>
-				<StatBlock
-					label={getHumanReadableDate(season.endDate)}
-					sublabel="season end date"
-					title={<StatBlock.Title>Season end date</StatBlock.Title>}
-					icon="Finish"
-				/>
-				<StatBlock
-					label={uniqueParticipants}
-					sublabel="unique participants"
-					title={<StatBlock.Title>Unique participants</StatBlock.Title>}
-					icon="Finish"
-				/>
-			</Flex>
+			<StyledRacesTop colorTokens={colorTokens}>
+				<div>{season.description}</div>
+				<Flex align justifyContent="space-evenly" flexWrap="wrap" gap={16}>
+					<StatBlock
+						label={races.length ?? '—'}
+						sublabel="races total"
+						title={<StatBlock.Title>Races total</StatBlock.Title>}
+						icon="Finish"
+					/>
+					<StatBlock
+						label={getHumanReadableDate(season.startDate)}
+						sublabel="season start date"
+						title={<StatBlock.Title>Season start date</StatBlock.Title>}
+						icon="Finish"
+					/>
+					<StatBlock
+						label={getHumanReadableDate(season.endDate)}
+						sublabel="season end date"
+						title={<StatBlock.Title>Season end date</StatBlock.Title>}
+						icon="Finish"
+					/>
+					<StatBlock
+						label={uniqueParticipants}
+						sublabel="unique participants"
+						title={<StatBlock.Title>Unique participants</StatBlock.Title>}
+						icon="Finish"
+					/>
+				</Flex>
+			</StyledRacesTop>
 			<StyledRacesList>
 				<Tabs value={activeTab} onChange={handleChangeTab}>
 					<Tab label="Ranking" value={TabsSeasonDetails.RANKING} />
@@ -94,6 +98,16 @@ export const SingleSeason = (props: SingleSeasonProps) => {
 const StyledSeasonWrapper = styled(Flex)`
 	gap: 16px;
 	width: 100%;
+`;
+
+const StyledRacesTop = styled(Flex)<{
+	colorTokens: ColorTokens;
+}>`
+	flex-direction: column;
+	background-color: ${({ colorTokens }) => colorTokens['core-tertiary-bg']}cc;
+	border-radius: 16px;
+	padding: 16px;
+	gap: 16px;
 `;
 
 const StyledRacesList = styled(Flex)`

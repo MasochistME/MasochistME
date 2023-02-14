@@ -1,5 +1,6 @@
 import { RacePlayer } from '@masochistme/sdk/dist/v1/types';
 import styled from 'styled-components';
+import { media } from 'styles';
 
 import { PodiumItem } from './PodiumItem';
 
@@ -35,4 +36,8 @@ const StyledPodium = styled.div`
 	grid-template-columns: 3fr 1;
 	padding: 0 32px;
 	height: 300px;
+
+	@media (max-width: ${media.tablets}) {
+		padding: 0px;
+	}
 `;

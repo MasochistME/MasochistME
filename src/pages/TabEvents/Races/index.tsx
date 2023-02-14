@@ -12,7 +12,7 @@ export const RacesPage = (): JSX.Element => {
 	const [selectedSeasonId, setSelectedSeasonId] = useState<string | null>(null);
 	return (
 		<StyledWrapper>
-			<Flex column gap={24} width="100%">
+			<Flex column width="100%" gap={16}>
 				<SeasonSelect
 					selectedSeasonId={selectedSeasonId}
 					setSelectedSeasonId={setSelectedSeasonId}
@@ -89,4 +89,5 @@ const StyledWrapper = styled.div`
 	flex-wrap: nowrap;
 	align-items: flex-start;
 	width: 100%;
+	gap: 16px;
 `;

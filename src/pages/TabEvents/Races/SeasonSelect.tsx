@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Icon, Menu, QueryBoundary, Size, Skeleton, Warning } from 'components';
+import { Icon, Menu, QueryBoundary, Size, Warning } from 'components';
 import { ColorTokens, fonts, media, useTheme } from 'styles';
 import { useRacesFromSeason } from 'hooks';
 import { useEffect } from 'react';
