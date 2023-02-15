@@ -10,8 +10,8 @@ export type TableHeaderCell = {
 export type TableColumn<T> = {
 	key: string;
 	title: React.ReactNode;
-	value: (item: T) => string | number;
-	render: (item: T) => React.ReactNode;
+	value: (item: T, index: number) => string | number;
+	render: (item: T, index: number) => React.ReactNode;
 	style?: React.CSSProperties;
 };
 

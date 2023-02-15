@@ -14,13 +14,15 @@ import {
 import { Podium, WinnerLink } from 'containers';
 import { fonts, media } from 'styles';
 import dayjs from 'dayjs';
+import { getMedal } from 'utils/getMedal';
 
 type Props = {
 	raceId?: string | null;
 };
 
 enum Columns {
-	PLACE = 'Place',
+	MEDAL = '🥇',
+	PLACE = '',
 	USERNAME = 'Username',
 	SCORE = 'Score',
 	TIME = 'Time',
@@ -59,6 +61,15 @@ const LeaderboardsBoundary = (props: Props) => {
 
 	const columns: TableColumn<RacePlayer>[] = [
 		{
+			key: Columns.MEDAL,
+			title: Columns.MEDAL,
+			value: (player: RacePlayer) => player?.place ?? 0,
+			render: (player: RacePlayer) => (
+				<span style={{ width: '50px' }}>{getMedal(player?.place)}</span>
+			),
+			style: { minWidth: '50px' },
+		},
+		{
 			key: Columns.PLACE,
 			title: Columns.PLACE,
 			value: (player: RacePlayer) => player?.place ?? 0,
@@ -69,7 +80,6 @@ const LeaderboardsBoundary = (props: Props) => {
 					}
 				/>
 			),
-			style: { width: '100px' },
 		},
 		{
 			key: Columns.USERNAME,
@@ -160,12 +170,13 @@ export const getTimeWithMs = (date: Date | number | null | undefined) => {
 
 const StyledPlayerScore = styled.div`
 	display: flex;
+	flex-direction: row;
 	align-items: center;
 	gap: 4px;
 	font-size: 1.3em;
 	font-weight: bold;
 	font-family: ${fonts.Dosis};
-	padding: 8px 32px;
+	padding: 8px;
 	@media (max-width: ${media.tablets}) {
 		padding: 8px;
 	}

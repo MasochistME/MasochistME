@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import { useActiveTab } from 'hooks';
+import { useActiveTab, useMixpanel } from 'hooks';
 import { TabDict } from 'configuration/tabs';
 import { Flex } from 'components';
 import { SubPage, Tabs, Tab, TabPanel } from 'containers';
@@ -16,11 +16,13 @@ enum EventTabs {
 
 export const TabEvents = (): JSX.Element => {
 	useActiveTab(TabDict.EVENTS);
+	const { track } = useMixpanel();
 
 	const [activeTab, setActiveTab] = useState<EventTabs>(EventTabs.RACES);
 
 	const handleChangeTab = (_e: React.SyntheticEvent, newTab: EventTabs) => {
 		setActiveTab(newTab);
+		track('events.tab.change', { tab: newTab });
 	};
 
 	return (

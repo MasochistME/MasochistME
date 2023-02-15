@@ -124,7 +124,4 @@ const StyledButton = styled.button.attrs((props: Props) => {
 			if (variant === Variant.GOLDEN) return colorTokens['core-tertiary-text'];
 		}};
 	}
-	& > *:not(:last-child) {
-		margin-right: 8px;
-	}
 `;

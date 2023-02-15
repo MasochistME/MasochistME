@@ -91,7 +91,8 @@ const StyledMemberAvatar = styled.div.attrs(
 		return { style };
 	},
 )<
-	Pick<Props, 'size' | 'patronTier' | 'onClick'> & {
+	Pick<Props, 'patronTier' | 'onClick'> & {
+		size: Size;
 		isEmpty: boolean;
 		colorTokens: ColorTokens;
 	}
@@ -100,10 +101,11 @@ const StyledMemberAvatar = styled.div.attrs(
 	align-items: center;
 	justify-content: center;
 	box-sizing: border-box;
-	padding: 2px;
 	overflow: hidden;
 	background-color: ${({ isEmpty, colorTokens }) =>
 		isEmpty ? colorTokens['core-tertiary-bg'] : 'transparent'};
+	padding: ${({ size }) =>
+		size === Size.BIG || size === Size.LARGE ? 1 : 0}px;
 	border-radius: ${({ size }) =>
 		size === Size.SMALL || size === Size.TINY ? 4 : 8}px;
 	border: ${({ size, colorTokens }) =>
