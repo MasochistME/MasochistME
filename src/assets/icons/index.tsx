@@ -18,6 +18,7 @@ import { ReactComponent as CoinStack } from './CoinStack.svg';
 import { ReactComponent as Crown } from './Crown.svg';
 import { ReactComponent as Discord } from './Discord.svg';
 import { ReactComponent as Donation } from './Donation.svg';
+import { ReactComponent as ExternalLink } from './ExternalLink.svg';
 import { ReactComponent as EllipsisVertical } from './EllipsisVertical.svg';
 import { ReactComponent as Finish } from './Finish.svg';
 import { ReactComponent as Gamepad } from './Gamepad.svg';
@@ -81,6 +82,7 @@ const icons = {
 	Discord,
 	Donation,
 	EllipsisVertical,
+	ExternalLink,
 	Finish,
 	Gamepad,
 	Gauge,

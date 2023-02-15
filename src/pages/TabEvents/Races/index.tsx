@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { ErrorFallback, Flex, QueryBoundary, Loader } from 'components';
+import { ErrorFallback, Flex, QueryBoundary, Loader, Icon } from 'components';
 import { Section, SectionProps } from 'containers';
 
 import { SingleSeason } from './SingleSeason';
@@ -12,16 +12,29 @@ export const RacesPage = (): JSX.Element => {
 	const [selectedSeasonId, setSelectedSeasonId] = useState<string | null>(null);
 	return (
 		<StyledWrapper>
-			<Flex column width="100%" gap={16}>
-				<SeasonSelect
-					selectedSeasonId={selectedSeasonId}
-					setSelectedSeasonId={setSelectedSeasonId}
-				/>
-				<QueryBoundary fallback={<Loader />} errorFallback={<ErrorFallback />}>
-					<SeasonBoundary selectedSeasonId={selectedSeasonId} />
-				</QueryBoundary>
+			<Flex row width="100%">
+				<Flex column width="100%" gap={16}>
+					<SeasonSelect
+						selectedSeasonId={selectedSeasonId}
+						setSelectedSeasonId={setSelectedSeasonId}
+					/>
+					<QueryBoundary
+						fallback={<Loader />}
+						errorFallback={<ErrorFallback />}>
+						<SeasonBoundary selectedSeasonId={selectedSeasonId} />
+					</QueryBoundary>
+				</Flex>
+				<Flex column gap={16}>
+					<RacesInfoBasic isDesktopOnly width="100%" maxWidth="450px" />
+					<RacesInfoPoints isDesktopOnly width="100%" maxWidth="450px" />
+					<RacesInfoJoin isDesktopOnly width="100%" maxWidth="450px" />
+				</Flex>
 			</Flex>
-			<RacesInfo isDesktopOnly width="100%" maxWidth="450px" />
+			<Flex justify alignItems="flex-start" flexWrap="wrap" gap={16}>
+				<RacesInfoBasic isMobileOnly width="30%" minWidth="300px" />
+				<RacesInfoPoints isMobileOnly width="30%" minWidth="300px" />
+				<RacesInfoJoin isMobileOnly width="30%" minWidth="300px" />
+			</Flex>
 		</StyledWrapper>
 	);
 };
@@ -34,7 +47,7 @@ const SeasonBoundary = ({ selectedSeasonId }: Props) => {
 	return <SingleSeason season={season} races={races} />;
 };
 
-const RacesInfo = (props: Partial<SectionProps>): JSX.Element => {
+const RacesInfoBasic = (props: Partial<SectionProps>): JSX.Element => {
 	return (
 		<Section
 			{...props}
@@ -46,7 +59,7 @@ const RacesInfo = (props: Partial<SectionProps>): JSX.Element => {
 						where you have to blindly complete a short secret game and get the
 						best possible score.
 					</div>
-					<div> There are two types of races:</div>
+					<div>There are two types of races:</div>
 					<ul style={{ margin: 0, paddingLeft: '24px', textAlign: 'left' }}>
 						<li>
 							<span style={{ fontWeight: 600 }}>time based</span> - you have to
@@ -60,8 +73,53 @@ const RacesInfo = (props: Partial<SectionProps>): JSX.Element => {
 					<div>
 						Races are organized into seasons. A season typically consists of 10
 						races and takes into consideration 7 best results of all
-						participants.
+						participants. The lower final season score you have, the higher you
+						are placed.
 					</div>
+				</Flex>
+			}
+		/>
+	);
+};
+
+const RacesInfoPoints = (props: Partial<SectionProps>): JSX.Element => {
+	return (
+		<Section
+			{...props}
+			title="Point system"
+			content={
+				<Flex column gap={8}>
+					<div>
+						When you participate in a race, your final points for this
+						particular race equal{' '}
+						<span style={{ fontWeight: 'bold' }}>your place minus 1</span>.
+					</div>
+					<div>
+						If you got disqualified, DNF'd or did not participate in a race at
+						all, your final points will be equal to{' '}
+						<span style={{ fontWeight: 'bold' }}>
+							number of participants who finished the race
+						</span>
+						.
+					</div>
+					<div>
+						The <span style={{ fontWeight: 'bold' }}>less</span> points you have
+						in the season, the{' '}
+						<span style={{ fontWeight: 'bold' }}>higher</span> you are placed.
+					</div>
+				</Flex>
+			}
+		/>
+	);
+};
+
+const RacesInfoJoin = (props: Partial<SectionProps>): JSX.Element => {
+	return (
+		<Section
+			{...props}
+			title="How to participate"
+			content={
+				<Flex column gap={8}>
 					<div>
 						Races take place in{' '}
 						<a href="https://discord.com/invite/NjAeT53kVb" target="_blank">
@@ -73,9 +131,10 @@ const RacesInfo = (props: Partial<SectionProps>): JSX.Element => {
 						<a
 							href="https://abiding-washer-fc3.notion.site/Races-6fe4971a56194039b85807adf2077262"
 							target="_blank">
-							This link talks about joining and participating in more detail
+							<Flex align gap={8}>
+								How to join and participate <Icon icon="ExternalLink" />
+							</Flex>
 						</a>
-						.
 					</div>
 				</Flex>
 			}
@@ -85,7 +144,7 @@ const RacesInfo = (props: Partial<SectionProps>): JSX.Element => {
 
 const StyledWrapper = styled.div`
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	flex-wrap: nowrap;
 	align-items: flex-start;
 	width: 100%;
