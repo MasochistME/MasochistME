@@ -47,7 +47,7 @@ const RacesInfo = (props: Partial<SectionProps>): JSX.Element => {
 						best possible score.
 					</div>
 					<div> There are two types of races:</div>
-					<ul>
+					<ul style={{ margin: 0, paddingLeft: '24px', textAlign: 'left' }}>
 						<li>
 							<span style={{ fontWeight: 600 }}>time based</span> - you have to
 							complete the game in the shortest time possible,

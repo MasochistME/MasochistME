@@ -53,7 +53,7 @@ enum Columns {
 	NAME = 'Race name',
 	POINTS = 'Pts',
 	DNF = 'DNF',
-	DISQUALIFIED = 'Disqualified',
+	DISQUALIFIED = 'DQ',
 }
 
 const RacesTable = ({
@@ -93,6 +93,7 @@ const RacesTable = ({
 					textAlign="left"
 				/>
 			),
+			style: { width: '60%' },
 		},
 		{
 			key: Columns.POINTS,
@@ -113,15 +114,16 @@ const RacesTable = ({
 			key: Columns.DNF,
 			title: Columns.DNF,
 			value: (race: Race) =>
-				Number(
-					participant?.allRaces.find(r => r.raceId === String(race._id))?.dnf,
-				) ?? 0,
+				participant?.allRaces.find(r => r.raceId === String(race._id))?.dnf
+					? 1
+					: 0,
 			render: (race: Race) => (
 				<TableCell
-					content={String(
-						participant?.allRaces.find(r => r.raceId === String(race._id))
-							?.dnf ?? '—',
-					)}
+					content={
+						participant?.allRaces.find(r => r.raceId === String(race._id))?.dnf
+							? 'yes'
+							: 'no'
+					}
 				/>
 			),
 		},
@@ -129,24 +131,32 @@ const RacesTable = ({
 			key: Columns.DISQUALIFIED,
 			title: Columns.DISQUALIFIED,
 			value: (race: Race) =>
-				Number(
-					participant?.allRaces.find(r => r.raceId === String(race._id))
-						?.disqualified,
-				) ?? 0,
+				participant?.allRaces.find(r => r.raceId === String(race._id))
+					?.disqualified
+					? 1
+					: 0,
 			render: (race: Race) => (
 				<TableCell
-					content={String(
+					content={
 						participant?.allRaces.find(r => r.raceId === String(race._id))
-							?.disqualified ?? '—',
-					)}
+							?.disqualified
+							? 'yes'
+							: 'no'
+					}
 				/>
 			),
 		},
 	];
 	return (
 		<WrapperRace column colorTokens={colorTokens}>
-			<Flex align gap={16} padding="16px">
-				<MemberAvatar member={participant?.member} size={Size.MEDIUM} />
+			<Flex align gap={16} padding="8px">
+				<div
+					style={{
+						border: `3px solid ${colorTokens['core-primary-text']}`,
+						borderRadius: '8px',
+					}}>
+					<MemberAvatar member={participant?.member} size={Size.BIG} />
+				</div>
 				<Link to={`/profile/${participant?.member?.steamId}`}>
 					<StyledUsername>{participant?.member?.name ?? '—'}</StyledUsername>
 				</Link>

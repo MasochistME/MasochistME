@@ -17,7 +17,7 @@ import { WinnerLink } from 'containers';
 import { useCuratorMembers, useSeasonLeaderboards } from 'sdk';
 import { ModalParticipant } from './ModalParticipant';
 import styled from 'styled-components';
-import { fonts, media } from 'styles';
+import { fonts } from 'styles';
 
 type Props = { seasonId: string };
 export const SingleSeasonRanking = (props: Props) => (
@@ -243,6 +243,7 @@ const useSeasonParticipants = (
 			};
 		})
 		.filter(player => player.member)
+		.sort((playerA, playerB) => playerA.pointsTotal - playerB.pointsTotal)
 		.sort((playerA, playerB) => playerB.allBronzes - playerA.allBronzes)
 		.sort((playerA, playerB) => playerB.allSilvers - playerA.allSilvers)
 		.sort((playerA, playerB) => playerB.allGolds - playerA.allGolds)
