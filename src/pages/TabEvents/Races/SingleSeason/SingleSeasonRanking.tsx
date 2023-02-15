@@ -4,11 +4,14 @@ import {
 	Button,
 	ErrorFallback,
 	Flex,
+	Icon,
 	Loader,
 	QueryBoundary,
+	Size,
 	Table,
 	TableCell,
 	TableColumn,
+	Tooltip,
 } from 'components';
 import { WinnerLink } from 'containers';
 import { useCuratorMembers, useSeasonLeaderboards } from 'sdk';
@@ -24,7 +27,7 @@ export const SingleSeasonRanking = (props: Props) => (
 );
 
 enum Columns {
-	PLACE = 'Place',
+	PLACE = '#',
 	PARTICIPANT = 'Participant',
 	SCORE_BEST = 'Score (best-of)',
 	SCORE_ALL = 'Score (all)',
@@ -76,31 +79,61 @@ const RankingBoundary = ({ seasonId }: Props) => {
 		},
 		{
 			key: Columns.GOLD,
-			title: Columns.GOLD,
+			title: (
+				<Tooltip content="Sum of all gold medals earned by this participant">
+					<span>{Columns.GOLD}</span>
+				</Tooltip>
+			),
 			value: (participant: SeasonSummary) => participant.allGolds,
 			render: (participant: SeasonSummary) => participant.allGolds,
 		},
 		{
 			key: Columns.SILVER,
-			title: Columns.SILVER,
+			title: (
+				<Tooltip content="Sum of all silver medals earned by this participant">
+					<span>{Columns.SILVER}</span>
+				</Tooltip>
+			),
 			value: (participant: SeasonSummary) => participant.allSilvers,
 			render: (participant: SeasonSummary) => participant.allSilvers,
 		},
 		{
 			key: Columns.BRONZE,
-			title: Columns.BRONZE,
+			title: (
+				<Tooltip content="Sum of all bronze medals earned by this participant">
+					<span>{Columns.BRONZE}</span>
+				</Tooltip>
+			),
 			value: (participant: SeasonSummary) => participant.allBronzes,
 			render: (participant: SeasonSummary) => participant.allBronzes,
 		},
 		{
 			key: Columns.SCORE_BEST,
-			title: Columns.SCORE_BEST,
+			title: (
+				<Flex row align justify gap={4}>
+					{Columns.SCORE_BEST}
+					<Icon
+						size={Size.MICRO}
+						icon="QuestionCircle"
+						hoverText="Final score calculated after discarding 3 worst results"
+					/>
+				</Flex>
+			),
 			value: (participant: SeasonSummary) => participant.pointsBest,
 			render: (participant: SeasonSummary) => participant.pointsBest,
 		},
 		{
 			key: Columns.SCORE_ALL,
-			title: Columns.SCORE_ALL,
+			title: (
+				<Flex row align justify gap={4}>
+					{Columns.SCORE_ALL}
+					<Icon
+						size={Size.MICRO}
+						icon="QuestionCircle"
+						hoverText="Full seasons score counting all season races"
+					/>
+				</Flex>
+			),
 			value: (participant: SeasonSummary) => participant.pointsTotal,
 			render: (participant: SeasonSummary) => participant.pointsTotal,
 		},
