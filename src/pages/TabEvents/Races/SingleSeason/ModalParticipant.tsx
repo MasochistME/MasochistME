@@ -64,6 +64,9 @@ const RacesTable = ({
 	const { colorTokens } = useTheme();
 	const { races } = useRacesFromSeason(seasonId);
 
+	const racesToDiscard = participant?.allRaces.slice(-3) ?? [];
+	const raceIdsToDiscard = racesToDiscard.map(race => race.raceId);
+
 	const columns: TableColumn<Race>[] = [
 		{
 			key: Columns.TYPE,
@@ -105,14 +108,16 @@ const RacesTable = ({
 				/>
 			),
 			value: () => 0,
-			render: () => (
+			render: (race: Race) => (
 				<TableCell
 					content={
-						<Icon
-							icon="XMark"
-							color={colorTokens['semantic-color--error-strong']}
-							hoverText="This race does not count towards the 'Best Of' score"
-						/>
+						raceIdsToDiscard?.includes(String(race._id)) ? (
+							<Icon
+								icon="XMark"
+								color={colorTokens['semantic-color--error-strong']}
+								hoverText="This race does not count towards the 'Best Of' score"
+							/>
+						) : null
 					}
 					padding="8px"
 					textAlign="left"

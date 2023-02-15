@@ -59,7 +59,7 @@ const RacesInfo = (props: Partial<SectionProps>): JSX.Element => {
 					</ul>
 					<div>
 						Races are organized into seasons. A season typically consists of 10
-						races and takes into consideration 8 best results of all
+						races and takes into consideration 7 best results of all
 						participants.
 					</div>
 					<div>
