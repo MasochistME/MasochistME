@@ -2,14 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Box, Modal } from '@mui/material';
+import { Race } from '@masochistme/sdk/dist/v1/types';
 
-import { fonts, useTheme, ColorTokens } from 'styles';
-import { Flex, Size, Table, TableCell, TableColumn } from 'components';
+import { fonts, useTheme, ColorTokens, media } from 'styles';
+import { Flex, Icon, Size, Table, TableCell, TableColumn } from 'components';
+import { useRacesFromSeason } from 'hooks';
+import { MemberAvatar } from 'containers';
+import { getRaceTypeIcon } from 'utils';
 
 import { SeasonSummary } from './SingleSeasonRanking';
-import { useRacesFromSeason } from 'hooks';
-import { Race } from '@masochistme/sdk/dist/v1/types';
-import { MemberAvatar } from 'containers';
 
 type Props = {
 	participant: SeasonSummary | null;
@@ -41,15 +42,14 @@ export const ModalParticipant = (props: Props) => {
 	return (
 		<Modal open={isModalOpen && !!participant} onClose={handleModalClose}>
 			<Box sx={modalStyle}>
-				<WrapperRace column colorTokens={colorTokens}>
-					<RacesTable seasonId={seasonId} participant={participant} />
-				</WrapperRace>
+				<RacesTable seasonId={seasonId} participant={participant} />
 			</Box>
 		</Modal>
 	);
 };
 
 enum Columns {
+	TYPE = '',
 	NAME = 'Race name',
 	POINTS = 'Pts',
 	DNF = 'DNF',
@@ -60,9 +60,27 @@ const RacesTable = ({
 	seasonId,
 	participant,
 }: Pick<Props, 'seasonId' | 'participant'>) => {
+	const { colorTokens } = useTheme();
 	const { races } = useRacesFromSeason(seasonId);
 
 	const columns: TableColumn<Race>[] = [
+		{
+			key: Columns.TYPE,
+			title: Columns.TYPE,
+			value: (race: Race) => race.type,
+			render: (race: Race) => (
+				<TableCell
+					padding="8px 0"
+					content={
+						<Icon
+							icon={getRaceTypeIcon(race)}
+							size={Size.MICRO}
+							hoverText={`${race.type.toUpperCase()} based race`}
+						/>
+					}
+				/>
+			),
+		},
 		{
 			key: Columns.NAME,
 			title: Columns.NAME,
@@ -70,7 +88,7 @@ const RacesTable = ({
 			render: (race: Race) => (
 				<TableCell
 					isCentered={false}
-					content={race.name}
+					content={<StyledRaceName>{race.name}</StyledRaceName>}
 					padding="8px"
 					textAlign="left"
 				/>
@@ -126,15 +144,15 @@ const RacesTable = ({
 		},
 	];
 	return (
-		<Flex column gap={16}>
-			<Flex align gap={16}>
+		<WrapperRace column colorTokens={colorTokens}>
+			<Flex align gap={16} padding="16px">
 				<MemberAvatar member={participant?.member} size={Size.MEDIUM} />
 				<Link to={`/profile/${participant?.member?.steamId}`}>
 					<StyledUsername>{participant?.member?.name ?? '—'}</StyledUsername>
 				</Link>
 			</Flex>
 			<Table columns={columns} dataset={races} rowsPerPage={10} />
-		</Flex>
+		</WrapperRace>
 	);
 };
 
@@ -144,11 +162,14 @@ export const WrapperRace = styled(Flex)<{ colorTokens: ColorTokens }>`
 	width: 600px;
 	max-width: 100%;
 	height: auto;
-	gap: 16px;
-	padding: 16px;
 	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']}ee;
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	font-family: ${fonts.Raleway};
+`;
+
+const StyledRaceName = styled.div`
+	font-size: 1.3em;
+	font-family: ${fonts.Dosis};
 `;
 
 const StyledUsername = styled.h2`

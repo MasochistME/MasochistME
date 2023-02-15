@@ -54,7 +54,7 @@ const RankingBoundary = ({ seasonId }: Props) => {
 		{
 			key: Columns.PLACE,
 			title: Columns.PLACE,
-			value: (_: SeasonSummary, index: number) => index + 1,
+			value: (_: SeasonSummary, index: number) => Number(index + 1),
 			render: (_: SeasonSummary, index: number) => (
 				<StyledPlace>{index + 1}</StyledPlace>
 			),
@@ -222,8 +222,5 @@ const StyledPlace = styled.div`
 	font-size: 1.3em;
 	font-weight: bold;
 	font-family: ${fonts.Dosis};
-	padding: 8px;
-	@media (max-width: ${media.tablets}) {
-		padding: 8px;
-	}
+	padding: 4px;
 `;
