@@ -5,7 +5,6 @@ import {
 	ErrorFallback,
 	Flex,
 	Icon,
-	Loader,
 	QueryBoundary,
 	Size,
 	Table,
@@ -20,13 +19,6 @@ import styled from 'styled-components';
 import { fonts } from 'styles';
 import { useMixpanel } from 'hooks';
 
-type Props = { seasonId: string };
-export const SingleSeasonRanking = (props: Props) => (
-	<QueryBoundary fallback={<Loader />} errorFallback={<ErrorFallback />}>
-		<RankingBoundary {...props} />
-	</QueryBoundary>
-);
-
 enum Columns {
 	PLACE = '#',
 	PARTICIPANT = 'Participant',
@@ -39,6 +31,28 @@ enum Columns {
 	DNF = 'DNF',
 	MORE = 'More',
 }
+
+type Props = { seasonId: string };
+export const SingleSeasonRanking = (props: Props) => {
+	const columns = Object.values(Columns).map(c => ({
+		key: c,
+		title: c,
+		value: () => '',
+		render: () => null,
+	}));
+	return (
+		<QueryBoundary
+			fallback={
+				<Table.Skeleton
+					columns={columns}
+					style={{ height: '36px', margin: '6px 0' }}
+				/>
+			}
+			errorFallback={<ErrorFallback />}>
+			<RankingBoundary {...props} />
+		</QueryBoundary>
+	);
+};
 
 const RankingBoundary = ({ seasonId }: Props) => {
 	const { track } = useMixpanel();
