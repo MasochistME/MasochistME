@@ -12,21 +12,22 @@ type Props<T> = {
 	columns: TableColumn<T>[];
 	dataset: T[];
 	rowsPerPage?: number;
+	orderBy?: string;
 };
 
 export const Table = <T extends Record<any, any>>(props: Props<T>) => {
-	const { columns, dataset, rowsPerPage: _rowsPerPage } = props;
+	const { columns, dataset, orderBy, rowsPerPage: _rowsPerPage } = props;
 	const [order, setOrder] = useState<Order>('asc');
-	const [orderBy, setOrderBy] = useState<string>();
+	const [_orderBy, setOrderBy] = useState<string | undefined>(orderBy);
 	const [page, setPage] = useState<number>(0);
 	const [rowsPerPage, setRowsPerPage] = useState<number>(_rowsPerPage ?? 20);
 
 	const fixedDataset = dataset.map(
-		item =>
+		(item, index) =>
 			columns.map(col => ({
 				...col,
-				...(col.value ? { value: col.value(item) } : {}),
-				...(col.render ? { render: col.render(item) } : {}),
+				...(col.value ? { value: col.value(item, index) } : {}),
+				...(col.render ? { render: col.render(item, index) } : {}),
 			})) as {
 				key: string;
 				title: React.ReactNode;
@@ -71,7 +72,7 @@ export const Table = <T extends Record<any, any>>(props: Props<T>) => {
 			<colgroup>{colGroup}</colgroup>
 			<TableHeader
 				order={order}
-				orderBy={orderBy}
+				orderBy={_orderBy}
 				tableHeaderCells={tableHeaderCells}
 				onRequestSort={handleRequestSort}
 			/>
@@ -80,7 +81,7 @@ export const Table = <T extends Record<any, any>>(props: Props<T>) => {
 				page={page}
 				rowsPerPage={rowsPerPage}
 				order={order}
-				orderBy={orderBy}
+				orderBy={_orderBy}
 			/>
 			<TablePagination
 				rows={fixedRows}

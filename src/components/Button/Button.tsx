@@ -99,7 +99,4 @@ const StyledButton = styled.button<{
 				? colorTokens['core-tertiary-text']
 				: colorTokens['core-primary-text']};
 	}
-	& > *:not(:last-child) {
-		margin-right: 8px;
-	}
 `;

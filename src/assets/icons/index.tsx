@@ -18,6 +18,8 @@ import { ReactComponent as CoinStack } from './CoinStack.svg';
 import { ReactComponent as Crown } from './Crown.svg';
 import { ReactComponent as Discord } from './Discord.svg';
 import { ReactComponent as Donation } from './Donation.svg';
+import { ReactComponent as ExternalLink } from './ExternalLink.svg';
+import { ReactComponent as EllipsisVertical } from './EllipsisVertical.svg';
 import { ReactComponent as Finish } from './Finish.svg';
 import { ReactComponent as Gamepad } from './Gamepad.svg';
 import { ReactComponent as Gauge } from './Gauge.svg';
@@ -56,6 +58,7 @@ import { ReactComponent as UserMinus } from './UserMinus.svg';
 import { ReactComponent as UserPlus } from './UserPlus.svg';
 import { ReactComponent as WarningCircle } from './WarningCircle.svg';
 import { ReactComponent as WarningTriangle } from './WarningTriangle.svg';
+import { ReactComponent as XMark } from './XMark.svg';
 
 const icons = {
 	AnglesDown,
@@ -78,6 +81,8 @@ const icons = {
 	Crown,
 	Discord,
 	Donation,
+	EllipsisVertical,
+	ExternalLink,
 	Finish,
 	Gamepad,
 	Gauge,
@@ -116,6 +121,7 @@ const icons = {
 	UserPlus,
 	WarningCircle,
 	WarningTriangle,
+	XMark,
 };
 
 export type IconType = keyof typeof icons;
