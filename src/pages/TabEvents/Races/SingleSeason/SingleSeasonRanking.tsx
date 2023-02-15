@@ -210,6 +210,9 @@ const useSeasonParticipants = (
 			};
 		})
 		.filter(player => player.member)
+		.sort((playerA, playerB) => playerB.allBronzes - playerA.allBronzes)
+		.sort((playerA, playerB) => playerB.allSilvers - playerA.allSilvers)
+		.sort((playerA, playerB) => playerB.allGolds - playerA.allGolds)
 		.sort((playerA, playerB) => playerA.pointsBest - playerB.pointsBest);
 	return participants;
 };
