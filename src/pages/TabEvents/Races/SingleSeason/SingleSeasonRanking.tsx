@@ -138,7 +138,7 @@ const RankingBoundary = ({ seasonId }: Props) => {
 				columns={columns}
 				dataset={participants}
 				rowsPerPage={10}
-				orderBy={Columns.SCORE_BEST}
+				orderBy={Columns.PLACE}
 			/>
 			<ModalParticipant
 				participant={selectedParticipant}
@@ -173,7 +173,7 @@ const useSeasonParticipants = (
 			const allRaces = data.filter(race => race.discordId === discordId);
 			const pointsTotal = allRaces.reduce((sum, cur) => sum + cur.points, 0);
 			const pointsBest = allRaces
-				.sort((raceA, raceB) => raceB.points - raceA.points)
+				.sort((raceA, raceB) => raceA.points - raceB.points)
 				.slice(0, allRaces.length - 3)
 				.reduce((sum, cur) => sum + cur.points, 0);
 			const participationsTotal = allRaces.reduce(
@@ -210,7 +210,7 @@ const useSeasonParticipants = (
 			};
 		})
 		.filter(player => player.member)
-		.sort((playerA, playerB) => playerA.pointsTotal - playerB.pointsTotal);
+		.sort((playerA, playerB) => playerA.pointsBest - playerB.pointsBest);
 	return participants;
 };
 
