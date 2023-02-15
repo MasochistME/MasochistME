@@ -13,6 +13,8 @@ import {
 import { WinnerLink } from 'containers';
 import { useCuratorMembers, useSeasonLeaderboards } from 'sdk';
 import { ModalParticipant } from './ModalParticipant';
+import styled from 'styled-components';
+import { fonts, media } from 'styles';
 
 type Props = { seasonId: string };
 export const SingleSeasonRanking = (props: Props) => (
@@ -22,15 +24,16 @@ export const SingleSeasonRanking = (props: Props) => (
 );
 
 enum Columns {
+	PLACE = 'Place',
 	PARTICIPANT = 'Participant',
-	SCORE_BEST = 'Score (best of)',
+	SCORE_BEST = 'Score (best-of)',
 	SCORE_ALL = 'Score (all)',
-	GOLD = 'Gold medals',
-	SILVER = 'Silver medals',
-	BRONZE = 'Bronze medals',
+	GOLD = '🥇',
+	SILVER = '🥈',
+	BRONZE = '🥉',
 	PARTICIPATIONS = 'Participations',
 	DNF = 'DNF',
-	MORE = '',
+	MORE = 'More',
 }
 
 const RankingBoundary = ({ seasonId }: Props) => {
@@ -49,6 +52,14 @@ const RankingBoundary = ({ seasonId }: Props) => {
 
 	const columns: TableColumn<SeasonSummary>[] = [
 		{
+			key: Columns.PLACE,
+			title: Columns.PLACE,
+			value: (_: SeasonSummary, index: number) => index + 1,
+			render: (_: SeasonSummary, index: number) => (
+				<StyledPlace>{index + 1}</StyledPlace>
+			),
+		},
+		{
 			key: Columns.PARTICIPANT,
 			title: Columns.PARTICIPANT,
 			value: (participant: SeasonSummary) =>
@@ -64,69 +75,71 @@ const RankingBoundary = ({ seasonId }: Props) => {
 			style: { width: '30%' },
 		},
 		{
-			key: Columns.SCORE_ALL,
-			title: Columns.SCORE_ALL,
-			value: (participant: SeasonSummary) => participant.pointsTotal,
-			render: (participant: SeasonSummary) => participant.pointsTotal,
-			style: { width: '90px' },
-		},
-		{
-			key: Columns.SCORE_BEST,
-			title: Columns.SCORE_BEST,
-			value: (participant: SeasonSummary) => participant.pointsBest,
-			render: (participant: SeasonSummary) => participant.pointsBest,
-			style: { width: '90px' },
-		},
-		{
 			key: Columns.GOLD,
 			title: Columns.GOLD,
 			value: (participant: SeasonSummary) => participant.allGolds,
 			render: (participant: SeasonSummary) => participant.allGolds,
-			style: { width: '90px' },
 		},
 		{
 			key: Columns.SILVER,
 			title: Columns.SILVER,
 			value: (participant: SeasonSummary) => participant.allSilvers,
 			render: (participant: SeasonSummary) => participant.allSilvers,
-			style: { width: '90px' },
 		},
 		{
 			key: Columns.BRONZE,
 			title: Columns.BRONZE,
 			value: (participant: SeasonSummary) => participant.allBronzes,
 			render: (participant: SeasonSummary) => participant.allBronzes,
-			style: { width: '90px' },
+		},
+		{
+			key: Columns.SCORE_BEST,
+			title: Columns.SCORE_BEST,
+			value: (participant: SeasonSummary) => participant.pointsBest,
+			render: (participant: SeasonSummary) => participant.pointsBest,
+		},
+		{
+			key: Columns.SCORE_ALL,
+			title: Columns.SCORE_ALL,
+			value: (participant: SeasonSummary) => participant.pointsTotal,
+			render: (participant: SeasonSummary) => participant.pointsTotal,
 		},
 		{
 			key: Columns.PARTICIPATIONS,
 			title: Columns.PARTICIPATIONS,
 			value: (participant: SeasonSummary) => participant.participationsTotal,
 			render: (participant: SeasonSummary) => participant.participationsTotal,
-			style: { width: '90px' },
 		},
 		{
 			key: Columns.DNF,
 			title: Columns.DNF,
 			value: (participant: SeasonSummary) => participant.dnfsTotal,
 			render: (participant: SeasonSummary) => participant.dnfsTotal,
-			style: { width: '90px' },
 		},
 		{
 			key: Columns.MORE,
 			title: Columns.MORE,
 			value: () => 0,
 			render: (participant: SeasonSummary) => (
-				<Button
-					icon="EllipsisVertical"
-					onClick={() => onMoreClick(participant)}
+				<TableCell
+					content={
+						<Button
+							icon="EllipsisVertical"
+							onClick={() => onMoreClick(participant)}
+						/>
+					}
 				/>
 			),
 		},
 	];
 	return (
 		<Flex column width="100%">
-			<Table columns={columns} dataset={participants} rowsPerPage={10} />
+			<Table
+				columns={columns}
+				dataset={participants}
+				rowsPerPage={10}
+				orderBy={Columns.SCORE_BEST}
+			/>
 			<ModalParticipant
 				participant={selectedParticipant}
 				seasonId={seasonId}
@@ -200,3 +213,17 @@ const useSeasonParticipants = (
 		.sort((playerA, playerB) => playerA.pointsTotal - playerB.pointsTotal);
 	return participants;
 };
+
+const StyledPlace = styled.div`
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	gap: 4px;
+	font-size: 1.3em;
+	font-weight: bold;
+	font-family: ${fonts.Dosis};
+	padding: 8px;
+	@media (max-width: ${media.tablets}) {
+		padding: 8px;
+	}
+`;
