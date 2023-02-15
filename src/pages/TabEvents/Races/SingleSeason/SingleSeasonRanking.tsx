@@ -176,11 +176,11 @@ const useSeasonParticipants = (
 				0,
 			);
 			const allSilvers = allRaces.reduce(
-				(sum, cur) => (cur.points > 0 && cur.points <= 2 ? sum + 1 : sum),
+				(sum, cur) => (cur.points >= 1 && cur.points < 3 ? sum + 1 : sum),
 				0,
 			);
 			const allBronzes = allRaces.reduce(
-				(sum, cur) => (cur.points > 2 && cur.points <= 5 ? sum + 1 : sum),
+				(sum, cur) => (cur.points >= 3 && cur.points < 6 ? sum + 1 : sum),
 				0,
 			);
 			return {

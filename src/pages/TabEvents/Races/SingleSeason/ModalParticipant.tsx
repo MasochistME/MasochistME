@@ -4,11 +4,12 @@ import styled from 'styled-components';
 import { Box, Modal } from '@mui/material';
 
 import { fonts, useTheme, ColorTokens } from 'styles';
-import { Flex, Table, TableCell, TableColumn } from 'components';
+import { Flex, Size, Table, TableCell, TableColumn } from 'components';
 
 import { SeasonSummary } from './SingleSeasonRanking';
 import { useRacesFromSeason } from 'hooks';
 import { Race } from '@masochistme/sdk/dist/v1/types';
+import { MemberAvatar } from 'containers';
 
 type Props = {
 	participant: SeasonSummary | null;
@@ -125,30 +126,16 @@ const RacesTable = ({
 		},
 	];
 	return (
-		<Flex column>
-			<Link to={`/profile/${participant?.member?.steamId}`}>
-				{participant?.member?.name ?? '—'}
-			</Link>
+		<Flex column gap={16}>
+			<Flex align gap={16}>
+				<MemberAvatar member={participant?.member} size={Size.MEDIUM} />
+				<Link to={`/profile/${participant?.member?.steamId}`}>
+					<StyledUsername>{participant?.member?.name ?? '—'}</StyledUsername>
+				</Link>
+			</Flex>
 			<Table columns={columns} dataset={races} rowsPerPage={10} />
 		</Flex>
 	);
-
-	{
-		/* {participant?.allRaces
-						.sort((raceA, raceB) => raceB.points - raceA.points)
-						.map(participantRace => {
-							const race = races.find(
-								rr => participantRace.raceId === String(rr._id),
-							);
-							return (
-								<Flex>
-									{race?.name ?? participantRace.raceId} -{' '}
-									{participantRace.points}pts - {String(participantRace.dnf)} -{' '}
-									{String(participantRace.disqualified)}
-								</Flex>
-							);
-						})} */
-	}
 };
 
 export const WrapperRace = styled(Flex)<{ colorTokens: ColorTokens }>`
@@ -162,5 +149,15 @@ export const WrapperRace = styled(Flex)<{ colorTokens: ColorTokens }>`
 	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']}ee;
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	font-family: ${fonts.Raleway};
-	/* padding: 16px; */
+`;
+
+const StyledUsername = styled.h2`
+	display: flex;
+	align-items: center;
+	margin: 0;
+	max-width: 600px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: 24px;
 `;

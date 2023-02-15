@@ -24,7 +24,7 @@ export const SingleSeason = (props: SingleSeasonProps) => {
 	const { season, races } = props;
 	const { colorTokens } = useTheme();
 	const [activeTab, setActiveTab] = useState<TabsSeasonDetails>(
-		TabsSeasonDetails.RACES,
+		TabsSeasonDetails.RANKING,
 	);
 
 	const uniqueParticipants =
