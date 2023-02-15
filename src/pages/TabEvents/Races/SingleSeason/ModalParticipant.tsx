@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Box, Modal } from '@mui/material';
 import { Race } from '@masochistme/sdk/dist/v1/types';
 
-import { fonts, useTheme, ColorTokens, media } from 'styles';
+import { fonts, useTheme, ColorTokens } from 'styles';
 import { Flex, Icon, Size, Table, TableCell, TableColumn } from 'components';
 import { useRacesFromSeason } from 'hooks';
 import { MemberAvatar } from 'containers';
@@ -49,8 +49,9 @@ export const ModalParticipant = (props: Props) => {
 };
 
 enum Columns {
-	TYPE = '',
+	TYPE = 'Type',
 	NAME = 'Race name',
+	COUNTS_TO_SCORE = '',
 	POINTS = 'Pts',
 	DNF = 'DNF',
 	DISQUALIFIED = 'DQ',
@@ -88,12 +89,35 @@ const RacesTable = ({
 			render: (race: Race) => (
 				<TableCell
 					isCentered={false}
-					content={<StyledRaceName>{race.name}</StyledRaceName>}
+					content={<StyledRaceName>{race.name.toUpperCase()}</StyledRaceName>}
 					padding="8px"
 					textAlign="left"
 				/>
 			),
 			style: { width: '60%' },
+		},
+		{
+			key: Columns.COUNTS_TO_SCORE,
+			title: (
+				<Icon
+					icon="CircleInfo"
+					hoverText="Races marked with X won't count towards the 'Best Of' score"
+				/>
+			),
+			value: () => 0,
+			render: () => (
+				<TableCell
+					content={
+						<Icon
+							icon="XMark"
+							color={colorTokens['semantic-color--error-strong']}
+							hoverText="This race does not count towards the 'Best Of' score"
+						/>
+					}
+					padding="8px"
+					textAlign="left"
+				/>
+			),
 		},
 		{
 			key: Columns.POINTS,
@@ -149,7 +173,7 @@ const RacesTable = ({
 	];
 	return (
 		<WrapperRace column colorTokens={colorTokens}>
-			<Flex align gap={16} padding="8px">
+			<Flex align gap={16} padding="8px" paddingBottom={0}>
 				<div
 					style={{
 						border: `3px solid ${colorTokens['core-primary-text']}`,
@@ -172,6 +196,7 @@ export const WrapperRace = styled(Flex)<{ colorTokens: ColorTokens }>`
 	width: 600px;
 	max-width: 100%;
 	height: auto;
+	gap: 16px;
 	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']}ee;
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	font-family: ${fonts.Raleway};

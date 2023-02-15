@@ -57,6 +57,7 @@ import { ReactComponent as UserMinus } from './UserMinus.svg';
 import { ReactComponent as UserPlus } from './UserPlus.svg';
 import { ReactComponent as WarningCircle } from './WarningCircle.svg';
 import { ReactComponent as WarningTriangle } from './WarningTriangle.svg';
+import { ReactComponent as XMark } from './XMark.svg';
 
 const icons = {
 	AnglesDown,
@@ -118,6 +119,7 @@ const icons = {
 	UserPlus,
 	WarningCircle,
 	WarningTriangle,
+	XMark,
 };
 
 export type IconType = keyof typeof icons;
