@@ -3,12 +3,23 @@ import styled from 'styled-components';
 
 import { useActiveTab, GameView, useToggleView } from 'hooks';
 import { TabDict } from 'configuration/tabs';
-import { SubPage } from 'containers';
-import { Flex } from 'components';
+import { Section, SectionProps, SubPage } from 'containers';
+import {
+	ErrorFallback,
+	Flex,
+	Icon,
+	IconType,
+	Loader,
+	QueryBoundary,
+	Size,
+} from 'components';
 
 import { GameTableView } from './GameTableView';
 import { GameFilterBar } from './GameFilterBar';
 import { GameTileView } from './GameTileView';
+import { useTiers } from 'sdk';
+import { Tier } from '@masochistme/sdk/dist/v1/types';
+import { Link } from 'react-router-dom';
 
 export const TabGames = () => {
 	useActiveTab(TabDict.GAMES);
@@ -17,6 +28,7 @@ export const TabGames = () => {
 	return (
 		<SubPage>
 			<StyledGames column>
+				<Info isMobileOnly />
 				<GameFilterBar
 					gameListView={gameListView}
 					toggleGameView={toggleGameView}
@@ -24,42 +36,60 @@ export const TabGames = () => {
 				{gameListView === GameView.TILE && <GameTileView />}
 				{gameListView === GameView.TABLE && <GameTableView />}
 			</StyledGames>
+			<Info isDesktopOnly minWidth="250px" maxWidth="450px" />
 		</SubPage>
 	);
 };
 
-// /**
-// * This is temporarily disabled since there is no use for it.
-// * Might be reenabled in the future where game events are introduced.
-// */
-// const TabGamesInfo = (props: Partial<SectionProps>): JSX.Element => {
-// 	return (
-// 		<Section
-// 			{...props}
-// 			title="MasochistME curations"
-// 			content={
-// 				<Flex column gap={8}>
-// 					<div>
-// 						Here&lsquo;s the list of games that MasochistME curates, as well as
-// 						the percentage completion comparision between our users.
-// 					</div>
-// 					<div>
-// 						In the MasochistME community, we grade the ranks of our users by how
-// 						many curated games they&lsquo;ve completed, as well as the
-// 						difficulty of those games. Each game specifies their own difficulty
-// 						in the description.
-// 					</div>
-// 					<div>
-// 						The list also includes which three users completed the game first
-// 						(with a gold, silver and bronze medals, respectively).
-// 					</div>
-// 				</Flex>
-// 			}
-// 		/>
-// 	);
-// };
+const Info = (props: Partial<SectionProps>) => (
+	<Section
+		title="Curated games"
+		content={
+			<QueryBoundary fallback={<Loader />} errorFallback={<ErrorFallback />}>
+				<InfoBoundary />
+			</QueryBoundary>
+		}
+		{...props}
+	/>
+);
+
+const InfoBoundary = (): JSX.Element => {
+	const { tiersData } = useTiers();
+
+	const tiersDescriptions = tiersData.map((tier: Tier) => (
+		<Flex key={`tier-${String(tier._id)}`} gap={4}>
+			<Icon icon={tier.icon as IconType} size={Size.MICRO} /> - {tier.score} pts
+			- {tier?.description}
+		</Flex>
+	));
+
+	return (
+		<Flex column gap={8}>
+			<div>
+				MasochistME curates games that pose a challenge and are unique in some
+				way. We also try to evaluate them by difficulty. Our rating system is
+				based on {tiersData?.length ?? 'X'} tiers, each marked with a symbol and
+				assigned a fixed amount of points for completing it:
+			</div>
+			<StyledTierTypes>{tiersDescriptions}</StyledTierTypes>
+			<div>
+				Games can also have <Link to={`/badges`}>badges</Link>, given for
+				completing additional feats.
+			</div>
+		</Flex>
+	);
+};
 
 const StyledGames = styled(Flex)`
 	width: 100%;
 	flex: 1 1 100%;
+`;
+
+const StyledTierTypes = styled(Flex)`
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 8px;
+	margin-left: 12px;
+	line-height: 1.5em;
+	text-align: left;
 `;

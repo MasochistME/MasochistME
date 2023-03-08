@@ -5,6 +5,7 @@ import { media } from 'styles';
 import { Flex, Button } from 'components';
 import { Size } from 'components';
 import { useMixpanel } from 'hooks';
+import { curatorURL } from 'utils';
 
 type Props = {
 	size?: Size;
@@ -16,7 +17,7 @@ export const ButtonsSocialMedia = (props: Props): JSX.Element => {
 
 	const onButtonCuratorClick = () => {
 		track(`button.curator.click`);
-		window.open('https://store.steampowered.com/curator/41289936', '_blank');
+		window.open(curatorURL, '_blank');
 	};
 	const onButtonPatreonClick = () => {
 		track(`button.patreon.click`);
