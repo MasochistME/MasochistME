@@ -125,7 +125,7 @@ export const updateMember = async (
      * If the first endpoint fails, use a fallback one.
      */
     let newMemberSteamGames = await getMemberSteamGames(memberId, games);
-    if (!newMemberSteamGames)
+    if (!newMemberSteamGames?.length)
       newMemberSteamGames = await getMemberSteamGamesFallback(memberId, games);
 
     // Add family share games to the list
@@ -446,7 +446,7 @@ const getMemberRecentSteamGames = async (
   memberId: string,
   curatedGames: Game[],
 ) => {
-  log.INFO(`--> [UPDATE] user ${memberId} --> fetching games data...`);
+  log.INFO(`--> [UPDATE] user ${memberId} --> fetching recent games data...`);
   /**
    * Scrapping member's Steam profile page - recent tab.
    */
