@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 
 type Props = {
 	selectedSeasonId: string | null;
-	setSelectedSeasonId: (selectedSeason: string) => void;
+	setSelectedSeasonId: (selectedSeason: string | null) => void;
 };
 export const SeasonSelect = (props: Props) => {
 	const { colorTokens } = useTheme();
@@ -18,7 +18,7 @@ export const SeasonSelect = (props: Props) => {
 					<Menu
 						anchorElement={() => (
 							<StyledSeasonTitle colorTokens={colorTokens}>
-								Loading seasons...
+								Select a season...
 								<StyledIcon
 									icon="ChevronDown"
 									size={Size.TINY}
@@ -42,7 +42,9 @@ const SeasonSelectBoundary = (props: Props) => {
 		useRacesFromSeason(selectedSeasonId);
 
 	useEffect(() => {
-		const activeSeasonId = String(seasonsActive[0]?._id);
+		const activeSeasonId = seasonsActive[0]
+			? String(seasonsActive[0]?._id)
+			: null;
 		setSelectedSeasonId(activeSeasonId);
 	}, [seasonsActive]);
 
@@ -79,11 +81,11 @@ const SeasonSelectBoundary = (props: Props) => {
 		<Menu
 			options={options}
 			setSelectedOption={setSelectedSeasonId}
-			placeholder="Select season..."
+			placeholder="Select a season..."
 			loadElement="Loading seasons..."
 			anchorElement={(isOpen: boolean) => (
 				<StyledSeasonTitle colorTokens={colorTokens}>
-					{season?.name ?? 'Loading seasons...'}
+					{season?.name ?? 'Select a season...'}
 					<StyledIcon icon="ChevronDown" size={Size.TINY} isOpen={isOpen} />
 				</StyledSeasonTitle>
 			)}

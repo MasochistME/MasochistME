@@ -1,6 +1,13 @@
 import styled from 'styled-components';
 
-import { ErrorFallback, Flex, QueryBoundary, Loader, Icon } from 'components';
+import {
+	ErrorFallback,
+	Flex,
+	QueryBoundary,
+	Loader,
+	Icon,
+	Warning,
+} from 'components';
 import { Section, SectionProps } from 'containers';
 
 import { SingleSeason } from './SingleSeason';
@@ -44,6 +51,10 @@ type Props = {
 };
 const SeasonBoundary = ({ selectedSeasonId }: Props) => {
 	const { season, races } = useRacesFromSeason(selectedSeasonId);
+	if (selectedSeasonId === null)
+		return (
+			<Warning description="There is no seasons active at the moment. Select one of the past races from the dropdown above." />
+		);
 	return <SingleSeason season={season} races={races} />;
 };
 
