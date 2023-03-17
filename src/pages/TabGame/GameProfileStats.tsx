@@ -1,12 +1,12 @@
-import styled from 'styled-components';
 import { Game } from '@masochistme/sdk/dist/v1/types';
+import styled from 'styled-components';
 
-import { useGameCompletion } from 'hooks';
-import { media, useTheme, ColorTokens } from 'styles';
-import { getPercentage } from 'utils';
-import { Flex, Skeleton, QueryBoundary } from 'components';
+import { Flex, QueryBoundary, Skeleton } from 'components';
 import { StatBlock } from 'containers';
+import { useGameCompletion } from 'hooks';
 import { useCuratorMembers, useLeaderboardsGames } from 'sdk';
+import { ColorTokens, media, useTheme } from 'styles';
+import { getPercentage } from 'utils';
 
 type Props = {
 	game?: Game;
@@ -46,10 +46,10 @@ const GameProfileStatsBoundary = (props: Required<Props>) => {
 			: `${gameLeaderboards.avgPlaytime.toFixed(2)} h`;
 
 	const completionTimeShortest = gameLeaderboards?.times?.shortestCompletion
-		? `${gameLeaderboards?.times.shortestCompletion} h`
+		? `${gameLeaderboards?.times.shortestCompletion.toFixed(2)} h`
 		: '—';
 	const completionTimeLongest = gameLeaderboards?.times?.longestCompletion
-		? `${gameLeaderboards?.times.longestCompletion} h`
+		? `${gameLeaderboards?.times.longestCompletion.toFixed(2)} h`
 		: '—';
 	const completionPercentage = getPercentage(
 		gameLeaderboards?.completions?.base ?? 0,
