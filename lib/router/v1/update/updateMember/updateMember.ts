@@ -417,6 +417,8 @@ const getMemberSteamGamesFallback = async (
       key: process.env.STEAM_KEY,
       steamid: memberId,
       include_played_free_games: true,
+      include_free_sub: true,
+      skip_unvetted_apps: false,
     },
   });
   const memberSteamGames: MemberSteamGame[] =
