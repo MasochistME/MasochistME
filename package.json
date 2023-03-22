@@ -34,10 +34,10 @@
   ],
   "dependencies": {
     "@masochistme/sdk": "^3.0.1",
-    "arcybot": "^1.4.6",
+    "arcybot": "^1.4.8",
     "compromise": "^12.2.1",
     "dayjs": "^1.11.5",
-    "discord.js": "^14.5.0",
+    "discord.js": "^14.8.0",
     "dotenv": "^16.0.3",
     "mongodb": "^4.10.0"
   },
