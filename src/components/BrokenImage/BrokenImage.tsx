@@ -9,12 +9,12 @@ import { Tooltip } from '../Tooltip';
 type Props = {
 	title?: string;
 	size?: Size;
-	width?: string;
-	height?: string;
+	width?: string; // unused
+	height?: string; // unused
 };
 
 export const BrokenImage = (props: Props) => {
-	const { title, size, width, height } = props;
+	const { title, size } = props;
 
 	return (
 		<Tooltip content={title ?? 'I could not load :('}>

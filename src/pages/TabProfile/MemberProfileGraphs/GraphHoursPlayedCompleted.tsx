@@ -12,11 +12,7 @@ export const GraphHoursPlayedCompleted = (props: Props) => {
 
 	const { tiersData } = useTiers();
 	const { gamesData } = useCuratedGames();
-	const {
-		memberGamesData,
-		isLoading: isMemberGamesLoading,
-		isFetched: isMemberGamesFetched,
-	} = useMemberGames(memberId);
+	const { memberGamesData } = useMemberGames(memberId);
 
 	const memberGamesWithTiers = memberGamesData
 		.filter(memberGame => memberGame.completionPercentage === 100)

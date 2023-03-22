@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Section } from 'containers';
-import { Flex, Icon, Tooltip, Size } from 'components';
+import { Flex, Icon, Size } from 'components';
 
 import { GraphHoursPlayedTotal } from './GraphHoursPlayedTotal';
 import { GraphHoursPlayedCompleted } from './GraphHoursPlayedCompleted';
