@@ -9,8 +9,9 @@ import {
 import { getErrorEmbed, getInfoEmbed, log } from "arcybot";
 import dayjs from "dayjs";
 
-import { RACE_TIMEOUT, RACE_RESULTS_TIMEOUT } from "consts";
+import { RACE_TIMEOUT, RACE_RESULTS_TIMEOUT, Room } from "consts";
 import {
+  getChannelByKey,
   getDateFromDelay,
   getDMChannel,
   getModChannel,
@@ -87,7 +88,7 @@ const handleRaceFinish = async (race: Race) => {
     dayjs(startDate).diff(new Date()) <= 0 &&
     dayjs(endDate).diff(new Date()) <= 0;
   const raceEndPeriodEnded =
-    dayjs(endDate).diff(new Date()) <= RACE_RESULTS_TIMEOUT;
+    -1 * dayjs(endDate).diff(new Date()) >= RACE_RESULTS_TIMEOUT;
 
   const raceShouldEnterEndPeriod = raceEnded && isActive && !isDone;
   const raceShouldEnd = raceEnded && !isActive && !isDone && raceEndPeriodEnded;
@@ -96,6 +97,17 @@ const handleRaceFinish = async (race: Race) => {
     log.INFO(
       `Race ends - entering the ${RACE_RESULTS_TIMEOUT}ms long grace period...`,
     );
+    try {
+      getChannelByKey(Room.RACE_CURRENT)?.send(
+        getInfoEmbed(
+          "RACE FINISHING SOON",
+          `You cannot join the race anymore, but if you are in the middle of your run, you still have ${RACE_RESULTS_TIMEOUT}ms to finish. After that time the race is closed and the results will get posted.`,
+        ),
+      );
+    } catch (e) {
+      log.WARN("Sending the warning about race ending failed!");
+      console.log(e);
+    }
     const response = await sdk.updateRaceById({
       raceId,
       race: { isActive: false },

@@ -80,8 +80,8 @@ const init = async () => {
     .on("warn", async (message: string) => {
       log.DEBUG("Discord bot warning detected");
       console.log(message);
-    })
-    .on("debug", console.log);
+    });
+  // .on("debug", console.log);
 };
 
 init();
