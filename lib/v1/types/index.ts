@@ -4,6 +4,8 @@
  */
 
 export * from './__Helpers';
+export * from './Award';
+export * from './AwardCategory';
 export * from './Badge';
 export * from './Candidate';
 export * from './Featured';
@@ -12,6 +14,7 @@ export * from './Leaderboards';
 export * from './Log';
 export * from './Member';
 export * from './MemberAchievement';
+export * from './MemberAward';
 export * from './MemberBadge';
 export * from './MemberGame';
 export * from './PatreonTier';

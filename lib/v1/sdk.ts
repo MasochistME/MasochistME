@@ -11,11 +11,14 @@ import {
 	getMembersList,
 	getMemberById,
 	updateMemberById,
+	getMemberAwardList,
 	getMemberBadgeList,
 	getMemberGameList,
 	getMemberAchievementList,
 	giveBadgeToMemberById,
+	giveAwardToMemberById,
 	revokeBadgeFromMemberById,
+	revokeAwardFromMemberById,
 } from 'v1/api/members';
 import {
 	getBadgesList,
@@ -24,6 +27,13 @@ import {
 	updateBadgeById,
 	deleteBadgeById,
 } from 'v1/api/badges';
+import {
+	getAwardsList,
+	createAward,
+	getAwardById,
+	updateAwardById,
+	deleteAwardById,
+} from 'v1/api/awards';
 import { createLog, getLogList } from 'v1/api/logs';
 import {
 	createRace,
@@ -162,6 +172,37 @@ export class SDK {
 	>(
 		args: Head<T>,
 	) => revokeBadgeFromMemberById(args, this.BASE_URL);
+
+	/**************************
+	 *         AWARDS         *
+	 **************************/
+
+	public getAwardsList = <T extends typeof getAwardsList>(args: Head<T>) =>
+		getBadgesList(args, this.BASE_URL);
+	public createAwardB = <T extends typeof createAward>(args: Head<T>) =>
+		createAward(args, this.BASE_URL);
+	public getAwardBById = <T extends typeof getAwardById>(args: Head<T>) =>
+		getAwardById(args, this.BASE_URL);
+	public updateAwardBById = <T extends typeof updateAwardById>(args: Head<T>) =>
+		updateAwardById(args, this.BASE_URL);
+	public deleteAwardBById = <T extends typeof deleteAwardById>(args: Head<T>) =>
+		deleteAwardById(args, this.BASE_URL);
+
+	/*********************************
+	 *         MEMBER AWARDS         *
+	 *********************************/
+
+	public getMemberAwardList = <T extends typeof getMemberAwardList>(
+		args: Head<T>,
+	) => getMemberAwardList(args, this.BASE_URL);
+	public giveAwardToMemberById = <T extends typeof giveAwardToMemberById>(
+		args: Head<T>,
+	) => giveAwardToMemberById(args, this.BASE_URL);
+	public revokeAwardFromMemberById = <
+		T extends typeof revokeAwardFromMemberById,
+	>(
+		args: Head<T>,
+	) => revokeAwardFromMemberById(args, this.BASE_URL);
 
 	/********************
 	 *       LOGS       *
