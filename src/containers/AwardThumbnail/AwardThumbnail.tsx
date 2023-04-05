@@ -24,8 +24,15 @@ export const AwardThumbnail = (props: Props) => {
 					size={size}
 					isUnlocked={isUnlocked}
 					colorTokens={colorTokens}
+					awardImg={awardImg}
 					onClick={onClick}>
-					<img src={awardImg} alt="Award" loading="lazy" />
+					<img src="http://http.cat/404.jpg" />
+					{/* <img
+						src={awardImg}
+						alt="Award"
+						loading="lazy"
+						style={{ mask: `url(${awardImg})` }}
+					/> */}
 				</StyledAwardThumbnail>
 			</Tooltip>
 		</QueryBoundary>
@@ -35,6 +42,7 @@ export const AwardThumbnail = (props: Props) => {
 const StyledAwardThumbnail = styled.div.attrs(
 	(
 		props: Pick<Props, 'size' | 'onClick' | 'isUnlocked'> & {
+			awardImg: string;
 			colorTokens: ColorTokens;
 		},
 	) => {
@@ -50,6 +58,7 @@ const StyledAwardThumbnail = styled.div.attrs(
 	},
 )<
 	Pick<Props, 'size' | 'onClick' | 'isUnlocked'> & {
+		awardImg: string;
 		colorTokens: ColorTokens;
 	}
 >`
@@ -58,14 +67,23 @@ const StyledAwardThumbnail = styled.div.attrs(
 	justify-content: center;
 	box-sizing: border-box;
 	overflow: hidden;
+	background-color: white;
+	/* background-color: ${({ colorTokens }) =>
+		colorTokens['semantic-color--idle']}; */
+	-webkit-mask-image: ${({ awardImg }) => `url(${awardImg})`};
+	-webkit-mask-size: 64px 64px;
+	-webkit-mask-repeat: no-repeat;
+	mask-image: ${({ awardImg }) => `url(${awardImg})`};
+	mask-size: 64px 64px;
+	mask-repeat: no-repeat;
 
-	img {
+	/* img {
 		width: 100%;
 		height: 100%;
 		object-fit: contain;
 		filter: ${({ isUnlocked, colorTokens }) =>
-			isUnlocked
-				? `drop-shadow(0 0 5px ${colorTokens['semantic-color--idle']})`
-				: ` contrast(0%) opacity(50%) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']})`};
-	}
+		isUnlocked
+			? `drop-shadow(0 0 5px ${colorTokens['semantic-color--idle']})`
+			: ` contrast(0%) opacity(50%) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']})`};
+	} */
 `;
