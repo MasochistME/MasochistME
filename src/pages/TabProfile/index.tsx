@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { PatreonTier, PatronTier } from '@masochistme/sdk/dist/v1/types';
 
 import { useMemberById, usePatreonTiers, useMemberLeaderboards } from 'sdk';
 import {
@@ -22,11 +23,12 @@ import { MemberProfileBadges } from './MemberProfileBadges';
 import { MemberProfileGraphs } from './MemberProfileGraphs';
 import { MemberProfileGames } from './MemberProfileGames';
 import { MemberProfileStats } from './MemberProfileStats';
-import { PatreonTier, PatronTier } from '@masochistme/sdk/dist/v1/types';
+import { MemberProfileAwards } from './MemberProfileAwards';
 
 enum TabsMap {
 	GRAPHS = 'graphs',
 	BADGES = 'badges',
+	AWARDS = 'awards',
 	GAMES = 'games',
 }
 
@@ -131,6 +133,7 @@ const TabProfileTabsBoundary = ({ id }: { id: string }) => {
 			<Tabs value={activeTab} onChange={handleChangeTab}>
 				<Tab label="Games" value={TabsMap.GAMES} />
 				<Tab label="Badges" value={TabsMap.BADGES} />
+				<Tab label="Awards" value={TabsMap.AWARDS} />
 				<Tab label="Graphs" value={TabsMap.GRAPHS} />
 			</Tabs>
 			<TabPanel activeTab={activeTab} tabId={TabsMap.GAMES}>
@@ -138,6 +141,9 @@ const TabProfileTabsBoundary = ({ id }: { id: string }) => {
 			</TabPanel>
 			<TabPanel activeTab={activeTab} tabId={TabsMap.BADGES}>
 				<MemberProfileBadges memberId={id} />
+			</TabPanel>
+			<TabPanel activeTab={activeTab} tabId={TabsMap.AWARDS}>
+				<MemberProfileAwards memberId={id} />
 			</TabPanel>
 			<TabPanel activeTab={activeTab} tabId={TabsMap.GRAPHS}>
 				<MemberProfileGraphs memberId={id} />

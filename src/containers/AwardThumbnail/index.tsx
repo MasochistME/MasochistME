@@ -1,0 +1,1 @@
+export { AwardThumbnail } from './AwardThumbnail';
