@@ -62,9 +62,10 @@ const StyledAwardThumbnail = styled.div.attrs(
 	img {
 		width: 100%;
 		height: 100%;
+		object-fit: contain;
 		filter: ${({ isUnlocked, colorTokens }) =>
 			isUnlocked
 				? `drop-shadow(0 0 5px ${colorTokens['semantic-color--idle']})`
-				: ` contrast(0%) opacity(1%) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']})`};
+				: ` contrast(0%) opacity(50%) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']}) drop-shadow(0 0 0 ${colorTokens['semantic-color--idle']})`};
 	}
 `;
