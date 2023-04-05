@@ -178,7 +178,7 @@ export class SDK {
 	 **************************/
 
 	public getAwardsList = <T extends typeof getAwardsList>(args: Head<T>) =>
-		getBadgesList(args, this.BASE_URL);
+		getAwardsList(args, this.BASE_URL);
 	public createAwardB = <T extends typeof createAward>(args: Head<T>) =>
 		createAward(args, this.BASE_URL);
 	public getAwardBById = <T extends typeof getAwardById>(args: Head<T>) =>
