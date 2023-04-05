@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
 import { useCuratedGames } from 'sdk';
-import { Flex, Icon, Button, QueryBoundary, Skeleton } from 'components';
+import { Flex, Icon, Button } from 'components';
 import { Game } from '@masochistme/sdk/dist/v1/types';
 
 type Props = {

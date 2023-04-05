@@ -79,6 +79,8 @@ export const useMemberLeaderboards = (steamId?: string) => {
 		error,
 	} = useQuery(
 		['masochist', 'leaderboards', steamId],
+		// We can disable non-null assertion because of "enabled"
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		() => sdk.getMemberLeaderboardsPositionById({ memberId: steamId! }),
 		{ enabled: !!steamId },
 	);
