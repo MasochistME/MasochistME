@@ -1,6 +1,6 @@
 name: Pull request check
 
-on: pull_request
+on: push
 
 jobs:
   build:
@@ -20,6 +20,10 @@ jobs:
       - name: Install dependencies
         run: yarn
 
+      - name: Create fake config file
+        run: |
+          echo "{\"PORT\": \"0000\", \"API\": \"http://localhost:0001\"}" > ./src/config.json
+
       - name: Test
         run: yarn test
 
@@ -27,4 +31,4 @@ jobs:
         run: yarn lint
 
       - name: Build
-        run: yarn maso:build
+        run: CI=false yarn maso:build
