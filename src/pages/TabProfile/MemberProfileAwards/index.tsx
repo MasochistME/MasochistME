@@ -33,7 +33,7 @@ export const MemberProfileAwards = (props: Props) => {
 						/>
 						<h1>{category.name}</h1>
 					</CategoryTitle>
-					<Flex gap={8}>
+					<Flex gap={16}>
 						{category.awards?.map(award => (
 							<AwardThumbnail award={award} isUnlocked={award.hasAward} />
 						))}
