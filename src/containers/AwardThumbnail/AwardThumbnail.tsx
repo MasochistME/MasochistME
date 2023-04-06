@@ -63,16 +63,16 @@ const StyledAwardThumbnail = styled.div.attrs(
 	box-sizing: border-box;
 	overflow: hidden;
 
-	${({ isUnlocked, colorTokens, awardImg, size }) =>
+	${({ isUnlocked, colorTokens, awardImg }) =>
 		!isUnlocked &&
 		`
 			background-color: ${colorTokens['semantic-color--idle']}};
 			-webkit-mask-image: url(${awardImg});
-			-webkit-mask-size: ${size}px;
+			-webkit-mask-size: contain;
 			-webkit-mask-repeat: no-repeat;
 			-webkit-mask-position: center;
 			mask-image: url(${awardImg});
-			mask-size: ${size}px;
+			mask-size: contain;
 			mask-repeat: no-repeat;
 			mask-position: center;
 			opacity: 0.8;
