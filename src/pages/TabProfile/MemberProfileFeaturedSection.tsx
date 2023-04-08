@@ -52,15 +52,7 @@ const SectionBoundary = ({ memberId }: Props) => {
 		if (featured.type === FeaturedType.NEWS)
 			return <FeaturedNews featured={featured} isCompact />;
 		if (featured.type === FeaturedType.VIDEO)
-			return (
-				<FeaturedVideo
-					featured={featured}
-					isCompact
-					hideOwner
-					hideDate
-					hideGame
-				/>
-			);
+			return <FeaturedVideo featured={featured} isCompact hideOwner />;
 	}, [featuredData, activeIndex]);
 
 	return (
