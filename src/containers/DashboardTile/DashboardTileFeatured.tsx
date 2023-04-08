@@ -56,7 +56,7 @@ export const DashboardTileFeatured = (props: Props): JSX.Element => {
 };
 
 const StyledContent = styled(Flex)`
-	gap: 12px;
+	gap: var(--size-12);
 	justify-content: space-between;
 	height: 100%;
 `;
@@ -69,7 +69,7 @@ DashboardTileFeatured.Skeleton = (
 		fullWidth
 		content={
 			<StyledContent column align>
-				<Skeleton width="840px" height="440px" />
+				<Skeleton width="84rem" height="44rem" />
 			</StyledContent>
 		}
 		{...props}
@@ -84,7 +84,7 @@ DashboardTileFeatured.Error = (
 		fullWidth
 		content={
 			<StyledContent column align>
-				<ErrorFallback height="440px" />
+				<ErrorFallback height="44rem" />
 			</StyledContent>
 		}
 		{...props}

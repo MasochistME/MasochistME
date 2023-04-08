@@ -26,11 +26,12 @@ export const Tooltip = (props: Props) => {
 };
 
 const StyledTooltip = styled(Flex)<{ colorTokens: ColorTokens }>`
-	padding: 8px;
+	padding: var(--size-8);
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	background-color: ${({ colorTokens }) => colorTokens['core-secondary-bg']};
-	border-radius: 8px;
-	border: 1px solid ${({ colorTokens }) => colorTokens['core-secondary-text']};
+	border-radius: var(--size-8);
+	border: var(--size-1) solid
+		${({ colorTokens }) => colorTokens['core-secondary-text']};
 	text-align: left;
 	max-width: ${media.bigPhones};
 `;

@@ -107,7 +107,7 @@ const LogListSkeleton = () => (
 				key={`log-new-${i}`}
 				height={42}
 				width="100%"
-				style={{ marginBottom: '2px' }}
+				style={{ marginBottom: '0.2rem' }}
 			/>
 		))}
 	</>
@@ -115,17 +115,17 @@ const LogListSkeleton = () => (
 
 const StyledLogList = styled(Flex)`
 	flex-direction: column;
-	max-width: 1000px;
+	max-width: 100rem;
 	width: 100%;
 `;
 
 const StyledLogItem = styled(Flex)<{ colorTokens: ColorTokens }>`
 	justify-content: space-between;
 	width: 100%;
-	padding: 4px;
-	border-bottom: 1px solid
+	padding: var(--size-4);
+	border-bottom: var(--size-1) solid
 		${({ colorTokens }) => colorTokens['core-primary-bg']};
-	border-top: 1px solid
+	border-top: var(--size-1) solid
 		${({ colorTokens }) => colorTokens['semantic-color--disabled']}66;
 	&:first-child {
 		border-top: none;

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { fonts, useTheme, ColorTokens } from 'styles';
+import { useTheme, ColorTokens } from 'styles';
 import { Icon, IconType, Tooltip } from 'components';
 import { Size } from 'components';
 
@@ -62,25 +62,27 @@ const StyledButton = styled.button<{
 	display: flex;
 	align-items: center;
 	margin: 0;
-	padding: 0;
 	border: none;
-	gap: 4px;
-	padding: ${({ iconOnly }) => (iconOnly ? `8px` : '4px 12px')};
-	border-radius: 4px;
+	gap: var(--size-8);
+	padding: ${({ iconOnly }) =>
+		iconOnly ? `var(--size-8)` : 'var(--size-6) var(--size-10)'};
+	border-radius: var(--size-4);
 	border: ${({ iconOnly, isGolden, colorTokens }) => {
 		if (iconOnly) return 0;
-		if (isGolden) return `1px solid ${colorTokens['semantic-color--tier-4']}`;
-		return `1px solid ${colorTokens['element-color--button-border']}`;
+		if (isGolden)
+			return `var(--size-1) solid ${colorTokens['semantic-color--tier-4']}`;
+		return `var(--size-1) solid ${colorTokens['element-color--button-border']}`;
 	}};
 	font-size: ${({ size }) => {
-		if (size === Size.TINY) return '8px';
-		if (size === Size.SMALL) return '12px';
-		if (size === Size.MEDIUM) return '18px';
-		if (size === Size.BIG) return '24px';
-		if (size === Size.LARGE) return '32px';
-		return '18px';
+		if (size === Size.TINY) return 'var(--size-12)';
+		if (size === Size.SMALL) return 'var(--size-14)';
+		if (size === Size.MEDIUM) return 'var(--size-16)';
+		if (size === Size.BIG) return 'var(--size-18)';
+		if (size === Size.LARGE) return 'var(--size-20)';
+		return 'var(--size-16)';
 	}};
-	font-family: ${fonts.Raleway};
+	font-family: var(--font-raleway);
+	font-weight: 600;
 	background-color: ${({ iconOnly, isGolden, colorTokens }) => {
 		if (iconOnly) return 'transparent';
 		if (isGolden) return `${colorTokens['core-primary-bg']}99`;

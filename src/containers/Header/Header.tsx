@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { fonts, media, useTheme, ColorTokens } from 'styles';
+import { media, useTheme, ColorTokens } from 'styles';
 import { Flex } from 'components';
 import { ButtonsSocialMedia, Logo } from 'containers';
 
@@ -26,23 +26,23 @@ export const Header = (): JSX.Element => {
 const StyledHeader = styled(Flex)<{ colorTokens: ColorTokens }>`
 	min-width: 100%;
 	max-width: 100%;
-	height: 70px;
+	height: var(--size-60);
 	justify-content: space-between;
 	background-color: ${({ colorTokens }) =>
 		colorTokens['element-color--header-bg']};
 	color: ${({ colorTokens }) => colorTokens['element-color--header-text']};
-	font-family: ${fonts.Raleway};
-	padding: 12px 32px;
+	font-family: var(--font-raleway);
+	padding: var(--size-12) var(--size-32);
 	@media (max-width: ${media.tablets}) {
-		padding: 8px 12px;
+		padding: var(--size-8) var(--size-12);
 	}
 `;
 
 const StyledHeaderTitle = styled.h1`
-	font-size: 1.2em;
-	font-weight: normal;
-	letter-spacing: 0.5em;
-	margin: 0 10px;
+	font-weight: 600;
+	font-size: var(--size-16);
+	letter-spacing: var(--size-4);
+	margin: 0 var(--size-10);
 	text-align: center;
 	text-transform: uppercase;
 

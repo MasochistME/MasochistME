@@ -53,13 +53,13 @@ Slider.Expand = SliderExpand;
 
 const Wrapper = styled(Flex)`
 	flex: 1 1 auto;
-	width: 250px;
+	width: 25rem;
 	max-width: 100%;
 	height: 100%;
 	align-items: center;
 	justify-content: space-between;
-	gap: 16px;
-	padding: 0 16px;
+	gap: var(--size-16);
+	padding: 0 var(--size-16);
 `;
 
 const StyledSlider = styled(MuiSlider)<{ colorTokens: ColorTokens }>`

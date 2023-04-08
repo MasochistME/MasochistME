@@ -71,8 +71,8 @@ export const DashboardTileTop = (
 	return (
 		<Section
 			title="Top 10 users"
-			minWidth="400px"
-			maxWidth="450px"
+			minWidth="40rem"
+			maxWidth="45rem"
 			content={
 				<Flex column align justify gap={5}>
 					{isLoading && loadingLeaders}
@@ -87,5 +87,5 @@ export const DashboardTileTop = (
 export const StyledSectionTopMember = styled(Flex)`
 	width: 100%;
 	justify-content: space-between;
-	padding: 0 16px;
+	padding: 0 var(--size-16);
 `;

@@ -28,7 +28,7 @@ export const Markdown = (props: Props) => {
 };
 
 const StyledMarkdown = styled(Flex)`
-	gap: 22.6px;
+	gap: 2.25rem;
 	& > * {
 		margin: 0;
 	}

@@ -18,7 +18,7 @@ type Props = {
 };
 
 export const MemberProfileStats = (props: Props) => (
-	<QueryBoundary fallback={<Skeleton width="100%" height="120px" />}>
+	<QueryBoundary fallback={<Skeleton width="100%" height="12rem" />}>
 		<MemberProfileStatsBoundary {...props} />
 	</QueryBoundary>
 );
@@ -197,8 +197,8 @@ const MemberProfileStatsBoundary = (props: Props) => {
 
 const StyledGameProfileStats = styled(Flex)`
 	justify-content: space-evenly;
-	gap: 16px;
-	padding: 24px 0 32px 0;
+	gap: var(--size-16);
+	padding: var(--size-24) 0 var(--size-32) 0;
 	@media (max-width: ${media.tablets}) {
 		flex-wrap: wrap;
 	}

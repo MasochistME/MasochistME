@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Member, SeasonLeaderboardEntry } from '@masochistme/sdk/dist/v1/types';
+import styled from 'styled-components';
+
 import {
 	Button,
 	ErrorFallback,
@@ -13,11 +15,9 @@ import {
 	Tooltip,
 } from 'components';
 import { WinnerLink } from 'containers';
+import { useMixpanel } from 'hooks';
 import { useCuratorMembers, useSeasonLeaderboards } from 'sdk';
 import { ModalParticipant } from './ModalParticipant';
-import styled from 'styled-components';
-import { fonts } from 'styles';
-import { useMixpanel } from 'hooks';
 
 enum Columns {
 	PLACE = '#',
@@ -43,10 +43,7 @@ export const SingleSeasonRanking = (props: Props) => {
 	return (
 		<QueryBoundary
 			fallback={
-				<Table.Skeleton
-					columns={columns}
-					style={{ height: '36px', margin: '6px 0' }}
-				/>
+				<Table.Skeleton columns={columns} style={{ margin: '0.6rem 0' }} />
 			}
 			errorFallback={<ErrorFallback />}>
 			<RankingBoundary {...props} />
@@ -274,9 +271,9 @@ const StyledPlace = styled.div`
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-	gap: 4px;
-	font-size: 1.3em;
+	gap: var(--size-4);
+	font-size: var(--size-16);
 	font-weight: bold;
-	font-family: ${fonts.Dosis};
-	padding: 4px;
+	font-family: var(--font-dosis);
+	padding: var(--size-4);
 `;

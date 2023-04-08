@@ -77,16 +77,16 @@ const StyledMemberAvatar = styled.div.attrs(
 			cursor: onClick ? 'pointer' : 'help',
 		};
 		if (patronTier === PatronTier.TIER1) {
-			style.border = `5px solid ${colorTokens['semantic-color--tier-1']}`;
+			style.border = `var(--size-5) solid ${colorTokens['semantic-color--tier-1']}`;
 		}
 		if (patronTier === PatronTier.TIER2) {
-			style.border = `5px solid ${colorTokens['semantic-color--tier-2']}`;
+			style.border = `var(--size-5) solid ${colorTokens['semantic-color--tier-2']}`;
 		}
 		if (patronTier === PatronTier.TIER3) {
-			style.border = `5px solid ${colorTokens['semantic-color--tier-3']}`;
+			style.border = `var(--size-5) solid ${colorTokens['semantic-color--tier-3']}`;
 		}
 		if (patronTier === PatronTier.TIER4) {
-			style.border = `5px solid ${colorTokens['semantic-color--tier-4']}`;
+			style.border = `var(--size-5) solid ${colorTokens['semantic-color--tier-4']}`;
 		}
 		return { style };
 	},
@@ -105,11 +105,11 @@ const StyledMemberAvatar = styled.div.attrs(
 	background-color: ${({ isEmpty, colorTokens }) =>
 		isEmpty ? colorTokens['core-tertiary-bg'] : 'transparent'};
 	padding: ${({ size }) =>
-		size === Size.BIG || size === Size.LARGE ? 1 : 0}px;
+		size === Size.BIG || size === Size.LARGE ? 0.1 : 0}rem;
 	border-radius: ${({ size }) =>
-		size === Size.SMALL || size === Size.TINY ? 4 : 8}px;
+		size === Size.SMALL || size === Size.TINY ? 0.4 : 0.8}rem;
 	border: ${({ size, colorTokens }) =>
-		`${size === Size.SMALL || size === Size.TINY ? 2 : 3}px
+		`${size === Size.SMALL || size === Size.TINY ? 0.2 : 0.3}rem 
 		solid ${colorTokens['core-primary-bg']}`};
 
 	& > * {

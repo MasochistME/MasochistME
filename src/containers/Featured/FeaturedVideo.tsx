@@ -102,7 +102,7 @@ export const FeaturedVideo = (props: Props) => {
 };
 
 const StyledFeaturedVideoWrapper = styled(Flex)`
-	gap: 8px;
+	gap: var(--size-8);
 	height: auto;
 	p,
 	h3 {
@@ -113,7 +113,7 @@ const StyledFeaturedVideoWrapper = styled(Flex)`
 const StyledFeaturedVideo = styled.div`
 	position: relative;
 	padding-bottom: 56.25%;
-	padding-top: 30px;
+	padding-top: var(--size-30);
 	height: 0;
 	overflow: hidden;
 	iframe {

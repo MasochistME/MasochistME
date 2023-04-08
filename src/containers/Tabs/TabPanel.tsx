@@ -30,7 +30,7 @@ export const TabPanel = (props: Props) => {
 
 const StyledTab = styled(Flex)<{ colorTokens: ColorTokens }>`
 	width: 100%;
-	padding: 16px;
+	padding: var(--size-16);
 	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']}99;
 	box-sizing: border-box;
 `;

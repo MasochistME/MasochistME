@@ -22,7 +22,7 @@ export const TabSupport = (): JSX.Element => {
 					<PatronsList />
 				</QueryBoundary>
 			</StyledHallOfFame>
-			<Info isDesktopOnly width="100%" maxWidth="450px" />
+			<Info isDesktopOnly width="100%" maxWidth="45rem" />
 		</SubPage>
 	);
 };
@@ -101,16 +101,15 @@ const StyledHallOfFame = styled(Flex)`
 	flex-direction: column;
 	flex: 1 1 100%;
 	flex-wrap: wrap;
-	gap: 16px;
+	gap: var(--size-16);
 `;
 
 const ButtonSupport = styled.img`
 	cursor: pointer;
-	box-shadow: 0 0 10px #000;
+	filter: drop-shadow(0 0 var(--size-10) #000);
 	margin: 0;
 	padding: 0;
-	height: 36px;
+	max-height: var(--size-36);
 	border: 0px;
-	border: 0;
-	border-radius: 8px;
+	border-radius: var(--size-8);
 `;

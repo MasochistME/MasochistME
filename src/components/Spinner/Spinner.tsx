@@ -20,6 +20,6 @@ export const Spinner = (props: Props): JSX.Element => {
 
 const StyledSpinner = styled(Flex)<{ colorTokens: ColorTokens }>`
 	box-sizing: border-box;
-	font-size: 32px;
+	font-size: var(--size-32);
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 `;

@@ -123,7 +123,7 @@ type ContentProps = Props & { content: React.ReactNode };
 const Content = ({ content, ...props }: ContentProps) => (
 	<Section
 		width="100%"
-		maxWidth="450px"
+		maxWidth="45rem"
 		title="History"
 		content={<StyledSectionHistory>{content}</StyledSectionHistory>}
 		{...props}
@@ -132,9 +132,9 @@ const Content = ({ content, ...props }: ContentProps) => (
 
 const StyledSectionHistory = styled(Flex)`
 	flex-direction: column;
-	gap: 11px;
+	gap: var(--size-11);
 	@media (max-width: ${media.smallNetbooks}) {
-		gap: 4px;
+		gap: var(--size-4);
 	}
 `;
 

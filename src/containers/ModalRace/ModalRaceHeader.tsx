@@ -72,15 +72,15 @@ const ModalRaceSkeleton = () => (
 			<Skeleton />
 			<Skeleton width="100%" />
 		</Flex>
-		<Skeleton width="100%" height="200px" />
+		<Skeleton width="100%" height="20rem" />
 	</StyledModalRaceHeader>
 );
 
 const StyledModalRaceHeader = styled(Flex)`
 	justify-content: space-between;
 	text-align: left;
-	gap: 8px;
-	padding: 8px;
+	gap: var(--size-8);
+	padding: var(--size-8);
 	p,
 	h2 {
 		margin: 0;

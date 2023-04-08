@@ -171,12 +171,12 @@ const StyledMemberProfileTop = styled(Flex)<{
 		if (isHighestPatronTier) return `${colorTokens['semantic-color--tier-4']}`;
 		return `inherit`;
 	}};
-	border-radius: 16px;
-	${({ tierColor }) => `border: 2px solid ${tierColor}`};
+	border-radius: var(--size-16);
+	${({ tierColor }) => `border: var(--size-2) solid ${tierColor}`};
 `;
 
 const MemberProfileSidebar = styled(Flex)`
 	width: 100%;
-	max-width: 450px;
-	gap: 16px;
+	max-width: 45rem;
+	gap: var(--size-16);
 `;

@@ -18,8 +18,8 @@ export const MemberProfileGraphs = (props: Props): JSX.Element | null => {
 	return (
 		<Flex justify flexWrap="wrap" width="100%" gap={16}>
 			<Section
-				minWidth="250px"
-				maxWidth="250px"
+				minWidth="25rem"
+				maxWidth="25rem"
 				title={
 					<Flex align gap={8}>
 						<span>Playtime total [h]</span>
@@ -33,8 +33,8 @@ export const MemberProfileGraphs = (props: Props): JSX.Element | null => {
 				content={<GraphHoursPlayedTotal memberId={memberId} />}
 			/>
 			<Section
-				minWidth="250px"
-				maxWidth="250px"
+				minWidth="25rem"
+				maxWidth="25rem"
 				title={
 					<Flex align gap={8}>
 						<span>Playtime completed [h]</span>
@@ -48,8 +48,8 @@ export const MemberProfileGraphs = (props: Props): JSX.Element | null => {
 				content={<GraphHoursPlayedCompleted memberId={memberId} />}
 			/>
 			<Section
-				minWidth="250px"
-				maxWidth="250px"
+				minWidth="25rem"
+				maxWidth="25rem"
 				title={
 					<Flex align gap={8}>
 						<span>Games completed</span>

@@ -31,7 +31,7 @@ type ContentProps = Props & { content: React.ReactNode };
 const Content = ({ content, ...props }: ContentProps) => (
 	<Section
 		width="100%"
-		maxWidth="450px"
+		maxWidth="45rem"
 		title="New badges"
 		content={<StyledNewBadges>{content}</StyledNewBadges>}
 		{...props}
@@ -67,9 +67,9 @@ const DashboardTileBadgesBoundary = (props: Props) => {
 
 const StyledNewBadges = styled(Flex)`
 	justify-content: center;
-	gap: 16px;
+	gap: var(--size-16);
 	@media (max-width: ${media.smallNetbooks}) {
-		gap: 4px;
+		gap: var(--size-4);
 		flex-wrap: wrap;
 	}
 `;
