@@ -39,7 +39,7 @@ export const TabBadges = (): JSX.Element => {
 				{badgeListView === BadgeView.TILE && <BadgesTileView />}
 				{badgeListView === BadgeView.TABLE && <BadgesTableView />}
 			</StyledBadges>
-			<Info isDesktopOnly minWidth="350px" maxWidth="350px" />
+			<Info isDesktopOnly minWidth="35rem" maxWidth="35rem" />
 		</SubPage>
 	);
 };
@@ -73,6 +73,6 @@ const Info = (props: Partial<SectionProps>): JSX.Element => {
 
 const StyledBadges = styled(Flex)`
 	flex-direction: column;
-	width: 1100px;
+	width: 110rem;
 	max-width: 100%;
 `;

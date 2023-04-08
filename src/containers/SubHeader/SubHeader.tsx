@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { fonts, media, useTheme, ColorTokens } from 'styles';
+import { media, useTheme, ColorTokens } from 'styles';
 import { Tab, tabs } from 'configuration/tabs';
 import { useAppContext } from 'context';
 import { Flex, Icon, Size } from 'components';
@@ -16,10 +16,10 @@ export const SubHeader = (): JSX.Element => {
 		<StyledSubHeader row>
 			<StyledTitle row align colorTokens={colorTokens} shUrl={SH_URL}>
 				<span className="subheader--icon__mobile">
-					<Icon icon={findTab()?.icon ?? 'QuestionCircle'} size={Size.MEDIUM} />
+					<Icon icon={findTab()?.icon ?? 'QuestionCircle'} size={Size.SMALL} />
 				</span>
 				<span className="subheader--icon__desktop">
-					<Icon icon={findTab()?.icon ?? 'QuestionCircle'} size={Size.BIG} />
+					<Icon icon={findTab()?.icon ?? 'QuestionCircle'} size={Size.MEDIUM} />
 				</span>
 				<h2>{findTab()?.text ?? '404'}</h2>
 			</StyledTitle>
@@ -32,19 +32,18 @@ const StyledSubHeader = styled(Flex)`
 	flex: 1 1 auto;
 	text-transform: uppercase;
 	width: 100%;
-	height: 100px;
+	height: 10rem;
 	box-sizing: border-box;
 `;
 
 const StyledTitle = styled(Flex)<{ colorTokens: ColorTokens; shUrl: string }>`
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
-	font-family: ${fonts.Cinzel};
-	letter-spacing: 0.3em;
-	font-size: 2em;
+	font-family: var(--font-cinzel);
+	letter-spacing: var(--size-3);
 	flex: 1 1 100%;
 	height: 100%;
-	padding: 0 24px;
-	gap: 24px;
+	padding: 0 var(--size-24);
+	gap: var(--size-24);
 	background-color: ${({ colorTokens }) => colorTokens['core-secondary-bg']};
 	background-image: url(${({ shUrl }) => shUrl});
 	background-repeat: no-repeat;
@@ -52,17 +51,21 @@ const StyledTitle = styled(Flex)<{ colorTokens: ColorTokens; shUrl: string }>`
 	background-size: cover;
 
 	@media (max-width: ${media.tablets}) {
-		letter-spacing: 0.1em;
-		gap: 8px;
-		padding: 0 12px;
+		letter-spacing: var(--size-1);
+		gap: var(--size-16);
+		padding: 0 var(--size-12);
 	}
 
 	h2 {
-		font-size: 1em;
+		all: unset;
+		font-size: var(--size-28);
+		line-height: var(--size-24);
 		font-weight: normal;
-		text-shadow: 0px 0px 5px
+		text-shadow: 0 0 var(--size-5)
 			${({ colorTokens }) => colorTokens['common-color--shadow']};
-		margin: 0;
+		@media (max-width: ${media.tablets}) {
+			font-size: var(--size-24);
+		}
 	}
 
 	& .subheader--icon__mobile {

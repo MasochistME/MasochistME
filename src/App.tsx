@@ -115,7 +115,7 @@ const PageWrapper = styled(Flex)`
 `;
 
 const Content = styled.div<{ colorTokens: ColorTokens }>`
-	width: 1500px;
+	width: 150rem;
 	max-width: 100vw;
 	position: relative;
 	box-sizing: border-box;

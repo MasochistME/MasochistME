@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Box, Modal } from '@mui/material';
 
-import { fonts, useTheme, ColorTokens } from 'styles';
+import { useTheme, ColorTokens } from 'styles';
 import { Flex, Loader, QueryBoundary } from 'components';
 import { GameLeaderboards } from 'containers';
 
@@ -32,8 +32,8 @@ export const ModalLeaderboards = (props: Props) => {
 		maxWidth: '90%',
 		maxHeight: '90%',
 		overflowY: 'auto',
-		border: `1px solid ${colorTokens['core-extra-bg']}`,
-		boxShadow: `0 0 10px ${colorTokens['common-color--black']}aa`,
+		border: `var(--size-1) solid ${colorTokens['core-extra-bg']}`,
+		boxShadow: `0 0 var(--size-10) ${colorTokens['common-color--black']}aa`,
 	};
 
 	return (
@@ -56,7 +56,7 @@ const ModalLeaderboardsBoundary = (
 
 	return (
 		<>
-			<Flex column gap={16} padding="16px">
+			<Flex column gap={16} padding="var(--size-16)">
 				<ModalLeaderboardsHeader gameId={gameId} />
 				<ModalLeaderboardsBadges gameId={gameId} isCompact={isCompact} />
 			</Flex>
@@ -68,11 +68,11 @@ const ModalLeaderboardsBoundary = (
 export const WrapperLeaderboards = styled(Flex)<{ colorTokens: ColorTokens }>`
 	box-sizing: border-box;
 	text-align: center;
-	width: 700px;
+	width: 70rem;
 	max-width: 100%;
 	height: auto;
-	gap: 16px;
+	gap: var(--size-16);
 	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']}ee;
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
-	font-family: ${fonts.Raleway};
+	font-family: var(--font-raleway);
 `;

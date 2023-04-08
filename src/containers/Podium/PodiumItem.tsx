@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { useMembers } from 'sdk';
 import { Icon, Size, Skeleton } from 'components';
-import { ColorTokens, fonts, useTheme } from 'styles';
+import { ColorTokens, useTheme } from 'styles';
 
 import { PodiumAvatar } from './PodiumAvatar';
 import { usePodiumColor } from './hooks';
@@ -67,21 +67,21 @@ const StyledPodiumItem = styled.div<{ colorTokens: ColorTokens }>`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: 8px;
-	box-shadow: 0 0 10px
+	gap: var(--size-8);
+	box-shadow: 0 0 var(--size-10)
 		${({ colorTokens }) => colorTokens['common-color--shadow']};
-	padding: 32px 0;
+	padding: var(--size-32) 0;
 	background-color: ${({ colorTokens }) => colorTokens['semantic-color--idle']};
 	&:nth-child(1) {
 		grid-column: 2;
 		grid-row: 1;
 		height: 100%;
 		z-index: 10;
-		font-size: 1.2rem;
+		font-size: var(--size-12);
 		& .place--number {
 			color: black;
-			font-size: 2rem;
-			margin-top: -10px;
+			font-size: var(--size-32);
+			margin-top: -1rem;
 		}
 	}
 	&:nth-child(2) {
@@ -90,8 +90,8 @@ const StyledPodiumItem = styled.div<{ colorTokens: ColorTokens }>`
 		height: 80%;
 		& .place--number {
 			color: black;
-			font-size: 1.1rem;
-			margin-top: -5px;
+			font-size: var(--size-18);
+			margin-top: -0.5rem;
 		}
 	}
 	&:nth-child(3) {
@@ -100,8 +100,8 @@ const StyledPodiumItem = styled.div<{ colorTokens: ColorTokens }>`
 		height: 80%;
 		& .place--number {
 			color: black;
-			font-size: 1.1rem;
-			margin-top: -5px;
+			font-size: var(--size-18);
+			margin-top: -0.5rem;
 		}
 	}
 `;
@@ -115,12 +115,12 @@ PodiumItem.Place = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	right: -2px;
-	top: 1px;
+	right: -0.2rem;
+	top: var(--size-1);
 	filter: drop-shadow(-5px 7px 5px #000);
 	& .place--number {
 		position: absolute;
-		font-family: ${fonts.Dosis};
+		font-family: var(--font-dosis);
 		font-weight: 600;
 	}
 `;
@@ -129,15 +129,16 @@ PodiumItem.Username = styled(Link)<{
 	colorTokens: ColorTokens;
 	place: 1 | 2 | 3;
 }>`
-	font-family: ${fonts.Dosis};
-	font-size: ${({ place }) => (place === 1 ? '1.5em' : '1.3em')};
+	font-family: var(--font-dosis);
+	font-size: ${({ place }) =>
+		place === 1 ? 'var(--size-24)' : 'var(--size-18)'};
 	color: ${({ colorTokens }) => colorTokens['core-tertiary-text']};
-	letter-spacing: 0.5px;
+	letter-spacing: 0.05rem;
 `;
 
 PodiumItem.Score = styled.span<{ colorTokens: ColorTokens }>`
-	font-size: 1.5em;
+	font-size: var(--size-16);
 	font-weight: bold;
-	font-family: ${fonts.Dosis};
-	border-radius: 32px;
+	font-family: var(--font-dosis);
+	border-radius: var(--size-32);
 `;

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Box, Modal } from '@mui/material';
 
-import { fonts, useTheme, ColorTokens } from 'styles';
+import { useTheme, ColorTokens } from 'styles';
 import { Flex } from 'components';
 
 import { ModalRaceHeader } from './ModalRaceHeader';
@@ -30,8 +30,8 @@ export const ModalRace = (props: Props): JSX.Element | null => {
 		maxWidth: '90%',
 		maxHeight: '90%',
 		overflowY: 'auto',
-		border: `1px solid ${colorTokens['core-extra-bg']}`,
-		boxShadow: `0 0 10px ${colorTokens['common-color--black']}aa`,
+		border: `var(--size-1) solid ${colorTokens['core-extra-bg']}`,
+		boxShadow: `0 0 var(--size-10) ${colorTokens['common-color--black']}aa`,
 	};
 
 	return (
@@ -49,12 +49,12 @@ export const ModalRace = (props: Props): JSX.Element | null => {
 export const WrapperRace = styled(Flex)<{ colorTokens: ColorTokens }>`
 	box-sizing: border-box;
 	text-align: center;
-	width: 600px;
+	width: 60rem;
 	max-width: 100%;
 	height: auto;
-	gap: 16px;
+	gap: var(--size-16);
 	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']}ee;
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
-	font-family: ${fonts.Raleway};
-	/* padding: 16px; */
+	font-family: var(--font-raleway);
+	/* padding: var(--size-16); */
 `;

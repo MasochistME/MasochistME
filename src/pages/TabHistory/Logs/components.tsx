@@ -7,11 +7,11 @@ import { media, ColorTokens, useTheme } from 'styles';
 const Description = styled.div`
 	display: inline-block;
 	width: 100%;
-	line-height: 15px;
+	line-height: var(--size-15);
 	text-align: left;
-	gap: 4px;
+	gap: var(--size-4);
 	& > * {
-		margin-right: 4px;
+		margin-right: var(--size-4);
 		vertical-align: middle;
 	}
 	@media (max-width: ${media.bigPhones}) {
@@ -25,12 +25,12 @@ const Description = styled.div`
 `;
 
 const Icons = styled(Flex)`
-	gap: 8px;
+	gap: var(--size-8);
 `;
 
 const Image = styled.img`
-	height: ${Size.SMALL}px;
-	max-height: ${Size.SMALL}px;
+	height: ${Size.SMALL / 10}rem;
+	max-height: ${Size.SMALL / 10}rem;
 `;
 
 type Props = {
@@ -67,12 +67,12 @@ const Logo = () => {
 };
 
 const Summary = styled(Flex)`
-	min-width: 130px;
+	min-width: 13rem;
 	justify-content: space-between;
 	align-items: center;
-	gap: 4px;
+	gap: var(--size-4);
 	& > i {
-		width: 20px;
+		width: var(--size-20);
 		box-sizing: border-box;
 	}
 `;

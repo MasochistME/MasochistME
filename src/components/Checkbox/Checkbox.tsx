@@ -66,9 +66,9 @@ export const Checkbox = <T extends string>(props: Props<T>): JSX.Element => {
 };
 
 const StyledCheckbox = styled(Flex)<{ colorTokens: ColorTokens }>`
-	padding: 4px;
+	padding: var(--size-4);
 	box-sizing: border-box;
-	max-height: 44px;
+	max-height: var(--size-44);
 
 	input {
 		display: none;
@@ -79,7 +79,7 @@ const StyledCheckbox = styled(Flex)<{ colorTokens: ColorTokens }>`
 	label {
 		margin: 0;
 		padding: 0;
-		font-size: 28px;
+		font-size: var(--size-28);
 	}
 	& > * {
 		cursor: pointer;

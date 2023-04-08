@@ -54,6 +54,6 @@ export const ButtonsSocialMedia = (props: Props): JSX.Element => {
 
 const StyledButtonsSocialMedia = styled(Flex)`
 	@media (min-width: ${media.bigPhones}) {
-		gap: 4px;
+		gap: var(--size-4);
 	}
 `;

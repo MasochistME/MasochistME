@@ -19,7 +19,7 @@ export const GameTooltip = (props: Props) => {
 			content={
 				game ? (
 					<StyledTooltip column>
-						<div style={{ gap: '4px' }}>
+						<div style={{ gap: 'var(--size-4)' }}>
 							<span style={{ fontWeight: 'bold' }}>{gameTitle}</span>
 						</div>
 					</StyledTooltip>

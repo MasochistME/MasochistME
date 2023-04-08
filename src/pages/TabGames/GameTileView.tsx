@@ -57,5 +57,5 @@ const StyledGamesList = styled.div`
 	align-items: center;
 	justify-content: center;
 	flex-wrap: wrap;
-	gap: 32px;
+	gap: var(--size-32);
 `;

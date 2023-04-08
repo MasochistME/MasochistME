@@ -90,7 +90,7 @@ const FeaturedBoundary = (props: FeaturedBoundaryProps) => {
 const StyledDashboard = styled(Flex)`
 	width: 100%;
 	align-items: flex-start;
-	gap: 16px;
+	gap: var(--size-16);
 	flex-wrap: wrap;
 `;
 
@@ -98,7 +98,7 @@ const StyledSectionTop = styled(Flex)`
 	flex-direction: row;
 	justify-content: space-between;
 	width: 100%;
-	gap: 16px;
+	gap: var(--size-16);
 	@media (max-width: ${media.netbooks}) {
 		flex-wrap: wrap;
 	}
@@ -106,15 +106,15 @@ const StyledSectionTop = styled(Flex)`
 
 const StyledNewStuff = styled(Flex)`
 	flex-direction: column;
-	gap: 16px;
+	gap: var(--size-16);
 	justify-content: space-evenly;
 `;
 
 const StyledColumnLeft = styled(Flex)`
 	flex-direction: column;
 	flex-wrap: wrap;
-	max-width: 450px;
-	gap: 16px;
+	max-width: 45rem;
+	gap: var(--size-16);
 	justify-content: space-between;
 	@media (max-width: ${media.netbooks}) {
 		flex-direction: row;
@@ -125,12 +125,12 @@ const StyledColumnLeft = styled(Flex)`
 `;
 
 const StyledColumnRight = styled(Flex)`
-	max-width: 1000px;
+	max-width: 100rem;
 	flex-direction: column;
 	justify-content: center;
 	flex-grow: 1;
 	flex-wrap: wrap;
-	gap: 16px;
+	gap: var(--size-16);
 	@media (max-width: ${media.netbooks}) {
 		justify-content: space-evenly;
 		max-width: 100%;

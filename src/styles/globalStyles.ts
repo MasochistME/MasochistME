@@ -1,10 +1,18 @@
 import { createGlobalStyle } from 'styled-components';
 import { ColorTokens, AssetTokens } from './theme';
 
+import { fonts, sizes } from './vars/main';
+
 const GlobalStyle = createGlobalStyle<{
 	colorTokens: ColorTokens;
 	assetTokens: AssetTokens;
 }>`
+  // Importing global variables residing in :root
+  :root {
+    ${() => fonts()}
+    ${() => sizes()}
+  }
+
   body, html {
     width: 100%;
     height: 100%;
@@ -28,11 +36,9 @@ const GlobalStyle = createGlobalStyle<{
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    font-family: 'Raleway';
+    font-family: var(--font-raleway);
     text-align: justify;
-
     font-feature-settings: "tnum", "tnum";
-    font-size: 14px;
     font-variant: tabular-nums;
     line-height: 1.5175;
     margin: 0;
@@ -55,6 +61,11 @@ const GlobalStyle = createGlobalStyle<{
     -khtml-user-select: none;
     -webkit-user-select: none;
     -o-user-select: none;
+  }
+
+
+  div, p {
+    font-size: var(--size-13);
   }
   
   a {

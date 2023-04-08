@@ -13,7 +13,7 @@ import {
 	Skeleton,
 } from 'components';
 import { MemberBadges, MemberAvatar } from 'containers';
-import { ColorTokens, useTheme, media, fonts } from 'styles';
+import { ColorTokens, useTheme, media } from 'styles';
 import { Size } from 'components';
 import { useAppContext } from 'context';
 
@@ -92,7 +92,7 @@ const GameLeaderboardsBoundary = (props: Props) => {
 						percentage={Math.floor(memberCompletion.completionPercentage)}
 					/>
 					{dev > 10 && (
-						<span style={{ width: '80px', textAlign: 'right' }}>
+						<span style={{ width: '8rem', textAlign: 'right' }}>
 							{memberCompletion.playTime} h
 						</span>
 					)}
@@ -137,18 +137,18 @@ const StyledGameLeaderboardsMember = styled(Flex)<{
 	max-width: 100%;
 	align-items: center;
 	&:not(:first-child) {
-		border-top: 1px solid
+		border-top: var(--size-1) solid
 			${({ colorTokens }) => colorTokens['semantic-color--interactive']};
 	}
 	&:not(:last-child) {
-		border-bottom: 1px solid
+		border-bottom: var(--size-1) solid
 			${({ colorTokens }) => colorTokens['core-primary-bg']};
 	}
 `;
 
 const StyledGameLeaderboardsMemberInfo = styled(Flex)`
 	width: 100%;
-	padding: 0 10px;
+	padding: 0 var(--size-10);
 	justify-content: space-between;
 	overflow: hidden;
 	@media (max-width: ${media.smallTablets}) {
@@ -163,7 +163,8 @@ const StyledGameLeaderboardsMemberUsername = styled.div<{
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	font-weight: bold;
-	font-size: ${({ isCompact }) => (isCompact ? '1em' : '1.2em')};
+	font-size: ${({ isCompact }) =>
+		isCompact ? 'var(--size-14)' : 'var(--size-16)'};
 	@media (max-width: ${media.smallTablets}) {
 		display: none;
 	}
@@ -174,10 +175,9 @@ const StyledGameLeaderboardsMemberTime = styled.div<{
 }>`
 	display: flex;
 	align-items: center;
-	font-size: 0.7em;
-	font-family: ${fonts.Verdana};
+	font-family: var(--font-verdana);
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
-	width: 128px;
+	width: var(--size-128);
 	@media (max-width: ${media.tablets}) {
 		display: none;
 	}

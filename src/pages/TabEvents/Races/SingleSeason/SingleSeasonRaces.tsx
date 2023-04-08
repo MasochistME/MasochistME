@@ -13,7 +13,7 @@ import {
 import { ModalRace, WinnerLink } from 'containers';
 import styled from 'styled-components';
 import { getRaceTypeIcon } from 'utils/getIcon';
-import { fonts, media } from 'styles';
+import { media } from 'styles';
 import { useMixpanel } from 'hooks';
 
 type Props = {
@@ -56,7 +56,7 @@ export const SingleSeasonRaces = (props: Props): JSX.Element => {
 			render: (race: RaceWithSummary) => (
 				<DateBlock date={race.startDate} withHours={false} shouldHide={false} />
 			),
-			style: { width: '90px' },
+			style: { width: '9rem' },
 		},
 		{
 			key: Columns.TYPE,
@@ -64,7 +64,7 @@ export const SingleSeasonRaces = (props: Props): JSX.Element => {
 			value: (race: RaceWithSummary) => race.type,
 			render: (race: RaceWithSummary) => (
 				<TableCell
-					padding="8px 0"
+					padding="var(--size-8) 0"
 					content={
 						<CellResponsive>
 							<span className="icon__mobile">
@@ -85,7 +85,7 @@ export const SingleSeasonRaces = (props: Props): JSX.Element => {
 					}
 				/>
 			),
-			style: { width: '30px' },
+			style: { width: '3rem' },
 		},
 		{
 			key: Columns.RACE_NAME,
@@ -116,7 +116,7 @@ export const SingleSeasonRaces = (props: Props): JSX.Element => {
 			render: (race: RaceWithSummary) => (
 				<TableCell content={race.summary?.signups} />
 			),
-			style: { maxWidth: '50px' },
+			style: { maxWidth: '5rem' },
 		},
 		{
 			key: Columns.PARTICIPANTS,
@@ -125,7 +125,7 @@ export const SingleSeasonRaces = (props: Props): JSX.Element => {
 			render: (race: RaceWithSummary) => (
 				<TableCell content={race.summary?.participants} />
 			),
-			style: { maxWidth: '50px' },
+			style: { maxWidth: '5rem' },
 		},
 		{
 			key: Columns.DNF,
@@ -134,7 +134,7 @@ export const SingleSeasonRaces = (props: Props): JSX.Element => {
 			render: (race: RaceWithSummary) => (
 				<TableCell content={race.summary?.dnf} />
 			),
-			style: { width: '40px' },
+			style: { width: '4rem' },
 		},
 		{
 			key: Columns.WINNER,
@@ -147,7 +147,7 @@ export const SingleSeasonRaces = (props: Props): JSX.Element => {
 					}
 				/>
 			),
-			style: { maxWidth: '200px' },
+			style: { maxWidth: '20rem' },
 		},
 	];
 
@@ -164,13 +164,13 @@ export const SingleSeasonRaces = (props: Props): JSX.Element => {
 };
 
 const TableCellRaceName = styled(Flex)`
-	font-size: 1.3em;
-	font-family: ${fonts.Dosis};
+	font-size: var(--size-14);
+	font-family: var(--font-dosis);
 	&:hover {
 		color: white;
 	}
 	@media (max-width: ${media.smallNetbooks}) {
-		font-size: 1em;
+		font-size: var(--size-12);
 	}
 `;
 

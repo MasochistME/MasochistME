@@ -52,15 +52,7 @@ const SectionBoundary = ({ memberId }: Props) => {
 		if (featured.type === FeaturedType.NEWS)
 			return <FeaturedNews featured={featured} isCompact />;
 		if (featured.type === FeaturedType.VIDEO)
-			return (
-				<FeaturedVideo
-					featured={featured}
-					isCompact
-					hideOwner
-					hideDate
-					hideGame
-				/>
-			);
+			return <FeaturedVideo featured={featured} isCompact hideOwner />;
 	}, [featuredData, activeIndex]);
 
 	return (
@@ -88,6 +80,6 @@ const StyledMemberProfileFeatured = styled.div`
 	flex-flow: row wrap;
 	justify-content: center;
 	align-items: center;
-	gap: 8px;
+	gap: var(--size-8);
 	width: 100%;
 `;

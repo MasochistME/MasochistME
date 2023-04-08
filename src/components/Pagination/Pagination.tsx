@@ -43,15 +43,15 @@ export const Pagination = (props: Props) => {
 };
 
 enum Width {
-	DEFAULT = 24,
-	COMPACT = 18,
+	DEFAULT = 2.4,
+	COMPACT = 1.8,
 }
 
 const StyledPagination = styled(Flex)`
 	width: 100%;
 	justify-content: center;
 	align-items: center;
-	gap: 8px;
+	gap: var(--size-8);
 	flex-wrap: wrap;
 `;
 
@@ -61,15 +61,15 @@ const StyledPaginationItem = styled.div<{
 	isCompact?: boolean;
 }>`
 	min-width: ${({ isCompact }) =>
-		isCompact ? Width.COMPACT : Width.DEFAULT}px;
+		isCompact ? Width.COMPACT : Width.DEFAULT}rem;
 	min-height: ${({ isCompact }) =>
-		isCompact ? Width.COMPACT : Width.DEFAULT}px;
+		isCompact ? Width.COMPACT : Width.DEFAULT}rem;
 	max-width: ${({ isCompact }) =>
-		isCompact ? Width.COMPACT : Width.DEFAULT}px;
+		isCompact ? Width.COMPACT : Width.DEFAULT}rem;
 	max-height: ${({ isCompact }) =>
-		isCompact ? Width.COMPACT : Width.DEFAULT}px;
+		isCompact ? Width.COMPACT : Width.DEFAULT}rem;
 	border-radius: ${({ isCompact }) =>
-		isCompact ? Width.COMPACT : Width.DEFAULT}px;
+		isCompact ? Width.COMPACT : Width.DEFAULT}rem;
 	margin-bottom: 0;
 	cursor: pointer;
 	background-color: ${({ colorTokens, isActive }) =>

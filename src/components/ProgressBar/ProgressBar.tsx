@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { fonts, media, useTheme, ColorTokens } from 'styles';
+import { media, useTheme, ColorTokens } from 'styles';
 
 type Props = {
 	percentage: number;
@@ -34,26 +34,26 @@ ProgressBar.Completion = styled.div.attrs(
 	(props: Omit<Props, 'percentage'> & { colorTokens: ColorTokens }) => {
 		const style: React.CSSProperties = {
 			backgroundColor: props.colorTokens['semantic-color--progress--track'],
-			border: `1px solid ${props.colorTokens['semantic-color--progress--track']}`,
+			border: `var(--size-1) solid ${props.colorTokens['semantic-color--progress--track']}`,
 			...props.style,
 		};
 		if (props.invert) {
 			style.backgroundColor = `${props.colorTokens['semantic-color--progress--thumb']}`;
-			style.border = `1px solid ${props.colorTokens['semantic-color--progress--thumb']}`;
+			style.border = `var(--size-1) solid ${props.colorTokens['semantic-color--progress--thumb']}`;
 		}
 		return { style };
 	},
 )<Omit<Props, 'percentage'> & { colorTokens: ColorTokens }>`
 	position: relative;
-	min-width: 200px;
-	height: 20px;
-	margin-right: 7px;
+	min-width: 20rem;
+	height: var(--size-20);
+	margin-right: var(--size-7);
 	padding: 0 !important;
 	box-sizing: border-box;
-	border-radius: 8px;
+	border-radius: var(--size-8);
 	@media (max-width: ${media.tablets}) {
 		border: none;
-		min-width: 100px;
+		min-width: 10rem;
 	}
 `;
 
@@ -76,7 +76,7 @@ ProgressBar.Progress = styled.div.attrs(
 	position: absolute;
 	height: 100%;
 	padding: 0 !important;
-	border-radius: 8px;
+	border-radius: var(--size-8);
 `;
 
 ProgressBar.Percentage = styled.div<{ colorTokens: ColorTokens }>`
@@ -86,10 +86,11 @@ ProgressBar.Percentage = styled.div<{ colorTokens: ColorTokens }>`
 	position: absolute;
 	width: 100%;
 	height: 100%;
-	font-size: 0.9em;
-	font-family: ${fonts.Raleway};
+	line-height: var(--size-11);
+	font-size: var(--size-11);
+	font-family: var(--font-raleway);
 	font-weight: bold;
-	letter-spacing: 0.1em;
+	letter-spacing: var(--size-1);
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
-	border-radius: 8px;
+	border-radius: var(--size-8);
 `;

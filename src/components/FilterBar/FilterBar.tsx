@@ -22,9 +22,9 @@ const StyledFilterBar = styled.div<{ colorTokens: ColorTokens }>`
 	align-items: center;
 	justify-content: space-between;
 	box-sizing: border-box;
-	padding: 16px 8px;
-	margin-bottom: 16px;
-	gap: 16px;
+	padding: var(--size-16) var(--size-8);
+	margin-bottom: var(--size-16);
+	gap: var(--size-16);
 	@media (max-width: ${media.smallNetbooks}) {
 		background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']}99;
 		align-items: center;

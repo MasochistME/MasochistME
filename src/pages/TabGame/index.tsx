@@ -129,7 +129,7 @@ const Info = (props: Partial<SectionProps> & { gameId: number }) => {
 	return (
 		<Section
 			width="100%"
-			maxWidth="450px"
+			maxWidth="45rem"
 			title="Badges"
 			content={
 				<QueryBoundary fallback={<Loader />} errorFallback={<ErrorFallback />}>
@@ -155,14 +155,14 @@ const InfoBoundary = ({ gameId }: { gameId: number }) => {
 };
 
 const StyledGameTabs = styled.div`
-	max-width: 1000px;
+	max-width: 100rem;
 	width: 100%;
 	flex: 1 1 100%;
 	overflow: hidden;
 `;
 
 const StyledGameProfileBadges = styled(Flex)`
-	gap: 8px;
+	gap: var(--size-8);
 	width: 100%;
 	flex-flow: row wrap;
 `;

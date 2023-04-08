@@ -73,9 +73,9 @@ const StyledBadgeThumbnail = styled.div.attrs(
 	justify-content: center;
 	box-sizing: border-box;
 	overflow: hidden;
-	/* padding: 2px; */
+	/* padding: var(--size-2); */
 	border-radius: ${({ size }) =>
-		size === Size.SMALL || size === Size.TINY ? 4 : 8}px;
+		size === Size.SMALL || size === Size.TINY ? 0.4 : 0.8}rem;
 	border: ${({ size, isDisabled, isNegative, colorTokens }) => {
 		const borderSize = size === Size.SMALL || size === Size.TINY ? 2 : 3;
 		const borderColor = isDisabled
@@ -83,7 +83,7 @@ const StyledBadgeThumbnail = styled.div.attrs(
 			: isNegative
 			? colorTokens['common-color--red']
 			: colorTokens['core-primary-text'];
-		return `${borderSize}px solid ${borderColor}`;
+		return `${borderSize / 10}rem solid ${borderColor}`;
 	}};
 
 	img {
