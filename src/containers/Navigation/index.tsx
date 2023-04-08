@@ -60,9 +60,9 @@ const StyledNavigation = styled.div<{
 	box-shadow: 0 10px 10px -10px ${({ colorTokens }) => colorTokens['common-color--shadow']};
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	font-family: var(--font-raleway);
-	font-size: 0.9em;
+	font-size: var(--size-12);
 	text-transform: uppercase;
-	letter-spacing: 2px;
+	letter-spacing: 0.15rem;
 	position: sticky;
 	top: 0px;
 	z-index: 1000;
@@ -84,7 +84,7 @@ const StyledTabItem = styled.div.attrs((props: NavItemProps) => {
 	justify-content: center;
 	align-items: center;
 	gap: 8px;
-	padding: 24px 0;
+	padding: var(--size-18) 0;
 	border-right: 3px solid
 		${({ colorTokens }) => colorTokens['element-color--header-bg']};
 	height: 100%;
