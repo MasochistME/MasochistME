@@ -54,11 +54,12 @@ const StyledInput = styled.input<{
 	hasIcon: boolean;
 }>`
 	flex: 1 1 auto;
-	height: 4var (--size-4);
-	width: 30rem;
-	max-width: 30rem;
+	height: 4.4rem;
+	width: 25rem;
+	max-width: 25rem;
 	padding: var(--size-4) var(--size-12);
-	font-size: var(--size-12);
+	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
+	font-size: var(--size-16);
 	font-family: var(--font-raleway);
 	background-color: transparent;
 	border-top-right-radius: var(--size-32);
@@ -75,7 +76,6 @@ const StyledInput = styled.input<{
 			hasIcon
 				? `var(--size-2) solid ${colorTokens['semantic-color--idle']}`
 				: 'none'};
-		color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 		outline: none;
 	}
 	&::placeholder {

@@ -75,7 +75,7 @@ const StyledGameTitle = styled.h2`
 	display: flex;
 	margin: 0;
 	align-items: center;
-	font-size: var(--size-24);
+	font-size: var(--size-20);
 `;
 
 const StyledGameHeaderThumbnail = styled.img<{ colorTokens: ColorTokens }>`

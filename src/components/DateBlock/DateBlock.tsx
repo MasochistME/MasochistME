@@ -44,9 +44,9 @@ const StyledDateBlock = styled(Flex)<{ shouldHide: boolean }>`
 	flex-wrap: nowrap;
 	flex-direction: column;
 	padding: 0 var(--size-4);
+	line-height: var(--size-14);
 	font-size: var(--size-14);
 	font-family: var(--font-dosis);
-	line-height: var(--size-12);
 	@media (max-width: ${media.tablets}) {
 		display: ${({ shouldHide }) => (shouldHide ? 'none !important' : 'flex')};
 	}

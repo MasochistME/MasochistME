@@ -106,10 +106,10 @@ const StyledHallOfFame = styled(Flex)`
 
 const ButtonSupport = styled.img`
 	cursor: pointer;
-	box-shadow: 0 0 var(--size-10) #000;
+	filter: drop-shadow(0 0 var(--size-10) #000);
 	margin: 0;
 	padding: 0;
-	height: var(--size-36);
+	max-height: var(--size-36);
 	border: 0px;
 	border-radius: var(--size-8);
 `;

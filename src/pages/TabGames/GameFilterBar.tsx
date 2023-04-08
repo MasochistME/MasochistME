@@ -116,7 +116,7 @@ const TierFilterBoundary = () => {
 };
 
 const StyledGameFilterBar = styled(Flex)`
-	gap: var(--size-32);
+	gap: var(--size-16);
 	flex-wrap: wrap;
 	align-items: center;
 	@media (max-width: ${media.smallNetbooks}) {
@@ -126,5 +126,5 @@ const StyledGameFilterBar = styled(Flex)`
 
 const StyledGameFilterBarTiers = styled(Flex)`
 	justify-content: center;
-	gap: var(--size-24);
+	gap: var(--size-16);
 `;

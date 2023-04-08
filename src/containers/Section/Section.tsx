@@ -79,8 +79,7 @@ const StyledSection = styled.div.attrs((props: StyledProps) => {
 	width: ${({ fullWidth }) => (fullWidth ? '100%' : 'auto')};
 	height: auto;
 	box-sizing: border-box;
-	border: var(--size-1) solid
-		${({ colorTokens }) => colorTokens['core-primary-bg']}88;
+	border: 1px solid ${({ colorTokens }) => colorTokens['semantic-color--idle']};
 	border-radius: var(--size-16);
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	background-color: ${({ colorTokens }) =>
@@ -110,17 +109,18 @@ Section.Title = styled.h3<{
 }>`
 	display: flex;
 	align-items: center;
-	justify-content: ${({ isCentered }) => (isCentered ? 'center' : 'flex-start')};
+	justify-content: ${({ isCentered }) =>
+		isCentered ? 'center' : 'flex-start'};
 	width: 100%;
-	padding: var(--size-4);
 	margin: 0;
-	font-size: var(--size-13);
+	padding: var(--size-4) var(--size-8);
+	font-size: var(--size-18);
 	font-family: var(--font-dosis);
 	text-transform: uppercase;
 	text-align: center;
 	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']};
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
-	border-radius: var(--size-16) var(--size-16); 0 0;
+	border-radius: var(--size-16) var(--size-16) 0 0;
 `;
 
 Section.Content = styled.div`

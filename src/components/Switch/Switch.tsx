@@ -19,14 +19,14 @@ export const Switch = (props: SwitchProps) => {
 
 const StyledSwitch = styled(MUISwitch)<Props>`
 	width: var(--size-42);
-	height: 2var (--size-6);
+	height: var(--size-26);
 	padding: 0;
 	.MuiSwitch-switchBase {
 		padding: 0;
 		margin: var(--size-2);
 		transition-duration: 300ms;
 		&.Mui-checked {
-			transform: translateX(1var (--size-8));
+			transform: translateX(var(--size-18));
 			color: #fff;
 			& + .MuiSwitch-track {
 				background-color: ${({ colortokens }) =>

@@ -52,6 +52,6 @@ const StyledUpdateStatus = styled(Flex)<{ colorTokens: ColorTokens }>`
 
 const StyledUpdateStatusText = styled.h3`
 	text-align: center;
-	font-size: var(--size-18);
+	font-size: var(--size-16);
 	font-family: 'Dosis', 'Raleway', Verdana, sans-serif;
 `;

@@ -208,7 +208,7 @@ export const WrapperRace = styled(Flex)<{ colorTokens: ColorTokens }>`
 `;
 
 const StyledRaceName = styled.div`
-	font-size: var(--size-13);
+	font-size: var(--size-16);
 	font-family: var(--font-dosis);
 `;
 
@@ -220,5 +220,5 @@ const StyledUsername = styled.h2`
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	font-size: var(--size-24);
+	font-size: var(--size-22);
 `;

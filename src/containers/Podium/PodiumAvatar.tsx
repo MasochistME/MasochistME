@@ -75,7 +75,7 @@ const StyledMemberAvatar = styled.div.attrs(
 			maxHeight: size,
 			cursor: onClick ? 'pointer' : 'help',
 		};
-		style.border = `var(--size-5) solid ${podiumColor}`;
+		style.border = `0.5rem solid ${podiumColor}`;
 		return { style };
 	},
 )<

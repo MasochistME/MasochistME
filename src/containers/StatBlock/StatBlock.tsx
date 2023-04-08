@@ -56,12 +56,13 @@ const StyledStatBlock = styled(Flex)<{
 	flex-direction: row;
 	align-items: center;
 	padding: var(--size-8) var(--size-16);
-	border-radius: 6var (--size-4);
+	border-radius: var(--size-64);
 	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']}99;
 	border: var(--size-2) solid ${({ tierColor }) => tierColor}66;
 	color: ${({ tierColor }) => tierColor};
 	font-family: var(--font-dosis);
 	cursor: help;
+
 	@media (max-width: ${media.tablets}) {
 		padding: var(--size-4) var(--size-8);
 		i {
@@ -71,21 +72,21 @@ const StyledStatBlock = styled(Flex)<{
 `;
 
 const StyledStatBlockLabel = styled.span`
-	font-size: var(--size-20);
+	line-height: var(--size-24);
+	font-size: var(--size-24);
 	font-weight: bold;
-	line-height: var(--size-10);
 	white-space: nowrap;
 	@media (max-width: ${media.tablets}) {
-		font-size: var(--size-13);
+		font-size: var(--size-20);
 	}
 `;
 
 const StyledStatBlockSublabel = styled.span<{ tierColor: string }>`
-	font-size: var(--size-10);
+	line-height: var(--size-14);
+	font-size: var(--size-14);
 	font-weight: bold;
 	color: ${({ tierColor }) => tierColor}bb;
 	white-space: nowrap;
-	line-height: var(--size-10);
 	@media (max-width: ${media.smallNetbooks}) {
 		display: none;
 	}

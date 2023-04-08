@@ -47,10 +47,7 @@ export const GameTableView = () => {
 	return (
 		<QueryBoundary
 			fallback={
-				<Table.Skeleton
-					columns={columns}
-					style={{ height: 'var(--size-36)', margin: 'var(--size-6) 0' }}
-				/>
+				<Table.Skeleton columns={columns} style={{ margin: '0.6rem 0' }} />
 			}
 			errorFallback={<ErrorFallback />}>
 			<GameTableViewBoundary />

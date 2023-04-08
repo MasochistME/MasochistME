@@ -115,7 +115,7 @@ const MemberProfileGamesSkeleton = () => {
 
 const StyledFilterBar = styled(Flex)`
 	align-items: center;
-	gap: var(--size-24);
+	gap: var(--size-16);
 	width: 100%;
 `;
 
@@ -134,7 +134,7 @@ const StyledFilterGame = styled(Flex)`
 `;
 
 const StyledFilterGameText = styled.span<{ colorTokens: ColorTokens }>`
-	font-size: var(--size-15);
+	font-size: var(--size-18);
 	color: ${({ colorTokens }) => colorTokens['core-tertiary-text']};
 	@media (max-width: ${media.tablets}) {
 		display: none;
@@ -142,7 +142,7 @@ const StyledFilterGameText = styled.span<{ colorTokens: ColorTokens }>`
 `;
 
 const StyledFilterGameSwitches = styled(Flex)`
-	font-size: var(--size-10);
+	font-size: var(--size-14);
 	word-wrap: nowrap;
 	white-space: nowrap;
 `;

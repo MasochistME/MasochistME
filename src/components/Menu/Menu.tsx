@@ -69,6 +69,7 @@ Menu.Item = styled(MuiMenuItem)`
 	display: flex;
 	align-items: center;
 	gap: var(--size-8);
+	font-size: var(--size-16);
 `;
 
 const AnchorWrapper = styled.div`
@@ -94,8 +95,8 @@ const StyledMenu = styled(MuiMenu)<{ colorTokens: ColorTokens }>`
 			&.MuiListSubheader-root {
 				color: ${({ colorTokens }) => colorTokens['core-secondary-text']};
 				font-family: var(--font-dosis);
-				font-size: var(--size-13);
-				line-height: var(--size-13);
+				font-size: var(--size-18); // TODO
+				line-height: var(--size-16);
 				padding: var(--size-8) 0 var(--size-8) var(--size-16);
 				&:not(:first-child) {
 					border-top: var(--size-1) solid

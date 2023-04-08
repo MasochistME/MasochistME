@@ -164,7 +164,7 @@ const StyledGameLeaderboardsMemberUsername = styled.div<{
 	white-space: nowrap;
 	font-weight: bold;
 	font-size: ${({ isCompact }) =>
-		isCompact ? 'var(--size-10)' : 'var(--size-12)'};
+		isCompact ? 'var(--size-14)' : 'var(--size-16)'};
 	@media (max-width: ${media.smallTablets}) {
 		display: none;
 	}
@@ -175,7 +175,6 @@ const StyledGameLeaderboardsMemberTime = styled.div<{
 }>`
 	display: flex;
 	align-items: center;
-	font-size: var(--size-7);
 	font-family: var(--font-verdana);
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	width: var(--size-128);

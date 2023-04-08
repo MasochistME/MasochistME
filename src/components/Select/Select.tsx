@@ -61,7 +61,7 @@ export const Select = (props: Props) => {
 
 const StyledSelect = styled(MuiSelect)<{ colorTokens: ColorTokens }>`
 	font-family: var(--font-raleway);
-	font-size: var(--size-10);
+	font-size: var(--size-18);
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	&.MuiInputBase-root {
 		background-color: ${({ colorTokens }) =>

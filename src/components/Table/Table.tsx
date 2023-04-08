@@ -103,10 +103,7 @@ Table.Skeleton = <T extends Record<any, any>>({
 		render: () => (
 			<TableCell
 				content={
-					<Skeleton
-						height="var(--size-16)"
-						style={{ flex: '1 1 auto', ...style }}
-					/>
+					<Skeleton height="3.6rem" style={{ flex: '1 1 auto', ...style }} />
 				}
 			/>
 		),
@@ -124,6 +121,9 @@ const StyledTable = styled.table`
 	th {
 		padding: 0 var(--size-4);
 		width: var(--size-1);
+	}
+	td {
+		font-size: var(--size-14);
 	}
 	td + {
 		padding: 0 var(--size-4);

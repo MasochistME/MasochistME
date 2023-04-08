@@ -77,7 +77,7 @@ const GameThumbnail = ({ gameId }: Pick<Props, 'gameId'>) => {
 			<StyledGameHiddenInfo column align colorTokens={colorTokens}>
 				<Icon icon={getTierIcon(game.tier, tiersData)} size={Size.MICRO} />
 				<h3>{game.title}</h3>
-				<p style={{ margin: '0', fontSize: '0.85em' }}>{game.description}</p>
+				<p>{game.description}</p>
 			</StyledGameHiddenInfo>
 		</StyledGameThumbnail>
 	);
@@ -122,8 +122,13 @@ const StyledGameHiddenInfo = styled(Flex)<{ colorTokens: ColorTokens }>`
 	background-color: rgba(0, 0, 0, 0);
 	color: ${({ colorTokens }) => colorTokens['core-tertiary-text']};
 	transition: background-color linear 0.4s, opacity 0.3s;
-
 	text-align: center;
+
+	p {
+		margin: 0;
+		font-size: var(--size-12);
+		line-height: var(--size-14);
+	}
 
 	&:hover {
 		opacity: 1;

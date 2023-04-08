@@ -43,10 +43,7 @@ export const SingleSeasonRanking = (props: Props) => {
 	return (
 		<QueryBoundary
 			fallback={
-				<Table.Skeleton
-					columns={columns}
-					style={{ height: 'var(--size-36)', margin: 'var(--size-6) 0' }}
-				/>
+				<Table.Skeleton columns={columns} style={{ margin: '0.6rem 0' }} />
 			}
 			errorFallback={<ErrorFallback />}>
 			<RankingBoundary {...props} />
@@ -275,7 +272,7 @@ const StyledPlace = styled.div`
 	flex-direction: row;
 	justify-content: center;
 	gap: var(--size-4);
-	font-size: var(--size-13);
+	font-size: var(--size-16);
 	font-weight: bold;
 	font-family: var(--font-dosis);
 	padding: var(--size-4);

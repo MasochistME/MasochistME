@@ -63,6 +63,7 @@ const StyledToggleButton = styled(ToggleButton)<{
 }>`
 	font-family: var(--font-dosis);
 	font-weight: 600;
+	font-size: var(--size-14);
 	&.MuiButtonBase-root {
 		line-height: unset;
 		padding: var(--size-8);

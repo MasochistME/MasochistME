@@ -40,10 +40,7 @@ export const ModalRaceLeaderboards = (props: Props) => {
 			fallback={
 				<Flex column width="100%" gap={16}>
 					<Podium.Skeleton />
-					<Table.Skeleton
-						columns={columns}
-						style={{ height: 'var(--size-36)', margin: 'var(--size-6) 0' }}
-					/>
+					<Table.Skeleton columns={columns} style={{ margin: '0.6rem 0' }} />
 				</Flex>
 			}
 			errorFallback={<ErrorFallback />}>
@@ -173,10 +170,10 @@ const StyledPlayerScore = styled.div`
 	flex-direction: row;
 	align-items: center;
 	gap: var(--size-4);
-	font-size: var(--size-13);
-	font-weight: bold;
-	font-family: var(--font-dosis);
 	padding: var(--size-8);
+	font-size: var(--size-16);
+	font-family: var(--font-dosis);
+	font-weight: bold;
 	@media (max-width: ${media.tablets}) {
 		padding: var(--size-8);
 	}

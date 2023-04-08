@@ -28,7 +28,11 @@ export const MemberProfileBadges = (props: Props) => {
 			const game = games.find((g: Game) => g.id === badge.gameId);
 			if (!game || game.isCurated || game.isProtected) {
 				return (
-					<BadgeTile badge={badge} key={`member-badge-${String(badge._id)}`} />
+					<BadgeTile
+						badge={badge}
+						isCompact
+						key={`member-badge-${String(badge._id)}`}
+					/>
 				);
 			}
 		})
@@ -46,7 +50,7 @@ export const MemberProfileBadges = (props: Props) => {
 };
 
 const StyledMemberProfileBadges = styled(Flex)`
-	align-items: center;
+	align-items: flex-start;
 	justify-content: center;
 	flex-wrap: wrap;
 	gap: var(--size-16);

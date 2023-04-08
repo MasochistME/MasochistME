@@ -94,5 +94,5 @@ export const SalePercentage = styled.span<{ colorTokens: ColorTokens }>`
 		${({ colorTokens }) => colorTokens['core-tertiary-bg']};
 	border-bottom: var(--size-3) solid
 		${({ colorTokens }) => colorTokens['core-tertiary-bg']};
-	font-size: var(--size-14);
+	font-size: var(--size-20);
 `;

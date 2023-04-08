@@ -65,6 +65,7 @@ const StyledFooterText = styled.footer`
 	text-align: left;
 	align-items: center;
 	gap: var(--size-8);
+	font-size: var(--size-12);
 
 	@media (max-width: ${media.bigPhones}) {
 		font-size: var(--size-10);

@@ -95,7 +95,7 @@ const StyledTablePagination = styled(TablePaginationUnstyled)<{
 		background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']};
 		color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 		font-family: var(--font-raleway);
-		font-size: var(--size-12);
+		font-size: var(--size-16);
 		cursor: pointer;
 
 		&:hover {
@@ -120,10 +120,10 @@ const StyledTablePagination = styled(TablePaginationUnstyled)<{
 
 	& .${classes.actions} > button {
 		margin: 0 var(--size-8);
-		padding: var(--size-16) var(--size-12);
+		padding: var(--size-6) var(--size-12);
 		border: transparent;
 		border-radius: var(--size-2);
-		font-size: var(--size-12);
+		font-size: var(--size-16);
 		cursor: pointer;
 		color: black;
 		background-color: ${({ colorTokens }) =>

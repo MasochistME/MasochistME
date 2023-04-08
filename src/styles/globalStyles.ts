@@ -62,6 +62,11 @@ const GlobalStyle = createGlobalStyle<{
     -webkit-user-select: none;
     -o-user-select: none;
   }
+
+
+  div, p {
+    font-size: var(--size-13);
+  }
   
   a {
     text-decoration: underline dotted;

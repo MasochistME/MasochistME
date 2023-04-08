@@ -164,13 +164,13 @@ export const SingleSeasonRaces = (props: Props): JSX.Element => {
 };
 
 const TableCellRaceName = styled(Flex)`
-	font-size: var(--size-13);
+	font-size: var(--size-14);
 	font-family: var(--font-dosis);
 	&:hover {
 		color: white;
 	}
 	@media (max-width: ${media.smallNetbooks}) {
-		font-size: var(--size-10);
+		font-size: var(--size-12);
 	}
 `;
 

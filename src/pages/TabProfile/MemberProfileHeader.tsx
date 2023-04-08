@@ -131,7 +131,7 @@ const StyledMemberProfileUsername = styled.h2`
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	font-size: var(--size-24);
+	font-size: var(--size-20);
 `;
 
 const StyledMemberProfileDetails = styled(Flex)`
