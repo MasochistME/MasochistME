@@ -1,12 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Award, MemberAward } from '@masochistme/sdk/dist/v1/types';
 
 import { useAwards, useMemberAwards } from 'sdk';
 import { Button, Flex } from 'components';
 import { useHistory } from 'react-router';
 import { AwardThumbnail } from 'containers';
-import { fonts } from 'styles';
 
 type Props = { memberId: string };
 
@@ -80,7 +78,7 @@ const CategoryTitle = styled(Flex)`
 
 	h1 {
 		all: unset;
-		font-family: ${fonts.Dosis};
+		font-family: var(--font-dosis);
 		font-size: 2em;
 	}
 `;
