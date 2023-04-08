@@ -68,7 +68,7 @@ export const Menu = (props: Props) => {
 Menu.Item = styled(MuiMenuItem)`
 	display: flex;
 	align-items: center;
-	gap: 8px;
+	gap: var(--size-8);
 `;
 
 const AnchorWrapper = styled.div`
@@ -77,12 +77,12 @@ const AnchorWrapper = styled.div`
 
 const StyledMenu = styled(MuiMenu)<{ colorTokens: ColorTokens }>`
 	& .MuiPaper-root {
-		border-radius: 8px;
+		border-radius: var(--size-8);
 		overflow: hidden;
-		border: 2px solid
+		border: var(--size-2) solid
 			${({ colorTokens }) => colorTokens['semantic-color--interactive']};
 		background-color: ${({ colorTokens }) => colorTokens['core-tertiary-bg']};
-		margin-top: 8px;
+		margin-top: var(--size-8);
 	}
 
 	& .MuiList-root {
@@ -94,18 +94,18 @@ const StyledMenu = styled(MuiMenu)<{ colorTokens: ColorTokens }>`
 			&.MuiListSubheader-root {
 				color: ${({ colorTokens }) => colorTokens['core-secondary-text']};
 				font-family: var(--font-dosis);
-				font-size: 1.3em;
-				line-height: 1.3em;
-				padding: 8px 0 8px 16px;
+				font-size: var(--size-13);
+				line-height: var(--size-13);
+				padding: var(--size-8) 0 var(--size-8) var(--size-16);
 				&:not(:first-child) {
-					border-top: 1px solid
+					border-top: var(--size-1) solid
 						${({ colorTokens }) => colorTokens['semantic-color--interactive']};
 				}
 			}
 			&.MuiButtonBase-root {
-				margin: 8px;
-				padding: 8px;
-				border-radius: 8px;
+				margin: var(--size-8);
+				padding: var(--size-8);
+				border-radius: var(--size-8);
 				&:hover {
 					background-color: ${({ colorTokens }) =>
 						colorTokens['semantic-color--interactive']};

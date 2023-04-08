@@ -61,21 +61,21 @@ export const Select = (props: Props) => {
 
 const StyledSelect = styled(MuiSelect)<{ colorTokens: ColorTokens }>`
 	font-family: var(--font-raleway);
-	font-size: 1em;
+	font-size: var(--size-10);
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	&.MuiInputBase-root {
 		background-color: ${({ colorTokens }) =>
 			colorTokens['semantic-color--interactive']};
 		flex: 1 1 auto;
 		width: 100%;
-		border-radius: 32px;
+		border-radius: var(--size-32);
 	}
 	&.MuiOutlinedInput-root {
 		outline: none;
 		border: none;
 	}
 	& .MuiSelect-select {
-		padding: 8px 16px;
+		padding: var(--size-8) var(--size-16);
 	}
 	svg {
 		color: ${({ colorTokens }) => colorTokens['core-primary-text']};

@@ -39,8 +39,8 @@ const StyledWinnerLink = styled(Link)<{ isCompact: boolean }>`
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
-	gap: 4px;
+	gap: var(--size-4);
 	h4 {
-		margin: ${({ isCompact }) => (isCompact ? 0 : '8px 0')};
+		margin: ${({ isCompact }) => (isCompact ? 0 : 'var(--size-8) 0')};
 	}
 `;

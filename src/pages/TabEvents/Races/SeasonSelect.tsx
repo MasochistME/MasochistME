@@ -104,7 +104,7 @@ const StyledSelectWrapper = styled.div`
 const StyledOption = styled.div`
 	display: flex;
 	align-items: center;
-	gap: 8px;
+	gap: var(--size-8);
 `;
 
 const StyledSeasonTitle = styled.h2<{ colorTokens: ColorTokens }>`
@@ -112,11 +112,11 @@ const StyledSeasonTitle = styled.h2<{ colorTokens: ColorTokens }>`
 	display: flex;
 	margin: 0;
 	align-items: center;
-	font-size: 24px;
+	font-size: var(--size-24);
 	text-align: left;
-	gap: 16px;
-	padding: 8px 16px;
-	border-radius: 64px;
+	gap: var(--size-16);
+	padding: var(--size-8) var(--size-16);
+	border-radius: var(--size-64);
 	background-color: ${({ colorTokens }) =>
 		colorTokens['semantic-color--interactive']};
 `;

@@ -34,7 +34,7 @@ export const TabChangelog = (props: Props): JSX.Element => {
 					<Posts {...props} />
 				</QueryBoundary>
 			</StyledContent>
-			<Info isDesktopOnly width="100%" maxWidth="450px" />
+			<Info isDesktopOnly width="100%" maxWidth="45rem" />
 		</SubPage>
 	);
 };
@@ -50,7 +50,7 @@ const Posts = (props: Props) => {
 					isCentered={false}
 					anchorId={post.anchorId}
 					fullWidth
-					maxWidth="1000px"
+					maxWidth="100rem"
 					content={<FeaturedNews featured={post.data} />}
 				/>
 			))}
@@ -107,9 +107,9 @@ const usePosts = () => {
 };
 
 const StyledContent = styled(Flex)`
-	gap: 12px;
+	gap: var(--size-12);
 	justify-content: space-between;
 	height: 100%;
-	width: 1000px;
+	width: 100rem;
 	max-width: 100%;
 `;

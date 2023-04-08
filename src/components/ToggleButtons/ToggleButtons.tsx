@@ -52,9 +52,9 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)<{
 	colorTokens: ColorTokens;
 }>`
 	&.MuiToggleButtonGroup-root {
-		border-radius: 32px;
+		border-radius: var(--size-32);
 		overflow: hidden;
-		border: 2px solid
+		border: var(--size-2) solid
 			${({ colorTokens }) => colorTokens['common-color--shadow']};
 	}
 `;
@@ -65,7 +65,7 @@ const StyledToggleButton = styled(ToggleButton)<{
 	font-weight: 600;
 	&.MuiButtonBase-root {
 		line-height: unset;
-		padding: 8px;
+		padding: var(--size-8);
 		background-color: ${({ colorTokens }) =>
 			colorTokens['semantic-color--idle']};
 		color: ${({ colorTokens }) => colorTokens['core-tertiary-text']};

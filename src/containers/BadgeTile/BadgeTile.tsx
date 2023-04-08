@@ -22,7 +22,9 @@ export const BadgeTile = (props: Props) => {
 				<BadgePoints badge={badge} />
 			</Flex>
 			<Flex column gap={2} width="100%">
-				<h3 style={{ margin: '0 0 4px 0' }}>{badge.name?.toUpperCase()}</h3>
+				<h3 style={{ margin: '0 0 var(--size-4) 0' }}>
+					{badge.name?.toUpperCase()}
+				</h3>
 				<StyledBadgeField>
 					<span style={{ fontWeight: 'bold' }}>Requirements</span> -{' '}
 					{badge.requirements}
@@ -43,7 +45,7 @@ BadgeTile.Skeleton = () => {
 				<BadgeThumbnail />
 				<BadgePoints />
 			</Flex>
-			<Skeleton width="100%" height="80px" />
+			<Skeleton width="100%" height="8rem" />
 		</StyledBadge>
 	);
 };
@@ -61,9 +63,9 @@ export const BadgePoints = (props: Props) => {
 
 const StyledBadge = styled(Flex)<{ colorTokens: ColorTokens }>`
 	width: 100%;
-	max-width: 450px;
-	padding: 12px;
-	gap: 12px;
+	max-width: 45rem;
+	padding: var(--size-12);
+	gap: var(--size-12);
 	align-items: flex-start;
 	box-sizing: border-box;
 	background-color: ${({ colorTokens }) => colorTokens['core-secondary-bg']}cc;
@@ -71,12 +73,12 @@ const StyledBadge = styled(Flex)<{ colorTokens: ColorTokens }>`
 
 const StyledBadgeField = styled.p`
 	margin: 0;
-	max-width: 450px;
+	max-width: 45rem;
 	text-align: left;
 `;
 
 const StyledBadgePoints = styled(Flex)`
-	gap: 4px;
+	gap: var(--size-4);
 	font-size: var(--size-18);
 	font-family: var(--font-dosis);
 `;

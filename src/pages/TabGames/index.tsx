@@ -36,7 +36,7 @@ export const TabGames = () => {
 				{gameListView === GameView.TILE && <GameTileView />}
 				{gameListView === GameView.TABLE && <GameTableView />}
 			</StyledGames>
-			<Info isDesktopOnly minWidth="250px" maxWidth="450px" />
+			<Info isDesktopOnly minWidth="25rem" maxWidth="45rem" />
 		</SubPage>
 	);
 };
@@ -88,8 +88,8 @@ const StyledGames = styled(Flex)`
 const StyledTierTypes = styled(Flex)`
 	flex-direction: column;
 	align-items: flex-start;
-	gap: 8px;
-	margin-left: 12px;
-	line-height: 1.5em;
+	gap: var(--size-8);
+	margin-left: var(--size-12);
+	line-height: var(--size-15);
 	text-align: left;
 `;

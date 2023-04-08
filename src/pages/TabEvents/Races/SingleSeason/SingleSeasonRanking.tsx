@@ -45,7 +45,7 @@ export const SingleSeasonRanking = (props: Props) => {
 			fallback={
 				<Table.Skeleton
 					columns={columns}
-					style={{ height: '36px', margin: '6px 0' }}
+					style={{ height: 'var(--size-36)', margin: 'var(--size-6) 0' }}
 				/>
 			}
 			errorFallback={<ErrorFallback />}>
@@ -274,9 +274,9 @@ const StyledPlace = styled.div`
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-	gap: 4px;
-	font-size: 1.3em;
+	gap: var(--size-4);
+	font-size: var(--size-13);
 	font-weight: bold;
 	font-family: var(--font-dosis);
-	padding: 4px;
+	padding: var(--size-4);
 `;

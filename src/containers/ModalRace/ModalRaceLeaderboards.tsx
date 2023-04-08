@@ -42,7 +42,7 @@ export const ModalRaceLeaderboards = (props: Props) => {
 					<Podium.Skeleton />
 					<Table.Skeleton
 						columns={columns}
-						style={{ height: '36px', margin: '6px 0' }}
+						style={{ height: 'var(--size-36)', margin: 'var(--size-6) 0' }}
 					/>
 				</Flex>
 			}
@@ -65,9 +65,9 @@ const LeaderboardsBoundary = (props: Props) => {
 			title: Columns.MEDAL,
 			value: (player: RacePlayer) => player?.place ?? 0,
 			render: (player: RacePlayer) => (
-				<span style={{ width: '50px' }}>{getMedal(player?.place)}</span>
+				<span style={{ width: '5rem' }}>{getMedal(player?.place)}</span>
 			),
-			style: { minWidth: '50px' },
+			style: { minWidth: '5rem' },
 		},
 		{
 			key: Columns.PLACE,
@@ -118,7 +118,7 @@ const LeaderboardsBoundary = (props: Props) => {
 					}
 				/>
 			),
-			style: { width: '100px' },
+			style: { width: '10rem' },
 		});
 
 	if (race?.type === RaceType.TIME_BASED)
@@ -137,7 +137,7 @@ const LeaderboardsBoundary = (props: Props) => {
 					}
 				/>
 			),
-			style: { width: '100px' },
+			style: { width: '10rem' },
 		});
 
 	return (
@@ -172,13 +172,13 @@ const StyledPlayerScore = styled.div`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	gap: 4px;
-	font-size: 1.3em;
+	gap: var(--size-4);
+	font-size: var(--size-13);
 	font-weight: bold;
 	font-family: var(--font-dosis);
-	padding: 8px;
+	padding: var(--size-8);
 	@media (max-width: ${media.tablets}) {
-		padding: 8px;
+		padding: var(--size-8);
 	}
 `;
 

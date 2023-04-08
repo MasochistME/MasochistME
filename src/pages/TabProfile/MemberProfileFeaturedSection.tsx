@@ -88,6 +88,6 @@ const StyledMemberProfileFeatured = styled.div`
 	flex-flow: row wrap;
 	justify-content: center;
 	align-items: center;
-	gap: 8px;
+	gap: var(--size-8);
 	width: 100%;
 `;

@@ -106,9 +106,9 @@ type SummaryProps = {
 
 const StyledLeaderboardsMemberSummary = styled(Flex)<SummaryProps>`
 	justify-content: space-between;
-	width: 1000px;
+	width: 100rem;
 	max-width: 100%;
-	gap: 4px;
+	gap: var(--size-4);
 	color: ${({ colorTokens, isDisabled, isHighestPatronTier }) => {
 		if (isDisabled) return colorTokens['semantic-color--error-strong'];
 		if (isHighestPatronTier) return colorTokens['semantic-color--tier-4'];
@@ -120,26 +120,26 @@ const StyledLeaderboardsMemberSummary = styled(Flex)<SummaryProps>`
 			return `${colorTokens['semantic-color--tier-4--muted']}aa`;
 		return `${colorTokens['semantic-color--idle']}bb`;
 	}};
-	border-bottom: 1px solid
+	border-bottom: var(--size-1) solid
 		${({ colorTokens, isHighestPatronTier }) => {
 			if (isHighestPatronTier)
 				return `${colorTokens['common-color--shadow']}88`;
 			return `${colorTokens['common-color--shadow']}88`;
 		}};
-	border-right: 1px solid
+	border-right: var(--size-1) solid
 		${({ colorTokens, isHighestPatronTier }) => {
 			if (isHighestPatronTier)
 				return `${colorTokens['common-color--shadow']}88`;
 			return `${colorTokens['common-color--shadow']}88`;
 		}};
-	border-top: 1px solid
+	border-top: var(--size-1) solid
 		${({ colorTokens, isDisabled, isHighestPatronTier }) => {
 			if (isDisabled) return colorTokens['semantic-color--error'];
 			if (isHighestPatronTier)
 				return `${colorTokens['semantic-color--tier-4']}88`;
 			return `${colorTokens['semantic-color--interactive']}99`;
 		}};
-	border-left: 1px solid
+	border-left: var(--size-1) solid
 		${({ colorTokens, isDisabled, isHighestPatronTier }) => {
 			if (isDisabled) return colorTokens['semantic-color--error'];
 			if (isHighestPatronTier)
@@ -150,15 +150,15 @@ const StyledLeaderboardsMemberSummary = styled(Flex)<SummaryProps>`
 
 const StyledLeaderboardsMemberDetailsImages = styled(Flex)`
 	flex-direction: row;
-	gap: 8px;
+	gap: var(--size-8);
 `;
 
 const StyledMemberPosition = styled(Flex)<{ size: Size }>`
-	width: ${({ size }) => size - 8}px;
-	max-width: 64px;
-	font-size: 1.5em;
+	width: ${({ size }) => (size - 8) / 10}rem;
+	max-width: var(--size-64);
+	font-size: var(--size-15);
 	@media (max-width: ${media.tablets}) {
-		width: 32px;
+		width: var(--size-32);
 	}
 	@media (max-width: ${media.bigPhones}) {
 		display: none;
@@ -169,7 +169,7 @@ const StyledLeaderboardsMemberIcons = styled(Flex)`
 	flex-direction: column;
 	align-items: center;
 	justify-content: space-evenly;
-	gap: 8px;
+	gap: var(--size-8);
 	@media (max-width: ${media.tablets}) {
 		display: none;
 	}
@@ -179,12 +179,12 @@ const StyledLeaderboardsMemberDetails = styled(Flex)`
 	justify-content: space-between;
 	box-sizing: border-box;
 	overflow: hidden;
-	margin: 0 10px;
+	margin: 0 var(--size-10);
 	width: 100%;
-	gap: 8px;
+	gap: var(--size-8);
 	@media (max-width: ${media.tablets}) {
 		max-width: 100%;
-		padding: 0 5px;
+		padding: 0 var(--size-5);
 	}
 `;
 
@@ -195,7 +195,7 @@ const StyledLeaderboardsMemberUsername = styled(Link)<{
 	&:hover {
 		color: white;
 	}
-	max-width: 500px;
+	max-width: 50rem;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;

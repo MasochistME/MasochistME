@@ -75,7 +75,7 @@ const StyledMemberAvatar = styled.div.attrs(
 			maxHeight: size,
 			cursor: onClick ? 'pointer' : 'help',
 		};
-		style.border = `5px solid ${podiumColor}`;
+		style.border = `var(--size-5) solid ${podiumColor}`;
 		return { style };
 	},
 )<
@@ -89,14 +89,14 @@ const StyledMemberAvatar = styled.div.attrs(
 	align-items: center;
 	justify-content: center;
 	box-sizing: border-box;
-	padding: 2px;
+	padding: var(--size-2);
 	overflow: hidden;
 	background-color: ${({ isEmpty, colorTokens }) =>
 		isEmpty ? colorTokens['core-tertiary-bg'] : 'transparent'};
 	border-radius: ${({ size }) =>
-		size === Size.SMALL || size === Size.TINY ? 4 : 8}px;
+		size === Size.SMALL || size === Size.TINY ? 0.4 : 0.8}rem;
 	border: ${({ size, colorTokens }) =>
-		`${size === Size.SMALL || size === Size.TINY ? 2 : 3}px
+		`${size === Size.SMALL || size === Size.TINY ? 0.2 : 0.3}rem
 		solid ${colorTokens['core-primary-bg']}`};
 
 	& > * {

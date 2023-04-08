@@ -32,7 +32,11 @@ export const GameProfileHeader = (props: Props): JSX.Element => {
 						target="_blank"
 						rel="noopener noreferrer">
 						<StyledGameTitle>
-							<Icon icon="Steam" marginRight="10px" size={Size.TINY} />
+							<Icon
+								icon="Steam"
+								marginRight="var(--size-10)"
+								size={Size.TINY}
+							/>
 							{game?.title ?? 'Loading...'}
 						</StyledGameTitle>
 					</a>
@@ -60,8 +64,8 @@ const GameHeaderTier = ({ gameTier }: { gameTier?: Tier }) => {
 
 const StyledGameHeader = styled(Flex)<{ colorTokens: ColorTokens }>`
 	max-width: 100%;
-	padding: 8px;
-	gap: 16px;
+	padding: var(--size-8);
+	gap: var(--size-16);
 	justify-content: space-between;
 	align-items: flex-start;
 	background-color: ${({ colorTokens }) => colorTokens['core-tertiary-bg']}66;
@@ -71,21 +75,23 @@ const StyledGameTitle = styled.h2`
 	display: flex;
 	margin: 0;
 	align-items: center;
-	font-size: 24px;
+	font-size: var(--size-24);
 `;
 
 const StyledGameHeaderThumbnail = styled.img<{ colorTokens: ColorTokens }>`
-	height: 128px;
-	min-height: 128px;
-	border-radius: 10px;
-	border: 3px solid ${({ colorTokens }) => colorTokens['core-tertiary-bg']};
+	height: var(--size-128);
+	min-height: var(--size-128);
+	border-radius: var(--size-10);
+	border: var(--size-3) solid
+		${({ colorTokens }) => colorTokens['core-tertiary-bg']};
 	box-sizing: border-box;
-	box-shadow: 0 0 10px ${({ colorTokens }) => colorTokens['core-tertiary-bg']};
+	box-shadow: 0 0 var(--size-10)
+		${({ colorTokens }) => colorTokens['core-tertiary-bg']};
 `;
 
 const StyledGameDetails = styled(Flex)`
 	flex: 1 1 100%;
-	gap: 12px;
+	gap: var(--size-12);
 	@media (max-width: ${media.tablets}) {
 		display: none;
 	}

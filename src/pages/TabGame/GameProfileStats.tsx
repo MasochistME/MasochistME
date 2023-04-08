@@ -17,7 +17,7 @@ export const GameProfileStats = (props: Props) => {
 
 	if (!game) return null;
 	return (
-		<QueryBoundary fallback={<Skeleton width="100%" height="120px" />}>
+		<QueryBoundary fallback={<Skeleton width="100%" height="12rem" />}>
 			<GameProfileStatsBoundary game={game} />
 		</QueryBoundary>
 	);
@@ -141,8 +141,8 @@ const GameProfileStatsBoundary = (props: Required<Props>) => {
 const StyledGameProfileStats = styled(Flex)<{ colorTokens: ColorTokens }>`
 	justify-content: space-evenly;
 	background-color: ${({ colorTokens }) => colorTokens['core-tertiary-bg']}66;
-	gap: 16px;
-	padding: 24px 0 32px 0;
+	gap: var(--size-16);
+	padding: var(--size-24) 0 var(--size-32) 0;
 	@media (max-width: ${media.tablets}) {
 		flex-wrap: wrap;
 	}

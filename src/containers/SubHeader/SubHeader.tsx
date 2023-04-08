@@ -32,19 +32,19 @@ const StyledSubHeader = styled(Flex)`
 	flex: 1 1 auto;
 	text-transform: uppercase;
 	width: 100%;
-	height: 100px;
+	height: 10rem;
 	box-sizing: border-box;
 `;
 
 const StyledTitle = styled(Flex)<{ colorTokens: ColorTokens; shUrl: string }>`
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	font-family: var(--font-cinzel);
-	letter-spacing: 0.3em;
-	font-size: 2em;
+	letter-spacing: var(--size-3);
+	font-size: var(--size-20);
 	flex: 1 1 100%;
 	height: 100%;
-	padding: 0 24px;
-	gap: 24px;
+	padding: 0 var(--size-24);
+	gap: var(--size-24);
 	background-color: ${({ colorTokens }) => colorTokens['core-secondary-bg']};
 	background-image: url(${({ shUrl }) => shUrl});
 	background-repeat: no-repeat;
@@ -52,15 +52,15 @@ const StyledTitle = styled(Flex)<{ colorTokens: ColorTokens; shUrl: string }>`
 	background-size: cover;
 
 	@media (max-width: ${media.tablets}) {
-		letter-spacing: 0.1em;
-		gap: 8px;
-		padding: 0 12px;
+		letter-spacing: var(--size-1);
+		gap: var(--size-8);
+		padding: 0 var(--size-12);
 	}
 
 	h2 {
-		font-size: 1em;
+		font-size: var(--size-10);
 		font-weight: normal;
-		text-shadow: 0px 0px 5px
+		text-shadow: 0 0 var(--size-5)
 			${({ colorTokens }) => colorTokens['common-color--shadow']};
 		margin: 0;
 	}

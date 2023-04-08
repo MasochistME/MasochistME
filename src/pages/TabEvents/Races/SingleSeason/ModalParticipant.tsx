@@ -35,8 +35,8 @@ export const ModalParticipant = (props: Props) => {
 		maxWidth: '90%',
 		maxHeight: '90%',
 		overflowY: 'auto',
-		border: `1px solid ${colorTokens['core-extra-bg']}`,
-		boxShadow: `0 0 10px ${colorTokens['common-color--black']}aa`,
+		border: `var(--size-1) solid ${colorTokens['core-extra-bg']}`,
+		boxShadow: `0 0 var(--size-10) ${colorTokens['common-color--black']}aa`,
 	};
 
 	return (
@@ -74,7 +74,7 @@ const RacesTable = ({
 			value: (race: Race) => race.type,
 			render: (race: Race) => (
 				<TableCell
-					padding="8px 0"
+					padding="var(--size-8) 0"
 					content={
 						<Icon
 							icon={getRaceTypeIcon(race)}
@@ -93,7 +93,7 @@ const RacesTable = ({
 				<TableCell
 					isCentered={false}
 					content={<StyledRaceName>{race.name.toUpperCase()}</StyledRaceName>}
-					padding="8px"
+					padding="var(--size-8)"
 					textAlign="left"
 				/>
 			),
@@ -119,7 +119,7 @@ const RacesTable = ({
 							/>
 						) : null
 					}
-					padding="8px"
+					padding="var(--size-8)"
 					textAlign="left"
 				/>
 			),
@@ -178,11 +178,11 @@ const RacesTable = ({
 	];
 	return (
 		<WrapperRace column colorTokens={colorTokens}>
-			<Flex align gap={16} padding="8px" paddingBottom={0}>
+			<Flex align gap={16} padding="var(--size-8)" paddingBottom={0}>
 				<div
 					style={{
-						border: `3px solid ${colorTokens['core-primary-text']}`,
-						borderRadius: '8px',
+						border: `var(--size-3) solid ${colorTokens['core-primary-text']}`,
+						borderRadius: 'var(--size-8)',
 					}}>
 					<MemberAvatar member={participant?.member} size={Size.BIG} />
 				</div>
@@ -198,17 +198,17 @@ const RacesTable = ({
 export const WrapperRace = styled(Flex)<{ colorTokens: ColorTokens }>`
 	box-sizing: border-box;
 	text-align: center;
-	width: 600px;
+	width: 60rem;
 	max-width: 100%;
 	height: auto;
-	gap: 16px;
+	gap: var(--size-16);
 	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']}ee;
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	font-family: var(--font-raleway);
 `;
 
 const StyledRaceName = styled.div`
-	font-size: 1.3em;
+	font-size: var(--size-13);
 	font-family: var(--font-dosis);
 `;
 
@@ -216,9 +216,9 @@ const StyledUsername = styled.h2`
 	display: flex;
 	align-items: center;
 	margin: 0;
-	max-width: 600px;
+	max-width: 60rem;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	font-size: 24px;
+	font-size: var(--size-24);
 `;

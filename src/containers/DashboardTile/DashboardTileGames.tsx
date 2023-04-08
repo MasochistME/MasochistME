@@ -66,5 +66,5 @@ const StyledNewGammes = styled(Flex)`
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: space-evenly;
-	gap: 16px;
+	gap: var(--size-16);
 `;

@@ -62,18 +62,18 @@ const StyledGameThumbnail = styled.div.attrs(
 	align-items: center;
 	justify-content: center;
 	box-sizing: border-box;
-	/* padding: 2px; */
+	/* padding:var(--size-2); */
 	border-radius: ${({ size }) =>
-		size === Size.LARGE || size === Size.BIG ? 8 : 4}px;
+		size === Size.LARGE || size === Size.BIG ? 0.8 : 0.4}rem;
 	border: ${({ size, colorTokens }) =>
-		`${size === Size.SMALL || size === Size.TINY ? 2 : 3}px
+		`${size === Size.SMALL || size === Size.TINY ? 0.2 : 0.3}rem
 		solid ${colorTokens['core-primary-bg']}`};
 
 	img {
 		width: 100%;
 		height: 100%;
 		border-radius: ${({ size }) =>
-			size === Size.LARGE || size === Size.BIG ? 8 : 4}px;
+			size === Size.LARGE || size === Size.BIG ? 0.8 : 0.4}rem;
 		opacity: ${({ size }) =>
 			size === Size.SMALL || size === Size.TINY ? '0.85' : '1'};
 		&:hover {

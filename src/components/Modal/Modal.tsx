@@ -22,8 +22,8 @@ export const Modal = (props: Props) => {
 		maxWidth: '90%',
 		maxHeight: '90%',
 		overflowY: 'auto',
-		border: `1px solid ${colorTokens['core-extra-bg']}`,
-		boxShadow: `0 0 10px ${colorTokens['common-color--black']}aa`,
+		border: `var(--size-1) solid ${colorTokens['core-extra-bg']}`,
+		boxShadow: `0 0 var(--size-10) ${colorTokens['common-color--black']}aa`,
 	};
 
 	const handleModalClose = () => {
@@ -43,10 +43,10 @@ const StyledContent = styled.div<{ colorTokens: ColorTokens }>`
 	display: flex;
 	flex-direction: column;
 	box-sizing: border-box;
-	width: 700px;
+	width: 70rem;
 	max-width: 100%;
 	height: auto;
-	gap: 16px;
+	gap: var(--size-16);
 	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']}ee;
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	font-family: var(--font-raleway);

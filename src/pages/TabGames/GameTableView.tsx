@@ -49,7 +49,7 @@ export const GameTableView = () => {
 			fallback={
 				<Table.Skeleton
 					columns={columns}
-					style={{ height: '36px', margin: '6px 0' }}
+					style={{ height: 'var(--size-36)', margin: 'var(--size-6) 0' }}
 				/>
 			}
 			errorFallback={<ErrorFallback />}>
@@ -84,7 +84,7 @@ const GameTableViewBoundary = () => {
 			title: Columns.TIER,
 			value: (game: Game) => game.tier,
 			render: (game: Game) => <Cell.Tier game={game} />,
-			style: { width: '30px' },
+			style: { width: '3rem' },
 		},
 		{
 			key: Columns.TITLE,

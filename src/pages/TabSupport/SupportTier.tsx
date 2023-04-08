@@ -65,5 +65,5 @@ export const SupportTier = (props: Props): JSX.Element => {
 const StyledSupportTierPatrons = styled(Flex)`
 	width: 100%;
 	flex-wrap: wrap;
-	gap: 16px;
+	gap: var(--size-16);
 `;

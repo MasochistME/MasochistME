@@ -58,7 +58,7 @@ const MemberProfileHeaderBoundary = (props: Props) => {
 						target="_blank"
 						rel="noopener noreferrer">
 						<StyledMemberProfileUsername>
-							<Icon icon="Steam" marginRight="10px" />
+							<Icon icon="Steam" marginRight="var(--size-10)" />
 							{memberName}
 						</StyledMemberProfileUsername>
 					</a>
@@ -91,7 +91,7 @@ const MemberProfileHeaderSkeleton = () => (
 		<StyledMemberProfileDetails column>
 			<StyledMemberProfileTopRow>
 				<StyledMemberProfileUsername>
-					<Icon icon="Steam" marginRight="10px" />
+					<Icon icon="Steam" marginRight="var(--size-10)" />
 					Loading...
 				</StyledMemberProfileUsername>
 				<MemberProfileUpdate />
@@ -105,8 +105,8 @@ const MemberProfileHeaderSkeleton = () => (
 
 const StyledMemberProfileHeader = styled(Flex)`
 	max-width: 100%;
-	padding: 8px;
-	gap: 16px;
+	padding: var(--size-8);
+	gap: var(--size-16);
 	justify-content: space-between;
 	align-items: flex-start;
 `;
@@ -127,16 +127,16 @@ const StyledMemberProfileUsername = styled.h2`
 	display: flex;
 	align-items: center;
 	margin: 0;
-	max-width: 600px;
+	max-width: 60rem;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	font-size: 24px;
+	font-size: var(--size-24);
 `;
 
 const StyledMemberProfileDetails = styled(Flex)`
 	width: 100%;
-	gap: 4px;
+	gap: var(--size-4);
 	align-items: flex-start;
 `;
 
@@ -148,5 +148,5 @@ const StyledMemberProfileDescription = styled.div`
 const StyledMemberProfilePatron = styled(Flex)`
 	cursor: help;
 	align-items: center;
-	gap: 6px;
+	gap: var(--size-6);
 `;

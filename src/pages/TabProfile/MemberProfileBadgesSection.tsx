@@ -19,7 +19,7 @@ export const MemberProfileBadgesSection = (props: Props): JSX.Element => {
 		<Section
 			title="Badges"
 			width="100%"
-			maxWidth="450px"
+			maxWidth="45rem"
 			content={
 				<QueryBoundary fallback={<Loader />} errorFallback={<ErrorFallback />}>
 					<SectionBoundary {...props} />
@@ -58,7 +58,7 @@ const SectionBoundary = (props: Props) => {
 };
 
 const StyledMemberProfileBadges = styled(Flex)`
-	gap: 8px;
+	gap: var(--size-8);
 	width: 100%;
 	flex-flow: row wrap;
 `;

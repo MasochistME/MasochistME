@@ -70,7 +70,7 @@ export const MemberProfileUpdate = (props: Props) => {
 
 const StyledMemberProfileUpdate = styled(Flex)`
 	align-items: center;
-	gap: 12px;
+	gap: var(--size-12);
 	@media (max-width: ${media.tablets}) {
 		display: none;
 	}

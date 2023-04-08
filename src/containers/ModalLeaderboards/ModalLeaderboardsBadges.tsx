@@ -43,7 +43,7 @@ export const ModalLeaderboardsBadges = (props: Props): JSX.Element | null => {
 };
 
 const StyledModalLeaderboardsBadges = styled(Flex)`
-	gap: 8px;
+	gap: var(--size-8);
 	width: 100%;
 	flex-flow: row wrap;
 `;

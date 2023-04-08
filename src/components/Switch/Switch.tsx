@@ -18,15 +18,15 @@ export const Switch = (props: SwitchProps) => {
 };
 
 const StyledSwitch = styled(MUISwitch)<Props>`
-	width: 42px;
-	height: 26px;
+	width: var(--size-42);
+	height: 2var (--size-6);
 	padding: 0;
 	.MuiSwitch-switchBase {
 		padding: 0;
-		margin: 2px;
+		margin: var(--size-2);
 		transition-duration: 300ms;
 		&.Mui-checked {
-			transform: translateX(18px);
+			transform: translateX(1var (--size-8));
 			color: #fff;
 			& + .MuiSwitch-track {
 				background-color: ${({ colortokens }) =>
@@ -40,7 +40,7 @@ const StyledSwitch = styled(MUISwitch)<Props>`
 		}
 		&.Mui-focusVisible .MuiSwitch-thumb {
 			color: #33cf4d;
-			border: 6px solid #fff;
+			border: var(--size-6) solid #fff;
 		}
 		&.Mui-disabled .MuiSwitch-thumb {
 			color: ${({ colortokens }) =>
@@ -52,12 +52,12 @@ const StyledSwitch = styled(MUISwitch)<Props>`
 	}
 	.MuiSwitch-thumb {
 		box-sizing: border-box;
-		width: 22px;
-		height: 22px;
+		width: var(--size-22);
+		height: var(--size-22);
 		color: ${({ colortokens }) => colortokens['semantic-color--switch-thumb']};
 	}
 	.MuiSwitch-track {
-		border-radius: ${26 / 2}px;
+		border-radius: 1.3rem;
 		background-color: ${({ colortokens }) =>
 			colortokens['semantic-color--switch-track']};
 		opacity: 1;

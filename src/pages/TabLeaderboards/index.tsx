@@ -34,7 +34,7 @@ export const TabLeaderboards = (): JSX.Element => {
 					<LeaderboardsList />
 				</QueryBoundary>
 			</StyledLeaderboards>
-			<Info isDesktopOnly minWidth="450px" maxWidth="450px" />
+			<Info isDesktopOnly minWidth="45rem" maxWidth="45rem" />
 		</SubPage>
 	);
 };
@@ -57,7 +57,7 @@ const LeaderboardsList = () => {
 const LeaderboardsListSkeleton = () => (
 	<Flex column gap={2}>
 		{new Array(10).fill(null).map(() => (
-			<Skeleton width="100%" height="64px" />
+			<Skeleton width="100%" height="var(--size-64)" />
 		))}
 	</Flex>
 );
@@ -118,6 +118,6 @@ const useLazyRankingList = () => {
 
 const StyledLeaderboards = styled(Flex)`
 	flex-direction: column;
-	width: 1000px;
+	width: 100rem;
 	max-width: 100%;
 `;

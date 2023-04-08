@@ -26,7 +26,7 @@ export const BadgesTableView = () => (
 		fallback={
 			<Table.Skeleton
 				columns={columns}
-				style={{ height: '36px', margin: '6px 0' }}
+				style={{ height: 'var(--size-36)', margin: 'var(--size-6) 0' }}
 			/>
 		}
 		errorFallback={<ErrorFallback />}>
@@ -70,7 +70,7 @@ const columns: TableColumn<Badge>[] = [
 		title: Columns.POINTS,
 		value: (badge: Badge) => badge.points,
 		render: (badge: Badge) => <TableCell content={badge.points} />,
-		style: { width: '20px' },
+		style: { width: '2rem' },
 	},
 	{
 		key: Columns.GAME,

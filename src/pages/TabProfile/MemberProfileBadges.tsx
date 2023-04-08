@@ -49,6 +49,6 @@ const StyledMemberProfileBadges = styled(Flex)`
 	align-items: center;
 	justify-content: center;
 	flex-wrap: wrap;
-	gap: 16px;
+	gap: var(--size-16);
 	width: 100%;
 `;

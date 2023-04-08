@@ -26,15 +26,15 @@ export const Header = (): JSX.Element => {
 const StyledHeader = styled(Flex)<{ colorTokens: ColorTokens }>`
 	min-width: 100%;
 	max-width: 100%;
-	height: 60px;
+	height: var(--size-60);
 	justify-content: space-between;
 	background-color: ${({ colorTokens }) =>
 		colorTokens['element-color--header-bg']};
 	color: ${({ colorTokens }) => colorTokens['element-color--header-text']};
 	font-family: var(--font-raleway);
-	padding: 12px 32px;
+	padding: var(--size-12) var(--size-32);
 	@media (max-width: ${media.tablets}) {
-		padding: 8px 12px;
+		padding: var(--size-8) var(--size-12);
 	}
 `;
 
@@ -42,7 +42,7 @@ const StyledHeaderTitle = styled.h1`
 	letter-spacing: var(--size-4);
 	font-size: var(--size-16);
 	font-weight: normal;
-	margin: 0 10px;
+	margin: 0 var(--size-10);
 	text-align: center;
 	text-transform: uppercase;
 

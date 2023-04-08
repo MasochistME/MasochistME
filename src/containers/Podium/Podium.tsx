@@ -34,10 +34,10 @@ const StyledPodium = styled.div`
 	display: grid;
 	align-items: center;
 	grid-template-columns: 3fr 1;
-	padding: 0 32px;
-	height: 300px;
+	padding: 0 var(--size-32);
+	height: 30rem;
 
 	@media (max-width: ${media.tablets}) {
-		padding: 0 8px;
+		padding: 0 var(--size-8);
 	}
 `;

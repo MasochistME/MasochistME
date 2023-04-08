@@ -97,7 +97,7 @@ const MemberProfileGamesSkeleton = () => {
 					<StyledFilterGameText colorTokens={colorTokens}>
 						Filter games
 					</StyledFilterGameText>
-					<Skeleton width="300px" height="42px" />
+					<Skeleton width="30rem" height="4.2rem" />
 				</StyledFilterBar>
 				<StyledFilterGameSwitches column gap={8}>
 					<Flex row align gap={16}>
@@ -115,7 +115,7 @@ const MemberProfileGamesSkeleton = () => {
 
 const StyledFilterBar = styled(Flex)`
 	align-items: center;
-	gap: 24px;
+	gap: var(--size-24);
 	width: 100%;
 `;
 
@@ -126,7 +126,7 @@ const StyledFilterGame = styled(Flex)`
 	font-family: var(--font-dosis);
 	font-weight: bold;
 	width: 100%;
-	padding-bottom: 16px;
+	padding-bottom: var(--size-16);
 	text-transform: uppercase;
 	@media (max-width: ${media.tablets}) {
 		flex-wrap: wrap;
@@ -134,7 +134,7 @@ const StyledFilterGame = styled(Flex)`
 `;
 
 const StyledFilterGameText = styled.span<{ colorTokens: ColorTokens }>`
-	font-size: 1.5em;
+	font-size: var(--size-15);
 	color: ${({ colorTokens }) => colorTokens['core-tertiary-text']};
 	@media (max-width: ${media.tablets}) {
 		display: none;
@@ -142,7 +142,7 @@ const StyledFilterGameText = styled.span<{ colorTokens: ColorTokens }>`
 `;
 
 const StyledFilterGameSwitches = styled(Flex)`
-	font-size: 1em;
+	font-size: var(--size-10);
 	word-wrap: nowrap;
 	white-space: nowrap;
 `;

@@ -32,7 +32,7 @@ export const StatBlock = (props: Props) => {
 		<Tooltip content={title}>
 			<StyledStatBlock colorTokens={colorTokens} tierColor={getTierColor()}>
 				{icon && <Icon icon={icon} size={Size.TINY} />}
-				{isLoading && <Skeleton width="100px" />}
+				{isLoading && <Skeleton width="10rem" />}
 				{!isLoading && (
 					<Flex column align>
 						<StyledStatBlockLabel>{label}</StyledStatBlockLabel>
@@ -52,40 +52,40 @@ const StyledStatBlock = styled(Flex)<{
 	colorTokens: ColorTokens;
 	tierColor: string;
 }>`
-	gap: 8px;
+	gap: var(--size-8);
 	flex-direction: row;
 	align-items: center;
-	padding: 8px 16px;
-	border-radius: 64px;
+	padding: var(--size-8) var(--size-16);
+	border-radius: 6var (--size-4);
 	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']}99;
-	border: 2px solid ${({ tierColor }) => tierColor}66;
+	border: var(--size-2) solid ${({ tierColor }) => tierColor}66;
 	color: ${({ tierColor }) => tierColor};
 	font-family: var(--font-dosis);
 	cursor: help;
 	@media (max-width: ${media.tablets}) {
-		padding: 4px 8px;
+		padding: var(--size-4) var(--size-8);
 		i {
-			font-size: 1.5em;
+			font-size: var(--size-15);
 		}
 	}
 `;
 
 const StyledStatBlockLabel = styled.span`
-	font-size: 2em;
+	font-size: var(--size-20);
 	font-weight: bold;
-	line-height: 1em;
+	line-height: var(--size-10);
 	white-space: nowrap;
 	@media (max-width: ${media.tablets}) {
-		font-size: 1.3em;
+		font-size: var(--size-13);
 	}
 `;
 
 const StyledStatBlockSublabel = styled.span<{ tierColor: string }>`
-	font-size: 1em;
+	font-size: var(--size-10);
 	font-weight: bold;
 	color: ${({ tierColor }) => tierColor}bb;
 	white-space: nowrap;
-	line-height: 1em;
+	line-height: var(--size-10);
 	@media (max-width: ${media.smallNetbooks}) {
 		display: none;
 	}
@@ -98,8 +98,8 @@ StatBlock.Title = styled(Flex)`
 StatBlock.Subtitle = styled(Flex)`
 	font-style: italic;
 	align-items: center;
-	gap: 8px;
+	gap: var(--size-8);
 	i {
-		width: 16px;
+		width: var(--size-16);
 	}
 `;

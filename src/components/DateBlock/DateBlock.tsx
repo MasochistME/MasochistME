@@ -40,13 +40,13 @@ export const DateBlock = (props: Props) => {
 };
 
 const StyledDateBlock = styled(Flex)<{ shouldHide: boolean }>`
-	flex: 1 0 90px;
+	flex: 1 0 9rem;
 	flex-wrap: nowrap;
 	flex-direction: column;
-	padding: 0 4px;
-	font-size: 14px;
+	padding: 0 var(--size-4);
+	font-size: var(--size-14);
 	font-family: var(--font-dosis);
-	line-height: 1.2em;
+	line-height: var(--size-12);
 	@media (max-width: ${media.tablets}) {
 		display: ${({ shouldHide }) => (shouldHide ? 'none !important' : 'flex')};
 	}

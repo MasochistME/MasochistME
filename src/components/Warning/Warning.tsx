@@ -13,7 +13,7 @@ export const Warning = (props: Props): JSX.Element => {
 
 const StyledWarning = styled(Flex)`
 	font-weight: bold;
-	font-size: 1.5em;
-	margin: 16px 0;
+	font-size: var(--size-15);
+	margin: var(--size-16) 0;
 	text-align: center;
 `;

@@ -18,7 +18,7 @@ export const BrokenImage = (props: Props) => {
 
 	return (
 		<Tooltip content={title ?? 'I could not load :('}>
-			<StyledBrokenImg fontSize={size ? size / 2 : '16px'}>
+			<StyledBrokenImg fontSize={size ? size / 2 : 'var(--size-16)'}>
 				<Icon icon="WarningTriangle" size={size} />
 			</StyledBrokenImg>
 		</Tooltip>

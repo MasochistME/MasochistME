@@ -75,16 +75,18 @@ const StyledSection = styled.div.attrs((props: StyledProps) => {
 	};
 })<StyledProps>`
 	flex: 0 1 auto;
-	width: 450px;
+	width: 45rem;
 	width: ${({ fullWidth }) => (fullWidth ? '100%' : 'auto')};
 	height: auto;
 	box-sizing: border-box;
-	border: 1px solid ${({ colorTokens }) => colorTokens['core-primary-bg']}88;
-	border-radius: 16px;
+	border: var(--size-1) solid
+		${({ colorTokens }) => colorTokens['core-primary-bg']}88;
+	border-radius: var(--size-16);
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	background-color: ${({ colorTokens }) =>
 		colorTokens['semantic-color--idle']}cc;
-	box-shadow: 0 0 15px ${({ colorTokens }) => colorTokens['core-tertiary-bg']};
+	box-shadow: 0 0 var(--size-15)
+		${({ colorTokens }) => colorTokens['core-tertiary-bg']};
 	${({ isMobileOnly, isDesktopOnly }) => {
 		if (isMobileOnly)
 			return `@media (min-width: ${media.netbooks}) {
@@ -108,21 +110,20 @@ Section.Title = styled.h3<{
 }>`
 	display: flex;
 	align-items: center;
-	justify-content: ${({ isCentered }) =>
-		isCentered ? 'center' : 'flex-start'};
+	justify-content: ${({ isCentered }) => (isCentered ? 'center' : 'flex-start')};
 	width: 100%;
-	padding: 4px;
+	padding: var(--size-4);
 	margin: 0;
-	font-size: 1.3em;
+	font-size: var(--size-13);
 	font-family: var(--font-dosis);
 	text-transform: uppercase;
 	text-align: center;
 	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']};
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
-	border-radius: 16px 16px 0 0;
+	border-radius: var(--size-16) var(--size-16); 0 0;
 `;
 
 Section.Content = styled.div`
 	width: 100%;
-	padding: 12px;
+	padding: var(--size-12);
 `;

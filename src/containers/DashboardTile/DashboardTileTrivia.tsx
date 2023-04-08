@@ -19,7 +19,7 @@ export const DashboardTileTrivia = (
 
 		return tiersData.map((tier: Tier) => (
 			<li
-				style={{ marginLeft: '30px' }}
+				style={{ marginLeft: '3rem' }}
 				key={`tier-${tier.score}-${String(tier._id)}`}>
 				<Icon icon={tier.icon as IconType} />
 				<span>{` : ${
@@ -42,7 +42,7 @@ export const DashboardTileTrivia = (
 							</p>
 							<p>Curated games:</p>
 							<ul>
-								<li style={{ marginLeft: '30px' }}>
+								<li style={{ marginLeft: '3rem' }}>
 									total: <span>{games.length}</span>
 								</li>
 								<ul>{mapCurated()}</ul>

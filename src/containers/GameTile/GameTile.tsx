@@ -84,9 +84,10 @@ const GameThumbnail = ({ gameId }: Pick<Props, 'gameId'>) => {
 };
 
 const StyledGameTile = styled(Flex)<{ colorTokens: ColorTokens }>`
-	width: 300px;
-	height: 145px;
-	border: 3px solid ${({ colorTokens }) => colorTokens['core-tertiary-bg']};
+	width: 30rem;
+	height: 14.5rem;
+	border: var(--size-3) solid
+		${({ colorTokens }) => colorTokens['core-tertiary-bg']};
 	box-sizing: border-box;
 `;
 
@@ -99,21 +100,21 @@ const StyledGameThumbnail = styled.div.attrs(({ src }: { src: string }) => {
 })<{ src: string }>`
 	width: 100%;
 	height: 100%;
-	background-size: 300px;
+	background-size: 30rem;
 	background-position: center;
 	background-repeat: no-repeat;
 
 	cursor: pointer;
 	transition: background-size ease-out 0.4s;
 	&:hover {
-		background-size: 400px;
+		background-size: 40rem;
 	}
 `;
 
 const StyledGameHiddenInfo = styled(Flex)<{ colorTokens: ColorTokens }>`
 	width: 100%;
 	height: 100%;
-	padding: 4px;
+	padding: var(--size-4);
 	box-sizing: border-box;
 	justify-content: space-around;
 	overflow: hidden;

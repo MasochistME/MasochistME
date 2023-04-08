@@ -21,7 +21,7 @@ const StyledMUITab = styled(MUITab)<{ colortokens: ColorTokens }>`
 	text-transform: uppercase;
 	font-weight: bold;
 	font-family: var(--font-dosis);
-	font-size: 18px;
+	font-size: var(--size-18);
 	color: ${({ colortokens }) => colortokens['core-secondary-text']};
 	background-color: ${({ colortokens }) => colortokens['core-primary-bg']}99;
 	&.Mui-selected {
@@ -61,7 +61,7 @@ const StyledMUITabs = styled(MUITabs)<{ colortokens: ColorTokens }>`
 		display: flex;
 		justify-content: center;
 		background-color: transparent;
-		height: 4px;
+		height: var(--size-4);
 	}
 	.MuiTabs-indicatorSpan {
 		max-width: 100;

@@ -57,14 +57,14 @@ const StyledNavigation = styled.div<{
 	width: 100%;
 	grid-template-columns: repeat(${({ nrOfTabs }) => nrOfTabs}, 1fr);
 	background-color: ${({ colorTokens }) => colorTokens['core-secondary-bg']};
-	box-shadow: 0 10px 10px -10px ${({ colorTokens }) => colorTokens['common-color--shadow']};
+	box-shadow: 0 var(--size-10) var(--size-10) -1rem ${({ colorTokens }) => colorTokens['common-color--shadow']};
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	font-family: var(--font-raleway);
 	font-size: var(--size-12);
 	text-transform: uppercase;
 	letter-spacing: 0.15rem;
 	position: sticky;
-	top: 0px;
+	top: 0p;
 	z-index: 1000;
 	list-style-type: none;
 `;
@@ -83,12 +83,12 @@ const StyledTabItem = styled.div.attrs((props: NavItemProps) => {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	gap: 8px;
+	gap: var(--size-8);
 	padding: var(--size-18) 0;
-	border-right: 3px solid
+	border-right: var(--size-3) solid
 		${({ colorTokens }) => colorTokens['element-color--header-bg']};
 	height: 100%;
-	max-height: 90px;
+	max-height: 9rem;
 	box-sizing: border-box;
 
 	&:hover {
@@ -97,8 +97,8 @@ const StyledTabItem = styled.div.attrs((props: NavItemProps) => {
 	}
 
 	@media (max-width: ${media.tablets}) {
-		padding: 12px 0;
-		max-height: 40px;
+		padding: var(--size-12) 0;
+		max-height: var(--size-40);
 	}
 `;
 

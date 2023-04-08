@@ -38,9 +38,7 @@ const GlobalStyle = createGlobalStyle<{
     background-repeat: no-repeat;
     font-family: var(--font-raleway);
     text-align: justify;
-
     font-feature-settings: "tnum", "tnum";
-    font-size: 14px;
     font-variant: tabular-nums;
     line-height: 1.5175;
     margin: 0;

@@ -37,7 +37,7 @@ export const LeaderboardsMember = (props: Props): JSX.Element => {
 };
 
 const StyledLeaderboardsMember = styled(Flex)`
-	width: 1000px;
+	width: 100rem;
 	max-width: 100%;
 	box-sizing: border-box;
 	justify-content: space-between;
