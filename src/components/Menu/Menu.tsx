@@ -3,7 +3,7 @@ import MuiMenu, { MenuProps } from '@mui/material/Menu';
 import MuiMenuItem from '@mui/material/MenuItem';
 import ListSubheader from '@mui/material/ListSubheader';
 import styled from 'styled-components';
-import { ColorTokens, fonts, useTheme } from 'styles';
+import { ColorTokens, useTheme } from 'styles';
 
 type Option = {
 	value: string;
@@ -88,12 +88,12 @@ const StyledMenu = styled(MuiMenu)<{ colorTokens: ColorTokens }>`
 	& .MuiList-root {
 		li {
 			color: ${({ colorTokens }) => colorTokens['core-primary-text']};
-			font-family: ${fonts.Raleway};
+			font-family: var(--font-raleway);
 			background-color: transparent;
 
 			&.MuiListSubheader-root {
 				color: ${({ colorTokens }) => colorTokens['core-secondary-text']};
-				font-family: ${fonts.Dosis};
+				font-family: var(--font-dosis);
 				font-size: 1.3em;
 				line-height: 1.3em;
 				padding: 8px 0 8px 16px;

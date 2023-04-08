@@ -13,7 +13,7 @@ import {
 	Skeleton,
 } from 'components';
 import { MemberBadges, MemberAvatar } from 'containers';
-import { ColorTokens, useTheme, media, fonts } from 'styles';
+import { ColorTokens, useTheme, media } from 'styles';
 import { Size } from 'components';
 import { useAppContext } from 'context';
 
@@ -175,7 +175,7 @@ const StyledGameLeaderboardsMemberTime = styled.div<{
 	display: flex;
 	align-items: center;
 	font-size: 0.7em;
-	font-family: ${fonts.Verdana};
+	font-family: var(--font-verdana);
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	width: 128px;
 	@media (max-width: ${media.tablets}) {

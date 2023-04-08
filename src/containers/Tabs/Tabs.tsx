@@ -1,7 +1,7 @@
 import { Tab as MUITab, Tabs as MUITabs } from '@mui/material';
 import styled from 'styled-components';
 
-import { fonts, ColorTokens, useTheme } from 'styles';
+import { ColorTokens, useTheme } from 'styles';
 
 /**
  * A single tab.
@@ -20,7 +20,7 @@ export const Tab = (props: StyledTabProps) => {
 const StyledMUITab = styled(MUITab)<{ colortokens: ColorTokens }>`
 	text-transform: uppercase;
 	font-weight: bold;
-	font-family: ${fonts.Dosis};
+	font-family: var(--font-dosis);
 	font-size: 18px;
 	color: ${({ colortokens }) => colortokens['core-secondary-text']};
 	background-color: ${({ colortokens }) => colortokens['core-primary-bg']}99;

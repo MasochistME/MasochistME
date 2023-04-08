@@ -1,7 +1,7 @@
 import React from 'react';
-import { Flex, Size } from 'components';
 import styled from 'styled-components';
-import { fonts } from 'styles';
+
+import { Flex, Size } from 'components';
 
 type Props = {
 	width?: string;
@@ -38,7 +38,7 @@ const StyledImg = styled.img`
 `;
 
 const StyledText = styled.div`
-	font-family: ${fonts.Dosis};
+	font-family: var(--font-dosis);
 	text-transform: uppercase;
 	letter-spacing: 2px;
 	opacity: 0.5;

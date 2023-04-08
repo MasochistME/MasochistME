@@ -13,7 +13,7 @@ import {
 import { ModalRace, WinnerLink } from 'containers';
 import styled from 'styled-components';
 import { getRaceTypeIcon } from 'utils/getIcon';
-import { fonts, media } from 'styles';
+import { media } from 'styles';
 import { useMixpanel } from 'hooks';
 
 type Props = {
@@ -165,7 +165,7 @@ export const SingleSeasonRaces = (props: Props): JSX.Element => {
 
 const TableCellRaceName = styled(Flex)`
 	font-size: 1.3em;
-	font-family: ${fonts.Dosis};
+	font-family: var(--font-dosis);
 	&:hover {
 		color: white;
 	}

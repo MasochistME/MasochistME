@@ -6,7 +6,7 @@ import {
 	ListSubheader,
 } from '@mui/material';
 import styled from 'styled-components';
-import { ColorTokens, fonts, useTheme } from 'styles';
+import { ColorTokens, useTheme } from 'styles';
 
 type Option = {
 	value: string;
@@ -60,7 +60,7 @@ export const Select = (props: Props) => {
 };
 
 const StyledSelect = styled(MuiSelect)<{ colorTokens: ColorTokens }>`
-	font-family: ${fonts.Raleway};
+	font-family: var(--font-raleway);
 	font-size: 1em;
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	&.MuiInputBase-root {

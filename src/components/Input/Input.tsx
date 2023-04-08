@@ -3,7 +3,7 @@ import { Icon } from 'components/Icon';
 import React from 'react';
 import styled from 'styled-components';
 
-import { media, fonts, useTheme, ColorTokens } from 'styles';
+import { media, useTheme, ColorTokens } from 'styles';
 
 type Props<T extends string> = {
 	query: T;
@@ -56,7 +56,7 @@ const StyledInput = styled.input<{
 	max-width: 300px;
 	padding: 4px 12px;
 	font-size: 1.2em;
-	font-family: ${fonts.Raleway};
+	font-family: var(--font-raleway);
 	background-color: transparent;
 	border-top-right-radius: 32px;
 	border-bottom-right-radius: 32px;

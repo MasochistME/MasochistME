@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { fonts, useTheme, ColorTokens } from 'styles';
+import { useTheme, ColorTokens } from 'styles';
 import { Icon, IconType, Tooltip } from 'components';
 import { Size } from 'components';
 
@@ -80,7 +80,7 @@ const StyledButton = styled.button<{
 		if (size === Size.LARGE) return '32px';
 		return '18px';
 	}};
-	font-family: ${fonts.Raleway};
+	font-family: var(--font-raleway);
 	background-color: ${({ iconOnly, isGolden, colorTokens }) => {
 		if (iconOnly) return 'transparent';
 		if (isGolden) return `${colorTokens['core-primary-bg']}99`;

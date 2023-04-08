@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Box, Modal } from '@mui/material';
 
-import { fonts, useTheme, ColorTokens } from 'styles';
+import { useTheme, ColorTokens } from 'styles';
 import { Flex } from 'components';
 
 import { ModalRaceHeader } from './ModalRaceHeader';
@@ -55,6 +55,6 @@ export const WrapperRace = styled(Flex)<{ colorTokens: ColorTokens }>`
 	gap: 16px;
 	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']}ee;
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
-	font-family: ${fonts.Raleway};
+	font-family: var(--font-raleway);
 	/* padding: 16px; */
 `;

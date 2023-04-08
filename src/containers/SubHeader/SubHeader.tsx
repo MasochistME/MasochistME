@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { fonts, media, useTheme, ColorTokens } from 'styles';
+import { media, useTheme, ColorTokens } from 'styles';
 import { Tab, tabs } from 'configuration/tabs';
 import { useAppContext } from 'context';
 import { Flex, Icon, Size } from 'components';
@@ -38,7 +38,7 @@ const StyledSubHeader = styled(Flex)`
 
 const StyledTitle = styled(Flex)<{ colorTokens: ColorTokens; shUrl: string }>`
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
-	font-family: ${fonts.Cinzel};
+	font-family: var(--font-cinzel);
 	letter-spacing: 0.3em;
 	font-size: 2em;
 	flex: 1 1 100%;

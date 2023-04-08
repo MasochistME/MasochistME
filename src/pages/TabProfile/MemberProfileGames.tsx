@@ -13,7 +13,7 @@ import {
 	Skeleton,
 	Switch,
 } from 'components';
-import { fonts, media, useTheme, ColorTokens } from 'styles';
+import { media, useTheme, ColorTokens } from 'styles';
 import { useMixpanel } from 'hooks';
 
 type Props = { memberId: string };
@@ -123,7 +123,7 @@ const StyledFilterGame = styled(Flex)`
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-	font-family: ${fonts.Dosis};
+	font-family: var(--font-dosis);
 	font-weight: bold;
 	width: 100%;
 	padding-bottom: 16px;

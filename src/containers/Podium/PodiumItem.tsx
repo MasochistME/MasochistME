@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { useMembers } from 'sdk';
 import { Icon, Size, Skeleton } from 'components';
-import { ColorTokens, fonts, useTheme } from 'styles';
+import { ColorTokens, useTheme } from 'styles';
 
 import { PodiumAvatar } from './PodiumAvatar';
 import { usePodiumColor } from './hooks';
@@ -120,7 +120,7 @@ PodiumItem.Place = styled.div`
 	filter: drop-shadow(-5px 7px 5px #000);
 	& .place--number {
 		position: absolute;
-		font-family: ${fonts.Dosis};
+		font-family: var(--font-dosis);
 		font-weight: 600;
 	}
 `;
@@ -129,7 +129,7 @@ PodiumItem.Username = styled(Link)<{
 	colorTokens: ColorTokens;
 	place: 1 | 2 | 3;
 }>`
-	font-family: ${fonts.Dosis};
+	font-family: var(--font-dosis);
 	font-size: ${({ place }) => (place === 1 ? '1.5em' : '1.3em')};
 	color: ${({ colorTokens }) => colorTokens['core-tertiary-text']};
 	letter-spacing: 0.5px;
@@ -138,6 +138,6 @@ PodiumItem.Username = styled(Link)<{
 PodiumItem.Score = styled.span<{ colorTokens: ColorTokens }>`
 	font-size: 1.5em;
 	font-weight: bold;
-	font-family: ${fonts.Dosis};
+	font-family: var(--font-dosis);
 	border-radius: 32px;
 `;

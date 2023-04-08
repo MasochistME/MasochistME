@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { fonts, useTheme, ColorTokens } from 'styles';
+import { useTheme, ColorTokens } from 'styles';
 import { useGames } from 'sdk';
 import { getGameThumbnail } from 'utils';
 import { Section, SectionProps } from 'containers';
@@ -85,7 +85,7 @@ export const SalePercentage = styled.span<{ colorTokens: ColorTokens }>`
 	justify-content: center;
 	width: 35%;
 	height: 40%;
-	font-family: ${fonts.Dosis};
+	font-family: var(--font-dosis);
 	font-weight: bold;
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	background-color: ${({ colorTokens }) => colorTokens['core-secondary-bg']};

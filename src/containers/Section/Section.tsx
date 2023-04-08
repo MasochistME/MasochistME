@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useHistory } from 'react-router';
 
-import { fonts, media, useTheme, ColorTokens } from 'styles';
+import { media, useTheme, ColorTokens } from 'styles';
 import { Button } from 'components';
 
 export type SectionProps = {
@@ -114,7 +114,7 @@ Section.Title = styled.h3<{
 	padding: 4px;
 	margin: 0;
 	font-size: 1.3em;
-	font-family: ${fonts.Dosis};
+	font-family: var(--font-dosis);
 	text-transform: uppercase;
 	text-align: center;
 	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']};

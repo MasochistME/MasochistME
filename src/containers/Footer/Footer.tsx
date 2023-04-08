@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Flex } from 'components';
-import { fonts, media, useTheme, ColorTokens } from 'styles';
+import { media, useTheme, ColorTokens } from 'styles';
 import { ButtonsSocialMedia } from 'containers';
 import { Size } from 'components';
 import { Link } from 'react-router-dom';
@@ -53,7 +53,7 @@ const StyledFooter = styled(Flex)<{ colorTokens: ColorTokens }>`
 	background-color: ${({ colorTokens }) =>
 		colorTokens['element-color--header-bg']};
 	color: ${({ colorTokens }) => colorTokens['element-color--header-text']};
-	font-family: ${fonts.Raleway};
+	font-family: var(--font-raleway);
 	a {
 		color: ${({ colorTokens }) => colorTokens['semantic-color--link-normal']};
 	}

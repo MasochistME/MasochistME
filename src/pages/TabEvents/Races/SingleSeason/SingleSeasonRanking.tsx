@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Member, SeasonLeaderboardEntry } from '@masochistme/sdk/dist/v1/types';
+import styled from 'styled-components';
+
 import {
 	Button,
 	ErrorFallback,
@@ -13,11 +15,9 @@ import {
 	Tooltip,
 } from 'components';
 import { WinnerLink } from 'containers';
+import { useMixpanel } from 'hooks';
 import { useCuratorMembers, useSeasonLeaderboards } from 'sdk';
 import { ModalParticipant } from './ModalParticipant';
-import styled from 'styled-components';
-import { fonts } from 'styles';
-import { useMixpanel } from 'hooks';
 
 enum Columns {
 	PLACE = '#',
@@ -277,6 +277,6 @@ const StyledPlace = styled.div`
 	gap: 4px;
 	font-size: 1.3em;
 	font-weight: bold;
-	font-family: ${fonts.Dosis};
+	font-family: var(--font-dosis);
 	padding: 4px;
 `;

@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Modal as MuiModal } from '@mui/material';
 import styled from 'styled-components';
 
-import { fonts, useTheme, ColorTokens } from 'styles';
+import { useTheme, ColorTokens } from 'styles';
 
 type Props = {
 	children: React.ReactNode;
@@ -49,5 +49,5 @@ const StyledContent = styled.div<{ colorTokens: ColorTokens }>`
 	gap: 16px;
 	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']}ee;
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
-	font-family: ${fonts.Raleway};
+	font-family: var(--font-raleway);
 `;

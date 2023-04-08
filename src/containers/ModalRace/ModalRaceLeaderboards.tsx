@@ -12,7 +12,7 @@ import {
 	TableColumn,
 } from 'components';
 import { Podium, WinnerLink } from 'containers';
-import { fonts, media } from 'styles';
+import { media } from 'styles';
 import dayjs from 'dayjs';
 import { getMedal } from 'utils/getMedal';
 
@@ -175,7 +175,7 @@ const StyledPlayerScore = styled.div`
 	gap: 4px;
 	font-size: 1.3em;
 	font-weight: bold;
-	font-family: ${fonts.Dosis};
+	font-family: var(--font-dosis);
 	padding: 8px;
 	@media (max-width: ${media.tablets}) {
 		padding: 8px;

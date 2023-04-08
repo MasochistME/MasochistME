@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Badge } from '@masochistme/sdk/dist/v1/types';
 
-import { fonts, useTheme, ColorTokens } from 'styles';
+import { useTheme, ColorTokens } from 'styles';
 import { BadgeThumbnail } from 'containers';
 import { Flex, Icon, Size, Skeleton } from 'components';
 
@@ -52,10 +52,10 @@ export const BadgePoints = (props: Props) => {
 	const { badge } = props;
 
 	return (
-		<Flex align gap={4} fontSize="18px" fontFamily={fonts.Dosis}>
+		<StyledBadgePoints align gap={4}>
 			{badge?.points ?? <Skeleton size={Size.TINY} />}
 			<Icon icon="CirclePlus" size={Size.MICRO} />
-		</Flex>
+		</StyledBadgePoints>
 	);
 };
 
@@ -73,4 +73,10 @@ const StyledBadgeField = styled.p`
 	margin: 0;
 	max-width: 450px;
 	text-align: left;
+`;
+
+const StyledBadgePoints = styled(Flex)`
+	gap: 4px;
+	font-size: var(--size-18);
+	font-family: var(--font-dosis);
 `;

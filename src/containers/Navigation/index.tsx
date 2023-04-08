@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { Icon } from 'components';
 import { useAppContext } from 'context';
-import { fonts, media, useTheme, ColorTokens } from 'styles';
+import { media, useTheme, ColorTokens } from 'styles';
 import { tabs, Tab } from 'configuration/tabs';
 
 export const Navigation = (): JSX.Element => {
@@ -59,7 +59,7 @@ const StyledNavigation = styled.div<{
 	background-color: ${({ colorTokens }) => colorTokens['core-secondary-bg']};
 	box-shadow: 0 10px 10px -10px ${({ colorTokens }) => colorTokens['common-color--shadow']};
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
-	font-family: ${fonts.Raleway};
+	font-family: var(--font-raleway);
 	font-size: 0.9em;
 	text-transform: uppercase;
 	letter-spacing: 2px;

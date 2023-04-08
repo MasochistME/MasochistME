@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { fonts, media, useTheme, ColorTokens } from 'styles';
+import { media, useTheme, ColorTokens } from 'styles';
 import { Flex, Icon, IconType, Tooltip, Skeleton, Size } from 'components';
 import { ColorMap } from 'utils';
 
@@ -60,7 +60,7 @@ const StyledStatBlock = styled(Flex)<{
 	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']}99;
 	border: 2px solid ${({ tierColor }) => tierColor}66;
 	color: ${({ tierColor }) => tierColor};
-	font-family: ${fonts.Dosis};
+	font-family: var(--font-dosis);
 	cursor: help;
 	@media (max-width: ${media.tablets}) {
 		padding: 4px 8px;

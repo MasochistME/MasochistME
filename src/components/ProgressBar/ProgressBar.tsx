@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { fonts, media, useTheme, ColorTokens } from 'styles';
+import { media, useTheme, ColorTokens } from 'styles';
 
 type Props = {
 	percentage: number;
@@ -87,7 +87,7 @@ ProgressBar.Percentage = styled.div<{ colorTokens: ColorTokens }>`
 	width: 100%;
 	height: 100%;
 	font-size: 0.9em;
-	font-family: ${fonts.Raleway};
+	font-family: var(--font-raleway);
 	font-weight: bold;
 	letter-spacing: 0.1em;
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};

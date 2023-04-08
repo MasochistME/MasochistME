@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 
-import { fonts, media } from 'styles';
+import { media } from 'styles';
 import { getHumanReadableDate } from 'utils';
 import { Flex } from '../Flex';
 
@@ -45,7 +45,7 @@ const StyledDateBlock = styled(Flex)<{ shouldHide: boolean }>`
 	flex-direction: column;
 	padding: 0 4px;
 	font-size: 14px;
-	font-family: ${fonts.Dosis};
+	font-family: var(--font-dosis);
 	line-height: 1.2em;
 	@media (max-width: ${media.tablets}) {
 		display: ${({ shouldHide }) => (shouldHide ? 'none !important' : 'flex')};

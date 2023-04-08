@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { Icon, Menu, QueryBoundary, Size, Warning } from 'components';
-import { ColorTokens, fonts, media, useTheme } from 'styles';
+import { ColorTokens, media, useTheme } from 'styles';
 import { useRacesFromSeason } from 'hooks';
 import { useEffect } from 'react';
 
@@ -108,7 +108,7 @@ const StyledOption = styled.div`
 `;
 
 const StyledSeasonTitle = styled.h2<{ colorTokens: ColorTokens }>`
-	font-family: ${fonts.Dosis};
+	font-family: var(--font-dosis);
 	display: flex;
 	margin: 0;
 	align-items: center;

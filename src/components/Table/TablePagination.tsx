@@ -3,7 +3,7 @@ import TablePaginationUnstyled, {
 } from '@mui/base/TablePaginationUnstyled';
 import styled from 'styled-components';
 
-import { useTheme, ColorTokens, fonts } from 'styles';
+import { useTheme, ColorTokens } from 'styles';
 import { TableRow } from './types';
 
 type Props = {
@@ -94,7 +94,7 @@ const StyledTablePagination = styled(TablePaginationUnstyled)<{
 		border-radius: 50px;
 		background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']};
 		color: ${({ colorTokens }) => colorTokens['core-primary-text']};
-		font-family: ${fonts.Raleway};
+		font-family: var(--font-raleway);
 		font-size: 1.2em;
 		cursor: pointer;
 

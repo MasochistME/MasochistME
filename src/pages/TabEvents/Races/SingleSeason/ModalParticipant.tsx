@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Box, Modal } from '@mui/material';
 import { Race } from '@masochistme/sdk/dist/v1/types';
 
-import { fonts, useTheme, ColorTokens } from 'styles';
+import { useTheme, ColorTokens } from 'styles';
 import { Flex, Icon, Size, Table, TableCell, TableColumn } from 'components';
 import { useRacesFromSeason } from 'hooks';
 import { MemberAvatar } from 'containers';
@@ -204,12 +204,12 @@ export const WrapperRace = styled(Flex)<{ colorTokens: ColorTokens }>`
 	gap: 16px;
 	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']}ee;
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
-	font-family: ${fonts.Raleway};
+	font-family: var(--font-raleway);
 `;
 
 const StyledRaceName = styled.div`
 	font-size: 1.3em;
-	font-family: ${fonts.Dosis};
+	font-family: var(--font-dosis);
 `;
 
 const StyledUsername = styled.h2`
