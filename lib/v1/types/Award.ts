@@ -23,9 +23,9 @@ export interface Award extends WithId {
 	img: string;
 	/**
 	 * Ordered list of children of this award (if it has them).
-	 * Array is empty if no children.
+	 * Array is empty or null if no children.
 	 */
-	children: string[];
+	children: string[] | null;
 	/**
 	 * Human readable ID of category that the award belongs to
 	 */
