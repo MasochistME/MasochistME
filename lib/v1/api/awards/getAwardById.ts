@@ -4,6 +4,7 @@ import { Award, ResponseError } from 'v1/types';
 
 /**
  * Retrieve an award with given ID (if it exists).
+ * If requested award has children they will get returned with it.
  *
  * Award is identified by its stringified `ObjectID`.
  *

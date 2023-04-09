@@ -22,13 +22,18 @@ export interface Award extends WithId {
 	 */
 	img: string;
 	/**
+	 * Ordered list of children of this award (if it has them).
+	 * Array is empty if no children.
+	 */
+	children: string[];
+	/**
 	 * Human readable ID of category that the award belongs to
 	 */
 	category: string;
 	/**
 	 * Automatically detected requirements needed to earn that badge.
 	 */
-	requirement: AwardRequirement[];
+	requirements: AwardRequirement[];
 	/**
 	 * Can the award be unlocked more than once.
 	 */
@@ -48,15 +53,13 @@ export interface Award extends WithId {
  */
 export interface AwardChild extends Award {
 	/**
-	 * Mongo generated ID of the parent award.
+	 * Tier of the child award. This is so you can have gold, bronze etc. tiers
+	 * while still keeping an unique name for the child award.
+	 * Null if there is no tier specific name
 	 */
-	childOf: string;
-	/**
-	 * Tier of the category.
-	 */
-	tier: number;
+	tier: string | null;
 	/**
 	 * Child awards cannot have their own categories.
 	 */
-	categories: never;
+	category: never;
 }

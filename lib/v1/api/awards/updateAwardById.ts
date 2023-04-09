@@ -13,6 +13,8 @@ import { Award, ResponseError } from 'v1/types';
  * - `description`
  * - `img`
  * - `category`
+ * - `requirements`
+ * - `children`
  * - `isStackable`
  * - `isEnabled`
  * - `isLegacy`
