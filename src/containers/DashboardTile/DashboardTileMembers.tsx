@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 import { LogMemberJoin, LogType } from '@masochistme/sdk/dist/v1/types';
@@ -32,7 +32,7 @@ export const DashboardTileMembers = (props: Props) => {
 };
 
 const DashboardTileMembersBoundary = (props: Props) => {
-	const history = useHistory();
+	const navigate = useNavigate();
 	const { membersData } = useCuratorMembers();
 	const { data: logs = [] } = useLogs({
 		limit: NUMBER_OF_MEMBERS,
@@ -41,7 +41,7 @@ const DashboardTileMembersBoundary = (props: Props) => {
 	});
 
 	const onMemberClick = (memberId?: string) => {
-		if (memberId) history.push(`/profile/${memberId}`);
+		if (memberId) navigate(`/profile/${memberId}`);
 	};
 
 	const memberLogs = logs.filter(

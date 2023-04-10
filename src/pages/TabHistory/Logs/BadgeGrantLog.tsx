@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { LogBadgeGet, Badge, Member } from '@masochistme/sdk/dist/v1/types';
 
 import { Icon } from 'components';
@@ -10,7 +10,7 @@ import { Size } from 'components';
 import { HistoryLog } from '.';
 
 export const BadgeGrantLog = ({ log }: { log: LogBadgeGet }) => {
-	const history = useHistory();
+	const navigate = useNavigate();
 
 	const { membersData } = useAllMembers();
 	const { badgesData } = useBadges();
@@ -19,7 +19,7 @@ export const BadgeGrantLog = ({ log }: { log: LogBadgeGet }) => {
 	const member = membersData.find((m: Member) => m.steamId === log.memberId);
 
 	const onMemberClick = () => {
-		if (member?.steamId) history.push(`/profile/${member.steamId}`);
+		if (member?.steamId) navigate(`/profile/${member.steamId}`);
 	};
 
 	if (!badge || !member) return null;

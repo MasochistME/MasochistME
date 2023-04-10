@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { LogMemberJoin, Member } from '@masochistme/sdk/dist/v1/types';
 
 import { useAllMembers } from 'sdk';
@@ -15,13 +15,13 @@ type Props = {
 
 export const MemberJoinLog = (props: Props): JSX.Element | null => {
 	const { log } = props;
-	const history = useHistory();
+	const navigate = useNavigate();
 
 	const { membersData } = useAllMembers();
 	const member = membersData.find((m: Member) => m.steamId === log.memberId);
 
 	const onMemberClick = () => {
-		member?.steamId && history.push(`/profile/${member.steamId}`);
+		member?.steamId && navigate(`/profile/${member.steamId}`);
 	};
 
 	return (

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { PatreonTier, PatronTier } from '@masochistme/sdk/dist/v1/types';
 import { useMemberById, usePatreonTiers, useMemberLeaderboards } from 'sdk';
 import {
 	ErrorFallback,
@@ -22,7 +23,6 @@ import { MemberProfileBadges } from './MemberProfileBadges';
 import { MemberProfileGraphs } from './MemberProfileGraphs';
 import { MemberProfileGames } from './MemberProfileGames';
 import { MemberProfileStats } from './MemberProfileStats';
-import { PatreonTier, PatronTier } from '@masochistme/sdk/dist/v1/types';
 
 enum TabsMap {
 	GRAPHS = 'graphs',
@@ -31,8 +31,9 @@ enum TabsMap {
 }
 
 export const TabProfile = (): JSX.Element => {
+	// ID param will always be defined because this tab is used ONLY for the /profile/:id route.
+	const { id } = useParams<{ id: string }>() as { id: string };
 	useActiveTab(TabDict.PROFILE, true);
-	const { id } = useParams<{ id: string }>();
 
 	return (
 		<SubPage>

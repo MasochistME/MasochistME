@@ -38,8 +38,9 @@ enum TabsMap {
 }
 
 export const TabGame = (): JSX.Element => {
+	// ID param will always be defined because this tab is used ONLY for the /game/:id route.
+	const { id } = useParams<{ id: string }>() as { id: string };
 	useActiveTab(TabDict.GAME, true);
-	const { id } = useParams<{ id: string }>();
 
 	return (
 		<SubPage>

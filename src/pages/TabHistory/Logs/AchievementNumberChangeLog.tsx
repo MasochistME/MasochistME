@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import {
 	LogAchievementNumberChange,
 	Tier,
@@ -21,7 +21,7 @@ export const AchievementNumberChangeLog = (
 	props: Props,
 ): JSX.Element | null => {
 	const { log } = props;
-	const history = useHistory();
+	const navigate = useNavigate();
 
 	const { tiersData } = useTiers();
 	const { gamesData: games } = useAllGames();
@@ -33,7 +33,7 @@ export const AchievementNumberChangeLog = (
 	const iconAchievementChange = game ? 'Checklist' : 'WarningTriangle'; // TODO this won't be compatible
 
 	const onGameClick = () => {
-		if (game?.id) history.push(`/game/${game.id}`);
+		if (game?.id) navigate(`/game/${game.id}`);
 	};
 
 	if (!game || !tier) return null;

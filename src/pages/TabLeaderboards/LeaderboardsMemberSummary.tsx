@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { useMemberLeaderboardsSummary } from 'hooks';
@@ -22,7 +22,7 @@ type Props = {
 };
 
 export const LeaderboardsMemberSummary = (props: Props): JSX.Element | null => {
-	const history = useHistory();
+	const navigate = useNavigate();
 	const { colorTokens } = useTheme();
 	const { steamId, position, onShowDetails } = props;
 	const [isExpanded, setIsExpanded] = useState(false);
@@ -53,7 +53,7 @@ export const LeaderboardsMemberSummary = (props: Props): JSX.Element | null => {
 	};
 
 	const onShowProfile = () => {
-		if (steamId) history.push(`/profile/${steamId}`);
+		if (steamId) navigate(`/profile/${steamId}`);
 	};
 
 	if (!memberData) return null;

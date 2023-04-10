@@ -1,5 +1,5 @@
 import { Badge } from '@masochistme/sdk/dist/v1/types';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 
 import { TableCell, TableLink } from 'components';
 import { useCuratedGames } from 'sdk';
@@ -8,7 +8,7 @@ import { useTheme } from 'styles';
 type Props = { badge: Badge };
 
 export const CellGame = ({ badge }: Props) => {
-	const history = useHistory();
+	const navigate = useNavigate();
 	const { colorTokens } = useTheme();
 	const { gamesData: games } = useCuratedGames();
 
@@ -16,7 +16,7 @@ export const CellGame = ({ badge }: Props) => {
 	const gameTitle = game?.title ?? badge.title ?? '—';
 
 	const onGameClick = (gameId?: number | null) => {
-		if (gameId) history.push(`/game/${gameId}`);
+		if (gameId) navigate(`/game/${gameId}`);
 	};
 
 	return (
