@@ -94,7 +94,7 @@ export const App = (): JSX.Element => {
 								}
 							/>
 							<Route
-								path="/profile/:id"
+								path="/profile/:id/*"
 								element={
 									<Boundary>
 										<TabProfile />
