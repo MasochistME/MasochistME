@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Tab as MUITab, Tabs as MUITabs } from '@mui/material';
 import styled from 'styled-components';
 
@@ -10,11 +11,17 @@ import { ColorTokens, useTheme } from 'styles';
 type StyledTabProps = {
 	label: string;
 	value: string;
+	to?: string;
 };
 
 export const Tab = (props: StyledTabProps) => {
 	const { colorTokens } = useTheme();
-	return <StyledMUITab disableRipple colortokens={colorTokens} {...props} />;
+	const { to, ...otherProps } = props;
+	const rest = {
+		...(to ? { component: Link, to } : {}),
+		...otherProps,
+	};
+	return <StyledMUITab disableRipple colortokens={colorTokens} {...rest} />;
 };
 
 const StyledMUITab = styled(MUITab)<{ colortokens: ColorTokens }>`
