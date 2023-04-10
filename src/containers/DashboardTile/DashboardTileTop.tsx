@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 
 import { useLeaderboardsMembers, useCuratorMembers } from 'sdk';
@@ -13,7 +13,7 @@ const NUMBER_OF_LEADERS = 10;
 export const DashboardTileTop = (
 	props: Omit<SectionProps, 'content' | 'title'>,
 ): JSX.Element => {
-	const history = useHistory();
+	const navigate = useNavigate();
 
 	const {
 		membersData,
@@ -44,7 +44,7 @@ export const DashboardTileTop = (
 		memberId: string;
 		position: number;
 	}) => {
-		const onUserClick = () => history.push(`/profile/${leader.memberId}`);
+		const onUserClick = () => navigate(`/profile/${leader.memberId}`);
 		return (
 			<StyledSectionTopMember row align key={`leaderboards-${leader.memberId}`}>
 				<div>{leader.position}.</div>

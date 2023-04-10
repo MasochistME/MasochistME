@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 
 import { useCuratedGames } from 'sdk';
@@ -11,7 +11,7 @@ type Props = {
 };
 
 export const ModalLeaderboardsHeader = ({ gameId }: Props) => {
-	const history = useHistory();
+	const navigate = useNavigate();
 	const { gamesData } = useCuratedGames();
 
 	const game = gamesData.find((g: Game) => g.id === gameId);
@@ -19,7 +19,7 @@ export const ModalLeaderboardsHeader = ({ gameId }: Props) => {
 	const onShowGame = (
 		event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
 	) => {
-		history.push(`/game/${gameId}`);
+		navigate(`/game/${gameId}`);
 		event.stopPropagation();
 	};
 

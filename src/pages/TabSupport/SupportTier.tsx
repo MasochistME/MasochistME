@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import { Member, PatreonTier } from '@masochistme/sdk/dist/v1/types';
 
@@ -13,7 +13,7 @@ type Props = {
 };
 
 export const SupportTier = (props: Props): JSX.Element => {
-	const history = useHistory();
+	const navigate = useNavigate();
 	const { patreonTier } = props;
 
 	const { membersData } = useMembers();
@@ -40,7 +40,7 @@ export const SupportTier = (props: Props): JSX.Element => {
 		});
 
 	const handlePatronClick = (member: Partial<Member>) => {
-		if (member.steamId) history.push(`/profile/${member.steamId}`);
+		if (member.steamId) navigate(`/profile/${member.steamId}`);
 	};
 
 	if (isLoading) return <Spinner />;

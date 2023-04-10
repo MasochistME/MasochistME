@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 
 import { Flex, Loader, QueryBoundary, ErrorFallback } from 'components';
@@ -31,7 +31,7 @@ export const MemberProfileBadgesSection = (props: Props): JSX.Element => {
 
 const SectionBoundary = (props: Props) => {
 	const { memberId } = props;
-	const history = useHistory();
+	const navigate = useNavigate();
 
 	const { memberBadges } = useMemberBadgesFilter(memberId);
 
@@ -45,7 +45,7 @@ const SectionBoundary = (props: Props) => {
 	));
 
 	const onBadgeClick = (gameId: number | null) => {
-		if (gameId) history.push(`/game/${gameId}`);
+		if (gameId) navigate(`/game/${gameId}`);
 	};
 
 	return (

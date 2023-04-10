@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 
 import { Icon } from 'components';
@@ -29,13 +29,13 @@ const NavigationItem = (props: Props): JSX.Element => {
 
 	const { activeTab } = useAppContext();
 	const { colorTokens } = useTheme();
-	const history = useHistory();
+	const navigate = useNavigate();
 
 	const isActive = tab.id === activeTab;
 
 	const onTabOpen = (): void => {
 		if (tab.external) window.open(tab.link);
-		else history.push(`/${tab.link}`);
+		else navigate(`/${tab.link}`);
 	};
 
 	return (

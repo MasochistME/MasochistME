@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import { Member, MemberGame } from '@masochistme/sdk/dist/v1/types';
 
@@ -39,7 +39,7 @@ const GameLeaderboardsBoundary = (props: Props) => {
 	const { gameId, isCompact } = props;
 	const { colorTokens } = useTheme();
 	const { dev } = useAppContext();
-	const history = useHistory();
+	const navigate = useNavigate();
 
 	const { gameCompletions } = useGameCompletion(gameId);
 
@@ -49,7 +49,7 @@ const GameLeaderboardsBoundary = (props: Props) => {
 		else return <DateBlock date={undefined} />;
 	};
 
-	const onMemberClick = (id?: string) => id && history.push(`/profile/${id}`);
+	const onMemberClick = (id?: string) => id && navigate(`/profile/${id}`);
 
 	const leaderboardsList = gameCompletions.map(
 		(memberCompletion: GameCompletion) => {
