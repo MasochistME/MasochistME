@@ -5,6 +5,9 @@ import { AwardsListParams } from '@masochistme/sdk/dist/v1/api/awards';
 import { log } from 'helpers/log';
 import { mongoInstance } from 'index';
 
+type AwardWithChildren = Omit<Award, 'children'> & {
+  children: (Award | null)[];
+};
 /**
  * Returns a list of all awards stored in the database.
  */
@@ -29,25 +32,58 @@ export const getAwardsList = async (
     });
 
     /**
-     * Get all the awards and assign them to categories
+     * Get all the awards
      */
     const collectionAwards = db.collection<Award>('awards');
-    const awards: Record<string, Award[]> = {};
+    const allAwards: Award[] = [];
     const cursorAwards = collectionAwards
       .find(filter)
       // .sort(sort) // This is unused atm
       .limit(limit);
-
     await cursorAwards.forEach((award: Award) => {
-      const awardCategory = award.category;
-      awards[awardCategory] = [...(awards[awardCategory] ?? []), award];
+      allAwards.push(award);
     });
 
-    const fixedCategories: (AwardCategory & { awards: Award[] })[] =
-      awardCategories.map(category => ({
-        ...category,
-        awards: awards[category.humanReadableId],
-      }));
+    /**
+     * Divide all the awards to standalone awards and awards which exist only as children
+     */
+    const awardChildrenIds = allAwards
+      .map((award: Award) => award.children)
+      .flat();
+    const awardsParents = allAwards
+      .filter((award: Award) => !awardChildrenIds.includes(String(award._id)))
+      .map((award: Award) => {
+        const children =
+          award.children
+            ?.map(
+              (awardId: string) =>
+                allAwards.find((a: Award) => String(a._id) === awardId) ?? null,
+            )
+            .filter(Boolean) ?? [];
+        return {
+          ...award,
+          children,
+        };
+      });
+
+    /**
+     * Assign the parent awards to their respective categories
+     */
+    const awardsByCategories: Record<string, AwardWithChildren[]> = {};
+    awardsParents.map(award => {
+      const awardCategory = award.category ?? 'no_category';
+      awardsByCategories[awardCategory] = [
+        ...(awardsByCategories[awardCategory] ?? []),
+        award,
+      ];
+    });
+
+    const fixedCategories: (AwardCategory & {
+      awards: AwardWithChildren[];
+    })[] = awardCategories.map(category => ({
+      ...category,
+      awards: awardsByCategories[category.humanReadableId],
+    }));
 
     res.status(200).send(fixedCategories);
   } catch (err: any) {
