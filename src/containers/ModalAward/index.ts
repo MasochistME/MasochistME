@@ -1,0 +1,1 @@
+export { ModalAward } from './ModalAward';

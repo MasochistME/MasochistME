@@ -25,3 +25,22 @@ export const useAwards = (params?: AwardsListParams) => {
 
 	return { awardsData, isLoading, isFetched, isError };
 };
+
+/**
+ *
+ * @returns
+ */
+export const useAward = (awardId: string) => {
+	const { sdk } = useAppContext();
+
+	const {
+		data: awardData,
+		isLoading,
+		isFetched,
+		isError,
+	} = useQuery(['masochist', 'awards', awardId], () =>
+		sdk.getAwardBById({ awardId }),
+	);
+
+	return { awardData, isLoading, isFetched, isError };
+};

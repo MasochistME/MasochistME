@@ -3,6 +3,7 @@ export * from './useCompletions';
 export * from './useDebounce';
 export * from './useLoadTiers';
 export * from './useLocalStorage';
+export * from './useMemberAward';
 export * from './useMemberBadgesFilter';
 export * from './useMemberData';
 export * from './useMemberLeaderboardsPoints';

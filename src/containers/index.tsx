@@ -18,6 +18,7 @@ export * from './Logo';
 export * from './MemberAvatar';
 export * from './MemberBadges';
 export * from './MemberLeaderboards';
+export * from './ModalAward';
 export * from './ModalLeaderboards';
 export * from './ModalRace';
 export * from './Navigation';

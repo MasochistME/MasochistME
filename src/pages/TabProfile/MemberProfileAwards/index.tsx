@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { Award } from '@masochistme/sdk/dist/v1/types';
 
 import { useAwards, useMemberAwards } from 'sdk';
 import { Button, Flex } from 'components';
 import { useNavigate } from 'react-router';
-import { AwardThumbnail } from 'containers';
+import { AwardThumbnail, ModalAward } from 'containers';
 
 type Props = { memberId: string };
 
@@ -12,7 +13,15 @@ export const MemberProfileAwards = (props: Props) => {
 	const { memberId } = props;
 	const navigate = useNavigate();
 
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [selectedAwardId, setSelectedAwardId] = useState<string>('');
 	const awardCategories = useAwardCategoriesForMember(memberId);
+
+	const onAwardThumbnailClick = (award: Award) => {
+		const awardId = String(award._id);
+		setSelectedAwardId(awardId);
+		setIsModalOpen(!isModalOpen);
+	};
 
 	const jumpToAnchor = (e: any, id: string) => {
 		e.preventDefault();
@@ -33,11 +42,21 @@ export const MemberProfileAwards = (props: Props) => {
 					</CategoryTitle>
 					<Flex gap={16}>
 						{category.awards?.map(award => (
-							<AwardThumbnail award={award} isUnlocked={award.hasAward} />
+							<AwardThumbnail
+								awardId={String(award._id)}
+								isUnlocked={award.hasAward}
+								onClick={() => onAwardThumbnailClick(award)}
+							/>
 						))}
 					</Flex>
 				</Flex>
 			))}
+			<ModalAward
+				awardId={selectedAwardId}
+				memberId={memberId}
+				isModalOpen={isModalOpen}
+				setIsModalOpen={setIsModalOpen}
+			/>
 		</StyledMemberProfileAwards>
 	);
 };

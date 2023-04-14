@@ -1,18 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Award } from '@masochistme/sdk/dist/v1/types';
+import { useAward } from 'sdk';
 
 import { Flex, Size, Tooltip } from 'components';
 import { AwardThumbnail } from 'containers/AwardThumbnail/AwardThumbnail';
 
 type Props = {
-	award?: Award;
+	awardId: string;
 	isUnlocked: boolean;
 	children: React.ReactElement;
 };
 
 export const AwardTooltip = (props: Props) => {
-	const { award, isUnlocked, children } = props;
+	const { awardId, isUnlocked, children } = props;
+	const { awardData: award } = useAward(awardId);
 
 	return (
 		<Tooltip
@@ -20,7 +21,7 @@ export const AwardTooltip = (props: Props) => {
 				award ? (
 					<StyledTooltip>
 						<AwardThumbnail
-							award={award}
+							awardId={awardId}
 							isUnlocked={isUnlocked}
 							hasTooltip={false}
 							size={Size.BIG}
