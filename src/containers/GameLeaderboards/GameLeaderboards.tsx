@@ -117,7 +117,7 @@ const GameLeaderboardsSkeleton = () => {
 					isCompact
 					colorTokens={colorTokens}
 					key={i}>
-					<Skeleton width="100%" />
+					<Skeleton width="100%" height="4.8rem" />
 				</StyledGameLeaderboardsMember>
 			))}
 		</StyledGameLeaderboards>

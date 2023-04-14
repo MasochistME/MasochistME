@@ -54,7 +54,7 @@ const StyledInput = styled.input<{
 	hasIcon: boolean;
 }>`
 	flex: 1 1 auto;
-	height: 4.4rem;
+	height: 3.5rem;
 	width: 25rem;
 	max-width: 25rem;
 	padding: var(--size-4) var(--size-12);
