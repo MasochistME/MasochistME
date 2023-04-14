@@ -42,9 +42,14 @@ const ModalAwardBoundary = (props: Pick<Props, 'awardId' | 'memberId'>) => {
 	return (
 		<Flex column gap={16} padding="var(--size-16)">
 			{awardChildren.map(child => {
+				const childId = String(child._id);
 				const isUnlocked = !!memberAwardsData.find(
-					memberAward => memberAward.awardId === String(child._id),
+					memberAward => memberAward.awardId === childId,
 				);
+				const timesUnlocked =
+					memberAwardsData.filter(
+						memberAward => memberAward.awardId === childId,
+					)?.length ?? 0;
 				return (
 					<Flex gap={16}>
 						<AwardThumbnail
@@ -53,8 +58,12 @@ const ModalAwardBoundary = (props: Pick<Props, 'awardId' | 'memberId'>) => {
 							hasTooltip={false}
 						/>
 						<StyledAwardDetails>
-							<h3>{child?.name}</h3>
-							<div>{child?.description}</div>
+							<h3 style={{ margin: 0 }}>{child?.name}</h3>
+							<div style={{ fontStyle: 'italic' }}>{child?.description}</div>
+							<div>
+								Times unlocked:{' '}
+								<span style={{ fontWeight: 600 }}>{timesUnlocked}x</span>
+							</div>
 						</StyledAwardDetails>
 					</Flex>
 				);
@@ -79,4 +88,5 @@ const StyledAwardDetails = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
+	gap: var(--size-8);
 `;
