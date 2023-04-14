@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Box, Modal } from '@mui/material';
 
 import { useTheme, ColorTokens } from 'styles';
-import { Flex } from 'components';
+import { Flex, Modal } from 'components';
 
 import { ModalRaceHeader } from './ModalRaceHeader';
 import { ModalRaceLeaderboards } from './ModalRaceLeaderboards';
@@ -18,30 +17,14 @@ export const ModalRace = (props: Props): JSX.Element | null => {
 	const { raceId, isModalOpen, setIsModalOpen } = props;
 	const { colorTokens } = useTheme();
 
-	const handleModalClose = () => {
-		setIsModalOpen(false);
-	};
-
-	const modalStyle = {
-		position: 'absolute',
-		top: '50%',
-		left: '50%',
-		transform: 'translate(-50%, -50%)',
-		maxWidth: '90%',
-		maxHeight: '90%',
-		overflowY: 'auto',
-		border: `var(--size-1) solid ${colorTokens['core-extra-bg']}`,
-		boxShadow: `0 0 var(--size-10) ${colorTokens['common-color--black']}aa`,
-	};
-
 	return (
-		<Modal open={isModalOpen && !!raceId} onClose={handleModalClose}>
-			<Box sx={modalStyle}>
-				<WrapperRace column colorTokens={colorTokens}>
-					<ModalRaceHeader raceId={raceId} />
-					<ModalRaceLeaderboards raceId={raceId} />
-				</WrapperRace>
-			</Box>
+		<Modal
+			isModalOpen={isModalOpen && !!raceId}
+			setIsModalOpen={setIsModalOpen}>
+			<WrapperRace column colorTokens={colorTokens}>
+				<ModalRaceHeader raceId={raceId} />
+				<ModalRaceLeaderboards raceId={raceId} />
+			</WrapperRace>
 		</Modal>
 	);
 };

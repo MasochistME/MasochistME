@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Box, Modal } from '@mui/material';
 
 import { useTheme, ColorTokens } from 'styles';
-import { Flex, Loader, QueryBoundary } from 'components';
+import { Flex, Loader, Modal, QueryBoundary } from 'components';
 import { GameLeaderboards } from 'containers';
 
 import { ModalLeaderboardsBadges } from './ModalLeaderboardsBadges';
@@ -20,31 +19,13 @@ export const ModalLeaderboards = (props: Props) => {
 	const { isModalOpen, setIsModalOpen, ...rest } = props;
 	const { colorTokens } = useTheme();
 
-	const handleModalClose = () => {
-		setIsModalOpen(false);
-	};
-
-	const modalStyle = {
-		position: 'absolute',
-		top: '50%',
-		left: '50%',
-		transform: 'translate(-50%, -50%)',
-		maxWidth: '90%',
-		maxHeight: '90%',
-		overflowY: 'auto',
-		border: `var(--size-1) solid ${colorTokens['core-extra-bg']}`,
-		boxShadow: `0 0 var(--size-10) ${colorTokens['common-color--black']}aa`,
-	};
-
 	return (
-		<Modal open={isModalOpen} onClose={handleModalClose}>
-			<Box sx={modalStyle}>
-				<WrapperLeaderboards column colorTokens={colorTokens}>
-					<QueryBoundary fallback={<Loader />}>
-						<ModalLeaderboardsBoundary {...rest} />
-					</QueryBoundary>
-				</WrapperLeaderboards>
-			</Box>
+		<Modal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
+			<WrapperLeaderboards column colorTokens={colorTokens}>
+				<QueryBoundary fallback={<Loader />}>
+					<ModalLeaderboardsBoundary {...rest} />
+				</QueryBoundary>
+			</WrapperLeaderboards>
 		</Modal>
 	);
 };
