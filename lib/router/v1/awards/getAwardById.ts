@@ -24,9 +24,24 @@ export const getAwardById = async (
 
     if (!award) {
       res.status(404).send({ error: 'Could not find an award with this id.' });
-    } else {
-      res.status(200).send(award);
+      return;
     }
+
+    // Award has no children, just send it
+    if (!award.children?.length) {
+      res.status(200).send(award);
+      return;
+    }
+
+    // Award has children, get them
+    const awardChildren: Award[] = [];
+    const cursorChildren = collection.find({
+      $or: award.children.map(childId => ({ _id: new ObjectId(childId) })),
+    });
+    await cursorChildren.forEach((award: Award) => {
+      awardChildren.push(award);
+    });
+    res.status(200).send({ ...award, children: awardChildren });
   } catch (err: any) {
     log.WARN(err);
     res.status(500).send({ error: err.message ?? 'Internal server error' });
