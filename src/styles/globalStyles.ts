@@ -66,7 +66,7 @@ const GlobalStyle = createGlobalStyle<{
 
 
   div, p {
-    font-size: var(--font-size-13);
+    font-size: var(--font-size-12);
   }
   
   a {

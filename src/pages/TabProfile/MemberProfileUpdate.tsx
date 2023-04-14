@@ -47,7 +47,7 @@ export const MemberProfileUpdate = (props: Props) => {
 	return (
 		<StyledMemberProfileUpdate>
 			<Tooltip content={lastUpdateDetails}>
-				<Flex column alignItems="flex-end" fontSize="var(--font-size-8)">
+				<Flex column alignItems="flex-end" fontSize="var(--font-size-9)">
 					<span>Last updated:</span>
 					<span style={{ fontStyle: 'italic' }}>{lastUpdate}</span>
 				</Flex>

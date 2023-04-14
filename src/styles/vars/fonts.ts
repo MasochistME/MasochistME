@@ -9,7 +9,7 @@ export const fonts = () => {
     --font-verdana: Verdana, Geneva, Tahoma, sans-serif;
   `;
 	const fontSize = `
-    --font-size-8: 0.8rem;
+    --font-size-9: 0.9rem;
     --font-size-10: 1.0rem;
     --font-size-11: 1.1rem;
     --font-size-12: 1.2rem;
