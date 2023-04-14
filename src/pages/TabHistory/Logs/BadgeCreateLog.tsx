@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { LogBadgeCreate, Badge, Game } from '@masochistme/sdk/dist/v1/types';
 
 import { Icon } from 'components';
@@ -10,7 +10,7 @@ import { Size } from 'components';
 import { HistoryLog } from '.';
 
 export const BadgeCreateLog = ({ log }: { log: LogBadgeCreate }) => {
-	const history = useHistory();
+	const navigate = useNavigate();
 
 	const { gamesData } = useCuratedGames();
 	const { badgesData } = useBadges();
@@ -19,7 +19,7 @@ export const BadgeCreateLog = ({ log }: { log: LogBadgeCreate }) => {
 	const game = gamesData.find((g: Game) => g.id === log.gameId);
 
 	const onGameClick = () => {
-		if (game?.id) history.push(`/game/${game.id}`);
+		if (game?.id) navigate(`/game/${game.id}`);
 	};
 
 	if (!badge || !game) return null;

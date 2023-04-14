@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import { Game, MemberGame, Tier } from '@masochistme/sdk/dist/v1/types';
 
@@ -16,7 +16,7 @@ type Props = {
 export const MemberLeaderboardsGame = (props: Props): JSX.Element => {
 	const { colorTokens } = useTheme();
 	const { steamId, memberGame } = props;
-	const history = useHistory();
+	const navigate = useNavigate();
 
 	const { gamesData } = useCuratedGames();
 	const { tiersData } = useTiers();
@@ -30,7 +30,7 @@ export const MemberLeaderboardsGame = (props: Props): JSX.Element => {
 	)?.icon ?? 'Spin') as IconType;
 
 	const onGameClick = () => {
-		history.push(`/game/${memberGame.gameId}`);
+		navigate(`/game/${memberGame.gameId}`);
 	};
 
 	return (

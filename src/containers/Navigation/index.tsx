@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 
 import { Icon } from 'components';
@@ -29,13 +29,13 @@ const NavigationItem = (props: Props): JSX.Element => {
 
 	const { activeTab } = useAppContext();
 	const { colorTokens } = useTheme();
-	const history = useHistory();
+	const navigate = useNavigate();
 
 	const isActive = tab.id === activeTab;
 
 	const onTabOpen = (): void => {
 		if (tab.external) window.open(tab.link);
-		else history.push(`/${tab.link}`);
+		else navigate(`/${tab.link}`);
 	};
 
 	return (
@@ -64,7 +64,7 @@ const StyledNavigation = styled.div<{
 	text-transform: uppercase;
 	letter-spacing: 0.15rem;
 	position: sticky;
-	top: 0p;
+	top: 0;
 	z-index: 1000;
 	list-style-type: none;
 `;
@@ -84,12 +84,9 @@ const StyledTabItem = styled.div.attrs((props: NavItemProps) => {
 	justify-content: center;
 	align-items: center;
 	gap: var(--size-8);
-	padding: var(--size-18) 0;
+	padding: var(--size-16) 0;
 	border-right: var(--size-3) solid
 		${({ colorTokens }) => colorTokens['element-color--header-bg']};
-	height: 100%;
-	max-height: 9rem;
-	box-sizing: border-box;
 
 	&:hover {
 		background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']};
@@ -98,7 +95,6 @@ const StyledTabItem = styled.div.attrs((props: NavItemProps) => {
 
 	@media (max-width: ${media.tablets}) {
 		padding: var(--size-12) 0;
-		max-height: var(--size-40);
 	}
 `;
 

@@ -9,7 +9,6 @@ const Description = styled.div`
 	width: 100%;
 	line-height: var(--size-15);
 	text-align: left;
-	gap: var(--size-4);
 	& > * {
 		margin-right: var(--size-4);
 		vertical-align: middle;

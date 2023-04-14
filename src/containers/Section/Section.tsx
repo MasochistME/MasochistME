@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 
 import { media, useTheme, ColorTokens } from 'styles';
 import { Button } from 'components';
@@ -18,7 +18,7 @@ export type SectionProps = {
 
 export const Section = (props: SectionProps) => {
 	const { colorTokens } = useTheme();
-	const history = useHistory();
+	const navigate = useNavigate();
 	const {
 		isMobileOnly = false,
 		isDesktopOnly = false,
@@ -35,7 +35,7 @@ export const Section = (props: SectionProps) => {
 	const jumpToAnchor = (e: any) => {
 		e.preventDefault();
 		e.stopPropagation();
-		history.push(`#${sanitizedAnchorId}`);
+		navigate(`#${sanitizedAnchorId}`);
 	};
 
 	return (
