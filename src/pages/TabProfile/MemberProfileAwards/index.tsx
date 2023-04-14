@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import { Award } from '@masochistme/sdk/dist/v1/types';
 
-import { useAwards, useMemberAwards } from 'sdk';
 import { Button, Flex } from 'components';
 import { AwardThumbnail, ModalAward } from 'containers';
+import { useAwardCategoriesForMember } from 'hooks';
 
 type Props = { memberId: string };
 
@@ -43,8 +43,8 @@ export const MemberProfileAwards = (props: Props) => {
 					<Flex gap={16}>
 						{category.awards?.map(award => (
 							<AwardThumbnail
-								awardId={String(award._id)}
-								isUnlocked={award.hasAward}
+								award={award}
+								isUnlocked={award.isUnlocked}
 								onClick={() => onAwardThumbnailClick(award)}
 							/>
 						))}
@@ -59,28 +59,6 @@ export const MemberProfileAwards = (props: Props) => {
 			/>
 		</StyledMemberProfileAwards>
 	);
-};
-
-const useAwardCategoriesForMember = (memberId: string) => {
-	const { awardsData } = useAwards({ sort: { category: 'desc' } });
-	const { memberAwardsData = [] } = useMemberAwards(memberId);
-
-	const awardCategories = awardsData.map(category => {
-		const categoryAwards = category.awards.map(award => {
-			const hasAward = memberAwardsData.some(
-				memberAward => memberAward.awardId === String(award._id),
-			);
-			return {
-				...award,
-				hasAward,
-			};
-		});
-		return {
-			...category,
-			awards: categoryAwards,
-		};
-	});
-	return awardCategories;
 };
 
 const StyledMemberProfileAwards = styled(Flex)`

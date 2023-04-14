@@ -1,4 +1,5 @@
 export * from './useActiveTab';
+export * from './useAwardCategoriesForMember';
 export * from './useCompletions';
 export * from './useDebounce';
 export * from './useLoadTiers';
@@ -8,7 +9,7 @@ export * from './useMemberBadgesFilter';
 export * from './useMemberData';
 export * from './useMemberLeaderboardsPoints';
 export * from './useMemberLeaderboardsSummary';
-export * from './useRacesFromSeason';
 export * from './useMixpanel';
+export * from './useRacesFromSeason';
 export * from './useScrollToLocation';
 export * from './useToggleView';

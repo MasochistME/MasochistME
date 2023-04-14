@@ -53,7 +53,7 @@ const ModalAwardBoundary = (props: Pick<Props, 'awardId' | 'memberId'>) => {
 				return (
 					<Flex gap={16}>
 						<AwardThumbnail
-							awardId={String(child._id)}
+							award={child}
 							isUnlocked={isUnlocked}
 							hasTooltip={false}
 						/>

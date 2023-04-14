@@ -1,13 +1,14 @@
+import { Award } from '@masochistme/sdk/dist/v1/types';
+
 import { QueryBoundary, Size, Skeleton } from 'components';
 import { AwardTooltip } from 'containers/AwardTooltip';
 import { CommonProps } from 'containers/CommonProps';
-import { useAward } from 'sdk';
 import styled from 'styled-components';
 import { ColorTokens, useTheme } from 'styles';
 import { getAwardThumbnail } from 'utils';
 
 type Props = CommonProps & {
-	awardId: string;
+	award: Award;
 	isUnlocked: boolean;
 	hasTooltip?: boolean;
 };
@@ -15,7 +16,7 @@ type Props = CommonProps & {
 export const AwardThumbnail = (props: Props): JSX.Element => {
 	const { colorTokens } = useTheme();
 	const {
-		awardId,
+		award,
 		hasTooltip = true,
 		isUnlocked,
 		isLoading,
@@ -23,8 +24,7 @@ export const AwardThumbnail = (props: Props): JSX.Element => {
 		onClick,
 	} = props;
 
-	if (isLoading || !awardId) return <Skeleton size={size} />;
-	const { awardData: award } = useAward(awardId);
+	if (isLoading || !award) return <Skeleton size={size} />;
 	const awardImg = getAwardThumbnail(award);
 
 	const thumbnail = (
@@ -41,7 +41,7 @@ export const AwardThumbnail = (props: Props): JSX.Element => {
 	return (
 		<QueryBoundary fallback={null}>
 			{hasTooltip ? (
-				<AwardTooltip awardId={awardId} isUnlocked={isUnlocked}>
+				<AwardTooltip award={award} isUnlocked={isUnlocked}>
 					{thumbnail}
 				</AwardTooltip>
 			) : (
