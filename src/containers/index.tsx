@@ -1,4 +1,5 @@
 export * from './AwardThumbnail';
+export * from './AwardTooltip';
 export * from './BadgeThumbnail';
 export * from './BadgeTile';
 export * from './BadgeTooltip';

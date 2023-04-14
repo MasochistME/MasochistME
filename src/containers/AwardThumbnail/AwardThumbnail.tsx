@@ -1,6 +1,7 @@
 import { Award } from '@masochistme/sdk/dist/v1/types';
 
-import { QueryBoundary, Size, Skeleton, Tooltip } from 'components';
+import { QueryBoundary, Size, Skeleton } from 'components';
+import { AwardTooltip } from 'containers/AwardTooltip';
 import { CommonProps } from 'containers/CommonProps';
 import styled from 'styled-components';
 import { ColorTokens, useTheme } from 'styles';
@@ -9,27 +10,43 @@ import { getAwardThumbnail } from 'utils';
 type Props = CommonProps & {
 	award: Award;
 	isUnlocked: boolean;
+	hasTooltip?: boolean;
 };
 
 export const AwardThumbnail = (props: Props): JSX.Element => {
 	const { colorTokens } = useTheme();
-	const { award, isUnlocked, isLoading, size = Size.LARGE, onClick } = props;
+	const {
+		award,
+		hasTooltip = true,
+		isUnlocked,
+		isLoading,
+		size = Size.LARGE,
+		onClick,
+	} = props;
 
 	if (isLoading || !award) return <Skeleton size={size} />;
 	const awardImg = getAwardThumbnail(award);
 
+	const thumbnail = (
+		<StyledAwardThumbnail
+			size={size}
+			isUnlocked={isUnlocked}
+			colorTokens={colorTokens}
+			awardImg={awardImg}
+			onClick={onClick}>
+			{isUnlocked && <img src={awardImg} alt="Award" />}
+		</StyledAwardThumbnail>
+	);
+
 	return (
 		<QueryBoundary fallback={null}>
-			<Tooltip content={award.name}>
-				<StyledAwardThumbnail
-					size={size}
-					isUnlocked={isUnlocked}
-					colorTokens={colorTokens}
-					awardImg={awardImg}
-					onClick={onClick}>
-					{isUnlocked && <img src={awardImg} alt="Award" />}
-				</StyledAwardThumbnail>
-			</Tooltip>
+			{hasTooltip ? (
+				<AwardTooltip award={award} isUnlocked={isUnlocked}>
+					{thumbnail}
+				</AwardTooltip>
+			) : (
+				thumbnail
+			)}
 		</QueryBoundary>
 	);
 };
@@ -43,10 +60,10 @@ const StyledAwardThumbnail = styled.div.attrs(
 	) => {
 		const { size, onClick } = props;
 		const style: React.CSSProperties = {
-			minWidth: size,
-			minHeight: size,
-			maxWidth: size,
-			maxHeight: size,
+			minWidth: `${size}rem`,
+			minHeight: `${size}rem`,
+			maxWidth: `${size}rem`,
+			maxHeight: `${size}rem`,
 			cursor: onClick ? 'pointer' : 'help',
 		};
 		return { style };
