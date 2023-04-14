@@ -1,21 +1,22 @@
 import { Award, Badge } from '@masochistme/sdk/dist/v1/types';
 
 export const curatorURL = 'https://store.steampowered.com/curator/41289936';
+export const NO_IMG = 'http://cdn.masochist.me/files/no_game_img.png';
 
 export const getGameThumbnail = (gameId?: number) => {
 	if (gameId)
 		return `https://cdn.akamai.steamstatic.com/steam/apps/${gameId}/header.jpg`;
-	else return 'http://cdn.masochist.me/files/no_game_img.png';
+	else return NO_IMG;
 };
 
 export const getBadgeThumbnail = (badge?: Badge) => {
 	if (badge?.img) return badge.img;
-	else return 'http://cdn.masochist.me/files/no_game_img.png';
+	else return NO_IMG;
 };
 
 export const getAwardThumbnail = (award?: Award) => {
 	if (award?.img) return award.img;
-	else return 'http://cdn.masochist.me/files/no_game_img.png';
+	else return NO_IMG;
 };
 
 export const getGameSteamUrl = (gameId: number): string => {

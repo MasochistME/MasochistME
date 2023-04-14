@@ -101,8 +101,10 @@ const StyledAwardThumbnail = styled.div.attrs(
 	`}
 
 	img {
-		width: 100%;
-		height: 100%;
+		min-width: ${({ size }) => size}rem;
+		min-height: ${({ size }) => size}rem;
+		max-width: ${({ size }) => size}rem;
+		max-height: ${({ size }) => size}rem;
 		object-fit: contain;
 	}
 `;

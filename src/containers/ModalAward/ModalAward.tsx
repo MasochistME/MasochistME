@@ -3,9 +3,10 @@ import styled from 'styled-components';
 
 import { useTheme, ColorTokens } from 'styles';
 import { ErrorFallback, Flex, Loader, Modal, QueryBoundary } from 'components';
-import { useMemberAward } from 'hooks';
-import { AwardThumbnail } from 'containers/AwardThumbnail';
 import { Award } from '@masochistme/sdk/dist/v1/types';
+import { ModalAwardHeader } from './ModalAwardHeader';
+import { ModalAwardChild } from './ModalAwardChild';
+import { useAward } from 'sdk';
 
 type Props = {
 	awardId: string;
@@ -31,43 +32,19 @@ export const ModalAward = (props: Props) => {
 
 const ModalAwardBoundary = (props: Pick<Props, 'awardId' | 'memberId'>) => {
 	const { awardId, memberId } = props;
+	const { awardData: award } = useAward(awardId);
 
-	const { awardData: award, memberAwardsData } = useMemberAward(
-		awardId,
-		memberId,
-	);
 	const awardChildren = (award?.children ?? [award]) as Award[];
 
 	if (!award) return <ErrorFallback />;
 	return (
-		<Flex column gap={16} padding="var(--size-16)">
-			{awardChildren.map(child => {
-				const childId = String(child._id);
-				const isUnlocked = !!memberAwardsData.find(
-					memberAward => memberAward.awardId === childId,
-				);
-				const timesUnlocked =
-					memberAwardsData.filter(
-						memberAward => memberAward.awardId === childId,
-					)?.length ?? 0;
-				return (
-					<Flex gap={16}>
-						<AwardThumbnail
-							award={child}
-							isUnlocked={isUnlocked}
-							hasTooltip={false}
-						/>
-						<StyledAwardDetails>
-							<h3 style={{ margin: 0 }}>{child?.name}</h3>
-							<div style={{ fontStyle: 'italic' }}>{child?.description}</div>
-							<div>
-								Times unlocked:{' '}
-								<span style={{ fontWeight: 600 }}>{timesUnlocked}x</span>
-							</div>
-						</StyledAwardDetails>
-					</Flex>
-				);
-			})}
+		<Flex column>
+			<ModalAwardHeader award={award} memberId={memberId} />
+			<Flex column>
+				{awardChildren.map(child => (
+					<ModalAwardChild award={child} memberId={memberId} />
+				))}
+			</Flex>
 		</Flex>
 	);
 };
@@ -82,11 +59,4 @@ const Wrapper = styled(Flex)<{ colorTokens: ColorTokens }>`
 	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']}ee;
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	font-family: var(--font-raleway);
-`;
-
-const StyledAwardDetails = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	gap: var(--size-8);
 `;

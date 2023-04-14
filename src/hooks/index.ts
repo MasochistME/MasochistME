@@ -1,5 +1,4 @@
 export * from './useActiveTab';
-export * from './useAwardCategoriesForMember';
 export * from './useCompletions';
 export * from './useDebounce';
 export * from './useLoadTiers';
