@@ -28,8 +28,8 @@ const Icons = styled(Flex)`
 `;
 
 const Image = styled.img`
-	height: ${Size.SMALL / 10}rem;
-	max-height: ${Size.SMALL / 10}rem;
+	height: ${Size.SMALL}rem;
+	max-height: ${Size.SMALL}rem;
 `;
 
 type Props = {

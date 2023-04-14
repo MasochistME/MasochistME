@@ -66,7 +66,7 @@ const StyledButton = styled.button<{
 	gap: var(--size-8);
 	padding: ${({ iconOnly }) =>
 		iconOnly ? `var(--size-8)` : 'var(--size-6) var(--size-10)'};
-	border-radius: var(--size-4);
+	border-radius: var(--border-radius-4);
 	border: ${({ iconOnly, isGolden, colorTokens }) => {
 		if (iconOnly) return 0;
 		if (isGolden)
@@ -74,12 +74,12 @@ const StyledButton = styled.button<{
 		return `var(--size-1) solid ${colorTokens['element-color--button-border']}`;
 	}};
 	font-size: ${({ size }) => {
-		if (size === Size.TINY) return 'var(--size-12)';
-		if (size === Size.SMALL) return 'var(--size-14)';
-		if (size === Size.MEDIUM) return 'var(--size-16)';
-		if (size === Size.BIG) return 'var(--size-18)';
-		if (size === Size.LARGE) return 'var(--size-20)';
-		return 'var(--size-16)';
+		if (size === Size.TINY) return 'var(--font-size-12)';
+		if (size === Size.SMALL) return 'var(--font-size-14)';
+		if (size === Size.MEDIUM) return 'var(--font-size-16)';
+		if (size === Size.BIG) return 'var(--font-size-18)';
+		if (size === Size.LARGE) return 'var(--font-size-20)';
+		return 'var(--font-size-16)';
 	}};
 	font-family: var(--font-raleway);
 	font-weight: 600;

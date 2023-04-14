@@ -22,11 +22,13 @@ enum TabsMap {
 	GAMES = 'games',
 }
 
-type Props = { id: string }
+type Props = { id: string };
 
-export const MemberProfileTabs = ({id}: Props) => (<QueryBoundary fallback={<Loader />} errorFallback={<ErrorFallback />}>
-<MemberProfileTabsBoundary id={id} />
-</QueryBoundary>)
+export const MemberProfileTabs = ({ id }: Props) => (
+	<QueryBoundary fallback={<Loader />} errorFallback={<ErrorFallback />}>
+		<MemberProfileTabsBoundary id={id} />
+	</QueryBoundary>
+);
 
 const MemberProfileTabsBoundary = ({ id }: Props) => {
 	const { track } = useMixpanel();

@@ -60,7 +60,7 @@ const StyledNavigation = styled.div<{
 	box-shadow: 0 var(--size-10) var(--size-10) -1rem ${({ colorTokens }) => colorTokens['common-color--shadow']};
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	font-family: var(--font-raleway);
-	font-size: var(--size-11);
+	font-size: var(--font-size-11);
 	text-transform: uppercase;
 	letter-spacing: 0.15rem;
 	position: sticky;

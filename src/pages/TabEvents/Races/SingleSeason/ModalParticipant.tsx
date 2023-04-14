@@ -182,7 +182,7 @@ const RacesTable = ({
 				<div
 					style={{
 						border: `var(--size-3) solid ${colorTokens['core-primary-text']}`,
-						borderRadius: 'var(--size-8)',
+						borderRadius: 'var(--border-radius-8)',
 					}}>
 					<MemberAvatar member={participant?.member} size={Size.BIG} />
 				</div>
@@ -208,7 +208,7 @@ export const WrapperRace = styled(Flex)<{ colorTokens: ColorTokens }>`
 `;
 
 const StyledRaceName = styled.div`
-	font-size: var(--size-16);
+	font-size: var(--font-size-16);
 	font-family: var(--font-dosis);
 `;
 
@@ -220,5 +220,5 @@ const StyledUsername = styled.h2`
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	font-size: var(--size-22);
+	font-size: var(--font-size-22);
 `;

@@ -128,7 +128,7 @@ const ErrorCode = styled.pre`
 	padding: var(--size-8);
 	margin: 0;
 	code {
-		font-size: var(--size-14);
+		font-size: var(--font-size-14);
 		text-align: left;
 	}
 `;

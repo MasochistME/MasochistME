@@ -126,7 +126,7 @@ const StyledGameHiddenInfo = styled(Flex)<{ colorTokens: ColorTokens }>`
 
 	p {
 		margin: 0;
-		font-size: var(--size-12);
+		font-size: var(--font-size-12);
 		line-height: var(--size-14);
 	}
 

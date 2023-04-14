@@ -32,7 +32,7 @@ const StyledWrapper = styled(Flex)<Props>`
 `;
 
 const StyledImg = styled.img`
-	width: ${Size.LARGE / 10}rem;
+	width: ${Size.LARGE}rem;
 	filter: opacity(100%) drop-shadow(1px 1px 0 #555) drop-shadow(-1px 1px 0 #555)
 		drop-shadow(1px -1px 0 #555) drop-shadow(-1px -1px 0 #555);
 `;

@@ -50,7 +50,7 @@ ProgressBar.Completion = styled.div.attrs(
 	margin-right: var(--size-7);
 	padding: 0 !important;
 	box-sizing: border-box;
-	border-radius: var(--size-8);
+	border-radius: var(--border-radius-8);
 	@media (max-width: ${media.tablets}) {
 		border: none;
 		min-width: 10rem;
@@ -76,7 +76,7 @@ ProgressBar.Progress = styled.div.attrs(
 	position: absolute;
 	height: 100%;
 	padding: 0 !important;
-	border-radius: var(--size-8);
+	border-radius: var(--border-radius-8);
 `;
 
 ProgressBar.Percentage = styled.div<{ colorTokens: ColorTokens }>`
@@ -87,10 +87,10 @@ ProgressBar.Percentage = styled.div<{ colorTokens: ColorTokens }>`
 	width: 100%;
 	height: 100%;
 	line-height: var(--size-11);
-	font-size: var(--size-11);
+	font-size: var(--font-size-11);
 	font-family: var(--font-raleway);
 	font-weight: bold;
 	letter-spacing: var(--size-1);
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
-	border-radius: var(--size-8);
+	border-radius: var(--border-radius-8);
 `;

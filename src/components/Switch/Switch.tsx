@@ -57,7 +57,7 @@ const StyledSwitch = styled(MUISwitch)<Props>`
 		color: ${({ colortokens }) => colortokens['semantic-color--switch-thumb']};
 	}
 	.MuiSwitch-track {
-		border-radius: 1.3rem;
+		border-radius: var(--border-radius-16);
 		background-color: ${({ colortokens }) =>
 			colortokens['semantic-color--switch-track']};
 		opacity: 1;
