@@ -3,21 +3,21 @@ import styled from 'styled-components';
 
 import { useAwards, useMemberAwards } from 'sdk';
 import { Button, Flex } from 'components';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { AwardThumbnail } from 'containers';
 
 type Props = { memberId: string };
 
 export const MemberProfileAwards = (props: Props) => {
 	const { memberId } = props;
-	const history = useHistory();
+	const navigate = useNavigate();
 
 	const awardCategories = useAwardCategoriesForMember(memberId);
 
 	const jumpToAnchor = (e: any, id: string) => {
 		e.preventDefault();
 		e.stopPropagation();
-		history.push(`#${id}`);
+		navigate(`#${id}`);
 	};
 
 	return (

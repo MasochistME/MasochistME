@@ -63,8 +63,8 @@ const MemberProfileStatsBoundary = (props: Props) => {
 	const gameCompletionTimes = memberCompletions.map(
 		completion => completion.playTime,
 	);
-	const completionTimeShortest = Math.min(...gameCompletionTimes);
-	const completionTimeLongest = Math.max(...gameCompletionTimes);
+	const completionTimeShortest = Math.min(...gameCompletionTimes).toFixed(2);
+	const completionTimeLongest = Math.max(...gameCompletionTimes).toFixed(2);
 
 	/**
 	 * Member completions by tier.

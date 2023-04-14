@@ -1,7 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { PatreonTier, PatronTier } from '@masochistme/sdk/dist/v1/types';
 
 import { Flex, Loader, QueryBoundary, Warning } from 'components';
 import { SubPage } from 'containers';
