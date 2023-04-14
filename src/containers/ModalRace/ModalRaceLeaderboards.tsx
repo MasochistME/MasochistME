@@ -171,7 +171,7 @@ const StyledPlayerScore = styled.div`
 	align-items: center;
 	gap: var(--size-4);
 	padding: var(--size-8);
-	font-size: var(--size-16);
+	font-size: var(--font-size-16);
 	font-family: var(--font-dosis);
 	font-weight: bold;
 	@media (max-width: ${media.tablets}) {

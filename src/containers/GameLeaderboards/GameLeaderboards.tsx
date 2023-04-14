@@ -164,7 +164,7 @@ const StyledGameLeaderboardsMemberUsername = styled.div<{
 	white-space: nowrap;
 	font-weight: bold;
 	font-size: ${({ isCompact }) =>
-		isCompact ? 'var(--size-14)' : 'var(--size-16)'};
+		isCompact ? 'var(--font-size-14)' : 'var(--font-size-16)'};
 	@media (max-width: ${media.smallTablets}) {
 		display: none;
 	}

@@ -58,13 +58,13 @@ const StyledTitle = styled(Flex)<{ colorTokens: ColorTokens; shUrl: string }>`
 
 	h2 {
 		all: unset;
-		font-size: var(--size-28);
+		font-size: var(--font-size-28);
 		line-height: var(--size-24);
 		font-weight: normal;
 		text-shadow: 0 0 var(--size-5)
 			${({ colorTokens }) => colorTokens['common-color--shadow']};
 		@media (max-width: ${media.tablets}) {
-			font-size: var(--size-24);
+			font-size: var(--font-size-24);
 		}
 	}
 

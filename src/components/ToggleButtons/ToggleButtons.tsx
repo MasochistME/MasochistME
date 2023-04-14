@@ -52,7 +52,7 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)<{
 	colorTokens: ColorTokens;
 }>`
 	&.MuiToggleButtonGroup-root {
-		border-radius: var(--size-32);
+		border-radius: var(--border-radius-32);
 		overflow: hidden;
 		border: var(--size-2) solid
 			${({ colorTokens }) => colorTokens['common-color--shadow']};
@@ -63,7 +63,7 @@ const StyledToggleButton = styled(ToggleButton)<{
 }>`
 	font-family: var(--font-dosis);
 	font-weight: 600;
-	font-size: var(--size-14);
+	font-size: var(--font-size-14);
 	&.MuiButtonBase-root {
 		line-height: unset;
 		padding: var(--size-8);

@@ -59,7 +59,7 @@ export const LeaderboardsMemberPoints = (props: Props): JSX.Element => {
 					<span
 						style={{
 							fontWeight: 'bold',
-							fontSize: 'var(--size-18)',
+							fontSize: 'var(--font-size-18)',
 							lineHeight: 'var(--size-14)',
 						}}>
 						Σ

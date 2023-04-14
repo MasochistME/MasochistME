@@ -77,10 +77,10 @@ const StyledPodiumItem = styled.div<{ colorTokens: ColorTokens }>`
 		grid-row: 1;
 		height: 100%;
 		z-index: 10;
-		font-size: var(--size-12);
+		font-size: var(--font-size-12);
 		& .place--number {
 			color: black;
-			font-size: var(--size-32);
+			font-size: var(--font-size-32);
 			margin-top: -1rem;
 		}
 	}
@@ -90,7 +90,7 @@ const StyledPodiumItem = styled.div<{ colorTokens: ColorTokens }>`
 		height: 80%;
 		& .place--number {
 			color: black;
-			font-size: var(--size-18);
+			font-size: var(--font-size-18);
 			margin-top: -0.5rem;
 		}
 	}
@@ -100,7 +100,7 @@ const StyledPodiumItem = styled.div<{ colorTokens: ColorTokens }>`
 		height: 80%;
 		& .place--number {
 			color: black;
-			font-size: var(--size-18);
+			font-size: var(--font-size-18);
 			margin-top: -0.5rem;
 		}
 	}
@@ -131,14 +131,14 @@ PodiumItem.Username = styled(Link)<{
 }>`
 	font-family: var(--font-dosis);
 	font-size: ${({ place }) =>
-		place === 1 ? 'var(--size-24)' : 'var(--size-18)'};
+		place === 1 ? 'var(--font-size-24)' : 'var(--font-size-18)'};
 	color: ${({ colorTokens }) => colorTokens['core-tertiary-text']};
 	letter-spacing: 0.05rem;
 `;
 
 PodiumItem.Score = styled.span<{ colorTokens: ColorTokens }>`
-	font-size: var(--size-16);
+	font-size: var(--font-size-16);
 	font-weight: bold;
 	font-family: var(--font-dosis);
-	border-radius: var(--size-32);
+	border-radius: var(--border-radius-32);
 `;

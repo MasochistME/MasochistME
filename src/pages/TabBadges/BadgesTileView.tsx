@@ -100,5 +100,5 @@ const StyledBadgesList = styled(Flex)`
 const StyledBadgeTitle = styled(Flex)`
 	align-items: center;
 	gap: var(--size-8);
-	font-size: var(--size-16);
+	font-size: var(--font-size-16);
 `;

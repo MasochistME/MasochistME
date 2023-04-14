@@ -57,7 +57,7 @@ const GameProfileFeaturedBoundary = (props: Props) => {
 const StyledGameProfileFeaturedItem = styled.div<{ colorTokens: ColorTokens }>`
 	padding: var(--size-8);
 	background-color: ${({ colorTokens }) => colorTokens['semantic-color--idle']};
-	border-radius: var(--size-8);
+	border-radius: var(--border-radius-8);
 	width: 100%;
 	max-width: 45rem;
 `;

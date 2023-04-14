@@ -94,7 +94,9 @@ const StyledMemberAvatar = styled.div.attrs(
 	background-color: ${({ isEmpty, colorTokens }) =>
 		isEmpty ? colorTokens['core-tertiary-bg'] : 'transparent'};
 	border-radius: ${({ size }) =>
-		size === Size.SMALL || size === Size.TINY ? 0.4 : 0.8}rem;
+		size === Size.SMALL || size === Size.TINY
+			? `var(--border-radius-4)`
+			: `var(--border-radius-8)`};
 	border: ${({ size, colorTokens }) =>
 		`${size === Size.SMALL || size === Size.TINY ? 0.2 : 0.3}rem
 		solid ${colorTokens['core-primary-bg']}`};

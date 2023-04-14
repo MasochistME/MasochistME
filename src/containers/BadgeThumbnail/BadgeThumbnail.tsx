@@ -75,7 +75,9 @@ const StyledBadgeThumbnail = styled.div.attrs(
 	overflow: hidden;
 	/* padding: var(--size-2); */
 	border-radius: ${({ size }) =>
-		size === Size.SMALL || size === Size.TINY ? 0.4 : 0.8}rem;
+		size === Size.SMALL || size === Size.TINY
+			? `var(--border-radius-4)`
+			: `var(--border-radius-8)`};
 	border: ${({ size, isDisabled, isNegative, colorTokens }) => {
 		const borderSize = size === Size.SMALL || size === Size.TINY ? 0.2 : 0.3;
 		const borderColor = isDisabled
