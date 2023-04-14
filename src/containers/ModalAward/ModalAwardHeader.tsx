@@ -25,7 +25,11 @@ export const ModalAwardHeader = (props: Props) => {
 		<StyledAwardHeader colorTokens={colorTokens}>
 			<h2>{award.name}</h2>
 			<Flex gap={16}>
-				<AwardSwapper award={award} isUnlocked={isUnlocked} />
+				{award.children ? (
+					<AwardSwapper award={award} isUnlocked={isUnlocked} />
+				) : (
+					<AwardThumbnail award={award} isUnlocked={isUnlocked} />
+				)}
 				<Flex
 					column
 					style={{
@@ -76,8 +80,12 @@ const StyledAwardHeader = styled.div<{ colorTokens: ColorTokens }>`
 	flex-direction: column;
 	gap: 8px;
 	padding: var(--size-16);
-	border-bottom: 3px solid
-		${({ colorTokens }) => colorTokens['element-color--button-border']};
+
+	&:not(:last-child) {
+		border-bottom: 3px solid
+			${({ colorTokens }) => colorTokens['element-color--button-border']};
+	}
+
 	h2 {
 		margin: 0;
 		font-size: var(--font-size-32);

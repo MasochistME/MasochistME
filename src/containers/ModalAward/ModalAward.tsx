@@ -40,11 +40,13 @@ const ModalAwardBoundary = (props: Pick<Props, 'awardId' | 'memberId'>) => {
 	return (
 		<Flex column>
 			<ModalAwardHeader award={award} memberId={memberId} />
-			<Flex column>
-				{awardChildren.map(child => (
-					<ModalAwardChild award={child} memberId={memberId} />
-				))}
-			</Flex>
+			{award?.children && (
+				<Flex column>
+					{awardChildren.map(child => (
+						<ModalAwardChild award={child} memberId={memberId} />
+					))}
+				</Flex>
+			)}
 		</Flex>
 	);
 };
