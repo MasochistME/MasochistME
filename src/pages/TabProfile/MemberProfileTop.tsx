@@ -69,6 +69,6 @@ const StyledMemberProfileTop = styled(Flex)<{
 		if (isHighestPatronTier) return `${colorTokens['semantic-color--tier-4']}`;
 		return `inherit`;
 	}};
-	border-radius: var(--size-16);
+	border-radius: var(--border-radius-16);
 	${({ tierColor }) => `border: var(--size-2) solid ${tierColor}`};
 `;

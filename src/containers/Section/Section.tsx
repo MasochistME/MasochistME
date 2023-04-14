@@ -80,7 +80,7 @@ const StyledSection = styled.div.attrs((props: StyledProps) => {
 	height: auto;
 	box-sizing: border-box;
 	border: 1px solid ${({ colorTokens }) => colorTokens['semantic-color--idle']};
-	border-radius: var(--size-16);
+	border-radius: var(--border-radius-16);
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	background-color: ${({ colorTokens }) =>
 		colorTokens['semantic-color--idle']}cc;
@@ -114,13 +114,13 @@ Section.Title = styled.h3<{
 	width: 100%;
 	margin: 0;
 	padding: var(--size-4) var(--size-8);
-	font-size: var(--size-18);
+	font-size: var(--font-size-18);
 	font-family: var(--font-dosis);
 	text-transform: uppercase;
 	text-align: center;
 	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']};
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
-	border-radius: var(--size-16) var(--size-16) 0 0;
+	border-radius: var(--border-radius-16) var(--size-16) 0 0;
 `;
 
 Section.Content = styled.div`

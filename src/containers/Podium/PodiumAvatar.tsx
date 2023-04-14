@@ -69,10 +69,10 @@ const StyledMemberAvatar = styled.div.attrs(
 	) => {
 		const { size, podiumColor, onClick } = props;
 		const style: React.CSSProperties = {
-			minWidth: size,
-			minHeight: size,
-			maxWidth: size,
-			maxHeight: size,
+			minWidth: `${size}rem`,
+			minHeight: `${size}rem`,
+			maxWidth: `${size}rem`,
+			maxHeight: `${size}rem`,
 			cursor: onClick ? 'pointer' : 'help',
 		};
 		style.border = `0.5rem solid ${podiumColor}`;
@@ -94,7 +94,9 @@ const StyledMemberAvatar = styled.div.attrs(
 	background-color: ${({ isEmpty, colorTokens }) =>
 		isEmpty ? colorTokens['core-tertiary-bg'] : 'transparent'};
 	border-radius: ${({ size }) =>
-		size === Size.SMALL || size === Size.TINY ? 0.4 : 0.8}rem;
+		size === Size.SMALL || size === Size.TINY
+			? `var(--border-radius-4)`
+			: `var(--border-radius-8)`};
 	border: ${({ size, colorTokens }) =>
 		`${size === Size.SMALL || size === Size.TINY ? 0.2 : 0.3}rem
 		solid ${colorTokens['core-primary-bg']}`};

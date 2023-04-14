@@ -29,5 +29,5 @@ export const TableCell = (props: Props): JSX.Element => {
 };
 
 const StyledTableCell = styled(Flex)`
-	font-size: var(--size-14);
+	font-size: var(--font-size-14);
 `;

@@ -39,7 +39,7 @@ const StyledWrapper = styled.div<{ colorTokens: ColorTokens }>`
 	align-items: center;
 	background-color: ${({ colorTokens }) => colorTokens['core-extra-bg']};
 	padding: var(--size-4);
-	border-radius: var(--size-32);
+	border-radius: var(--border-radius-32);
 	&.expanded {
 		gap: var(--size-4);
 	}

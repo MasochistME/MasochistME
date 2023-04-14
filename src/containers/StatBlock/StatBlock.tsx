@@ -56,7 +56,7 @@ const StyledStatBlock = styled(Flex)<{
 	flex-direction: row;
 	align-items: center;
 	padding: var(--size-8) var(--size-16);
-	border-radius: var(--size-64);
+	border-radius: var(--border-radius-64);
 	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']}99;
 	border: var(--size-2) solid ${({ tierColor }) => tierColor}66;
 	color: ${({ tierColor }) => tierColor};
@@ -66,24 +66,24 @@ const StyledStatBlock = styled(Flex)<{
 	@media (max-width: ${media.tablets}) {
 		padding: var(--size-4) var(--size-8);
 		i {
-			font-size: var(--size-15);
+			font-size: var(--font-size-15);
 		}
 	}
 `;
 
 const StyledStatBlockLabel = styled.span`
 	line-height: var(--size-24);
-	font-size: var(--size-24);
+	font-size: var(--font-size-24);
 	font-weight: bold;
 	white-space: nowrap;
 	@media (max-width: ${media.tablets}) {
-		font-size: var(--size-20);
+		font-size: var(--font-size-20);
 	}
 `;
 
 const StyledStatBlockSublabel = styled.span<{ tierColor: string }>`
 	line-height: var(--size-14);
-	font-size: var(--size-14);
+	font-size: var(--font-size-14);
 	font-weight: bold;
 	color: ${({ tierColor }) => tierColor}bb;
 	white-space: nowrap;

@@ -69,7 +69,7 @@ Menu.Item = styled(MuiMenuItem)`
 	display: flex;
 	align-items: center;
 	gap: var(--size-8);
-	font-size: var(--size-16);
+	font-size: var(--font-size-16);
 `;
 
 const AnchorWrapper = styled.div`
@@ -78,7 +78,7 @@ const AnchorWrapper = styled.div`
 
 const StyledMenu = styled(MuiMenu)<{ colorTokens: ColorTokens }>`
 	& .MuiPaper-root {
-		border-radius: var(--size-8);
+		border-radius: var(--border-radius-8);
 		overflow: hidden;
 		border: var(--size-2) solid
 			${({ colorTokens }) => colorTokens['semantic-color--interactive']};
@@ -95,7 +95,7 @@ const StyledMenu = styled(MuiMenu)<{ colorTokens: ColorTokens }>`
 			&.MuiListSubheader-root {
 				color: ${({ colorTokens }) => colorTokens['core-secondary-text']};
 				font-family: var(--font-dosis);
-				font-size: var(--size-18); // TODO
+				font-size: var(--font-size-18); // TODO
 				line-height: var(--size-16);
 				padding: var(--size-8) 0 var(--size-8) var(--size-16);
 				&:not(:first-child) {
@@ -106,7 +106,7 @@ const StyledMenu = styled(MuiMenu)<{ colorTokens: ColorTokens }>`
 			&.MuiButtonBase-root {
 				margin: var(--size-8);
 				padding: var(--size-8);
-				border-radius: var(--size-8);
+				border-radius: var(--border-radius-8);
 				&:hover {
 					background-color: ${({ colorTokens }) =>
 						colorTokens['semantic-color--interactive']};

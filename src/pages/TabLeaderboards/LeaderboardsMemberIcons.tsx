@@ -29,7 +29,7 @@ export const LeaderboardsMemberIconPatron = (props: Props) => {
 			colorTokens['core-secondary-bg']) as ColorTokens;
 		return (
 			<Icon
-				size={20}
+				size={2}
 				hoverText={`This member is ${patron?.description.toUpperCase()} tier supporter.`}
 				icon="Donation"
 				cursor="help"
@@ -85,5 +85,5 @@ export const LeaderboardsMemberIconOutdated = ({
 
 export const LeaderboardsMemberIconDummy = () => {
 	const style = { color: 'transparent' };
-	return <Icon icon="WarningCircle" size={20} {...style} />;
+	return <Icon icon="WarningCircle" size={2} {...style} />;
 };

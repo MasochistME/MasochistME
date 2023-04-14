@@ -70,10 +70,10 @@ const StyledMemberAvatar = styled.div.attrs(
 	) => {
 		const { size, patronTier, colorTokens, onClick } = props;
 		const style: React.CSSProperties = {
-			minWidth: size,
-			minHeight: size,
-			maxWidth: size,
-			maxHeight: size,
+			minWidth: `${size}rem`,
+			minHeight: `${size}rem`,
+			maxWidth: `${size}rem`,
+			maxHeight: `${size}rem`,
 			cursor: onClick ? 'pointer' : 'help',
 		};
 		if (patronTier === PatronTier.TIER1) {
@@ -107,7 +107,9 @@ const StyledMemberAvatar = styled.div.attrs(
 	padding: ${({ size }) =>
 		size === Size.BIG || size === Size.LARGE ? 0.1 : 0}rem;
 	border-radius: ${({ size }) =>
-		size === Size.SMALL || size === Size.TINY ? 0.4 : 0.8}rem;
+		size === Size.SMALL || size === Size.TINY
+			? `var(--border-radius-4)`
+			: `var(--border-radius-8)`};
 	border: ${({ size, colorTokens }) =>
 		`${size === Size.SMALL || size === Size.TINY ? 0.2 : 0.3}rem 
 		solid ${colorTokens['core-primary-bg']}`};

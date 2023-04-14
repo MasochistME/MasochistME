@@ -108,7 +108,7 @@ const StyledRacesTop = styled(Flex)<{
 }>`
 	flex-direction: column;
 	background-color: ${({ colorTokens }) => colorTokens['core-tertiary-bg']}cc;
-	border-radius: var(--size-16);
+	border-radius: var(--border-radius-16);
 	padding: var(--size-16);
 	gap: var(--size-16);
 `;

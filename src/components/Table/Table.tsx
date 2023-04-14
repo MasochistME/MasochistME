@@ -123,7 +123,7 @@ const StyledTable = styled.table`
 		width: var(--size-1);
 	}
 	td {
-		font-size: var(--size-14);
+		font-size: var(--font-size-14);
 	}
 	td + {
 		padding: 0 var(--size-4);

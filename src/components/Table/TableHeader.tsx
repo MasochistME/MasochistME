@@ -52,7 +52,7 @@ export const TableHeader = <T extends string>(props: Props<T>) => {
 
 const StyledTableHeader = styled.thead<{ colorTokens: ColorTokens }>`
 	font-weight: 600;
-	font-size: var(--size-14);
+	font-size: var(--font-size-14);
 	line-height: var(--size-16);
 	text-align: center;
 	height: var(--size-50);

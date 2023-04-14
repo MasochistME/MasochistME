@@ -1,9 +1,9 @@
 export enum Size {
-	NANO = 8,
-	MICRO = 16,
-	TINY = 24,
-	SMALL = 32,
-	MEDIUM = 48,
-	BIG = 64,
-	LARGE = 128,
+	NANO = 0.8,
+	MICRO = 1.6,
+	TINY = 2.4,
+	SMALL = 3.2,
+	MEDIUM = 4.8,
+	BIG = 6.4,
+	LARGE = 12.8,
 }

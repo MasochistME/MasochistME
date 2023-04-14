@@ -46,7 +46,7 @@ const StyledInputWrapper = styled.div<{ colorTokens: ColorTokens }>`
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	border: var(--size-2) solid
 		${({ colorTokens }) => colorTokens['semantic-color--idle']};
-	border-radius: var(--size-32);
+	border-radius: var(--border-radius-32);
 	overflow: hidden;
 `;
 const StyledInput = styled.input<{
@@ -54,12 +54,12 @@ const StyledInput = styled.input<{
 	hasIcon: boolean;
 }>`
 	flex: 1 1 auto;
-	height: 4.4rem;
+	height: 3.5rem;
 	width: 25rem;
 	max-width: 25rem;
 	padding: var(--size-4) var(--size-12);
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
-	font-size: var(--size-16);
+	font-size: var(--font-size-16);
 	font-family: var(--font-raleway);
 	background-color: transparent;
 	border-top-right-radius: var(--size-32);
