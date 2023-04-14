@@ -113,6 +113,7 @@ const StyledNewStuff = styled(Flex)`
 const StyledColumnLeft = styled(Flex)`
 	flex-direction: column;
 	flex-wrap: wrap;
+	width: 100%;
 	max-width: 45rem;
 	gap: var(--size-16);
 	justify-content: space-between;
