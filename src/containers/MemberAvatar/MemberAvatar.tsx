@@ -70,10 +70,10 @@ const StyledMemberAvatar = styled.div.attrs(
 	) => {
 		const { size, patronTier, colorTokens, onClick } = props;
 		const style: React.CSSProperties = {
-			minWidth: size,
-			minHeight: size,
-			maxWidth: size,
-			maxHeight: size,
+			minWidth: `${size}rem`,
+			minHeight: `${size}rem`,
+			maxWidth: `${size}rem`,
+			maxHeight: `${size}rem`,
 			cursor: onClick ? 'pointer' : 'help',
 		};
 		if (patronTier === PatronTier.TIER1) {

@@ -49,10 +49,10 @@ const StyledGameThumbnail = styled.div.attrs(
 	) => {
 		const { size, onClick } = props;
 		const style: React.CSSProperties = {
-			minWidth: size * 2,
-			minHeight: size,
-			maxWidth: size * 2,
-			maxHeight: size,
+			minWidth: `${size * 2}rem`,
+			minHeight: `${size}rem`,
+			maxWidth: `${size * 2}rem`,
+			maxHeight: `${size}rem`,
 			cursor: onClick ? 'pointer' : 'help',
 		};
 		return { style };

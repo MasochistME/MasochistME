@@ -1,5 +1,5 @@
 export const fonts = () => {
-	return `font-size: 10px;
+	return `font-size: 8px;
     --font-cardo: "Cardo", Verdana, sans-serif;
     --font-cinzel: "Cinzel", Georgia, serif;
     --font-dosis: "Dosis", Verdana, sans-serif;
