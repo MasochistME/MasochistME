@@ -27,8 +27,6 @@ type ContextType = {
 	setVisibleTiers: (visibleTiers: TierId[]) => void;
 	visiblePrices: number[];
 	setVisiblePrices: (visiblePrices: number[]) => void;
-	visibleLogs: LogType[];
-	setVisibleLogs: (visibleEvents: LogType[]) => void;
 
 	_gameListView: GameView;
 	_setGameListView: (gameListView: GameView) => void;
@@ -61,9 +59,6 @@ export const AppContextProvider = ({
 	const [queryMember, setQueryMember] = useState<string>('');
 
 	const [visibleTiers, setVisibleTiers] = useState<TierId[]>([]);
-	const [visibleLogs, setVisibleLogs] = useState<LogType[]>(
-		LogDictionary.map(e => e.type),
-	);
 	const [visiblePrices, setVisiblePrices] = useState<number[]>([0, 1000]);
 
 	const path = config.API;
@@ -88,8 +83,6 @@ export const AppContextProvider = ({
 		setVisibleTiers,
 		visiblePrices,
 		setVisiblePrices,
-		visibleLogs,
-		setVisibleLogs,
 
 		_gameListView,
 		_setGameListView,

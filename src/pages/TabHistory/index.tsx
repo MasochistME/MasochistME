@@ -3,24 +3,37 @@ import styled from 'styled-components';
 
 import { SubPage, Section, SectionProps } from 'containers';
 import { Flex, Icon, Loader, QueryBoundary, ErrorFallback } from 'components';
-import { useActiveTab } from 'hooks';
+import { useActiveTab, useContextualRouting } from 'hooks';
 import { TabDict, LogDictionary } from 'configuration';
 
 import { LogsList } from './LogsList';
 import { LogsFilterBar } from './LogsFilterBar';
+import { LogType } from '@masochistme/sdk/dist/v1/types';
 
 export const TabHistory = (): JSX.Element => {
 	useActiveTab(TabDict.HISTORY);
+	const { setRoute, route: filter } = useContextualRouting<string>({
+		key: 'filter',
+		value: LogDictionary.map(e => e.type).join(','),
+	});
+
+	const setVisibleLogs = (newLogs: LogType[]) => {
+		if (newLogs.length > 0) setRoute(newLogs.join(','));
+		else setRoute('');
+	};
 
 	return (
 		<SubPage>
 			<StyledLogsList column>
 				<Info isMobileOnly />
 				<QueryBoundary fallback={<Loader />} errorFallback={<ErrorFallback />}>
-					<LogsFilterBar />
+					<LogsFilterBar
+						visibleLogs={filter.split(',') as LogType[]}
+						setVisibleLogs={setVisibleLogs}
+					/>
 				</QueryBoundary>
 				<QueryBoundary fallback={<Loader />} errorFallback={<ErrorFallback />}>
-					<LogsList />
+					<LogsList visibleLogs={filter.split(',') as LogType[]} />
 				</QueryBoundary>
 			</StyledLogsList>
 			<Info isDesktopOnly width="100%" maxWidth="45rem" />
