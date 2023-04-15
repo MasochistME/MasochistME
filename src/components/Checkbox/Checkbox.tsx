@@ -79,7 +79,7 @@ const StyledCheckbox = styled(Flex)<{ colorTokens: ColorTokens }>`
 	label {
 		margin: 0;
 		padding: 0;
-		font-size: var(--size-28);
+		font-size: var(--font-size-28);
 	}
 	& > * {
 		cursor: pointer;

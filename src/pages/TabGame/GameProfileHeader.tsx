@@ -42,7 +42,7 @@ export const GameProfileHeader = (props: Props): JSX.Element => {
 					</a>
 					<GameHeaderTier gameTier={gameTier} />
 				</Flex>
-				<div style={{ fontSize: '1.1em' }}>
+				<div style={{ fontSize: 'var(--font-size-11)' }}>
 					{game?.description ?? 'Loading...'}
 				</div>
 			</StyledGameDetails>
@@ -75,13 +75,13 @@ const StyledGameTitle = styled.h2`
 	display: flex;
 	margin: 0;
 	align-items: center;
-	font-size: var(--size-20);
+	font-size: var(--font-size-20);
 `;
 
 const StyledGameHeaderThumbnail = styled.img<{ colorTokens: ColorTokens }>`
 	height: var(--size-128);
 	min-height: var(--size-128);
-	border-radius: var(--size-10);
+	border-radius: var(--border-radius-10);
 	border: var(--size-3) solid
 		${({ colorTokens }) => colorTokens['core-tertiary-bg']};
 	box-sizing: border-box;

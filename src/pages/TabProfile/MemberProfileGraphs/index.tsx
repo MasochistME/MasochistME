@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 
 import { Section } from 'containers';
 import { Flex, Icon, Size } from 'components';
@@ -21,14 +22,14 @@ export const MemberProfileGraphs = (props: Props): JSX.Element | null => {
 				minWidth="25rem"
 				maxWidth="25rem"
 				title={
-					<Flex align gap={8}>
+					<StyledGraphTitle>
 						<span>Playtime total [h]</span>
 						<Icon
 							size={Size.MICRO}
 							icon="QuestionCircle"
 							hoverText={`Total number of hours this member spent playing games from specified tiers`}
 						/>
-					</Flex>
+					</StyledGraphTitle>
 				}
 				content={<GraphHoursPlayedTotal memberId={memberId} />}
 			/>
@@ -36,14 +37,14 @@ export const MemberProfileGraphs = (props: Props): JSX.Element | null => {
 				minWidth="25rem"
 				maxWidth="25rem"
 				title={
-					<Flex align gap={8}>
+					<StyledGraphTitle>
 						<span>Playtime completed [h]</span>
 						<Icon
 							size={Size.MICRO}
 							icon="CircleInfo"
 							hoverText="Total number of hours this member spent completing games from specified tiers"
 						/>
-					</Flex>
+					</StyledGraphTitle>
 				}
 				content={<GraphHoursPlayedCompleted memberId={memberId} />}
 			/>
@@ -51,14 +52,14 @@ export const MemberProfileGraphs = (props: Props): JSX.Element | null => {
 				minWidth="25rem"
 				maxWidth="25rem"
 				title={
-					<Flex align gap={8}>
+					<StyledGraphTitle>
 						<span>Games completed</span>
 						<Icon
 							size={Size.MICRO}
 							icon="CircleInfo"
 							hoverText="Total number of games from specified tiers that this member completed"
 						/>
-					</Flex>
+					</StyledGraphTitle>
 				}
 				content={<GraphGamesCompleted memberId={memberId} />}
 			/>
@@ -70,3 +71,10 @@ export const MemberProfileGraphs = (props: Props): JSX.Element | null => {
 		</Flex>
 	);
 };
+
+const StyledGraphTitle = styled.div`
+	display: flex;
+	align-items: center;
+	gap: var(--size-8);
+	font-size: var(--font-size-16);
+`;

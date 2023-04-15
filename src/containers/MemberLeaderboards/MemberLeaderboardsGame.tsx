@@ -74,8 +74,6 @@ const StyledMemberGame = styled(Flex)<{ colorTokens: ColorTokens }>`
 		${({ colorTokens }) => colorTokens['common-color--shadow']}88;
 	border-top: var(--size-1) solid
 		${({ colorTokens }) => colorTokens['semantic-color--interactive']}99;
-	border-left: var(--size-1) solid
-		${({ colorTokens }) => colorTokens['semantic-color--interactive']}99;
 	&:first-child {
 		border-top: none;
 	}

@@ -1,5 +1,5 @@
 export const sizes = () => {
-	return `
+	const sizeBasic = `
     --size-1: 0.1rem;
     --size-2: 0.2rem;
     --size-3: 0.3rem;
@@ -39,4 +39,6 @@ export const sizes = () => {
     --size-64: 6.4rem;
     --size-128: 12.8rem;
   `;
+
+	return sizeBasic;
 };

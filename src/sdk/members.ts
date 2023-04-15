@@ -84,6 +84,30 @@ export const useMemberById = (steamId: string) => {
 /**
  *
  */
+export const useMemberGames = (steamId: string) => {
+	const { sdk } = useAppContext();
+
+	const {
+		data: memberGamesData = [],
+		isLoading,
+		isFetched,
+		isError,
+	} = useQuery(
+		['masochist', 'member', 'games', steamId],
+		() =>
+			sdk.getMemberGameList({
+				steamId,
+				sort: { completionPercentage: 'desc' },
+			}),
+		{ enabled: !!steamId },
+	);
+
+	return { memberGamesData, isLoading, isFetched, isError };
+};
+
+/**
+ *
+ */
 export const useMemberBadges = (steamId: string) => {
 	const { sdk } = useAppContext();
 
@@ -104,23 +128,19 @@ export const useMemberBadges = (steamId: string) => {
 /**
  *
  */
-export const useMemberGames = (steamId: string) => {
+export const useMemberAwards = (steamId: string) => {
 	const { sdk } = useAppContext();
 
 	const {
-		data: memberGamesData = [],
+		data: memberAwardsData = [],
 		isLoading,
 		isFetched,
 		isError,
 	} = useQuery(
-		['masochist', 'member', 'games', steamId],
-		() =>
-			sdk.getMemberGameList({
-				steamId,
-				sort: { completionPercentage: 'desc' },
-			}),
+		['masochist', 'member', steamId, 'awards'],
+		() => sdk.getMemberAwardList({ steamId }),
 		{ enabled: !!steamId },
 	);
 
-	return { memberGamesData, isLoading, isFetched, isError };
+	return { memberAwardsData, isLoading, isFetched, isError };
 };

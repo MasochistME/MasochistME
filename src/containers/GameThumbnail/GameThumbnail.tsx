@@ -49,10 +49,10 @@ const StyledGameThumbnail = styled.div.attrs(
 	) => {
 		const { size, onClick } = props;
 		const style: React.CSSProperties = {
-			minWidth: size * 2,
-			minHeight: size,
-			maxWidth: size * 2,
-			maxHeight: size,
+			minWidth: `${size * 2}rem`,
+			minHeight: `${size}rem`,
+			maxWidth: `${size * 2}rem`,
+			maxHeight: `${size}rem`,
 			cursor: onClick ? 'pointer' : 'help',
 		};
 		return { style };
@@ -64,7 +64,9 @@ const StyledGameThumbnail = styled.div.attrs(
 	box-sizing: border-box;
 	/* padding:var(--size-2); */
 	border-radius: ${({ size }) =>
-		size === Size.LARGE || size === Size.BIG ? 0.8 : 0.4}rem;
+		size === Size.LARGE || size === Size.BIG
+			? `var(--border-radius-8)`
+			: `var(--border-radius-4)`};
 	border: ${({ size, colorTokens }) =>
 		`${size === Size.SMALL || size === Size.TINY ? 0.2 : 0.3}rem
 		solid ${colorTokens['core-primary-bg']}`};
@@ -73,7 +75,9 @@ const StyledGameThumbnail = styled.div.attrs(
 		width: 100%;
 		height: 100%;
 		border-radius: ${({ size }) =>
-			size === Size.LARGE || size === Size.BIG ? 0.8 : 0.4}rem;
+			size === Size.LARGE || size === Size.BIG
+				? `var(--border-radius-8)`
+				: `var(--border-radius-4)`};
 		opacity: ${({ size }) =>
 			size === Size.SMALL || size === Size.TINY ? '0.85' : '1'};
 		&:hover {

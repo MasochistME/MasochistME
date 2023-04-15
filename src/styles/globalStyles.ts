@@ -1,7 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 import { ColorTokens, AssetTokens } from './theme';
 
-import { fonts, sizes } from './vars/main';
+import { fonts, sizes, border } from './vars/main';
 
 const GlobalStyle = createGlobalStyle<{
 	colorTokens: ColorTokens;
@@ -11,6 +11,7 @@ const GlobalStyle = createGlobalStyle<{
   :root {
     ${() => fonts()}
     ${() => sizes()}
+    ${() => border()}
   }
 
   body, html {
@@ -65,7 +66,7 @@ const GlobalStyle = createGlobalStyle<{
 
 
   div, p {
-    font-size: var(--size-13);
+    font-size: var(--font-size-12);
   }
   
   a {

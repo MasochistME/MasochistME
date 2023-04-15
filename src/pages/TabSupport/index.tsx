@@ -111,5 +111,5 @@ const ButtonSupport = styled.img`
 	padding: 0;
 	max-height: var(--size-36);
 	border: 0px;
-	border-radius: var(--size-8);
+	border-radius: var(--border-radius-8);
 `;

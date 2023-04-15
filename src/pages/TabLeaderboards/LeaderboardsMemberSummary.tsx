@@ -154,9 +154,9 @@ const StyledLeaderboardsMemberDetailsImages = styled(Flex)`
 `;
 
 const StyledMemberPosition = styled(Flex)<{ size: Size }>`
-	width: ${({ size }) => (size - 8) / 10}rem;
+	width: ${({ size }) => size - 0.8}rem;
 	max-width: var(--size-64);
-	font-size: var(--size-16);
+	font-size: var(--font-size-16);
 	@media (max-width: ${media.tablets}) {
 		width: var(--size-32);
 	}

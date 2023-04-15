@@ -16,10 +16,12 @@ import { useMixpanel } from 'hooks';
 import { MemberProfileBadges } from './MemberProfileBadges';
 import { MemberProfileGraphs } from './MemberProfileGraphs';
 import { MemberProfileGames } from './MemberProfileGames';
+import { MemberProfileAwards } from './MemberProfileAwards';
 
 enum TabRoutes {
 	GRAPHS = 'graphs',
 	BADGES = 'badges',
+	AWARDS = 'awards',
 	GAMES = 'games',
 }
 
@@ -56,6 +58,7 @@ const MemberProfileTabsBoundary = ({ id }: Props) => {
 			<Tabs value={activeTab} onChange={handleChangeTab}>
 				<Tab label="Games" value={TabRoutes.GAMES} to={TabRoutes.GAMES} />
 				<Tab label="Badges" value={TabRoutes.BADGES} to={TabRoutes.BADGES} />
+				<Tab label="Awards" value={TabRoutes.AWARDS} to={TabRoutes.AWARDS} />
 				<Tab label="Graphs" value={TabRoutes.GRAPHS} to={TabRoutes.GRAPHS} />
 			</Tabs>
 
@@ -73,6 +76,14 @@ const MemberProfileTabsBoundary = ({ id }: Props) => {
 					element={
 						<TabPanel activeTab={activeTab} tabId={TabRoutes.BADGES}>
 							<MemberProfileBadges memberId={id} />
+						</TabPanel>
+					}
+				/>
+				<Route
+					path={TabRoutes.AWARDS}
+					element={
+						<TabPanel activeTab={activeTab} tabId={TabRoutes.AWARDS}>
+							<MemberProfileAwards memberId={id} />
 						</TabPanel>
 					}
 				/>

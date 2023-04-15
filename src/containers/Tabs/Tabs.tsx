@@ -28,7 +28,7 @@ const StyledMUITab = styled(MUITab)<{ colortokens: ColorTokens }>`
 	text-transform: uppercase;
 	font-weight: bold;
 	font-family: var(--font-dosis);
-	font-size: var(--size-18);
+	font-size: var(--font-size-18);
 	color: ${({ colortokens }) => colortokens['core-secondary-text']};
 	background-color: ${({ colortokens }) => colortokens['core-primary-bg']}99;
 	&.Mui-selected {

@@ -18,14 +18,15 @@ export const BrokenImage = (props: Props) => {
 
 	return (
 		<Tooltip content={title ?? 'I could not load :('}>
-			<StyledBrokenImg fontSize={size ? size / 2 : 'var(--size-16)'}>
+			<StyledBrokenImg size={size}>
 				<Icon icon="WarningTriangle" size={size} />
 			</StyledBrokenImg>
 		</Tooltip>
 	);
 };
 
-const StyledBrokenImg = styled(Flex)`
+const StyledBrokenImg = styled(Flex)<{ size?: Size }>`
+	font-size: ${({ size }) => (size ? `${size / 2}rem` : 'var(--font-size-16)')};
 	box-sizing: border-box;
 	align-items: center;
 	justify-content: center;

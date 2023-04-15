@@ -113,11 +113,11 @@ const StyledSeasonTitle = styled.h2<{ colorTokens: ColorTokens }>`
 	display: flex;
 	margin: 0;
 	align-items: center;
-	font-size: var(--size-20);
+	font-size: var(--font-size-20);
 	text-align: left;
 	gap: var(--size-16);
 	padding: var(--size-6) var(--size-12);
-	border-radius: var(--size-64);
+	border-radius: var(--border-radius-64);
 	background-color: ${({ colorTokens }) =>
 		colorTokens['semantic-color--interactive']};
 `;

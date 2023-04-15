@@ -84,7 +84,7 @@ const StyledBadge = styled(Flex)<{
 const StyledBadgeTitle = styled.h3`
 	all: unset;
 	font-weight: 600;
-	font-size: var(--size-16);
+	font-size: var(--font-size-16);
 	line-height: var(--size-16);
 `;
 
@@ -92,13 +92,13 @@ const StyledBadgeField = styled.p`
 	margin: 0;
 	max-width: 45rem;
 	text-align: left;
-	font-size: var(--size-14);
+	font-size: var(--font-size-14);
 	line-height: var(--size-16);
 `;
 
 const StyledBadgePoints = styled(Flex)`
 	gap: var(--size-4);
 	line-height: var(--size-18);
-	font-size: var(--size-18);
+	font-size: var(--font-size-18);
 	font-family: var(--font-dosis);
 `;

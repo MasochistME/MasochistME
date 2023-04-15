@@ -117,7 +117,7 @@ const GameLeaderboardsSkeleton = () => {
 					isCompact
 					colorTokens={colorTokens}
 					key={i}>
-					<Skeleton width="100%" />
+					<Skeleton width="100%" height="4.8rem" />
 				</StyledGameLeaderboardsMember>
 			))}
 		</StyledGameLeaderboards>
@@ -164,7 +164,7 @@ const StyledGameLeaderboardsMemberUsername = styled.div<{
 	white-space: nowrap;
 	font-weight: bold;
 	font-size: ${({ isCompact }) =>
-		isCompact ? 'var(--size-14)' : 'var(--size-16)'};
+		isCompact ? 'var(--font-size-14)' : 'var(--font-size-16)'};
 	@media (max-width: ${media.smallTablets}) {
 		display: none;
 	}

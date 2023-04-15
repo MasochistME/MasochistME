@@ -1,11 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Box, Modal } from '@mui/material';
 import { Race } from '@masochistme/sdk/dist/v1/types';
 
 import { useTheme, ColorTokens } from 'styles';
-import { Flex, Icon, Size, Table, TableCell, TableColumn } from 'components';
+import {
+	Flex,
+	Icon,
+	Modal,
+	Size,
+	Table,
+	TableCell,
+	TableColumn,
+} from 'components';
 import { useRacesFromSeason } from 'hooks';
 import { MemberAvatar } from 'containers';
 import { getRaceTypeIcon } from 'utils';
@@ -21,29 +28,12 @@ type Props = {
 
 export const ModalParticipant = (props: Props) => {
 	const { participant, seasonId, isModalOpen, setIsModalOpen } = props;
-	const { colorTokens } = useTheme();
-
-	const handleModalClose = () => {
-		setIsModalOpen(false);
-	};
-
-	const modalStyle = {
-		position: 'absolute',
-		top: '50%',
-		left: '50%',
-		transform: 'translate(-50%, -50%)',
-		maxWidth: '90%',
-		maxHeight: '90%',
-		overflowY: 'auto',
-		border: `var(--size-1) solid ${colorTokens['core-extra-bg']}`,
-		boxShadow: `0 0 var(--size-10) ${colorTokens['common-color--black']}aa`,
-	};
 
 	return (
-		<Modal open={isModalOpen && !!participant} onClose={handleModalClose}>
-			<Box sx={modalStyle}>
-				<RacesTable seasonId={seasonId} participant={participant} />
-			</Box>
+		<Modal
+			isModalOpen={isModalOpen && !!participant}
+			setIsModalOpen={setIsModalOpen}>
+			<RacesTable seasonId={seasonId} participant={participant} />
 		</Modal>
 	);
 };
@@ -182,7 +172,7 @@ const RacesTable = ({
 				<div
 					style={{
 						border: `var(--size-3) solid ${colorTokens['core-primary-text']}`,
-						borderRadius: 'var(--size-8)',
+						borderRadius: 'var(--border-radius-8)',
 					}}>
 					<MemberAvatar member={participant?.member} size={Size.BIG} />
 				</div>
@@ -208,7 +198,7 @@ export const WrapperRace = styled(Flex)<{ colorTokens: ColorTokens }>`
 `;
 
 const StyledRaceName = styled.div`
-	font-size: var(--size-16);
+	font-size: var(--font-size-16);
 	font-family: var(--font-dosis);
 `;
 
@@ -220,5 +210,5 @@ const StyledUsername = styled.h2`
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	font-size: var(--size-22);
+	font-size: var(--font-size-22);
 `;

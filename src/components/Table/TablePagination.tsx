@@ -91,11 +91,11 @@ const StyledTablePagination = styled(TablePaginationUnstyled)<{
 		padding: var(--size-4);
 		border: var(--size-2) solid
 			${({ colorTokens }) => colorTokens['semantic-color--idle']};
-		border-radius: var(--size-50);
+		border-radius: var(--border-radius-50);
 		background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']};
 		color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 		font-family: var(--font-raleway);
-		font-size: var(--size-16);
+		font-size: var(--font-size-16);
 		cursor: pointer;
 
 		&:hover {
@@ -122,8 +122,8 @@ const StyledTablePagination = styled(TablePaginationUnstyled)<{
 		margin: 0 var(--size-8);
 		padding: var(--size-6) var(--size-12);
 		border: transparent;
-		border-radius: var(--size-2);
-		font-size: var(--size-16);
+		border-radius: var(--border-radius-2);
+		font-size: var(--font-size-16);
 		cursor: pointer;
 		color: black;
 		background-color: ${({ colorTokens }) =>
