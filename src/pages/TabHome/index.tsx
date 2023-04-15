@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { Featured } from '@masochistme/sdk/dist/v1/types';
 import styled from 'styled-components';
 
-import { fonts, media } from 'styles';
-import { useFeatured } from 'sdk/featured';
+import { media } from 'styles';
+import { useFeatured } from 'sdk';
 import { chooseRandomIndex } from 'utils';
 import { useActiveTab } from 'hooks';
 import { TabDict } from 'configuration/tabs';
-import { Button, Flex, QueryBoundary, Size } from 'components';
+import { Flex, QueryBoundary } from 'components';
 import { SubPage, DashboardTile } from 'containers';
-import { Featured } from '@masochistme/sdk/dist/v1/types';
-import { useHistory } from 'react-router';
-import { Variant } from 'components/Button/types';
+
 import { CommunityInfo } from './CommunityInfo';
 
 export enum SectionMap {

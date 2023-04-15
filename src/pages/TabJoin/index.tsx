@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 
 import styled from 'styled-components';
 
@@ -46,9 +46,9 @@ export const TabJoin = () => {
 
 type InfoProps = Partial<SectionProps>;
 const Info = (props: InfoProps) => {
-	const history = useHistory();
+	const navigate = useNavigate();
 	const onGameListClick = () => {
-		history.push('/games');
+		navigate('/games');
 	};
 
 	return (

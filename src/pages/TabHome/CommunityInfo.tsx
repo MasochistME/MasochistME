@@ -1,14 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { fonts } from 'styles';
 import { Button, Flex } from 'components';
 import { useMixpanel } from 'hooks';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { Variant } from 'components/Button/types';
 
 export const CommunityInfo = () => {
-	const history = useHistory();
+	const navigate = useNavigate();
 	const { track } = useMixpanel();
 
 	const onButtonDiscordClick = () => {
@@ -17,7 +16,7 @@ export const CommunityInfo = () => {
 	};
 	const onButtonJoinClick = () => {
 		track(`button.join.click`);
-		history.push(`/join`);
+		navigate(`/join`);
 	};
 
 	return (
@@ -52,7 +51,7 @@ const StyledWrapper = styled.div`
 	flex-direction: column;
 	width: 100%;
 	max-width: 1000px;
-	font-family: ${fonts.Dosis};
+	font-family: var(--font-dosis);
 	gap: 16px;
 	padding: 16px 0;
 	p {
