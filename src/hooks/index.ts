@@ -9,6 +9,7 @@ export * from './useMemberData';
 export * from './useMemberLeaderboardsPoints';
 export * from './useMemberLeaderboardsSummary';
 export * from './useMixpanel';
+export * from './useNavigateToTab';
 export * from './useRacesFromSeason';
 export * from './useScrollToLocation';
 export * from './useToggleView';

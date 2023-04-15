@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import React from 'react';
 import styled from 'styled-components';
 
 import { useMemberById } from 'sdk';
@@ -11,7 +10,7 @@ import {
 	Warning,
 } from 'components';
 import { Tabs, Tab, TabPanel } from 'containers';
-import { useMixpanel } from 'hooks';
+import { useNavigateToTab, useMixpanel } from 'hooks';
 
 import { MemberProfileBadges } from './MemberProfileBadges';
 import { MemberProfileGraphs } from './MemberProfileGraphs';
@@ -35,14 +34,14 @@ export const MemberProfileTabs = ({ id }: Props) => (
 
 const MemberProfileTabsBoundary = ({ id }: Props) => {
 	const { track } = useMixpanel();
-	const { memberData: member } = useMemberById(id);
-	const [activeTab, setActiveTab] = useState<string>(TabRoutes.GAMES);
+	const { navigateToTab, tab } = useNavigateToTab(TabRoutes.GAMES);
 
+	const { memberData: member } = useMemberById(id);
 	const isUserPrivate = member?.isPrivate;
 	const isUserNotAMember = member && !member.isMember && !member.isProtected;
 
 	const handleChangeTab = (_e: React.SyntheticEvent, newTab: TabRoutes) => {
-		setActiveTab(newTab);
+		navigateToTab({ tab: newTab });
 		track('page.user.tab', { tab: newTab });
 	};
 
@@ -55,48 +54,25 @@ const MemberProfileTabsBoundary = ({ id }: Props) => {
 
 	return (
 		<StyledMemberProfileTabs column>
-			<Tabs value={activeTab} onChange={handleChangeTab}>
-				<Tab label="Games" value={TabRoutes.GAMES} to={TabRoutes.GAMES} />
-				<Tab label="Badges" value={TabRoutes.BADGES} to={TabRoutes.BADGES} />
-				<Tab label="Awards" value={TabRoutes.AWARDS} to={TabRoutes.AWARDS} />
-				<Tab label="Graphs" value={TabRoutes.GRAPHS} to={TabRoutes.GRAPHS} />
+			<Tabs value={tab} onChange={handleChangeTab}>
+				<Tab label="Games" value={TabRoutes.GAMES} />
+				<Tab label="Badges" value={TabRoutes.BADGES} />
+				<Tab label="Awards" value={TabRoutes.AWARDS} />
+				<Tab label="Graphs" value={TabRoutes.GRAPHS} />
 			</Tabs>
 
-			<Routes>
-				<Route
-					path={TabRoutes.GAMES}
-					element={
-						<TabPanel activeTab={activeTab} tabId={TabRoutes.GAMES}>
-							<MemberProfileGames memberId={id} />
-						</TabPanel>
-					}
-				/>
-				<Route
-					path={TabRoutes.BADGES}
-					element={
-						<TabPanel activeTab={activeTab} tabId={TabRoutes.BADGES}>
-							<MemberProfileBadges memberId={id} />
-						</TabPanel>
-					}
-				/>
-				<Route
-					path={TabRoutes.AWARDS}
-					element={
-						<TabPanel activeTab={activeTab} tabId={TabRoutes.AWARDS}>
-							<MemberProfileAwards memberId={id} />
-						</TabPanel>
-					}
-				/>
-				<Route
-					path={TabRoutes.GRAPHS}
-					element={
-						<TabPanel activeTab={activeTab} tabId={TabRoutes.GRAPHS}>
-							<MemberProfileGraphs memberId={id} />
-						</TabPanel>
-					}
-				/>
-				<Route path="/" element={<Navigate to={TabRoutes.GAMES} />} />
-			</Routes>
+			<TabPanel activeTab={tab} tabId={TabRoutes.GAMES}>
+				<MemberProfileGames memberId={id} />
+			</TabPanel>
+			<TabPanel activeTab={tab} tabId={TabRoutes.BADGES}>
+				<MemberProfileBadges memberId={id} />
+			</TabPanel>
+			<TabPanel activeTab={tab} tabId={TabRoutes.AWARDS}>
+				<MemberProfileAwards memberId={id} />
+			</TabPanel>
+			<TabPanel activeTab={tab} tabId={TabRoutes.GRAPHS}>
+				<MemberProfileGraphs memberId={id} />
+			</TabPanel>
 		</StyledMemberProfileTabs>
 	);
 };
