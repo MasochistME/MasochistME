@@ -26,7 +26,7 @@ export const TabJoin = () => {
 					<h2>Points checker</h2>
 					<Icon
 						icon="CircleInfo"
-						hoverText="Does not count family share games and possible badges"
+						hoverText="Does not count possible badges and family share games (unless you played them less than two weeks ago)"
 					/>
 				</StyledTitle>
 				<SteamNameInput
