@@ -1,5 +1,6 @@
 export * from './useActiveTab';
 export * from './useCompletions';
+export * from './useContextualRouting';
 export * from './useDebounce';
 export * from './useLoadTiers';
 export * from './useLocalStorage';
@@ -9,7 +10,6 @@ export * from './useMemberData';
 export * from './useMemberLeaderboardsPoints';
 export * from './useMemberLeaderboardsSummary';
 export * from './useMixpanel';
-export * from './useNavigateToTab';
 export * from './useRacesFromSeason';
 export * from './useScrollToLocation';
 export * from './useToggleView';

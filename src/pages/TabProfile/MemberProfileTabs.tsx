@@ -10,7 +10,7 @@ import {
 	Warning,
 } from 'components';
 import { Tabs, Tab, TabPanel } from 'containers';
-import { useNavigateToTab, useMixpanel } from 'hooks';
+import { useContextualRouting, useMixpanel } from 'hooks';
 
 import { MemberProfileBadges } from './MemberProfileBadges';
 import { MemberProfileGraphs } from './MemberProfileGraphs';
@@ -34,14 +34,17 @@ export const MemberProfileTabs = ({ id }: Props) => (
 
 const MemberProfileTabsBoundary = ({ id }: Props) => {
 	const { track } = useMixpanel();
-	const { navigateToTab, tab } = useNavigateToTab(TabRoutes.GAMES);
+	const { navigateToRoute, route: tab } = useContextualRouting<TabRoutes>({
+		key: 'tab',
+		value: TabRoutes.GAMES,
+	});
 
 	const { memberData: member } = useMemberById(id);
 	const isUserPrivate = member?.isPrivate;
 	const isUserNotAMember = member && !member.isMember && !member.isProtected;
 
 	const handleChangeTab = (_e: React.SyntheticEvent, newTab: TabRoutes) => {
-		navigateToTab({ tab: newTab });
+		navigateToRoute({ tab: newTab });
 		track('page.user.tab', { tab: newTab });
 	};
 
