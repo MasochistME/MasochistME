@@ -13,7 +13,7 @@ export const useContextualRouting = <T extends string>(param: Param<T>) => {
 	}, []);
 
 	const route = useMemo(() => {
-		return searchParams.get(param.key) ?? param.value;
+		return (searchParams.get(param.key) ?? param.value) as T;
 	}, [searchParams]);
 
 	const setRoute = <T extends string>(newRoute: T) => {
