@@ -1,31 +1,17 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { useAppContext } from 'context';
 import { FilterBar, Input, ToggleButtons } from 'components';
 import { TimePeriod } from 'utils/getTimePeriod';
-import { useContextualRouting } from 'hooks';
 
-export const LeaderboardsFilterBar = (): JSX.Element => {
-	const {
-		queryMember,
-		setQueryMember,
-		queryLeaderboardPeriod,
-		setQueryLeaderboardPeriod,
-	} = useAppContext();
+type Props = {
+	filter: TimePeriod;
+	changeFilter: (filter: TimePeriod) => void;
+};
 
-	const { navigateToRoute, route: filter } = useContextualRouting<TimePeriod>({
-		key: 'filter',
-		value: queryLeaderboardPeriod,
-	});
-
-	const changeValue = (period: TimePeriod) => {
-		setQueryLeaderboardPeriod(period);
-		navigateToRoute({ filter: period });
-	};
-
-	useEffect(() => {
-		setQueryLeaderboardPeriod(filter);
-	}, []);
+export const LeaderboardsFilterBar = (props: Props): JSX.Element => {
+	const { filter, changeFilter } = props;
+	const { queryMember, setQueryMember } = useAppContext();
 
 	const options = [
 		{
@@ -57,7 +43,7 @@ export const LeaderboardsFilterBar = (): JSX.Element => {
 			<ToggleButtons
 				options={options}
 				value={filter}
-				changeValue={changeValue}
+				changeValue={changeFilter}
 			/>
 		</FilterBar>
 	);

@@ -7,7 +7,6 @@ import { LogDictionary } from 'configuration/logs';
 
 import { Theme } from 'styles';
 import { GameView, BadgeView } from 'hooks';
-import { TimePeriod } from 'utils/getTimePeriod';
 
 import config from 'config.json';
 
@@ -40,8 +39,6 @@ type ContextType = {
 	setQueryGame: (queryGame: string) => void;
 	queryMember: string;
 	setQueryMember: (queryMember: string) => void;
-	queryLeaderboardPeriod: TimePeriod;
-	setQueryLeaderboardPeriod: (queryLeaderboardPeriod: TimePeriod) => void;
 };
 
 export const AppContextProvider = ({
@@ -62,8 +59,6 @@ export const AppContextProvider = ({
 
 	const [queryGame, setQueryGame] = useState<string>('');
 	const [queryMember, setQueryMember] = useState<string>('');
-	const [queryLeaderboardPeriod, setQueryLeaderboardPeriod] =
-		useState<TimePeriod>(TimePeriod.ALL);
 
 	const [visibleTiers, setVisibleTiers] = useState<TierId[]>([]);
 	const [visibleLogs, setVisibleLogs] = useState<LogType[]>(
@@ -105,8 +100,6 @@ export const AppContextProvider = ({
 		setQueryGame,
 		queryMember,
 		setQueryMember,
-		queryLeaderboardPeriod,
-		setQueryLeaderboardPeriod,
 	};
 
 	return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

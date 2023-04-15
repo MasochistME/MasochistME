@@ -8,10 +8,6 @@ export const useContextualRouting = <T extends string>(param: Param<T>) => {
 	const navigate = useNavigate();
 	const [searchParams, setSearchParams] = useSearchParams();
 
-	useEffect(() => {
-		if (!route) setRoute(param.key);
-	}, []);
-
 	const route = useMemo(() => {
 		return (searchParams.get(param.key) ?? param.value) as T;
 	}, [searchParams]);
@@ -22,6 +18,11 @@ export const useContextualRouting = <T extends string>(param: Param<T>) => {
 
 	const navigateToRoute = (params: Record<string, string>) =>
 		navigate({ pathname: '', search: `?${createSearchParams(params)}` });
+
+	useEffect(() => {
+		if (!route) setRoute(param.key);
+		else setRoute(route);
+	}, [route]);
 
 	return { route, setRoute, navigateToRoute };
 };
