@@ -1,10 +1,14 @@
 import { Request, Response } from 'express';
 import axios from 'axios';
-import { Game, Tier } from '@masochistme/sdk/dist/v1/types';
+import { Game, MemberGame, Tier } from '@masochistme/sdk/dist/v1/types';
 
-import { log } from 'helpers/log';
 import { mongoInstance } from 'index';
-import { MemberSteamGameFallback } from 'router/v1/update/types';
+import { log } from 'helpers/log';
+import {
+  getMemberSteamAchievements,
+  getMemberSteamGames,
+} from 'router/v1/update/updateMember/updateMember';
+import { validateSteamUrl } from 'helpers/validate';
 
 /**
  * Returns a small summary of any requested Steam member.
@@ -38,27 +42,12 @@ export const getCandidateSummary = async (
       curatedGames.push(el);
     });
 
+    const userId = await getIdFromUrl(steamUrl);
+
     // Scrape a list of scouted Steam user's perfected games.
-    const candidateUrl = `${steamUrl}/games?tab=perfect`;
-    const perfectGamesDataRaw = (await axios.get(candidateUrl))?.data ?? '{}';
+    const candidateSteamGames = await getMemberSteamGames(userId, curatedGames);
 
-    if (
-      perfectGamesDataRaw.includes('The specified profile could not be found.')
-    ) {
-      res.status(404).send({
-        error: 'User with this Steam ID does not exist.',
-      });
-      return;
-    }
-    const profileRegex = new RegExp(/(?<=var rgGames = )(.*)(?=[}}])/i);
-    // Important - this can return undefined, if user privated only their game list
-    // Handle this by returning an info about it
-    const perfectGamesDataMatched = profileRegex.exec(perfectGamesDataRaw)?.[0];
-    const perfectGamesDataFixed = perfectGamesDataMatched
-      ? perfectGamesDataMatched + '}]'
-      : '[]';
-
-    if (!perfectGamesDataMatched) {
+    if (!candidateSteamGames?.length) {
       res.status(403).send({
         error:
           "This user's Steam profile is private or their games' data is hidden.",
@@ -66,8 +55,37 @@ export const getCandidateSummary = async (
       return;
     }
 
-    const perfectGamesDataParsed: MemberSteamGameFallback[] = JSON.parse(
-      perfectGamesDataFixed,
+    /**
+     * Get info about user's achievements.
+     * Achievements also give us info about game's completion ratio.
+     */
+    const newMemberSteamAchievements = await getMemberSteamAchievements(
+      userId,
+      candidateSteamGames,
+    );
+
+    /**
+     * Aggregate the Steam game data with its achievement data.
+     * This allows us to populate both MemberGames and MemberAchievements databases.
+     */
+    const candidateGames: Omit<MemberGame, '_id'>[] = candidateSteamGames.map(
+      game => {
+        const gameStats = newMemberSteamAchievements.find(
+          g => g.gameId === game.gameId,
+        );
+        const {
+          completionPercentage = 0,
+          achievementsUnlocked = 0,
+          mostRecentAchievementDate = new Date(0),
+        } = gameStats?.game ?? {};
+
+        return {
+          ...game,
+          completionPercentage,
+          achievementsUnlocked,
+          mostRecentAchievementDate,
+        };
+      },
     );
 
     // Get a list of MasochistME tiers
@@ -78,9 +96,9 @@ export const getCandidateSummary = async (
       tiers.push(el);
     });
 
-    const perfectGamesData = perfectGamesDataParsed
+    const perfectGamesData = candidateGames
       .map(game => {
-        const curatedGame = curatedGames.find(g => g.id === game.appid);
+        const curatedGame = curatedGames.find(g => g.id === game.gameId);
         if (!curatedGame) return null;
         const pts =
           tiers.find(tier => tier.id === curatedGame.tier)?.score ?? 0;
@@ -88,7 +106,7 @@ export const getCandidateSummary = async (
           id: curatedGame.id,
           title: curatedGame.title,
           tier: curatedGame.tier,
-          pts,
+          pts: game.completionPercentage === 100 ? pts : 0,
         };
       })
       .filter(Boolean);
@@ -100,21 +118,22 @@ export const getCandidateSummary = async (
   }
 };
 
-const validateSteamUrl = (steamUrl?: string) => {
-  const error =
-    'Steam profile link must follow one of two formats: https://steamcommunity.com/id/ + your unique ID, which consists of letters, numbers and symbol _; or https://steamcommunity.com/profiles/ + your numeric ID.';
+const getIdFromUrl = async (steamUrl?: string) => {
+  const normalUrl = 'https://steamcommunity.com/profiles/';
+  const vanityUrl = 'https://steamcommunity.com/id/';
 
-  const steamUrlWithIdValidator = new RegExp(
-    /^(https:\/\/steamcommunity.com\/id\/)[a-zA-Z0-9_]*$/i,
-  );
-  const steamUrlWithProfileValidator = new RegExp(
-    /^(https:\/\/steamcommunity.com\/profiles\/)[0-9]*$/i,
-  );
+  if (steamUrl?.includes(normalUrl)) {
+    const id = steamUrl.replace(normalUrl, '');
+    return id;
+  }
 
-  const hasErrorId = !!steamUrl && !steamUrlWithIdValidator.test(steamUrl);
-  const hasErrorProfiles =
-    !!steamUrl && !steamUrlWithProfileValidator.test(steamUrl);
-  const hasError = !steamUrl || (hasErrorId && hasErrorProfiles);
-
-  return { hasError, error };
+  const vanityName = steamUrl?.replace(vanityUrl, '');
+  const idUrl = 'http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001';
+  const idData = await axios.get(idUrl, {
+    params: {
+      key: process.env.STEAM_KEY,
+      vanityurl: vanityName,
+    },
+  });
+  return idData?.data?.response?.steamid;
 };
