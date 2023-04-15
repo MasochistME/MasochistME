@@ -55,12 +55,12 @@ export const LeaderboardsMemberPoints = (props: Props): JSX.Element => {
 				</StyledScore>
 			</Tooltip>
 			<Tooltip content="Sum of all points">
-				<StyledScore style={{ marginLeft: '16px' }}>
+				<StyledScore style={{ marginLeft: 'var(--size-16)' }}>
 					<span
 						style={{
 							fontWeight: 'bold',
-							fontSize: '18px',
-							lineHeight: '14px',
+							fontSize: 'var(--font-size-18)',
+							lineHeight: 'var(--size-14)',
 						}}>
 						Σ
 					</span>
@@ -73,11 +73,11 @@ export const LeaderboardsMemberPoints = (props: Props): JSX.Element => {
 
 const StyledLeaderboardsMemberPoints = styled(Flex)`
 	@media (min-width: ${media.smallTablets}) {
-		width: 260px;
-		gap: 16px;
+		width: 26rem;
+		gap: var(--size-16);
 	}
 	@media (max-width: ${media.smallTablets}) {
-		gap: 2px;
+		gap: var(--size-2);
 	}
 `;
 
@@ -85,8 +85,8 @@ const StyledScore = styled(Flex)`
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	gap: 4px;
-	width: 20px;
+	gap: var(--size-4);
+	width: var(--size-20);
 
 	i {
 		margin: 0;

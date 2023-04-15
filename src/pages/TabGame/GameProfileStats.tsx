@@ -1,12 +1,12 @@
-import styled from 'styled-components';
 import { Game } from '@masochistme/sdk/dist/v1/types';
+import styled from 'styled-components';
 
-import { useGameCompletion } from 'hooks';
-import { media, useTheme, ColorTokens } from 'styles';
-import { getPercentage } from 'utils';
-import { Flex, Skeleton, QueryBoundary } from 'components';
+import { Flex, QueryBoundary, Skeleton } from 'components';
 import { StatBlock } from 'containers';
+import { useGameCompletion } from 'hooks';
 import { useCuratorMembers, useLeaderboardsGames } from 'sdk';
+import { ColorTokens, media, useTheme } from 'styles';
+import { getPercentage } from 'utils';
 
 type Props = {
 	game?: Game;
@@ -17,7 +17,7 @@ export const GameProfileStats = (props: Props) => {
 
 	if (!game) return null;
 	return (
-		<QueryBoundary fallback={<Skeleton width="100%" height="120px" />}>
+		<QueryBoundary fallback={<Skeleton width="100%" height="12rem" />}>
 			<GameProfileStatsBoundary game={game} />
 		</QueryBoundary>
 	);
@@ -46,10 +46,10 @@ const GameProfileStatsBoundary = (props: Required<Props>) => {
 			: `${gameLeaderboards.avgPlaytime.toFixed(2)} h`;
 
 	const completionTimeShortest = gameLeaderboards?.times?.shortestCompletion
-		? `${gameLeaderboards?.times.shortestCompletion} h`
+		? `${gameLeaderboards?.times.shortestCompletion.toFixed(2)} h`
 		: '—';
 	const completionTimeLongest = gameLeaderboards?.times?.longestCompletion
-		? `${gameLeaderboards?.times.longestCompletion} h`
+		? `${gameLeaderboards?.times.longestCompletion.toFixed(2)} h`
 		: '—';
 	const completionPercentage = getPercentage(
 		gameLeaderboards?.completions?.base ?? 0,
@@ -137,8 +137,8 @@ const GameProfileStatsBoundary = (props: Required<Props>) => {
 const StyledGameProfileStats = styled(Flex)<{ colorTokens: ColorTokens }>`
 	justify-content: space-evenly;
 	background-color: ${({ colorTokens }) => colorTokens['core-tertiary-bg']}66;
-	gap: 16px;
-	padding: 24px 0 32px 0;
+	gap: var(--size-16);
+	padding: var(--size-24) 0 var(--size-32) 0;
 	@media (max-width: ${media.tablets}) {
 		flex-wrap: wrap;
 	}

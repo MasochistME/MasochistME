@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import { Game, MemberGame, Tier } from '@masochistme/sdk/dist/v1/types';
 
@@ -16,7 +16,7 @@ type Props = {
 export const MemberLeaderboardsGame = (props: Props): JSX.Element => {
 	const { colorTokens } = useTheme();
 	const { steamId, memberGame } = props;
-	const history = useHistory();
+	const navigate = useNavigate();
 
 	const { gamesData } = useCuratedGames();
 	const { tiersData } = useTiers();
@@ -30,7 +30,7 @@ export const MemberLeaderboardsGame = (props: Props): JSX.Element => {
 	)?.icon ?? 'Spin') as IconType;
 
 	const onGameClick = () => {
-		history.push(`/game/${memberGame.gameId}`);
+		navigate(`/game/${memberGame.gameId}`);
 	};
 
 	return (
@@ -65,16 +65,14 @@ export const MemberLeaderboardsGame = (props: Props): JSX.Element => {
 
 const StyledMemberGame = styled(Flex)<{ colorTokens: ColorTokens }>`
 	width: 100%;
-	height: 37px;
-	gap: 4px;
+	height: var(--size-36);
+	gap: var(--size-4);
 	text-align: left;
-	border-bottom: 1px solid
+	border-bottom: var(--size-1) solid
 		${({ colorTokens }) => colorTokens['common-color--shadow']}88;
-	border-right: 1px solid
+	border-right: var(--size-1) solid
 		${({ colorTokens }) => colorTokens['common-color--shadow']}88;
-	border-top: 1px solid
-		${({ colorTokens }) => colorTokens['semantic-color--interactive']}99;
-	border-left: 1px solid
+	border-top: var(--size-1) solid
 		${({ colorTokens }) => colorTokens['semantic-color--interactive']}99;
 	&:first-child {
 		border-top: none;
@@ -88,10 +86,10 @@ const StyledGameInfo = styled(Flex)`
 	width: 100%;
 	justify-content: flex-start;
 	@media (max-width: ${media.tablets}) {
-		margin-left: 6px;
+		margin-left: var(--size-6);
 	}
 	i {
-		width: 16px;
+		width: var(--size-16);
 	}
 `;
 

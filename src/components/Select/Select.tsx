@@ -6,7 +6,7 @@ import {
 	ListSubheader,
 } from '@mui/material';
 import styled from 'styled-components';
-import { ColorTokens, fonts, useTheme } from 'styles';
+import { ColorTokens, useTheme } from 'styles';
 
 type Option = {
 	value: string;
@@ -60,22 +60,22 @@ export const Select = (props: Props) => {
 };
 
 const StyledSelect = styled(MuiSelect)<{ colorTokens: ColorTokens }>`
-	font-family: ${fonts.Raleway};
-	font-size: 1em;
+	font-family: var(--font-raleway);
+	font-size: var(--font-size-18);
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	&.MuiInputBase-root {
 		background-color: ${({ colorTokens }) =>
 			colorTokens['semantic-color--interactive']};
 		flex: 1 1 auto;
 		width: 100%;
-		border-radius: 32px;
+		border-radius: var(--border-radius-32);
 	}
 	&.MuiOutlinedInput-root {
 		outline: none;
 		border: none;
 	}
 	& .MuiSelect-select {
-		padding: 8px 16px;
+		padding: var(--size-8) var(--size-16);
 	}
 	svg {
 		color: ${({ colorTokens }) => colorTokens['core-primary-text']};

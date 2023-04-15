@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import {
 	Badge,
@@ -123,7 +123,7 @@ type ContentProps = Props & { content: React.ReactNode };
 const Content = ({ content, ...props }: ContentProps) => (
 	<Section
 		width="100%"
-		maxWidth="450px"
+		maxWidth="45rem"
 		title="History"
 		content={<StyledSectionHistory>{content}</StyledSectionHistory>}
 		{...props}
@@ -132,14 +132,14 @@ const Content = ({ content, ...props }: ContentProps) => (
 
 const StyledSectionHistory = styled(Flex)`
 	flex-direction: column;
-	gap: 11px;
+	gap: var(--size-11);
 	@media (max-width: ${media.smallNetbooks}) {
-		gap: 4px;
+		gap: var(--size-4);
 	}
 `;
 
 const useLogComponents = () => {
-	const history = useHistory();
+	const navigate = useNavigate();
 
 	const { gamesData: games } = useAllGames();
 	const { membersData: members } = useAllMembers();
@@ -152,7 +152,7 @@ const useLogComponents = () => {
 			'QuestionCircle';
 		const member = members.find((m: Member) => m.steamId === log.memberId);
 		const onUserClick = () =>
-			member?.steamId && history.push(`/profile/${member.steamId}`);
+			member?.steamId && navigate(`/profile/${member.steamId}`);
 
 		if (member)
 			return (
@@ -174,7 +174,7 @@ const useLogComponents = () => {
 			'QuestionCircle';
 		const member = members.find((m: Member) => m.steamId === log.memberId);
 		const onUserClick = () =>
-			member?.steamId && history.push(`/profile/${member.steamId}`);
+			member?.steamId && navigate(`/profile/${member.steamId}`);
 
 		if (member)
 			return (
@@ -195,7 +195,7 @@ const useLogComponents = () => {
 			LogDictionary.find(e => e.type === LogType.GAME_ADD)?.icon ??
 			'QuestionCircle';
 		const game = games.find((g: Game) => g.id === log.gameId);
-		const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
+		const onGameClick = () => game?.id && navigate(`/game/${game.id}`);
 
 		if (game)
 			return (
@@ -237,8 +237,8 @@ const useLogComponents = () => {
 		const game = games.find((g: Game) => g.id === log.gameId);
 
 		const onUserClick = () =>
-			member?.steamId && history.push(`/profile/${member.steamId}`);
-		const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
+			member?.steamId && navigate(`/profile/${member.steamId}`);
+		const onGameClick = () => game?.id && navigate(`/game/${game.id}`);
 
 		if (member && game)
 			return (
@@ -263,7 +263,7 @@ const useLogComponents = () => {
 			'QuestionCircle';
 		const game = games.find((g: Game) => g.id === log.gameId);
 
-		const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
+		const onGameClick = () => game?.id && navigate(`/game/${game.id}`);
 
 		if (game)
 			return (
@@ -287,7 +287,7 @@ const useLogComponents = () => {
 		const game = games.find((g: Game) => g.id === Number(log.gameId));
 		const badge = badges.find((b: Badge) => String(b._id) === log.badgeId);
 
-		const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
+		const onGameClick = () => game?.id && navigate(`/game/${game.id}`);
 
 		if (game && badge)
 			return (
@@ -311,7 +311,7 @@ const useLogComponents = () => {
 		const member = members.find((m: Member) => m.steamId === log.memberId);
 
 		const onUserClick = () =>
-			member?.steamId && history.push(`/profile/${member.steamId}`);
+			member?.steamId && navigate(`/profile/${member.steamId}`);
 
 		if (member && badge)
 			return (
@@ -334,7 +334,7 @@ const useLogComponents = () => {
 			LogDictionary.find(e => e.type === LogType.ACHIEVEMENTS_CHANGE)?.icon ??
 			'QuestionCircle';
 		const game = games.find((g: Game) => g.id === log.gameId);
-		const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
+		const onGameClick = () => game?.id && navigate(`/game/${game.id}`);
 
 		if (game)
 			return (

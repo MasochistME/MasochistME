@@ -29,6 +29,8 @@ export const useRaceById = (raceId?: string | null) => {
 		isError,
 	} = useQuery(
 		['masochist', 'race', raceId],
+		// We can disable non-null assertion because of "enabled"
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		() => sdk.getRaceById({ raceId: raceId! }),
 		{ enabled: !!raceId },
 	);

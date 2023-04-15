@@ -52,15 +52,15 @@ const BadgesTileViewBoundary = () => {
 
 			return (
 				<Section
+					width="35rem"
 					maxWidth="100%"
-					width="350px"
 					key={`game-${game.gameId}-badges`}
 					anchorId={String(game.gameId)}
 					title={
-						<Flex align gap={8}>
+						<StyledBadgeTitle>
 							<Icon icon={tierIcon} />
 							<Link to={`/game/${game.gameId}`}>{game.gameTitle}</Link>
-						</Flex>
+						</StyledBadgeTitle>
 					}
 					content={
 						<Flex column gap={8}>
@@ -79,8 +79,10 @@ const BadgesTileViewSkeleton = () => (
 		{new Array(9).fill(null).map(() => (
 			<Section
 				maxWidth="100%"
-				width="350px"
-				title={<Skeleton variant="text" width="100px" height="24px" />}
+				width="35rem"
+				title={
+					<Skeleton variant="text" width="10rem" height="var(--size-24)" />
+				}
 				content={<BadgeTile.Skeleton />}
 			/>
 		))}
@@ -91,6 +93,12 @@ const StyledBadgesList = styled(Flex)`
 	flex-wrap: wrap;
 	align-items: flex-start;
 	justify-content: center;
-	gap: 16px;
+	gap: var(--size-16);
 	width: 100%;
+`;
+
+const StyledBadgeTitle = styled(Flex)`
+	align-items: center;
+	gap: var(--size-8);
+	font-size: var(--font-size-16);
 `;

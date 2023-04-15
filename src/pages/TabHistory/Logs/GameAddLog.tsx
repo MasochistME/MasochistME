@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { Game, Tier, LogGameAdd } from '@masochistme/sdk/dist/v1/types';
 
 import { useAllGames, useTiers } from 'sdk';
@@ -15,7 +15,7 @@ type Props = {
 
 export const GameAddLog = (props: Props): JSX.Element | null => {
 	const { log } = props;
-	const history = useHistory();
+	const navigate = useNavigate();
 
 	const { tiersData } = useTiers();
 	const { gamesData: games } = useAllGames();
@@ -29,7 +29,7 @@ export const GameAddLog = (props: Props): JSX.Element | null => {
 	) as IconType;
 
 	const onGameClick = () => {
-		history.push(`/game/${log.gameId}`);
+		navigate(`/game/${log.gameId}`);
 	};
 
 	return (

@@ -1,7 +1,7 @@
 import { Tab as MUITab, Tabs as MUITabs } from '@mui/material';
 import styled from 'styled-components';
 
-import { fonts, ColorTokens, useTheme } from 'styles';
+import { ColorTokens, useTheme } from 'styles';
 
 /**
  * A single tab.
@@ -20,8 +20,8 @@ export const Tab = (props: StyledTabProps) => {
 const StyledMUITab = styled(MUITab)<{ colortokens: ColorTokens }>`
 	text-transform: uppercase;
 	font-weight: bold;
-	font-family: ${fonts.Dosis};
-	font-size: 18px;
+	font-family: var(--font-dosis);
+	font-size: var(--font-size-18);
 	color: ${({ colortokens }) => colortokens['core-secondary-text']};
 	background-color: ${({ colortokens }) => colortokens['core-primary-bg']}99;
 	&.Mui-selected {
@@ -61,7 +61,7 @@ const StyledMUITabs = styled(MUITabs)<{ colortokens: ColorTokens }>`
 		display: flex;
 		justify-content: center;
 		background-color: transparent;
-		height: 4px;
+		height: var(--size-4);
 	}
 	.MuiTabs-indicatorSpan {
 		max-width: 100;

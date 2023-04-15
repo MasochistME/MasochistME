@@ -24,10 +24,7 @@ enum Columns {
 export const BadgesTableView = () => (
 	<QueryBoundary
 		fallback={
-			<Table.Skeleton
-				columns={columns}
-				style={{ height: '36px', margin: '6px 0' }}
-			/>
+			<Table.Skeleton columns={columns} style={{ margin: '0.6rem 0' }} />
 		}
 		errorFallback={<ErrorFallback />}>
 		<BadgesTableViewBoundary />
@@ -70,7 +67,7 @@ const columns: TableColumn<Badge>[] = [
 		title: Columns.POINTS,
 		value: (badge: Badge) => badge.points,
 		render: (badge: Badge) => <TableCell content={badge.points} />,
-		style: { width: '20px' },
+		style: { width: '2rem' },
 	},
 	{
 		key: Columns.GAME,

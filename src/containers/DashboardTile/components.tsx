@@ -19,9 +19,9 @@ const StyledLogCompact = styled.div`
 	display: flex;
 	align-items: center;
 	width: 100%;
-	margin: 0px;
+	margin: 0;
 	box-sizing: border-box;
-	gap: 8px;
+	gap: var(--size-8);
 	&(:Icon) {
 		color: red;
 	}
@@ -58,6 +58,6 @@ LogCompact.Block = styled.div`
 	display: inline-block;
 	text-align: left;
 	& > * {
-		margin-right: 4px;
+		margin-right: var(--size-4);
 	}
 `;

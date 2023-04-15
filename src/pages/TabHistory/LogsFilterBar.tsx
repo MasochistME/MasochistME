@@ -29,7 +29,7 @@ export const LogsFilterBar = (): JSX.Element => {
 
 const StyledLogFilterBar = styled(Flex)`
 	width: 100%;
-	gap: 16px;
+	gap: var(--size-16);
 	flex-wrap: wrap;
 	@media (max-width: ${media.smallNetbooks}) {
 		justify-content: center;

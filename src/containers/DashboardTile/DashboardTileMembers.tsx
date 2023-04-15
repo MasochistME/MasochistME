@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 import { LogMemberJoin, LogType } from '@masochistme/sdk/dist/v1/types';
@@ -24,7 +24,7 @@ export const DashboardTileMembers = (props: Props) => {
 		<QueryBoundary
 			fallback={<Content content={members} />}
 			errorFallback={
-				<Content content={<ErrorFallback width="450px" maxWidth="100%" />} />
+				<Content content={<ErrorFallback width="45rem" maxWidth="100%" />} />
 			}>
 			<DashboardTileMembersBoundary {...props} />
 		</QueryBoundary>
@@ -32,7 +32,7 @@ export const DashboardTileMembers = (props: Props) => {
 };
 
 const DashboardTileMembersBoundary = (props: Props) => {
-	const history = useHistory();
+	const navigate = useNavigate();
 	const { membersData } = useCuratorMembers();
 	const { data: logs = [] } = useLogs({
 		limit: NUMBER_OF_MEMBERS,
@@ -41,7 +41,7 @@ const DashboardTileMembersBoundary = (props: Props) => {
 	});
 
 	const onMemberClick = (memberId?: string) => {
-		if (memberId) history.push(`/profile/${memberId}`);
+		if (memberId) navigate(`/profile/${memberId}`);
 	};
 
 	const memberLogs = logs.filter(
@@ -74,7 +74,7 @@ type ContentProps = Props & { content: React.ReactNode };
 const Content = ({ content, ...props }: ContentProps) => (
 	<Section
 		width="100%"
-		maxWidth="450px"
+		maxWidth="45rem"
 		title="New members"
 		content={<StyledNewMembers>{content}</StyledNewMembers>}
 		{...props}
@@ -83,10 +83,10 @@ const Content = ({ content, ...props }: ContentProps) => (
 
 const StyledNewMembers = styled(Flex)`
 	justify-content: center;
-	gap: 16px;
+	gap: var(--size-16);
 	flex-wrap: wrap;
 	@media (max-width: ${media.smallNetbooks}) {
-		gap: 4px;
+		gap: var(--size-4);
 	}
 	@media (max-width: ${media.bigPhones}) {
 		display: flex;

@@ -1,9 +1,9 @@
 import React from 'react';
 import {
 	BrowserRouter as Router,
-	Switch,
+	Routes,
 	Route,
-	Redirect,
+	Navigate,
 } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -36,69 +36,98 @@ export const App = (): JSX.Element => {
 					<Navigation />
 					<Content colorTokens={colorTokens}>
 						<SubHeader />
-						<Switch>
-							<Route exact path="/">
-								<Boundary>
-									<TabHome />
-								</Boundary>
-							</Route>
-							<Route exact path="/home">
-								<Redirect to="/" />
-							</Route>
-							<Route exact path="/games">
-								<Boundary>
-									<TabGames />
-								</Boundary>
-							</Route>
-							<Route exact path="/leaderboards">
-								<Boundary>
-									<TabLeaderboards />
-								</Boundary>
-							</Route>
-							<Route exact path="/history">
-								<Boundary>
-									<TabHistory />
-								</Boundary>
-							</Route>
-							<Route exact path="/support">
-								<Boundary>
-									<TabSupport />
-								</Boundary>
-							</Route>
-							<Route exact path="/badges">
-								<Boundary>
-									<TabBadges />
-								</Boundary>
-							</Route>
-							<Route exact path="/events">
-								<Boundary>
-									<TabEvents />
-								</Boundary>
-							</Route>
-							<Route exact path="/profile/:id">
-								<Boundary>
-									<TabProfile />
-								</Boundary>
-							</Route>
-							<Route exact path="/game/:id">
-								<Boundary>
-									<TabGame />
-								</Boundary>
-							</Route>
-							<Route exact path="/join">
-								<Boundary>
-									<TabJoin />
-								</Boundary>
-							</Route>
-							<Route exact path="/changelog">
-								<Boundary>
-									<TabChangelog />
-								</Boundary>
-							</Route>
-							<Route>
-								<NotFound />
-							</Route>
-						</Switch>
+						<Routes>
+							<Route
+								path="/"
+								element={
+									<Boundary>
+										<TabHome />
+									</Boundary>
+								}
+							/>
+							<Route path="/home" element={<Navigate to="/" />} />
+							<Route
+								path="/games"
+								element={
+									<Boundary>
+										<TabGames />
+									</Boundary>
+								}
+							/>
+							<Route
+								path="/leaderboards"
+								element={
+									<Boundary>
+										<TabLeaderboards />
+									</Boundary>
+								}
+							/>
+							<Route
+								path="/history"
+								element={
+									<Boundary>
+										<TabHistory />
+									</Boundary>
+								}
+							/>
+							<Route
+								path="/support"
+								element={
+									<Boundary>
+										<TabSupport />
+									</Boundary>
+								}
+							/>
+							<Route
+								path="/badges"
+								element={
+									<Boundary>
+										<TabBadges />
+									</Boundary>
+								}
+							/>
+							<Route
+								path="/events"
+								element={
+									<Boundary>
+										<TabEvents />
+									</Boundary>
+								}
+							/>
+							<Route
+								path="/profile/:id"
+								element={
+									<Boundary>
+										<TabProfile />
+									</Boundary>
+								}
+							/>
+							<Route
+								path="/game/:id"
+								element={
+									<Boundary>
+										<TabGame />
+									</Boundary>
+								}
+							/>
+							<Route
+								path="/join"
+								element={
+									<Boundary>
+										<TabJoin />
+									</Boundary>
+								}
+							/>
+							<Route
+								path="/changelog"
+								element={
+									<Boundary>
+										<TabChangelog />
+									</Boundary>
+								}
+							/>
+							<Route element={<NotFound />} />
+						</Routes>
 					</Content>
 				</Flex>
 				<Footer />
@@ -121,7 +150,7 @@ const PageWrapper = styled(Flex)`
 `;
 
 const Content = styled.div<{ colorTokens: ColorTokens }>`
-	width: 1500px;
+	width: 150rem;
 	max-width: 100vw;
 	position: relative;
 	box-sizing: border-box;

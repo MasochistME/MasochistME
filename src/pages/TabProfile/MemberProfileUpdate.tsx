@@ -50,7 +50,7 @@ export const MemberProfileUpdate = (props: Props) => {
 	return (
 		<StyledMemberProfileUpdate>
 			<Tooltip content={lastUpdateDetails}>
-				<Flex column alignItems="flex-end" fontSize="0.8em">
+				<Flex column alignItems="flex-end" fontSize="var(--font-size-9)">
 					<span>Last updated:</span>
 					<span style={{ fontStyle: 'italic' }}>{lastUpdate}</span>
 				</Flex>
@@ -73,7 +73,7 @@ export const MemberProfileUpdate = (props: Props) => {
 
 const StyledMemberProfileUpdate = styled(Flex)`
 	align-items: center;
-	gap: 12px;
+	gap: var(--size-12);
 	@media (max-width: ${media.tablets}) {
 		display: none;
 	}

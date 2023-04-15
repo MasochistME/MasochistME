@@ -52,8 +52,10 @@ export const TableHeader = <T extends string>(props: Props<T>) => {
 
 const StyledTableHeader = styled.thead<{ colorTokens: ColorTokens }>`
 	font-weight: 600;
+	font-size: var(--font-size-14);
+	line-height: var(--size-16);
 	text-align: center;
-	height: 50px;
+	height: var(--size-50);
 	background-color: ${({ colorTokens }) => colorTokens['core-secondary-bg']};
 	tr > td {
 		text-align: center;
@@ -73,7 +75,7 @@ const StyledTableSortLabel = styled(TableSortLabel)<{
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	height: 50px;
+	height: var(--size-50);
 	.Mui-active,
 	&:hover {
 		color: ${({ colorTokens }) => colorTokens['semantic-color--active']};

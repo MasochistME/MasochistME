@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
 import { Icon, Menu, QueryBoundary, Size, Warning } from 'components';
-import { ColorTokens, fonts, media, useTheme } from 'styles';
+import { ColorTokens, media, useTheme } from 'styles';
 import { useRacesFromSeason } from 'hooks';
 import { useEffect } from 'react';
 
 type Props = {
 	selectedSeasonId: string | null;
-	setSelectedSeasonId: (selectedSeason: string) => void;
+	setSelectedSeasonId: (selectedSeason: string | null) => void;
 };
 export const SeasonSelect = (props: Props) => {
 	const { colorTokens } = useTheme();
@@ -18,9 +18,10 @@ export const SeasonSelect = (props: Props) => {
 					<Menu
 						anchorElement={() => (
 							<StyledSeasonTitle colorTokens={colorTokens}>
-								Loading seasons...
+								Select a season...
 								<StyledIcon
 									icon="ChevronDown"
+									// TODO This sizing does not work, fix
 									size={Size.TINY}
 									isOpen={false}
 								/>
@@ -42,7 +43,9 @@ const SeasonSelectBoundary = (props: Props) => {
 		useRacesFromSeason(selectedSeasonId);
 
 	useEffect(() => {
-		const activeSeasonId = String(seasonsActive[0]?._id);
+		const activeSeasonId = seasonsActive[0]
+			? String(seasonsActive[0]?._id)
+			: null;
 		setSelectedSeasonId(activeSeasonId);
 	}, [seasonsActive]);
 
@@ -79,11 +82,11 @@ const SeasonSelectBoundary = (props: Props) => {
 		<Menu
 			options={options}
 			setSelectedOption={setSelectedSeasonId}
-			placeholder="Select season..."
+			placeholder="Select a season..."
 			loadElement="Loading seasons..."
 			anchorElement={(isOpen: boolean) => (
 				<StyledSeasonTitle colorTokens={colorTokens}>
-					{season?.name ?? 'Loading seasons...'}
+					{season?.name ?? 'Select a season...'}
 					<StyledIcon icon="ChevronDown" size={Size.TINY} isOpen={isOpen} />
 				</StyledSeasonTitle>
 			)}
@@ -102,19 +105,19 @@ const StyledSelectWrapper = styled.div`
 const StyledOption = styled.div`
 	display: flex;
 	align-items: center;
-	gap: 8px;
+	gap: var(--size-8);
 `;
 
 const StyledSeasonTitle = styled.h2<{ colorTokens: ColorTokens }>`
-	font-family: ${fonts.Dosis};
+	font-family: var(--font-dosis);
 	display: flex;
 	margin: 0;
 	align-items: center;
-	font-size: 24px;
+	font-size: var(--font-size-20);
 	text-align: left;
-	gap: 16px;
-	padding: 8px 16px;
-	border-radius: 64px;
+	gap: var(--size-16);
+	padding: var(--size-6) var(--size-12);
+	border-radius: var(--border-radius-64);
 	background-color: ${({ colorTokens }) =>
 		colorTokens['semantic-color--interactive']};
 `;

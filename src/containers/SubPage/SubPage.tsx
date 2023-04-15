@@ -20,9 +20,9 @@ const StyledSubPage = styled(Flex)`
 	flex: 1 1 auto;
 	flex-direction: row;
 	align-items: flex-start;
-	padding: 16px;
+	padding: var(--size-16);
 	width: 100%;
-	gap: 16px;
+	gap: var(--size-16);
 	box-sizing: border-box;
 
 	@media (max-width: ${media.netbooks}) {
@@ -31,6 +31,6 @@ const StyledSubPage = styled(Flex)`
 	}
 
 	@media (max-width: ${media.smallTablets}) {
-		padding: 8px;
+		padding: var(--size-8);
 	}
 `;

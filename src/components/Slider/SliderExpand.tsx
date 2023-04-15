@@ -38,10 +38,10 @@ const StyledWrapper = styled.div<{ colorTokens: ColorTokens }>`
 	display: flex;
 	align-items: center;
 	background-color: ${({ colorTokens }) => colorTokens['core-extra-bg']};
-	padding: 4px;
-	border-radius: 32px;
+	padding: var(--size-4);
+	border-radius: var(--border-radius-32);
 	&.expanded {
-		gap: 4px;
+		gap: var(--size-4);
 	}
 `;
 
@@ -54,7 +54,7 @@ const StyledExpand = styled.div`
 
 	&.expanded {
 		visibility: visible;
-		width: 200px;
+		width: 20rem;
 		opacity: 1;
 	}
 `;

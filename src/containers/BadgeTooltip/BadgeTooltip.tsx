@@ -26,14 +26,14 @@ export const BadgeTooltip = (props: Props) => {
 			content={
 				badge ? (
 					<StyledTooltip column>
-						<div style={{ gap: '4px' }}>
+						<div style={{ gap: 'var(--size-4)' }}>
 							<span style={{ fontWeight: 'bold' }}>{gameTitle}</span>
 							<span> - </span>
 							<span>
 								{badge.name} ({badge.points} pts)
 							</span>
 						</div>
-						<div style={{ maxWidth: '250px', fontStyle: 'italic' }}>
+						<div style={{ maxWidth: '25rem', fontStyle: 'italic' }}>
 							{badge.description}
 						</div>
 					</StyledTooltip>

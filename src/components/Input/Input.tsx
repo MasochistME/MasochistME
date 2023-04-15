@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { IconType } from 'assets/icons';
 import { Icon } from 'components/Icon';
-import { media, fonts, useTheme, ColorTokens } from 'styles';
+import { media, useTheme, ColorTokens } from 'styles';
 
 type Props<T extends string> = {
 	query: T;
@@ -29,7 +29,9 @@ export const Input = <T extends string>(props: Props<T>): JSX.Element => {
 	return (
 		<StyledInputWrapperExternal>
 			<StyledInputWrapperInternal colorTokens={colorTokens}>
-				{icon && <Icon icon="Search" padding="0 12px 0 14px" />}
+				{icon && (
+					<Icon icon="Search" padding="0 var(--size-12) 0 var(--size-14)" />
+				)}
 				<StyledInput
 					type="text"
 					placeholder={placeholder}
@@ -60,8 +62,9 @@ const StyledInputWrapperInternal = styled.div<{ colorTokens: ColorTokens }>`
 	justify-content: center;
 	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']}cc;
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
-	border: 2px solid ${({ colorTokens }) => colorTokens['semantic-color--idle']};
-	border-radius: 32px;
+	border: var(--size-2) solid
+		${({ colorTokens }) => colorTokens['semantic-color--idle']};
+	border-radius: var(--border-radius-32);
 	overflow: hidden;
 `;
 
@@ -78,22 +81,28 @@ const StyledInput = styled.input<{
 	hasIcon: boolean;
 }>`
 	flex: 1 1 auto;
-	height: 44px;
-	padding: 4px 12px;
-	font-size: 1.2em;
-	font-family: ${fonts.Raleway};
+	height: 3.5rem;
+	width: 25rem;
+	max-width: 25rem;
+	padding: var(--size-4) var(--size-12);
+	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
+	font-size: var(--font-size-16);
+	font-family: var(--font-raleway);
 	background-color: transparent;
-	border-top-right-radius: 32px;
-	border-bottom-right-radius: 32px;
+	border-top-right-radius: var(--size-32);
+	border-bottom-right-radius: var(--size-32);
 	border: none;
-	border-left: ${({ hasIcon }) => (hasIcon ? '2px solid transparent' : 'none')};
+	border-left: ${({ hasIcon }) =>
+		hasIcon ? 'var(--size-2) solid transparent' : 'none'};
+
 	box-sizing: border-box;
 	&:active,
 	&:focus {
 		border: none;
 		border-left: ${({ colorTokens, hasIcon }) =>
-			hasIcon ? `2px solid ${colorTokens['semantic-color--idle']}` : 'none'};
-		color: ${({ colorTokens }) => colorTokens['core-primary-text']};
+			hasIcon
+				? `var(--size-2) solid ${colorTokens['semantic-color--idle']}`
+				: 'none'};
 		outline: none;
 	}
 	&::placeholder {

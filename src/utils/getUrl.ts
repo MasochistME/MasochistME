@@ -1,5 +1,7 @@
 import { Badge } from '@masochistme/sdk/dist/v1/types';
 
+export const curatorURL = 'https://store.steampowered.com/curator/41289936';
+
 export const getGameThumbnail = (gameId?: number) => {
 	if (gameId)
 		return `https://cdn.akamai.steamstatic.com/steam/apps/${gameId}/header.jpg`;

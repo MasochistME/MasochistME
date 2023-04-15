@@ -142,8 +142,8 @@ const getAxiosError = (error: AxiosError) => {
 const StyledContent = styled.div`
 	display: flex;
 	flex-direction: column;
-	gap: 16px;
-	padding: 16px;
+	gap: var(--size-16);
+	padding: var(--size-16);
 
 	h2,
 	p {
@@ -154,10 +154,10 @@ const StyledContent = styled.div`
 const ErrorCode = styled.pre`
 	background-color: #333;
 	color: white;
-	padding: 8px;
+	padding: var(--size-8);
 	margin: 0;
 	code {
-		font-size: 11px;
+		font-size: var(--font-size-14);
 		text-align: left;
 	}
 `;

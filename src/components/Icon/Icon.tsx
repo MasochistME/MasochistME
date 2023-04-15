@@ -45,18 +45,18 @@ const StyledSVG = styled.span<{
 	spin: boolean;
 	shadowColor?: ColorTokens | string;
 }>`
-	min-height: ${({ size }) => size}px;
-	max-height: ${({ size }) => size}px;
+	min-height: ${({ size }) => size}rem;
+	max-height: ${({ size }) => size}rem;
 	svg {
 		${({ spin }) => spin && `animation: rotation 2s infinite linear;`}
 		display: block;
 		margin: 0 auto;
-		min-height: ${({ size }) => size}px;
-		max-height: ${({ size }) => size}px;
-		height: ${({ size }) => size}px;
-		width: ${({ size }) => size}px;
+		min-height: ${({ size }) => size}rem;
+		max-height: ${({ size }) => size}rem;
+		height: ${({ size }) => size}rem;
+		width: ${({ size }) => size}rem;
 		${({ shadowColor }) =>
-			shadowColor && `filter: drop-shadow(0 0 5px ${shadowColor});`}
+			shadowColor && `filter: drop-shadow(0 0 var(--size-5) ${shadowColor});`}
 		path {
 			fill: currentColor;
 		}

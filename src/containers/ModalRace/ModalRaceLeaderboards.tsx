@@ -12,7 +12,7 @@ import {
 	TableColumn,
 } from 'components';
 import { Podium, WinnerLink } from 'containers';
-import { fonts, media } from 'styles';
+import { media } from 'styles';
 import dayjs from 'dayjs';
 import { getMedal } from 'utils/getMedal';
 
@@ -40,10 +40,7 @@ export const ModalRaceLeaderboards = (props: Props) => {
 			fallback={
 				<Flex column width="100%" gap={16}>
 					<Podium.Skeleton />
-					<Table.Skeleton
-						columns={columns}
-						style={{ height: '36px', margin: '6px 0' }}
-					/>
+					<Table.Skeleton columns={columns} style={{ margin: '0.6rem 0' }} />
 				</Flex>
 			}
 			errorFallback={<ErrorFallback />}>
@@ -65,9 +62,9 @@ const LeaderboardsBoundary = (props: Props) => {
 			title: Columns.MEDAL,
 			value: (player: RacePlayer) => player?.place ?? 0,
 			render: (player: RacePlayer) => (
-				<span style={{ width: '50px' }}>{getMedal(player?.place)}</span>
+				<span style={{ width: '5rem' }}>{getMedal(player?.place)}</span>
 			),
-			style: { minWidth: '50px' },
+			style: { minWidth: '5rem' },
 		},
 		{
 			key: Columns.PLACE,
@@ -118,7 +115,7 @@ const LeaderboardsBoundary = (props: Props) => {
 					}
 				/>
 			),
-			style: { width: '100px' },
+			style: { width: '10rem' },
 		});
 
 	if (race?.type === RaceType.TIME_BASED)
@@ -137,7 +134,7 @@ const LeaderboardsBoundary = (props: Props) => {
 					}
 				/>
 			),
-			style: { width: '100px' },
+			style: { width: '10rem' },
 		});
 
 	return (
@@ -172,13 +169,13 @@ const StyledPlayerScore = styled.div`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	gap: 4px;
-	font-size: 1.3em;
+	gap: var(--size-4);
+	padding: var(--size-8);
+	font-size: var(--font-size-16);
+	font-family: var(--font-dosis);
 	font-weight: bold;
-	font-family: ${fonts.Dosis};
-	padding: 8px;
 	@media (max-width: ${media.tablets}) {
-		padding: 8px;
+		padding: var(--size-8);
 	}
 `;
 

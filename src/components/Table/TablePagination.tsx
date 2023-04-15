@@ -3,7 +3,7 @@ import TablePaginationUnstyled, {
 } from '@mui/base/TablePaginationUnstyled';
 import styled from 'styled-components';
 
-import { useTheme, ColorTokens, fonts } from 'styles';
+import { useTheme, ColorTokens } from 'styles';
 import { TableRow } from './types';
 
 type Props = {
@@ -54,7 +54,7 @@ const StyledTablePaginationFooter = styled.tfoot<{
 }>`
 	font-weight: 600;
 	text-align: center;
-	height: 50px;
+	height: var(--size-50);
 	background-color: ${({ colorTokens }) => colorTokens['core-secondary-bg']};
 	tr {
 	}
@@ -68,11 +68,11 @@ const StyledTablePagination = styled(TablePaginationUnstyled)<{
 	}
 
 	& .${classes.toolbar} {
-		padding: 0 16px;
+		padding: 0 var(--size-16);
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
-		gap: 10px;
+		gap: var(--size-10);
 
 		@media (min-width: 768px) {
 			flex-direction: row;
@@ -88,14 +88,14 @@ const StyledTablePagination = styled(TablePaginationUnstyled)<{
 	}
 
 	& .${classes.select} {
-		padding: 4px;
-		border: 2px solid
+		padding: var(--size-4);
+		border: var(--size-2) solid
 			${({ colorTokens }) => colorTokens['semantic-color--idle']};
-		border-radius: 50px;
+		border-radius: var(--border-radius-50);
 		background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']};
 		color: ${({ colorTokens }) => colorTokens['core-primary-text']};
-		font-family: ${fonts.Raleway};
-		font-size: 1.2em;
+		font-family: var(--font-raleway);
+		font-size: var(--font-size-16);
 		cursor: pointer;
 
 		&:hover {
@@ -104,7 +104,7 @@ const StyledTablePagination = styled(TablePaginationUnstyled)<{
 		}
 
 		&:focus {
-			outline: 1px solid
+			outline: var(--size-1) solid
 				${({ colorTokens }) => colorTokens['semantic-color--active']};
 		}
 	}
@@ -114,16 +114,16 @@ const StyledTablePagination = styled(TablePaginationUnstyled)<{
 	}
 
 	& .${classes.actions} {
-		padding: 2px;
+		padding: var(--size-2);
 		text-align: center;
 	}
 
 	& .${classes.actions} > button {
-		margin: 0 8px;
-		padding: 6px 12px;
+		margin: 0 var(--size-8);
+		padding: var(--size-6) var(--size-12);
 		border: transparent;
-		border-radius: 2px;
-		font-size: 1.2em;
+		border-radius: var(--border-radius-2);
+		font-size: var(--font-size-16);
 		cursor: pointer;
 		color: black;
 		background-color: ${({ colorTokens }) =>
@@ -135,7 +135,7 @@ const StyledTablePagination = styled(TablePaginationUnstyled)<{
 		}
 
 		&:focus {
-			outline: 1px solid
+			outline: var(--size-1) solid
 				${({ colorTokens }) => colorTokens['semantic-color--active']};
 		}
 	}

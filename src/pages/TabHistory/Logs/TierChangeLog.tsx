@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { Game, Tier, LogGameTierChange } from '@masochistme/sdk/dist/v1/types';
 
 import { useAllGames, useTiers } from 'sdk';
@@ -13,7 +13,7 @@ type Props = { log: LogGameTierChange };
 
 export const TierChangeLog = (props: Props): JSX.Element | null => {
 	const { log } = props;
-	const history = useHistory();
+	const navigate = useNavigate();
 
 	const { tiersData } = useTiers();
 	const { gamesData } = useAllGames();
@@ -22,7 +22,7 @@ export const TierChangeLog = (props: Props): JSX.Element | null => {
 	const gameRating = tiersData.find((tier: Tier) => tier.id === game?.tier);
 	const isDemoted = Number(log.oldTier) > Number(log.newTier);
 
-	const onGameClick = () => game?.id && history.push(`/game/${game.id}`);
+	const onGameClick = () => game?.id && navigate(`/game/${game.id}`);
 
 	if (!game) return null;
 

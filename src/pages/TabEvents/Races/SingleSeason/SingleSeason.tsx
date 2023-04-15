@@ -99,7 +99,7 @@ export const SingleSeason = (props: SingleSeasonProps) => {
 };
 
 const StyledSeasonWrapper = styled(Flex)`
-	gap: 16px;
+	gap: var(--size-16);
 	width: 100%;
 `;
 
@@ -108,9 +108,9 @@ const StyledRacesTop = styled(Flex)<{
 }>`
 	flex-direction: column;
 	background-color: ${({ colorTokens }) => colorTokens['core-tertiary-bg']}cc;
-	border-radius: 16px;
-	padding: 16px;
-	gap: 16px;
+	border-radius: var(--border-radius-16);
+	padding: var(--size-16);
+	gap: var(--size-16);
 `;
 
 const StyledRacesList = styled(Flex)`

@@ -1,10 +1,10 @@
 import React from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 
 import { Icon } from 'components';
 import { useAppContext } from 'context';
-import { fonts, media, useTheme, ColorTokens } from 'styles';
+import { media, useTheme, ColorTokens } from 'styles';
 import { tabs, Tab } from 'configuration/tabs';
 
 export const Navigation = (): JSX.Element => {
@@ -29,13 +29,13 @@ const NavigationItem = (props: Props): JSX.Element => {
 
 	const { activeTab } = useAppContext();
 	const { colorTokens } = useTheme();
-	const history = useHistory();
+	const navigate = useNavigate();
 
 	const isActive = tab.id === activeTab;
 
 	const onTabOpen = (): void => {
 		if (tab.external) window.open(tab.link);
-		else history.push(`/${tab.link}`);
+		else navigate(`/${tab.link}`);
 	};
 
 	return (
@@ -57,14 +57,14 @@ const StyledNavigation = styled.div<{
 	width: 100%;
 	grid-template-columns: repeat(${({ nrOfTabs }) => nrOfTabs}, 1fr);
 	background-color: ${({ colorTokens }) => colorTokens['core-secondary-bg']};
-	box-shadow: 0 10px 10px -10px ${({ colorTokens }) => colorTokens['common-color--shadow']};
+	box-shadow: 0 var(--size-10) var(--size-10) -1rem ${({ colorTokens }) => colorTokens['common-color--shadow']};
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
-	font-family: ${fonts.Raleway};
-	font-size: 0.9em;
+	font-family: var(--font-raleway);
+	font-size: var(--font-size-11);
 	text-transform: uppercase;
-	letter-spacing: 2px;
+	letter-spacing: 0.15rem;
 	position: sticky;
-	top: 0px;
+	top: 0;
 	z-index: 1000;
 	list-style-type: none;
 `;
@@ -83,13 +83,10 @@ const StyledTabItem = styled.div.attrs((props: NavItemProps) => {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	gap: 8px;
-	padding: 24px 0;
-	border-right: 3px solid
+	gap: var(--size-8);
+	padding: var(--size-16) 0;
+	border-right: var(--size-3) solid
 		${({ colorTokens }) => colorTokens['element-color--header-bg']};
-	height: 100%;
-	max-height: 90px;
-	box-sizing: border-box;
 
 	&:hover {
 		background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']};
@@ -97,8 +94,7 @@ const StyledTabItem = styled.div.attrs((props: NavItemProps) => {
 	}
 
 	@media (max-width: ${media.tablets}) {
-		padding: 12px 0;
-		max-height: 40px;
+		padding: var(--size-12) 0;
 	}
 `;
 

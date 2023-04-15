@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { fonts, useTheme, ColorTokens } from 'styles';
+import { useTheme, ColorTokens } from 'styles';
 import { useGames } from 'sdk';
 import { getGameThumbnail } from 'utils';
 import { Section, SectionProps } from 'containers';
@@ -60,7 +60,7 @@ const DashboardTileSaleBoundary = (props: Props) => {
 export const StyledSectionSale = styled(Flex)`
 	width: 100%;
 	flex-wrap: wrap;
-	gap: 8px;
+	gap: var(--size-8);
 `;
 
 export const StyledGameSaleTile = styled.a<{ colorTokens: ColorTokens }>`
@@ -70,11 +70,12 @@ export const StyledGameSaleTile = styled.a<{ colorTokens: ColorTokens }>`
 	background-size: cover;
 	background-repeat: no-repeat;
 	box-sizing: border-box;
-	min-width: 200px;
-	height: 96px;
-	border: 3px solid ${({ colorTokens }) => colorTokens['core-tertiary-bg']};
+	min-width: 20rem;
+	height: 9.6rem;
+	border: var(--size-3) solid
+		${({ colorTokens }) => colorTokens['core-tertiary-bg']};
 	&:hover {
-		box-shadow: 0 0 10px
+		box-shadow: 0 0 var(--size-10)
 			${({ colorTokens }) => colorTokens['core-secondary-bg']};
 	}
 `;
@@ -85,12 +86,13 @@ export const SalePercentage = styled.span<{ colorTokens: ColorTokens }>`
 	justify-content: center;
 	width: 35%;
 	height: 40%;
-	font-family: ${fonts.Dosis};
+	font-family: var(--font-dosis);
 	font-weight: bold;
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	background-color: ${({ colorTokens }) => colorTokens['core-secondary-bg']};
-	border-left: 3px solid ${({ colorTokens }) => colorTokens['core-tertiary-bg']};
-	border-bottom: 3px solid
+	border-left: var(--size-3) solid
 		${({ colorTokens }) => colorTokens['core-tertiary-bg']};
-	font-size: 1.5em;
+	border-bottom: var(--size-3) solid
+		${({ colorTokens }) => colorTokens['core-tertiary-bg']};
+	font-size: var(--font-size-20);
 `;

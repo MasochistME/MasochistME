@@ -23,7 +23,7 @@ export const TabHistory = (): JSX.Element => {
 					<LogsList />
 				</QueryBoundary>
 			</StyledLogsList>
-			<Info isDesktopOnly width="100%" maxWidth="450px" />
+			<Info isDesktopOnly width="100%" maxWidth="45rem" />
 		</SubPage>
 	);
 };
@@ -65,8 +65,8 @@ const StyledLogsList = styled(Flex)`
 const StyledLogTypes = styled(Flex)`
 	flex-direction: column;
 	align-items: flex-start;
-	gap: 8px;
-	margin-left: 12px;
-	line-height: 1.5em;
+	gap: var(--size-8);
+	margin-left: var(--size-12);
+	line-height: var(--size-15);
 	text-align: left;
 `;

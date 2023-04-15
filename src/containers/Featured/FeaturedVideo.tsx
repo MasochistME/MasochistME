@@ -57,7 +57,7 @@ export const FeaturedVideo = (props: Props) => {
 					)}
 				</Flex>
 			</h3>
-			<Flex gap={4}>
+			<StyledDetails>
 				{!hideGame &&
 					title &&
 					(featured.gameId ? (
@@ -67,14 +67,14 @@ export const FeaturedVideo = (props: Props) => {
 							{title}
 						</a>
 					) : !hideGame ? (
-						title
+						<span style={{ fontWeight: 600 }}>{title}</span>
 					) : null)}
 				{!hideDescription && (
-					<p style={{ fontStyle: 'italic', textAlign: 'left' }}>
+					<span style={{ fontStyle: 'italic' }}>
 						{featured.description ? `● ${featured.description}` : null}
-					</p>
+					</span>
 				)}
-			</Flex>
+			</StyledDetails>
 			{isCompact && (
 				<p style={{ lineHeight: 0, height: 0, opacity: 0 }}>
 					This is a very dirty hack to make this work. If I don't put this line
@@ -102,7 +102,7 @@ export const FeaturedVideo = (props: Props) => {
 };
 
 const StyledFeaturedVideoWrapper = styled(Flex)`
-	gap: 8px;
+	gap: var(--size-8);
 	height: auto;
 	p,
 	h3 {
@@ -113,7 +113,7 @@ const StyledFeaturedVideoWrapper = styled(Flex)`
 const StyledFeaturedVideo = styled.div`
 	position: relative;
 	padding-bottom: 56.25%;
-	padding-top: 30px;
+	padding-top: var(--size-30);
 	height: 0;
 	overflow: hidden;
 	iframe {
@@ -122,5 +122,16 @@ const StyledFeaturedVideo = styled.div`
 		left: 0;
 		width: 100%;
 		height: 100%;
+	}
+`;
+
+const StyledDetails = styled.div`
+	display: inline-block;
+	line-height: var(--size-15);
+	width: 100%;
+	text-align: left;
+	& > * {
+		margin-right: var(--size-4);
+		vertical-align: middle;
 	}
 `;

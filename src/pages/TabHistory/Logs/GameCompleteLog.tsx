@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import {
 	LogComplete,
 	Game,
@@ -20,7 +20,7 @@ type Props = {
 
 export const GameCompleteLog = (props: Props): JSX.Element | null => {
 	const { log } = props;
-	const history = useHistory();
+	const navigate = useNavigate();
 
 	const { membersData } = useAllMembers();
 	const { tiersData } = useTiers();
@@ -34,10 +34,10 @@ export const GameCompleteLog = (props: Props): JSX.Element | null => {
 	const iconGameRating = (gameRating?.icon ?? 'QuestionCircle') as IconType;
 
 	const onMemberClick = () => {
-		if (member?.steamId) history.push(`/profile/${member.steamId}`);
+		if (member?.steamId) navigate(`/profile/${member.steamId}`);
 	};
 	const onGameClick = () => {
-		if (game?.id) history.push(`/game/${game.id}`);
+		if (game?.id) navigate(`/game/${game.id}`);
 	};
 
 	return (

@@ -77,16 +77,17 @@ const GameThumbnail = ({ gameId }: Pick<Props, 'gameId'>) => {
 			<StyledGameHiddenInfo column align colorTokens={colorTokens}>
 				<Icon icon={getTierIcon(game.tier, tiersData)} size={Size.MICRO} />
 				<h3>{game.title}</h3>
-				<p style={{ margin: '0', fontSize: '0.85em' }}>{game.description}</p>
+				<p>{game.description}</p>
 			</StyledGameHiddenInfo>
 		</StyledGameThumbnail>
 	);
 };
 
 const StyledGameTile = styled(Flex)<{ colorTokens: ColorTokens }>`
-	width: 300px;
-	height: 145px;
-	border: 3px solid ${({ colorTokens }) => colorTokens['core-tertiary-bg']};
+	width: 30rem;
+	height: 14.5rem;
+	border: var(--size-3) solid
+		${({ colorTokens }) => colorTokens['core-tertiary-bg']};
 	box-sizing: border-box;
 `;
 
@@ -99,21 +100,21 @@ const StyledGameThumbnail = styled.div.attrs(({ src }: { src: string }) => {
 })<{ src: string }>`
 	width: 100%;
 	height: 100%;
-	background-size: 300px;
+	background-size: 30rem;
 	background-position: center;
 	background-repeat: no-repeat;
 
 	cursor: pointer;
 	transition: background-size ease-out 0.4s;
 	&:hover {
-		background-size: 400px;
+		background-size: 40rem;
 	}
 `;
 
 const StyledGameHiddenInfo = styled(Flex)<{ colorTokens: ColorTokens }>`
 	width: 100%;
 	height: 100%;
-	padding: 4px;
+	padding: var(--size-4);
 	box-sizing: border-box;
 	justify-content: space-around;
 	overflow: hidden;
@@ -121,8 +122,13 @@ const StyledGameHiddenInfo = styled(Flex)<{ colorTokens: ColorTokens }>`
 	background-color: rgba(0, 0, 0, 0);
 	color: ${({ colorTokens }) => colorTokens['core-tertiary-text']};
 	transition: background-color linear 0.4s, opacity 0.3s;
-
 	text-align: center;
+
+	p {
+		margin: 0;
+		font-size: var(--font-size-12);
+		line-height: var(--size-14);
+	}
 
 	&:hover {
 		opacity: 1;

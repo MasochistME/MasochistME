@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { Game, GameLeaderboards, Tier } from '@masochistme/sdk/dist/v1/types';
 
 import { useTiers, useLeaderboardsGames } from 'sdk';
@@ -32,10 +32,10 @@ Cell.Tier = (props: Props) => {
 Cell.Title = (props: Props) => {
 	const { game } = props;
 	const { colorTokens } = useTheme();
-	const history = useHistory();
+	const navigate = useNavigate();
 
 	const onGameClick = (game: Game) => {
-		if (game?.id) history.push(`/game/${game.id}`);
+		if (game?.id) navigate(`/game/${game.id}`);
 	};
 	return (
 		<Flex align textAlign="left" gap={4}>

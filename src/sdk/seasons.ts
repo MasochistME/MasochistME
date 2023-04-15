@@ -31,6 +31,8 @@ export const useSeasonLeaderboards = ({ seasonId }: { seasonId?: string }) => {
 
 	return useQuery(
 		['masochist', 'season', seasonId],
+		// We can disable non-null assertion because of "enabled"
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		() => sdk.getSeasonLeaderboardsById({ seasonId: seasonId! }),
 		{ enabled: !!seasonId },
 	);

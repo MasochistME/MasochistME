@@ -9,23 +9,24 @@ import { Tooltip } from '../Tooltip';
 type Props = {
 	title?: string;
 	size?: Size;
-	width?: string;
-	height?: string;
+	width?: string; // unused
+	height?: string; // unused
 };
 
 export const BrokenImage = (props: Props) => {
-	const { title, size, width, height } = props;
+	const { title, size } = props;
 
 	return (
 		<Tooltip content={title ?? 'I could not load :('}>
-			<StyledBrokenImg fontSize={size ? size / 2 : '16px'}>
+			<StyledBrokenImg size={size}>
 				<Icon icon="WarningTriangle" size={size} />
 			</StyledBrokenImg>
 		</Tooltip>
 	);
 };
 
-const StyledBrokenImg = styled(Flex)`
+const StyledBrokenImg = styled(Flex)<{ size?: Size }>`
+	font-size: ${({ size }) => (size ? `${size / 2}rem` : 'var(--font-size-16)')};
 	box-sizing: border-box;
 	align-items: center;
 	justify-content: center;

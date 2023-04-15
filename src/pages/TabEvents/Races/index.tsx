@@ -1,6 +1,13 @@
 import styled from 'styled-components';
 
-import { ErrorFallback, Flex, QueryBoundary, Loader, Icon } from 'components';
+import {
+	ErrorFallback,
+	Flex,
+	QueryBoundary,
+	Loader,
+	Icon,
+	Warning,
+} from 'components';
 import { Section, SectionProps } from 'containers';
 
 import { SingleSeason } from './SingleSeason';
@@ -25,15 +32,15 @@ export const RacesPage = (): JSX.Element => {
 					</QueryBoundary>
 				</Flex>
 				<Flex column gap={16}>
-					<RacesInfoBasic isDesktopOnly width="100%" maxWidth="450px" />
-					<RacesInfoPoints isDesktopOnly width="100%" maxWidth="450px" />
-					<RacesInfoJoin isDesktopOnly width="100%" maxWidth="450px" />
+					<RacesInfoBasic isDesktopOnly width="100%" maxWidth="45rem" />
+					<RacesInfoPoints isDesktopOnly width="100%" maxWidth="45rem" />
+					<RacesInfoJoin isDesktopOnly width="100%" maxWidth="45rem" />
 				</Flex>
 			</Flex>
 			<Flex justify alignItems="flex-start" flexWrap="wrap" gap={16}>
-				<RacesInfoBasic isMobileOnly width="30%" minWidth="300px" />
-				<RacesInfoPoints isMobileOnly width="30%" minWidth="300px" />
-				<RacesInfoJoin isMobileOnly width="30%" minWidth="300px" />
+				<RacesInfoBasic isMobileOnly width="30%" minWidth="30rem" />
+				<RacesInfoPoints isMobileOnly width="30%" minWidth="30rem" />
+				<RacesInfoJoin isMobileOnly width="30%" minWidth="30rem" />
 			</Flex>
 		</StyledWrapper>
 	);
@@ -44,6 +51,10 @@ type Props = {
 };
 const SeasonBoundary = ({ selectedSeasonId }: Props) => {
 	const { season, races } = useRacesFromSeason(selectedSeasonId);
+	if (selectedSeasonId === null)
+		return (
+			<Warning description="There is no seasons active at the moment. Select one of the past races from the dropdown above." />
+		);
 	return <SingleSeason season={season} races={races} />;
 };
 
@@ -60,7 +71,12 @@ const RacesInfoBasic = (props: Partial<SectionProps>): JSX.Element => {
 						best possible score.
 					</div>
 					<div>There are two types of races:</div>
-					<ul style={{ margin: 0, paddingLeft: '24px', textAlign: 'left' }}>
+					<ul
+						style={{
+							margin: 0,
+							paddingLeft: 'var(--size-24)',
+							textAlign: 'left',
+						}}>
 						<li>
 							<span style={{ fontWeight: 600 }}>time based</span> - you have to
 							complete the game in the shortest time possible,
@@ -148,5 +164,5 @@ const StyledWrapper = styled.div`
 	flex-wrap: nowrap;
 	align-items: flex-start;
 	width: 100%;
-	gap: 16px;
+	gap: var(--size-16);
 `;

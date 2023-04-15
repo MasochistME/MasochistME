@@ -1,3 +1,4 @@
+import styled from 'styled-components';
 import { Flex } from 'components';
 
 type Props = {
@@ -17,13 +18,16 @@ export const TableCell = (props: Props): JSX.Element => {
 	} = props;
 
 	return (
-		<Flex
-			row
+		<StyledTableCell
 			alignItems={isCentered ? 'center' : 'inherit'}
 			justifyContent={isCentered ? 'center' : 'inherit'}
 			whiteSpace={isNoWrap ? 'nowrap' : 'inherit'}
 			{...style}>
 			{content}
-		</Flex>
+		</StyledTableCell>
 	);
 };
+
+const StyledTableCell = styled(Flex)`
+	font-size: var(--font-size-14);
+`;

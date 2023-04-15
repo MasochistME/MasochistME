@@ -55,14 +55,14 @@ const GameProfileFeaturedBoundary = (props: Props) => {
 };
 
 const StyledGameProfileFeaturedItem = styled.div<{ colorTokens: ColorTokens }>`
-	padding: 8px;
+	padding: var(--size-8);
 	background-color: ${({ colorTokens }) => colorTokens['semantic-color--idle']};
-	border-radius: 8px;
+	border-radius: var(--border-radius-8);
 	width: 100%;
-	max-width: 450px;
+	max-width: 45rem;
 `;
 const StyledGameProfileFeatured = styled(Flex)`
 	justify-content: center;
 	flex-wrap: wrap;
-	gap: 12px;
+	gap: var(--size-12);
 `;

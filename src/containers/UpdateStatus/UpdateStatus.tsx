@@ -10,7 +10,7 @@ export const UpdateStatus = (): JSX.Element => {
 	const { colorTokens } = useTheme();
 
 	return (
-		<HideOn media="smallNetbooks" flex="1 0 450px" display="flex">
+		<HideOn media="smallNetbooks" flex="1 0 45rem" display="flex">
 			<StyledUpdateStatus column align justify colorTokens={colorTokens}>
 				<QueryBoundary fallback={null}>
 					<UpdateStatusBoundary />
@@ -36,7 +36,7 @@ const UpdateStatusBoundary = () => {
 	return (
 		<ProgressBar
 			percentage={status?.updateProgress ?? 100}
-			style={{ height: '30px', width: '100%' }}
+			style={{ height: '3rem', width: '100%' }}
 			invert
 		/>
 	);
@@ -47,11 +47,11 @@ const StyledUpdateStatus = styled(Flex)<{ colorTokens: ColorTokens }>`
 		colorTokens['semantic-color--section-update--text']};
 	background-color: ${({ colorTokens }) =>
 		colorTokens['semantic-color--section-update--bg']};
-	flex: 1 0 450px;
+	flex: 1 0 45rem;
 `;
 
 const StyledUpdateStatusText = styled.h3`
 	text-align: center;
-	font-size: 18px;
+	font-size: var(--font-size-16);
 	font-family: 'Dosis', 'Raleway', Verdana, sans-serif;
 `;

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Flex } from 'components';
-import { fonts, media, useTheme, ColorTokens } from 'styles';
+import { media, useTheme, ColorTokens } from 'styles';
 import { ButtonsSocialMedia } from 'containers';
 import { Size } from 'components';
 import { Link } from 'react-router-dom';
@@ -43,17 +43,17 @@ export const Footer = () => {
 
 const StyledFooter = styled(Flex)<{ colorTokens: ColorTokens }>`
 	position: sticky;
-	bottom: 0px;
+	bottom: 0;
 	justify-self: flex-end;
 	justify-content: space-between;
 	width: 100%;
-	padding: 0px 24px;
-	box-shadow: 0 0 30px
+	padding: 0 var(--size-24);
+	box-shadow: 0 0 var(--size-30)
 		${({ colorTokens }) => colorTokens['common-color--shadow']};
 	background-color: ${({ colorTokens }) =>
 		colorTokens['element-color--header-bg']};
 	color: ${({ colorTokens }) => colorTokens['element-color--header-text']};
-	font-family: ${fonts.Raleway};
+	font-family: var(--font-raleway);
 	a {
 		color: ${({ colorTokens }) => colorTokens['semantic-color--link-normal']};
 	}
@@ -64,9 +64,10 @@ const StyledFooterText = styled.footer`
 	margin: 0;
 	text-align: left;
 	align-items: center;
-	gap: 8px;
+	gap: var(--size-8);
+	font-size: var(--font-size-12);
 
 	@media (max-width: ${media.bigPhones}) {
-		font-size: 1em;
+		font-size: var(--font-size-10);
 	}
 `;
