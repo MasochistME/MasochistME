@@ -13,24 +13,24 @@ import {
 	QueryBoundary,
 	Size,
 } from 'components';
-import { validateSteamName } from './utils';
+import { validateSteamUrl } from './utils';
 import { media, useTheme } from 'styles';
 import { ColorMap } from 'utils';
 
 type Props = {
-	steamName: string;
+	steamUrl: string;
 	isServerError: boolean;
 	setIsServerError: (isServerError: boolean) => void;
 };
 export const CandidateSummary = ({
-	steamName,
+	steamUrl,
 	// isServerError,
 	setIsServerError,
 }: Props) => {
 	const [isAlertOpen, setIsAlertOpen] = useState<boolean>(false);
 	const [serverError, setServerError] = useState<Error>();
 
-	const { error } = validateSteamName(steamName);
+	const { error } = validateSteamUrl(steamUrl);
 
 	const onReset = () => {
 		setIsServerError(false);
@@ -39,7 +39,7 @@ export const CandidateSummary = ({
 		setServerError(e);
 	};
 
-	if (!steamName.length) return null;
+	if (!steamUrl.length) return null;
 	return (
 		<QueryBoundary
 			fallback={<CandidateSummaryLoader />}
@@ -47,7 +47,7 @@ export const CandidateSummary = ({
 			displayError
 			onReset={onReset}
 			onError={onError}>
-			<CandidateSummaryBoundary steamName={steamName} />
+			<CandidateSummaryBoundary steamUrl={steamUrl} />
 			<Alert
 				severity="error"
 				message={error}
@@ -58,16 +58,16 @@ export const CandidateSummary = ({
 	);
 };
 
-const CandidateSummaryBoundary = ({ steamName }: Pick<Props, 'steamName'>) => {
+const CandidateSummaryBoundary = ({ steamUrl }: Pick<Props, 'steamUrl'>) => {
 	const { LOGO_URL_STATIC } = useTheme();
-	const { data = [] } = useCandidateSummary(steamName);
+	const { candidateData = [] } = useCandidateSummary(steamUrl);
 	const { tiersData } = useTiers();
 
-	const pointsSum = data?.reduce((sum, curr) => sum + curr.pts, 0);
+	const pointsSum = candidateData?.reduce((sum, curr) => sum + curr.pts, 0);
 	const tiersSum = tiersData.map(tier => ({
 		tier: tier.id,
 		icon: tier.icon,
-		pts: data.reduce(
+		pts: candidateData.reduce(
 			(sum, curr) => (curr.tier === tier.id ? sum + curr.pts : sum),
 			0,
 		),
@@ -91,7 +91,7 @@ const CandidateSummaryBoundary = ({ steamName }: Pick<Props, 'steamName'>) => {
 
 	const avatarUrl = null;
 
-	if (!data) return null;
+	if (!candidateData) return null;
 	return (
 		<Flex column>
 			<StyledCandidateHeader row align>
@@ -102,13 +102,10 @@ const CandidateSummaryBoundary = ({ steamName }: Pick<Props, 'steamName'>) => {
 						alt="Member avatar"
 						loading="lazy"
 					/>
-					<a
-						href={`https://steamcommunity.com/id/${steamName}`}
-						target="_blank"
-						rel="noopener noreferrer">
+					<a href={steamUrl} target="_blank" rel="noopener noreferrer">
 						<StyledCandidateUsername>
 							<Icon icon="Steam" marginRight="10px" />
-							{steamName}
+							{steamUrl}
 						</StyledCandidateUsername>
 					</a>
 				</Flex>

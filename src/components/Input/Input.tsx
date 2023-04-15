@@ -11,12 +11,21 @@ type Props<T extends string> = {
 	placeholder?: string;
 	icon?: IconType;
 	error?: string;
+	isFullWidth?: boolean;
 	onEnterPress?: () => void;
 };
 
 export const Input = <T extends string>(props: Props<T>): JSX.Element => {
 	const { colorTokens } = useTheme();
-	const { icon, placeholder, error, query, setQuery, onEnterPress } = props;
+	const {
+		icon,
+		placeholder,
+		error,
+		isFullWidth = false,
+		query,
+		setQuery,
+		onEnterPress,
+	} = props;
 
 	const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
 		if (onEnterPress && event.key === 'Enter') onEnterPress();
@@ -27,7 +36,7 @@ export const Input = <T extends string>(props: Props<T>): JSX.Element => {
 	};
 
 	return (
-		<StyledInputWrapperExternal>
+		<StyledInputWrapperExternal isFullWidth={isFullWidth}>
 			<StyledInputWrapperInternal colorTokens={colorTokens}>
 				{icon && (
 					<Icon icon="Search" padding="0 var(--size-12) 0 var(--size-14)" />
@@ -50,16 +59,17 @@ export const Input = <T extends string>(props: Props<T>): JSX.Element => {
 	);
 };
 
-const StyledInputWrapperExternal = styled.div`
+const StyledInputWrapperExternal = styled.div<{ isFullWidth: boolean }>`
 	display: flex;
 	flex-direction: column;
-	width: 300px;
-	max-width: 300px;
+	width: ${({ isFullWidth }) => (isFullWidth ? '100%' : '300px')};
+	max-width: 100%;
 `;
 const StyledInputWrapperInternal = styled.div<{ colorTokens: ColorTokens }>`
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	width: 100%;
 	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']}cc;
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	border: var(--size-2) solid
@@ -72,6 +82,7 @@ const StyledInputError = styled.span<{
 	colorTokens: ColorTokens;
 }>`
 	font-size: 0.8em;
+	text-align: left;
 	color: ${({ colorTokens }) => colorTokens['semantic-color--error-strong']};
 `;
 
@@ -82,8 +93,8 @@ const StyledInput = styled.input<{
 }>`
 	flex: 1 1 auto;
 	height: 3.5rem;
-	width: 25rem;
-	max-width: 25rem;
+	width: 100%;
+	max-width: 100%;
 	padding: var(--size-4) var(--size-12);
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	font-size: var(--font-size-16);

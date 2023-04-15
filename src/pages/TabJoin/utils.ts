@@ -1,8 +1,15 @@
-export const validateSteamName = (steamName?: string) => {
+export const validateSteamUrl = (steamUrl?: string) => {
 	const error =
-		'Please enter an account name that is at least 3 characters long and uses only a-z, A-Z, 0-9 or _ characters.';
-	const steamNameValidator = new RegExp(/^[a-zA-Z0-9_]*$/i);
+		'Steam profile URL must match the format https://steamcommunity.com/id/* OR https://steamcommunity.com/profiles/*';
+	const steamUrlWithIdValidator = new RegExp(
+		/^https:\/\/steamcommunity\.com\/profiles\/[0-9]*$/i,
+	);
+	const steamUrlWithNameValidator = new RegExp(
+		/^https:\/\/steamcommunity\.com\/id\/[a-zA-Z0-9_]*$/i,
+	);
 	const hasError =
-		!steamName || steamName.length < 3 || !steamNameValidator.test(steamName);
+		!steamUrl ||
+		(!steamUrlWithIdValidator.test(steamUrl) &&
+			!steamUrlWithNameValidator.test(steamUrl));
 	return { hasError, error };
 };

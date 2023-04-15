@@ -16,7 +16,7 @@ export const TabJoin = () => {
 	useActiveTab(TabDict.JOIN);
 	// const { colorTokens } = useTheme();
 	const [isServerError, setIsServerError] = useState<boolean>(false);
-	const [steamName, setSteamName] = useState<string>('');
+	const [steamUrl, setSteamUrl] = useState<string>('');
 
 	return (
 		<SubPage>
@@ -30,11 +30,11 @@ export const TabJoin = () => {
 					/>
 				</StyledTitle>
 				<SteamNameInput
-					setSteamName={setSteamName}
+					setSteamUrl={setSteamUrl}
 					setIsServerError={setIsServerError}
 				/>
 				<CandidateSummary
-					steamName={steamName}
+					steamUrl={steamUrl}
 					isServerError={isServerError}
 					setIsServerError={setIsServerError}
 				/>
