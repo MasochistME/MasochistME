@@ -19,7 +19,7 @@ import {
   MemberSteamPlayerStats,
 } from '../types';
 
-import { queueMember } from '.';
+import { updateQueue } from '../updateQueue';
 
 /**
  * Updates one particular user data.
@@ -48,7 +48,7 @@ export const updateMember = async (
      * Check if the member update queue is not too long.
      * If yes, do not proceed.
      */
-    if (queueMember.QUEUE.length >= queueMember.MAX_UPDATE_QUEUE) {
+    if (updateQueue.MEMBER_QUEUE_FULL) {
       res.status(202).send({
         message: 'Too many users are updating now - retry in a few minutes.',
       });
@@ -60,7 +60,7 @@ export const updateMember = async (
      * Check if the member is already in the process of being updated.
      * If yes, do not proceed.
      */
-    if (queueMember.QUEUE.includes(memberId)) {
+    if (updateQueue.MEMBER_QUEUE.includes(memberId)) {
       res.status(202).send({ message: 'This user is already being updated.' });
       log.INFO(`--> [UPDATE] updating user ${memberId} [ALREADY UPDATING]`);
       return;
@@ -89,7 +89,7 @@ export const updateMember = async (
       message:
         'Member update successfully started! Refresh in a couple of minutes.',
     });
-    queueMember.QUEUE = [...queueMember.QUEUE, memberId];
+    updateQueue.MEMBER_QUEUE = [...updateQueue.MEMBER_QUEUE, memberId];
 
     /**
      * Get member's data from Steam API.
@@ -339,7 +339,9 @@ export const updateMember = async (
     /**
      * Fin!
      */
-    queueMember.QUEUE = queueMember.QUEUE.filter(queue => queue !== memberId);
+    updateQueue.MEMBER_QUEUE = updateQueue.MEMBER_QUEUE.filter(
+      queue => queue !== memberId,
+    );
     log.INFO(`--> [UPDATE] user ${memberId} [END]`);
   } catch (err: any) {
     log.INFO(`--> [UPDATE] user ${memberId} [ERROR]`);
@@ -347,7 +349,9 @@ export const updateMember = async (
     /**
      * Remove user from update queue.
      */
-    queueMember.QUEUE = queueMember.QUEUE.filter(queue => queue !== memberId);
+    updateQueue.MEMBER_QUEUE = updateQueue.MEMBER_QUEUE.filter(
+      queue => queue !== memberId,
+    );
   } finally {
     //
   }

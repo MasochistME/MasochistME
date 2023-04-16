@@ -4,11 +4,13 @@ import { Game, MemberGame, Tier } from '@masochistme/sdk/dist/v1/types';
 
 import { mongoInstance } from 'index';
 import { log } from 'helpers/log';
+import { updateQueue } from 'router/v1/update/updateQueue';
 import {
   getMemberSteamAchievements,
   getMemberSteamGames,
 } from 'router/v1/update/updateMember/updateMember';
 import { validateSteamUrl } from 'helpers/validate';
+import { MemberSteam } from 'router/v1/update/types';
 
 /**
  * Returns a small summary of any requested Steam member.
@@ -20,10 +22,14 @@ export const getCandidateSummary = async (
   req: Request,
   res: Response,
 ): Promise<void> => {
-  try {
-    // Validate provided Steam name.
-    const { steamUrl } = req.body;
+  const { steamUrl } = req.body;
+  const userId = await getIdFromUrl(steamUrl);
 
+  try {
+    log.INFO(`--> [SCOUT] candidate ${userId} [START]`);
+    /**
+     * First, we start with validating provided Steam name.
+     */
     const { hasError, error } = validateSteamUrl(steamUrl);
 
     if (hasError) {
@@ -31,8 +37,68 @@ export const getCandidateSummary = async (
       return;
     }
 
-    // Get a list of curated games.
+    /**
+     * Check if the candidate already figures in the database.
+     * If yes: return the cached data.
+     */
     const { db } = mongoInstance.getDb();
+    const collectionCandidates = db.collection('candidates');
+    const oldCandidateData = await collectionCandidates.findOne({
+      steamId: userId,
+    });
+
+    if (oldCandidateData) {
+      res.status(200).send(oldCandidateData);
+      log.INFO(`--> [SCOUT] returning cached candidate ${userId} [END]`);
+      return;
+    }
+
+    /**
+     * If no: continue scouting.
+     * But first check if the candidate update queue is not too long.
+     * If yes: do not proceed.
+     */
+    if (updateQueue.CANDIDATE_QUEUE_FULL) {
+      res.status(202).send({
+        message:
+          'Too many candidates are being scouted - retry in a few minutes.',
+      });
+      log.INFO(`--> [SCOUT] candidate ${userId} [QUEUE OVERFLOW]`);
+      return;
+    }
+
+    /**
+     * Check if the candidate is already in the process of being scouted.
+     * If yes: do not proceed.
+     */
+    if (updateQueue.CANDIDATE_QUEUE.includes(userId)) {
+      res
+        .status(202)
+        .send({ message: 'This candidate is already being scouted.' });
+      log.INFO(`--> [SCOUT] candidate ${userId} [ALREADY UPDATING]`);
+      return;
+    }
+
+    /**
+     * If no: continue scouting.
+     * Get candidate's data from Steam API.
+     */
+    log.INFO(`--> [SCOUT] user ${userId} --> fetching Steam data...`);
+    const memberSteamUrl = `https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2`;
+    const memberSteamData = await axios.get(memberSteamUrl, {
+      params: {
+        key: process.env.STEAM_KEY,
+        steamids: userId,
+      },
+    });
+    const { personaname, avatarhash }: MemberSteam =
+      memberSteamData?.data?.response?.players?.[0] ?? {};
+
+    /**
+     * Then, we get a list of curated games.
+     */
+
+    updateQueue.CANDIDATE_QUEUE = [...updateQueue.CANDIDATE_QUEUE, userId];
     const collectionGames = db.collection<Game>('games');
     const curatedGames: Game[] = [];
     const cursorGames = collectionGames.find({
@@ -42,9 +108,9 @@ export const getCandidateSummary = async (
       curatedGames.push(el);
     });
 
-    const userId = await getIdFromUrl(steamUrl);
-
-    // Scrape a list of scouted Steam user's perfected games.
+    /**
+     * Then, we get a list of scouted Steam user's perfected games.
+     */
     const candidateSteamGames = await getMemberSteamGames(userId, curatedGames);
 
     if (!candidateSteamGames?.length) {
@@ -88,7 +154,10 @@ export const getCandidateSummary = async (
       },
     );
 
-    // Get a list of MasochistME tiers
+    /**
+     * Get a list of MasochistME tiers and segregate the games to their
+     * respective tiers. Assign the point values to them.
+     */
     const collectionTiers = db.collection<Tier>('tiers');
     const tiers: Tier[] = [];
     const cursorTiers = collectionTiers.find();
@@ -111,13 +180,42 @@ export const getCandidateSummary = async (
       })
       .filter(Boolean);
 
-    res.status(200).send(perfectGamesData);
+    /**
+     * Save the candidate to database.
+     * Candidate's data in database is supposed to expire.
+     * TTL to be done.
+     */
+    const candidateData = {
+      steamId: userId,
+      name: personaname,
+      avatarHash: avatarhash,
+      games: perfectGamesData,
+      updated: new Date(),
+    };
+    await collectionCandidates.insertOne(candidateData);
+
+    /**
+     * Fin!
+     */
+    updateQueue.CANDIDATE_QUEUE = updateQueue.CANDIDATE_QUEUE.filter(
+      queue => queue !== userId,
+    );
+    res.status(200).send(candidateData);
   } catch (err: any) {
     log.WARN(err);
     res.status(500).send({ error: err.message ?? 'Internal server error' });
+    updateQueue.CANDIDATE_QUEUE = updateQueue.CANDIDATE_QUEUE.filter(
+      queue => queue !== userId,
+    );
   }
 };
 
+/**
+ * Gets Steam user's ID from their URL.
+ * If the URL provided is vanity URL we get ID from the endpoint.
+ * @param steamUrl string
+ * @returns SteamID string
+ */
 const getIdFromUrl = async (steamUrl?: string) => {
   const normalUrl = 'https://steamcommunity.com/profiles/';
   const vanityUrl = 'https://steamcommunity.com/id/';
