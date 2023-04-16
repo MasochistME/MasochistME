@@ -14,8 +14,8 @@ import {
 	Size,
 } from 'components';
 import { validateSteamUrl } from './utils';
-import { media, useTheme } from 'styles';
-import { ColorMap } from 'utils';
+import { ColorTokens, media, useTheme } from 'styles';
+import { ColorMap, getAvatarFromHash } from 'utils';
 
 type Props = {
 	steamUrl: string;
@@ -59,15 +59,18 @@ export const CandidateSummary = ({
 };
 
 const CandidateSummaryBoundary = ({ steamUrl }: Pick<Props, 'steamUrl'>) => {
-	const { LOGO_URL_STATIC } = useTheme();
-	const { candidateData = [] } = useCandidateSummary(steamUrl);
+	const { colorTokens, LOGO_URL_STATIC } = useTheme();
+	const { candidateData } = useCandidateSummary(steamUrl);
 	const { tiersData } = useTiers();
 
-	const pointsSum = candidateData?.reduce((sum, curr) => sum + curr.pts, 0);
+	const pointsSum = candidateData?.games.reduce(
+		(sum, curr) => sum + curr.pts,
+		0,
+	);
 	const tiersSum = tiersData.map(tier => ({
 		tier: tier.id,
 		icon: tier.icon,
-		pts: candidateData.reduce(
+		pts: candidateData?.games.reduce(
 			(sum, curr) => (curr.tier === tier.id ? sum + curr.pts : sum),
 			0,
 		),
@@ -89,23 +92,25 @@ const CandidateSummaryBoundary = ({ steamUrl }: Pick<Props, 'steamUrl'>) => {
 		[tiersSum],
 	);
 
-	const avatarUrl = null;
-
 	if (!candidateData) return null;
 	return (
 		<Flex column>
 			<StyledCandidateHeader row align>
 				<Flex align gap={16}>
 					<StyledCandidateAvatar
-						src={avatarUrl ?? LOGO_URL_STATIC}
-						imgSize={Size.BIG}
+						src={
+							getAvatarFromHash(candidateData.avatarHash, 'full') ??
+							LOGO_URL_STATIC
+						}
+						size={Size.BIG}
+						colorTokens={colorTokens}
 						alt="Member avatar"
 						loading="lazy"
 					/>
 					<a href={steamUrl} target="_blank" rel="noopener noreferrer">
 						<StyledCandidateUsername>
 							<Icon icon="Steam" marginRight="10px" />
-							{steamUrl}
+							{candidateData.name}
 						</StyledCandidateUsername>
 					</a>
 				</Flex>
@@ -150,16 +155,18 @@ const StyledCandidateHeader = styled(Flex)`
 	align-items: flex-start;
 `;
 
-const StyledCandidateAvatar = styled.img.attrs(
-	({ imgSize }: { imgSize: Size }) => {
-		const style: React.CSSProperties = {
-			width: `${imgSize}px`,
-			height: `${imgSize}px`,
-		};
-		return style;
-	},
-)`
+const StyledCandidateAvatar = styled.img<{
+	size: Size;
+	colorTokens: ColorTokens;
+}>`
 	object-fit: contain;
+	max-width: ${({ size }) => size}rem;
+	max-height: ${({ size }) => size}rem;
+	min-width: ${({ size }) => size}rem;
+	min-height: ${({ size }) => size}rem;
+	border: ${({ size, colorTokens }) =>
+		`${size === Size.SMALL || size === Size.TINY ? 0.2 : 0.3}rem 
+		solid ${colorTokens['core-primary-bg']}`};
 	@media (max-width: ${media.tablets}) {
 		display: none;
 	}

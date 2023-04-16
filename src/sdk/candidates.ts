@@ -5,7 +5,7 @@ export const useCandidateSummary = (steamUrl: string) => {
 	const { sdk } = useAppContext();
 
 	const {
-		data: candidateData = [],
+		data: candidateData,
 		isLoading,
 		isFetched,
 		isError,

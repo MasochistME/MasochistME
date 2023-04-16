@@ -17,6 +17,13 @@ export const getGameSteamUrl = (gameId: number): string => {
 	return `http://store.steampowered.com/api/appdetails?appids=${gameId}`;
 };
 
+export const getAvatarFromHash = (
+	avatarHash: string,
+	size: 'full' | 'medium' = 'full',
+): string => {
+	return `https://avatars.akamai.steamstatic.com/${avatarHash}_${size}.jpg`;
+};
+
 export const getYTVideoID = (link?: string) => {
 	if (!link) return null;
 
