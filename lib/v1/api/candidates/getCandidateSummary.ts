@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 
-import { CandidateGame, ResponseError } from 'v1/types';
+import { Candidate, ResponseError } from 'v1/types';
 
 /**
  * Returns a summary of a Steam user, if they exist.
@@ -11,7 +11,7 @@ import { CandidateGame, ResponseError } from 'v1/types';
  *
  * ```ts
  * const steamUrl: string = "https://steamcommunity.com/id/ARCYVILK";
- * const candidateGames: CandidateGames[] = await sdk.getCandidateSummary({ steamUrl });
+ * const candidate: Candidate[] = await sdk.getCandidateSummary({ steamUrl });
  * ```
  *
  * @param params.steamId   - (Optional) Steam ID of the requested member.
@@ -21,19 +21,19 @@ export const getCandidateSummary = async (
 	params: CandidateSummaryParams,
 	/** @ignore */
 	BASE_URL: string,
-): Promise<CandidateGame[]> => {
+): Promise<Candidate> => {
 	const { steamUrl } = params;
 	const url = `${BASE_URL}/candidate/scout`;
 
 	const candidateResponse = await axios.post<
-		CandidateGame[] | ResponseError,
-		AxiosResponse<CandidateGame[] | ResponseError>
+		Candidate | ResponseError,
+		AxiosResponse<Candidate | ResponseError>
 	>(url, { steamUrl }, { validateStatus: () => true });
 
 	const { status, data } = candidateResponse;
 
 	if (status !== 200) throw new Error((data as ResponseError).error);
-	return data as CandidateGame[];
+	return data as Candidate;
 };
 
 export type CandidateSummaryParams = {

@@ -5,6 +5,25 @@
 import { TierId } from './Tier';
 
 /**
+ * This is a type of a single object representing a single candidate
+ * (does not have to be MasochistME member)
+ */
+export interface Candidate {
+	/**
+	 * Candidate's Steam ID.
+	 */
+	steamId: string;
+	/**
+	 * List of candidate's perfected games.
+	 */
+	games: CandidateGame[];
+	/**
+	 * Date of the last data fetch for this specific candidate.
+	 */
+	updated: Date;
+}
+
+/**
  * This is a type of a single object representing a single Steam game
  * curated on Masochist.ME, which got perfected by a Steam's user
  * (does not have to be MasochistME member)
