@@ -54,28 +54,27 @@ export const getCandidateSummary = async (
     }
 
     /**
-     * If no: continue scouting.
-     * But first check if the candidate update queue is not too long.
-     * If yes: do not proceed.
-     */
-    if (updateQueue.CANDIDATE_QUEUE_FULL) {
-      res.status(202).send({
-        message:
-          'Too many candidates are being scouted - retry in a few minutes.',
-      });
-      log.INFO(`--> [SCOUT] candidate ${userId} [QUEUE OVERFLOW]`);
-      return;
-    }
-
-    /**
      * Check if the candidate is already in the process of being scouted.
      * If yes: do not proceed.
      */
     if (updateQueue.CANDIDATE_QUEUE.includes(userId)) {
       res
-        .status(202)
-        .send({ message: 'This candidate is already being scouted.' });
+        .status(409)
+        .send({ error: 'This candidate is already being scouted.' });
       log.INFO(`--> [SCOUT] candidate ${userId} [ALREADY UPDATING]`);
+      return;
+    }
+
+    /**
+     * Check if the candidate update queue is not too long.
+     * If yes: do not proceed.
+     */
+    if (updateQueue.isCandidateQueueFull()) {
+      res.status(429).send({
+        error:
+          'Too many candidates are being scouted - retry in a few minutes.',
+      });
+      log.INFO(`--> [SCOUT] candidate ${userId} [QUEUE OVERFLOW]`);
       return;
     }
 

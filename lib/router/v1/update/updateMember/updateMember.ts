@@ -48,7 +48,7 @@ export const updateMember = async (
      * Check if the member update queue is not too long.
      * If yes, do not proceed.
      */
-    if (updateQueue.MEMBER_QUEUE_FULL) {
+    if (updateQueue.isMemberQueueFull()) {
       res.status(202).send({
         message: 'Too many users are updating now - retry in a few minutes.',
       });

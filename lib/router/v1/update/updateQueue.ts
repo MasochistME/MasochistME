@@ -16,7 +16,8 @@ class UpdateQueue {
   set MEMBER_QUEUE(Q_UPDATE: string[]) {
     this._MEMBER_QUEUE = Q_UPDATE;
   }
-  MEMBER_QUEUE_FULL = this._MEMBER_QUEUE.length >= this.MAX_UPDATE_MEMBER_QUEUE;
+  isMemberQueueFull = () =>
+    this._MEMBER_QUEUE.length >= this.MAX_UPDATE_MEMBER_QUEUE;
 
   // Candidate queues
   get CANDIDATE_QUEUE(): string[] {
@@ -25,7 +26,7 @@ class UpdateQueue {
   set CANDIDATE_QUEUE(Q_UPDATE: string[]) {
     this._CANDIDATE_QUEUE = Q_UPDATE;
   }
-  CANDIDATE_QUEUE_FULL =
+  isCandidateQueueFull = () =>
     this._CANDIDATE_QUEUE.length >= this.MAX_UPDATE_CANDIDATE_QUEUE;
 }
 
