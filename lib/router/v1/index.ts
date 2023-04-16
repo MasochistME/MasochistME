@@ -30,22 +30,29 @@ import {
   getMembersList,
   getMemberById,
   updateMemberById,
+  getMemberGameList,
   getMemberAchievementList,
   getMemberBadgeList,
-  getMemberGameList,
   giveBadgeToMemberById,
   revokeBadgeFromMemberById,
+  getMemberAwardList,
+  giveAwardToMemberById,
+  revokeAwardFromMemberById,
 } from './members';
 
 routerV1.post('/members/list', getMembersList);
 routerV1.get('/members/member/:memberId', getMemberById);
 routerV1.put('/members/member/:memberId', apiV1Auth, updateMemberById);
+
+// Member games
+routerV1.post('/members/member/:memberId/games/list', getMemberGameList);
 routerV1.post(
   '/members/member/:memberId/achievements/list',
   getMemberAchievementList,
 );
+
+// Member badges
 routerV1.post('/members/member/:memberId/badges/list', getMemberBadgeList);
-routerV1.post('/members/member/:memberId/games/list', getMemberGameList);
 routerV1.post(
   '/members/member/:memberId/badges/badge/:badgeId',
   apiV1Auth,
@@ -55,6 +62,19 @@ routerV1.delete(
   '/members/member/:memberId/badges/badge/:badgeId',
   apiV1Auth,
   revokeBadgeFromMemberById,
+);
+
+// Member awards
+routerV1.post('/members/member/:memberId/awards/list', getMemberAwardList);
+routerV1.post(
+  '/members/member/:memberId/awards/award/:awardId',
+  apiV1Auth,
+  giveAwardToMemberById,
+);
+routerV1.delete(
+  '/members/member/:memberId/awards/award/:awardId',
+  apiV1Auth,
+  revokeAwardFromMemberById,
 );
 
 /********************************
@@ -105,6 +125,24 @@ routerV1.post('/badges', apiV1Auth, createBadge);
 routerV1.get('/badges/badge/:badgeId', getBadgeById);
 routerV1.put('/badges/badge/:badgeId', apiV1Auth, updateBadgeById);
 routerV1.delete('/badges/badge/:badgeId', apiV1Auth, deleteBadgeById);
+
+/**************************
+ *         AWARDS         *
+ **************************/
+
+import {
+  getAwardsList,
+  createAward,
+  getAwardById,
+  updateAwardById,
+  deleteAwardById,
+} from './awards';
+
+routerV1.post('/awards/list', getAwardsList);
+routerV1.post('/awards', apiV1Auth, createAward);
+routerV1.get('/awards/award/:awardId', getAwardById);
+routerV1.put('/awards/award/:awardId', apiV1Auth, updateAwardById);
+routerV1.delete('/awards/award/:awardId', apiV1Auth, deleteAwardById);
 
 /*************************
  *         LOGS         *

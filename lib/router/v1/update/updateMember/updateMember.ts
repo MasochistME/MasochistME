@@ -19,7 +19,7 @@ import {
   MemberSteamPlayerStats,
 } from '../types';
 
-import { queueMember } from '.';
+import { updateQueue } from '../updateQueue';
 
 /**
  * Updates one particular user data.
@@ -48,7 +48,7 @@ export const updateMember = async (
      * Check if the member update queue is not too long.
      * If yes, do not proceed.
      */
-    if (queueMember.QUEUE.length >= queueMember.MAX_UPDATE_QUEUE) {
+    if (updateQueue.isMemberQueueFull()) {
       res.status(202).send({
         message: 'Too many users are updating now - retry in a few minutes.',
       });
@@ -60,7 +60,7 @@ export const updateMember = async (
      * Check if the member is already in the process of being updated.
      * If yes, do not proceed.
      */
-    if (queueMember.QUEUE.includes(memberId)) {
+    if (updateQueue.MEMBER_QUEUE.includes(memberId)) {
       res.status(202).send({ message: 'This user is already being updated.' });
       log.INFO(`--> [UPDATE] updating user ${memberId} [ALREADY UPDATING]`);
       return;
@@ -89,7 +89,7 @@ export const updateMember = async (
       message:
         'Member update successfully started! Refresh in a couple of minutes.',
     });
-    queueMember.QUEUE = [...queueMember.QUEUE, memberId];
+    updateQueue.MEMBER_QUEUE = [...updateQueue.MEMBER_QUEUE, memberId];
 
     /**
      * Get member's data from Steam API.
@@ -339,7 +339,9 @@ export const updateMember = async (
     /**
      * Fin!
      */
-    queueMember.QUEUE = queueMember.QUEUE.filter(queue => queue !== memberId);
+    updateQueue.MEMBER_QUEUE = updateQueue.MEMBER_QUEUE.filter(
+      queue => queue !== memberId,
+    );
     log.INFO(`--> [UPDATE] user ${memberId} [END]`);
   } catch (err: any) {
     log.INFO(`--> [UPDATE] user ${memberId} [ERROR]`);
@@ -347,19 +349,59 @@ export const updateMember = async (
     /**
      * Remove user from update queue.
      */
-    queueMember.QUEUE = queueMember.QUEUE.filter(queue => queue !== memberId);
+    updateQueue.MEMBER_QUEUE = updateQueue.MEMBER_QUEUE.filter(
+      queue => queue !== memberId,
+    );
   } finally {
     //
   }
 };
 
+export const getMemberSteamGames = async (
+  memberId: string,
+  curatedGames: Game[],
+) => {
+  log.INFO(`--> [UPDATE] user ${memberId} --> fetching games data...`);
+  const memberSteamUrl = `http://api.steampowered.com/IPlayerService/GetOwnedGames/v1/`;
+  const memberSteamGamesData = await axios.get(memberSteamUrl, {
+    params: {
+      key: process.env.STEAM_KEY,
+      steamid: memberId,
+      include_played_free_games: true,
+      include_free_sub: true,
+      skip_unvetted_apps: false,
+    },
+  });
+  const memberSteamGames: MemberSteamGame[] =
+    memberSteamGamesData?.data?.response?.games;
+  if (!memberSteamGames) return [];
+
+  const memberSteamGamesFixed = memberSteamGames
+    .filter(game => {
+      const isCurated = curatedGames.find(g => g.id === game.appid);
+      return !!isCurated;
+    })
+    .map(game => ({
+      memberId,
+      gameId: game.appid,
+      playTime: game.playtime_forever / 60, // this is in minutes
+    }));
+
+  return memberSteamGamesFixed;
+};
+
 /**
  * Get member's games from scrapping the Steam page.
- * The reason this is used before the proper endpoint is that it shows all games,
- * including the free ones and restricted ones.
+ * This is a fallback function - it will execute when getNewMemberGames does not return any data.
+ * Steam has hid this endpoint behind a login, so it is left here as a fallback.
  */
-const getMemberSteamGames = async (memberId: string, curatedGames: Game[]) => {
-  log.INFO(`--> [UPDATE] user ${memberId} --> fetching games data...`);
+const getMemberSteamGamesFallback = async (
+  memberId: string,
+  curatedGames: Game[],
+) => {
+  log.INFO(
+    `--> [UPDATE] user ${memberId} --> fetching games data - fallback...`,
+  );
   /**
    * Scrapping member's Steam profile page.
    */
@@ -398,45 +440,6 @@ const getMemberSteamGames = async (memberId: string, curatedGames: Game[]) => {
       };
     });
   return memberScrappedProfileFixed;
-};
-
-/**
- * This is a fallback function - it will execute when getNewMemberGames does not return any data.
- * It does not return restricted games data, so it is used exclusively as fallback.
- */
-const getMemberSteamGamesFallback = async (
-  memberId: string,
-  curatedGames: Game[],
-) => {
-  log.INFO(
-    `--> [UPDATE] user ${memberId} --> fetching games data  - fallback...`,
-  );
-  const memberSteamUrl = `http://api.steampowered.com/IPlayerService/GetOwnedGames/v1/`;
-  const memberSteamGamesData = await axios.get(memberSteamUrl, {
-    params: {
-      key: process.env.STEAM_KEY,
-      steamid: memberId,
-      include_played_free_games: true,
-      include_free_sub: true,
-      skip_unvetted_apps: false,
-    },
-  });
-  const memberSteamGames: MemberSteamGame[] =
-    memberSteamGamesData?.data?.response?.games;
-  if (!memberSteamGames) return [];
-
-  const memberSteamGamesFixed = memberSteamGames
-    .filter(game => {
-      const isCurated = curatedGames.find(g => g.id === game.appid);
-      return !!isCurated;
-    })
-    .map(game => ({
-      memberId,
-      gameId: game.appid,
-      playTime: game.playtime_forever / 60, // this is in minutes
-    }));
-
-  return memberSteamGamesFixed;
 };
 
 /**
@@ -503,7 +506,7 @@ type TempMemberStats = {
     | 'achievementsUnlocked'
   >;
 };
-const getMemberSteamAchievements = async (
+export const getMemberSteamAchievements = async (
   memberId: string,
   memberGames: { gameId: number; playTime: number }[],
 ): Promise<TempMemberStats[]> =>
