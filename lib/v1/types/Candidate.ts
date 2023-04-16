@@ -14,6 +14,14 @@ export interface Candidate {
 	 */
 	steamId: string;
 	/**
+	 * Candidate's Steam persona name.
+	 */
+	name: string;
+	/**
+	 * Hash of the candidate's Steam avatar.
+	 */
+	avatarHash: string;
+	/**
 	 * List of candidate's perfected games.
 	 */
 	games: CandidateGame[];
