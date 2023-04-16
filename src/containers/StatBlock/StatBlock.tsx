@@ -25,12 +25,20 @@ export const StatBlock = (props: Props) => {
 
 	const getTierColor = () => {
 		if (tier === ColorMap.GOLD) return colorTokens['semantic-color--tier-4'];
+		if (tier === ColorMap.WARNING)
+			return colorTokens['semantic-color--warning-strong'];
+		if (tier === ColorMap.SUCCESS) return colorTokens['semantic-color--tier-4'];
+		if (tier === ColorMap.ERROR)
+			return colorTokens['semantic-color--error-strong'];
 		return colorTokens['semantic-color--active']; // Normal, default color
 	};
 
 	return (
 		<Tooltip content={title}>
-			<StyledStatBlock colorTokens={colorTokens} tierColor={getTierColor()}>
+			<StyledStatBlock
+				colorTokens={colorTokens}
+				tierColor={getTierColor()}
+				hasTooltip={!!title}>
 				{icon && <Icon icon={icon} size={Size.TINY} />}
 				{isLoading && <Skeleton width="10rem" />}
 				{!isLoading && (
@@ -51,6 +59,7 @@ export const StatBlock = (props: Props) => {
 const StyledStatBlock = styled(Flex)<{
 	colorTokens: ColorTokens;
 	tierColor: string;
+	hasTooltip: boolean;
 }>`
 	gap: var(--size-8);
 	flex-direction: row;
@@ -61,8 +70,7 @@ const StyledStatBlock = styled(Flex)<{
 	border: var(--size-2) solid ${({ tierColor }) => tierColor}66;
 	color: ${({ tierColor }) => tierColor};
 	font-family: var(--font-dosis);
-	cursor: help;
-
+	cursor: ${({ hasTooltip }) => (hasTooltip ? 'help' : 'inherit')};
 	@media (max-width: ${media.tablets}) {
 		padding: var(--size-4) var(--size-8);
 		i {

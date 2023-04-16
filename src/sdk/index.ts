@@ -1,4 +1,5 @@
 export * from './badges';
+export * from './candidates';
 export * from './logs';
 export * from './games';
 export * from './featured';

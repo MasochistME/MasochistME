@@ -12,12 +12,19 @@ type Props<T> = {
 	columns: TableColumn<T>[];
 	dataset: T[];
 	rowsPerPage?: number;
+	order?: 'asc' | 'desc';
 	orderBy?: string;
 };
 
 export const Table = <T extends Record<any, any>>(props: Props<T>) => {
-	const { columns, dataset, orderBy, rowsPerPage: _rowsPerPage } = props;
-	const [order, setOrder] = useState<Order>('asc');
+	const {
+		columns,
+		dataset,
+		order = 'asc',
+		orderBy,
+		rowsPerPage: _rowsPerPage,
+	} = props;
+	const [_order, setOrder] = useState<Order>(order);
 	const [_orderBy, setOrderBy] = useState<string | undefined>(orderBy);
 	const [page, setPage] = useState<number>(0);
 	const [rowsPerPage, setRowsPerPage] = useState<number>(_rowsPerPage ?? 20);
@@ -55,7 +62,7 @@ export const Table = <T extends Record<any, any>>(props: Props<T>) => {
 		property: string,
 	) => {
 		setOrderBy(property);
-		setOrder(order === 'asc' ? 'desc' : 'asc');
+		setOrder(_order === 'asc' ? 'desc' : 'asc');
 	};
 
 	const tableHeaderCells = fixedColumns.map(column => ({
@@ -71,7 +78,7 @@ export const Table = <T extends Record<any, any>>(props: Props<T>) => {
 		<StyledTable className="MuiTable-root" aria-label="simple table">
 			<colgroup>{colGroup}</colgroup>
 			<TableHeader
-				order={order}
+				order={_order}
 				orderBy={_orderBy}
 				tableHeaderCells={tableHeaderCells}
 				onRequestSort={handleRequestSort}
@@ -80,7 +87,7 @@ export const Table = <T extends Record<any, any>>(props: Props<T>) => {
 				rows={fixedRows}
 				page={page}
 				rowsPerPage={rowsPerPage}
-				order={order}
+				order={_order}
 				orderBy={_orderBy}
 			/>
 			<TablePagination

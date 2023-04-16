@@ -18,7 +18,7 @@ export const Header = (): JSX.Element => {
 					- games that masochists love
 				</StyledHeaderSubTitle>
 			</StyledHeaderTitle>
-			<ButtonsSocialMedia />
+			<ButtonsSocialMedia withJoinButton />
 		</StyledHeader>
 	);
 };
