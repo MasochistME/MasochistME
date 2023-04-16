@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { Game, MemberGame, Tier } from '@masochistme/sdk/dist/v1/types';
 
 import { mongoInstance } from 'index';
@@ -85,12 +85,17 @@ export const getCandidateSummary = async (
      */
     log.INFO(`--> [SCOUT] user ${userId} --> fetching Steam data...`);
     const memberSteamUrl = `https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2`;
-    const memberSteamData = await axios.get(memberSteamUrl, {
-      params: {
-        key: process.env.STEAM_KEY,
-        steamids: userId,
-      },
-    });
+    let memberSteamData;
+    try {
+      memberSteamData = await axios.get(memberSteamUrl, {
+        params: {
+          key: process.env.STEAM_KEY,
+          steamids: userId,
+        },
+      });
+    } catch (err) {
+      throw new Error('Requested Steam user does not exist.');
+    }
     const { personaname, avatarhash }: MemberSteam =
       memberSteamData?.data?.response?.players?.[0] ?? {};
 
@@ -203,10 +208,12 @@ export const getCandidateSummary = async (
     res.status(200).send(candidateData);
   } catch (err: any) {
     log.WARN(err);
-    res.status(500).send({ error: err.message ?? 'Internal server error' });
     updateQueue.CANDIDATE_QUEUE = updateQueue.CANDIDATE_QUEUE.filter(
       queue => queue !== userId,
     );
+    res
+      .status(err.status ?? 500)
+      .send({ error: err.message ?? 'Internal server error' });
   }
 };
 
