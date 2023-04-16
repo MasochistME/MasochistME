@@ -160,7 +160,7 @@ export const colors: Record<Theme, ColorTokens> = {
 		'semantic-color--disabled': '#7b7a8d',
 
 		// TODO - START
-		'semantic-color--success': '#fd8cc5',
+		'semantic-color--success': '#ff67b4',
 		'semantic-color--success-strong': '#cb2578',
 		'semantic-color--success-muted': '#b76c91',
 		// TODO - END
