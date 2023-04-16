@@ -20,6 +20,7 @@ import { ReactComponent as CoinStack } from './CoinStack.svg';
 import { ReactComponent as Crown } from './Crown.svg';
 import { ReactComponent as Discord } from './Discord.svg';
 import { ReactComponent as Donation } from './Donation.svg';
+import { ReactComponent as DoorOpen } from './DoorOpen.svg';
 import { ReactComponent as ExternalLink } from './ExternalLink.svg';
 import { ReactComponent as EllipsisVertical } from './EllipsisVertical.svg';
 import { ReactComponent as Finish } from './Finish.svg';
@@ -44,6 +45,7 @@ import { ReactComponent as Spin } from './Spin.svg';
 import { ReactComponent as SquareCheck } from './SquareCheck.svg';
 import { ReactComponent as SquareMinus } from './SquareMinus.svg';
 import { ReactComponent as SquarePlus } from './SquarePlus.svg';
+import { ReactComponent as SquareX } from './SquareX.svg';
 import { ReactComponent as StarBlack } from './StarBlack.svg';
 import { ReactComponent as StarCheck } from './StarCheck.svg';
 import { ReactComponent as StarEmpty } from './StarEmpty.svg';
@@ -85,6 +87,7 @@ const icons = {
 	Crown,
 	Discord,
 	Donation,
+	DoorOpen,
 	EllipsisVertical,
 	ExternalLink,
 	Finish,
@@ -109,6 +112,7 @@ const icons = {
 	SquareCheck,
 	SquareMinus,
 	SquarePlus,
+	SquareX,
 	StarBlack,
 	StarCheck,
 	StarEmpty,

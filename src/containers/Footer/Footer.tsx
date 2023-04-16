@@ -29,7 +29,7 @@ export const Footer = () => {
 					<Link to="/changelog">Changelog</Link>
 				</div>
 				<div
-					style={{ width: Size.SMALL, height: Size.SMALL }}
+					style={{ width: `${Size.SMALL}rem`, height: `${Size.SMALL}rem` }}
 					onClick={() => {
 						track('dev');
 						setDev(dev + 1);

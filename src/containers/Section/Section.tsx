@@ -14,6 +14,7 @@ export type SectionProps = {
 	content: React.ReactNode;
 	width?: string;
 	height?: string;
+	isStyled?: boolean;
 } & Omit<React.CSSProperties, 'width' | 'height' | 'content' | 'translate'>;
 
 export const Section = (props: SectionProps) => {
@@ -27,6 +28,7 @@ export const Section = (props: SectionProps) => {
 		content,
 		isCentered = true,
 		anchorId,
+		isStyled = true,
 		...style
 	} = props;
 
@@ -44,17 +46,19 @@ export const Section = (props: SectionProps) => {
 			isMobileOnly={isMobileOnly}
 			isDesktopOnly={isDesktopOnly}
 			colorTokens={colorTokens}
+			isStyled={isStyled}
 			{...style}>
 			{title && (
 				<Section.Title
 					isCentered={isCentered}
+					isStyled={isStyled}
 					colorTokens={colorTokens}
 					id={sanitizedAnchorId}>
 					{title}
 					{anchorId && <Button icon="Link" onClick={jumpToAnchor} />}
 				</Section.Title>
 			)}
-			<Section.Content>{content}</Section.Content>
+			<Section.Content isStyled={isStyled}>{content}</Section.Content>
 		</StyledSection>
 	);
 };
@@ -79,13 +83,17 @@ const StyledSection = styled.div.attrs((props: StyledProps) => {
 	width: ${({ fullWidth }) => (fullWidth ? '100%' : 'auto')};
 	height: auto;
 	box-sizing: border-box;
-	border: 1px solid ${({ colorTokens }) => colorTokens['semantic-color--idle']};
+	border: ${({ isStyled, colorTokens }) =>
+		isStyled ? `${colorTokens['semantic-color--idle']}}` : '0'};
 	border-radius: var(--border-radius-16);
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
-	background-color: ${({ colorTokens }) =>
-		colorTokens['semantic-color--idle']}cc;
-	box-shadow: 0 0 var(--size-15)
-		${({ colorTokens }) => colorTokens['core-tertiary-bg']};
+	background-color: ${({ isStyled, colorTokens }) =>
+		isStyled ? `${colorTokens['semantic-color--idle']}cc` : 'transparent'};
+	box-shadow: ${({ isStyled, colorTokens }) =>
+		isStyled
+			? `0 0 var(--size-15) ${colorTokens['core-tertiary-bg']}}`
+			: 'none'};
+
 	${({ isMobileOnly, isDesktopOnly }) => {
 		if (isMobileOnly)
 			return `@media (min-width: ${media.netbooks}) {
@@ -104,6 +112,7 @@ const StyledSection = styled.div.attrs((props: StyledProps) => {
 
 Section.Title = styled.h3<{
 	isCentered: boolean;
+	isStyled: boolean;
 	colorTokens: ColorTokens;
 	id: any;
 }>`
@@ -118,12 +127,13 @@ Section.Title = styled.h3<{
 	font-family: var(--font-dosis);
 	text-transform: uppercase;
 	text-align: center;
-	background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']};
+	background-color: ${({ isStyled, colorTokens }) =>
+		isStyled ? `${colorTokens['core-primary-bg']}}` : 'transparent'};
 	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
 	border-radius: var(--border-radius-16) var(--size-16) 0 0;
 `;
 
-Section.Content = styled.div`
+Section.Content = styled.div<{ isStyled: boolean }>`
 	width: 100%;
-	padding: var(--size-12);
+	padding: ${({ isStyled }) => (isStyled ? 'var(--size-12)' : 0)};
 `;

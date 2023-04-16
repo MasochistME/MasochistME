@@ -7,6 +7,7 @@ import { useTheme, ColorTokens } from 'styles';
 import { CommonProps } from 'containers';
 import { BrokenImage, Flex, Skeleton, Tooltip } from 'components';
 import { usePodiumColor } from './hooks';
+import { getAvatarFromHash } from 'utils';
 
 type Props = CommonProps & {
 	member?: Partial<Member>;
@@ -26,8 +27,7 @@ export const PodiumAvatar = (props: Props) => {
 	} = props;
 
 	const avatarUrl = useMemo(() => {
-		if (member.avatarHash)
-			return `https://avatars.akamai.steamstatic.com/${member.avatarHash}_full.jpg`;
+		if (member.avatarHash) return getAvatarFromHash(member.avatarHash, 'full');
 		if (member.avatar) return member.avatar;
 		return null;
 	}, [member]);

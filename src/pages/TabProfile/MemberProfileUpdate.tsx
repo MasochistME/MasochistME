@@ -8,6 +8,7 @@ import { useUpdateMemberMutation, useMemberLeaderboards } from 'sdk';
 import { media } from 'styles';
 import { getHumanReadableDate } from 'utils';
 import { Alert, Flex, Tooltip, Button } from 'components';
+import { Variant } from 'components/Button/types';
 
 type Props = {
 	member?: Member;
@@ -17,10 +18,6 @@ export const MemberProfileUpdate = (props: Props) => {
 	const { member } = props;
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const [message, setMessage] = useState<string>('');
-	const handleMemberUpdate = () => {
-		mutate({ shouldUpdate: true });
-		setIsOpen(true);
-	};
 
 	const { leaderData } = useMemberLeaderboards(member?.steamId);
 	const { mutate, data: memberUpdateData } = useUpdateMemberMutation(
@@ -28,11 +25,17 @@ export const MemberProfileUpdate = (props: Props) => {
 	);
 
 	const isHighestPatronTier = leaderData?.patreonTier === PatronTier.TIER4;
+	const variant = isHighestPatronTier ? Variant.GOLDEN : Variant.DEFAULT;
 
 	useEffect(() => {
 		const response = memberUpdateData?.message ?? 'Please wait...';
 		if (response) setMessage(response);
 	}, [memberUpdateData]);
+
+	const handleMemberUpdate = () => {
+		mutate({ shouldUpdate: true });
+		setIsOpen(true);
+	};
 
 	const lastUpdate =
 		new Date(member?.lastUpdated ?? 0).getTime() === 0
@@ -55,7 +58,7 @@ export const MemberProfileUpdate = (props: Props) => {
 			<Button
 				label="Update"
 				icon="Refresh"
-				isGolden={isHighestPatronTier}
+				variant={variant}
 				onClick={handleMemberUpdate}
 			/>
 			<Alert

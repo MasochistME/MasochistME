@@ -2283,10 +2283,10 @@
   resolved "https://registry.yarnpkg.com/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz#b2ac626d6cb9c8718ab459166d4bb405b8ffa78b"
   integrity sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==
 
-"@masochistme/sdk@^3.2.3":
-  version "3.2.3"
-  resolved "https://registry.yarnpkg.com/@masochistme/sdk/-/sdk-3.2.3.tgz#8882ad1fe13ed4958e301372d94a8f623863dce0"
-  integrity sha512-R65QhyvxOVMpTAqJGtGgHrU1YyF9K5V9fMFY3dzIl7yt7LdUolPDsswC33BBcN3yIPiETvAjQ5ur/s0OwoQOtw==
+"@masochistme/sdk@^3.2.5":
+  version "3.2.5"
+  resolved "https://registry.yarnpkg.com/@masochistme/sdk/-/sdk-3.2.5.tgz#5281ef909e21c66e922b2900763926b532ea8bc6"
+  integrity sha512-UWInlEmB4BSoXAm2mAni4VMbCYG4Ev4b2t0WpcXu2+E2Rd4KRSy2Bay/M+TCKspCeizP0Bojqe1myAk+vnFUew==
   dependencies:
     axios "1.1.2"
     discord.js "^14.8.0"
@@ -2496,9 +2496,9 @@
     lodash "^4.17.21"
 
 "@sapphire/snowflake@^3.4.0":
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/@sapphire/snowflake/-/snowflake-3.4.0.tgz#25c012158a9feea2256c718985dbd6c1859a5022"
-  integrity sha512-zZxymtVO6zeXVMPds+6d7gv/OfnCc25M1Z+7ZLB0oPmeMTPeRWVPQSS16oDJy5ZsyCOLj7M6mbZml5gWXcVRNw==
+  version "3.4.2"
+  resolved "https://registry.yarnpkg.com/@sapphire/snowflake/-/snowflake-3.4.2.tgz#365af8e7b57ada924ec8e85383b921280f81d128"
+  integrity sha512-KJwlv5gkGjs1uFV7/xx81n3tqgBwBJvH94n1xDyH3q+JSmtsMeSleJffarEBfG2yAFeJiFA4BnGOK6FFPHc19g==
 
 "@sinclair/typebox@^0.24.1":
   version "0.24.47"
@@ -4762,9 +4762,9 @@ dir-glob@^3.0.1:
     path-type "^4.0.0"
 
 discord-api-types@^0.37.37:
-  version "0.37.37"
-  resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.37.37.tgz#49bc42a36124c85f06297f1548f130329ed5aeb0"
-  integrity sha512-LDMBKzl/zbvHO/yCzno5hevuA6lFIXJwdKSJZQrB+1ToDpFfN9thK+xxgZNR4aVkI7GHRDja0p4Sl2oYVPnHYg==
+  version "0.37.38"
+  resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.37.38.tgz#0599937f64aff63a2b534376563021f17537d166"
+  integrity sha512-p9dibYycLXY1FUM9bIuohYeHHwa/634394QE90n6Tlb6ID5HtCtXBPYY68oaOlFnlFLBJAOYATMwX5oiV+VqiA==
 
 discord.js@^14.8.0:
   version "14.9.0"
@@ -10182,9 +10182,9 @@ unbox-primitive@^1.0.2:
     which-boxed-primitive "^1.0.2"
 
 undici@^5.21.0:
-  version "5.21.0"
-  resolved "https://registry.yarnpkg.com/undici/-/undici-5.21.0.tgz#b00dfc381f202565ab7f52023222ab862bb2494f"
-  integrity sha512-HOjK8l6a57b2ZGXOcUsI5NLfoTrfmbOl90ixJDl0AEFG4wgHNDQxtZy15/ZQp7HhjkpaGlp/eneMgtsu1dIlUA==
+  version "5.21.2"
+  resolved "https://registry.yarnpkg.com/undici/-/undici-5.21.2.tgz#329f628aaea3f1539a28b9325dccc72097d29acd"
+  integrity sha512-f6pTQ9RF4DQtwoWSaC42P/NKlUjvezVvd9r155ohqkwFNRyBKM3f3pcty3ouusefNRyM25XhIQEbeQ46sZDJfQ==
   dependencies:
     busboy "^1.6.0"
 

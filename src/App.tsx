@@ -19,6 +19,7 @@ import { TabGame } from './pages/TabGame';
 import { TabGames } from './pages/TabGames';
 import { TabHistory } from './pages/TabHistory';
 import { TabHome } from './pages/TabHome';
+import { TabJoin } from './pages/TabJoin';
 import { TabLeaderboards } from './pages/TabLeaderboards';
 import { TabProfile } from './pages/TabProfile';
 import { TabSupport } from './pages/TabSupport';
@@ -106,6 +107,14 @@ export const App = (): JSX.Element => {
 								element={
 									<Boundary>
 										<TabGame />
+									</Boundary>
+								}
+							/>
+							<Route
+								path="/join/*"
+								element={
+									<Boundary>
+										<TabJoin />
 									</Boundary>
 								}
 							/>
