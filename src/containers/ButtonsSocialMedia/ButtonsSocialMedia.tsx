@@ -6,6 +6,8 @@ import { Flex, Button } from 'components';
 import { Size } from 'components';
 import { useMixpanel } from 'hooks';
 import { curatorURL } from 'utils';
+import { Variant } from 'components/Button/types';
+import { useNavigate } from 'react-router';
 
 type Props = {
 	size?: Size;
@@ -14,6 +16,7 @@ type Props = {
 export const ButtonsSocialMedia = (props: Props): JSX.Element => {
 	const { size = Size.BIG } = props;
 	const { track } = useMixpanel();
+	const navigate = useNavigate();
 
 	const onButtonCuratorClick = () => {
 		track(`button.curator.click`);
@@ -27,9 +30,19 @@ export const ButtonsSocialMedia = (props: Props): JSX.Element => {
 		track(`button.discord.click`);
 		window.open('https://discord.gg/NjAeT53kVb', '_blank');
 	};
+	const onJoinUsClick = () => {
+		track(`button.joinus.click`);
+		navigate('/join');
+	};
 
 	return (
 		<StyledButtonsSocialMedia>
+			<Button
+				size={Size.SMALL}
+				label="Join us!"
+				variant={Variant.PRIMARY}
+				onClick={onJoinUsClick}
+			/>
 			<Button
 				size={size}
 				icon="Steam"

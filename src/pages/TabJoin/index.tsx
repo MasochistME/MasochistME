@@ -3,15 +3,16 @@ import { useNavigate } from 'react-router';
 
 import styled from 'styled-components';
 
-import { useActiveTab } from 'hooks';
+import { useActiveTab, useMixpanel } from 'hooks';
 import { TabDict } from 'configuration/tabs';
-import { Button, Flex, Icon } from 'components';
+import { Button, Flex } from 'components';
 import { Variant } from 'components/Button/types';
 import { SubPage, Section, SectionProps } from 'containers';
 
 import { CandidateSummary } from './CandidateSummary';
 import { SteamNameInput } from './SteamNameInput';
 import { useSearchParams } from 'react-router-dom';
+import { curatorURL } from 'utils';
 
 export const TabJoin = () => {
 	useActiveTab(TabDict.JOIN);
@@ -24,55 +25,105 @@ export const TabJoin = () => {
 
 	return (
 		<SubPage>
-			<StyledWrapper column justify align>
-				<Info isMobileOnly width="100%" />
-				<StyledTitle>
-					<h2>Points checker</h2>
-					<Icon
-						icon="CircleInfo"
-						hoverText="Does not count possible badges and family share games (unless you played them less than two weeks ago)"
-					/>
-				</StyledTitle>
-				<SteamNameInput setSteamUrl={setSteamUrl} />
-				<CandidateSummary steamUrl={steamUrl} />
+			<StyledWrapper justify>
+				<Section
+					flex="1 1 75rem"
+					isStyled={false}
+					title="Points checker"
+					content={
+						<Flex column gap="var(--size-16)">
+							<SteamNameInput setSteamUrl={setSteamUrl} />
+							<CandidateSummary steamUrl={steamUrl} />
+						</Flex>
+					}
+				/>
+				<Flex column gap="var(--size-16)" flex="1 1 30%">
+					<CommunityInfo />
+					<JoinInfo />
+				</Flex>
 			</StyledWrapper>
-			<Info isDesktopOnly width="100%" maxWidth="450px" />
 		</SubPage>
 	);
 };
 
 type InfoProps = Partial<SectionProps>;
-const Info = (props: InfoProps) => {
+const JoinInfo = (props: InfoProps) => {
+	return (
+		<Section
+			title="How to join us?"
+			width="100%"
+			content={
+				<StyledInfo>
+					<div>
+						To join, you have to have{' '}
+						<span style={{ fontWeight: 600 }}>at least 20 points</span> worth of
+						games curated on MasochistME. The list of endorsed games is
+						available under the GAMES tab. A single game cannot give you more
+						than 10 points - this is to encourage variety.
+					</div>
+					<div>
+						You can check how many points you have by using our point checker.
+						Remember to set your Steam profile and game list to public first. As
+						a candidate, you can update your profile once a week.
+					</div>
+					<div></div>
+				</StyledInfo>
+			}
+			{...props}
+		/>
+	);
+};
+
+const CommunityInfo = () => {
 	const navigate = useNavigate();
-	const onGameListClick = () => {
-		navigate('/games');
+	const { track } = useMixpanel();
+
+	const onButtonDiscordClick = () => {
+		track(`button.discord.click`);
+		window.open('https://discord.gg/NjAeT53kVb', '_blank');
+	};
+	const onButtonCuratorClick = () => {
+		track(`button.discord.click`);
+		window.open(curatorURL, '_blank');
+	};
+	const onButtonSupportClick = () => {
+		track(`button.support.click`);
+		navigate('/support');
 	};
 
 	return (
 		<Section
-			title="Rules"
-			width="100%"
-			maxWidth="600px"
+			title="About us"
 			content={
-				<>
-					<p>
-						To join, you have to have at least 20 points worth of games curated
-						on MasochistME. The list of endorsed games is available under the
-						GAMES tab.
-					</p>
-					<Button
-						icon="Gamepad"
-						label="Game list"
-						variant={Variant.PRIMARY}
-						onClick={onGameListClick}
-					/>
-					<p>
-						A single game cannot give you more than 10 points - this is to
-						encourage variety.
-					</p>
-				</>
+				<StyledInfo>
+					<div>
+						We are a tight-knit community of gamers who enjoy a good challenge.
+						We select the most demanding and unique games that Steam has to
+						offer, curate them and then participate in a friendly competition
+						against each other in custom leaderboards.
+					</div>
+					<Flex gap={16} flexWrap="wrap" justify>
+						<Button
+							label="Discord server"
+							icon="Discord"
+							variant={Variant.PRIMARY}
+							onClick={onButtonDiscordClick}
+						/>
+						<Button
+							label="Steam curator"
+							icon="Steam"
+							variant={Variant.PRIMARY}
+							onClick={onButtonCuratorClick}
+						/>
+						<Button
+							label="Support us!"
+							icon="Heart"
+							variant={Variant.PRIMARY}
+							onClick={onButtonSupportClick}
+						/>
+					</Flex>
+				</StyledInfo>
 			}
-			{...props}
 		/>
 	);
 };
@@ -81,14 +132,11 @@ const StyledWrapper = styled(Flex)`
 	width: 100%;
 	align-items: flex-start;
 	flex-wrap: wrap;
-	gap: 8px;
+	gap: var(--size-16);
 `;
 
-const StyledTitle = styled.div`
+const StyledInfo = styled.div`
 	display: flex;
-	gap: 8px;
-	align-items: center;
-	h2 {
-		margin: 0;
-	}
+	flex-direction: column;
+	gap: var(--size-8);
 `;

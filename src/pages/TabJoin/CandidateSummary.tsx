@@ -53,7 +53,7 @@ const CandidateSummaryBoundary = ({ steamUrl }: Pick<Props, 'steamUrl'>) => {
 
 	const groupedTierPoints = useMemo(
 		() => (
-			<Flex row gap={8}>
+			<Flex row gap={8} justify flexWrap="wrap">
 				{Object.values(tiersSum).map(tier => (
 					<StatBlock
 						sublabel="points in tier"

@@ -10,8 +10,6 @@ import { TabDict } from 'configuration/tabs';
 import { Flex, QueryBoundary } from 'components';
 import { SubPage, DashboardTile } from 'containers';
 
-import { CommunityInfo } from './CommunityInfo';
-
 export enum SectionMap {
 	WELCOME = 'welcome',
 	UPDATE = 'update',
@@ -30,7 +28,6 @@ export const TabHome = (): JSX.Element => {
 	return (
 		<SubPage>
 			<StyledDashboard column justify align>
-				<CommunityInfo />
 				<QueryBoundary
 					fallback={<DashboardTile.Featured.Skeleton isMobileOnly />}
 					errorFallback={<DashboardTile.Featured.Error isMobileOnly />}>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { Button, Input, Size } from 'components';
-import { useTheme, ColorTokens } from 'styles';
+import { useTheme, ColorTokens, media } from 'styles';
 import { validateSteamUrl } from 'pages/TabJoin/utils';
 import { useSearchParams } from 'react-router-dom';
 
@@ -62,6 +62,11 @@ const StyledInputWrapper = styled.div<{ colorTokens: ColorTokens }>`
 	background-color: ${({ colorTokens }) => colorTokens['core-secondary-bg']};
 	border-radius: 64px;
 	width: 100%;
+
+	@media (max-width: ${media.tablets}) {
+		/* flex-wrap: wrap; */
+		padding: var(--size-8) var(--size-12);
+	}
 
 	.steam-url__button-go {
 		display: flex;

@@ -70,9 +70,11 @@ const StyledButton = styled.button.attrs((props: Props) => {
 	};
 	return { style };
 })<StyledButtonProps>`
-	display: flex;
+	display: inline-flex;
+	flex-basis: auto;
 	align-items: center;
-	margin: 0;
+	align-self: flex-start;
+	margin: auto 0;
 	border: none;
 	gap: var(--size-8);
 	padding: ${({ iconOnly }) =>

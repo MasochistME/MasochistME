@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Candidate } from '@masochistme/sdk/dist/v1/types';
 
 import { ColorMap } from 'utils';
-import { ColorTokens, useTheme } from 'styles';
+import { ColorTokens, media, useTheme } from 'styles';
 import { Flex, Icon, Size } from 'components';
 
 type Props = { candidate: Candidate };
@@ -14,13 +14,13 @@ export const CandidateVerdict = ({ candidate }: Props) => {
 
 	return (
 		<StyledCandidateVerdict isEligible={isEligible} colorTokens={colorTokens}>
-			<Flex align gap={'var(--size-8)'} flex="1 1 auto">
+			<Flex align gap={'var(--size-8)'}>
 				<Icon icon={isEligible ? 'SquareCheck' : 'SquareX'} size={Size.SMALL} />
-				<div style={{ fontSize: 'var(--font-size-18)' }}>
+				<StyledCandidateVerdictSummary>
 					{isEligible
 						? 'You are eligible to join!'
-						: 'You are not eligible to join yet!'}
-				</div>
+						: 'You are not yet eligible to join!'}
+				</StyledCandidateVerdictSummary>
 			</Flex>
 			<StyledCandidatePoints>Pts: {pointsSum ?? 0}</StyledCandidatePoints>
 		</StyledCandidateVerdict>
@@ -33,6 +33,8 @@ const StyledCandidateVerdict = styled.div<{
 }>`
 	display: flex;
 	align-items: center;
+	width: 100%;
+	justify-content: space-between;
 	font-family: var(--font-dosis);
 	font-weight: 600;
 	padding: var(--size-4);
@@ -46,10 +48,16 @@ const StyledCandidateVerdict = styled.div<{
 			: colorTokens[`semantic-color--${ColorMap.ERROR}`]};
 `;
 
+const StyledCandidateVerdictSummary = styled.div`
+	text-align: left;
+	font-size: var(--font-size-18);
+	line-height: var(--font-size-20);
+`;
+
 const StyledCandidatePoints = styled.div`
 	display: flex;
-	flex-wrap: nowrap;
+	flex: 0 0 auto;
+	margin-right: var(--size-8);
 	font-family: var(--font-dosis);
 	font-size: var(--font-size-20);
-	margin-right: var(--size-8);
 `;
