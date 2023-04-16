@@ -25,7 +25,7 @@ export const CandidateSummary = ({ steamUrl }: Props) => {
 	return (
 		<QueryBoundary
 			fallback={
-				<Loader title="This might take a few minutes - do not leave this page..." />
+				<Loader title="This might take a few minutes - you can leave that page and come back later" />
 			}
 			errorFallback={<ErrorFallback />}>
 			<CandidateSummaryBoundary steamUrl={steamUrl} />

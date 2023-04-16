@@ -11,10 +11,11 @@ import { useNavigate } from 'react-router';
 
 type Props = {
 	size?: Size;
+	withJoinButton?: boolean;
 };
 
 export const ButtonsSocialMedia = (props: Props): JSX.Element => {
-	const { size = Size.BIG } = props;
+	const { size = Size.BIG, withJoinButton = false } = props;
 	const { track } = useMixpanel();
 	const navigate = useNavigate();
 
@@ -37,12 +38,14 @@ export const ButtonsSocialMedia = (props: Props): JSX.Element => {
 
 	return (
 		<StyledButtonsSocialMedia>
-			<Button
-				size={Size.SMALL}
-				label="Join us!"
-				variant={Variant.PRIMARY}
-				onClick={onJoinUsClick}
-			/>
+			{withJoinButton && (
+				<Button
+					size={Size.SMALL}
+					label="Join us!"
+					variant={Variant.PRIMARY}
+					onClick={onJoinUsClick}
+				/>
+			)}
 			<Button
 				size={size}
 				icon="Steam"

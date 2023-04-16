@@ -47,33 +47,6 @@ export const TabJoin = () => {
 };
 
 type InfoProps = Partial<SectionProps>;
-const JoinInfo = (props: InfoProps) => {
-	return (
-		<Section
-			title="How to join us?"
-			width="100%"
-			content={
-				<StyledInfo>
-					<div>
-						To join, you have to have{' '}
-						<span style={{ fontWeight: 600 }}>at least 20 points</span> worth of
-						games curated on MasochistME. The list of endorsed games is
-						available under the GAMES tab. A single game cannot give you more
-						than 10 points - this is to encourage variety.
-					</div>
-					<div>
-						You can check how many points you have by using our point checker.
-						Remember to set your Steam profile and game list to public first. As
-						a candidate, you can update your profile once a week.
-					</div>
-					<div></div>
-				</StyledInfo>
-			}
-			{...props}
-		/>
-	);
-};
-
 const CommunityInfo = () => {
 	const navigate = useNavigate();
 	const { track } = useMixpanel();
@@ -124,6 +97,37 @@ const CommunityInfo = () => {
 					</Flex>
 				</StyledInfo>
 			}
+		/>
+	);
+};
+
+const JoinInfo = (props: InfoProps) => {
+	return (
+		<Section
+			title="How to join us?"
+			width="100%"
+			content={
+				<StyledInfo>
+					<div>
+						To join, you have to have{' '}
+						<span style={{ fontWeight: 600 }}>at least 20 points</span> worth of
+						games curated on MasochistME. The list of endorsed games is
+						available under the GAMES tab. A single game cannot give you more
+						than 10 points - this is to encourage variety.
+					</div>
+					<div>
+						You can check how many points you have by using our point checker.
+						Remember to set your Steam profile and game list to public first. As
+						a candidate, you can update your profile once a week.
+					</div>
+					<div>
+						<span style={{ fontWeight: 600 }}>→ Eligible to join?</span> Copy
+						the URL of this page with your point checker results and post them
+						in our Discord! Mods will get back to you.
+					</div>
+				</StyledInfo>
+			}
+			{...props}
 		/>
 	);
 };
