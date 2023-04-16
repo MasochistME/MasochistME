@@ -34,11 +34,17 @@ export const CandidateHeader = ({ candidate }: Props) => {
 					</StyledCandidateUsername>
 				</a>
 			</Flex>
-			<Flex column alignItems="flex-end">
-				<span>Last updated:</span>
-				<span style={{ fontStyle: 'italic' }}>
-					{getHumanReadableDate(candidate.updated)}
-				</span>
+			<Flex align gap={8}>
+				<Flex column alignItems="flex-end">
+					<span>Last updated:</span>
+					<span style={{ fontStyle: 'italic' }}>
+						{getHumanReadableDate(candidate.updated)}
+					</span>
+				</Flex>
+				<Icon
+					icon="CircleInfo"
+					hoverText="This profile info will be stored for a week. You will be able to update again after that time passes."
+				/>
 			</Flex>
 		</StyledCandidateHeader>
 	);

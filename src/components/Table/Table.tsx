@@ -62,7 +62,7 @@ export const Table = <T extends Record<any, any>>(props: Props<T>) => {
 		property: string,
 	) => {
 		setOrderBy(property);
-		setOrder(order === 'asc' ? 'desc' : 'asc');
+		setOrder(_order === 'asc' ? 'desc' : 'asc');
 	};
 
 	const tableHeaderCells = fixedColumns.map(column => ({
@@ -78,7 +78,7 @@ export const Table = <T extends Record<any, any>>(props: Props<T>) => {
 		<StyledTable className="MuiTable-root" aria-label="simple table">
 			<colgroup>{colGroup}</colgroup>
 			<TableHeader
-				order={order}
+				order={_order}
 				orderBy={_orderBy}
 				tableHeaderCells={tableHeaderCells}
 				onRequestSort={handleRequestSort}
@@ -87,7 +87,7 @@ export const Table = <T extends Record<any, any>>(props: Props<T>) => {
 				rows={fixedRows}
 				page={page}
 				rowsPerPage={rowsPerPage}
-				order={order}
+				order={_order}
 				orderBy={_orderBy}
 			/>
 			<TablePagination
