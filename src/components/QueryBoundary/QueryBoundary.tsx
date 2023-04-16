@@ -28,15 +28,15 @@ export const QueryBoundary = (props: Props) => {
 		onReset,
 		onError,
 	} = props;
+	const [, setError] = useState<Error | null>(null);
 	const location = useLocation();
-
-	const [error, setError] = useState<Error | null>(null);
+	const errorBoundaryKey = `${location.pathname}${location.search}`;
 
 	return (
 		<QueryErrorResetBoundary>
 			{({ reset }) => (
 				<ErrorBoundary
-					key={location.pathname}
+					key={errorBoundaryKey}
 					onReset={reset}
 					onError={(e: Error) => {
 						if (onError) onError(e);
@@ -63,9 +63,15 @@ const ErrorFallback = ({
 	errorFallback,
 	displayError,
 }: FallbackProps & Pick<Props, 'errorFallback' | 'displayError'>) => {
+	console.log(error);
 	const [showErrorModal, setShowErrorModal] = useState(false);
 
-	if (errorFallback) return errorFallback;
+	if (errorFallback) {
+		const errorFallbackComponentWithError = React.cloneElement(errorFallback, {
+			error: typeof error === 'string' ? error : error.message,
+		});
+		return errorFallbackComponentWithError;
+	}
 	if (displayError && error)
 		return (
 			<ErrorModal

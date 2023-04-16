@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
 import styled from 'styled-components';
@@ -11,12 +11,16 @@ import { SubPage, Section, SectionProps } from 'containers';
 
 import { CandidateSummary } from './CandidateSummary';
 import { SteamNameInput } from './SteamNameInput';
+import { useSearchParams } from 'react-router-dom';
 
 export const TabJoin = () => {
 	useActiveTab(TabDict.JOIN);
-	// const { colorTokens } = useTheme();
-	const [isServerError, setIsServerError] = useState<boolean>(false);
+	const [, setSearchParams] = useSearchParams();
 	const [steamUrl, setSteamUrl] = useState<string>('');
+
+	useEffect(() => {
+		if (steamUrl.length) setSearchParams({ url: steamUrl });
+	}, [steamUrl]);
 
 	return (
 		<SubPage>
@@ -29,15 +33,8 @@ export const TabJoin = () => {
 						hoverText="Does not count possible badges and family share games (unless you played them less than two weeks ago)"
 					/>
 				</StyledTitle>
-				<SteamNameInput
-					setSteamUrl={setSteamUrl}
-					setIsServerError={setIsServerError}
-				/>
-				<CandidateSummary
-					steamUrl={steamUrl}
-					isServerError={isServerError}
-					setIsServerError={setIsServerError}
-				/>
+				<SteamNameInput setSteamUrl={setSteamUrl} />
+				<CandidateSummary steamUrl={steamUrl} />
 			</StyledWrapper>
 			<Info isDesktopOnly width="100%" maxWidth="450px" />
 		</SubPage>

@@ -17,6 +17,10 @@ export const getGameSteamUrl = (gameId: number): string => {
 	return `http://store.steampowered.com/api/appdetails?appids=${gameId}`;
 };
 
+export const getUserSteamUrl = (steamId: string): string => {
+	return `http://steamcommunity.com/profiles/${steamId}`;
+};
+
 export const getAvatarFromHash = (
 	avatarHash: string,
 	size: 'full' | 'medium' = 'full',

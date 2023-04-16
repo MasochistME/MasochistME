@@ -8,12 +8,14 @@ type Props = {
 	height?: string;
 	maxWidth?: string;
 	maxHeight?: string;
+	error?: string;
 };
 export const ErrorFallback = (props: Props) => {
+	const { error = 'Could not load', ...rest } = props;
 	return (
-		<StyledWrapper {...props}>
+		<StyledWrapper {...rest}>
 			<StyledImg src="http://cdn.masochist.me/files/ash_fail.png" />
-			<StyledText>Could not load</StyledText>
+			<StyledText>{error}</StyledText>
 		</StyledWrapper>
 	);
 };

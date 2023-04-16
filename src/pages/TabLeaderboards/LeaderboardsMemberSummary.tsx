@@ -136,14 +136,14 @@ const StyledLeaderboardsMemberSummary = styled(Flex)<SummaryProps>`
 		}};
 	border-top: var(--size-1) solid
 		${({ colorTokens, isDisabled, isHighestPatronTier }) => {
-			if (isDisabled) return colorTokens['semantic-color--error'];
+			if (isDisabled) return `${colorTokens['semantic-color--error']}b8`;
 			if (isHighestPatronTier)
 				return `${colorTokens['semantic-color--tier-4']}88`;
 			return `${colorTokens['semantic-color--interactive']}99`;
 		}};
 	border-left: var(--size-1) solid
 		${({ colorTokens, isDisabled, isHighestPatronTier }) => {
-			if (isDisabled) return colorTokens['semantic-color--error'];
+			if (isDisabled) return `${colorTokens['semantic-color--error']}b8`;
 			if (isHighestPatronTier)
 				return `${colorTokens['semantic-color--tier-4']}88`;
 			return `${colorTokens['semantic-color--interactive']}99`;

@@ -31,6 +31,9 @@ export interface ColorTokens extends ColorTokensCommon {
 	'semantic-color--active': string; // white
 	'semantic-color--disabled': string; // mediumGrey
 
+	'semantic-color--success': string; // green? TODO
+	'semantic-color--success-strong': string; // green? TODO
+	'semantic-color--success-muted': string; // green? TODO
 	'semantic-color--warning': string; // yellow
 	'semantic-color--warning-strong': string; // yellow
 	'semantic-color--warning-muted': string; // tier4muted
@@ -96,10 +99,15 @@ export const colors: Record<Theme, ColorTokens> = {
 		'semantic-color--active': '#9895db',
 		'semantic-color--disabled': '#7b7a8d',
 
+		// TODO - START
+		'semantic-color--success': '#62ad3e',
+		'semantic-color--success-strong': '#335621',
+		'semantic-color--success-muted': '#546c48',
+		// TODO - END
 		'semantic-color--warning': '#fdc000',
 		'semantic-color--warning-strong': '#fdc000',
 		'semantic-color--warning-muted': '#a47b00',
-		'semantic-color--error': '#582e34',
+		'semantic-color--error': '#9b091e',
 		'semantic-color--error-strong': '#d38893',
 		'semantic-color--error-muted': '#1e1012',
 
@@ -151,6 +159,11 @@ export const colors: Record<Theme, ColorTokens> = {
 		'semantic-color--active': '#ffa5a5',
 		'semantic-color--disabled': '#7b7a8d',
 
+		// TODO - START
+		'semantic-color--success': '#fd8cc5',
+		'semantic-color--success-strong': '#cb2578',
+		'semantic-color--success-muted': '#b76c91',
+		// TODO - END
 		'semantic-color--warning': '#fdc000',
 		'semantic-color--warning-strong': '#fdc000',
 		'semantic-color--warning-muted': '#a47b00',
@@ -206,6 +219,11 @@ export const colors: Record<Theme, ColorTokens> = {
 		'semantic-color--active': '#0a0a0a',
 		'semantic-color--disabled': '#7b7a8d',
 
+		// TODO - START
+		'semantic-color--success': '#62ad3e',
+		'semantic-color--success-strong': '#335621',
+		'semantic-color--success-muted': '#546c48',
+		// TODO - END
 		'semantic-color--warning': '#fdc000',
 		'semantic-color--warning-strong': '#fdc000',
 		'semantic-color--warning-muted': '#a47b00',

@@ -12,6 +12,7 @@ type Props<T extends string> = {
 	icon?: IconType;
 	error?: string;
 	isFullWidth?: boolean;
+	name?: string;
 	onEnterPress?: () => void;
 };
 
@@ -21,6 +22,7 @@ export const Input = <T extends string>(props: Props<T>): JSX.Element => {
 		icon,
 		placeholder,
 		error,
+		name,
 		isFullWidth = false,
 		query,
 		setQuery,
@@ -50,6 +52,7 @@ export const Input = <T extends string>(props: Props<T>): JSX.Element => {
 					colorTokens={colorTokens}
 					onKeyDown={onKeyDown}
 					isError={!!error}
+					{...(name ? { name } : {})}
 				/>
 			</StyledInputWrapperInternal>
 			{!!error && (

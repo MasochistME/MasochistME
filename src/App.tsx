@@ -111,7 +111,7 @@ export const App = (): JSX.Element => {
 								}
 							/>
 							<Route
-								path="/join"
+								path="/join/*"
 								element={
 									<Boundary>
 										<TabJoin />
