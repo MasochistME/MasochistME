@@ -37,6 +37,7 @@ export const App = (): JSX.Element => {
 					<Content colorTokens={colorTokens}>
 						<SubHeader />
 						<Routes>
+							<Route path="*" element={<NotFound />} />
 							<Route
 								path="/"
 								element={
@@ -126,7 +127,6 @@ export const App = (): JSX.Element => {
 									</Boundary>
 								}
 							/>
-							<Route element={<NotFound />} />
 						</Routes>
 					</Content>
 				</Flex>
