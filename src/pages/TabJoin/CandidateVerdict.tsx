@@ -22,7 +22,7 @@ export const CandidateVerdict = ({ candidate }: Props) => {
 						: 'You are not yet eligible to join!'}
 				</StyledCandidateVerdictSummary>
 			</Flex>
-			<StyledCandidatePoints>Pts: {pointsSum ?? 0}</StyledCandidatePoints>
+			<StyledCandidatePoints>{pointsSum ?? 0}/20 pts</StyledCandidatePoints>
 		</StyledCandidateVerdict>
 	);
 };
@@ -40,7 +40,7 @@ const StyledCandidateVerdict = styled.div<{
 	padding: var(--size-4);
 	color: ${({ isEligible, colorTokens }) =>
 		isEligible
-			? colorTokens[`core-primary-bg`]
+			? colorTokens[`common-color--black`]
 			: colorTokens[`core-primary-text`]};
 	background-color: ${({ isEligible, colorTokens }) =>
 		isEligible

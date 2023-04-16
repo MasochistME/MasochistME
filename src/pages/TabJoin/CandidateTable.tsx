@@ -6,6 +6,7 @@ import { GameThumbnail } from 'containers';
 import { useTiers } from 'sdk';
 import { useTheme } from 'styles';
 import { getTierIcon } from 'utils';
+import { useNavigate } from 'react-router';
 
 enum Columns {
 	TIER = '',
@@ -16,8 +17,14 @@ enum Columns {
 type Props = { candidate: Candidate };
 
 export const CandidateTable = ({ candidate }: Props) => {
+	const navigate = useNavigate();
 	const { colorTokens } = useTheme();
 	const { tiersData } = useTiers();
+
+	const onGameClick = (gameId: number) => {
+		navigate(`/game/${gameId}`);
+	};
+
 	const columns: TableColumn<CandidateGame>[] = [
 		{
 			key: Columns.TIER,
@@ -36,7 +43,11 @@ export const CandidateTable = ({ candidate }: Props) => {
 				<TableCell
 					content={
 						<StyledCandidateGameTitle>
-							<GameThumbnail gameId={game.id} size={Size.SMALL} />
+							<GameThumbnail
+								gameId={game.id}
+								size={Size.SMALL}
+								onClick={() => onGameClick(game.id)}
+							/>
 							{game.title}
 						</StyledCandidateGameTitle>
 					}
@@ -55,10 +66,15 @@ export const CandidateTable = ({ candidate }: Props) => {
 						<Icon
 							icon="SquareCheck"
 							color={colorTokens['semantic-color--success']}
+							shadowColor={colorTokens['common-color--black']}
 						/>
 					);
 				return (
-					<Icon icon="SquareX" color={colorTokens['semantic-color--error']} />
+					<Icon
+						icon="SquareX"
+						color={colorTokens['semantic-color--error-strong']}
+						shadowColor={colorTokens['common-color--black']}
+					/>
 				);
 			},
 			style: { width: '1rem' },
