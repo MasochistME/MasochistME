@@ -228,11 +228,11 @@ const getIdFromUrl = async (steamUrl?: string) => {
   const vanityUrl = 'https://steamcommunity.com/id/';
 
   if (steamUrl?.includes(normalUrl)) {
-    const id = steamUrl.replace(normalUrl, '');
+    const id = steamUrl.replace(normalUrl, '').replace('/', '');
     return id;
   }
 
-  const vanityName = steamUrl?.replace(vanityUrl, '');
+  const vanityName = steamUrl?.replace(vanityUrl, '').replace('/', '');
   const idUrl = 'http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001';
   const idData = await axios.get(idUrl, {
     params: {

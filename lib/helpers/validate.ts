@@ -46,10 +46,10 @@ export const validateSteamUrl = (steamUrl?: string) => {
     'Steam profile link must follow one of two formats: https://steamcommunity.com/id/ + your unique ID, which consists of letters, numbers and symbol _; or https://steamcommunity.com/profiles/ + your numeric ID.';
 
   const steamUrlWithIdValidator = new RegExp(
-    /^(https:\/\/steamcommunity.com\/id\/)[a-zA-Z0-9_]*$/i,
+    /^(https:\/\/steamcommunity.com\/id\/)[a-zA-Z0-9_]*[\/]?$/i,
   );
   const steamUrlWithProfileValidator = new RegExp(
-    /^(https:\/\/steamcommunity.com\/profiles\/)[0-9]*$/i,
+    /^(https:\/\/steamcommunity.com\/profiles\/)[0-9]*[\/]?$/i,
   );
 
   const hasError =
