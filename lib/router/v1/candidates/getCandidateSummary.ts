@@ -58,9 +58,10 @@ export const getCandidateSummary = async (
      * If yes: do not proceed.
      */
     if (updateQueue.CANDIDATE_QUEUE.includes(userId)) {
-      res
-        .status(409)
-        .send({ error: 'This candidate is already being scouted.' });
+      res.status(409).send({
+        error:
+          'This candidate is already being scouted - visit this page again in a few minutes!',
+      });
       log.INFO(`--> [SCOUT] candidate ${userId} [ALREADY UPDATING]`);
       return;
     }
