@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { useTheme, ColorTokens } from 'styles';
 import { Icon, IconType, Tooltip } from 'components';
 import { Size } from 'components';
+import { Variant } from './types';
+import React from 'react';
 
 type Props = {
 	label?: string;
@@ -12,7 +14,8 @@ type Props = {
 	toggled?: boolean;
 	tooltip?: React.ReactNode;
 	size?: Size;
-	isGolden?: boolean;
+	variant?: Variant;
+	className?: string;
 	onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 };
 
@@ -24,8 +27,9 @@ export const Button = (props: Props) => {
 		disabled = false,
 		toggled = false,
 		tooltip,
-		isGolden = false,
 		size = Size.MEDIUM,
+		variant = Variant.DEFAULT,
+		className,
 		onClick,
 	} = props;
 	const { colorTokens } = useTheme();
@@ -38,8 +42,9 @@ export const Button = (props: Props) => {
 				disabled={disabled}
 				toggled={toggled}
 				colorTokens={colorTokens}
-				isGolden={isGolden}
-				onClick={onClick}>
+				variant={variant}
+				onClick={onClick}
+				className={className}>
 				{icon && iconPlacement === 'left' && (
 					<Icon icon={icon} size={size / 3} />
 				)}
@@ -52,25 +57,34 @@ export const Button = (props: Props) => {
 	);
 };
 
-const StyledButton = styled.button<{
+type StyledButtonProps = {
 	size: Size;
+	variant: Variant;
 	toggled: boolean;
 	iconOnly: boolean;
-	isGolden: boolean;
 	colorTokens: ColorTokens;
-}>`
-	display: flex;
+};
+const StyledButton = styled.button.attrs((props: Props) => {
+	const style: React.CSSProperties = {
+		cursor: props.disabled ? `not-allowed` : 'pointer',
+	};
+	return { style };
+})<StyledButtonProps>`
+	display: inline-flex;
+	flex-basis: auto;
 	align-items: center;
-	margin: 0;
+	align-self: flex-start;
+	margin: auto 0;
 	border: none;
 	gap: var(--size-8);
 	padding: ${({ iconOnly }) =>
 		iconOnly ? `var(--size-8)` : 'var(--size-6) var(--size-10)'};
 	border-radius: var(--border-radius-4);
-	border: ${({ iconOnly, isGolden, colorTokens }) => {
+	border: ${({ iconOnly, variant, colorTokens }) => {
 		if (iconOnly) return 0;
-		if (isGolden)
-			return `var(--size-1) solid ${colorTokens['semantic-color--tier-4']}`;
+		if (variant === Variant.GOLDEN) {
+			return `1px solid ${colorTokens['semantic-color--tier-4']}`;
+		}
 		return `var(--size-1) solid ${colorTokens['element-color--button-border']}`;
 	}};
 	font-size: ${({ size }) => {
@@ -83,22 +97,33 @@ const StyledButton = styled.button<{
 	}};
 	font-family: var(--font-raleway);
 	font-weight: 600;
-	background-color: ${({ iconOnly, isGolden, colorTokens }) => {
+	background-color: ${({ iconOnly, variant, colorTokens }) => {
 		if (iconOnly) return 'transparent';
-		if (isGolden) return `${colorTokens['core-primary-bg']}99`;
-		return colorTokens['element-color--button-bg'];
+		if (variant === Variant.DEFAULT)
+			return colorTokens['element-color--button-bg'];
+		if (variant === Variant.PRIMARY)
+			return colorTokens['element-color--button-text'];
+		if (variant === Variant.GOLDEN)
+			return `${colorTokens['core-primary-bg']}99`;
 	}};
-	color: ${({ colorTokens, isGolden, toggled }) => {
-		if (isGolden) return colorTokens['semantic-color--tier-4'];
+	color: ${({ colorTokens, variant, disabled, toggled }) => {
+		if (disabled) return colorTokens['semantic-color--disabled'];
 		if (toggled) return colorTokens['core-primary-text'];
-		return colorTokens['element-color--button-text'];
+		if (variant === Variant.DEFAULT)
+			return colorTokens['element-color--button-text'];
+		if (variant === Variant.PRIMARY)
+			return colorTokens['element-color--button-bg'];
+		if (variant === Variant.GOLDEN)
+			return colorTokens['semantic-color--tier-4'];
 	}};
 
-	cursor: pointer;
 	&:hover {
-		color: ${({ colorTokens, isGolden }) =>
-			isGolden
-				? colorTokens['core-tertiary-text']
-				: colorTokens['core-primary-text']};
+		color: ${({ colorTokens, disabled, variant }) => {
+			if (disabled) return;
+			if (variant === Variant.DEFAULT) return colorTokens['core-primary-text'];
+			if (variant === Variant.PRIMARY)
+				return colorTokens['element-color--button-bg'];
+			if (variant === Variant.GOLDEN) return colorTokens['core-tertiary-text'];
+		}};
 	}
 `;
