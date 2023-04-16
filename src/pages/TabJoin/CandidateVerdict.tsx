@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Candidate } from '@masochistme/sdk/dist/v1/types';
 
 import { ColorMap } from 'utils';
-import { ColorTokens, media, useTheme } from 'styles';
+import { ColorTokens, useTheme } from 'styles';
 import { Flex, Icon, Size } from 'components';
 
 type Props = { candidate: Candidate };

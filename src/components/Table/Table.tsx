@@ -12,12 +12,19 @@ type Props<T> = {
 	columns: TableColumn<T>[];
 	dataset: T[];
 	rowsPerPage?: number;
+	order?: 'asc' | 'desc';
 	orderBy?: string;
 };
 
 export const Table = <T extends Record<any, any>>(props: Props<T>) => {
-	const { columns, dataset, orderBy, rowsPerPage: _rowsPerPage } = props;
-	const [order, setOrder] = useState<Order>('asc');
+	const {
+		columns,
+		dataset,
+		order = 'asc',
+		orderBy,
+		rowsPerPage: _rowsPerPage,
+	} = props;
+	const [_order, setOrder] = useState<Order>(order);
 	const [_orderBy, setOrderBy] = useState<string | undefined>(orderBy);
 	const [page, setPage] = useState<number>(0);
 	const [rowsPerPage, setRowsPerPage] = useState<number>(_rowsPerPage ?? 20);

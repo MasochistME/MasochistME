@@ -14,6 +14,7 @@ import { ColorMap } from 'utils';
 import { ColorTokens, useTheme } from 'styles';
 import { CandidateHeader } from './CandidateHeader';
 import { CandidateVerdict } from './CandidateVerdict';
+import { CandidateTable } from 'pages/TabJoin/CandidateTable';
 
 type Props = {
 	steamUrl: string;
@@ -73,6 +74,7 @@ const CandidateSummaryBoundary = ({ steamUrl }: Pick<Props, 'steamUrl'>) => {
 			<Flex column gap={16} padding={'var(--size-16)'}>
 				<CandidateHeader candidate={candidateData} />
 				{groupedTierPoints}
+				<CandidateTable candidate={candidateData} />
 			</Flex>
 		</StyledCandidateSummary>
 	);

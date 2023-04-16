@@ -9,12 +9,13 @@ import { useTheme, ColorTokens } from 'styles';
 
 type Props = CommonProps & {
 	game?: Game;
+	gameId?: number;
 };
 
 export const GameThumbnail = (props: Props) => {
 	const { colorTokens } = useTheme();
-	const { game, size = Size.MEDIUM, title, isLoading, onClick } = props;
-	const gameSrc = getGameThumbnail(game?.id);
+	const { game, gameId, size = Size.MEDIUM, title, isLoading, onClick } = props;
+	const gameSrc = getGameThumbnail(gameId ?? game?.id);
 
 	const gameThumbnail = isLoading ? (
 		<Skeleton size={size} />
