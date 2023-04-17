@@ -80,6 +80,11 @@ export const getCandidateSummary = async (
     }
 
     /**
+     * Add candidate to queue.
+     */
+    updateQueue.CANDIDATE_QUEUE = [...updateQueue.CANDIDATE_QUEUE, userId];
+
+    /**
      * If no: continue scouting.
      * Get candidate's data from Steam API.
      */
@@ -102,8 +107,6 @@ export const getCandidateSummary = async (
     /**
      * Then, we get a list of curated games.
      */
-
-    updateQueue.CANDIDATE_QUEUE = [...updateQueue.CANDIDATE_QUEUE, userId];
     const collectionGames = db.collection<Game>('games');
     const curatedGames: Game[] = [];
     const cursorGames = collectionGames.find({
@@ -119,11 +122,9 @@ export const getCandidateSummary = async (
     const candidateSteamGames = await getMemberSteamGames(userId, curatedGames);
 
     if (!candidateSteamGames?.length) {
-      res.status(403).send({
-        error:
-          "This user's Steam profile is private or their games' data is hidden.",
-      });
-      return;
+      throw new Error(
+        "This user's Steam profile is private or their games' data is hidden.",
+      );
     }
 
     /**
