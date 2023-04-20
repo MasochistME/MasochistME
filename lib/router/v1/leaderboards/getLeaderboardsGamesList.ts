@@ -112,7 +112,10 @@ export const getLeaderboardsGamesList = async (
 
       const gameBadges = badges.filter(badge => badge.gameId === game.id);
       const badgePoints =
-        gameBadges.reduce((sum, badge) => (sum += badge.points), 0) ?? 0;
+        gameBadges.reduce(
+          (sum, badge) => (badge.points > 0 ? (sum += badge.points) : sum),
+          0,
+        ) ?? 0;
 
       // TODO add completions with badges
 
