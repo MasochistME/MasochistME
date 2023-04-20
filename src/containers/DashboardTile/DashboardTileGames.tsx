@@ -6,6 +6,7 @@ import { LogGameAdd, LogType } from '@masochistme/sdk/dist/v1/types';
 import { useCuratedGames, useLogs } from 'sdk';
 import { Section, SectionProps, GameTile } from 'containers';
 import { Flex, ErrorFallback, QueryBoundary } from 'components';
+import { t } from 'i18n';
 
 const NUMBER_OF_GAMES = 3;
 
@@ -54,7 +55,7 @@ const DashboardTileGamesBoundary = (props: Props): JSX.Element => {
 type ContentProps = Props & { content: React.ReactNode };
 const Content = ({ content, ...props }: ContentProps) => (
 	<Section
-		title="Recent curations"
+		title={t('dashboard.games.title')}
 		maxWidth="100%"
 		content={<StyledNewGammes>{content}</StyledNewGammes>}
 		{...props}

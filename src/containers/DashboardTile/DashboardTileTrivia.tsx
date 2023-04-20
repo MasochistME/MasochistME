@@ -4,6 +4,7 @@ import { Game, Tier } from '@masochistme/sdk/dist/v1/types';
 import { useTiers, useCuratorMembers, useCuratedGames } from 'sdk';
 import { Spinner, Icon, IconType } from 'components';
 import { Section, SectionProps } from 'containers';
+import { t } from 'i18n';
 
 export const DashboardTileTrivia = (
 	props: Omit<SectionProps, 'content' | 'title'>,
@@ -31,19 +32,20 @@ export const DashboardTileTrivia = (
 
 	return (
 		<Section
-			title="Trivia"
+			title={t('dashboard.trivia.title')}
 			content={
 				<>
 					{isLoading && <Spinner />}
 					{!isLoading && (
 						<>
 							<p>
-								Users total: <span>{membersData.length}</span>
+								{t('dashboard.trivia.users_total')}:{' '}
+								<span>{membersData.length}</span>
 							</p>
-							<p>Curated games:</p>
+							<p>{t('dashboard.trivia.curated_games')}:</p>
 							<ul>
 								<li style={{ marginLeft: '3rem' }}>
-									total: <span>{games.length}</span>
+									{t('dashboard.trivia.total')}: <span>{games.length}</span>
 								</li>
 								<ul>{mapCurated()}</ul>
 							</ul>

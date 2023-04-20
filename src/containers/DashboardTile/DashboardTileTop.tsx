@@ -7,6 +7,7 @@ import { Section, SectionProps } from 'containers';
 import { Flex, Skeleton } from 'components';
 
 import { LogCompact } from './components';
+import { t } from 'i18n';
 
 const NUMBER_OF_LEADERS = 10;
 
@@ -35,7 +36,7 @@ export const DashboardTileTop = (
 		sum: leader.sum,
 		name:
 			membersData.find(member => member.steamId === leader.memberId)?.name ??
-			'UNKNOWN',
+			t('unknown').toUpperCase(),
 	}));
 
 	const leaderboardRow = (leader: {
@@ -57,7 +58,9 @@ export const DashboardTileTop = (
 					}}>
 					<span>{leader.name}</span>
 				</LogCompact.Link>
-				<div style={{ whiteSpace: 'nowrap' }}>{leader.sum} pts</div>
+				<div style={{ whiteSpace: 'nowrap' }}>
+					{leader.sum} {t('pts')}
+				</div>
 			</StyledSectionTopMember>
 		);
 	};
@@ -70,7 +73,7 @@ export const DashboardTileTop = (
 
 	return (
 		<Section
-			title="Top 10 users"
+			title={t('dashboard.top.title')}
 			minWidth="40rem"
 			maxWidth="45rem"
 			content={

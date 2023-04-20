@@ -6,6 +6,7 @@ import { Section, SectionProps } from 'containers';
 import { ErrorFallback, Flex, Loader, Pagination, Skeleton } from 'components';
 
 import { FeaturedNews, FeaturedVideo } from 'containers/Featured';
+import { t } from 'i18n';
 
 type Props = Omit<SectionProps, 'content' | 'title'> & {
 	featuredData: Featured[];
@@ -38,7 +39,7 @@ export const DashboardTileFeatured = (props: Props): JSX.Element => {
 
 	return (
 		<Section
-			title="Featured"
+			title={t('dashboard.featured.title')}
 			content={
 				<StyledContent column>
 					{isLoading ? <Loader /> : featuredContent}
