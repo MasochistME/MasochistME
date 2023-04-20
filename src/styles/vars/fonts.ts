@@ -1,5 +1,9 @@
 export const fonts = () => {
-	const fontBasic = `font-size: 10px;`;
+	/// Converts pixels to percent using the default browser font size.
+	const baseFontSize = (pixels: number, defaultFontSize = 16) => {
+		return 100 * (pixels / defaultFontSize);
+	};
+	const fontBasic = `font-size: ${baseFontSize(10)}%;`;
 	const fontFamily = `
     --font-cardo: "Cardo", Verdana, sans-serif;
     --font-cinzel: "Cinzel", Georgia, serif;
