@@ -7,6 +7,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 
 import { useTheme } from 'styles';
 import GlobalStyle from 'styles/globalStyles';
+import { initLocale } from 'i18n';
 import { AppContextProvider } from 'context';
 
 import { App } from './App';
@@ -17,6 +18,8 @@ import './index.css';
 
 dayjs.extend(customParseFormat);
 dayjs.extend(relativeTime);
+
+initLocale();
 
 const queryClient = new QueryClient({
 	defaultOptions: {

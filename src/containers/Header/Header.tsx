@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { media, useTheme, ColorTokens } from 'styles';
 import { Flex } from 'components';
 import { ButtonsSocialMedia, Logo } from 'containers';
+import { t } from 'i18n';
 
 export const Header = (): JSX.Element => {
 	const { colorTokens } = useTheme();
@@ -11,12 +12,9 @@ export const Header = (): JSX.Element => {
 		<StyledHeader align colorTokens={colorTokens}>
 			<Logo />
 			<StyledHeaderTitle>
-				<span className="title__mobile">Masochist.ME</span>
-				<span className="title__desktop">M.ME</span>
-				<StyledHeaderSubTitle>
-					{' '}
-					- games that masochists love
-				</StyledHeaderSubTitle>
+				<span className="title__desktop">{t('header.title_desktop')}</span>
+				<span className="title__mobile">{t('header.title_mobile')}</span>
+				<StyledHeaderSubTitle> - {t('header.subtitle')}</StyledHeaderSubTitle>
 			</StyledHeaderTitle>
 			<ButtonsSocialMedia withJoinButton />
 		</StyledHeader>
@@ -47,12 +45,12 @@ const StyledHeaderTitle = styled.h1`
 	text-transform: uppercase;
 
 	& .title__mobile {
-		@media (max-width: ${media.smallTablets}) {
+		@media (min-width: ${media.smallTablets}) {
 			display: none;
 		}
 	}
 	& .title__desktop {
-		@media (min-width: ${media.smallTablets}) {
+		@media (max-width: ${media.smallTablets}) {
 			display: none;
 		}
 	}
