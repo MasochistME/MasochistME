@@ -3,6 +3,7 @@ import { LogType } from '@masochistme/sdk/dist/v1/types';
 
 import { SingleLog } from 'configuration';
 import { Checkbox } from 'components';
+import { t } from 'i18n';
 
 type Props = {
 	log: SingleLog;
@@ -17,7 +18,7 @@ export const LogsFilterCheckbox = (props: Props): JSX.Element => {
 		<Checkbox
 			icon={log.icon}
 			itemType={log.type}
-			itemDescription={log.description}
+			itemDescription={t(log.description)}
 			visibleItems={visibleLogs}
 			setVisibleItems={setVisibleLogs}
 		/>

@@ -12,5 +12,28 @@
   "header.title_mobile": "M.ME",
   "header.subtitle": "games that masochists love",
 
-  "select.placeholder_default": "Select..."
+  "select.placeholder_default": "Select...",
+
+  "history.log.description.memberJoin": "new member joining the community",
+  "history.log.description.memberLeave": "member leaving the community",
+  "history.log.description.hundo": "member completing a curated game",
+  "history.log.description.gameCurate": "new game being curated",
+  "history.log.description.gameRemove": "game being removed from curator",
+  "history.log.description.gameTierChange": "game changing its tier",
+  "history.log.description.badgeCreate": "game getting a new badge",
+  "history.log.description.badgeGrant": "member earning a new badge",
+  "history.log.description.achievementNumberChange": "game having achievements added or removed",
+  "history.log.description.custom": "custom event",
+
+  "tabs.title.home": "Home",
+  "tabs.title.leaderboards": "Leaderboards",
+  "tabs.title.game_list": "Game list",
+  "tabs.title.badges": "Badges",
+  "tabs.title.events": "Events",
+  "tabs.title.history": "History",
+  "tabs.title.support": "Support",
+  "tabs.title.profile": "Profile",
+  "tabs.title.game": "Game",
+  "tabs.title.how_to_join": "How to join",
+  "tabs.title.changelog": "Changelog"
 }

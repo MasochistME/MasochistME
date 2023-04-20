@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
 
+import { t } from 'i18n';
 import { media, useTheme, ColorTokens } from 'styles';
 import { Tab, tabs } from 'configuration/tabs';
 import { useAppContext } from 'context';
@@ -10,18 +11,24 @@ import { UpdateStatus } from 'containers';
 export const SubHeader = (): JSX.Element => {
 	const { activeTab } = useAppContext();
 	const { SH_URL, colorTokens } = useTheme();
-	const findTab = () => tabs.find((tab: Tab) => tab.id === activeTab);
+	const tab = useMemo(() => {
+		const visibleTab = tabs.find((tab: Tab) => tab.id === activeTab);
+		return {
+			icon: visibleTab?.icon ?? 'QuestionCircle',
+			text: visibleTab ? t(visibleTab.text) : '404',
+		};
+	}, [activeTab]);
 
 	return (
 		<StyledSubHeader row>
 			<StyledTitle row align colorTokens={colorTokens} shUrl={SH_URL}>
 				<span className="subheader--icon__mobile">
-					<Icon icon={findTab()?.icon ?? 'QuestionCircle'} size={Size.SMALL} />
+					<Icon icon={tab.icon} size={Size.SMALL} />
 				</span>
 				<span className="subheader--icon__desktop">
-					<Icon icon={findTab()?.icon ?? 'QuestionCircle'} size={Size.MEDIUM} />
+					<Icon icon={tab.icon} size={Size.MEDIUM} />
 				</span>
-				<h2>{findTab()?.text ?? '404'}</h2>
+				<h2>{tab.text}</h2>
 			</StyledTitle>
 			<UpdateStatus />
 		</StyledSubHeader>

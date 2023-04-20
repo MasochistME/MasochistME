@@ -1,7 +1,7 @@
 import { Locale } from './locale';
 import enUS from './en-US.json';
 
-type LocaleKeys = keyof typeof enUS;
+export type LocaleKey = keyof typeof enUS;
 export enum AvailableLocales {
 	'en-US' = 'en-US',
 }
@@ -9,9 +9,9 @@ export enum AvailableLocales {
 let l: Locale;
 
 export const initLocale = () => {
-	l = new Locale();
+	if (!l) l = new Locale();
 };
 
-export const t = (key: LocaleKeys) => {
+export const t = (key: LocaleKey) => {
 	return l.getTranslation(key);
 };

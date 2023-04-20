@@ -1,3 +1,4 @@
+import { LocaleKey } from 'i18n';
 import { IconType } from 'components';
 
 export enum TabDict {
@@ -16,7 +17,7 @@ export enum TabDict {
 
 export type Tab = {
 	id: TabDict;
-	text: string;
+	text: LocaleKey;
 	icon: IconType;
 	link: string;
 	visible: boolean;
@@ -26,7 +27,7 @@ export type Tab = {
 export const tabs: Tab[] = [
 	{
 		id: TabDict.HOME,
-		text: 'home',
+		text: 'tabs.title.home',
 		icon: 'Home',
 		link: '',
 		visible: true,
@@ -34,7 +35,7 @@ export const tabs: Tab[] = [
 	},
 	{
 		id: TabDict.LEADERBOARDS,
-		text: 'leaderboards',
+		text: 'tabs.title.leaderboards',
 		icon: 'Medal',
 		link: 'leaderboards',
 		visible: true,
@@ -42,7 +43,7 @@ export const tabs: Tab[] = [
 	},
 	{
 		id: TabDict.GAMES,
-		text: 'game list',
+		text: 'tabs.title.game_list',
 		icon: 'Gamepad',
 		link: 'games',
 		visible: true,
@@ -50,7 +51,7 @@ export const tabs: Tab[] = [
 	},
 	{
 		id: TabDict.BADGES,
-		text: 'badges',
+		text: 'tabs.title.badges',
 		icon: 'Badge',
 		link: 'badges',
 		visible: true,
@@ -58,7 +59,7 @@ export const tabs: Tab[] = [
 	},
 	{
 		id: TabDict.EVENTS,
-		text: 'events',
+		text: 'tabs.title.events',
 		icon: 'Finish',
 		link: 'events',
 		visible: true,
@@ -66,7 +67,7 @@ export const tabs: Tab[] = [
 	},
 	{
 		id: TabDict.HISTORY,
-		text: 'history',
+		text: 'tabs.title.history',
 		icon: 'History',
 		link: 'history',
 		visible: true,
@@ -74,7 +75,7 @@ export const tabs: Tab[] = [
 	},
 	{
 		id: TabDict.SUPPORT,
-		text: 'support',
+		text: 'tabs.title.support',
 		icon: 'Heart',
 		link: 'support',
 		visible: true,
@@ -83,7 +84,7 @@ export const tabs: Tab[] = [
 	// NOT INCLUDED IN THE NAVIGATION BAR
 	{
 		id: TabDict.PROFILE,
-		text: 'profile',
+		text: 'tabs.title.profile',
 		icon: 'IDCard',
 		link: 'profile',
 		visible: false,
@@ -91,7 +92,7 @@ export const tabs: Tab[] = [
 	},
 	{
 		id: TabDict.GAME,
-		text: 'game',
+		text: 'tabs.title.game',
 		icon: 'Puzzle',
 		link: 'game',
 		visible: false,
@@ -99,7 +100,7 @@ export const tabs: Tab[] = [
 	},
 	{
 		id: TabDict.JOIN,
-		text: 'How to join',
+		text: 'tabs.title.how_to_join',
 		icon: 'DoorOpen',
 		link: 'join',
 		visible: false,
@@ -107,7 +108,7 @@ export const tabs: Tab[] = [
 	},
 	{
 		id: TabDict.CHANGELOG,
-		text: 'Changelog',
+		text: 'tabs.title.changelog',
 		icon: 'Checklist',
 		link: 'changelog',
 		visible: false,
