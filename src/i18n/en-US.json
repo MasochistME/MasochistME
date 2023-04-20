@@ -1,6 +1,16 @@
 {
-  "i_could_not_load": "I could not load :(",
+  "error.could_not_load": "Could not load",
+  "error.i_could_not_load": "I could not load :(",
+  "error.something_broke": "Something broke :c",
+  "error.reload_page":"Simply reloading the page might help.",
+
+  "checkbox.show": "Show",
+  "checkbox.hide": "Hide",
+  "checkbox.label": "items of type",
+
   "header.title_desktop": "Masochist.ME",
   "header.title_mobile": "M.ME",
-  "header.subtitle": "games that masochists love"
+  "header.subtitle": "games that masochists love",
+
+  "select.placeholder_default": "Select..."
 }

@@ -41,7 +41,6 @@ export const ToggleButtons = <T extends string>(
 			value={value}
 			onChange={onChange}
 			exclusive
-			aria-label="text alignment"
 			colorTokens={colorTokens}>
 			{radios}
 		</StyledToggleButtonGroup>

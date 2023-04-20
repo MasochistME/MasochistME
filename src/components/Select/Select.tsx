@@ -7,6 +7,7 @@ import {
 } from '@mui/material';
 import styled from 'styled-components';
 import { ColorTokens, useTheme } from 'styles';
+import { t } from 'i18n';
 
 type Option = {
 	value: string;
@@ -25,7 +26,7 @@ export const Select = (props: Props) => {
 		options,
 		selectedOption,
 		setSelectedOption,
-		placeholder = 'Select...',
+		placeholder = t('select.placeholder_default'),
 	} = props;
 	const { colorTokens } = useTheme();
 

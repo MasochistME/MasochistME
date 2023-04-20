@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import { Size } from 'components';
+import { t } from 'i18n';
 
 import { Icon } from '../Icon';
 import { Flex } from '../Flex';
@@ -17,7 +18,7 @@ export const BrokenImage = (props: Props) => {
 	const { title, size } = props;
 
 	return (
-		<Tooltip content={title ?? 'I could not load :('}>
+		<Tooltip content={title ?? t('error.i_could_not_load')}>
 			<StyledBrokenImg size={size}>
 				<Icon icon="WarningTriangle" size={size} />
 			</StyledBrokenImg>

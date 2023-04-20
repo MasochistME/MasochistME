@@ -9,6 +9,7 @@ import { Modal } from 'components/Modal';
 import { AxiosError } from 'axios';
 import { Size } from 'components/__utils';
 import { useLocation } from 'react-router';
+import { t } from 'i18n';
 
 type Props = {
 	fallback?: React.ReactNode;
@@ -102,8 +103,8 @@ const ErrorModal = (props: ErrorModalProps) => {
 	return (
 		<Modal isModalOpen={showErrorModal} setIsModalOpen={setShowErrorModal}>
 			<StyledContent>
-				<h2>Something broke :c</h2>
-				<div>Simply reloading the page might help.</div>
+				<h2>{t('error.something_broke')}</h2>
+				<div>{t('error.reload_page')}</div>
 				<div>
 					<Button
 						size={Size.SMALL}
