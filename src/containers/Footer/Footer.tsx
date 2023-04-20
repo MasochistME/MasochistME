@@ -8,6 +8,7 @@ import { Size } from 'components';
 import { Link } from 'react-router-dom';
 import { useAppContext } from 'context';
 import { useMixpanel } from 'hooks';
+import { t } from 'i18n';
 
 export const Footer = () => {
 	const { colorTokens } = useTheme();
@@ -18,7 +19,7 @@ export const Footer = () => {
 		<StyledFooter align colorTokens={colorTokens}>
 			<StyledFooterText>
 				<div>
-					Made by{' '}
+					{t('made_by')}{' '}
 					<a href="http://arcyvilk.com/" target="_blank">
 						Arcyvilk
 					</a>{' '}
@@ -26,7 +27,7 @@ export const Footer = () => {
 				</div>
 				<div>●</div>
 				<div>
-					<Link to="/changelog">Changelog</Link>
+					<Link to="/changelog">{t('tabs.title.changelog')}</Link>
 				</div>
 				<div
 					style={{ width: `${Size.SMALL}rem`, height: `${Size.SMALL}rem` }}

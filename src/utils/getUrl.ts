@@ -23,9 +23,9 @@ export const getUserSteamUrl = (steamId: string): string => {
 
 export const getAvatarFromHash = (
 	avatarHash: string,
-	size: 'full' | 'medium' = 'full',
+	size: '_full' | '_medium' | '',
 ): string => {
-	return `https://avatars.akamai.steamstatic.com/${avatarHash}_${size}.jpg`;
+	return `https://avatars.akamai.steamstatic.com/${avatarHash}${size}.jpg`;
 };
 
 export const getYTVideoID = (link?: string) => {

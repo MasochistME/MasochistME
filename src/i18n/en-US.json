@@ -1,8 +1,16 @@
 {
-  "error.could_not_load": "Could not load",
-  "error.i_could_not_load": "I could not load :(",
-  "error.something_broke": "Something broke :c",
-  "error.reload_page":"Simply reloading the page might help.",
+  "badges": "Badges",
+  "details": "Details",
+  "loading": "Loading...",
+  "made_by": "Made by",
+  "pts": "pts",
+  
+  "badge.requirements": "Requirements",
+
+  "button.social.join": "Join us!",
+  "button.social.steam": "Our Steam curator",
+  "button.social.discord": "Our Discord server",
+  "button.social.support": "Support us!",
 
   "checkbox.show": "Show",
   "checkbox.hide": "Hide",
@@ -11,8 +19,6 @@
   "header.title_desktop": "Masochist.ME",
   "header.title_mobile": "M.ME",
   "header.subtitle": "games that masochists love",
-
-  "select.placeholder_default": "Select...",
 
   "history.log.description.memberJoin": "new member joining the community",
   "history.log.description.memberLeave": "member leaving the community",
@@ -25,6 +31,25 @@
   "history.log.description.achievementNumberChange": "game having achievements added or removed",
   "history.log.description.custom": "custom event",
 
+  "race.header.race_type.score": "Score based race",
+  "race.header.race_type.time": "Time based race",
+  "race.header.instructions": "Instructions",
+  "race.header.objectives": "Objectives",
+  "race.header.download_grace_time": "Download grace time",
+  "race.header.proof_grace_time": "Proof upload grace time",
+
+  "race.details.reveal_time": "reveal time",
+  "race.details.start_time": "start time",
+  "race.details.end_time": "end time",
+  "race.details.proof_time": "proof time",
+  "race.leaderboards.column.medal": "🥇",
+  "race.leaderboards.column.place": "",
+  "race.leaderboards.column.username": "Username",
+  "race.leaderboards.column.score": "Score",
+  "race.leaderboards.column.time": "Time",
+
+  "select.placeholder_default": "Select...",
+
   "tabs.title.home": "Home",
   "tabs.title.leaderboards": "Leaderboards",
   "tabs.title.game_list": "Game list",
@@ -35,5 +60,17 @@
   "tabs.title.profile": "Profile",
   "tabs.title.game": "Game",
   "tabs.title.how_to_join": "How to join",
-  "tabs.title.changelog": "Changelog"
+  "tabs.title.changelog": "Changelog",
+
+  "update_status.next_update": "Next update",
+
+  "winner_link.this_member_is_an_owner": "This member is an owner of this race.",
+
+  "error.could_not_load": "Could not load",
+  "error.could_not_load_avatar": "Could not load the avatar.",
+  "error.i_could_not_load": "I could not load :(",
+  "error.something_broke": "Something broke :c",
+  "error.reload_page":"Simply reloading the page might help.",
+
+  "warning.unknown_game": "Unknown game"
 }

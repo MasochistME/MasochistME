@@ -5,6 +5,7 @@ import { Badge } from '@masochistme/sdk/dist/v1/types';
 import { useGameBadges } from 'sdk';
 import { Flex } from 'components';
 import { BadgeTile, BadgeThumbnail, Section } from 'containers';
+import { t } from 'i18n';
 
 type Props = {
 	gameId: number;
@@ -23,7 +24,7 @@ export const ModalLeaderboardsBadges = (props: Props): JSX.Element | null => {
 		<Section
 			fullWidth
 			boxSizing="border-box"
-			title="Badges"
+			title={t('badges')}
 			content={
 				<StyledModalLeaderboardsBadges justify>
 					{badges.map((badge: Badge) => {

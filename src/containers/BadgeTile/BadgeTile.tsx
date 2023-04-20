@@ -5,6 +5,7 @@ import { Badge } from '@masochistme/sdk/dist/v1/types';
 import { useTheme, ColorTokens, media } from 'styles';
 import { BadgeThumbnail } from 'containers';
 import { Flex, Icon, Size, Skeleton } from 'components';
+import { t } from 'i18n';
 
 type Props = {
 	badge?: Badge;
@@ -25,8 +26,8 @@ export const BadgeTile = (props: Props) => {
 			<Flex column gap={12} width="100%">
 				<StyledBadgeTitle>{badge.name?.toUpperCase()}</StyledBadgeTitle>
 				<StyledBadgeField>
-					<span style={{ fontWeight: 'bold' }}>Requirements</span> -{' '}
-					{badge.requirements}
+					<span style={{ fontWeight: 'bold' }}>{t('badge.requirements')}</span>{' '}
+					- {badge.requirements}
 				</StyledBadgeField>
 				<StyledBadgeField style={{ fontStyle: 'italic' }}>
 					{badge.description}
