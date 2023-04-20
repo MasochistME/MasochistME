@@ -10,6 +10,7 @@ import { SingleSeasonRanking } from './SingleSeasonRanking';
 import { SingleSeasonRaces } from './SingleSeasonRaces';
 import { ColorTokens, useTheme } from 'styles';
 import { useMixpanel } from 'hooks';
+import { t } from 'i18n';
 
 enum TabsSeasonDetails {
 	RANKING = 'ranking',
@@ -58,34 +59,53 @@ export const SingleSeason = (props: SingleSeasonProps) => {
 				<Flex align justifyContent="space-evenly" flexWrap="wrap" gap={16}>
 					<StatBlock
 						label={races.length ?? '—'}
-						sublabel="races total"
-						title={<StatBlock.Title>Races total</StatBlock.Title>}
+						sublabel={t('seasons.stat.races_total.subtitle')}
+						title={
+							<StatBlock.Title>
+								{t('seasons.stat.races_total.title')}
+							</StatBlock.Title>
+						}
 						icon="Finish"
 					/>
 					<StatBlock
 						label={getHumanReadableDate(season.startDate)}
-						sublabel="season start date"
-						title={<StatBlock.Title>Season start date</StatBlock.Title>}
+						sublabel={t('seasons.stat.season_start.subtitle')}
+						title={
+							<StatBlock.Title>
+								{t('seasons.stat.season_start.title')}
+							</StatBlock.Title>
+						}
 						icon="Finish"
 					/>
 					<StatBlock
 						label={getHumanReadableDate(season.endDate)}
-						sublabel="season end date"
-						title={<StatBlock.Title>Season end date</StatBlock.Title>}
+						sublabel={t('seasons.stat.season_end.subtitle')}
+						title={
+							<StatBlock.Title>
+								{t('seasons.stat.season_end.title')}
+							</StatBlock.Title>
+						}
 						icon="Finish"
 					/>
 					<StatBlock
 						label={uniqueParticipants}
-						sublabel="unique participants"
-						title={<StatBlock.Title>Unique participants</StatBlock.Title>}
+						sublabel={t('seasons.stat.unique_participants.subtitle')}
+						title={
+							<StatBlock.Title>
+								{t('seasons.stat.unique_participants.title')}
+							</StatBlock.Title>
+						}
 						icon="Finish"
 					/>
 				</Flex>
 			</StyledRacesTop>
 			<StyledRacesList>
 				<Tabs value={activeTab} onChange={handleChangeTab}>
-					<Tab label="Ranking" value={TabsSeasonDetails.RANKING} />
-					<Tab label="Races" value={TabsSeasonDetails.RACES} />
+					<Tab
+						label={t('seasons.tab.ranking')}
+						value={TabsSeasonDetails.RANKING}
+					/>
+					<Tab label={t('seasons.tab.races')} value={TabsSeasonDetails.RACES} />
 				</Tabs>
 				<TabPanel activeTab={activeTab} tabId={TabsSeasonDetails.RANKING}>
 					<SingleSeasonRanking seasonId={String(season._id)} />

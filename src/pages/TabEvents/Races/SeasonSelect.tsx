@@ -1,9 +1,10 @@
+import { useEffect } from 'react';
 import styled from 'styled-components';
 
-import { Icon, Menu, QueryBoundary, Size, Warning } from 'components';
-import { ColorTokens, media, useTheme } from 'styles';
+import { t } from 'i18n';
 import { useRacesFromSeason } from 'hooks';
-import { useEffect } from 'react';
+import { ColorTokens, media, useTheme } from 'styles';
+import { Icon, Menu, QueryBoundary, Size, Warning } from 'components';
 
 type Props = {
 	selectedSeasonId: string | null;
@@ -18,7 +19,7 @@ export const SeasonSelect = (props: Props) => {
 					<Menu
 						anchorElement={() => (
 							<StyledSeasonTitle colorTokens={colorTokens}>
-								Select a season...
+								{t('races.seasons.select.placeholder')}
 								<StyledIcon
 									icon="ChevronDown"
 									// TODO This sizing does not work, fix
@@ -29,7 +30,9 @@ export const SeasonSelect = (props: Props) => {
 						)}
 					/>
 				}
-				errorFallback={<Warning description="Could not load season list" />}>
+				errorFallback={
+					<Warning description={t('races.seasons.select.could_not_load')} />
+				}>
 				<SeasonSelectBoundary {...props} />
 			</QueryBoundary>
 		</StyledSelectWrapper>
@@ -72,9 +75,9 @@ const SeasonSelectBoundary = (props: Props) => {
 	}));
 
 	const options = [
-		{ value: 'Active seasons', isSubheader: true },
+		{ value: t('races.seasons.select.active'), isSubheader: true },
 		...optionsSeasonsActive,
-		{ value: 'Past seasons', isSubheader: true },
+		{ value: t('races.seasons.select.past'), isSubheader: true },
 		...optionsSeasonsDone,
 	];
 
@@ -82,11 +85,11 @@ const SeasonSelectBoundary = (props: Props) => {
 		<Menu
 			options={options}
 			setSelectedOption={setSelectedSeasonId}
-			placeholder="Select a season..."
-			loadElement="Loading seasons..."
+			placeholder={t('races.seasons.select.placeholder')}
+			loadElement={t('races.seasons.select.loading')}
 			anchorElement={(isOpen: boolean) => (
 				<StyledSeasonTitle colorTokens={colorTokens}>
-					{season?.name ?? 'Select a season...'}
+					{season?.name ?? t('races.seasons.select.placeholder')}
 					<StyledIcon icon="ChevronDown" size={Size.TINY} isOpen={isOpen} />
 				</StyledSeasonTitle>
 			)}

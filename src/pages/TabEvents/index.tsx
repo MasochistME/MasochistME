@@ -8,6 +8,7 @@ import { SubPage, Tabs, Tab, TabPanel } from 'containers';
 
 import { RacesPage } from './Races';
 import { OtherEventsPage } from './OtherEvents';
+import { t } from 'i18n';
 
 enum EventTabs {
 	RACES = 'races',
@@ -29,8 +30,8 @@ export const TabEvents = (): JSX.Element => {
 		<SubPage>
 			<StyledEvents>
 				<Tabs value={activeTab} onChange={handleChangeTab}>
-					<Tab label="Races" value={EventTabs.RACES} />
-					<Tab label="Other events" value={EventTabs.OTHER} />
+					<Tab label={t('events.tab.races')} value={EventTabs.RACES} />
+					<Tab label={t('events.tab.other_events')} value={EventTabs.OTHER} />
 				</Tabs>
 				<TabPanel activeTab={activeTab} tabId={EventTabs.RACES}>
 					<RacesPage />
