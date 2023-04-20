@@ -8,6 +8,7 @@ import { TabDict, LogDictionary } from 'configuration';
 
 import { LogsList } from './LogsList';
 import { LogsFilterBar } from './LogsFilterBar';
+import { t } from 'i18n';
 
 export const TabHistory = (): JSX.Element => {
 	useActiveTab(TabDict.HISTORY);
@@ -43,7 +44,7 @@ const Info = (props: Partial<SectionProps>): JSX.Element => (
 const InfoBoundary = () => {
 	const logDescriptions = LogDictionary.map((log, index: number) => (
 		<Flex key={`log-desc-${index}`} gap={4}>
-			<Icon icon={log.icon} /> - {log.description},
+			<Icon icon={log.icon} /> - {t(log.description)},
 		</Flex>
 	));
 	return (

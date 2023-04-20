@@ -8,6 +8,12 @@
   
   "badge.requirements": "Requirements",
 
+  "badges.title": "Badges",
+  "badges.view.toggle_table": "Toggle table view",
+  "badges.view.toggle_grid" : "Toggle grid view",
+  "badges.info.desc1": "Badges are additional, community defined feats that you can achieve in a curated game. They allow you to get recognized for an in-game achievement and get rewarded with points before finishing the game.",
+  "badges.info.desc2": "Since badges are granted by moderators manually, you need to submit a proof of fulfilling the badge requirement to have it unlocked.",
+
   "button.social.join": "Join us!",
   "button.social.steam": "Our Steam curator",
   "button.social.discord": "Our Discord server",
@@ -37,6 +43,11 @@
   "dashboard.trivia.curated_games": "Curated games",
   "dashboard.trivia.total": "total",
 
+  "games.filter.search_placeholder": "Search games",
+  "games.title": "Games",
+  "games.view.toggle_table": "Toggle table view",
+  "games.view.toggle_grid" : "Toggle grid view",
+
   "header.title_desktop": "Masochist.ME",
   "header.title_mobile": "M.ME",
   "header.subtitle": "games that masochists love",
@@ -51,6 +62,12 @@
   "history.log.description.badgeGrant": "member earning a new badge",
   "history.log.description.achievementNumberChange": "game having achievements added or removed",
   "history.log.description.custom": "custom event",
+
+  "leaderboards.filter.search_placeholder": "Search members",
+  "leaderboards.filter.all": "All",
+  "leaderboards.filter.past_week": "Past weel",
+  "leaderboards.filter.past_month": "Past month",
+  "leaderboards.filter.past_year": "Past year",
 
   "race.header.race_type.score": "Score based race",
   "race.header.race_type.time": "Time based race",
@@ -91,7 +108,7 @@
   "error.could_not_load_avatar": "Could not load the avatar.",
   "error.i_could_not_load": "I could not load :(",
   "error.something_broke": "Something broke :c",
-  "error.reload_page":"Simply reloading the page might help.",
+  "error.reload_page": "Simply reloading the page might help.",
 
   "warning.unknown_game": "Unknown game"
 }

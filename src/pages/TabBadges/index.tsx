@@ -8,6 +8,7 @@ import { SubPage, Section, SectionProps } from 'containers';
 
 import { BadgesTableView } from './BadgesTableView';
 import { BadgesTileView } from './BadgesTileView';
+import { t } from 'i18n';
 
 export const TabBadges = (): JSX.Element => {
 	useActiveTab(TabDict.BADGES);
@@ -20,8 +21,8 @@ export const TabBadges = (): JSX.Element => {
 	}, [badgeListView]);
 
 	const badgeViewButtonLabel = useMemo(() => {
-		if (badgeListView === BadgeView.TILE) return 'Toggle table view';
-		else return 'Toggle grid view';
+		if (badgeListView === BadgeView.TILE) return t('badges.view.toggle_table');
+		else return t('badges.view.toggle_grid');
 	}, [badgeListView]);
 
 	return (
@@ -48,17 +49,13 @@ const Info = (props: Partial<SectionProps>): JSX.Element => {
 	return (
 		<Section
 			{...props}
-			title="Badges"
+			title={t('badges.title')}
 			content={
 				<Flex column gap={8}>
+					<div>{t('badges.info.desc1')}</div>
 					<div>
-						Badges are additional, community defined feats that you can achieve
-						in a curated game. They allow you to get recognized for an in-game
-						achievement and get rewarded with points before finishing the game.
-					</div>
-					<div>
-						Since badges are granted by moderators manually, you need to submit
-						a proof of fulfilling the badge requirement to have it unlocked.
+						{t('badges.info.desc2')}
+						{/* TODO Localize the text below */}
 						This is done on our{' '}
 						<a href="https://discord.com/invite/NjAeT53kVb" target="_blank">
 							Discord server
