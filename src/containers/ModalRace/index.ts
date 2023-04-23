@@ -1,1 +1,0 @@
-export { ModalRace } from './ModalRace';

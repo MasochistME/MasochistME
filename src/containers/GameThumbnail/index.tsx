@@ -1,1 +1,0 @@
-export { GameThumbnail } from './GameThumbnail';

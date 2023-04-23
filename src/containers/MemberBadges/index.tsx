@@ -1,1 +1,0 @@
-export { MemberBadges } from './MemberBadges';

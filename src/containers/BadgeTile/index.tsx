@@ -1,1 +1,0 @@
-export { BadgeTile } from './BadgeTile';

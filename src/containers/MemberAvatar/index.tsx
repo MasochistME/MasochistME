@@ -1,1 +1,0 @@
-export { MemberAvatar } from './MemberAvatar';

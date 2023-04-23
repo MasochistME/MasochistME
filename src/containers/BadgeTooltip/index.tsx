@@ -1,1 +1,0 @@
-export { BadgeTooltip } from './BadgeTooltip';
