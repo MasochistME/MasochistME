@@ -32,13 +32,17 @@ const GameProfileFeaturedBoundary = (props: Props) => {
 
 			if (featured.type === FeaturedType.NEWS)
 				return (
-					<StyledGameProfileFeaturedItem colorTokens={colorTokens}>
+					<StyledGameProfileFeaturedItem
+						key={`${String(featured._id)}`}
+						colorTokens={colorTokens}>
 						<FeaturedNews featured={featured} isCompact />
 					</StyledGameProfileFeaturedItem>
 				);
 			if (featured.type === FeaturedType.VIDEO)
 				return (
-					<StyledGameProfileFeaturedItem colorTokens={colorTokens}>
+					<StyledGameProfileFeaturedItem
+						key={`${String(featured._id)}`}
+						colorTokens={colorTokens}>
 						<FeaturedVideo featured={featured} isCompact hideGame />
 					</StyledGameProfileFeaturedItem>
 				);

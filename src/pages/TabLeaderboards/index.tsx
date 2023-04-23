@@ -62,8 +62,8 @@ const LeaderboardsList = ({ timePeriod }: { timePeriod: TimePeriod }) => {
 
 const LeaderboardsListSkeleton = () => (
 	<Flex column gap={2}>
-		{new Array(10).fill(null).map(() => (
-			<Skeleton width="100%" height="var(--size-64)" />
+		{new Array(10).fill(null).map((_, index: number) => (
+			<Skeleton key={index} width="100%" height="var(--size-64)" />
 		))}
 	</Flex>
 );
