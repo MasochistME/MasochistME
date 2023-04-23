@@ -2,7 +2,8 @@ import { LocaleKey } from 'i18n';
 import enUS from './en-US.json';
 
 const generateTestLocale = () => {
-	const teST: Record<LocaleKey, string> = enUS;
+	// Deep clone the default locale.
+	const teST: Record<LocaleKey, string> = JSON.parse(JSON.stringify(enUS));
 	const keys = Object.keys(teST) as LocaleKey[];
 	keys.forEach((key: LocaleKey) => {
 		teST[key] = '...';
