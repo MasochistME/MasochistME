@@ -4,9 +4,8 @@
   "pipeline": {
     "maso:start": {"outputs": []},
     "maso:build": {"outputs": []},
-    "lint": {
-      "outputs": []
-    },
+    "docs": {"outputs": []},
+    "lint":  {"outputs": []},
     "tsc": {
       "dependsOn": ["^tsc"],
       "outputs": []
