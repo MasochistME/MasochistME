@@ -4,16 +4,20 @@ import styled from 'styled-components';
 import { useMemberLeaderboardsPoints } from 'hooks';
 import { media } from 'styles';
 import { Size } from 'components';
+import { TimePeriod } from 'utils/getTimePeriod';
 import { Flex, Icon, IconType, Spinner, Tooltip } from 'components';
 
 type Props = {
 	steamId: string;
+	timePeriod: TimePeriod;
 };
 
 export const LeaderboardsMemberPoints = (props: Props): JSX.Element => {
-	const { steamId } = props;
-	const { tierPoints, member, isLoading } =
-		useMemberLeaderboardsPoints(steamId);
+	const { steamId, timePeriod } = props;
+	const { tierPoints, member, isLoading } = useMemberLeaderboardsPoints(
+		steamId,
+		timePeriod,
+	);
 
 	/**
 	 * All of the member's points, grouped by game tier.

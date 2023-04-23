@@ -7,7 +7,6 @@ import { LogDictionary } from 'configuration/logs';
 
 import { Theme } from 'styles';
 import { GameView, BadgeView } from 'hooks';
-import { TimePeriod } from 'utils/getTimePeriod';
 
 import config from 'config.json';
 
@@ -28,8 +27,6 @@ type ContextType = {
 	setVisibleTiers: (visibleTiers: TierId[]) => void;
 	visiblePrices: number[];
 	setVisiblePrices: (visiblePrices: number[]) => void;
-	visibleLogs: LogType[];
-	setVisibleLogs: (visibleEvents: LogType[]) => void;
 
 	_gameListView: GameView;
 	_setGameListView: (gameListView: GameView) => void;
@@ -40,8 +37,6 @@ type ContextType = {
 	setQueryGame: (queryGame: string) => void;
 	queryMember: string;
 	setQueryMember: (queryMember: string) => void;
-	queryLeaderboardPeriod: TimePeriod;
-	setQueryLeaderboardPeriod: (queryLeaderboardPeriod: TimePeriod) => void;
 };
 
 export const AppContextProvider = ({
@@ -62,13 +57,8 @@ export const AppContextProvider = ({
 
 	const [queryGame, setQueryGame] = useState<string>('');
 	const [queryMember, setQueryMember] = useState<string>('');
-	const [queryLeaderboardPeriod, setQueryLeaderboardPeriod] =
-		useState<TimePeriod>(TimePeriod.ALL);
 
 	const [visibleTiers, setVisibleTiers] = useState<TierId[]>([]);
-	const [visibleLogs, setVisibleLogs] = useState<LogType[]>(
-		LogDictionary.map(e => e.type),
-	);
 	const [visiblePrices, setVisiblePrices] = useState<number[]>([0, 1000]);
 
 	const path = config.API;
@@ -93,8 +83,6 @@ export const AppContextProvider = ({
 		setVisibleTiers,
 		visiblePrices,
 		setVisiblePrices,
-		visibleLogs,
-		setVisibleLogs,
 
 		_gameListView,
 		_setGameListView,
@@ -105,8 +93,6 @@ export const AppContextProvider = ({
 		setQueryGame,
 		queryMember,
 		setQueryMember,
-		queryLeaderboardPeriod,
-		setQueryLeaderboardPeriod,
 	};
 
 	return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

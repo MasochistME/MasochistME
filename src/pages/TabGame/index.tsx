@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { Game, Badge } from '@masochistme/sdk/dist/v1/types';
@@ -11,31 +11,13 @@ import {
 	ErrorFallback,
 	Loader,
 } from 'components';
-import {
-	SubPage,
-	Section,
-	SectionProps,
-	BadgeTile,
-	Tabs,
-	Tab,
-	TabPanel,
-} from 'containers';
+import { SubPage, Section, SectionProps, BadgeTile } from 'containers';
 import { useActiveTab, useMixpanel } from 'hooks';
 import { TabDict } from 'configuration/tabs';
 
 import { GameProfileHeader } from './GameProfileHeader';
-import { GameProfileLeaderboards } from './GameProfileLeaderboards';
-import { GameProfileFeatured } from './GameProfileFeatured';
-// import { GameProfileGraphs } from './GameProfileGraphs';
-// import { GameProfileBadges } from './GameProfileBadges';
 import { GameProfileStats } from './GameProfileStats';
-
-enum TabsMap {
-	LEADERBOARDS = 'leaderboards',
-	FEATURED = 'featured',
-	GRAPHS = 'graphs',
-	BADGES = 'badges',
-}
+import { TabGameTabsBoundary } from './GameProfileTabs';
 
 export const TabGame = (): JSX.Element => {
 	// ID param will always be defined because this tab is used ONLY for the /game/:id route.
@@ -92,39 +74,6 @@ const TabGameTopBoundary = ({ game }: { game: Game }) => (
 	</Flex>
 );
 
-const TabGameTabsBoundary = ({ gameId }: { gameId: number }) => {
-	const { track } = useMixpanel();
-	const [activeTab, setActiveTab] = useState<string>(TabsMap.LEADERBOARDS);
-	const handleChangeTab = (_e: React.SyntheticEvent, newTab: TabsMap) => {
-		setActiveTab(newTab);
-		track('page.game.tab', { tab: newTab });
-	};
-
-	return (
-		<StyledGameTabs>
-			<Tabs value={activeTab} onChange={handleChangeTab}>
-				<Tab label="Leaderboards" value={TabsMap.LEADERBOARDS} />
-				<Tab label="Featured content" value={TabsMap.FEATURED} />
-				{/* <Tab label="Badges" value={TabsMap.BADGES} /> */}
-				{/* <Tab label="Graphs" value={TabsMap.GRAPHS} /> */}
-			</Tabs>
-			<TabPanel activeTab={activeTab} tabId={TabsMap.LEADERBOARDS}>
-				<GameProfileLeaderboards gameId={gameId} />
-			</TabPanel>
-			<TabPanel activeTab={activeTab} tabId={TabsMap.FEATURED}>
-				<GameProfileFeatured gameId={gameId} />
-			</TabPanel>
-			{/* 
-			<TabPanel activeTab={activeTab} tabId={TabsMap.GRAPHS}>
-				<GameProfileGraphs gameId={gameId} title={game.title} />
-			</TabPanel>
-			<TabPanel activeTab={activeTab} tabId={TabsMap.BADGES}>
-				<GameProfileBadges gameId={gameId} />
-			</TabPanel> */}
-		</StyledGameTabs>
-	);
-};
-
 const Info = (props: Partial<SectionProps> & { gameId: number }) => {
 	const { gameId, ...rest } = props;
 	return (
@@ -154,13 +103,6 @@ const InfoBoundary = ({ gameId }: { gameId: number }) => {
 		</StyledGameProfileBadges>
 	);
 };
-
-const StyledGameTabs = styled.div`
-	max-width: 100rem;
-	width: 100%;
-	flex: 1 1 100%;
-	overflow: hidden;
-`;
 
 const StyledGameProfileBadges = styled(Flex)`
 	gap: var(--size-8);

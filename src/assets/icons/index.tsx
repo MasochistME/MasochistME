@@ -6,6 +6,8 @@ import { ReactComponent as Bolt } from './Bolt.svg';
 import { ReactComponent as Bookmark } from './Bookmark.svg';
 import { ReactComponent as Calendar } from './Calendar.svg';
 import { ReactComponent as CalendarCheck } from './CalendarCheck.svg';
+import { ReactComponent as CaretLeft } from './CaretLeft.svg';
+import { ReactComponent as CaretRight } from './CaretRight.svg';
 import { ReactComponent as Checklist } from './Checklist.svg';
 import { ReactComponent as ChevronDown } from './ChevronDown.svg';
 import { ReactComponent as ChevronUp } from './ChevronUp.svg';
@@ -71,6 +73,8 @@ const icons = {
 	Bookmark,
 	Calendar,
 	CalendarCheck,
+	CaretLeft,
+	CaretRight,
 	Checklist,
 	ChevronDown,
 	ChevronUp,

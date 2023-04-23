@@ -1,0 +1,1 @@
+export { AwardTooltip } from './AwardTooltip';

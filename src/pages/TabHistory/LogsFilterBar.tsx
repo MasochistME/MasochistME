@@ -1,15 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
+import { LogType } from '@masochistme/sdk/dist/v1/types';
 
-import { useAppContext } from 'context';
 import { SingleLog, LogDictionary } from 'configuration';
 import { media } from 'styles';
 import { FilterBar, Flex } from 'components';
 
 import { LogsFilterCheckbox } from './LogsFilterCheckbox';
 
-export const LogsFilterBar = (): JSX.Element => {
-	const { visibleLogs, setVisibleLogs } = useAppContext();
+type Props = {
+	visibleLogs: LogType[];
+	setVisibleLogs: (visibleLogs: LogType[]) => void;
+};
+
+export const LogsFilterBar = (props: Props): JSX.Element => {
+	const { visibleLogs, setVisibleLogs } = props;
 
 	return (
 		<FilterBar>

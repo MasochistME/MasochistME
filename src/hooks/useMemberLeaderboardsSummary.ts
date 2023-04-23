@@ -2,9 +2,13 @@ import { useMemo } from 'react';
 import { PatronTier } from '@masochistme/sdk/dist/v1/types';
 
 import { useCuratorMembers, useLeaderboardsMembers } from 'sdk';
+import { TimePeriod } from 'utils/getTimePeriod';
 
-export const useMemberLeaderboardsSummary = (memberId: string) => {
-	const { leaderboardsData } = useLeaderboardsMembers();
+export const useMemberLeaderboardsSummary = (
+	memberId: string,
+	timePeriod: TimePeriod,
+) => {
+	const { leaderboardsData } = useLeaderboardsMembers({ from: timePeriod });
 	const { membersData } = useCuratorMembers();
 
 	const leaderData = useMemo(() => {
