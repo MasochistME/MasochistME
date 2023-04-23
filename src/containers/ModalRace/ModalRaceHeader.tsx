@@ -13,6 +13,7 @@ import {
 	Spinner,
 } from 'components';
 import { getRaceTypeIcon } from 'utils';
+import { t } from 'i18n';
 
 type Props = {
 	raceId?: string | null;
@@ -33,7 +34,9 @@ const HeaderBoundary = (props: Props) => {
 
 	const icon = getRaceTypeIcon(race);
 	const iconTextHover =
-		race.type === RaceType.SCORE_BASED ? 'Score based race' : 'Time based race';
+		race.type === RaceType.SCORE_BASED
+			? t('race.header.race_type.score')
+			: t('race.header.race_type.score');
 
 	return (
 		<StyledModalRaceHeader column>
@@ -46,19 +49,26 @@ const HeaderBoundary = (props: Props) => {
 				</h2>
 			</Flex>
 			<p>
-				<span style={{ fontWeight: 600 }}>Instructions:</span>{' '}
+				<span style={{ fontWeight: 600 }}>
+					{t('race.header.instructions')}:
+				</span>{' '}
 				{race.instructions}
 			</p>
 			<p>
-				<span style={{ fontWeight: 600 }}>Objectives:</span> {race.objectives}
+				<span style={{ fontWeight: 600 }}>{t('race.header.objectives')}:</span>{' '}
+				{race.objectives}
 			</p>
 			<Flex align width="100%" justifyContent="space-around">
 				<Flex column align>
-					<span style={{ fontWeight: 600 }}>Download grace time:</span>
+					<span style={{ fontWeight: 600 }}>
+						{t('race.header.download_grace_time')}:
+					</span>
 					{race.downloadGrace}s
 				</Flex>
 				<Flex column align>
-					<span style={{ fontWeight: 600 }}>Proof upload grace time:</span>
+					<span style={{ fontWeight: 600 }}>
+						{t('race.header.proof_grace_time')}:
+					</span>
 					{race.uploadGrace}s
 				</Flex>
 			</Flex>

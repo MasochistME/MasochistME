@@ -8,6 +8,7 @@ import { CommonProps } from 'containers';
 import { BrokenImage, Flex, Skeleton, Tooltip } from 'components';
 import { usePodiumColor } from './hooks';
 import { getAvatarFromHash } from 'utils';
+import { t } from 'i18n';
 
 type Props = CommonProps & {
 	member?: Partial<Member>;
@@ -17,7 +18,7 @@ type Props = CommonProps & {
 export const PodiumAvatar = (props: Props) => {
 	const { colorTokens, LOGO_URL_STATIC } = useTheme();
 	const {
-		member = { name: 'Loading...' },
+		member = { name: t('loading') },
 		place,
 		size = Size.MEDIUM,
 		title,
@@ -27,7 +28,7 @@ export const PodiumAvatar = (props: Props) => {
 	} = props;
 
 	const avatarUrl = useMemo(() => {
-		if (member.avatarHash) return getAvatarFromHash(member.avatarHash, 'full');
+		if (member.avatarHash) return getAvatarFromHash(member.avatarHash, '_full');
 		if (member.avatar) return member.avatar;
 		return null;
 	}, [member]);
@@ -45,7 +46,7 @@ export const PodiumAvatar = (props: Props) => {
 				isEmpty={!avatarUrl}>
 				{isLoading && <Skeleton size={size} />}
 				{!isLoading && (isError || !avatarUrl) && (
-					<BrokenImage size={size} title="Could not load the avatar." />
+					<BrokenImage size={size} title={t('error.could_not_load_avatar')} />
 				)}
 				{!isLoading && !isError && avatarUrl && (
 					<img

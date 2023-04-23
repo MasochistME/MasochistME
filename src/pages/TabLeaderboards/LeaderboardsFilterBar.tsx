@@ -3,6 +3,7 @@ import React from 'react';
 import { useAppContext } from 'context';
 import { FilterBar, Input, ToggleButtons } from 'components';
 import { TimePeriod } from 'utils/getTimePeriod';
+import { t } from 'i18n';
 
 type Props = {
 	filter: TimePeriod;
@@ -15,19 +16,19 @@ export const LeaderboardsFilterBar = (props: Props): JSX.Element => {
 
 	const options = [
 		{
-			label: 'All',
+			label: t('leaderboards.filter.all'),
 			value: TimePeriod.ALL,
 		},
 		{
-			label: 'Past week',
+			label: t('leaderboards.filter.past_week'),
 			value: TimePeriod.PAST_WEEK,
 		},
 		{
-			label: 'Past month',
+			label: t('leaderboards.filter.past_month'),
 			value: TimePeriod.PAST_MONTH,
 		},
 		{
-			label: 'Past year',
+			label: t('leaderboards.filter.past_year'),
 			value: TimePeriod.PAST_YEAR,
 		},
 	];
@@ -35,7 +36,7 @@ export const LeaderboardsFilterBar = (props: Props): JSX.Element => {
 	return (
 		<FilterBar>
 			<Input
-				placeholder="Search members"
+				placeholder={t('leaderboards.filter.search_placeholder')}
 				query={queryMember}
 				setQuery={setQueryMember}
 				icon="Search"

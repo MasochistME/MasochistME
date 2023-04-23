@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { useCuratedGames } from 'sdk';
 import { Flex, Icon, Button } from 'components';
 import { Game } from '@masochistme/sdk/dist/v1/types';
+import { t } from 'i18n';
 
 type Props = {
 	gameId: number;
@@ -32,10 +33,10 @@ export const ModalLeaderboardsHeader = ({ gameId }: Props) => {
 				onClick={event => event.stopPropagation()}>
 				<Flex align gap={8}>
 					<Icon icon="Steam" />
-					<h2>{game ? game.title : 'Loading...'}</h2>
+					<h2>{game ? game.title : t('loading')}</h2>
 				</Flex>
 			</a>
-			<Button label="Details" icon="CircleInfo" onClick={onShowGame} />
+			<Button label={t('details')} icon="CircleInfo" onClick={onShowGame} />
 		</StyledModalLeaderboardsHeader>
 	);
 };

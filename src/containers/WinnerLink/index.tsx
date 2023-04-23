@@ -5,6 +5,7 @@ import { useRaceById } from 'sdk';
 import { useMemberData } from 'hooks';
 import { Icon } from 'components';
 import { MemberAvatar } from 'containers/MemberAvatar';
+import { t } from 'i18n';
 
 type Props = {
 	discordId?: string | null;
@@ -29,7 +30,10 @@ export const WinnerLink = (props: Props) => {
 			{hasAvatar && <MemberAvatar member={member} />}
 			<h4>{username ?? '—'}</h4>
 			{race?.owner === discordId && (
-				<Icon icon="Crown" hoverText="This member is an owner of this race." />
+				<Icon
+					icon="Crown"
+					hoverText={t('winner_link.this_member_is_an_owner')}
+				/>
 			)}
 		</StyledWinnerLink>
 	);

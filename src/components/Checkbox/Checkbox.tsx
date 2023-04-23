@@ -7,6 +7,7 @@ import { Size } from 'components/__utils';
 import { Icon, IconType } from 'components/Icon';
 import { Flex } from 'components/Flex';
 import { Tooltip } from 'components/Tooltip';
+import { t } from 'i18n';
 
 type Props<T extends string> = {
 	icon: IconType;
@@ -42,8 +43,8 @@ export const Checkbox = <T extends string>(props: Props<T>): JSX.Element => {
 			content={
 				<Flex column>
 					<Flex align gap={4}>
-						{isChecked ? 'Hide' : 'Show'} items of type{' '}
-						{<Icon icon={icon} size={Size.MICRO} />}
+						{isChecked ? t('checkbox.hide') : t('checkbox.show')}{' '}
+						{t('checkbox.label')} {<Icon icon={icon} size={Size.MICRO} />}
 					</Flex>
 					{itemDescription && <span>({itemDescription})</span>}
 				</Flex>

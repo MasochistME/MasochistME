@@ -5,6 +5,7 @@ import { useUpdateStatus } from 'sdk';
 import { Flex, ProgressBar, QueryBoundary } from 'components';
 import { HideOn } from 'containers';
 import { ColorTokens, useTheme } from 'styles';
+import { t } from 'i18n';
 
 export const UpdateStatus = (): JSX.Element => {
 	const { colorTokens } = useTheme();
@@ -26,12 +27,14 @@ const UpdateStatusBoundary = () => {
 		? new Date(
 				new Date(status.lastUpdate).getTime() + 43200000,
 		  ).toLocaleString()
-		: 'loading...';
+		: t('loading');
 
 	const isStatusIdle = !status?.isUpdating || status.updateStatus === 'idle';
 	if (isStatusIdle)
 		return (
-			<StyledUpdateStatusText>Next update: {nextUpdate}</StyledUpdateStatusText>
+			<StyledUpdateStatusText>
+				{t('update_status.next_update')}: {nextUpdate}
+			</StyledUpdateStatusText>
 		);
 	return (
 		<ProgressBar

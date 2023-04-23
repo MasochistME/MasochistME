@@ -18,25 +18,26 @@ import { WinnerLink } from 'containers';
 import { useMixpanel } from 'hooks';
 import { useCuratorMembers, useSeasonLeaderboards } from 'sdk';
 import { ModalParticipant } from './ModalParticipant';
+import { LocaleKey, t } from 'i18n';
 
-enum Columns {
-	PLACE = '#',
-	PARTICIPANT = 'Participant',
-	SCORE_BEST = 'Score (best-of)',
-	SCORE_ALL = 'Score (all)',
-	GOLD = '🥇',
-	SILVER = '🥈',
-	BRONZE = '🥉',
-	PARTICIPATIONS = 'Participations',
-	DNF = 'DNF',
-	MORE = 'More',
-}
+const Columns: Record<string, LocaleKey> = {
+	PLACE: 'season.ranking.column.place',
+	PARTICIPANT: 'season.ranking.column.participant',
+	SCORE_BEST: 'season.ranking.column.score_best',
+	SCORE_ALL: 'season.ranking.column.score_all',
+	GOLD: 'season.ranking.column.gold',
+	SILVER: 'season.ranking.column.silver',
+	BRONZE: 'season.ranking.column.bronze',
+	PARTICIPATIONS: 'season.ranking.column.participations',
+	DNF: 'season.ranking.column.dnf',
+	MORE: 'season.ranking.column.more',
+};
 
 type Props = { seasonId: string };
 export const SingleSeasonRanking = (props: Props) => {
 	const columns = Object.values(Columns).map(c => ({
 		key: c,
-		title: c,
+		title: t(c),
 		value: () => '',
 		render: () => null,
 	}));
@@ -72,7 +73,7 @@ const RankingBoundary = ({ seasonId }: Props) => {
 	const columns: TableColumn<SeasonSummary>[] = [
 		{
 			key: Columns.PLACE,
-			title: Columns.PLACE,
+			title: t(Columns.PLACE),
 			value: (_: SeasonSummary, index: number) => Number(index + 1),
 			render: (_: SeasonSummary, index: number) => (
 				<StyledPlace>{index + 1}</StyledPlace>
@@ -80,7 +81,7 @@ const RankingBoundary = ({ seasonId }: Props) => {
 		},
 		{
 			key: Columns.PARTICIPANT,
-			title: Columns.PARTICIPANT,
+			title: t(Columns.PARTICIPANT),
 			value: (participant: SeasonSummary) =>
 				participant.member?.name?.toLowerCase() ?? participant.discordId,
 			render: (participant: SeasonSummary) => (
@@ -96,8 +97,8 @@ const RankingBoundary = ({ seasonId }: Props) => {
 		{
 			key: Columns.GOLD,
 			title: (
-				<Tooltip content="Sum of all gold medals earned by this participant">
-					<span>{Columns.GOLD}</span>
+				<Tooltip content={t('season.ranking.column.gold.subtitle')}>
+					<span>{t(Columns.GOLD)}</span>
 				</Tooltip>
 			),
 			value: (participant: SeasonSummary) => participant.allGolds,
@@ -106,8 +107,8 @@ const RankingBoundary = ({ seasonId }: Props) => {
 		{
 			key: Columns.SILVER,
 			title: (
-				<Tooltip content="Sum of all silver medals earned by this participant">
-					<span>{Columns.SILVER}</span>
+				<Tooltip content={t('season.ranking.column.silver.subtitle')}>
+					<span>{t(Columns.SILVER)}</span>
 				</Tooltip>
 			),
 			value: (participant: SeasonSummary) => participant.allSilvers,
@@ -116,8 +117,8 @@ const RankingBoundary = ({ seasonId }: Props) => {
 		{
 			key: Columns.BRONZE,
 			title: (
-				<Tooltip content="Sum of all bronze medals earned by this participant">
-					<span>{Columns.BRONZE}</span>
+				<Tooltip content={t('season.ranking.column.bronze.subtitle')}>
+					<span>{t(Columns.BRONZE)}</span>
 				</Tooltip>
 			),
 			value: (participant: SeasonSummary) => participant.allBronzes,
@@ -127,11 +128,11 @@ const RankingBoundary = ({ seasonId }: Props) => {
 			key: Columns.SCORE_BEST,
 			title: (
 				<Flex row align justify gap={4}>
-					{Columns.SCORE_BEST}
+					{t(Columns.SCORE_BEST)}
 					<Icon
 						size={Size.MICRO}
 						icon="QuestionCircle"
-						hoverText="Final score calculated after discarding 3 worst results"
+						hoverText={t('season.ranking.column.score_best.subtitle')}
 					/>
 				</Flex>
 			),
@@ -142,11 +143,11 @@ const RankingBoundary = ({ seasonId }: Props) => {
 			key: Columns.SCORE_ALL,
 			title: (
 				<Flex row align justify gap={4}>
-					{Columns.SCORE_ALL}
+					{t(Columns.SCORE_ALL)}
 					<Icon
 						size={Size.MICRO}
 						icon="QuestionCircle"
-						hoverText="Full seasons score counting all season races"
+						hoverText={t('season.ranking.column.score_all.subtitle')}
 					/>
 				</Flex>
 			),
@@ -155,19 +156,19 @@ const RankingBoundary = ({ seasonId }: Props) => {
 		},
 		{
 			key: Columns.PARTICIPATIONS,
-			title: Columns.PARTICIPATIONS,
+			title: t(Columns.PARTICIPATIONS),
 			value: (participant: SeasonSummary) => participant.participationsTotal,
 			render: (participant: SeasonSummary) => participant.participationsTotal,
 		},
 		{
 			key: Columns.DNF,
-			title: Columns.DNF,
+			title: t(Columns.DNF),
 			value: (participant: SeasonSummary) => participant.dnfsTotal,
 			render: (participant: SeasonSummary) => participant.dnfsTotal,
 		},
 		{
 			key: Columns.MORE,
-			title: Columns.MORE,
+			title: t(Columns.MORE),
 			value: () => 0,
 			render: (participant: SeasonSummary) => (
 				<TableCell
@@ -211,6 +212,7 @@ export type SeasonSummary = {
 	allBronzes: number;
 	allRaces: SeasonLeaderboardEntry[];
 };
+
 const useSeasonParticipants = (
 	data: SeasonLeaderboardEntry[],
 ): SeasonSummary[] => {

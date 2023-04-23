@@ -20,7 +20,7 @@ export const CandidateHeader = ({ candidate }: Props) => {
 			<Flex align gap={16}>
 				<StyledCandidateAvatar
 					src={
-						getAvatarFromHash(candidate.avatarHash, 'full') ?? LOGO_URL_STATIC
+						getAvatarFromHash(candidate.avatarHash, '_full') ?? LOGO_URL_STATIC
 					}
 					size={Size.BIG}
 					colorTokens={colorTokens}

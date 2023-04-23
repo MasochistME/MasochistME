@@ -35,6 +35,7 @@ import {
 } from 'components';
 
 import { LogCompact } from './components';
+import { t } from 'i18n';
 
 const NUMBER_OF_LOGS = 15;
 
@@ -124,7 +125,7 @@ const Content = ({ content, ...props }: ContentProps) => (
 	<Section
 		width="100%"
 		maxWidth="45rem"
-		title="History"
+		title={t('dashboard.history.title')}
 		content={<StyledSectionHistory>{content}</StyledSectionHistory>}
 		{...props}
 	/>
@@ -162,7 +163,7 @@ const useLogComponents = () => {
 						<LogCompact.Link onClick={onUserClick}>
 							{member.name}
 						</LogCompact.Link>
-						<span>has joined the group!</span>
+						<span>{t('dashboard.history.has_joined')}</span>
 					</LogCompact.Block>
 				</LogCompact>
 			);
@@ -184,7 +185,7 @@ const useLogComponents = () => {
 						<LogCompact.Link onClick={onUserClick}>
 							{member.name}
 						</LogCompact.Link>
-						<span>has left the group!</span>
+						<span>{t('dashboard.history.has_left')}</span>
 					</LogCompact.Block>
 				</LogCompact>
 			);
@@ -205,7 +206,7 @@ const useLogComponents = () => {
 						<LogCompact.Link onClick={onGameClick}>
 							{game.title}
 						</LogCompact.Link>
-						<span>has been curated!</span>
+						<span>{t('dashboard.history.has_been_curated')}</span>
 					</LogCompact.Block>
 				</LogCompact>
 			);
@@ -223,7 +224,7 @@ const useLogComponents = () => {
 					<LogCompact.Icon icon={icon} />
 					<LogCompact.Block>
 						<LogCompact.Link> {game.title}</LogCompact.Link>
-						<span>has been removed from curator!</span>
+						<span>{t('dashboard.history.has_been_removed')}</span>
 					</LogCompact.Block>
 				</LogCompact>
 			);
@@ -248,7 +249,7 @@ const useLogComponents = () => {
 						<LogCompact.Link onClick={onUserClick}>
 							{member.name}
 						</LogCompact.Link>
-						<span>completed</span>
+						<span>{t('dashboard.history.completed')}</span>
 						<LogCompact.Link onClick={onGameClick}>
 							{game.title}!
 						</LogCompact.Link>
@@ -273,7 +274,7 @@ const useLogComponents = () => {
 						<LogCompact.Link onClick={onGameClick}>
 							{game.title}
 						</LogCompact.Link>
-						<span>changed its tier to</span>
+						<span>{t('dashboard.history.changed_tier')}</span>
 					</LogCompact.Block>
 					<Icon size={Size.TINY} icon={getTierIcon(game.tier, tiersData)} />!
 				</LogCompact>
@@ -297,7 +298,7 @@ const useLogComponents = () => {
 						<LogCompact.Link onClick={onGameClick}>
 							{game.title}
 						</LogCompact.Link>
-						<span>got a new badge!</span>
+						<span>{t('dashboard.history.got_badge')}!</span>
 					</LogCompact.Block>
 				</LogCompact>
 			);
@@ -321,7 +322,9 @@ const useLogComponents = () => {
 						<LogCompact.Link onClick={onUserClick}>
 							{member.name}
 						</LogCompact.Link>
-						<span>got a new badge - {badge.name}!</span>
+						<span>
+							{t('dashboard.history.got_badge')} - {badge.name}!
+						</span>
 					</LogCompact.Block>
 				</LogCompact>
 			);
@@ -345,6 +348,7 @@ const useLogComponents = () => {
 							{game.title}
 						</LogCompact.Link>
 						<span>
+							{/* TODO Localize this */}
 							{log.oldNumber < log.newNumber
 								? `got ${log.newNumber - log.oldNumber} new achievements!`
 								: `had ${log.oldNumber - log.newNumber} achievements removed!`}

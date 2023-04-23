@@ -7,6 +7,7 @@ import { useBadges, useLogs } from 'sdk';
 import { BadgeThumbnail, Section, SectionProps } from 'containers';
 import { Flex, ErrorFallback, QueryBoundary } from 'components';
 import { Size } from 'components';
+import { t } from 'i18n';
 
 const NUMBER_OF_BADGES = 5;
 
@@ -32,7 +33,7 @@ const Content = ({ content, ...props }: ContentProps) => (
 	<Section
 		width="100%"
 		maxWidth="45rem"
-		title="New badges"
+		title={t('dashboard.badges.title')}
 		content={<StyledNewBadges>{content}</StyledNewBadges>}
 		{...props}
 	/>

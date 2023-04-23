@@ -6,10 +6,12 @@ import { Icon } from 'components';
 import { useAppContext } from 'context';
 import { media, useTheme, ColorTokens } from 'styles';
 import { tabs, Tab } from 'configuration/tabs';
+import { t } from 'i18n';
 
 export const Navigation = (): JSX.Element => {
 	const { colorTokens } = useTheme();
 	const nrOfTabs = tabs.filter(t => t.visible).length;
+
 	return (
 		<StyledNavigation colorTokens={colorTokens} nrOfTabs={nrOfTabs}>
 			{tabs.map(
@@ -44,7 +46,7 @@ const NavigationItem = (props: Props): JSX.Element => {
 			active={isActive}
 			colorTokens={colorTokens}>
 			<Icon icon={tab.icon} />
-			<StyledTabLabel>{tab.text}</StyledTabLabel>
+			<StyledTabLabel>{t(tab.text)}</StyledTabLabel>
 		</StyledTabItem>
 	);
 };

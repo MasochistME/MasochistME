@@ -22,9 +22,6 @@ const StyledLogCompact = styled.div`
 	margin: 0;
 	box-sizing: border-box;
 	gap: var(--size-8);
-	&(:Icon) {
-		color: red;
-	}
 `;
 
 LogCompact.Link = (props: Props) => {

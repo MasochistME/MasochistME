@@ -1,61 +1,62 @@
 import { LogType } from '@masochistme/sdk/dist/v1/types';
 import { IconType } from 'components';
+import { LocaleKey } from 'i18n';
 
 export type SingleLog = {
 	type: LogType;
 	icon: IconType;
-	description: string;
+	description: LocaleKey;
 };
 
 export const LogDictionary: SingleLog[] = [
 	{
 		icon: 'UserPlus',
-		description: 'new member joining the community',
+		description: `history.log.description.${LogType.MEMBER_JOIN}`,
 		type: LogType.MEMBER_JOIN,
 	},
 	{
 		icon: 'UserMinus',
-		description: 'member leaving the community',
+		description: `history.log.description.${LogType.MEMBER_LEAVE}`,
 		type: LogType.MEMBER_LEAVE,
 	},
 	{
 		icon: 'SquareCheck',
-		description: 'member completing a curated game',
+		description: `history.log.description.${LogType.COMPLETE}`,
 		type: LogType.COMPLETE,
 	},
 	{
 		icon: 'SquarePlus',
-		description: 'new game being curated',
+		description: `history.log.description.${LogType.GAME_ADD}`,
 		type: LogType.GAME_ADD,
 	},
 	{
 		icon: 'SquareMinus',
-		description: 'game being removed from curator',
+		description: `history.log.description.${LogType.GAME_REMOVE}`,
 		type: LogType.GAME_REMOVE,
 	},
 	{
 		icon: 'Bolt',
-		description: 'game changing its tier',
+		description: `history.log.description.${LogType.GAME_TIER_CHANGE}`,
 		type: LogType.GAME_TIER_CHANGE,
 	},
 	{
 		icon: 'Badge',
-		description: 'game getting a new badge',
+		description: `history.log.description.${LogType.BADGE_CREATE}`,
 		type: LogType.BADGE_CREATE,
 	},
 	{
 		icon: 'Medal',
-		description: 'member earning a new badge',
+		description: `history.log.description.${LogType.BADGE_GET}`,
 		type: LogType.BADGE_GET,
 	},
 	{
 		icon: 'Checklist',
-		description: 'game having achievements added or removed',
+		description: `history.log.description.${LogType.ACHIEVEMENTS_CHANGE}`,
 		type: LogType.ACHIEVEMENTS_CHANGE,
 	},
 	{
 		icon: 'Heart',
-		description: 'custom event',
+		description: `history.log.description.${LogType.CUSTOM}`,
 		type: LogType.CUSTOM,
 	},
 ];
