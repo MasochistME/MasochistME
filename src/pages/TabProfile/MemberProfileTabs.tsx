@@ -15,7 +15,7 @@ import { useContextualRouting, useMixpanel } from 'hooks';
 import { MemberProfileBadges } from './MemberProfileBadges';
 import { MemberProfileGraphs } from './MemberProfileGraphs';
 import { MemberProfileGames } from './MemberProfileGames';
-// import { MemberProfileAwards } from './MemberProfileAwards';
+import { MemberProfileAwards } from './MemberProfileAwards';
 
 enum TabRoutes {
 	GRAPHS = 'graphs',
@@ -60,7 +60,7 @@ const MemberProfileTabsBoundary = ({ id }: Props) => {
 			<Tabs value={tab} onChange={handleChangeTab}>
 				<Tab label="Games" value={TabRoutes.GAMES} />
 				<Tab label="Badges" value={TabRoutes.BADGES} />
-				{/* <Tab label="Awards" value={TabRoutes.AWARDS} /> */}
+				<Tab label="Awards" value={TabRoutes.AWARDS} />
 				<Tab label="Graphs" value={TabRoutes.GRAPHS} />
 			</Tabs>
 
@@ -70,9 +70,9 @@ const MemberProfileTabsBoundary = ({ id }: Props) => {
 			<TabPanel activeTab={tab} tabId={TabRoutes.BADGES}>
 				<MemberProfileBadges memberId={id} />
 			</TabPanel>
-			{/* <TabPanel activeTab={tab} tabId={TabRoutes.AWARDS}>
+			<TabPanel activeTab={tab} tabId={TabRoutes.AWARDS}>
 				<MemberProfileAwards memberId={id} />
-			</TabPanel> */}
+			</TabPanel>
 			<TabPanel activeTab={tab} tabId={TabRoutes.GRAPHS}>
 				<MemberProfileGraphs memberId={id} />
 			</TabPanel>
