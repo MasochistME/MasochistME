@@ -2,10 +2,11 @@ import { useMemo } from 'react';
 import styled from 'styled-components';
 import { Member, PatronTier } from '@masochistme/sdk/dist/v1/types';
 
-import { Size } from 'components';
+import { t } from 'i18n';
+import { getAvatarFromHash } from 'utils';
 import { useTheme, ColorTokens } from 'styles';
 import { CommonProps } from 'containers';
-import { BrokenImage, Flex, Skeleton, Tooltip } from 'components';
+import { BrokenImage, Flex, Skeleton, Size, Tooltip } from 'components';
 
 type Props = CommonProps & {
 	member?: Partial<Member>;
@@ -15,7 +16,7 @@ type Props = CommonProps & {
 export const MemberAvatar = (props: Props) => {
 	const { colorTokens, LOGO_URL_STATIC } = useTheme();
 	const {
-		member = { name: 'Loading...' },
+		member = { name: t('loading') },
 		patronTier,
 		size = Size.MEDIUM,
 		title,
@@ -32,9 +33,7 @@ export const MemberAvatar = (props: Props) => {
 
 	const avatarUrl = useMemo(() => {
 		if (member.avatarHash)
-			return `https://avatars.akamai.steamstatic.com/${member.avatarHash}${avatarSize}.jpg`;
-		if (member.avatar) return member.avatar;
-		return null;
+			return getAvatarFromHash(member.avatarHash, avatarSize);
 	}, [member]);
 
 	if (isLoading) return <Skeleton size={size} />;
@@ -47,7 +46,7 @@ export const MemberAvatar = (props: Props) => {
 				isEmpty={!avatarUrl}
 				colorTokens={colorTokens}>
 				{(isError || !avatarUrl) && (
-					<BrokenImage size={size} title="Could not load the avatar." />
+					<BrokenImage size={size} title={t('error.could_not_load_avatar')} />
 				)}
 				{!isError && avatarUrl && (
 					<img

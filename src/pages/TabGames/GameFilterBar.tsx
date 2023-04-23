@@ -24,6 +24,7 @@ import {
 } from 'hooks';
 import { TabDict } from 'configuration/tabs';
 import { useTiers } from 'sdk';
+import { t } from 'i18n';
 
 const DEFAULT_PRICES = [0, 1000];
 
@@ -56,15 +57,15 @@ export const GameFilterBar = (props: Props): JSX.Element => {
 	}, [gameListView]);
 
 	const gameViewButtonLabel = useMemo(() => {
-		if (gameListView === GameView.TILE) return 'Toggle table view';
-		else return 'Toggle grid view';
+		if (gameListView === GameView.TILE) return t('games.view.toggle_table');
+		else return t('games.view.toggle_grid');
 	}, [gameListView]);
 
 	return (
 		<FilterBar>
 			<StyledGameFilterBar>
 				<Input
-					placeholder="Search games"
+					placeholder={t('games.filter.search_placeholder')}
 					query={queryGame}
 					setQuery={setQueryGame}
 					icon="Search"

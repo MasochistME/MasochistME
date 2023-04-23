@@ -14,6 +14,7 @@ import { SingleSeason } from './SingleSeason';
 import { useRacesFromSeason } from 'hooks';
 import { SeasonSelect } from './SeasonSelect';
 import { useState } from 'react';
+import { t } from 'i18n';
 
 export const RacesPage = (): JSX.Element => {
 	const [selectedSeasonId, setSelectedSeasonId] = useState<string | null>(null);
@@ -52,9 +53,7 @@ type Props = {
 const SeasonBoundary = ({ selectedSeasonId }: Props) => {
 	const { season, races } = useRacesFromSeason(selectedSeasonId);
 	if (selectedSeasonId === null)
-		return (
-			<Warning description="There is no seasons active at the moment. Select one of the past races from the dropdown above." />
-		);
+		return <Warning description={t('races.no_season_active')} />;
 	return <SingleSeason season={season} races={races} />;
 };
 
@@ -62,15 +61,11 @@ const RacesInfoBasic = (props: Partial<SectionProps>): JSX.Element => {
 	return (
 		<Section
 			{...props}
-			title="Races"
+			title={t('races.info_basic.title')}
 			content={
 				<Flex column gap={8}>
-					<div>
-						Races are community events (usually happening over the weekend),
-						where you have to blindly complete a short secret game and get the
-						best possible score.
-					</div>
-					<div>There are two types of races:</div>
+					<div>{t('races.info_basic1')}</div>
+					<div>{t('races.info_basic2.title')}</div>
 					<ul
 						style={{
 							margin: 0,
@@ -78,20 +73,19 @@ const RacesInfoBasic = (props: Partial<SectionProps>): JSX.Element => {
 							textAlign: 'left',
 						}}>
 						<li>
-							<span style={{ fontWeight: 600 }}>time based</span> - you have to
-							complete the game in the shortest time possible,
+							<span style={{ fontWeight: 600 }}>
+								{t('races.info_basic2.time_based')}
+							</span>{' '}
+							{t('races.info_basic2.time_based.desc')}
 						</li>
 						<li>
-							<span style={{ fontWeight: 600 }}>score based</span> - you have to
-							get the highest score within a limited time frame.
+							<span style={{ fontWeight: 600 }}>
+								{t('races.info_basic2.time_based')}
+							</span>{' '}
+							{t('races.info_basic2.time_based.desc')}
 						</li>
 					</ul>
-					<div>
-						Races are organized into seasons. A season typically consists of 10
-						races and takes into consideration 7 best results of all
-						participants. The lower final season score you have, the higher you
-						are placed.
-					</div>
+					<div>{t('races.info_basic3')}</div>
 				</Flex>
 			}
 		/>
@@ -99,10 +93,11 @@ const RacesInfoBasic = (props: Partial<SectionProps>): JSX.Element => {
 };
 
 const RacesInfoPoints = (props: Partial<SectionProps>): JSX.Element => {
+	// TODO Lokalize the text below
 	return (
 		<Section
 			{...props}
-			title="Point system"
+			title={t('races.info_points.title')}
 			content={
 				<Flex column gap={8}>
 					<div>
@@ -130,10 +125,11 @@ const RacesInfoPoints = (props: Partial<SectionProps>): JSX.Element => {
 };
 
 const RacesInfoJoin = (props: Partial<SectionProps>): JSX.Element => {
+	// TODO Localize the text below
 	return (
 		<Section
 			{...props}
-			title="How to participate"
+			title={t('races.info_join.title')}
 			content={
 				<Flex column gap={8}>
 					<div>
@@ -148,7 +144,7 @@ const RacesInfoJoin = (props: Partial<SectionProps>): JSX.Element => {
 							href="https://abiding-washer-fc3.notion.site/Races-6fe4971a56194039b85807adf2077262"
 							target="_blank">
 							<Flex align gap={8}>
-								How to join and participate <Icon icon="ExternalLink" />
+								{t('races.info_join.link')} <Icon icon="ExternalLink" />
 							</Flex>
 						</a>
 					</div>

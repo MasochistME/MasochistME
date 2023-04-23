@@ -6,6 +6,7 @@ import { useGames } from 'sdk';
 import { getGameThumbnail } from 'utils';
 import { Section, SectionProps } from 'containers';
 import { Flex, Loader, Spinner, QueryBoundary } from 'components';
+import { t } from 'i18n';
 
 type Props = Omit<SectionProps, 'content' | 'title'>;
 export const DashboardTileSale = (props: Props) => {
@@ -41,7 +42,7 @@ const DashboardTileSaleBoundary = (props: Props) => {
 	return (
 		<Section
 			fullWidth
-			title="Games on sale"
+			title={t('dashboard.sale.title')}
 			content={
 				<>
 					{isLoading && <Loader />}

@@ -8,6 +8,7 @@ import { useMixpanel } from 'hooks';
 import { curatorURL } from 'utils';
 import { Variant } from 'components/Button/types';
 import { useNavigate } from 'react-router';
+import { t } from 'i18n';
 
 type Props = {
 	size?: Size;
@@ -41,7 +42,7 @@ export const ButtonsSocialMedia = (props: Props): JSX.Element => {
 			{withJoinButton && (
 				<Button
 					size={Size.SMALL}
-					label="Join us!"
+					label={t('button.social.join')}
 					variant={Variant.PRIMARY}
 					onClick={onJoinUsClick}
 				/>
@@ -49,19 +50,19 @@ export const ButtonsSocialMedia = (props: Props): JSX.Element => {
 			<Button
 				size={size}
 				icon="Steam"
-				tooltip="Our Steam curator"
+				tooltip={t('button.social.steam')}
 				onClick={onButtonCuratorClick}
 			/>
 			<Button
 				size={size}
 				icon="Discord"
-				tooltip="Our Discord server"
+				tooltip={t('button.social.discord')}
 				onClick={onButtonDiscordClick}
 			/>
 			<Button
 				size={size}
 				icon="Patreon"
-				tooltip="Support us!"
+				tooltip={t('button.social.support')}
 				onClick={onButtonPatreonClick}
 			/>
 		</StyledButtonsSocialMedia>

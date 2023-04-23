@@ -9,6 +9,7 @@ import { useCuratorMembers, useLogs } from 'sdk';
 import { MemberAvatar, Section, SectionProps } from 'containers';
 import { Flex, ErrorFallback, QueryBoundary } from 'components';
 import { Size } from 'components';
+import { t } from 'i18n';
 
 const NUMBER_OF_MEMBERS = 10;
 
@@ -60,7 +61,9 @@ const DashboardTileMembersBoundary = (props: Props) => {
 					title={
 						<Flex column>
 							<span style={{ fontWeight: 'bold' }}>{member.name}</span>
-							<span>Joined {dayjs(log.date).fromNow()}</span>
+							<span>
+								{t('dashboard.members.joined')} {dayjs(log.date).fromNow()}
+							</span>
 						</Flex>
 					}
 				/>
@@ -75,7 +78,7 @@ const Content = ({ content, ...props }: ContentProps) => (
 	<Section
 		width="100%"
 		maxWidth="45rem"
-		title="New members"
+		title={t('dashboard.members.title')}
 		content={<StyledNewMembers>{content}</StyledNewMembers>}
 		{...props}
 	/>

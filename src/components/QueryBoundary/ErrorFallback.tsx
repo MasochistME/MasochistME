@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Flex, Size } from 'components';
+import { t } from 'i18n';
 
 type Props = {
 	width?: string;
@@ -11,7 +12,7 @@ type Props = {
 	error?: string;
 };
 export const ErrorFallback = (props: Props) => {
-	const { error = 'Could not load', ...rest } = props;
+	const { error = t('error.could_not_load'), ...rest } = props;
 	return (
 		<StyledWrapper {...rest}>
 			<StyledImg src="http://cdn.masochist.me/files/ash_fail.png" />

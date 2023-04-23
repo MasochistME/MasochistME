@@ -75,7 +75,7 @@ export const Table = <T extends Record<any, any>>(props: Props<T>) => {
 	const colGroup = fixedColumns.map(col => <col style={col.style ?? {}} />);
 
 	return (
-		<StyledTable className="MuiTable-root" aria-label="simple table">
+		<StyledTable className="MuiTable-root" aria-label="Table">
 			<colgroup>{colGroup}</colgroup>
 			<TableHeader
 				order={_order}

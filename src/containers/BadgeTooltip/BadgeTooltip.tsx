@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useCuratedGames } from 'sdk';
 import { Flex, Tooltip } from 'components';
 import { Badge, Game } from '@masochistme/sdk/dist/v1/types';
+import { t } from 'i18n';
 
 type Props = {
 	badge?: Badge;
@@ -18,7 +19,7 @@ export const BadgeTooltip = (props: Props) => {
 	const gameTitle = (
 		game?.title ??
 		badge?.title ??
-		'UNKNOWN GAME'
+		t('warning.unknown_game').toUpperCase()
 	).toUpperCase();
 
 	return (
@@ -30,7 +31,7 @@ export const BadgeTooltip = (props: Props) => {
 							<span style={{ fontWeight: 'bold' }}>{gameTitle}</span>
 							<span> - </span>
 							<span>
-								{badge.name} ({badge.points} pts)
+								{badge.name} ({badge.points} {t('pts')})
 							</span>
 						</div>
 						<div style={{ maxWidth: '25rem', fontStyle: 'italic' }}>
