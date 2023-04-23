@@ -6,6 +6,7 @@ import { useContextualRouting, useMixpanel } from 'hooks';
 
 import { GameProfileLeaderboards } from './GameProfileLeaderboards';
 import { GameProfileFeatured } from './GameProfileFeatured';
+import { GameProfileGraphs } from './Graphs';
 
 enum TabRoutes {
 	LEADERBOARDS = 'leaderboards',
@@ -32,8 +33,7 @@ export const TabGameTabsBoundary = ({ gameId }: { gameId: number }) => {
 			<Tabs value={tab} onChange={handleChangeTab}>
 				<Tab label="Leaderboards" value={TabRoutes.LEADERBOARDS} />
 				<Tab label="Featured content" value={TabRoutes.FEATURED} />
-				{/* <Tab label="Badges" value={TabRoutes.BADGES} /> */}
-				{/* <Tab label="Graphs" value={TabRoutes.GRAPHS} /> */}
+				<Tab label="Graphs" value={TabRoutes.GRAPHS} />
 			</Tabs>
 			<TabPanel activeTab={tab} tabId={TabRoutes.LEADERBOARDS}>
 				<GameProfileLeaderboards gameId={gameId} />
@@ -41,13 +41,9 @@ export const TabGameTabsBoundary = ({ gameId }: { gameId: number }) => {
 			<TabPanel activeTab={tab} tabId={TabRoutes.FEATURED}>
 				<GameProfileFeatured gameId={gameId} />
 			</TabPanel>
-			{/* 
 			<TabPanel activeTab={tab} tabId={TabRoutes.GRAPHS}>
-				<GameProfileGraphs gameId={gameId} title={game.title} />
+				<GameProfileGraphs gameId={gameId} />
 			</TabPanel>
-			<TabPanel activeTab={tab} tabId={TabRoutes.BADGES}>
-				<GameProfileBadges gameId={gameId} />
-			</TabPanel> */}
 		</StyledGameTabs>
 	);
 };
