@@ -1,0 +1,62 @@
+{
+  "name": "drfetus",
+  "version": "4.2.2",
+  "description": "A custom Dr. Fetus Bot for the Masochist.ME community!",
+  "author": "Arcyvilk <arcyvilk@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "create-command": "node ./scripts/createCommand.mjs && yarn lint --fix",
+    "build:dev": "env ENV=dev tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
+    "build:prod": "env ENV=prod tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
+    "fetus:dev": "env ENV=dev npx tsx src/fetus.ts",
+    "fetus:dev:watch": "env ENV=dev nodemon --exec npx tsx src/fetus.ts",
+    "fetus:prod": "env ENV=prod npx tsx src/fetus.ts",
+    "fetus:prod:watch": "env ENV=prod nodemon --exec npx tsx src/fetus.ts",
+    "fetus": "node dist/fetus.js",
+    "start": "env ENV=prod node dist/fetus.js",
+    "lint": "eslint . --ext .ts --fix",
+    "test": "echo TODO"
+  },
+  "main": "dist/fetus.js",
+  "homepage": "https://github.com/PointOnePercent/DrFetus#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PointOnePercent/DrFetus.git"
+  },
+  "bugs": {
+    "url": "https://github.com/PointOnePercent/DrFetus/issues"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "dependencies": {
+    "@masochistme/sdk": "^3.0.1",
+    "arcybot": "^1.4.8",
+    "compromise": "^12.2.1",
+    "dayjs": "^1.11.5",
+    "discord.js": "^14.8.0",
+    "dotenv": "^16.0.3",
+    "mongodb": "^4.10.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.9",
+    "@types/mongodb": "^4.0.7",
+    "@types/node": "^18.8.0",
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1",
+    "chalk": "^5.1.0",
+    "eslint": "^8.24.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "lodash": "^4.17.19",
+    "nodemon": "^2.0.20",
+    "prettier": "^2.7.1",
+    "prompt-confirm": "^2.0.4",
+    "ts-node": "^9.1.1",
+    "tsc-alias": "^1.7.0",
+    "typescript": "^4.8.4"
+  }
+}

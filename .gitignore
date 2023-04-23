@@ -1,0 +1,12 @@
+node_modules
+dist
+build
+yarn-error.log
+
+.env
+config.json
+
+.yalc
+yalc.lock
+
+.envprod
