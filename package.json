@@ -7,6 +7,8 @@
     "lint": "turbo run lint",
     "tsc": "turbo run tsc",
     "docs": "turbo run docs",
+    "maso:build": "turbo run maso:build",
+    "maso:start": "turbo run maso:start",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "workspaces": [
