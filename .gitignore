@@ -10,6 +10,7 @@ coverage
 build
 dist
 out
+__docs
 
 # misc
 .DS_Store
