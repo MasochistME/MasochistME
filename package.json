@@ -1,0 +1,60 @@
+{
+  "name": "masochist-api",
+  "version": "4.0.0",
+  "description": "MasochistME API",
+  "main": "dist/index.js",
+  "scripts": {
+    "build:dev": "env ENV=dev PORT=3081 CORS=http://localhost:3000 DELAY=3000 BIG_DELAY=43200000 tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
+    "build:staging": "env ENV=dev PORT=3081 CORS=http://dev.masochist.me DELAY=3000 BIG_DELAY=43200000 tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
+    "build:prod": "env ENV=prod PORT=3002 CORS=http://masochist.me DELAY=3000 BIG_DELAY=43200000 tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
+    "api:dev": "env ENV=dev PORT=3081 CORS=http://localhost:3000 DELAY=3000 BIG_DELAY=43200000 npx tsx lib/index.ts",
+    "api:dev:watch": "env ENV=dev PORT=3081 CORS=http://localhost:3000 DELAY=3000 BIG_DELAY=43200000 nodemon --exec npx tsx lib/index.ts",
+    "api:staging": "env ENV=dev PORT=3081 CORS=http://dev.masochist.me DELAY=3000 BIG_DELAY=43200000 node dist/index.js",
+    "api:prod": "env ENV=prod PORT=3002 CORS=http://masochist.me DELAY=3000 BIG_DELAY=43200000 node dist/index.js",
+    "api:prod:watch": "env ENV=prod PORT=3002 CORS=http://masochist.me DELAY=3000 BIG_DELAY=43200000 nodemon --exec npx tsx lib/index.ts",
+    "api:prod:test:danger": "env ENV=prod PORT=3081 CORS=http://localhost:3000 DELAY=3000 BIG_DELAY=43200000 nodemon --exec npx tsx lib/index.ts",
+    "start": "env NODE_OPTIONS='--experimental-specifier-resolution=node' node dist/index.js",
+    "clean": "rm -rf node_modules && rm -rf dist",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix --quiet",
+    "test": "echo TODO"
+  },
+  "author": "Arcyvilk",
+  "license": "ISC",
+  "dependencies": {
+    "@masochistme/sdk": "^3.2.5",
+    "axios": "^0.19.0",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dayjs": "^1.11.7",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongodb": "^4.10.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.14",
+    "@types/lodash": "^4.14.186",
+    "@types/mongodb": "^4.0.7",
+    "@types/node": "^14.14.20",
+    "@typescript-eslint/eslint-plugin": "^5.39.0",
+    "@typescript-eslint/parser": "^5.39.0",
+    "eslint": "^8.25.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "lodash": "^4.17.13",
+    "nodemon": "^2.0.20",
+    "prettier": "^2.7.1",
+    "tsc-alias": "^1.7.0",
+    "typescript": "^4.8.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PointOnePercent/dds-microservice.git"
+  },
+  "bugs": {
+    "url": "https://github.com/PointOnePercent/dds-microservice/issues"
+  },
+  "homepage": "https://github.com/PointOnePercent/dds-microservice#readme"
+}
