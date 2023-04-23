@@ -4,13 +4,14 @@ import { useAppContext } from 'context';
 import { FilterBar, Input, ToggleButtons } from 'components';
 import { TimePeriod } from 'utils/getTimePeriod';
 
-export const LeaderboardsFilterBar = (): JSX.Element => {
-	const {
-		queryMember,
-		setQueryMember,
-		queryLeaderboardPeriod,
-		setQueryLeaderboardPeriod,
-	} = useAppContext();
+type Props = {
+	filter: TimePeriod;
+	changeFilter: (filter: TimePeriod) => void;
+};
+
+export const LeaderboardsFilterBar = (props: Props): JSX.Element => {
+	const { filter, changeFilter } = props;
+	const { queryMember, setQueryMember } = useAppContext();
 
 	const options = [
 		{
@@ -41,8 +42,8 @@ export const LeaderboardsFilterBar = (): JSX.Element => {
 			/>
 			<ToggleButtons
 				options={options}
-				value={queryLeaderboardPeriod}
-				changeValue={setQueryLeaderboardPeriod}
+				value={filter}
+				changeValue={changeFilter}
 			/>
 		</FilterBar>
 	);

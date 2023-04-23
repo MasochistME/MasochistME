@@ -28,7 +28,7 @@ const MemberProfileStatsBoundary = (props: Props) => {
 
 	const { tiersData } = useTiers();
 	const { memberGamesData } = useMemberGames(memberId);
-	const { leaderboardsData } = useLeaderboardsMembers();
+	const { leaderboardsData } = useLeaderboardsMembers({});
 
 	const getStatTier = () => {
 		if (patron?.id === PatronTier.TIER4) return ColorMap.GOLD;

@@ -30,20 +30,21 @@ import { useTheme, ColorTokens } from 'styles';
 
 const NUMBER_OF_LOGS = 50;
 
-export const LogsList = () => {
+type Props = { visibleLogs: LogType[] };
+export const LogsList = (props: Props) => {
 	return (
 		<StyledLogList>
 			<QueryBoundary
 				fallback={<LogListSkeleton />}
 				errorFallback={<ErrorFallback />}>
-				<LogsListBoundary />
+				<LogsListBoundary {...props} />
 			</QueryBoundary>
 		</StyledLogList>
 	);
 };
 
-const LogsListBoundary = () => {
-	const { visibleLogs } = useAppContext();
+const LogsListBoundary = (props: Props) => {
+	const { visibleLogs } = props;
 	const { colorTokens } = useTheme();
 	const { data: logs = [] } = useLogs({
 		sort: { date: 'desc' },

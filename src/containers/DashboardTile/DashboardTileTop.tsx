@@ -24,7 +24,7 @@ export const DashboardTileTop = (
 		leaderboardsData,
 		isLoading: isLeadersLoading,
 		isFetched: isLeadersFetched,
-	} = useLeaderboardsMembers(NUMBER_OF_LEADERS);
+	} = useLeaderboardsMembers({ limit: NUMBER_OF_LEADERS });
 
 	const isLoading = isMembersLoading && isLeadersLoading;
 	const isFetched = isMembersFetched && isLeadersFetched;

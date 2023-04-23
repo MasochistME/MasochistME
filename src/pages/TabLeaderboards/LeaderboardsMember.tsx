@@ -5,15 +5,17 @@ import styled from 'styled-components';
 import { media } from 'styles';
 import { Flex } from 'components';
 import { MemberLeaderboards } from 'containers';
+import { TimePeriod } from 'utils/getTimePeriod';
 
 import { LeaderboardsMemberSummary } from './LeaderboardsMemberSummary';
 
 type Props = {
 	steamId: string;
 	position: number;
+	timePeriod: TimePeriod;
 };
 export const LeaderboardsMember = (props: Props): JSX.Element => {
-	const { steamId, position } = props;
+	const { steamId, position, timePeriod } = props;
 	const [isOpened, setIsOpened] = useState(false);
 
 	const changeDetailsVisibility = () => {
@@ -25,6 +27,7 @@ export const LeaderboardsMember = (props: Props): JSX.Element => {
 			<LeaderboardsMemberSummary
 				steamId={steamId}
 				position={position}
+				timePeriod={timePeriod}
 				onShowDetails={changeDetailsVisibility}
 			/>
 			<Collapse unmountOnExit={true} in={isOpened} style={{ width: '100%' }}>

@@ -1,5 +1,6 @@
 export * from './useActiveTab';
 export * from './useCompletions';
+export * from './useContextualRouting';
 export * from './useDebounce';
 export * from './useLoadTiers';
 export * from './useLocalStorage';

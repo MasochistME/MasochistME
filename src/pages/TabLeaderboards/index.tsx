@@ -5,7 +5,7 @@ import { Leaderboards } from '@masochistme/sdk/dist/v1/types';
 
 import { useAppContext } from 'context';
 import { useMembers, useLeaderboardsMembers } from 'sdk';
-import { useActiveTab } from 'hooks';
+import { useActiveTab, useContextualRouting } from 'hooks';
 import { TabDict } from 'configuration/tabs';
 import { SubPage, Section, SectionProps } from 'containers';
 import {
@@ -19,19 +19,24 @@ import {
 import { LeaderboardsFilterBar } from './LeaderboardsFilterBar';
 import { LeaderboardsMember } from './LeaderboardsMember';
 import { curatorURL } from 'utils';
+import { TimePeriod } from 'utils/getTimePeriod';
 
 export const TabLeaderboards = (): JSX.Element => {
 	useActiveTab(TabDict.LEADERBOARDS);
+	const { route: from, setRoute } = useContextualRouting<TimePeriod>({
+		key: 'from',
+		value: TimePeriod.ALL,
+	});
 
 	return (
 		<SubPage>
 			<StyledLeaderboards>
 				<Info isMobileOnly />
-				<LeaderboardsFilterBar />
+				<LeaderboardsFilterBar filter={from} changeFilter={setRoute} />
 				<QueryBoundary
 					fallback={<LeaderboardsListSkeleton />}
 					errorFallback={<ErrorFallback />}>
-					<LeaderboardsList />
+					<LeaderboardsList timePeriod={from} />
 				</QueryBoundary>
 			</StyledLeaderboards>
 			<Info isDesktopOnly minWidth="45rem" maxWidth="45rem" />
@@ -39,14 +44,15 @@ export const TabLeaderboards = (): JSX.Element => {
 	);
 };
 
-const LeaderboardsList = () => {
-	const lazyRankingList = useLazyRankingList();
+const LeaderboardsList = ({ timePeriod }: { timePeriod: TimePeriod }) => {
+	const lazyRankingList = useLazyRankingList(timePeriod);
 	return (
 		<Flex column>
 			{lazyRankingList.map(leader => (
 				<LeaderboardsMember
 					steamId={leader.memberId}
 					position={leader.position}
+					timePeriod={timePeriod}
 					key={`leaderboards-leader-${leader.memberId}`}
 				/>
 			))}
@@ -97,9 +103,9 @@ const InfoBoundary = () => {
 	);
 };
 
-const useLazyRankingList = () => {
+const useLazyRankingList = (from: TimePeriod) => {
 	const { queryMember } = useAppContext();
-	const { leaderboardsData } = useLeaderboardsMembers();
+	const { leaderboardsData } = useLeaderboardsMembers({ from });
 	const { membersData = [] } = useMembers();
 
 	return leaderboardsData

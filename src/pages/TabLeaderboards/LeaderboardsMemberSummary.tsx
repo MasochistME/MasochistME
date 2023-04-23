@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { useMemberLeaderboardsSummary } from 'hooks';
 import { media, useTheme, ColorTokens } from 'styles';
+import { TimePeriod } from 'utils/getTimePeriod';
 import { MemberAvatar } from 'containers';
 import { Flex, Button, Size } from 'components';
 
@@ -19,20 +20,21 @@ import { Variant } from 'components/Button/types';
 type Props = {
 	steamId: string;
 	position: number;
+	timePeriod: TimePeriod;
 	onShowDetails: () => void;
 };
 
 export const LeaderboardsMemberSummary = (props: Props): JSX.Element | null => {
 	const navigate = useNavigate();
 	const { colorTokens } = useTheme();
-	const { steamId, position, onShowDetails } = props;
+	const { steamId, position, timePeriod, onShowDetails } = props;
 	const [isExpanded, setIsExpanded] = useState(false);
 
 	const {
 		memberLeaderboardsSummary: member,
 		memberData,
 		leaderData,
-	} = useMemberLeaderboardsSummary(steamId);
+	} = useMemberLeaderboardsSummary(steamId, timePeriod);
 
 	const size = Size.BIG;
 	const variant = member.isHighestPatronTier ? Variant.GOLDEN : Variant.DEFAULT;
@@ -94,7 +96,7 @@ export const LeaderboardsMemberSummary = (props: Props): JSX.Element | null => {
 						{infoIcon}
 					</Flex>
 				</StyledLeaderboardsMemberUsername>
-				<LeaderboardsMemberPoints steamId={steamId} />
+				<LeaderboardsMemberPoints steamId={steamId} timePeriod={timePeriod} />
 			</StyledLeaderboardsMemberDetails>
 		</StyledLeaderboardsMemberSummary>
 	);
