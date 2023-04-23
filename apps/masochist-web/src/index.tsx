@@ -22,32 +22,32 @@ dayjs.extend(relativeTime);
 initLocale();
 
 const queryClient = new QueryClient({
-	defaultOptions: {
-		queries: {
-			suspense: true,
-			retry: false,
-			staleTime: 10 * 60 * 1000, // 10 minutes
-		},
-	},
+  defaultOptions: {
+    queries: {
+      suspense: true,
+      retry: false,
+      staleTime: 10 * 60 * 1000, // 10 minutes
+    },
+  },
 });
 
 const RootApp = () => {
-	return (
-		<AppContextProvider>
-			<Root />
-		</AppContextProvider>
-	);
+  return (
+    <AppContextProvider>
+      <Root />
+    </AppContextProvider>
+  );
 };
 
 const Root = () => {
-	const { assetTokens, colorTokens } = useTheme();
-	return (
-		<QueryClientProvider client={queryClient}>
-			{/* <ReactQueryDevtools initialIsOpen={false} /> */}
-			<GlobalStyle assetTokens={assetTokens} colorTokens={colorTokens} />
-			<App />
-		</QueryClientProvider>
-	);
+  const { assetTokens, colorTokens } = useTheme();
+  return (
+    <QueryClientProvider client={queryClient}>
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+      <GlobalStyle assetTokens={assetTokens} colorTokens={colorTokens} />
+      <App />
+    </QueryClientProvider>
+  );
 };
 
 const container = document.getElementById('root');

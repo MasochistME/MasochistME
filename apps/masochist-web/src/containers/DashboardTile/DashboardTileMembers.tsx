@@ -15,83 +15,83 @@ const NUMBER_OF_MEMBERS = 10;
 
 type Props = Omit<SectionProps, 'content' | 'title'>;
 export const DashboardTileMembers = (props: Props) => {
-	const members = new Array(NUMBER_OF_MEMBERS)
-		.fill(null)
-		.map((_, i: number) => (
-			<MemberAvatar isLoading key={`member-new-${i}`} size={Size.BIG} />
-		));
+  const members = new Array(NUMBER_OF_MEMBERS)
+    .fill(null)
+    .map((_, i: number) => (
+      <MemberAvatar isLoading key={`member-new-${i}`} size={Size.BIG} />
+    ));
 
-	return (
-		<QueryBoundary
-			fallback={<Content content={members} />}
-			errorFallback={
-				<Content content={<ErrorFallback width="45rem" maxWidth="100%" />} />
-			}>
-			<DashboardTileMembersBoundary {...props} />
-		</QueryBoundary>
-	);
+  return (
+    <QueryBoundary
+      fallback={<Content content={members} />}
+      errorFallback={
+        <Content content={<ErrorFallback width="45rem" maxWidth="100%" />} />
+      }>
+      <DashboardTileMembersBoundary {...props} />
+    </QueryBoundary>
+  );
 };
 
 const DashboardTileMembersBoundary = (props: Props) => {
-	const navigate = useNavigate();
-	const { membersData } = useCuratorMembers();
-	const { data: logs = [] } = useLogs({
-		limit: NUMBER_OF_MEMBERS,
-		sort: { date: 'desc' },
-		filter: { type: LogType.MEMBER_JOIN },
-	});
+  const navigate = useNavigate();
+  const { membersData } = useCuratorMembers();
+  const { data: logs = [] } = useLogs({
+    limit: NUMBER_OF_MEMBERS,
+    sort: { date: 'desc' },
+    filter: { type: LogType.MEMBER_JOIN },
+  });
 
-	const onMemberClick = (memberId?: string) => {
-		if (memberId) navigate(`/profile/${memberId}`);
-	};
+  const onMemberClick = (memberId?: string) => {
+    if (memberId) navigate(`/profile/${memberId}`);
+  };
 
-	const memberLogs = logs.filter(
-		log => log.type === LogType.MEMBER_JOIN,
-	) as unknown as LogMemberJoin[];
+  const memberLogs = logs.filter(
+    log => log.type === LogType.MEMBER_JOIN,
+  ) as unknown as LogMemberJoin[];
 
-	const members = memberLogs.map(log => {
-		const member = membersData.find(member => member.steamId === log.memberId);
-		if (member)
-			return (
-				<MemberAvatar
-					key={`new-member-${member.steamId}`}
-					member={member}
-					size={Size.BIG}
-					onClick={() => onMemberClick(member.steamId)}
-					title={
-						<Flex column>
-							<span style={{ fontWeight: 'bold' }}>{member.name}</span>
-							<span>
-								{t('dashboard.members.joined')} {dayjs(log.date).fromNow()}
-							</span>
-						</Flex>
-					}
-				/>
-			);
-	});
+  const members = memberLogs.map(log => {
+    const member = membersData.find(member => member.steamId === log.memberId);
+    if (member)
+      return (
+        <MemberAvatar
+          key={`new-member-${member.steamId}`}
+          member={member}
+          size={Size.BIG}
+          onClick={() => onMemberClick(member.steamId)}
+          title={
+            <Flex column>
+              <span style={{ fontWeight: 'bold' }}>{member.name}</span>
+              <span>
+                {t('dashboard.members.joined')} {dayjs(log.date).fromNow()}
+              </span>
+            </Flex>
+          }
+        />
+      );
+  });
 
-	return <Content content={members} {...props} />;
+  return <Content content={members} {...props} />;
 };
 
 type ContentProps = Props & { content: React.ReactNode };
 const Content = ({ content, ...props }: ContentProps) => (
-	<Section
-		width="100%"
-		maxWidth="45rem"
-		title={t('dashboard.members.title')}
-		content={<StyledNewMembers>{content}</StyledNewMembers>}
-		{...props}
-	/>
+  <Section
+    width="100%"
+    maxWidth="45rem"
+    title={t('dashboard.members.title')}
+    content={<StyledNewMembers>{content}</StyledNewMembers>}
+    {...props}
+  />
 );
 
 const StyledNewMembers = styled(Flex)`
-	justify-content: center;
-	gap: var(--size-16);
-	flex-wrap: wrap;
-	@media (max-width: ${media.smallNetbooks}) {
-		gap: var(--size-4);
-	}
-	@media (max-width: ${media.bigPhones}) {
-		display: flex;
-	}
+  justify-content: center;
+  gap: var(--size-16);
+  flex-wrap: wrap;
+  @media (max-width: ${media.smallNetbooks}) {
+    gap: var(--size-4);
+  }
+  @media (max-width: ${media.bigPhones}) {
+    display: flex;
+  }
 `;

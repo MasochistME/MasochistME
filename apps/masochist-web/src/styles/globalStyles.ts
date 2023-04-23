@@ -4,8 +4,8 @@ import { ColorTokens, AssetTokens } from './theme';
 import { fonts, sizes, border } from './vars/main';
 
 const GlobalStyle = createGlobalStyle<{
-	colorTokens: ColorTokens;
-	assetTokens: AssetTokens;
+  colorTokens: ColorTokens;
+  assetTokens: AssetTokens;
 }>`
   // Importing global variables residing in :root
   :root {
@@ -32,7 +32,7 @@ const GlobalStyle = createGlobalStyle<{
     height: auto;
     min-height: 100vh;
     background-image: url(${({ assetTokens }) =>
-			assetTokens['core-background']});
+      assetTokens['core-background']});
     background-attachment: fixed;
     background-position: center;
     background-size: cover;

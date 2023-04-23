@@ -9,13 +9,13 @@ import { DashboardTileTop } from './DashboardTileTop';
 import { DashboardTileTrivia } from './DashboardTileTrivia';
 
 export const DashboardTile = {
-	Featured: DashboardTileFeatured,
-	Badges: DashboardTileBadges,
-	Games: DashboardTileGames,
-	Discord: DashboardTileDiscord,
-	History: DashboardTileHistory,
-	Members: DashboardTileMembers,
-	Sale: DashboardTileSale,
-	Top: DashboardTileTop,
-	Trivia: DashboardTileTrivia,
+  Featured: DashboardTileFeatured,
+  Badges: DashboardTileBadges,
+  Games: DashboardTileGames,
+  Discord: DashboardTileDiscord,
+  History: DashboardTileHistory,
+  Members: DashboardTileMembers,
+  Sale: DashboardTileSale,
+  Top: DashboardTileTop,
+  Trivia: DashboardTileTrivia,
 };

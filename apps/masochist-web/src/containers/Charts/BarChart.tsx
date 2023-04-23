@@ -77,55 +77,55 @@
 
 import { Chart } from 'react-chartjs-2';
 import {
-	Chart as ChartJS,
-	ChartData,
-	ChartOptions,
-	registerables,
-	ScaleOptionsByType,
+  Chart as ChartJS,
+  ChartData,
+  ChartOptions,
+  registerables,
+  ScaleOptionsByType,
 } from 'chart.js';
 import { useTheme } from 'styles';
 
 ChartJS.register(...registerables);
 
 type Props = {
-	datasetIdKey: string;
-	data: ChartData;
-	options?: ChartOptions;
-	axisOptions?: ScaleOptionsByType<any>;
+  datasetIdKey: string;
+  data: ChartData;
+  options?: ChartOptions;
+  axisOptions?: ScaleOptionsByType<any>;
 };
 
 export const BarChart = (props: Props): JSX.Element => {
-	const { colorTokens } = useTheme();
-	const { datasetIdKey, data, options = {} } = props;
+  const { colorTokens } = useTheme();
+  const { datasetIdKey, data, options = {} } = props;
 
-	const axisOptions = {
-		...props.axisOptions,
-		grid: {
-			color: colorTokens['semantic-color--interactive'],
-		},
-	};
+  const axisOptions = {
+    ...props.axisOptions,
+    grid: {
+      color: colorTokens['semantic-color--interactive'],
+    },
+  };
 
-	const config: { options: ChartOptions } = {
-		options: {
-			scales: {
-				xAxis: axisOptions,
-				yAxis: axisOptions,
-			},
-			responsive: true,
-			elements: {
-				bar: {
-					borderWidth: 3,
-				},
-			},
-			...options,
-		},
-	};
+  const config: { options: ChartOptions } = {
+    options: {
+      scales: {
+        xAxis: axisOptions,
+        yAxis: axisOptions,
+      },
+      responsive: true,
+      elements: {
+        bar: {
+          borderWidth: 3,
+        },
+      },
+      ...options,
+    },
+  };
 
-	ChartJS.defaults.color = 'white';
-	ChartJS.defaults.font.size = 14;
-	ChartJS.defaults.font.family = '"Raleway", "Verdana", sans-serif';
+  ChartJS.defaults.color = 'white';
+  ChartJS.defaults.font.size = 14;
+  ChartJS.defaults.font.family = '"Raleway", "Verdana", sans-serif';
 
-	return (
-		<Chart type="bar" datasetIdKey={datasetIdKey} data={data} {...config} />
-	);
+  return (
+    <Chart type="bar" datasetIdKey={datasetIdKey} data={data} {...config} />
+  );
 };

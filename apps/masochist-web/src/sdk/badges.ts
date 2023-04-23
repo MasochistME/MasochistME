@@ -7,17 +7,17 @@ import { useAppContext } from 'context';
  * @returns
  */
 export const useBadges = (params?: BadgesListParams) => {
-	const { sdk } = useAppContext();
+  const { sdk } = useAppContext();
 
-	const {
-		data: badgesData = [],
-		isLoading,
-		isFetched,
-		isError,
-	} = useQuery(
-		['masochist', 'badges', params ? JSON.stringify(params) : ''],
-		() => sdk.getBadgesList({ ...(params ?? {}) }),
-	);
+  const {
+    data: badgesData = [],
+    isLoading,
+    isFetched,
+    isError,
+  } = useQuery(
+    ['masochist', 'badges', params ? JSON.stringify(params) : ''],
+    () => sdk.getBadgesList({ ...(params ?? {}) }),
+  );
 
-	return { badgesData, isLoading, isFetched, isError };
+  return { badgesData, isLoading, isFetched, isError };
 };

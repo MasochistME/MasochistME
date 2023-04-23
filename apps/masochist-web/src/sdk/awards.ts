@@ -8,22 +8,22 @@ import { useAppContext } from 'context';
  * @returns
  */
 export const useAwards = (params?: AwardsListParams) => {
-	const { sdk } = useAppContext();
+  const { sdk } = useAppContext();
 
-	const {
-		data = [],
-		isLoading,
-		isFetched,
-		isError,
-	} = useQuery(
-		['masochist', 'awards', params ? JSON.stringify(params) : ''],
-		() => sdk.getAwardsList({ ...(params ?? {}) }),
-	);
+  const {
+    data = [],
+    isLoading,
+    isFetched,
+    isError,
+  } = useQuery(
+    ['masochist', 'awards', params ? JSON.stringify(params) : ''],
+    () => sdk.getAwardsList({ ...(params ?? {}) }),
+  );
 
-	// TODO move this type to SDK
-	const awardsData = data as unknown as (AwardCategory & { awards: Award[] })[];
+  // TODO move this type to SDK
+  const awardsData = data as unknown as (AwardCategory & { awards: Award[] })[];
 
-	return { awardsData, isLoading, isFetched, isError };
+  return { awardsData, isLoading, isFetched, isError };
 };
 
 /**
@@ -31,16 +31,16 @@ export const useAwards = (params?: AwardsListParams) => {
  * @returns
  */
 export const useAward = (awardId: string) => {
-	const { sdk } = useAppContext();
+  const { sdk } = useAppContext();
 
-	const {
-		data: awardData,
-		isLoading,
-		isFetched,
-		isError,
-	} = useQuery(['masochist', 'awards', awardId], () =>
-		sdk.getAwardBById({ awardId }),
-	);
+  const {
+    data: awardData,
+    isLoading,
+    isFetched,
+    isError,
+  } = useQuery(['masochist', 'awards', awardId], () =>
+    sdk.getAwardBById({ awardId }),
+  );
 
-	return { awardData, isLoading, isFetched, isError };
+  return { awardData, isLoading, isFetched, isError };
 };

@@ -5,34 +5,34 @@ import { useAppContext } from 'context';
  *
  */
 export const usePatreonTiers = () => {
-	const { sdk } = useAppContext();
+  const { sdk } = useAppContext();
 
-	const {
-		data: patreonTiersData = [],
-		isLoading,
-		isFetched,
-		isError,
-	} = useQuery(['masochist', 'patreon', 'tiers'], () =>
-		sdk.getPatreonTierList(),
-	);
+  const {
+    data: patreonTiersData = [],
+    isLoading,
+    isFetched,
+    isError,
+  } = useQuery(['masochist', 'patreon', 'tiers'], () =>
+    sdk.getPatreonTierList(),
+  );
 
-	return { patreonTiersData, isLoading, isFetched, isError };
+  return { patreonTiersData, isLoading, isFetched, isError };
 };
 
 /**
  *
  */
 export const usePatrons = () => {
-	const { sdk } = useAppContext();
+  const { sdk } = useAppContext();
 
-	const {
-		data: patronsData = [],
-		isLoading,
-		isFetched,
-		isError,
-	} = useQuery(['masochist', 'patreon', 'patrons'], () =>
-		sdk.getPatronsList({}),
-	);
+  const {
+    data: patronsData = [],
+    isLoading,
+    isFetched,
+    isError,
+  } = useQuery(['masochist', 'patreon', 'patrons'], () =>
+    sdk.getPatronsList({}),
+  );
 
-	return { patronsData, isLoading, isFetched, isError };
+  return { patronsData, isLoading, isFetched, isError };
 };

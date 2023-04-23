@@ -10,37 +10,37 @@ import { Size } from 'components';
 import { HistoryLog } from '.';
 
 export const BadgeGrantLog = ({ log }: { log: LogBadgeGet }) => {
-	const navigate = useNavigate();
+  const navigate = useNavigate();
 
-	const { membersData } = useAllMembers();
-	const { badgesData } = useBadges();
+  const { membersData } = useAllMembers();
+  const { badgesData } = useBadges();
 
-	const badge = badgesData.find((b: Badge) => String(b._id) === log.badgeId);
-	const member = membersData.find((m: Member) => m.steamId === log.memberId);
+  const badge = badgesData.find((b: Badge) => String(b._id) === log.badgeId);
+  const member = membersData.find((m: Member) => m.steamId === log.memberId);
 
-	const onMemberClick = () => {
-		if (member?.steamId) navigate(`/profile/${member.steamId}`);
-	};
+  const onMemberClick = () => {
+    if (member?.steamId) navigate(`/profile/${member.steamId}`);
+  };
 
-	if (!badge || !member) return null;
+  if (!badge || !member) return null;
 
-	return (
-		<HistoryLog>
-			<MemberAvatar member={member} size={Size.SMALL} />
-			<HistoryLog.Description>
-				<HistoryLog.Link onClick={onMemberClick}>
-					{member?.name ?? `User ${log.memberId}`}
-				</HistoryLog.Link>
-				has earned a new badge -
-				<HistoryLog.Link> {badge?.name ?? log.badgeId}!</HistoryLog.Link>
-			</HistoryLog.Description>
-			<HistoryLog.Summary>
-				<HistoryLog.Icons>
-					<Icon icon={member ? 'SquareCheck' : 'WarningTriangle'} />
-					<Icon icon="Badge" />
-				</HistoryLog.Icons>
-				<BadgeThumbnail badge={badge} size={Size.SMALL} />
-			</HistoryLog.Summary>
-		</HistoryLog>
-	);
+  return (
+    <HistoryLog>
+      <MemberAvatar member={member} size={Size.SMALL} />
+      <HistoryLog.Description>
+        <HistoryLog.Link onClick={onMemberClick}>
+          {member?.name ?? `User ${log.memberId}`}
+        </HistoryLog.Link>
+        has earned a new badge -
+        <HistoryLog.Link> {badge?.name ?? log.badgeId}!</HistoryLog.Link>
+      </HistoryLog.Description>
+      <HistoryLog.Summary>
+        <HistoryLog.Icons>
+          <Icon icon={member ? 'SquareCheck' : 'WarningTriangle'} />
+          <Icon icon="Badge" />
+        </HistoryLog.Icons>
+        <BadgeThumbnail badge={badge} size={Size.SMALL} />
+      </HistoryLog.Summary>
+    </HistoryLog>
+  );
 };

@@ -5,9 +5,9 @@
  * @returns
  */
 export const stringCompare = (a = '', b = ''): any => {
-	const al = a.replace(/\s+/g, '');
-	const bl = b.replace(/\s+/g, '');
-	return al.localeCompare(bl, 'nb');
+  const al = a.replace(/\s+/g, '');
+  const bl = b.replace(/\s+/g, '');
+  return al.localeCompare(bl, 'nb');
 };
 
 /**
@@ -17,9 +17,9 @@ export const stringCompare = (a = '', b = ''): any => {
  * @returns
  */
 export const booleanCompare = (a = false, b = false): any => {
-	const a1 = a ? 'true' : 'false';
-	const b1 = b ? 'true' : 'false';
-	return stringCompare(a1, b1);
+  const a1 = a ? 'true' : 'false';
+  const b1 = b ? 'true' : 'false';
+  return stringCompare(a1, b1);
 };
 
 /**
@@ -31,5 +31,5 @@ export const booleanCompare = (a = false, b = false): any => {
  * @returns array Deduped array
  */
 export const dedupArray = <T>(value: T, index: number, arrToDedup: T[]) => {
-	return arrToDedup.indexOf(value) === index;
+  return arrToDedup.indexOf(value) === index;
 };

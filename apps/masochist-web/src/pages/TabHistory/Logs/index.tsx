@@ -12,16 +12,16 @@ import { TierChangeLog } from './TierChangeLog';
 import { CustomLog } from './CustomLog';
 
 type Props = {
-	children: React.ReactNode;
-	onClick?: () => void;
+  children: React.ReactNode;
+  onClick?: () => void;
 };
 export const HistoryLog = (props: Pick<Props, 'children'>) => {
-	const { children } = props;
-	return (
-		<Flex align justifyContent="space-between" width="100%" gap={6}>
-			{children}
-		</Flex>
-	);
+  const { children } = props;
+  return (
+    <Flex align justifyContent="space-between" width="100%" gap={6}>
+      {children}
+    </Flex>
+  );
 };
 
 /**
@@ -39,13 +39,13 @@ HistoryLog.TierChange = TierChangeLog;
 HistoryLog.Custom = CustomLog;
 
 import {
-	Description,
-	Icons,
-	Image,
-	Link,
-	Icon,
-	Logo,
-	Summary,
+  Description,
+  Icons,
+  Image,
+  Link,
+  Icon,
+  Logo,
+  Summary,
 } from './components';
 
 /**

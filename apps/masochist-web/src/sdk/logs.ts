@@ -9,10 +9,10 @@ import { LogListParams } from '@masochistme/sdk/dist/v1/api/logs';
  * @returns
  */
 export const useLogs = (params?: LogListParams) => {
-	const { sdk } = useAppContext();
+  const { sdk } = useAppContext();
 
-	return useQuery(
-		['masochist', 'logs', params ? JSON.stringify(params) : ''],
-		() => sdk.getLogList({ ...(params ?? {}) }),
-	);
+  return useQuery(
+    ['masochist', 'logs', params ? JSON.stringify(params) : ''],
+    () => sdk.getLogList({ ...(params ?? {}) }),
+  );
 };

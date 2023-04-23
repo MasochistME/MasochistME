@@ -1,10 +1,10 @@
 export const fonts = () => {
-	/// Converts pixels to percent using the default browser font size.
-	const baseFontSize = (pixels: number, defaultFontSize = 16) => {
-		return 100 * (pixels / defaultFontSize);
-	};
-	const fontBasic = `font-size: ${baseFontSize(10)}%;`;
-	const fontFamily = `
+  /// Converts pixels to percent using the default browser font size.
+  const baseFontSize = (pixels: number, defaultFontSize = 16) => {
+    return 100 * (pixels / defaultFontSize);
+  };
+  const fontBasic = `font-size: ${baseFontSize(10)}%;`;
+  const fontFamily = `
     --font-cardo: "Cardo", Verdana, sans-serif;
     --font-cinzel: "Cinzel", Georgia, serif;
     --font-dosis: "Dosis", Verdana, sans-serif;
@@ -12,7 +12,7 @@ export const fonts = () => {
     --font-press: "Press Start 2P", Verdana, sans-serif;
     --font-verdana: Verdana, Geneva, Tahoma, sans-serif;
   `;
-	const fontSize = `
+  const fontSize = `
     --font-size-9: 0.9rem;
     --font-size-10: 1.0rem;
     --font-size-11: 1.1rem;
@@ -28,5 +28,5 @@ export const fonts = () => {
     --font-size-28: 2.8rem;
     --font-size-32: 3.2rem;
   `;
-	return fontBasic + fontFamily + fontSize;
+  return fontBasic + fontFamily + fontSize;
 };

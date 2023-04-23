@@ -10,35 +10,35 @@ import { Size } from 'components';
 import { HistoryLog } from '.';
 
 type Props = {
-	log: LogMemberLeave;
+  log: LogMemberLeave;
 };
 
 export const MemberLeaveLog = (props: Props): JSX.Element | null => {
-	const { log } = props;
-	const navigate = useNavigate();
+  const { log } = props;
+  const navigate = useNavigate();
 
-	const { membersData } = useAllMembers();
-	const member = membersData.find((m: Member) => m.steamId === log.memberId);
+  const { membersData } = useAllMembers();
+  const member = membersData.find((m: Member) => m.steamId === log.memberId);
 
-	const onMemberClick = () => {
-		if (member?.steamId) navigate(`/profile/${member.steamId}`);
-	};
+  const onMemberClick = () => {
+    if (member?.steamId) navigate(`/profile/${member.steamId}`);
+  };
 
-	return (
-		<HistoryLog>
-			<MemberAvatar member={member} size={Size.SMALL} />
-			<HistoryLog.Description>
-				<HistoryLog.Link onClick={onMemberClick}>
-					{member?.name ?? `User ${log.memberId}`}
-				</HistoryLog.Link>
-				has left the group!
-			</HistoryLog.Description>
-			<HistoryLog.Summary>
-				<HistoryLog.Icons>
-					<Icon icon={member ? 'UserMinus' : 'WarningTriangle'} />
-				</HistoryLog.Icons>
-				<HistoryLog.Logo />
-			</HistoryLog.Summary>
-		</HistoryLog>
-	);
+  return (
+    <HistoryLog>
+      <MemberAvatar member={member} size={Size.SMALL} />
+      <HistoryLog.Description>
+        <HistoryLog.Link onClick={onMemberClick}>
+          {member?.name ?? `User ${log.memberId}`}
+        </HistoryLog.Link>
+        has left the group!
+      </HistoryLog.Description>
+      <HistoryLog.Summary>
+        <HistoryLog.Icons>
+          <Icon icon={member ? 'UserMinus' : 'WarningTriangle'} />
+        </HistoryLog.Icons>
+        <HistoryLog.Logo />
+      </HistoryLog.Summary>
+    </HistoryLog>
+  );
 };

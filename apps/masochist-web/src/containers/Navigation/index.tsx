@@ -9,99 +9,99 @@ import { tabs, Tab } from 'configuration/tabs';
 import { t } from 'i18n';
 
 export const Navigation = (): JSX.Element => {
-	const { colorTokens } = useTheme();
-	const nrOfTabs = tabs.filter(t => t.visible).length;
+  const { colorTokens } = useTheme();
+  const nrOfTabs = tabs.filter(t => t.visible).length;
 
-	return (
-		<StyledNavigation colorTokens={colorTokens} nrOfTabs={nrOfTabs}>
-			{tabs.map(
-				(tab: Tab, index: number) =>
-					tab.visible && <NavigationItem key={`nav-${index} `} tab={tab} />,
-			)}
-		</StyledNavigation>
-	);
+  return (
+    <StyledNavigation colorTokens={colorTokens} nrOfTabs={nrOfTabs}>
+      {tabs.map(
+        (tab: Tab, index: number) =>
+          tab.visible && <NavigationItem key={`nav-${index} `} tab={tab} />,
+      )}
+    </StyledNavigation>
+  );
 };
 
 type Props = {
-	tab: Tab;
+  tab: Tab;
 };
 
 const NavigationItem = (props: Props): JSX.Element => {
-	const { tab } = props;
+  const { tab } = props;
 
-	const { activeTab } = useAppContext();
-	const { colorTokens } = useTheme();
-	const navigate = useNavigate();
+  const { activeTab } = useAppContext();
+  const { colorTokens } = useTheme();
+  const navigate = useNavigate();
 
-	const isActive = tab.id === activeTab;
+  const isActive = tab.id === activeTab;
 
-	const onTabOpen = (): void => {
-		if (tab.external) window.open(tab.link);
-		else navigate(`/${tab.link}`);
-	};
+  const onTabOpen = (): void => {
+    if (tab.external) window.open(tab.link);
+    else navigate(`/${tab.link}`);
+  };
 
-	return (
-		<StyledTabItem
-			onClick={onTabOpen}
-			active={isActive}
-			colorTokens={colorTokens}>
-			<Icon icon={tab.icon} />
-			<StyledTabLabel>{t(tab.text)}</StyledTabLabel>
-		</StyledTabItem>
-	);
+  return (
+    <StyledTabItem
+      onClick={onTabOpen}
+      active={isActive}
+      colorTokens={colorTokens}>
+      <Icon icon={tab.icon} />
+      <StyledTabLabel>{t(tab.text)}</StyledTabLabel>
+    </StyledTabItem>
+  );
 };
 
 const StyledNavigation = styled.div<{
-	colorTokens: ColorTokens;
-	nrOfTabs: number;
+  colorTokens: ColorTokens;
+  nrOfTabs: number;
 }>`
-	display: grid;
-	width: 100%;
-	grid-template-columns: repeat(${({ nrOfTabs }) => nrOfTabs}, 1fr);
-	background-color: ${({ colorTokens }) => colorTokens['core-secondary-bg']};
-	box-shadow: 0 var(--size-10) var(--size-10) -1rem ${({ colorTokens }) => colorTokens['common-color--shadow']};
-	color: ${({ colorTokens }) => colorTokens['core-primary-text']};
-	font-family: var(--font-raleway);
-	font-size: var(--font-size-11);
-	text-transform: uppercase;
-	letter-spacing: 0.15rem;
-	position: sticky;
-	top: 0;
-	z-index: 1000;
-	list-style-type: none;
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(${({ nrOfTabs }) => nrOfTabs}, 1fr);
+  background-color: ${({ colorTokens }) => colorTokens['core-secondary-bg']};
+  box-shadow: 0 var(--size-10) var(--size-10) -1rem ${({ colorTokens }) => colorTokens['common-color--shadow']};
+  color: ${({ colorTokens }) => colorTokens['core-primary-text']};
+  font-family: var(--font-raleway);
+  font-size: var(--font-size-11);
+  text-transform: uppercase;
+  letter-spacing: 0.15rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  list-style-type: none;
 `;
 
 type NavItemProps = { active?: boolean; colorTokens: ColorTokens };
 
 const StyledTabItem = styled.div.attrs((props: NavItemProps) => {
-	const { active } = props;
-	const style: React.CSSProperties = {};
-	if (active) {
-		style.backgroundColor = props.colorTokens['core-primary-bg'];
-	}
-	return { style };
+  const { active } = props;
+  const style: React.CSSProperties = {};
+  if (active) {
+    style.backgroundColor = props.colorTokens['core-primary-bg'];
+  }
+  return { style };
 })<NavItemProps>`
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	gap: var(--size-8);
-	padding: var(--size-16) 0;
-	border-right: var(--size-3) solid
-		${({ colorTokens }) => colorTokens['element-color--header-bg']};
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--size-8);
+  padding: var(--size-16) 0;
+  border-right: var(--size-3) solid
+    ${({ colorTokens }) => colorTokens['element-color--header-bg']};
 
-	&:hover {
-		background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']};
-		cursor: pointer;
-	}
+  &:hover {
+    background-color: ${({ colorTokens }) => colorTokens['core-primary-bg']};
+    cursor: pointer;
+  }
 
-	@media (max-width: ${media.tablets}) {
-		padding: var(--size-12) 0;
-	}
+  @media (max-width: ${media.tablets}) {
+    padding: var(--size-12) 0;
+  }
 `;
 
 const StyledTabLabel = styled.div`
-	@media (max-width: ${media.tablets}) {
-		display: none;
-	}
+  @media (max-width: ${media.tablets}) {
+    display: none;
+  }
 `;

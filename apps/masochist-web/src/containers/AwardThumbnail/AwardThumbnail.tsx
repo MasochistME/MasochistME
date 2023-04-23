@@ -8,81 +8,81 @@ import { ColorTokens, useTheme } from 'styles';
 import { getAwardThumbnail } from 'utils';
 
 type Props = CommonProps & {
-	award: Award;
-	isUnlocked: boolean;
-	hasTooltip?: boolean;
+  award: Award;
+  isUnlocked: boolean;
+  hasTooltip?: boolean;
 };
 
 export const AwardThumbnail = (props: Props): JSX.Element => {
-	const { colorTokens } = useTheme();
-	const {
-		award,
-		hasTooltip = true,
-		isUnlocked,
-		isLoading,
-		size = Size.LARGE,
-		onClick,
-	} = props;
+  const { colorTokens } = useTheme();
+  const {
+    award,
+    hasTooltip = true,
+    isUnlocked,
+    isLoading,
+    size = Size.LARGE,
+    onClick,
+  } = props;
 
-	if (isLoading || !award) return <Skeleton size={size} />;
-	const awardImg = getAwardThumbnail(award);
+  if (isLoading || !award) return <Skeleton size={size} />;
+  const awardImg = getAwardThumbnail(award);
 
-	const thumbnail = (
-		<StyledAwardThumbnail
-			size={size}
-			isUnlocked={isUnlocked}
-			colorTokens={colorTokens}
-			awardImg={awardImg}
-			onClick={onClick}>
-			{isUnlocked && <img src={awardImg} alt="Award" />}
-		</StyledAwardThumbnail>
-	);
+  const thumbnail = (
+    <StyledAwardThumbnail
+      size={size}
+      isUnlocked={isUnlocked}
+      colorTokens={colorTokens}
+      awardImg={awardImg}
+      onClick={onClick}>
+      {isUnlocked && <img src={awardImg} alt="Award" />}
+    </StyledAwardThumbnail>
+  );
 
-	return (
-		<QueryBoundary fallback={null}>
-			{hasTooltip ? (
-				<AwardTooltip award={award} isUnlocked={isUnlocked}>
-					{thumbnail}
-				</AwardTooltip>
-			) : (
-				thumbnail
-			)}
-		</QueryBoundary>
-	);
+  return (
+    <QueryBoundary fallback={null}>
+      {hasTooltip ? (
+        <AwardTooltip award={award} isUnlocked={isUnlocked}>
+          {thumbnail}
+        </AwardTooltip>
+      ) : (
+        thumbnail
+      )}
+    </QueryBoundary>
+  );
 };
 
 const StyledAwardThumbnail = styled.div.attrs(
-	(
-		props: Pick<Props, 'size' | 'onClick' | 'isUnlocked'> & {
-			awardImg: string;
-			colorTokens: ColorTokens;
-		},
-	) => {
-		const { size, onClick } = props;
-		const style: React.CSSProperties = {
-			minWidth: `${size}rem`,
-			minHeight: `${size}rem`,
-			maxWidth: `${size}rem`,
-			maxHeight: `${size}rem`,
-			cursor: onClick ? 'pointer' : 'help',
-		};
-		return { style };
-	},
+  (
+    props: Pick<Props, 'size' | 'onClick' | 'isUnlocked'> & {
+      awardImg: string;
+      colorTokens: ColorTokens;
+    },
+  ) => {
+    const { size, onClick } = props;
+    const style: React.CSSProperties = {
+      minWidth: `${size}rem`,
+      minHeight: `${size}rem`,
+      maxWidth: `${size}rem`,
+      maxHeight: `${size}rem`,
+      cursor: onClick ? 'pointer' : 'help',
+    };
+    return { style };
+  },
 )<
-	Pick<Props, 'size' | 'onClick' | 'isUnlocked'> & {
-		awardImg: string;
-		colorTokens: ColorTokens;
-	}
+  Pick<Props, 'size' | 'onClick' | 'isUnlocked'> & {
+    awardImg: string;
+    colorTokens: ColorTokens;
+  }
 >`
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	box-sizing: border-box;
-	overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: hidden;
 
-	${({ isUnlocked, colorTokens, awardImg }) =>
-		!isUnlocked &&
-		`
+  ${({ isUnlocked, colorTokens, awardImg }) =>
+    !isUnlocked &&
+    `
 			background-color: ${colorTokens['semantic-color--idle']}};
 			-webkit-mask-image: url(${awardImg});
 			-webkit-mask-size: contain;
@@ -100,11 +100,11 @@ const StyledAwardThumbnail = styled.div.attrs(
 			}
 	`}
 
-	img {
-		min-width: ${({ size }) => size}rem;
-		min-height: ${({ size }) => size}rem;
-		max-width: ${({ size }) => size}rem;
-		max-height: ${({ size }) => size}rem;
-		object-fit: contain;
-	}
+  img {
+    min-width: ${({ size }) => size}rem;
+    min-height: ${({ size }) => size}rem;
+    max-width: ${({ size }) => size}rem;
+    max-height: ${({ size }) => size}rem;
+    object-fit: contain;
+  }
 `;

@@ -13,36 +13,36 @@ import { MemberProfileTop } from './MemberProfileTop';
 import { MemberProfileTabs } from './MemberProfileTabs';
 
 export const TabProfile = (): JSX.Element => {
-	// ID param will always be defined because this tab is used ONLY for the /profile/:id route.
-	const { id } = useParams<{ id: string }>() as { id: string };
-	useActiveTab(TabDict.PROFILE, true);
+  // ID param will always be defined because this tab is used ONLY for the /profile/:id route.
+  const { id } = useParams<{ id: string }>() as { id: string };
+  useActiveTab(TabDict.PROFILE, true);
 
-	return (
-		<SubPage>
-			<QueryBoundary
-				fallback={
-					<Flex align justify width="100%">
-						<Loader />
-					</Flex>
-				}
-				errorFallback={
-					<Warning description={`User with id ${id} does not exist.`} />
-				}>
-				<Flex column width="100%" gap={16}>
-					<MemberProfileTop id={id} />
-					<MemberProfileTabs id={id} />
-				</Flex>
-				<StyledSidebar column>
-					<MemberProfileBadgesSection memberId={id} />
-					<MemberProfileFeaturedSection memberId={id} />
-				</StyledSidebar>
-			</QueryBoundary>
-		</SubPage>
-	);
+  return (
+    <SubPage>
+      <QueryBoundary
+        fallback={
+          <Flex align justify width="100%">
+            <Loader />
+          </Flex>
+        }
+        errorFallback={
+          <Warning description={`User with id ${id} does not exist.`} />
+        }>
+        <Flex column width="100%" gap={16}>
+          <MemberProfileTop id={id} />
+          <MemberProfileTabs id={id} />
+        </Flex>
+        <StyledSidebar column>
+          <MemberProfileBadgesSection memberId={id} />
+          <MemberProfileFeaturedSection memberId={id} />
+        </StyledSidebar>
+      </QueryBoundary>
+    </SubPage>
+  );
 };
 
 const StyledSidebar = styled(Flex)`
-	width: 100%;
-	max-width: 45rem;
-	gap: var(--size-16);
+  width: 100%;
+  max-width: 45rem;
+  gap: var(--size-16);
 `;
