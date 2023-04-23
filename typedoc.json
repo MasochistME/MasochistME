@@ -1,0 +1,12 @@
+{
+  "disableSources": true,
+  "entryPoints": ["lib/v1/api/*", "lib/v1/types/*"],
+  // "entryPointStrategy": "expand",
+  "out": "__docs",
+  "theme": "default",
+  "categorizeByGroup": false,
+  "categoryOrder": ["Members", "Games", "Badges", "Races", "Race participants", "*", "Errors"],
+  "sort": ["instance-first", "source-order"],
+  "plugin": ["typedoc-plugin-merge-modules"],
+  "mergeModulesMergeMode": "module"
+}
