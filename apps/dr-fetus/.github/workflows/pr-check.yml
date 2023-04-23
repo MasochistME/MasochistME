@@ -1,6 +1,6 @@
 name: Pull request check
 
-on: push
+on: pull_request
 
 jobs:
   build:
@@ -8,10 +8,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v1
         with:
           node-version: '16.x'
           registry-url: 'https://registry.npmjs.org'
@@ -20,10 +20,6 @@ jobs:
       - name: Install dependencies
         run: yarn
 
-      - name: Create fake config file
-        run: |
-          echo "{\"PORT\": \"0000\", \"API\": \"http://localhost:0001\"}" > ./src/config.json
-
       - name: Test
         run: yarn test
 
@@ -31,4 +27,4 @@ jobs:
         run: yarn lint
 
       - name: Build
-        run: CI=false yarn maso:build
+        run: yarn build:dev

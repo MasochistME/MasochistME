@@ -14,5 +14,9 @@
     },
     "editor.suggest.insertMode": "replace"
   },
+  "colorize.languages": [
+    "javascript",
+    "typescript"
+  ],
   "typescript.tsdk": "node_modules\\typescript\\lib"
 }
