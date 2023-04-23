@@ -13,14 +13,14 @@ type Option = {
 };
 
 type Props = {
-	loadElement?: React.ReactNode;
+	loadElement?: React.ReactNode; // unused
 	options?: Option[];
 	setSelectedOption?: (selectedOption: string) => void;
 	anchorElement: (isOpen: boolean) => React.ReactNode;
 } & Partial<MenuProps>;
 
 export const Menu = (props: Props) => {
-	const { options, anchorElement, open: _, ...muiProps } = props;
+	const { options, anchorElement, open: _open, ...muiProps } = props;
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
 	const { colorTokens } = useTheme();
@@ -34,11 +34,16 @@ export const Menu = (props: Props) => {
 	};
 
 	const renderOptions =
-		options?.map((option: Option) => {
+		options?.map((option: Option, index: number) => {
 			if (option.isSubheader)
-				return <ListSubheader>{option.value}</ListSubheader>;
+				return (
+					<ListSubheader key={`sh-${index}`}>{option.value}</ListSubheader>
+				);
 			return (
-				<MuiMenuItem value={option.value} onClick={option.onSelect}>
+				<MuiMenuItem
+					key={`mi-${index}`}
+					value={option.value}
+					onClick={option.onSelect}>
 					{option.render ?? option.value}
 				</MuiMenuItem>
 			);

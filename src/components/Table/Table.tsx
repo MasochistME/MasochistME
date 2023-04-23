@@ -72,7 +72,9 @@ export const Table = <T extends Record<any, any>>(props: Props<T>) => {
 		numeric: false,
 	}));
 
-	const colGroup = fixedColumns.map(col => <col style={col.style ?? {}} />);
+	const colGroup = fixedColumns.map((col, index) => (
+		<col key={index} style={col.style ?? {}} />
+	));
 
 	return (
 		<StyledTable className="MuiTable-root" aria-label="Table">

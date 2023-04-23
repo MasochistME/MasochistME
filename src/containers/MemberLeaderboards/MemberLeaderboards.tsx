@@ -47,8 +47,8 @@ const MemberLeaderboardsBoundary = (props: Props) => {
 
 const MemberLeaderboardsSkeleton = () => (
 	<Flex column gap={2}>
-		{new Array(5).fill(null).map(() => (
-			<Skeleton width="100%" height="3.2rem" />
+		{new Array(5).fill(null).map((_, index: number) => (
+			<Skeleton key={index} width="100%" height="3.2rem" />
 		))}
 	</Flex>
 );

@@ -59,6 +59,7 @@ const MemberProfileGamesBoundary = (props: Props) => {
 					</StyledFilterGameText>
 					{tiersData.map((tier: Tier) => (
 						<Checkbox
+							key={`checkbox-tier-${tier.id}`}
 							icon={tier.icon as IconType}
 							itemType={tier.id}
 							visibleItems={visibleTiers}

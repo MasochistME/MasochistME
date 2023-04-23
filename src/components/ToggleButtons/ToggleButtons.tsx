@@ -23,6 +23,7 @@ export const ToggleButtons = <T extends string>(
 
 	const radios = options.map(option => (
 		<StyledToggleButton
+			key={`option-${option.value}`}
 			value={option.value}
 			aria-label={option.value}
 			colorTokens={colorTokens}>
