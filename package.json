@@ -2,13 +2,16 @@
   "name": "masochistme",
   "private": true,
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
+    "maso:build": "turbo run maso:build",
+    "maso:start": "turbo run maso:start",
+    "build:sdk": "turbo run build:sdk",
+    "build:prod": "turbo run build:prod",
+    "build:staging": "turbo run build:staging",
+    "build:dev": "turbo run build:dev",
+    "dev": "turbo run api:dev:watch",
     "lint": "turbo run lint",
     "tsc": "turbo run tsc",
     "docs": "turbo run docs",
-    "maso:build": "turbo run maso:build",
-    "maso:start": "turbo run maso:start",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "workspaces": [

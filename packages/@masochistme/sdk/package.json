@@ -1,6 +1,6 @@
 {
   "name": "@masochistme/sdk",
-  "version": "3.2.6",
+  "version": "3.2.7",
   "description": "Masochist.ME SDK",
   "repository": "https://github.com/MasochistME/masochist-sdk.git",
   "author": "Arcyvilk <arcyvilk@gmail.com>",
@@ -13,7 +13,8 @@
     "dist/**/*"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && tsc-alias -p tsconfig.json",
+    "build:sdk": "tsc && tsc-alias -p tsconfig.json",
     "lint": "eslint . --ext .ts",
     "test": "echo TODO",
     "semantic-release": "semantic-release",
@@ -32,6 +33,7 @@
     "jsdoc": "^3.6.11",
     "nodemon": "^2.0.19",
     "semantic-release": "^19.0.5",
+    "tsc-alias": "^1.8.5",
     "typedoc": "^0.23.16",
     "typedoc-plugin-merge-modules": "^4.0.1"
   }
