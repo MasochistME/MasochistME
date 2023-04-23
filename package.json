@@ -1,21 +1,38 @@
 {
+  "name": "masochistme",
   "private": true,
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
+    "tsc": "turbo run tsc",
+    "docs": "turbo run docs",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
-  "devDependencies": {
-    "eslint": "^7.32.0",
-    "eslint-config-custom": "*",
-    "prettier": "^2.5.1",
-    "turbo": "latest"
-  },
-  "name": "MasochistME",
-  "packageManager": "yarn@1.22.11",
   "workspaces": [
     "apps/*",
-    "packages/*"
-  ]
+    "packages/*",
+    "packages/@masochistme/*"
+  ],
+  "dependencies": {
+    "axios": "1.1.2",
+    "dayjs": "^1.11.7",
+    "dotenv": "^16.0.3",
+    "lodash": "^4.17.13",
+    "mongodb": "^4.10.0"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.186",
+    "@types/node": "^18.8.0",
+    "@typescript-eslint/eslint-plugin": "^5.40.0",
+    "@typescript-eslint/parser": "^5.40.0",
+    "eslint": "^8.25.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-config-turbo": "latest",
+    "prettier": "^2.7.1",
+    "turbo": "latest",
+    "typescript": "^4.8.4"
+  },
+  "packageManager": "yarn@1.22.19"
 }
