@@ -3,7 +3,7 @@ import { MemberAward } from '@masochistme/sdk/dist/v1/types';
 import { MemberAwardListParams } from '@masochistme/sdk/dist/v1/api/members';
 
 import { log } from 'helpers/log';
-import { mongoInstance } from 'index';
+import { mongoInstance } from 'api';
 
 /**
  * Returns a list of all awards belonging to a single member.

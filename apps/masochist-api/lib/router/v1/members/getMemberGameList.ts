@@ -3,7 +3,7 @@ import { MemberGame, Game } from '@masochistme/sdk/dist/v1/types';
 import { MemberGameListParams } from '@masochistme/sdk/dist/v1/api/members';
 
 import { log } from 'helpers/log';
-import { mongoInstance } from 'index';
+import { mongoInstance } from 'api';
 import { sortCollection } from 'helpers/db';
 
 /**

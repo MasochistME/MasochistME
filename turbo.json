@@ -2,20 +2,24 @@
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["**/.env.*local"],
   "pipeline": {
+    "tsc": {
+      "dependsOn": ["^tsc"],
+      "outputs": []
+    },
     "maso:build": {"outputs": []},
     "maso:start": {"outputs": []},
     "build:sdk": {"outputs": []},
     "build:prod": {"outputs": []},
     "build:dev": {"outputs": []},
     "build:staging": {"outputs": []},
-    "api:dev:watch": {"outputs": []},
     "docs": {"outputs": []},
     "lint":  {"outputs": []},
-    "tsc": {
-      "dependsOn": ["^tsc"],
-      "outputs": []
+    "api:dev": {
+      "outputs": [],
+      "cache": false,
+      "persistent": true
     },
-    "dev": {
+    "api:prod": {
       "outputs": [],
       "cache": false,
       "persistent": true

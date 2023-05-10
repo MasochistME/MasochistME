@@ -5,7 +5,7 @@ import { RaceListParams } from '@masochistme/sdk/dist/v1/api/races';
 
 import { log } from 'helpers/log';
 import { sortCollection } from 'helpers/db';
-import { mongoInstance } from 'index';
+import { mongoInstance } from 'api';
 import {
   getParticipantRaceScore,
   sortPlayersByResult,

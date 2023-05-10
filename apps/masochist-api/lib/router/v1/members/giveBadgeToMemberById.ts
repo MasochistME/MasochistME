@@ -7,7 +7,7 @@ import {
 } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
-import { mongoInstance } from 'index';
+import { mongoInstance } from 'api';
 
 /**
  * Gives a badge with given badge ID to member with given member ID.

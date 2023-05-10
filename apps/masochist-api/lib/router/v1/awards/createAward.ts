@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { Award } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
-import { mongoInstance } from 'index';
+import { mongoInstance } from 'api';
 
 /**
  * Creates a new award.

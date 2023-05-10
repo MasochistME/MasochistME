@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { Badge } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
-import { mongoInstance } from 'index';
+import { mongoInstance } from 'api';
 
 /**
  * Returns a badge by the given ID (if it exists).

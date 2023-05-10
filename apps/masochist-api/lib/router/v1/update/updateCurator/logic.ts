@@ -18,7 +18,7 @@ import { splitArrayToChunks } from 'helpers';
 
 import { SteamGameDetailsData, MemberSteam } from '../types';
 import { statusCurator, UpdateStatus } from '.';
-import { mongoInstance } from 'index';
+import { mongoInstance } from 'api';
 
 type Update = { lastUpdate: Date; id: 'status' };
 

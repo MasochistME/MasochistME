@@ -4,7 +4,7 @@ import { BadgesByGameIdListParams } from '@masochistme/sdk/dist/v1/api/games';
 
 import { log } from 'helpers/log';
 import { sortCollection } from 'helpers/db';
-import { mongoInstance } from 'index';
+import { mongoInstance } from 'api';
 
 /**
  * Returns a list of all badges belonging to a game with given ID.

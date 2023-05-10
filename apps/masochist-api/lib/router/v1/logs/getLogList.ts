@@ -4,7 +4,7 @@ import { LogListParams } from '@masochistme/sdk/dist/v1/api/logs';
 
 import { log } from 'helpers/log';
 import { sortCollection } from 'helpers/db';
-import { mongoInstance } from 'index';
+import { mongoInstance } from 'api';
 
 /**
  * Returns a list of all logs.

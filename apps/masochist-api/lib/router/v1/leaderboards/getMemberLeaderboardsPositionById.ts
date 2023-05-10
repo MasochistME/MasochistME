@@ -13,7 +13,7 @@ import {
 } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
-import { mongoInstance } from 'index';
+import { mongoInstance } from 'api';
 
 /**
  * Returns information about member's position in MasochistME leaderboards.

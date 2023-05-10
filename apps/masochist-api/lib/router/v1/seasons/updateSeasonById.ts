@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { Season } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
-import { mongoInstance } from 'index';
+import { mongoInstance } from 'api';
 
 /**
  * Updates a season by its ID. All of the updatable fields are optional.

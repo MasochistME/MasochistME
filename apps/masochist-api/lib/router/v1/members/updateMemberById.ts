@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { Member } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
-import { mongoInstance } from 'index';
+import { mongoInstance } from 'api';
 
 /**
  * Updates a member with given member ID. All of the updatable fields are optional.

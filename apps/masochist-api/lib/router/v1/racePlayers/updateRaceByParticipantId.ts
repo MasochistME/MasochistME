@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { Race, RacePlayer } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
-import { mongoInstance } from 'index';
+import { mongoInstance } from 'api';
 
 export const updateRaceByParticipantId = async (
   req: Request<any, Partial<Omit<Race, '_id'>>>,

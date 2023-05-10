@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { Badge } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
-import { mongoInstance } from 'index';
+import { mongoInstance } from 'api';
 
 /**
  * Updates a badge with given badge ID. All of the updatable fields are optional.

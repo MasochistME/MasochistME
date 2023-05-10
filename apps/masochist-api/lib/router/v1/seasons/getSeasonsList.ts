@@ -3,7 +3,7 @@ import { Season } from '@masochistme/sdk/dist/v1/types';
 import { SeasonsListParams } from '@masochistme/sdk/dist/v1/api/seasons';
 
 import { log } from 'helpers/log';
-import { mongoInstance } from 'index';
+import { mongoInstance } from 'api';
 import { sortCollection } from 'helpers/db';
 
 /**

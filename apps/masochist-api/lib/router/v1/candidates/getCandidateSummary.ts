@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import axios, { AxiosError } from 'axios';
 import { Game, MemberGame, Tier } from '@masochistme/sdk/dist/v1/types';
 
-import { mongoInstance } from 'index';
+import { mongoInstance } from 'api';
 import { log } from 'helpers/log';
 import { updateQueue } from 'router/v1/update/updateQueue';
 import {

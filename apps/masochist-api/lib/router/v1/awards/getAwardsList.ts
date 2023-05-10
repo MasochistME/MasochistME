@@ -3,7 +3,7 @@ import { Award, AwardCategory } from '@masochistme/sdk/dist/v1/types';
 import { AwardsListParams } from '@masochistme/sdk/dist/v1/api/awards';
 
 import { log } from 'helpers/log';
-import { mongoInstance } from 'index';
+import { mongoInstance } from 'api';
 
 type AwardWithChildren = Omit<Award, 'children'> & {
   children: (Award | null)[];
