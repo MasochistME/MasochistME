@@ -4,9 +4,9 @@
   "description": "MasochistME API",
   "main": "dist/api.js",
   "scripts": {
-    "build:dev": "env ENV=dev PORT=3081 CORS=http://localhost:3000 DELAY=3000 BIG_DELAY=43200000 tsc",
-    "build:staging": "env ENV=dev PORT=3081 CORS=http://dev.masochist.me DELAY=3000 BIG_DELAY=43200000 tsc",
-    "build:prod": "env ENV=prod PORT=3002 CORS=http://masochist.me DELAY=3000 BIG_DELAY=43200000 tsc",
+    "build:dev": "env ENV=dev PORT=3081 CORS=http://localhost:3000 DELAY=3000 BIG_DELAY=43200000 tsc && tsc-alias",
+    "build:staging": "env ENV=dev PORT=3081 CORS=http://dev.masochist.me DELAY=3000 BIG_DELAY=43200000 tsc && tsc-alias",
+    "build:prod": "env ENV=prod PORT=3002 CORS=http://masochist.me DELAY=3000 BIG_DELAY=43200000 tsc && tsc-alias",
     "api:dev": "env ENV=dev PORT=3081 CORS=http://localhost:3000 DELAY=3000 BIG_DELAY=43200000 npx tsx lib/api.ts",
     "api:dev:watch": "env ENV=dev PORT=3081 CORS=http://localhost:3000 DELAY=3000 BIG_DELAY=43200000 nodemon --exec npx tsx lib/api.ts",
     "api:staging": "env ENV=dev PORT=3081 CORS=http://dev.masochist.me DELAY=3000 BIG_DELAY=43200000 node dist/api.js",

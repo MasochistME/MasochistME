@@ -5,7 +5,7 @@
     "rootDir": "./lib",
     "outDir": "./dist",
     "declaration": true,
-    "declarationDir": "./dist"
+    "declarationDir": "dist"
   },
   "include": ["lib/**/*"],
   "exclude": ["node_modules", "dist", "__migrate"],

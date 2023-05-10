@@ -13,6 +13,7 @@
       "rootDir": ".",
   
       "noUnusedParameters": true,
+      "noImplicitAny": false,
       "allowSyntheticDefaultImports": true,
       "forceConsistentCasingInFileNames": true,
       "strict": true,
