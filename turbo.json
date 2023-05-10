@@ -19,6 +19,11 @@
       "cache": false,
       "persistent": true
     },
+    "api:staging": {
+      "outputs": [],
+      "cache": false,
+      "persistent": true
+    },
     "api:prod": {
       "outputs": [],
       "cache": false,
