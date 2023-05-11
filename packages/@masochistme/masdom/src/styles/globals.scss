@@ -1,0 +1,21 @@
+@use "sass:math";
+
+@import './vars/border.scss';
+@import './vars/fonts.scss';
+@import './vars/sizes.scss';
+
+@import './vars/themes/_themes.scss';
+
+@function baseFontSize($pixels, $defaultFontSize: 16px) {
+  @return (math.div($pixels, $defaultFontSize) * 100%);
+}
+
+:root {
+  --common-color--black: #040404;
+  --common-color--white: #f0f0f0;
+  --common-color--red: #ff0000;
+  --common-color--shadow: #141414;
+  --common-color--light: #e0e0e0;
+
+  font-size: baseFontSize(10px);
+}

@@ -1,0 +1,59 @@
+.theme-meat {
+  --core-primary-bg: #862020;
+  --core-secondary-bg: #5f1919;
+  --core-tertiary-bg: #501414;
+  --core-extra-bg: #512929;
+  --core-primary-text: #ffe7e7;
+  --core-secondary-text: #f6a593;
+  --core-tertiary-text: #fffef4;
+
+  --semantic-color--tier-4: #ffe148;
+  --semantic-color--tier-4--muted: #a58214;
+  --semantic-color--tier-3: #f5f5f5;
+  --semantic-color--tier-3--muted: #979797;
+  --semantic-color--tier-2: #ff6b1f;
+  --semantic-color--tier-2--muted: #a14719;
+  --semantic-color--tier-1: #32a042;
+  --semantic-color--tier-1--muted: #184e20;
+
+  --semantic-color--idle: #2e0a0a;
+  --semantic-color--interactive: #541717;
+  --semantic-color--active: #ffa5a5;
+  --semantic-color--disabled: #7b7a8d;
+
+  // TODO - START
+  --semantic-color--success: #ff67b4;
+  --semantic-color--success-strong: #cb2578;
+  --semantic-color--success-muted: #b76c91;
+  // TODO - END
+  --semantic-color--warning: #fdc000;
+  --semantic-color--warning-strong: #fdc000;
+  --semantic-color--warning-muted: #a47b00;
+  --semantic-color--error: #582e34;
+  --semantic-color--error-strong: #d38893;
+  --semantic-color--error-muted: #1e1012;
+
+  --semantic-color--progress--track: #2e0a0a;
+  --semantic-color--progress--thumb: #890000;
+
+  --semantic-color--link-normal: #f0f0f0;
+  --semantic-color--link-hover: d0d0d0;
+  --semantic-color--link-visited: c0c0c0;
+  --semantic-color--link-muted: afafaf;
+  --semantic-color--section-update--bg: #b2052f;
+  --semantic-color--section-update--text: #fadcd2;
+
+  --semantic-color--switch-track: #320303;
+  --semantic-color--switch-thumb: #f0f0f0;
+  --semantic-color--switch-track--checked: #7e5252;
+  --semantic-color--switch-thumb--checked: #f0f0f0;
+  --semantic-color--switch-track--disabled: #7b7a8d;
+  --semantic-color--switch-thumb--disabled: #f0f0f0;
+
+  --element-color--header-bg: #4e1414;
+  --element-color--header-text: #fedfd6;
+
+  --element-color--button-bg: #9d3737;
+  --element-color--button-text: #ffe7e7;
+  --element-color--button-border: #ec2e2e;
+}
