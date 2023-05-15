@@ -1,0 +1,94 @@
+@import '../../styles/globals.scss';
+
+.button {
+  display: inline-flex;
+  flex-basis: auto;
+  align-items: center;
+  align-self: flex-start;
+  margin: auto 0;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+
+  gap: $size-8;
+  border-radius: $border-radius-4;
+  font-family: $font-raleway;
+
+  // DEFAULTS OVERWRITTEN BY CLASSES
+  font-size: $font-size-16; // DEFAULT FONT SIZE
+  padding: $size-6 $size-10; // DEFAULT PADDING
+
+  &--size {
+    &-nano {
+      font-size: $font-size-9;
+    }
+    &-micro {
+      font-size: $font-size-10;
+    }
+    &-tiny {
+      font-size: $font-size-12;
+    }
+    &-small {
+      font-size: $font-size-14;
+    }
+    &-medium {
+      font-size: $font-size-16;
+    }
+    &-big {
+      font-size: $font-size-18;
+    }
+    &-large {
+      font-size: $font-size-20;
+    }
+  }
+
+  background-color: var(--element-color--button-bg);
+  color: var(--element-color--button-text);
+  border: $size-1 solid var(--element-color--button-border);
+  &:hover {
+    color: var(--core-primary-text);
+  }
+
+  &--variant {
+    &-default {
+      // DEFAULT STYLES HERE
+    }
+    &-primary {
+      background-color: var(--element-color--button-text);
+      color: var(--element-color--button-bg);
+      &:hover {
+        color: var(--core-button-bg);
+      }
+    }
+    &-secondary {
+      background-color: black; // TODO
+    }
+    &-danger {
+      background-color: black; // TODO
+    }
+    &-golden {
+      background-color: var(--core-primary-bg)99;
+      color: var(--semantic-color--tier-4);
+      border: 1px solid var(--semantic-color--tier-4);
+      &:hover {
+        color: var(--core-tertiary-text);
+      }
+    }
+  }
+
+  &--iconOnly {
+    padding: $size-8;
+    border: 0;
+    background-color: transparent;
+  }
+
+  &--disabled {
+    cursor: not-allowed;
+    color: var(--semantic-color--disabled);
+  }
+
+  &--toggled {
+    cursor: wait; // TODO
+    color: var(--core-primary-text);
+  }
+}

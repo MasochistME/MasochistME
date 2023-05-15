@@ -1,0 +1,18 @@
+{
+    "extends": "../../../tsconfig.base",
+    "compilerOptions": {
+      "baseUrl": "./src",
+      "rootDir": "./src",
+      "lib": ["dom", "dom.iterable", "es2021"],
+      "target": "es2021",
+      "module": "es2022",
+      "jsx": "react",
+      "allowJs": true,
+      "checkJs": true,
+      "outDir": "./dist",
+      "declaration": true,
+      "declarationDir": "./dist"
+    },
+    "include": ["./src/**/*"],
+    "exclude": ["node_modules", "**/*/__tests__", "*.js"]
+  }

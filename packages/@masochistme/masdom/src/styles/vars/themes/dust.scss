@@ -1,0 +1,59 @@
+.theme-dust {
+  --core-primary-text: #040404;
+  --core-secondary-text: #141620;
+  --core-tertiary-text: #0a0a0a;
+  --core-extra-bg: #91a0bb;;
+  --core-primary-bg: #BEC9E0;
+  --core-secondary-bg: #c9d6f1;
+  --core-tertiary-bg: #9e9db5;
+
+  --semantic-color--tier-4: #fdc000;
+  --semantic-color--tier-4--muted: #684f00;
+  --semantic-color--tier-3: #f5f5f5;
+  --semantic-color--tier-3--muted: #979797;
+  --semantic-color--tier-2: #ff6b1f;
+  --semantic-color--tier-2--muted: #a14719;
+  --semantic-color--tier-1: #32a042;
+  --semantic-color--tier-1--muted: #184e20;
+
+  --semantic-color--idle: #838ca7;
+  --semantic-color--interactive: #545281;
+  --semantic-color--active: #0a0a0a;
+  --semantic-color--disabled: #7b7a8d;
+
+  // TODO - START
+  --semantic-color--success: #62ad3e;
+  --semantic-color--success-strong: #335621;
+  --semantic-color--success-muted: #546c48;
+  // TODO - END
+  --semantic-color--warning: #fdc000;
+  --semantic-color--warning-strong: #fdc000;
+  --semantic-color--warning-muted: #a47b00;
+  --semantic-color--error: #582e34;
+  --semantic-color--error-strong: #d38893;
+  --semantic-color--error-muted: #1e1012;
+
+  --semantic-color--progress--track: #2e0a0a;
+  --semantic-color--progress--thumb: #890000;
+
+  --semantic-color--link-normal: #11366e;
+  --semantic-color--link-hover: 11366e;
+  --semantic-color--link-visited: 11186e;
+  --semantic-color--link-muted: afafaf;
+  --semantic-color--section-update--bg: #040404;
+  --semantic-color--section-update--text: #f0f0f0;
+
+  --semantic-color--switch-track: #545281;
+  --semantic-color--switch-thumb: #f0f0f0;
+  --semantic-color--switch-track--checked: #BEC9E0;
+  --semantic-color--switch-thumb--checked: #f0f0f0;
+  --semantic-color--switch-track--disabled: #7b7a8d;
+  --semantic-color--switch-thumb--disabled: #f0f0f0;
+
+  --element-color--header-bg: #BEC9E0;
+  --element-color--header-text: #040404;
+
+  --element-color--button-bg: #9e9db5;
+  --element-color--button-text: #141620;
+  --element-color--button-border: #545281;
+}

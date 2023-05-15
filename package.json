@@ -9,6 +9,7 @@
     "build:staging": "turbo run build:staging",
     "build:dev": "turbo run build:dev",
     "api:dev:watch": "turbo run api:dev:watch",
+    "api:dev": "turbo run api:dev",
     "api:staging": "turbo run api:staging",
     "api:prod": "turbo run api:prod",
     "lint": "turbo run lint",
