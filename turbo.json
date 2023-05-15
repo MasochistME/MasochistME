@@ -14,7 +14,7 @@
     "build:staging": {"outputs": []},
     "docs": {"outputs": []},
     "lint":  {"outputs": []},
-    "api:dev": {
+    "api:dev:watch": {
       "outputs": [],
       "cache": false,
       "persistent": true

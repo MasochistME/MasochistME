@@ -42,8 +42,8 @@ export const TabGameTabsBoundary = ({ gameId }: { gameId: number }) => {
         <GameProfileFeatured gameId={gameId} />
       </TabPanel>
       {/* <TabPanel activeTab={tab} tabId={TabRoutes.GRAPHS}>
-				<GameProfileGraphs gameId={gameId} />
-			</TabPanel> */}
+        <GameProfileGraphs gameId={gameId} />
+      </TabPanel> */}
     </StyledGameTabs>
   );
 };
