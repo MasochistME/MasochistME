@@ -1,0 +1,20 @@
+{
+    "extends": "../../tsconfig.base",
+    "compilerOptions": {
+      "baseUrl": "./src",
+      "rootDir": "./src",
+      "lib": ["dom", "dom.iterable", "es2021"],
+      "target": "es2021",
+      "module": "es2022",
+      "jsx": "react-jsx",
+      "checkJs": true,
+      "outDir": "./dist",
+      "declaration": true,
+      "declarationDir": "./dist",
+      "paths": {
+        "@mui/styled-engine": ["./node_modules/@mui/styled-engine-sc"]
+      }
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "**/*/__tests__", "*.js"]
+  }

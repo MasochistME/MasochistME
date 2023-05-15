@@ -1,0 +1,1 @@
+export { getCandidateSummary } from './getCandidateSummary';

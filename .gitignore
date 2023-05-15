@@ -1,16 +1,20 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+node_modules
 
 # testing
-/coverage
+coverage
 
 # production
-/build
+build
+dist
+out
+__docs
 
 # misc
 .DS_Store
+*.pem
 .env
 .env.local
 .env.development.local
@@ -35,3 +39,10 @@ package-lock.json
 config.dev.json
 config.prod.json
 config.staging.json
+
+
+# turbo
+.turbo
+
+# vercel
+.vercel

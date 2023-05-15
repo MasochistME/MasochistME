@@ -1,0 +1,68 @@
+{
+  "name": "@masochistme/web",
+  "version": "4.0.0",
+  "private": true,
+  "description": "MasochistME - games that masochists love.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MasochistME/MasochistME.git"
+  },
+  "author": "Arcyvilk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MasochistME/MasochistME/issues"
+  },
+  "scripts": {
+    "maso:dev": "env HOST=0.0.0.0 react-app-rewired start",
+    "maso:start": "react-app-rewired start",
+    "maso:build": "react-app-rewired build",
+    "build:prod": "yarn maso:build",
+    "build:dev": "yarn maso:build",
+    "build:staging": "yarn maso:build",
+    "lint": "eslint src --ext .ts,.tsx",
+    "test": "echo TODO"
+  },
+  "dependencies": {
+    "@masochistme/sdk": "*",
+    "@mui/material": "^5.10.10",
+    "@mui/styled-engine-sc": "^5.10.6",
+    "@sgratzl/chartjs-chart-boxplot": "^4.1.2",
+    "@tanstack/react-location": "^3.7.4",
+    "@tanstack/react-query": "4.0.9",
+    "@tippyjs/react": "^4.2.6",
+    "babel-polyfill": "^6.26.0",
+    "chart.js": "^3.0.0",
+    "crypto-js": "^4.0.0",
+    "mixpanel-browser": "^2.45.0",
+    "moment": "^2.24.0",
+    "node-cache": "^5.1.0",
+    "react": "^18.2.0",
+    "react-chartjs-2": "^4.3.1",
+    "react-collapse": "^5.1.1",
+    "react-dom": "^18.2.0",
+    "react-error-boundary": "^3.1.4",
+    "react-markdown": "^8.0.3",
+    "react-router": "^6.10.0",
+    "react-router-dom": "^6.10.0",
+    "react-scripts": "^5.0.1",
+    "styled-components": "^5.3.6"
+  },
+  "devDependencies": {
+    "@tanstack/react-query-devtools": "^4.0.10",
+    "@types/crypto-js": "^4.0.1",
+    "@types/mixpanel-browser": "^2.38.1",
+    "@types/react": "^18.0.27",
+    "@types/react-collapse": "^5.0.1",
+    "@types/react-dom": "^18.0.10",
+    "@types/react-router-dom": "^5.3.3",
+    "@types/styled-components": "^5.1.7",
+    "react-app-rewired": "^2.2.1"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}

@@ -1,27 +1,28 @@
-## MasochistME
+# MasochistME - monorepo
 
-Website for the MasochistME Steam community.
+This is a monorepo holding projects related to the MasochistME app: website, backend server, bot and SDK.
+Monorepo is based on [turborepo]().
 
-### How to run the website locally
+## Subrepositories
 
-First, you will need to add a configuration file. In the `src` directory, create a `config.json` file with the following stucture:
-```
-{
-  "PORT": 8081,
-  "API": "http://localhost:3081",
-  "MIXPANEL_TOKEN": "SUPER_SECRET_MIXPANEL_TOKEN"
-}
-```
+- [masochist-web]() - website hosted on [masochist.me](masochist.me) domain
+- [masochist-api]() - backend server
+- [masochist-sdk]() - SDK for easy API access [[DOCS](https://masochistme.github.io/MasochistME)]
+- [dr-fetus]() - Dr. Fetus bot serving on the MME Discord
 
-This is a development environment configuration - you will need to host the server locally as well to be able to use the staging data. To do so, clone the [masochist-api](https://github.com/MasochistME/masochist-api) repository, set it up as in its README and run it with `yarn api:dev:watch` command. It will automatically fetch the staging data so feel free to do whatever you want in local, at worst it will break staging. 
+## Running the monorepo locally
 
-After that, you can run the website:
+First, you will obviously need to clone this repository.
 
-- clone the repository
-- check out the `release-dev` branch
-- `yarn` | `npm install`
-- `yarn maso:start`
+`apps/dr-fetus` and `apps/masochist-api` rely on `.env` files being populated in their root directories. Navigate there and create those files based on those packages' README files and existing `.env.example`.
 
-### How to release a new production build
+`apps/masochist-web` relies on an `src/config.json` file. Navigate to its directory and populate that file based on the package's README.
 
-There is no automated production release - you need to log into the remote server, pull and build the newest version of `main` branch. Since it's not a particularly collaboration-friendly way to do it for now I'm just doing it manually.
+Next, run the following commands in the root directory:
+
+- `yarn` - to install dependencies for all workspaces inside the monorepo,
+- `yarn build:sdk` - builds the local version of the SDK (other repos base on the local one, you can lock to a specific version in package.json if you want to use NPM package),
+- `yarn dev` - this command runs the backend server - it's necessary for the website to work locally,
+- `yarn maso:start` - runs the website on port 3000.
+
+You might need to add a `--force` flag at the end of the command if Turbo caching prevents you from running it.
