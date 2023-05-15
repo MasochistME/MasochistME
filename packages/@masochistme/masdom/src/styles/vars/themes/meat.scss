@@ -19,7 +19,7 @@
   --semantic-color--idle: #2e0a0a;
   --semantic-color--interactive: #541717;
   --semantic-color--active: #ffa5a5;
-  --semantic-color--disabled: #7b7a8d;
+  --semantic-color--disabled: var(--ash-02);
 
   // TODO - START
   --semantic-color--success: #ff67b4;
@@ -47,7 +47,7 @@
   --semantic-color--switch-thumb: #f0f0f0;
   --semantic-color--switch-track--checked: #7e5252;
   --semantic-color--switch-thumb--checked: #f0f0f0;
-  --semantic-color--switch-track--disabled: #7b7a8d;
+  --semantic-color--switch-track--disabled: var(--ash-02);
   --semantic-color--switch-thumb--disabled: #f0f0f0;
 
   --element-color--header-bg: #4e1414;

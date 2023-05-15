@@ -1,59 +1,59 @@
 .theme-ash {
-  --core-primary-bg: #040404;
-  --core-secondary-bg: #141620; 
-  --core-tertiary-bg: #0a0a0a; 
-  --core-extra-bg: #293251; 
-  --core-primary-text: #BEC9E0; 
-  --core-secondary-text: #9e9db5; 
-  --core-tertiary-text: #f0f0f0; 
+  --core-primary-bg: var(--dust-08);
+  --core-secondary-bg: var(--dust-07); 
+  --core-tertiary-bg: var(--black); 
+  --core-extra-bg: var(--dust-05); 
+  --core-primary-text: var(--dust-02); 
+  --core-secondary-text: var(--ash-01); 
+  --core-tertiary-text: var(--white); 
 
-  --semantic-color--tier-4: #fdc000; 
-  --semantic-color--tier-4--muted: #8e6c00; 
-  --semantic-color--tier-3: #f5f5f5; 
-  --semantic-color--tier-3--muted: #979797; 
+  --semantic-color--tier-4: var(--yellow-01); 
+  --semantic-color--tier-4--muted: var(--yellow-03); 
+  --semantic-color--tier-3: var(--gray-01); 
+  --semantic-color--tier-3--muted: var(--gray-05); 
   --semantic-color--tier-2: #ff6b1f; 
   --semantic-color--tier-2--muted: #a14719; 
-  --semantic-color--tier-1: #32a042; 
-  --semantic-color--tier-1--muted: #184e20; 
+  --semantic-color--tier-1: var(--green-02);
+  --semantic-color--tier-1--muted: var(--green-03);
 
-  --semantic-color--idle: #282f44; 
-  --semantic-color--interactive: #545281; 
-  --semantic-color--active: #9895db; 
-  --semantic-color--disabled: #7b7a8d; 
+  --semantic-color--idle: var(--dust-06); 
+  --semantic-color--interactive: var(--ash-04); 
+  --semantic-color--active: var(--ash-03); 
+  --semantic-color--disabled: var(--ash-02); 
 
   // TODO - START
-  --semantic-color--success: #62ad3e; 
-  --semantic-color--success-strong: #335621; 
-  --semantic-color--success-muted: #546c48; 
+  --semantic-color--success: var(--green-01);
+  --semantic-color--success-strong: var(--green-04);
+  --semantic-color--success-muted: var(--green-05);
   // TODO - END
-  --semantic-color--warning: #fdc000; 
-  --semantic-color--warning-strong: #fdc000; 
-  --semantic-color--warning-muted: #a47b00; 
+  --semantic-color--warning: var(--yellow-01);
+  --semantic-color--warning-strong: var(--yellow-01);
+  --semantic-color--warning-muted: var(--yellow-02);
   --semantic-color--error: #9b091e; 
   --semantic-color--error-strong: #d38893; 
   --semantic-color--error-muted: #1e1012; 
 
-  --semantic-color--progress--track: #040404; 
-  --semantic-color--progress--thumb: #545281; 
+  --semantic-color--progress--track: var(--dust-08); 
+  --semantic-color--progress--thumb: var(--ash-04); 
 
-  --semantic-color--link-normal: #f0f0f0; 
-  --semantic-color--link-hover: #d0d0d0; 
-  --semantic-color--link-visited: #c0c0c0; 
-  --semantic-color--link-muted: #afafaf; 
-  --semantic-color--section-update--bg: #040404; 
-  --semantic-color--section-update--text: #f0f0f0; 
+  --semantic-color--link-normal: var(--white);
+  --semantic-color--link-hover: var(--gray-02);
+  --semantic-color--link-visited: var(--gray-03);
+  --semantic-color--link-muted: var(--gray-04);
+  --semantic-color--section-update--bg: var(--dust-08); 
+  --semantic-color--section-update--text: var(--white);
 
-  --semantic-color--switch-track: #545281; 
-  --semantic-color--switch-thumb: #f0f0f0; 
-  --semantic-color--switch-track--checked: #BEC9E0; 
-  --semantic-color--switch-thumb--checked: #f0f0f0; 
-  --semantic-color--switch-track--disabled: #7b7a8d; 
-  --semantic-color--switch-thumb--disabled: #f0f0f0; 
+  --semantic-color--switch-track: var(--ash-04); 
+  --semantic-color--switch-thumb: var(--white);
+  --semantic-color--switch-track--checked: var(--dust-02); 
+  --semantic-color--switch-thumb--checked: var(--white);
+  --semantic-color--switch-track--disabled: var(--ash-02); 
+  --semantic-color--switch-thumb--disabled: var(--white);
 
-  --element-color--header-bg: #040404; 
-  --element-color--header-text: #BEC9E0; 
+  --element-color--header-bg: var(--dust-08); 
+  --element-color--header-text: var(--dust-02); 
 
-  --element-color--button-bg: #0a0a0a; 
-  --element-color--button-text: #9e9db5; 
-  --element-color--button-border: #545281;
+  --element-color--button-bg: var(--dust-08);
+  --element-color--button-text: var(--ash-01); 
+  --element-color--button-border: var(--ash-04);
 }

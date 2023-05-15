@@ -17,6 +17,12 @@ const onClick = () => {
 
 type Story = StoryObj<typeof Button>;
 
+export const Default: Story = {
+  args: {
+    label: 'Button',
+  },
+};
+
 export const Sizes: Story = {
   args: {
     label: 'Button',
