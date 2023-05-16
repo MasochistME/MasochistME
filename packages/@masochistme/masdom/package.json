@@ -24,10 +24,12 @@
     "@storybook/react": "^7.0.10",
     "@storybook/react-webpack5": "^7.0.10",
     "@storybook/testing-library": "^0.0.14-next.2",
+    "@svgr/webpack": "^8.0.1",
     "@types/react": "^18.2.6",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-svg-loader": "^3.0.3",
     "sass": "^1.62.1",
     "storybook": "^7.0.10"
   },

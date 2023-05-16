@@ -28,6 +28,21 @@ const config = {
       ...(config.resolve.modules || []),
       path.resolve(__dirname, "../src"),
     ];
+
+    config.module.rules = [
+      ...config.module.rules,
+      {
+        test: /\.svg$/i,
+        use: ['@svgr/webpack']
+      },
+      // {
+      //   loader: 'react-svg-loader',
+      //   options: {
+      //     jsx: true // true outputs JSX tags
+      //   }
+      // }
+    ]
+
     return config;
   },
 };
