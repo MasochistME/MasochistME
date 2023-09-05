@@ -1,14 +1,12 @@
 import React, { useContext, useState } from 'react';
 import { SDK } from '@masochistme/sdk/dist/v1/sdk';
-import { TierId, LogType } from '@masochistme/sdk/dist/v1/types';
+import { TierId } from '@masochistme/sdk/dist/v1/types';
 
 import { TabDict } from 'configuration/tabs';
-import { LogDictionary } from 'configuration/logs';
 
 import { Theme } from 'styles';
 import { GameView, BadgeView } from 'hooks';
-
-import config from 'config.json';
+import { env } from 'env';
 
 type ContextType = {
   // DEV
@@ -61,9 +59,13 @@ export const AppContextProvider = ({
   const [visibleTiers, setVisibleTiers] = useState<TierId[]>([]);
   const [visiblePrices, setVisiblePrices] = useState<number[]>([0, 1000]);
 
-  const path = config.API;
+  if (!env.API) {
+    throw new Error('No API');
+  }
+
+  const path = env.API ?? '';
   const sdk = new SDK({
-    host: config.API,
+    host: env.API ?? '',
     authToken: 'masochist',
   });
 
