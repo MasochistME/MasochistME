@@ -23,7 +23,7 @@ export const mmeDb =
 const host =
   process.env['ENV'] === 'dev'
     ? 'http://localhost:3081'
-    : 'https://65.108.214.190:3002';
+    : 'https://api.masochist.me';
 
 export const mongo = new Database([{ symbol: botDb, url: process.env['DB'] }]);
 
