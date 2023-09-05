@@ -76,7 +76,7 @@ const Info = (props: Partial<SectionProps>): JSX.Element => {
               target="_blank"
               id={idLinkPatreon}>
               <ButtonSupport
-                src="http://cdn.masochist.me/assets/patreon.png"
+                src="https://cdn.masochist.me/assets/patreon.png"
                 alt="Patreon button"
               />
             </a>

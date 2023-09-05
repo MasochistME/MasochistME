@@ -18,14 +18,14 @@ yarn add @masochistme/sdk@latest
 
 To be able to use the MasochistSDK in your application, you will need to pass a configuration file to the SDK instance with two parameters:
 
-- `host` - the basic path to the MasochistAPI (usually `http://masochist.me:3002`)
+- `host` - the basic path to the MasochistAPI (usually `https://masochist.me:3002`)
 - `accessToken` - your personal API token
 
 ```ts
 import { SDK } from "@masochistme/sdk/dist/v1/sdk";
 
 const config = {
-  host:        "http://masochist.me:3002",
+  host:        "https://masochist.me:3002",
   accessToken: "your_super_secret_access_token",
 };
 

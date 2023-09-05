@@ -15,7 +15,7 @@ export const ErrorFallback = (props: Props) => {
   const { error = t('error.could_not_load'), ...rest } = props;
   return (
     <StyledWrapper {...rest}>
-      <StyledImg src="http://cdn.masochist.me/files/ash_fail.png" />
+      <StyledImg src="https://cdn.masochist.me/files/ash_fail.png" />
       <StyledText>{error}</StyledText>
     </StyledWrapper>
   );
