@@ -1,21 +1,21 @@
-import mixpanel from 'mixpanel-browser';
-import config from 'config.json';
+const USE_MIXPANEL = false;
 
-let USE_MIXPANEL = false;
-// @ts-ignore
-if (config.MIXPANEL_TOKEN) {
-  // @ts-ignore
-  mixpanel.init(config.MIXPANEL_TOKEN, { debug: false });
-  USE_MIXPANEL = true;
-}
+// This file is a testament to when Mixpanel was used.
+// Might be reused in the future with the self-hosted statistics service
 
 export const useMixpanel = () => {
+  // @ts-ignore
   const track = (event: string, params = {}) => {
-    if (USE_MIXPANEL) mixpanel.track(event, params);
+    if (USE_MIXPANEL) {
+      // mixpanel.track(event, params);
+    }
   };
 
+  // @ts-ignore
   const trackLink = (domId: string, event: string, params = {}) => {
-    if (USE_MIXPANEL) mixpanel.track_links(domId, event, params);
+    if (USE_MIXPANEL) {
+      // mixpanel.track_links(domId, event, params);
+    }
   };
 
   return { track, trackLink };

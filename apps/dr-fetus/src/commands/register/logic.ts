@@ -3,11 +3,11 @@ import {
   APIEmbed,
   ButtonBuilder,
   ButtonStyle,
-} from "discord.js";
-import { DiscordInteraction, getSuccessEmbed, getErrorEmbed } from "arcybot";
+} from 'discord.js';
+import { DiscordInteraction, getSuccessEmbed, getErrorEmbed } from 'arcybot';
 
-import { REGISTRATION_REVIEW, Room } from "consts";
-import { getChannelById, getMemberNameById, getOption } from "utils";
+import { REGISTRATION_REVIEW, Room } from 'consts';
+import { getChannelById, getMemberNameById, getOption } from 'utils';
 
 /**
  * Allows user to sent their MasochistME link for the mod approval
@@ -19,7 +19,7 @@ export const register = async (
   interaction: DiscordInteraction,
 ): Promise<void> => {
   const regex = new RegExp(/(?<=masochist.me\/profile\/).*/);
-  const link = interaction.options.getString("link", true);
+  const link = interaction.options.getString('link', true);
 
   const isMasochistLink = regex.test(link);
   const steamId = link.match(regex)?.[0];
@@ -28,8 +28,8 @@ export const register = async (
   if (!isMasochistLink ?? !steamId) {
     interaction.reply(
       getErrorEmbed(
-        "Incorrect link",
-        "The link you provided is not a correct Masochist.ME profile.",
+        'Incorrect link',
+        'The link you provided is not a correct Masochist.ME profile.',
         true,
       ),
     );
@@ -46,8 +46,8 @@ export const register = async (
 
   interaction.reply(
     getSuccessEmbed(
-      "Success!",
-      "Your registration request has been sent to the mod team. Please wait for their approval.",
+      'Success!',
+      'Your registration request has been sent to the mod team. Please wait for their approval.',
     ),
   );
 };
@@ -59,11 +59,11 @@ export const register = async (
 const getModApprovalButtons = () => {
   const buttonApprove = new ButtonBuilder()
     .setCustomId(`${REGISTRATION_REVIEW}_APPROVE`)
-    .setLabel("Approve")
+    .setLabel('Approve')
     .setStyle(ButtonStyle.Success);
   const buttonReject = new ButtonBuilder()
     .setCustomId(`${REGISTRATION_REVIEW}_REJECT`)
-    .setLabel("Reject")
+    .setLabel('Reject')
     .setStyle(ButtonStyle.Danger);
   const buttonBar = new ActionRowBuilder<ButtonBuilder>().addComponents(
     buttonApprove,
@@ -85,30 +85,30 @@ const getModApprovalEmbed = (
   steamUsername: string,
 ) => {
   const embed: APIEmbed = {
-    title: "🔧 User registration request",
+    title: '🔧 User registration request',
     fields: [
       {
-        name: "User",
+        name: 'User',
         value: `<@${interaction.user.id}>`,
         inline: true,
       },
       {
-        name: "Requested Steam",
+        name: 'Requested Steam',
         value: steamUsername,
         inline: true,
       },
       {
-        name: "Steam ID",
+        name: 'Steam ID',
         value: steamId,
         inline: true,
       },
       {
-        name: "Steam profile",
+        name: 'Steam profile',
         value: `https://steamcommunity.com/profiles/${steamId}`,
       },
       {
-        name: "Masochist.ME link",
-        value: `http://masochist.me/profile/${steamId}`,
+        name: 'Masochist.ME link',
+        value: `https://masochist.me/profile/${steamId}`,
       },
     ],
   };

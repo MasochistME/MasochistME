@@ -1,15 +1,15 @@
-import { APIEmbed } from "discord.js";
-import { DiscordInteraction } from "arcybot";
-import { Leaderboards, Member } from "@masochistme/sdk/dist/v1/types";
+import { APIEmbed } from 'discord.js';
+import { DiscordInteraction } from 'arcybot';
+import { Leaderboards, Member } from '@masochistme/sdk/dist/v1/types';
 
-import { cache, sdk } from "fetus";
-import { createError, ErrorAction } from "utils";
+import { cache, sdk } from 'fetus';
+import { createError, ErrorAction } from 'utils';
 
-import { UNKNOWN, USER_NO_DESCRIPTION } from "consts";
+import { UNKNOWN, USER_NO_DESCRIPTION } from 'consts';
 
 type PartialMember = Pick<
   Member,
-  "name" | "avatar" | "description" | "steamId"
+  'name' | 'avatar' | 'description' | 'steamId'
 > & {
   url: string;
   tierCompletion: string;
@@ -41,7 +41,7 @@ export const profile = async (
 
     const usefulMemberInfo: PartialMember = {
       steamId: member.steamId,
-      name: `${member.name} (${isMember ? "member" : "guest"})`,
+      name: `${member.name} (${isMember ? 'member' : 'guest'})`,
       avatar: member.avatar,
       url: `https://steamcommunity.com/profiles/${member.steamId}`,
       description: member.description,
@@ -68,32 +68,32 @@ const getMemberEmbed = (member: PartialMember) => {
     thumbnail: { url: member.avatar },
     fields: [
       {
-        name: "Description",
+        name: 'Description',
         value: member.description ?? USER_NO_DESCRIPTION,
       },
       {
-        name: "Steam profile",
+        name: 'Steam profile',
         value: `https://steamcommunity.com/profiles/${
           member.steamId ?? UNKNOWN
         }`,
       },
       {
-        name: "Masochist.ME link",
-        value: `http://masochist.me/profile/${member.steamId ?? UNKNOWN}`,
+        name: 'Masochist.ME link',
+        value: `https://masochist.me/profile/${member.steamId ?? UNKNOWN}`,
       },
       {
-        name: "Rank:",
-        value: member.rank ?? "-",
+        name: 'Rank:',
+        value: member.rank ?? '-',
         inline: true,
       },
       {
-        name: "Badges unlocked:",
-        value: member.badges ?? "-",
+        name: 'Badges unlocked:',
+        value: member.badges ?? '-',
         inline: true,
       },
       {
-        name: "Tier completion:",
-        value: member.tierCompletion ?? "-",
+        name: 'Tier completion:',
+        value: member.tierCompletion ?? '-',
         inline: true,
       },
     ],
@@ -109,8 +109,8 @@ const getMemberEmbed = (member: PartialMember) => {
  */
 const getMemberRank = (memberRanking?: Leaderboards, isMember?: boolean) => {
   if (!isMember) return `—\n\n**Total points:**\n—`;
-  const memberPointsSum = memberRanking?.sum ?? "—";
-  const memberPosition = memberRanking?.position ?? "—";
+  const memberPointsSum = memberRanking?.sum ?? '—';
+  const memberPosition = memberRanking?.position ?? '—';
   return `${memberPosition}\n\n**Total points:**\n\`\`${memberPointsSum}\`\``;
 };
 
@@ -123,14 +123,14 @@ const getMemberTierCompletion = (
   memberRanking?: Leaderboards,
   isMember?: boolean,
 ) => {
-  if (!isMember) return "—";
+  if (!isMember) return '—';
   const memberTierCompletionSummary = cache.tiers
     .map(tier => {
       const memberTierCompletion =
-        memberRanking?.games?.find(rank => rank.tier === tier.id)?.total ?? "0";
+        memberRanking?.games?.find(rank => rank.tier === tier.id)?.total ?? '0';
       return `\`\`Tier ${tier.id} - ${memberTierCompletion}\`\``;
     })
-    .join("\n");
+    .join('\n');
   return memberTierCompletionSummary;
 };
 
@@ -141,10 +141,10 @@ const getMemberTierCompletion = (
  */
 const getMemberBadges = (memberRanking?: Leaderboards, isMember?: boolean) => {
   if (!isMember) return `—\n\n**Badges points:**\n—`;
-  const memberBadges: { points: number | "—"; total: number | "—" } =
+  const memberBadges: { points: number | '—'; total: number | '—' } =
     memberRanking?.badges ?? {
-      points: "—",
-      total: "—",
+      points: '—',
+      total: '—',
     };
 
   return `\`\`${memberBadges.total}\`\`\n\n**Badges points:**\n\`\`${memberBadges.points}\`\``;

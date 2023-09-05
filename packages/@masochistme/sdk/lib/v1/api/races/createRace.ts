@@ -15,7 +15,7 @@ import { Race, ResponseError } from 'v1/types';
  *  type: RaceType.TIME,
  *  startDate: new Date(),
  *  endDate: new Date(16893846783483),
- *  downloadLink: "http://masochist.me",
+ *  downloadLink: "https://masochist.me",
  *  downloadGrace: "30",
  *  uploadGrace: "30",
  *  owner: "738927465878329",
@@ -32,21 +32,21 @@ import { Race, ResponseError } from 'v1/types';
  * @param params.race - Object with the data of the new race.
  */
 export const createRace = async (
-	params: { race: Omit<Race, '_id' | 'isActive' | 'isDone'> },
-	/** @ignore */
-	BASE_URL: string,
+  params: { race: Omit<Race, '_id' | 'isActive' | 'isDone'> },
+  /** @ignore */
+  BASE_URL: string,
 ): Promise<InsertOneResult<Race>> => {
-	const { race } = params;
-	const url = `${BASE_URL}/races`;
+  const { race } = params;
+  const url = `${BASE_URL}/races`;
 
-	const raceResponse = await axios.post<
-		InsertOneResult<Race> | ResponseError,
-		AxiosResponse<InsertOneResult<Race> | ResponseError>,
-		Omit<Race, '_id' | 'isActive' | 'isDone'>
-	>(url, race, { validateStatus: () => true });
+  const raceResponse = await axios.post<
+    InsertOneResult<Race> | ResponseError,
+    AxiosResponse<InsertOneResult<Race> | ResponseError>,
+    Omit<Race, '_id' | 'isActive' | 'isDone'>
+  >(url, race, { validateStatus: () => true });
 
-	const { status, data } = raceResponse;
+  const { status, data } = raceResponse;
 
-	if (status !== 201) throw new Error((data as ResponseError).error);
-	return data as InsertOneResult<Race>;
+  if (status !== 201) throw new Error((data as ResponseError).error);
+  return data as InsertOneResult<Race>;
 };

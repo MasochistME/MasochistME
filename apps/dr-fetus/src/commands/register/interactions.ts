@@ -1,9 +1,9 @@
-import { getErrorEmbed } from "arcybot";
-import { ButtonInteraction, APIEmbed } from "discord.js";
+import { getErrorEmbed } from 'arcybot';
+import { ButtonInteraction, APIEmbed } from 'discord.js';
 
-import { isMod } from "utils";
-import { REGISTRATION_REVIEW } from "consts";
-import { sdk } from "fetus";
+import { isMod } from 'utils';
+import { REGISTRATION_REVIEW } from 'consts';
+import { sdk } from 'fetus';
 
 /**
  * Handles autocompletion for the create badge command
@@ -25,17 +25,17 @@ export const registrationReview = async (
   }
 
   const embedFields = interaction.message.embeds[0].data.fields;
-  const steamId = embedFields?.find(field => field.name === "Steam ID")?.value;
+  const steamId = embedFields?.find(field => field.name === 'Steam ID')?.value;
   const steamUsername = embedFields?.find(
-    field => field.name === "Requested Steam",
+    field => field.name === 'Requested Steam',
   )?.value;
-  const user = embedFields?.find(field => field.name === "User")?.value;
+  const user = embedFields?.find(field => field.name === 'User')?.value;
   const regexUserId = new RegExp(/(?<=<@)([^>]*)/);
   const userDiscordId = user?.match(regexUserId)?.[0];
 
   if (!steamId || !steamUsername || !user || !userDiscordId) {
     interaction.update({
-      ...getErrorEmbed("Error", "Something went wrong."),
+      ...getErrorEmbed('Error', 'Something went wrong.'),
       components: [],
     });
     return;
@@ -56,25 +56,25 @@ export const registrationReview = async (
       );
       if (!acknowledged) {
         throw new Error(
-          "Incorrect token. Please contact Arcyvilk because something is fucked up.",
+          'Incorrect token. Please contact Arcyvilk because something is fucked up.',
         );
       }
       if (modifiedCount === 0) {
         throw new Error(
-          "Could not modify this member. Most likely the provided profile link is incorrect.",
+          'Could not modify this member. Most likely the provided profile link is incorrect.',
         );
       }
       interaction.update({
-        embeds: [{ ...embed, title: "✅ User application - APPROVED" }],
+        embeds: [{ ...embed, title: '✅ User application - APPROVED' }],
         components: [],
       });
     } catch (err: any) {
       interaction.update({
         ...getErrorEmbed(
-          "Error",
+          'Error',
           err?.message ??
             err ??
-            "Incorrect token. Please contact Arcyvilk because something is fucked up.",
+            'Incorrect token. Please contact Arcyvilk because something is fucked up.',
         ),
         components: [],
       });
@@ -82,7 +82,7 @@ export const registrationReview = async (
   }
   if (interaction.customId === `${REGISTRATION_REVIEW}_REJECT`) {
     interaction.update({
-      embeds: [{ ...embed, title: "❌ User application - REJECTED" }],
+      embeds: [{ ...embed, title: '❌ User application - REJECTED' }],
       components: [],
     });
   }
@@ -120,46 +120,46 @@ const getApplicationReviewedEmbed = (
   steamId: string,
   steamUsername: string,
 ): APIEmbed => {
-  const getVerdict = (): "APPROVED" | "REJECTED" | "UNKNOWN" => {
+  const getVerdict = (): 'APPROVED' | 'REJECTED' | 'UNKNOWN' => {
     if (interaction.customId === `${REGISTRATION_REVIEW}_APPROVE`)
-      return "APPROVED";
+      return 'APPROVED';
     if (interaction.customId === `${REGISTRATION_REVIEW}_REJECT`)
-      return "REJECTED";
-    return "UNKNOWN";
+      return 'REJECTED';
+    return 'UNKNOWN';
   };
 
   return {
     fields: [
       {
-        name: "User",
+        name: 'User',
         value: user,
         inline: true,
       },
       {
-        name: "Requested Steam",
+        name: 'Requested Steam',
         value: steamUsername,
         inline: true,
       },
       {
-        name: "Steam ID",
+        name: 'Steam ID',
         value: steamId,
         inline: true,
       },
       {
-        name: "Steam profile",
+        name: 'Steam profile',
         value: `https://steamcommunity.com/profiles/${steamId}`,
       },
       {
-        name: "Masochist.ME link",
-        value: `http://masochist.me/profile/${steamId}`,
+        name: 'Masochist.ME link',
+        value: `https://masochist.me/profile/${steamId}`,
       },
       {
-        name: "Verdict",
+        name: 'Verdict',
         value: getVerdict(),
         inline: true,
       },
       {
-        name: "Mod reviewer",
+        name: 'Mod reviewer',
         value: `<@${interaction.user.id}>`,
         inline: true,
       },
