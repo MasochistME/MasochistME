@@ -17,9 +17,9 @@
     "maso:dev": "env HOST=0.0.0.0 PORT=3000 REACT_APP_API=http://localhost:3081 react-app-rewired start",
     "maso:start": "react-app-rewired start",
     "maso:build": "react-app-rewired build",
-    "build:prod": "env PORT=8000 REACT_APP_API=https://api.masochist.me react-app-rewired build",
-    "build:dev": "env PORT=8081 REACT_APP_API=http://localhost:3081 react-app-rewired build",
-    "build:staging": "env PORT=8081 REACT_APP_API=https://api-dev.masochist.me react-app-rewired build",
+    "build:prod": "env PORT=8000 REACT_APP_API=https://api.masochist.me --max_old_space_size=4096 react-app-rewired build",
+    "build:dev": "env PORT=8081 REACT_APP_API=http://localhost:3081 --max_old_space_size=4096 react-app-rewired build",
+    "build:staging": "env PORT=8081 REACT_APP_API=https://api-dev.masochist.me --max_old_space_size=4096 react-app-rewired build",
     "lint": "eslint src --ext .ts,.tsx",
     "test": "echo TODO"
   },
