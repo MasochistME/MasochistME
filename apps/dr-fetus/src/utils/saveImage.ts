@@ -21,7 +21,7 @@ export const saveImage = async (
       process.env.ENV === 'prod'
         ? path.resolve(
             __dirname,
-            `../../../__CDN/${type}`,
+            `../../../../../__CDN/${type}`,
             `${name}.${extension}`,
           )
         : path.resolve(__dirname, `${name}.${extension}`);
