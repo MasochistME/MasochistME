@@ -96,7 +96,7 @@ const StyledButton = styled.button.attrs((props: Props) => {
     return 'var(--font-size-16)';
   }};
   font-family: var(--font-raleway);
-  font-weight: 600;
+  font-weight: 500;
   background-color: ${({ iconOnly, variant, colorTokens }) => {
     if (iconOnly) return 'transparent';
     if (variant === Variant.DEFAULT)

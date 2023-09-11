@@ -1,0 +1,88 @@
+/* CARDO */
+@font-face {
+  font-family: Cardo;
+  font-weight: 300;
+  font-style: normal;
+  src: url('./fonts/Cardo/Cardo-Regular.ttf') format('truetype')
+}
+@font-face {
+  font-family: Cardo;
+  font-weight: 600;
+  font-style: bold;
+  src: url('./fonts/Cardo/Cardo-Bold.ttf') format('truetype'),
+}
+@font-face {
+  font-family: Cardo;
+  font-style: italic;
+  font-style: normal;
+  src: url('./fonts/Cardo/Cardo-Italic.ttf') format('truetype'),
+}
+
+/* CINZEL */
+@font-face {
+  font-family: Cinzel;
+  font-weight: 300;
+  font-style: normal;
+  src: url('./fonts/Cinzel/Cinzel-VariableFont_wght.ttf') format('truetype');
+}
+@font-face {
+  font-family: Cinzel;
+  font-weight: 600;
+  font-style: bold;
+  src: url('./fonts/Cinzel/Cinzel-VariableFont_wght.ttf') format('truetype');
+}
+@font-face {
+  font-family: Cinzel;
+  font-weight: 300;
+  font-style: italic;
+  src: url('./fonts/Cinzel/Cinzel-VariableFont_wght.ttf') format('truetype');
+}
+
+/* DOSIS */
+@font-face {
+  font-family: Dosis;
+  src: url('./fonts/Dosis/Dosis-VariableFont_wght.ttf') format('truetype');
+}
+/* @font-face {
+  font-family: Dosis;
+  font-weight: 600;
+  font-style: bold;
+  src: url('./fonts/Dosis/Dosis-VariableFont_wght.ttf') format('truetype');
+}
+@font-face {
+  font-family: Dosis;
+  font-weight: 300;
+  font-style: italic;
+  src: url('./fonts/Dosis/Dosis-VariableFont_wght.ttf') format('truetype');
+} */
+
+/* PRESS START 2P */
+@font-face {
+  font-family: 'Press Start 2P';
+  font-weight: 300;
+  font-style: normal;
+  src: url('./fonts/Press_Start_2P/PressStart2P-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Press Start 2P';
+  font-weight: 600;
+  font-style: bold;
+  src: url('./fonts/Press_Start_2P/PressStart2P-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Press Start 2P';
+  font-weight: 300;
+  font-style: italic;
+  src: url('./fonts/Press_Start_2P/PressStart2P-Regular.ttf') format('truetype');
+}
+
+/* RALEWAY */
+@font-face {
+  font-family: Raleway;
+  src: url('./fonts/Raleway/Raleway-VariableFont_wght.ttf') format('truetype')
+}
+@font-face {
+  font-family: Raleway;
+  font-style: italic;
+  src: url('./fonts/Raleway/Raleway-Italic-VariableFont_wght.ttf') format('truetype')
+}

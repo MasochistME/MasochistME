@@ -45,7 +45,8 @@
     "react-router": "^6.10.0",
     "react-router-dom": "^6.10.0",
     "react-scripts": "^5.0.1",
-    "styled-components": "^5.3.6"
+    "styled-components": "^5.3.6",
+    "theme": "*"
   },
   "devDependencies": {
     "@tanstack/react-query-devtools": "^4.0.10",

@@ -275,7 +275,7 @@ const StyledPlace = styled.div`
   justify-content: center;
   gap: var(--size-4);
   font-size: var(--font-size-16);
-  font-weight: bold;
+  font-weight: 600;
   font-family: var(--font-dosis);
   padding: var(--size-4);
 `;

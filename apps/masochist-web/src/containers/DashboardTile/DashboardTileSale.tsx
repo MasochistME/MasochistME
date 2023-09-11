@@ -88,7 +88,7 @@ export const SalePercentage = styled.span<{ colorTokens: ColorTokens }>`
   width: 35%;
   height: 40%;
   font-family: var(--font-dosis);
-  font-weight: bold;
+  font-weight: 600;
   color: ${({ colorTokens }) => colorTokens['core-primary-text']};
   background-color: ${({ colorTokens }) => colorTokens['core-secondary-bg']};
   border-left: var(--size-3) solid

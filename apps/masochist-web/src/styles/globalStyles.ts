@@ -17,6 +17,7 @@ const GlobalStyle = createGlobalStyle<{
   body, html {
     width: 100%;
     height: 100%;
+    font-weight: normal;
   }
 
   html {
@@ -76,6 +77,10 @@ const GlobalStyle = createGlobalStyle<{
       text-decoration: underline dotted;
       color: ${({ colorTokens }) => colorTokens['semantic-color--link-hover']}
     }
+  }
+
+  h1,h2,h3,h4,h5,h6 {
+    font-weight: normal;
   }
 
   .rotate {

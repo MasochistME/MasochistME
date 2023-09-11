@@ -125,7 +125,7 @@ const StyledFilterGame = styled(Flex)`
   justify-content: space-between;
   align-items: center;
   font-family: var(--font-dosis);
-  font-weight: bold;
+  font-weight: 600;
   width: 100%;
   padding-bottom: var(--size-16);
   text-transform: uppercase;
