@@ -276,7 +276,7 @@ const useLogComponents = () => {
             </LogCompact.Link>
             <span>{t('dashboard.history.changed_tier')}</span>
           </LogCompact.Block>
-          <Icon size={Size.TINY} icon={getTierIcon(game.tier, tiersData)} />!
+          <Icon size={Size.MICRO} icon={getTierIcon(game.tier, tiersData)} />!
         </LogCompact>
       );
   };
