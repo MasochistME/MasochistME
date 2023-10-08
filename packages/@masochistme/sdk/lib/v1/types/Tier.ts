@@ -29,6 +29,10 @@ export type Tier = WithId<{
    * ID of a tier, usually a stringified number from 1 to 5.
    */
   id: TierId;
+  /**
+   * Flag indicating if the game of particular tier should be hidden on leaderboards (for special tiers with no points)
+   */
+  hideOnLeaderboards: boolean;
 }>;
 
 /**
