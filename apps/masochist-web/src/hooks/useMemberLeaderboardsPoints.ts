@@ -30,13 +30,15 @@ export const useMemberLeaderboardsPoints = (
    * All of the member's points, grouped by game tier.
    */
   const tierPoints = useMemo(() => {
-    return tiersData.map((tier: Tier) => {
-      const gameTier = member?.games?.find(game => game.tier === tier.id);
-      return {
-        ...tier,
-        ...gameTier,
-      };
-    });
+    return tiersData
+      .filter((tier: Tier) => !tier.hideOnLeaderboards)
+      .map((tier: Tier) => {
+        const gameTier = member?.games?.find(game => game.tier === tier.id);
+        return {
+          ...tier,
+          ...gameTier,
+        };
+      });
   }, [tiersData, leaderboardsData]);
 
   return { tierPoints, member, isLoading, isFetched };
