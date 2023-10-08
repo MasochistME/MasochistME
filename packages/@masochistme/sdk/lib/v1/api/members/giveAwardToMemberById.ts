@@ -25,20 +25,20 @@ import { MemberAward, ResponseError } from 'v1/types';
  * @param params.memberId - ID of member which is supposed to get an award.
  */
 export const giveAwardToMemberById = async (
-	params: { awardId: string; memberId: string },
-	/** @ignore */
-	BASE_URL: string,
+  params: { awardId: string; memberId: string },
+  /** @ignore */
+  BASE_URL: string,
 ): Promise<InsertOneResult<MemberAward>> => {
-	const { awardId, memberId } = params;
-	const url = `${BASE_URL}/members/member/${memberId}/awards/award/${awardId}`;
+  const { awardId, memberId } = params;
+  const url = `${BASE_URL}/members/member/${memberId}/awards/award/${awardId}`;
 
-	const memberAwardResponse = await axios.post<
-		InsertOneResult<MemberAward> | ResponseError,
-		AxiosResponse<InsertOneResult<MemberAward> | ResponseError>
-	>(url, {}, { validateStatus: () => true });
+  const memberAwardResponse = await axios.post<
+    InsertOneResult<MemberAward> | ResponseError,
+    AxiosResponse<InsertOneResult<MemberAward> | ResponseError>
+  >(url, {}, { validateStatus: () => true });
 
-	const { status, data } = memberAwardResponse;
+  const { status, data } = memberAwardResponse;
 
-	if (status !== 201) throw new Error((data as ResponseError).error);
-	return data as InsertOneResult<MemberAward>;
+  if (status !== 201) throw new Error((data as ResponseError).error);
+  return data as InsertOneResult<MemberAward>;
 };

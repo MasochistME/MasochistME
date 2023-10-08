@@ -16,6 +16,7 @@ export * from './Member';
 export * from './MemberAchievement';
 export * from './MemberAward';
 export * from './MemberBadge';
+export * from './MemberCheese';
 export * from './MemberGame';
 export * from './PatreonTier';
 export * from './Patron';

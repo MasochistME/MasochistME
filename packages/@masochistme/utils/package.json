@@ -1,0 +1,12 @@
+{
+  "name": "@masochistme/utils",
+  "version": "0.0.0",
+  "main": "lib/index.ts",
+  "types": "lib/index.ts",
+  "files": [
+    "lib/**/*"
+  ],
+  "dependencies": {
+    "typescript": "latest"
+  }
+}

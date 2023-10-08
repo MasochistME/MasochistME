@@ -1,0 +1,14 @@
+{
+  "extends": "../../../tsconfig.base",
+  "compilerOptions": {
+    "baseUrl": "./lib",
+    "rootDir": "./lib",
+    "isolatedModules": false,
+    "checkJs": true,
+    "outDir": "./dist",
+    "declaration": true,
+    "declarationDir": "./dist"
+  },
+  "include": ["lib/**/*"],
+  "exclude": [],
+}
