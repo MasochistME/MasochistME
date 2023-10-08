@@ -84,16 +84,21 @@ const MemberProfileStatsBoundary = (props: Props) => {
       );
     });
 
-  const pointsTotal = memberLeaderData?.games.map((game, index) => {
-    const tierIcon = (tiersData.find(tier => tier.id === game.tier)?.icon ??
-      'QuestionCircle') as IconType;
-    return (
-      <StatBlock.Subtitle key={`statblock-points-${index}`}>
-        <Icon icon={tierIcon} /> -{' '}
-        <span style={{ fontWeight: 'bold' }}>{game.points}</span> pts
-      </StatBlock.Subtitle>
-    );
-  });
+  const pointsTotal = memberLeaderData?.games
+    .filter(
+      game =>
+        !tiersData.find(tier => tier.id === game.tier)?.hideOnLeaderboards,
+    )
+    .map((game, index) => {
+      const tierIcon = (tiersData.find(tier => tier.id === game.tier)?.icon ??
+        'QuestionCircle') as IconType;
+      return (
+        <StatBlock.Subtitle key={`statblock-points-${index}`}>
+          <Icon icon={tierIcon} /> -{' '}
+          <span style={{ fontWeight: 'bold' }}>{game.points}</span> pts
+        </StatBlock.Subtitle>
+      );
+    });
 
   const badgesTotal = (
     <StatBlock.Subtitle>
