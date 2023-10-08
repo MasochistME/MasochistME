@@ -69,16 +69,20 @@ const MemberProfileStatsBoundary = (props: Props) => {
   /**
    * Member completions by tier.
    */
-  const completionsByTier = memberLeaderData?.games.map((game, index) => {
-    const tierIcon = (tiersData.find(tier => tier.id === game.tier)?.icon ??
-      'QuestionCircle') as IconType;
-    return (
-      <StatBlock.Subtitle key={`statblock-completions-${index}`}>
-        <Icon icon={tierIcon} /> -{' '}
-        <span style={{ fontWeight: 'bold' }}>{game.total}</span>
-      </StatBlock.Subtitle>
-    );
-  });
+  const completionsByTier = memberLeaderData?.games
+    .filter(
+      game => !tiersData.find(t => t.id === game.tier)?.hideOnLeaderboards,
+    )
+    .map((game, index) => {
+      const tierIcon = (tiersData.find(tier => tier.id === game.tier)?.icon ??
+        'QuestionCircle') as IconType;
+      return (
+        <StatBlock.Subtitle key={`statblock-completions-${index}`}>
+          <Icon icon={tierIcon} /> -{' '}
+          <span style={{ fontWeight: 'bold' }}>{game.total}</span>
+        </StatBlock.Subtitle>
+      );
+    });
 
   const pointsTotal = memberLeaderData?.games.map((game, index) => {
     const tierIcon = (tiersData.find(tier => tier.id === game.tier)?.icon ??
