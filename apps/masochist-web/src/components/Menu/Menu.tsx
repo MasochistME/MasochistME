@@ -89,20 +89,24 @@ const StyledMenu = styled(MuiMenu)<{ colorTokens: ColorTokens }>`
       ${({ colorTokens }) => colorTokens['semantic-color--interactive']};
     background-color: ${({ colorTokens }) => colorTokens['core-tertiary-bg']};
     margin-top: var(--size-8);
+    min-width: 200px;
   }
 
   & .MuiList-root {
+    padding: 0;
+
     li {
       color: ${({ colorTokens }) => colorTokens['core-primary-text']};
       font-family: var(--font-raleway);
       background-color: transparent;
+      padding: var(--size-12);
 
       &.MuiListSubheader-root {
         color: ${({ colorTokens }) => colorTokens['core-secondary-text']};
         font-family: var(--font-dosis);
         font-size: var(--font-size-18); // TODO
         line-height: var(--size-16);
-        padding: var(--size-8) 0 var(--size-8) var(--size-16);
+        /* padding: var(--size-8) 0 var(--size-8) var(--size-16); */
         &:not(:first-child) {
           border-top: var(--size-1) solid
             ${({ colorTokens }) => colorTokens['semantic-color--interactive']};
