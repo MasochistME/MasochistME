@@ -23,6 +23,7 @@ export const getSeasonsList = async (
 
     const cursor = collection
       .find({
+        isVisible: true,
         ...(inactive !== undefined && { startDate: null, endDate: null }), //  has NO start date and NO end date
         ...(active !== undefined && {
           startDate: { $ne: null },
