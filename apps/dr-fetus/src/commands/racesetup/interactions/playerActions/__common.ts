@@ -4,17 +4,21 @@ import {
   ActionRowBuilder,
   APIEmbed,
   APIEmbedField,
-} from "discord.js";
-import dayjs from "dayjs";
-import { Race, RaceType, RaceScoreBased } from "@masochistme/sdk/dist/v1/types";
+} from 'discord.js';
+import { Race, RaceType, RaceScoreBased } from '@masochistme/sdk/dist/v1/types';
 
-import { RaceButton } from "consts";
-import { getDiscordTimestamp, cenzor } from "utils";
+import { RaceButton } from 'consts';
+import { getDiscordTimestamp, cenzor } from 'utils';
+
+export const isRaceInGracePeriod = (race: Race) =>
+  !race.isDone && !race.isActive;
+export const isRaceFinished = (race: Race) => race.isDone && !race.isActive;
 
 export const fieldsBeforeReveal = [
   {
-    name: "---",
-    value: `1. Once you click the **REVEAL** button, the grace time begins. It's a short time of undisclosured length for downloading and starting the game - it will get substracted from your final time.
+    name: '---',
+    value: `1. Once you click the **REVEAL** button, the grace time begins. It's a short 
+    time of undisclosured length for downloading and starting the game - it will get substracted from your final time.
   \n2. After the game is downloaded and you are ready to start, click the **START** button. **Remember to do this or your race will get forfeited!**
   \nGood luck! You can start the race whenever it's convenient for you within the time limit.`,
   },
@@ -22,7 +26,7 @@ export const fieldsBeforeReveal = [
 
 export const fieldsAfterReveal = [
   {
-    name: "---",
+    name: '---',
     value: `**The grace period has started** - it will get substracted from your final score while you download the game.
   \nWhen you are ready to start click the **START** button. **Remember to do this or the entire grace period will be added to your final time!**`,
   },
@@ -43,28 +47,28 @@ export const getRaceStartButtons = (
 ) => {
   const buttonRevealRace = new ButtonBuilder()
     .setCustomId(`${RaceButton.RACE_REVEAL}-${raceId}`)
-    .setLabel("REVEAL")
+    .setLabel('REVEAL')
     .setStyle(
       isRevealButtonEnabled ? ButtonStyle.Primary : ButtonStyle.Secondary,
     )
     .setDisabled(!isRevealButtonEnabled);
   const buttonStartRace = new ButtonBuilder()
     .setCustomId(`${RaceButton.RACE_START}-${raceId}`)
-    .setLabel("START")
+    .setLabel('START')
     .setStyle(
       isStartButtonEnabled ? ButtonStyle.Success : ButtonStyle.Secondary,
     )
     .setDisabled(!isStartButtonEnabled);
   const buttonFinishRace = new ButtonBuilder()
     .setCustomId(`${RaceButton.RACE_FINISH}-${raceId}`)
-    .setLabel("FINISH")
+    .setLabel('FINISH')
     .setStyle(
       isFinishButtonEnabled ? ButtonStyle.Primary : ButtonStyle.Secondary,
     )
     .setDisabled(!isFinishButtonEnabled);
   const buttonGiveUpRace = new ButtonBuilder()
     .setCustomId(`${RaceButton.RACE_GIVE_UP}-${raceId}`)
-    .setLabel("GIVE UP")
+    .setLabel('GIVE UP')
     .setStyle(ButtonStyle.Danger)
     .setDisabled(!isGiveUpButtonEnabled);
   const buttonBar = new ActionRowBuilder<ButtonBuilder>().addComponents(
@@ -90,29 +94,29 @@ export const getRaceStartEmbed = (
 ): APIEmbed => {
   const fields: APIEmbedField[] = [
     {
-      name: "Instructions",
+      name: 'Instructions',
       value: race.instructions,
     },
     {
-      name: "Objectives",
+      name: 'Objectives',
       value: isCenzored ? cenzor(race.objectives) : race.objectives,
     },
     {
-      name: "Start time",
+      name: 'Start time',
       value: getDiscordTimestamp(race.startDate),
       inline: true,
     },
     {
-      name: "Finish time",
+      name: 'Finish time',
       value: getDiscordTimestamp(race.endDate),
       inline: true,
     },
     {
-      name: "Download link",
+      name: 'Download link',
       value: isCenzored ? cenzor(race.downloadLink) : race.downloadLink,
     },
     {
-      name: "Screenshot upload grace period",
+      name: 'Screenshot upload grace period',
       value: `${race.uploadGrace} s`,
       inline: true,
     },
@@ -120,7 +124,7 @@ export const getRaceStartEmbed = (
 
   if (race.type === RaceType.SCORE_BASED)
     fields.push({
-      name: "Play time limit",
+      name: 'Play time limit',
       value: `${(race as RaceScoreBased).playLimit / 60} minutes`,
       inline: true,
     });
@@ -131,7 +135,7 @@ export const getRaceStartEmbed = (
     fields: [
       ...fields,
       {
-        name: "Race owner",
+        name: 'Race owner',
         value: `<@${race.owner}>`,
         inline: true,
       },

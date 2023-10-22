@@ -1,5 +1,5 @@
-import { DiscordInteraction } from "arcybot";
-import { Message, ButtonInteraction, MessageCollector } from "discord.js";
+import { DiscordInteraction } from 'arcybot';
+import { Message, ButtonInteraction, MessageCollector } from 'discord.js';
 
 export const awaitMessage = async <
   T extends DiscordInteraction | ButtonInteraction,
@@ -23,11 +23,11 @@ export const awaitMessage = async <
       time,
     });
 
-    messageCollector.on("collect", async () => {
+    messageCollector.on('collect', async () => {
       messageCollector.stop();
     });
 
-    messageCollector.on("end", async collected => {
+    messageCollector.on('end', async collected => {
       if (collected.size) {
         const reply = collected.first();
         resolve(reply);

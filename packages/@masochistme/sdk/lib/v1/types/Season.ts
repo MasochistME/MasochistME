@@ -33,6 +33,10 @@ export type Season = WithId<{
    * Indicates if this is a special season.
    */
   isSpecial: boolean;
+  /**
+   * Determines if the season is to be displayed on website.
+   */
+  isVisible: boolean;
 }>;
 
 export interface SeasonLeaderboardEntry {

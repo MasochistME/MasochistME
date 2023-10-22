@@ -16,6 +16,8 @@ __docs
 .DS_Store
 *.pem
 .env
+.env.dev
+.env.prod
 .env.local
 .env.development.local
 .env.staging.local
