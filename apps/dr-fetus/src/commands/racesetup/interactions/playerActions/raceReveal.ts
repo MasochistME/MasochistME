@@ -1,14 +1,14 @@
-import { ButtonInteraction } from "discord.js";
+import { ButtonInteraction } from 'discord.js';
 
-import { sdk } from "fetus";
-import { RaceButton } from "consts";
-import { createError, ErrorAction } from "utils";
+import { sdk } from 'fetus';
+import { RaceButton } from 'consts';
+import { createError, ErrorAction } from 'utils';
 
 import {
   fieldsAfterReveal,
   getRaceStartEmbed,
   getRaceStartButtons,
-} from "./__common";
+} from './__common';
 
 /**
  * Response to race participant clicking the REVEAL button.
@@ -23,11 +23,16 @@ export const raceReveal = async (
   try {
     const raceId = interaction.customId.replace(
       `${RaceButton.RACE_REVEAL}-`,
-      "",
+      '',
     );
     const race = await sdk.getRaceById({ raceId });
-    if (race.isDone)
-      throw "This race is finished. You cannot participate anymore.";
+
+    if (!race.isActive)
+      createError(
+        interaction,
+        "This race is finished. You won't be able to participate anymore.",
+        ErrorAction.SEND,
+      );
 
     const revealDate = new Date();
     const { acknowledged } = await sdk.updateRaceByParticipantId({
@@ -35,7 +40,7 @@ export const raceReveal = async (
       memberId: interaction.user.id,
       update: { revealDate },
     });
-    if (!acknowledged) throw new Error("Database did not respond.");
+    if (!acknowledged) throw new Error('Database did not respond.');
 
     interaction.update({
       embeds: [
@@ -46,7 +51,9 @@ export const raceReveal = async (
           fieldsAfterReveal,
         ),
       ],
-      components: [getRaceStartButtons(raceId, false, true, false, false)],
+      components: [
+        getRaceStartButtons(raceId, false, race.isActive, false, false),
+      ],
     });
   } catch (err: any) {
     createError(interaction, err, ErrorAction.REPLY);

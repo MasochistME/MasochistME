@@ -1,16 +1,16 @@
-import { ButtonInteraction } from "discord.js";
+import { ButtonInteraction } from 'discord.js';
 
-import { sdk } from "fetus";
-import { RaceButton } from "consts";
+import { sdk } from 'fetus';
+import { RaceButton } from 'consts';
 import {
   getUTCDate,
   getTimestampFromDate,
   createError,
   ErrorAction,
-} from "utils";
+} from 'utils';
 
-import { getRaceStartEmbed, getRaceStartButtons } from "./__common";
-import { RaceType } from "@masochistme/sdk/dist/v1/types";
+import { getRaceStartEmbed, getRaceStartButtons } from './__common';
+import { RaceType } from '@masochistme/sdk/dist/v1/types';
 
 /**
  * Response to race participant clicking the START button.
@@ -25,11 +25,15 @@ export const raceStart = async (
   try {
     const raceId = interaction.customId.replace(
       `${RaceButton.RACE_START}-`,
-      "",
+      '',
     );
     const race = await sdk.getRaceById({ raceId });
     if (race.isDone)
-      throw "This race is finished. You cannot participate anymore.";
+      createError(
+        interaction,
+        'This race is finished. You cannot participate anymore.',
+        ErrorAction.SEND,
+      );
 
     const startDate = new Date();
     const { acknowledged } = await sdk.updateRaceByParticipantId({
@@ -37,17 +41,17 @@ export const raceStart = async (
       memberId: interaction.user.id,
       update: { startDate },
     });
-    if (!acknowledged) throw new Error("Database did not respond.");
+    if (!acknowledged) throw new Error('Database did not respond.');
     const tempFields = [
       {
-        name: "---",
+        name: '---',
         value: `When you are done click the **FINISH** button - this will prompt you to upload a proof of finishing the race.
         \nYou'll have ${race.uploadGrace} seconds to upload your screenshot. If you exceed that time it's fine, but the additional time will be added to your final score.`,
       },
       ...(race.type === RaceType.SCORE_BASED
         ? [
             {
-              name: "Time left",
+              name: 'Time left',
               value: `<t:${(
                 (getTimestampFromDate(startDate) + race.playLimit * 1000) /
                 1000
@@ -57,7 +61,7 @@ export const raceStart = async (
           ]
         : [
             {
-              name: "Your start time",
+              name: 'Your start time',
               value: getUTCDate(startDate),
               inline: true,
             },
@@ -72,7 +76,9 @@ export const raceStart = async (
           tempFields,
         ),
       ],
-      components: [getRaceStartButtons(raceId, false, false, true, true)],
+      components: [
+        getRaceStartButtons(raceId, false, false, !race.isDone, !race.isDone),
+      ],
     });
   } catch (err: any) {
     createError(interaction, err, ErrorAction.REPLY);
