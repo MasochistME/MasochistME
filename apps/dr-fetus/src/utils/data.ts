@@ -1,8 +1,8 @@
-import { DiscordInteraction } from "arcybot";
+import { DiscordInteraction } from 'arcybot';
 
-import { bot, cache, sdk } from "fetus";
-import { Room, UNKNOWN_NAME } from "consts";
-import { ButtonInteraction, DMChannel } from "discord.js";
+import { bot, cache, sdk } from 'fetus';
+import { Room, UNKNOWN_NAME } from 'consts';
+import { ButtonInteraction, DMChannel } from 'discord.js';
 
 export const getOption = <T>(key: string): T =>
   cache.options.find(option => option.option === key)?.value;
@@ -61,7 +61,7 @@ export const getIsUserRegistered = async (discordId: string) => {
 };
 
 export const getFileExtension = (url: string): string | null => {
-  const regex = new RegExp(/([^\.]*)$/i);
+  const regex = new RegExp(/\.(\w{3,4})(?:$|\?)/i);
   const extension = regex.exec(url)?.[0] ?? null;
   return extension;
 };
