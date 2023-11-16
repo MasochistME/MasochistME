@@ -25,7 +25,7 @@ export const MemberProfileUpdate = (props: Props) => {
   );
 
   const isHighestPatronTier = leaderData?.patreonTier === PatronTier.TIER4;
-  const variant = isHighestPatronTier ? Variant.GOLDEN : Variant.DEFAULT;
+  const variant = isHighestPatronTier ? Variant.GOLDEN : Variant.PRIMARY;
 
   useEffect(() => {
     const response = memberUpdateData?.message ?? 'Please wait...';
@@ -49,14 +49,16 @@ export const MemberProfileUpdate = (props: Props) => {
 
   return (
     <StyledMemberProfileUpdate>
-      <Tooltip content={lastUpdateDetails}>
-        <Flex column alignItems="flex-end" fontSize="var(--font-size-9)">
-          <span>Last updated:</span>
-          <span style={{ fontStyle: 'italic' }}>{lastUpdate}</span>
-        </Flex>
-      </Tooltip>
-      <Button
-        label="Update"
+      <StyledUpdateTimer>
+        <Tooltip content={lastUpdateDetails}>
+          <Flex column alignItems="flex-end" fontSize="var(--font-size-9)">
+            <span>Last updated:</span>
+            <span style={{ fontStyle: 'italic' }}>{lastUpdate}</span>
+          </Flex>
+        </Tooltip>
+      </StyledUpdateTimer>
+      <StyledUpdateButton
+        styledIcon={true}
         icon="Refresh"
         variant={variant}
         onClick={handleMemberUpdate}
@@ -71,10 +73,21 @@ export const MemberProfileUpdate = (props: Props) => {
   );
 };
 
-const StyledMemberProfileUpdate = styled(Flex)`
-  align-items: center;
-  gap: var(--size-12);
+const StyledUpdateTimer = styled.div`
   @media (max-width: ${media.tablets}) {
     display: none;
   }
+`;
+
+const StyledUpdateButton = styled(Button)`
+  @media (min-width: ${media.tablets}) {
+    ::after {
+      content: 'Update';
+    }
+  }
+`;
+
+const StyledMemberProfileUpdate = styled(Flex)`
+  align-items: center;
+  gap: var(--size-12);
 `;
