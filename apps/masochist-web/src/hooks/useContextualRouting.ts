@@ -13,7 +13,7 @@ export const useContextualRouting = <T extends string>(param: Param<T>) => {
   }, [searchParams]);
 
   const setRoute = <T extends string>(newRoute: T) => {
-    setSearchParams({ [param.key]: newRoute });
+    setSearchParams({ [param.key]: newRoute }, { replace: true });
   };
 
   const navigateToRoute = (params: Record<string, string>) =>
