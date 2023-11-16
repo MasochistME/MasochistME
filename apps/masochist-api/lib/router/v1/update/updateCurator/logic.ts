@@ -1,17 +1,6 @@
 import axios from 'axios';
 import { Response } from 'express';
-import {
-  Member,
-  Game,
-  LogType,
-  LogMemberJoin,
-  LogMemberLeave,
-  LogGameRemove,
-  LogGameAdd,
-  LogGameTierChange,
-  LogAchievementNumberChange,
-  Tier,
-} from '@masochistme/sdk/dist/v1/types';
+import { Member, Game, Tier } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
 import { splitArrayToChunks } from 'helpers';
@@ -19,6 +8,7 @@ import { splitArrayToChunks } from 'helpers';
 import { SteamGameDetailsData, MemberSteam } from '../types';
 import { statusCurator, UpdateStatus } from '.';
 import { mongoInstance } from 'api';
+import * as eventLog from './logs';
 
 type Update = { lastUpdate: Date; id: 'status' };
 
@@ -123,20 +113,7 @@ export const updateCuratorLogic = async (
         }]`,
       );
 
-      const collectionLogsMemberLeave =
-        db.collection<Omit<LogMemberLeave, '_id'>>('logs');
-      membersWhoLeft.forEach(async memberId => {
-        const responseLog = await collectionLogsMemberLeave.insertOne({
-          type: LogType.MEMBER_LEAVE,
-          memberId,
-          date: new Date(),
-        });
-        log.INFO(
-          `--> [UPDATE] main update --> generating MemberLeave logs [${
-            responseLog.acknowledged ? 'SUCCESS' : 'ERROR'
-          }]`,
-        );
-      });
+      eventLog.logMemberLeave(membersWhoLeft);
 
       log.INFO(
         `--> [UPDATE] main update --> handling ${membersWhoLeft.length} members that left [END]`,
@@ -197,15 +174,8 @@ export const updateCuratorLogic = async (
         curatorNewMembersDetails,
       );
 
-      const collectionLogsMemberJoin =
-        db.collection<Omit<LogMemberJoin, '_id'>>('logs');
-      membersWhoJoined.forEach(async memberId => {
-        await collectionLogsMemberJoin.insertOne({
-          type: LogType.MEMBER_JOIN,
-          memberId,
-          date: new Date(),
-        });
-      });
+      eventLog.logMemberJoin(membersWhoJoined);
+
       log.INFO(
         `--> [UPDATE] main update --> saving new members [${
           responseAddNewMembers.acknowledged ? 'SUCCESS' : 'ERROR'
@@ -358,21 +328,7 @@ export const updateCuratorLogic = async (
         }]`,
       );
 
-      const collectionLogsGamesRemoved =
-        db.collection<Omit<LogGameRemove, '_id'>>('logs');
-
-      gamesThatGotRemoved.forEach(async gameId => {
-        const responseLog = await collectionLogsGamesRemoved.insertOne({
-          type: LogType.GAME_REMOVE,
-          gameId,
-          date: new Date(),
-        });
-        log.INFO(
-          `--> [UPDATE] main update --> generating GameRemove logs [${
-            responseLog.acknowledged ? 'SUCCESS' : 'ERROR'
-          }]`,
-        );
-      });
+      eventLog.logGameRemove(gamesThatGotRemoved);
 
       log.INFO(
         `--> [UPDATE] main update --> handling ${gamesThatGotRemoved.length} removed games [END]`,
@@ -402,16 +358,7 @@ export const updateCuratorLogic = async (
         curatorNewGamesDetails,
       );
 
-      const collectionLogsGamesAdd =
-        db.collection<Omit<LogGameAdd, '_id'>>('logs');
-
-      gamesThatGotAdded.forEach(async gameId => {
-        await collectionLogsGamesAdd.insertOne({
-          type: LogType.GAME_ADD,
-          gameId,
-          date: new Date(),
-        });
-      });
+      eventLog.logGameAdd(gamesThatGotAdded);
 
       log.INFO(
         `--> [UPDATE] main update --> saving new games [${
@@ -429,6 +376,7 @@ export const updateCuratorLogic = async (
       .filter((gameNew: Partial<Game>) => {
         const gamePrev = oldGames.find(g => g.id === gameNew.id);
         if (!gamePrev) return false; // ignore new games as we already handled them
+
         return (
           gamePrev.title !== gameNew.title ||
           gamePrev.description !== gameNew.description ||
@@ -446,10 +394,11 @@ export const updateCuratorLogic = async (
       );
       curatorUpdatedGamesDetails.forEach(async game => {
         if (!game.id) return;
+        const gamePrev = oldGames.find(g => g.id === game.id);
+        const achievementsTotal = getGameAchievements(gamePrev, game);
+
         const responseUpdateOldGame = await collectionGames.updateOne(
-          {
-            id: game.id,
-          },
+          { id: game.id },
           {
             $set: {
               ...(!game.isProtected && {
@@ -461,7 +410,7 @@ export const updateCuratorLogic = async (
               sale: game.sale,
               price: game.price,
               currency: game.currency,
-              achievementsTotal: game.achievementsTotal,
+              achievementsTotal,
             },
           },
         );
@@ -471,34 +420,9 @@ export const updateCuratorLogic = async (
           }]`,
         );
 
-        /**
-         * Add logs for games.
-         */
-        const gamePrev = oldGames.find(g => g.id === game.id);
-        // Create ACHIEVEMENT NUMBER CHANGE log
-        if (gamePrev?.achievementsTotal !== game.achievementsTotal) {
-          const collectionLogsAchievementsChange =
-            db.collection<Omit<LogAchievementNumberChange, '_id'>>('logs');
-          await collectionLogsAchievementsChange.insertOne({
-            type: LogType.ACHIEVEMENTS_CHANGE,
-            gameId: game.id,
-            oldNumber: gamePrev?.achievementsTotal ?? 0,
-            newNumber: game?.achievementsTotal ?? 0,
-            date: new Date(),
-          });
-        }
-        // Create GAME TIER CHANGE log
-        if (gamePrev?.tier !== game.tier) {
-          const collectionLogsTierChange =
-            db.collection<Omit<LogGameTierChange, '_id'>>('logs');
-          await collectionLogsTierChange.insertOne({
-            type: LogType.GAME_TIER_CHANGE,
-            gameId: game.id,
-            oldTier: gamePrev?.tier ?? 'UNKNOWN',
-            newTier: game?.tier ?? 'UNKNOWN',
-            date: new Date(),
-          });
-        }
+        // Add logs for games.
+        eventLog.logAchievementNumberChange(gamePrev, game);
+        eventLog.logGameTierChange(gamePrev, game);
       });
 
       log.INFO(
@@ -644,4 +568,19 @@ const getGameTier = (description: string, tiers: Tier[]) => {
   const gameTier =
     tiers.find(tier => description.startsWith(tier.symbol))?.id ?? '1';
   return gameTier;
+};
+
+/**
+ * Sometimes Steam update bugs out and returns either 0 or other invalid value
+ * for achievements of a game that definitely does have achievements. Here we prevent
+ * the game from updating if the achievements bug out.
+ */
+const getGameAchievements = (gamePrev, gameNew) => {
+  const gameHasBuggedAchievements =
+    Boolean(gamePrev?.achievementsTotal) === true &&
+    Boolean(gameNew.achievementsTotal) === false;
+  const achievementsTotal = gameHasBuggedAchievements
+    ? gamePrev?.achievementsTotal
+    : gameNew.achievementsTotal;
+  return achievementsTotal;
 };
