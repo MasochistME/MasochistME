@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
+import { log } from '@masochistme/utils';
 import { Patron } from '@masochistme/sdk/dist/v1/types';
 import { PatronListParams } from '@masochistme/sdk/dist/v1/api/patrons';
 
-import { log } from 'helpers/log';
 import { sortCollection } from 'helpers/db';
 import { mongoInstance } from 'api';
 

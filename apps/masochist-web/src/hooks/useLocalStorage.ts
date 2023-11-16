@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { log } from 'utils';
+import { log } from '@masochistme/utils';
 
 export const useLocalStorage = <T extends Record<string, any>>(
   key: string,

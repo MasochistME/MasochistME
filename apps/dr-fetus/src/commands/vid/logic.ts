@@ -1,19 +1,19 @@
-import { DiscordInteraction, getErrorEmbed, getSuccessEmbed } from "arcybot";
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
-import { ObjectId } from "mongodb";
-import { FeaturedType } from "@masochistme/sdk/dist/v1/types";
+import { DiscordInteraction, getErrorEmbed, getSuccessEmbed } from 'arcybot';
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
+import { ObjectId } from 'mongodb';
+import { isLink } from '@masochistme/utils';
+import { FeaturedType } from '@masochistme/sdk/dist/v1/types';
 
 import {
   createError,
   ErrorAction,
   getChannelById,
   getOption,
-  isLink,
   getIsUserRegistered,
-} from "utils";
-import { FEATURE_VIDEO, Room } from "consts";
-import { sdk } from "fetus";
-import { Options } from "./builder";
+} from 'utils';
+import { FEATURE_VIDEO, Room } from 'consts';
+import { sdk } from 'fetus';
+import { Options } from './builder';
 
 /**
  * Sends a video to the designated channel.
@@ -31,13 +31,13 @@ export const vid = async (interaction: DiscordInteraction): Promise<void> => {
 
   if (!isLink(videoLink)) {
     interaction.reply(
-      getErrorEmbed("Wrong link", "_This_ is not a link.", true),
+      getErrorEmbed('Wrong link', '_This_ is not a link.', true),
     );
     return;
   }
   if (!channelVid) {
     interaction.reply(
-      getErrorEmbed("Wrong channel", "I can't find the video channel.", true),
+      getErrorEmbed('Wrong channel', "I can't find the video channel.", true),
     );
     return;
   }
@@ -47,7 +47,7 @@ export const vid = async (interaction: DiscordInteraction): Promise<void> => {
   if (!channel) {
     interaction.reply(
       getErrorEmbed(
-        "Wrong channel",
+        'Wrong channel',
         "I don't have access to this channel, you dumbass.",
         true,
       ),
@@ -57,7 +57,7 @@ export const vid = async (interaction: DiscordInteraction): Promise<void> => {
   if (!channel.isTextBased()) {
     interaction.reply(
       getErrorEmbed(
-        "Wrong channel",
+        'Wrong channel',
         "You can't send a link to a non-text based channel, dumbass.",
         true,
       ),
@@ -88,18 +88,18 @@ export const vid = async (interaction: DiscordInteraction): Promise<void> => {
     const interactionReplyContent = `It is now reposted to the video channel. ${
       !isUserRegistered
         ? "\n\n⚠️ **You don't have your Discord account connected to your MasochistME account, so the moderators won't be able to feature your video.**\n\nTo have a possibility of having your videos posted to MasochistME featured section, use the `/register` command."
-        : ""
+        : ''
     }`;
 
     channel?.send({
-      content: `${videoLink}\n_${description ?? ""} ~<@${
+      content: `${videoLink}\n_${description ?? ''} ~<@${
         interaction.user.id
       }>_`,
       components,
     });
 
     interaction.reply(
-      getSuccessEmbed("Video sent!", interactionReplyContent, true),
+      getSuccessEmbed('Video sent!', interactionReplyContent, true),
     );
   } catch (err: any) {
     createError(interaction, err, ErrorAction.REPLY);
@@ -116,7 +116,7 @@ const getFeatureVideoButtons = (insertedId?: ObjectId) => {
     : FEATURE_VIDEO;
   const buttonFeature = new ButtonBuilder()
     .setCustomId(customId)
-    .setLabel("FEATURE VIDEO (mod only)")
+    .setLabel('FEATURE VIDEO (mod only)')
     .setStyle(ButtonStyle.Primary);
   const buttonBar = new ActionRowBuilder<ButtonBuilder>().addComponents(
     buttonFeature,

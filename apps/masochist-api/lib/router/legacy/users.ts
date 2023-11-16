@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import axios from 'axios';
+import { log } from '@masochistme/utils';
 
 import cache from 'cache';
 import { connectToDb, getDataFromDB } from 'helpers/db';
-import { log } from 'helpers/log';
 
 /**
  * Returns basic users' data.

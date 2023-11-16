@@ -1,10 +1,10 @@
 import styled from 'styled-components';
+import { getHumanReadableDate } from '@masochistme/utils';
 import { Award } from '@masochistme/sdk/dist/v1/types';
 
 import { Button, Size } from 'components';
 import { AwardThumbnail } from 'containers/AwardThumbnail';
 import { useMemberAward } from 'hooks';
-import { getHumanReadableDate } from 'utils';
 import { ColorTokens, useTheme } from 'styles';
 
 type Props = {

@@ -1,7 +1,7 @@
 import axios from 'axios';
+import { log } from '@masochistme/utils';
 import { Patron, PatreonTier } from '@masochistme/sdk/dist/legacy/types';
 
-import { log } from 'helpers/log';
 import { connectToDb } from 'helpers/db';
 
 /**

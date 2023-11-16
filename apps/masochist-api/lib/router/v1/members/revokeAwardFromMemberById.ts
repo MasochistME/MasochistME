@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { MemberAward, Log } from '@masochistme/sdk/dist/v1/types';
+import { log } from '@masochistme/utils';
+import { MemberAward } from '@masochistme/sdk/dist/v1/types';
 
-import { log } from 'helpers/log';
 import { mongoInstance } from 'api';
 
 /**

@@ -9,6 +9,37 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.extend(duration);
 
+/**
+ *
+ * @param date
+ * @param withHours
+ * @returns
+ */
+export const getHumanReadableDate = (
+  date: Date | number | null | undefined,
+  withHours?: boolean,
+) => {
+  if (date === null || date === undefined) return '—';
+  const format = withHours ? 'D MMM YYYY, H:mm:ss' : 'D MMM YYYY';
+  return dayjs(date).format(format);
+};
+
+/**
+ * Ingests a date in any format and returns a timestamp.
+ * @param date Date | string | null
+ * @returns number
+ */
+export const getTimestampFromDate = (date: Date | string | null): number => {
+  if (typeof date === 'string') return Date.parse(date);
+  if (date instanceof Date) return date.getTime();
+  return 0;
+};
+
+/**
+ *
+ * @param delay
+ * @returns
+ */
 export const getDateFromDelay = (delay: number) => {
   const time = Date.now();
   const delayInMs = delay * 60 * 60 * 1000;
@@ -16,20 +47,14 @@ export const getDateFromDelay = (delay: number) => {
   return date;
 };
 
+/**
+ *
+ * @param date
+ * @returns
+ */
 export const getUTCDate = (date: Date | null) => {
   if (date === null) return '—';
   return dayjs(date).tz('UTC').format('DD. MMMM YYYY, H:mm:ss [(UTC)]');
-};
-
-export const getHumanReadableDate = (date: Date | null) => {
-  if (date === null) return '—';
-  return dayjs(date).format('D MMM YYYY, H:mm:ss');
-};
-
-export const getTimestampFromDate = (date: Date | string | null): number => {
-  if (typeof date === 'string') return Date.parse(date);
-  if (date instanceof Date) return date.getTime();
-  return 0;
 };
 
 /**

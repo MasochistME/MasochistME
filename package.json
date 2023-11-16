@@ -2,6 +2,7 @@
   "name": "masochistme",
   "private": true,
   "scripts": {
+    "build:package": "turbo run build:package",
     "maso:build": "turbo run maso:build",
     "maso:start": "turbo run maso:start",
     "build:sdk": "turbo run build:sdk",

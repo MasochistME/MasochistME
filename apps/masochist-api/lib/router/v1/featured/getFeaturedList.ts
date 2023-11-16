@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
+import { log } from '@masochistme/utils';
 import { Featured } from '@masochistme/sdk/dist/v1/types';
 import { FeaturedListParams } from '@masochistme/sdk/dist/v1/api/featured';
 
-import { log } from 'helpers/log';
 import { sortCollection } from 'helpers/db';
 import { mongoInstance } from 'api';
 

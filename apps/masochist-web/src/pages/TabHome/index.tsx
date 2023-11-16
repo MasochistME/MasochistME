@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { chooseRandomIndex } from '@masochistme/utils';
 import { Featured } from '@masochistme/sdk/dist/v1/types';
 import styled from 'styled-components';
 
 import { media } from 'styles';
 import { useFeatured } from 'sdk';
-import { chooseRandomIndex } from 'utils';
+
 import { useActiveTab } from 'hooks';
 import { TabDict } from 'configuration/tabs';
 import { Flex, QueryBoundary } from 'components';

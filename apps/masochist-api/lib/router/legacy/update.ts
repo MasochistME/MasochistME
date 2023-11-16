@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { log } from 'helpers/log';
+import { log } from '@masochistme/utils';
+
 import { connectToDb, getDataFromDB } from 'helpers/db';
 import { getCuratorMembers, updateCuratorGames } from 'router/legacy/curator';
 import {

@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
+import { log } from '@masochistme/utils';
 import { RacePlayer } from '@masochistme/sdk/dist/v1/types';
 import { RaceParticipantsListParams } from '@masochistme/sdk/dist/v1/api/racePlayers';
 
-import { log } from 'helpers/log';
 import { mongoInstance } from 'api';
 import { sortCollection } from 'helpers/db';
 

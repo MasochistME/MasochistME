@@ -1,5 +1,5 @@
 // import Discord from "discord.js";
-// import { log } from "utils/log";
+// import { log } from '@masochistme/utils';
 // import { createEmbed } from "utils/helpers";
 // import { cache } from "utils/cache";
 

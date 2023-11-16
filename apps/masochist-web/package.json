@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@masochistme/sdk": "*",
+    "@masochistme/utils": "*",
     "@mui/material": "^5.10.10",
     "@mui/styled-engine-sc": "^5.10.6",
     "@sgratzl/chartjs-chart-boxplot": "^4.1.2",

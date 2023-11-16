@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
+import { log } from '@masochistme/utils';
 
-import { log } from 'helpers/log';
 import { connectToDb, getDataFromDB } from 'helpers/db';
 import { Member } from 'router/legacy/types/user';
 

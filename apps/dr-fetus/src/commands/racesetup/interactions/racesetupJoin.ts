@@ -7,12 +7,13 @@ import {
   APIEmbedField,
 } from 'discord.js';
 import { getErrorEmbed, getInfoEmbed } from 'arcybot';
+import { getDiscordTimestamp, cenzorString } from '@masochistme/utils';
 import { Race, RaceType, RaceScoreBased } from '@masochistme/sdk/dist/v1/types';
 import dayjs from 'dayjs';
 
 import { sdk } from 'fetus';
 import { RaceButton, RoleOption, Room } from 'consts';
-import { getChannelByKey, getDiscordTimestamp, cenzor, getOption } from 'utils';
+import { getChannelByKey, getOption } from 'utils';
 
 import { raceSendStartFormToParticipantSelf } from './playerActions';
 
@@ -228,7 +229,7 @@ const getNewRaceCensoredEmbed = async (race: Race): Promise<APIEmbed> => {
     },
     {
       name: 'Objectives',
-      value: cenzor(race.objectives),
+      value: cenzorString(race.objectives),
     },
     {
       name: 'Start time',
@@ -242,7 +243,7 @@ const getNewRaceCensoredEmbed = async (race: Race): Promise<APIEmbed> => {
     },
     {
       name: 'Download link',
-      value: cenzor(race.downloadLink),
+      value: cenzorString(race.downloadLink),
     },
     ...(race.type === RaceType.SCORE_BASED
       ? [

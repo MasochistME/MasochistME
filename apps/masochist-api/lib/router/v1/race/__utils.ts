@@ -1,7 +1,6 @@
 import dayjs from 'dayjs';
+import { getTimestampFromDate } from '@masochistme/utils';
 import { Race, RacePlayer, RaceType } from '@masochistme/sdk/dist/v1/types';
-
-import { getTimestampFromDate } from 'helpers';
 
 /**
  * Returns participant's time in miliseconds

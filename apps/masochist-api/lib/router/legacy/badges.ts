@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb';
 import { orderBy } from 'lodash';
+import { log } from '@masochistme/utils';
 
-import { log } from 'helpers/log';
 import { connectToDb, getDataFromDB } from 'helpers/db';
 
 import { TBadgeAddedEvent, TBadgeGivenEvent } from './types/events';

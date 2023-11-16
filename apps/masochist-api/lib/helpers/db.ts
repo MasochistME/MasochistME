@@ -1,6 +1,6 @@
 import { Db, MongoClient, WithId, SortDirection } from 'mongodb';
 
-import { log } from 'helpers/log';
+import { log } from '@masochistme/utils';
 import { Sort } from '@masochistme/sdk/dist/v1/types';
 
 export class MongoInstance {

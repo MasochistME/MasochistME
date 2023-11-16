@@ -1,3 +1,4 @@
+import { getTimestampFromDate, getDateFromDelay } from '@masochistme/utils';
 import {
   Race,
   RacePlayer,
@@ -10,13 +11,7 @@ import { getErrorEmbed, getInfoEmbed, log } from 'arcybot';
 import dayjs from 'dayjs';
 
 import { RACE_TIMEOUT, RACE_RESULTS_TIMEOUT, Room } from 'consts';
-import {
-  getChannelByKey,
-  getDateFromDelay,
-  getDMChannel,
-  getModChannel,
-  getTimestampFromDate,
-} from 'utils';
+import { getChannelByKey, getDMChannel, getModChannel } from 'utils';
 import { bot, sdk } from 'fetus';
 
 import { RaceData } from 'commands/racesetup/logic';

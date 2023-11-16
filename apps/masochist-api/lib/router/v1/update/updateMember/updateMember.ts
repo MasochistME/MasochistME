@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import axios from 'axios';
+import { log } from '@masochistme/utils';
 import {
   Game,
   Member,
@@ -9,7 +10,6 @@ import {
   LogComplete,
 } from '@masochistme/sdk/dist/v1/types';
 
-import { log } from 'helpers/log';
 import { mongoInstance } from 'api';
 
 import {

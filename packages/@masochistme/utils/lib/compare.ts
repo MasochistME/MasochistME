@@ -9,3 +9,15 @@ export const stringCompare = (a = '', b = ''): any => {
   const bl = b.replace(/\s+/g, '');
   return al.localeCompare(bl, 'nb');
 };
+
+/**
+ * Compares two booleans
+ * @param a
+ * @param b
+ * @returns
+ */
+export const booleanCompare = (a = false, b = false): any => {
+  const a1 = a ? 'true' : 'false';
+  const b1 = b ? 'true' : 'false';
+  return stringCompare(a1, b1);
+};

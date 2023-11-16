@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
+import { log } from '@masochistme/utils';
 import { MemberGame, Game } from '@masochistme/sdk/dist/v1/types';
 import { MemberGameListParams } from '@masochistme/sdk/dist/v1/api/members';
 
-import { log } from 'helpers/log';
 import { mongoInstance } from 'api';
 import { sortCollection } from 'helpers/db';
 

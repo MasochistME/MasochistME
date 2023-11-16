@@ -5,10 +5,10 @@ import {
   APIEmbed,
   APIEmbedField,
 } from 'discord.js';
+import { getDiscordTimestamp, cenzorString } from '@masochistme/utils';
 import { Race, RaceType, RaceScoreBased } from '@masochistme/sdk/dist/v1/types';
 
 import { RaceButton } from 'consts';
-import { getDiscordTimestamp, cenzor } from 'utils';
 
 export const isRaceInGracePeriod = (race: Race) =>
   !race.isDone && !race.isActive;
@@ -99,7 +99,7 @@ export const getRaceStartEmbed = (
     },
     {
       name: 'Objectives',
-      value: isCenzored ? cenzor(race.objectives) : race.objectives,
+      value: isCenzored ? cenzorString(race.objectives) : race.objectives,
     },
     {
       name: 'Start time',
@@ -113,7 +113,7 @@ export const getRaceStartEmbed = (
     },
     {
       name: 'Download link',
-      value: isCenzored ? cenzor(race.downloadLink) : race.downloadLink,
+      value: isCenzored ? cenzorString(race.downloadLink) : race.downloadLink,
     },
     {
       name: 'Screenshot upload grace period',

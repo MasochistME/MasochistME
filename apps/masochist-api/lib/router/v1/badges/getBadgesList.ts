@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
+import { log } from '@masochistme/utils';
 import { Badge } from '@masochistme/sdk/dist/v1/types';
 import { BadgesListParams } from '@masochistme/sdk/dist/v1/api/badges';
 
-import { log } from 'helpers/log';
 import { sortCollection } from 'helpers/db';
 import { mongoInstance } from 'api';
 

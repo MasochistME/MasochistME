@@ -1,7 +1,7 @@
+import { getFileExtension } from '@masochistme/utils';
 import path from 'path';
 import axios from 'axios';
 import fs from 'fs';
-import { getFileExtension } from './data';
 
 export enum ImgType {
   BADGE = 'badges',

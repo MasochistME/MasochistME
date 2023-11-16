@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
+import { log } from '@masochistme/utils';
 import { Game, MemberGame, Tier } from '@masochistme/sdk/dist/v1/types';
 
 import { mongoInstance } from 'api';
-import { log } from 'helpers/log';
 import { updateQueue } from 'router/v1/update/updateQueue';
 import {
   getMemberSteamAchievements,

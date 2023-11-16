@@ -1,9 +1,10 @@
 import { DiscordInteraction, getInfoEmbed } from 'arcybot';
 import { APIEmbed, APIEmbedField } from 'discord.js';
+import { splitArrayToChunks } from '@masochistme/utils';
 import { RaceWithParticipants } from '@masochistme/sdk/dist/v1/types';
 
 import { sdk } from 'fetus';
-import { splitArrayToChunks, createError, ErrorAction } from 'utils';
+import { createError, ErrorAction } from 'utils';
 import { getMedal } from 'commands/_utils/race';
 import { isRaceFinished } from 'commands/racesetup/interactions/playerActions/__common';
 

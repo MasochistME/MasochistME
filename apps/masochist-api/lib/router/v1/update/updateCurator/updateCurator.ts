@@ -1,6 +1,5 @@
+import { hash, log } from '@masochistme/utils';
 import { Request, Response } from 'express';
-import { log } from 'helpers/log';
-import { hash } from 'helpers/hash';
 
 import { updateCuratorLogic } from './logic';
 

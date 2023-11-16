@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 
+import { getHumanReadableDate } from '@masochistme/utils';
 import { Member, PatronTier } from '@masochistme/sdk/dist/v1/types';
 
 import { useUpdateMemberMutation, useMemberLeaderboards } from 'sdk';
 import { media } from 'styles';
-import { getHumanReadableDate } from 'utils';
 import { Alert, Flex, Tooltip, Button } from 'components';
 import { Variant } from 'components/Button/types';
 

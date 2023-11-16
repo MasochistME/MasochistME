@@ -1,9 +1,9 @@
+import { log } from '@masochistme/utils';
 import * as dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
 
 import { MongoInstance } from 'helpers/db';
-import { log } from 'helpers/log';
 
 // import { routerLegacy } from 'router/legacy';
 import { routerV1 } from 'router/v1';

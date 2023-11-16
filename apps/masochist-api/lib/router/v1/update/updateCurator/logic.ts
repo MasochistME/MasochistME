@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Response } from 'express';
+import { log, splitArrayToChunks } from '@masochistme/utils';
 import {
   Member,
   Game,
@@ -12,9 +13,6 @@ import {
   LogAchievementNumberChange,
   Tier,
 } from '@masochistme/sdk/dist/v1/types';
-
-import { log } from 'helpers/log';
-import { splitArrayToChunks } from 'helpers';
 
 import { SteamGameDetailsData, MemberSteam } from '../types';
 import { statusCurator, UpdateStatus } from '.';

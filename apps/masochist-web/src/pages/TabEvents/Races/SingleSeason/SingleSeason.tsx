@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import { getHumanReadableDate } from '@masochistme/utils';
 import { RaceWithSummary, Season } from '@masochistme/sdk/dist/v1/types';
 
 import { ErrorFallback, Flex } from 'components';
 import { StatBlock, Tabs, Tab, TabPanel } from 'containers';
-import { getHumanReadableDate } from 'utils';
 
 import { SingleSeasonRanking } from './SingleSeasonRanking';
 import { SingleSeasonRaces } from './SingleSeasonRaces';

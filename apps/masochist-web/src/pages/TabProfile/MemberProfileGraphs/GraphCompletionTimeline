@@ -1,11 +1,11 @@
 import React from 'react';
 import { orderBy } from 'lodash';
 import moment from 'moment';
+import { log } from '@masochistme/utils';
 import { Tier, Game, Member } from '@masochistme/sdk/dist/v1/types';
 
 import { useCuratedGames, useTiers, useMemberById, useMemberGames } from 'sdk';
 import { Section, DoughnutChart, LineChart } from 'containers';
-import { log } from 'utils';
 import { Flex, Spinner } from 'components';
 
 type Props = {

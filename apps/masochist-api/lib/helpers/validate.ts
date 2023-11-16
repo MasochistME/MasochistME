@@ -1,5 +1,4 @@
-import { hash } from 'helpers/hash';
-import { log } from 'helpers/log';
+import { hash, log } from '@masochistme/utils';
 
 export const apiLegacyAuth = (req: any, res: any, next: any) => {
   const authorizationHeader = req.headers.authorization;

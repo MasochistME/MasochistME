@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { log } from '@masochistme/utils';
 import {
   GameLeaderboards,
   Badge,
@@ -10,7 +11,6 @@ import {
 } from '@masochistme/sdk/dist/v1/types';
 import { LeaderboardsGamesListParams } from '@masochistme/sdk/dist/v1/api/leaderboards';
 
-import { log } from 'helpers/log';
 import { mongoInstance } from 'api';
 
 /**

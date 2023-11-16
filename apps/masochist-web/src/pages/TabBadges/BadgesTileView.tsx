@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { dedupArray, stringCompare } from '@masochistme/utils';
 
-import { dedupArray, stringCompare } from 'utils';
 import { useBadges, useCuratedGames, useTiers } from 'sdk';
 import {
   ErrorFallback,

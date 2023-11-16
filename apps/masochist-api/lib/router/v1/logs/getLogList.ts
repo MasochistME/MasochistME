@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
+import { log } from '@masochistme/utils';
 import { Log } from '@masochistme/sdk/dist/v1/types';
 import { LogListParams } from '@masochistme/sdk/dist/v1/api/logs';
 
-import { log } from 'helpers/log';
 import { sortCollection } from 'helpers/db';
 import { mongoInstance } from 'api';
 
