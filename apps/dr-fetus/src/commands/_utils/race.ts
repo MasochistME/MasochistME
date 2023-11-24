@@ -217,8 +217,7 @@ const handleScoreRaceDNF = async (
     raceParticipants.forEach(async participant => {
       const participantPlayTime =
         getTimestampFromDate(new Date()) -
-        getTimestampFromDate(participant.startDate) +
-        RACE_RESULTS_TIMEOUT;
+        getTimestampFromDate(participant.startDate);
       const shouldPlayerBeDisqualified = participantPlayTime > playLimit * 1000;
       if (shouldPlayerBeDisqualified) {
         await getDMChannel(participant.discordId)?.send(
