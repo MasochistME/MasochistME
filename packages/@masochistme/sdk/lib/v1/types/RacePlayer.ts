@@ -72,9 +72,16 @@ export interface RacePlayerScore extends Omit<BaseRacePlayer, 'type'> {
    */
   type: RaceType.SCORE_BASED;
   /**
+   * @deprecated
    * If participant got warned that their time is ending.
    */
   isWarned: boolean;
+  /**
+   * Replaces `isWarned`.
+   * Indicates how many warns user has left before disqualification.
+   * SCORE_RACE_WARNINGS determines max warns that can be issued
+   */
+  warningsLeft: number;
   /**
    * Score that participant achieved in the given limit of time.
    */
