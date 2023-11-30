@@ -6,6 +6,8 @@ import {
   RaceTimeBased,
   RaceType,
 } from '@masochistme/sdk/dist/v1/types';
+import { SCORE_RACE_WARNINGS } from '@masochistme/sdk/dist/v1';
+
 import { getErrorEmbed, getInfoEmbed, log } from 'arcybot';
 import dayjs from 'dayjs';
 
@@ -144,11 +146,15 @@ const handleScoreRace = async (race: RaceScoreBased) => {
   })) as RacePlayerScore[];
   await handleScoreRaceWarn(
     race,
-    raceParticipants.filter(p => p.startDate && !p.endDate && !p.isWarned),
+    raceParticipants.filter(
+      p => p.startDate && !p.endDate && p.warningsLeft > 0,
+    ),
   );
   await handleScoreRaceDNF(
     race,
-    raceParticipants.filter(p => p.startDate && !p.endDate && p.isWarned),
+    raceParticipants.filter(
+      p => p.startDate && !p.endDate && p.warningsLeft === 0,
+    ),
   );
 };
 
@@ -169,15 +175,34 @@ const handleScoreRaceWarn = async (
       const participantPlayTime =
         getTimestampFromDate(new Date()) -
         getTimestampFromDate(participant.startDate);
-      const shouldPlayerBeWarned =
+
+      // First player warning, happening at the time set up by race owner
+      const isPlayerFirstWarning =
+        participant.warningsLeft === SCORE_RACE_WARNINGS &&
         playLimit * 1000 - participantPlayTime <= warningPeriod * 1000;
+      // Second player warning, always occuring a minute before the end of the run
+      const isPlayerLastWarning =
+        participant.warningsLeft === 1 &&
+        playLimit * 1000 - participantPlayTime <= 1000;
+
+      // Get the time until the end of the race to display for the player
+      const warningGraceTime =
+        (isPlayerFirstWarning ? warningPeriod : 1) * 1000;
+
+      // Player should be warned two times, this checks if it's any of those times
+      const shouldPlayerBeWarned = isPlayerFirstWarning || isPlayerLastWarning;
+
       if (shouldPlayerBeWarned) {
+        const msTillEnd = ((Date.now() + warningGraceTime) / 1000).toFixed(0);
+        const timeTillEnd = `<t:${msTillEnd}:R>`;
         await getDMChannel(participant.discordId)?.send(
           getInfoEmbed(
-            'Your race attempt ends soon',
-            `You have ${
-              warningPeriod / 60
-            } minutes left before the end of your run.
+            isPlayerLastWarning
+              ? 'ONE MINUTE LEFT UNTIL THE END OF RACE!'
+              : 'Your race attempt ends soon',
+            `Your run ends ${
+              isPlayerLastWarning ? 'exactly in ONE MINUTE' : timeTillEnd
+            }.
               \n**You need to physically click the END button before the race timer runs out.** If you forget to do this, you'll get DNF.
               \n[DEBUG] Timestamp: \`\`${getTimestampFromDate(new Date())}\`\``,
           ),
@@ -185,7 +210,7 @@ const handleScoreRaceWarn = async (
         const { acknowledged } = await sdk.updateRaceByParticipantId({
           raceId,
           memberId: participant.discordId,
-          update: { isWarned: true } as Partial<
+          update: { warningsLeft: participant.warningsLeft - 1 } as Partial<
             Omit<RacePlayerScore, '_id' | 'type'>
           >,
         });
@@ -210,16 +235,16 @@ const handleScoreRaceDNF = async (
   raceParticipants: RacePlayerScore[],
 ) => {
   try {
-    const { playLimit, _id } = race;
+    const { playLimit, warningPeriod, _id } = race;
     const raceId = String(_id);
     const botId = bot.botClient.user?.id;
 
     raceParticipants.forEach(async participant => {
       const participantPlayTime =
         getTimestampFromDate(new Date()) -
-        getTimestampFromDate(participant.startDate) +
-        RACE_RESULTS_TIMEOUT;
-      const shouldPlayerBeDisqualified = participantPlayTime > playLimit * 1000;
+        getTimestampFromDate(participant.startDate);
+      const shouldPlayerBeDisqualified =
+        participantPlayTime >= (playLimit + warningPeriod) * 1000;
       if (shouldPlayerBeDisqualified) {
         await getDMChannel(participant.discordId)?.send(
           getErrorEmbed(

@@ -1,6 +1,7 @@
 import { ObjectId } from 'mongodb';
 import { Request, Response } from 'express';
 import { Race, RacePlayer, RaceType } from '@masochistme/sdk/dist/v1/types';
+import { SCORE_RACE_WARNINGS } from '@masochistme/sdk/dist/v1';
 
 import { log } from 'helpers/log';
 import { mongoInstance } from 'api';
@@ -46,7 +47,10 @@ export const joinRaceByParticipantId = async (
       disqualified: false,
       disqualificationReason: null,
       disqualifiedBy: null,
-      ...(race.type === RaceType.SCORE_BASED && { score: null }),
+      ...(race.type === RaceType.SCORE_BASED && {
+        score: null,
+        warningsLeft: SCORE_RACE_WARNINGS,
+      }),
     };
 
     // We upsert this to avoid people participating more than once

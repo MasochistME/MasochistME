@@ -53,7 +53,9 @@ export const raceStart = async (
             {
               name: 'Time left',
               value: `<t:${(
-                (getTimestampFromDate(startDate) + race.playLimit * 1000) /
+                (getTimestampFromDate(startDate) +
+                  race.playLimit * 1000 +
+                  race.warningPeriod * 1000) /
                 1000
               ).toFixed(0)}:R>`,
               inline: true,
