@@ -19,7 +19,7 @@ export type MemberCheese = WithId<{
   gameId: number;
   /**
    * Determines if the cheese badge was self-added or by a mod.
-   * If my a mod, member cannot edit it.
+   * If by a mod, member cannot edit it.
    */
   isModAssigned: boolean;
   /**

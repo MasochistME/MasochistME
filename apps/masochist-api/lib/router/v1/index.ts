@@ -38,6 +38,9 @@ import {
   getMemberAwardList,
   giveAwardToMemberById,
   revokeAwardFromMemberById,
+  getMemberCheeseList,
+  revokeCheeseFromMemberById,
+  giveCheeseToMemberById,
 } from './members';
 
 routerV1.post('/members/list', getMembersList);
@@ -62,6 +65,19 @@ routerV1.delete(
   '/members/member/:memberId/badges/badge/:badgeId',
   apiV1Auth,
   revokeBadgeFromMemberById,
+);
+
+// Member cheese
+routerV1.post('/members/member/:memberId/cheese/list', getMemberCheeseList);
+routerV1.post(
+  '/members/member/:memberId/cheese',
+  apiV1Auth,
+  giveCheeseToMemberById,
+);
+routerV1.delete(
+  '/members/member/:memberId/cheese/:gameId',
+  apiV1Auth,
+  revokeCheeseFromMemberById,
 );
 
 // Member awards

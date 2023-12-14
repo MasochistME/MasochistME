@@ -6,7 +6,6 @@ import { MemberCheese, ResponseError } from 'v1/types';
 /**
  * Gives a cheese badge to an existing member.
  *
- * Award is identified by its stringified `ObjectID`.
  * Member is identified by their Discord ID.
  *
  * ## Usage
@@ -34,12 +33,12 @@ export const giveCheeseToMemberById = async (
   const { memberId, ...rest } = params;
   const url = `${BASE_URL}/members/member/${memberId}/cheese`;
 
-  const memberAwardResponse = await axios.post<
+  const memberCheeseResponse = await axios.post<
     InsertOneResult<MemberCheese> | ResponseError,
     AxiosResponse<InsertOneResult<MemberCheese> | ResponseError>
   >(url, { ...rest }, { validateStatus: () => true });
 
-  const { status, data } = memberAwardResponse;
+  const { status, data } = memberCheeseResponse;
 
   if (status !== 201) throw new Error((data as ResponseError).error);
   return data as InsertOneResult<MemberCheese>;

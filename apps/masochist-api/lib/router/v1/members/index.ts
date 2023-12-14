@@ -12,3 +12,7 @@ export { revokeBadgeFromMemberById } from './revokeBadgeFromMemberById';
 export { getMemberAwardList } from './getMemberAwardList';
 export { giveAwardToMemberById } from './giveAwardToMemberById';
 export { revokeAwardFromMemberById } from './revokeAwardFromMemberById';
+
+export { getMemberCheeseList } from './getMemberCheeseList';
+export { giveCheeseToMemberById } from './giveCheeseToMemberById';
+export { revokeCheeseFromMemberById } from './revokeCheeseFromMemberById';
