@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { MemberCheese } from '@masochistme/sdk/lib/v1/types';
-import { MemberCheeseListParams } from '@masochistme/sdk/lib/v1/api/members';
+import { MemberCheese } from '@masochistme/sdk/dist/v1/types';
+import { MemberCheeseListParams } from '@masochistme/sdk/dist/v1/api/members';
 
 import { log } from 'helpers/log';
 import { mongoInstance } from 'api';

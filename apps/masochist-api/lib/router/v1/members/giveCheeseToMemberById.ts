@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 
 import { log } from 'helpers/log';
 import { mongoInstance } from 'api';
-import { MemberCheese } from '@masochistme/sdk/lib/v1/types';
+import { MemberCheese } from '@masochistme/sdk/dist/v1/types';
 
 /**
  * Gives a cheese badge to member with given member ID.

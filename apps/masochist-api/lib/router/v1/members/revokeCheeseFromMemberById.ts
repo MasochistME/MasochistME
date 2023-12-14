@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { MemberCheese } from '@masochistme/sdk/lib/v1/types';
+import { MemberCheese } from '@masochistme/sdk/dist/v1/types';
 
 import { log } from 'helpers/log';
 import { mongoInstance } from 'api';
