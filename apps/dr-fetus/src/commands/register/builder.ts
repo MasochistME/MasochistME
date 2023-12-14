@@ -1,10 +1,10 @@
-import { SlashCommandBuilder } from "discord.js";
+import { SlashCommandBuilder } from 'discord.js';
 
 export const registerBuilder = new SlashCommandBuilder()
-  .setName("register")
+  .setName('register')
   .addStringOption(option =>
     option
-      .setName("link")
-      .setDescription("Link to your Masochist.ME profile")
+      .setName('link')
+      .setDescription('Link to your Masochist.ME profile')
       .setRequired(true),
   );

@@ -1,6 +1,6 @@
-import { DiscordInteraction } from "arcybot";
+import { DiscordInteraction } from 'arcybot';
 
-import { getRandomMemeFromAPI } from "api";
+import { getRandomMemeFromAPI } from 'api';
 
 /**
  * Sends a meme to the channel.

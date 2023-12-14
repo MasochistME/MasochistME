@@ -1,9 +1,9 @@
 import {
   AutocompleteInteraction,
   ApplicationCommandOptionChoiceData,
-} from "discord.js";
+} from 'discord.js';
 
-import { getBadgeChoices } from "commands/_utils/choices";
+import { getBadgeChoices } from 'commands/_utils/choices';
 
 /**
  * Handles autocompletion for the badge edit commands
@@ -17,7 +17,7 @@ export const badgeEditAutocomplete = async (
 
   let choices: ApplicationCommandOptionChoiceData[] = [];
   const focused = interaction.options.getFocused(true);
-  if (focused.name === "badge") choices = getBadgeChoices(focused.value);
+  if (focused.name === 'badge') choices = getBadgeChoices(focused.value);
 
   await interaction.respond(choices);
 };

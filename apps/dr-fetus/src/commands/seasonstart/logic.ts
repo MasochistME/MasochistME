@@ -1,8 +1,8 @@
-import { getSuccessEmbed, DiscordInteraction } from "arcybot";
+import { getSuccessEmbed, DiscordInteraction } from 'arcybot';
 
-import { createError, ErrorAction } from "utils";
-import { sdk } from "fetus";
-import { Options } from "./builder";
+import { createError, ErrorAction } from 'utils';
+import { sdk } from 'fetus';
+import { Options } from './builder';
 
 /**
  * Allows a moderator to start a new season.
@@ -25,16 +25,16 @@ export const seasonstart = async (
         `Race with the name **${seasonId.toUpperCase()}** does not exist.`,
       );
     if (specifiedSeason?.startDate)
-      throw new Error("You cannot start a season which is already started.");
+      throw new Error('You cannot start a season which is already started.');
 
     const response = await sdk.startSeasonById({ seasonId });
 
     if (!response.acknowledged)
-      throw new Error("Could not start a new season, please try again later.");
+      throw new Error('Could not start a new season, please try again later.');
 
     interaction.editReply(
       getSuccessEmbed(
-        "Success",
+        'Success',
         `You officially started season **${specifiedSeason.name.toUpperCase()}**!`,
       ),
     );

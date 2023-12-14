@@ -1,7 +1,7 @@
-import { getSuccessEmbed, DiscordInteraction } from "arcybot";
+import { getSuccessEmbed, DiscordInteraction } from 'arcybot';
 
-import { sdk } from "fetus";
-import { createError, ErrorAction } from "utils";
+import { sdk } from 'fetus';
+import { createError, ErrorAction } from 'utils';
 
 /**
  * Allows the user to set a custom description on their Masochist.ME profile.
@@ -13,13 +13,13 @@ export const setdescription = async (
 ): Promise<void> => {
   await interaction.deferReply();
 
-  const description = interaction.options.getString("description", true);
+  const description = interaction.options.getString('description', true);
 
   try {
     const member = await sdk.getMemberById({ discordId: interaction.user.id });
     const steamId = member?.steamId;
     if (!steamId)
-      throw "Could not find your Masochist.ME user data. You might have not connected your Discord account with Masochist.ME one - to do so, use the `/register` command.";
+      throw 'Could not find your Masochist.ME user data. You might have not connected your Discord account with Masochist.ME one - to do so, use the `/register` command.';
     const response = await sdk.updateMemberById({
       memberId: interaction.user.id,
       member: { description },
@@ -29,7 +29,7 @@ export const setdescription = async (
 
     interaction.editReply(
       getSuccessEmbed(
-        "New description is set!",
+        'New description is set!',
         `Now everyone will be able to see that <@${interaction.user.id}> describes themselves as:\n\n***"${description}"***\n\n`,
       ),
     );

@@ -1,5 +1,5 @@
-import { MongoClient, Db } from "mongodb";
-import { log } from "arcybot";
+import { MongoClient, Db } from 'mongodb';
+import { log } from 'arcybot';
 
 type DB = {
   symbol?: string;
@@ -13,7 +13,7 @@ export class Database {
 
   public init = async () => {
     this.config.forEach(c => this.connectToDbClient(c));
-    log.INFO("Database successfully initialized!");
+    log.INFO('Database successfully initialized!');
   };
 
   connectToDbClient = async (db: DB): Promise<void> => {

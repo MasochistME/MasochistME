@@ -1,9 +1,9 @@
 import {
   AutocompleteInteraction,
   ApplicationCommandOptionChoiceData,
-} from "discord.js";
+} from 'discord.js';
 // @ts-ignore:next-line
-import { getFilteredChoices } from "commands/_utils";
+import { getFilteredChoices } from 'commands/_utils';
 
 /**
  * Handles autocompletion for the "template" command.
@@ -16,12 +16,12 @@ export const templateAutocomplete = async (
   if (!interaction.isAutocomplete()) return;
 
   let choices: ApplicationCommandOptionChoiceData[] = [
-    { name: "option 1", value: "option1" },
-    { name: "option 2", value: "option2" },
+    { name: 'option 1', value: 'option1' },
+    { name: 'option 2', value: 'option2' },
   ];
   const focused = interaction.options.getFocused(true);
 
-  if (focused.name === "stringoption")
+  if (focused.name === 'stringoption')
     choices = getFilteredChoices(choices, focused.value);
 
   await interaction.respond(choices);

@@ -1,6 +1,6 @@
-import { getSuccessEmbed, DiscordInteraction } from "arcybot";
-import { createError, ErrorAction } from "utils";
-import { Options } from "./builder";
+import { getSuccessEmbed, DiscordInteraction } from 'arcybot';
+import { createError, ErrorAction } from 'utils';
+import { Options } from './builder';
 
 /**
  * Describe your "role" command here.
@@ -25,11 +25,11 @@ const roleAssign = async (interaction: DiscordInteraction): Promise<void> => {
     const role = interaction.guild?.roles.cache.find(
       role => role.id === roleId,
     );
-    if (!role) throw "Selected role does not exist.";
+    if (!role) throw 'Selected role does not exist.';
     // @ts-ignore
     interaction.member?.roles.add(role);
     interaction.editReply(
-      getSuccessEmbed("Success", `You now have **${role.name}** role!`),
+      getSuccessEmbed('Success', `You now have **${role.name}** role!`),
     );
   } catch (err: any) {
     createError(interaction, err, ErrorAction.EDIT);
@@ -47,12 +47,12 @@ const roleRemove = async (interaction: DiscordInteraction): Promise<void> => {
     const role = interaction.guild?.roles.cache.find(
       role => role.id === roleId,
     );
-    if (!role) throw "Selected role does not exist.";
+    if (!role) throw 'Selected role does not exist.';
     // @ts-ignore
     interaction.member?.roles.remove(role);
     interaction.editReply(
       getSuccessEmbed(
-        "Success",
+        'Success',
         `You don't have role **${role.name}** anymore!`,
       ),
     );

@@ -1,13 +1,13 @@
-import { SlashCommandBuilder } from "discord.js";
+import { SlashCommandBuilder } from 'discord.js';
 
 /**
  * Builder for the memedelete command.
  */
 export const memedeleteBuilder = new SlashCommandBuilder()
-  .setName("memedelete")
+  .setName('memedelete')
   .addStringOption(option =>
     option
-      .setName("memeindex")
-      .setDescription("Number of the meme to be deleted")
+      .setName('memeindex')
+      .setDescription('Number of the meme to be deleted')
       .setRequired(true),
   );

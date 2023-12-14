@@ -1,7 +1,7 @@
-import { DiscordInteraction, getErrorEmbed, getSuccessEmbed } from "arcybot";
+import { DiscordInteraction, getErrorEmbed, getSuccessEmbed } from 'arcybot';
 
-import { getMemesFromAPI, deleteMemeFromAPI } from "api";
-import { createError, ErrorAction } from "utils";
+import { getMemesFromAPI, deleteMemeFromAPI } from 'api';
+import { createError, ErrorAction } from 'utils';
 
 /**
  * Deletes a meme permanently from the database.
@@ -12,13 +12,13 @@ export const memedelete = async (
   interaction: DiscordInteraction,
 ): Promise<void> => {
   const memes = await getMemesFromAPI();
-  const memeIndex = Number(interaction.options.getString("memeindex"));
+  const memeIndex = Number(interaction.options.getString('memeindex'));
 
   if (isNaN(memeIndex)) {
     interaction.reply(
       getErrorEmbed(
         "Can't delete a meme",
-        "The index you provided is not a number.",
+        'The index you provided is not a number.',
       ),
     );
     return;
@@ -27,7 +27,7 @@ export const memedelete = async (
     interaction.reply(
       getErrorEmbed(
         "Can't delete a meme",
-        "Meme with this number does not exist.",
+        'Meme with this number does not exist.',
       ),
     );
     return;
@@ -40,7 +40,7 @@ export const memedelete = async (
     await deleteMemeFromAPI(memeToDeleteId);
     interaction.reply(
       getSuccessEmbed(
-        "Meme deleted!",
+        'Meme deleted!',
         `In case it was by mistake, the deleted meme was:\n\n${memeToDelete.meme}`,
       ),
     );

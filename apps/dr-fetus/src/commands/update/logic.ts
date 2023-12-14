@@ -1,7 +1,7 @@
-import { DiscordInteraction, getAwaitEmbed, getSuccessEmbed } from "arcybot";
+import { DiscordInteraction, getAwaitEmbed, getSuccessEmbed } from 'arcybot';
 
-import { bot, cache } from "fetus";
-import { createError, ErrorAction } from "utils";
+import { bot, cache } from 'fetus';
+import { createError, ErrorAction } from 'utils';
 
 /**
  * Sends a meme to the channel.
@@ -14,23 +14,23 @@ export const update = async (
   await interaction.deferReply();
   interaction.editReply(
     getAwaitEmbed(
-      "Updating...",
-      "⏳ Updating cache...\n⏳ Updating command list...",
+      'Updating...',
+      '⏳ Updating cache...\n⏳ Updating command list...',
     ),
   );
   try {
     await cache.update();
     interaction.editReply(
       getAwaitEmbed(
-        "Updating...",
-        "✅ Updating cache...\n⏳ Updating command list...",
+        'Updating...',
+        '✅ Updating cache...\n⏳ Updating command list...',
       ),
     );
     await bot.commands.register();
     interaction.editReply(
       getSuccessEmbed(
-        "Done!",
-        "✅ Updating cache...\n✅ Updating command list...\n\nUpdate successfully completed!",
+        'Done!',
+        '✅ Updating cache...\n✅ Updating command list...\n\nUpdate successfully completed!',
       ),
     );
   } catch (err: any) {

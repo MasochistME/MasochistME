@@ -1,25 +1,28 @@
-import { AutocompleteInteraction } from "discord.js";
+import { AutocompleteInteraction } from 'discord.js';
 
-import { badgeCreateAutocomplete } from "commands/badgecreate/interactions";
-import { badgeEditAutocomplete } from "commands/badgeedit/interactions";
-import { vidGameAutocomplete } from "commands/vid/interactions";
+import { badgeCreateAutocomplete } from 'commands/badgecreate/interactions';
+import { badgeEditAutocomplete } from 'commands/badgeedit/interactions';
+import { badgeAutocomplete } from 'commands/_interactions/badge';
 
-import { badgeAutocomplete } from "commands/_interactions/badge";
-import { roleAutocomplete } from "commands/_interactions/role";
-import { raceAutocomplete } from "commands/race/interactions";
+import { cheeseAutocomplete } from 'commands/cheese/interactions';
+import { vidGameAutocomplete } from 'commands/vid/interactions';
+
+import { roleAutocomplete } from 'commands/_interactions/role';
+import { raceAutocomplete } from 'commands/race/interactions';
 import {
   seasonInactiveAutocomplete,
   seasonActiveAutocomplete,
-} from "commands/_interactions/season";
+} from 'commands/_interactions/season';
 
-const BADGE_MEMBER_CMDS = ["badgegive", "badgerevoke"];
-const BADGE_EDIT_CMDS = ["badgedelete", "badgeedit"];
-const BADGE_CREATION_CMDS = ["badgecreate"];
-const SEASON_START = ["seasonstart"];
-const GET_ACTIVE_SEASONS = ["racesetup", "seasonend"];
-const VID_GET_GAME = ["vid"];
-const RACE_CMDS = ["race"];
-const ROLE_CMDS = ["role"];
+const BADGE_MEMBER_CMDS = ['badgegive', 'badgerevoke'];
+const BADGE_EDIT_CMDS = ['badgedelete', 'badgeedit'];
+const BADGE_CREATION_CMDS = ['badgecreate'];
+const CHEESE_CMDS = ['cheese'];
+const SEASON_START = ['seasonstart'];
+const GET_ACTIVE_SEASONS = ['racesetup', 'seasonend'];
+const VID_GET_GAME = ['vid'];
+const RACE_CMDS = ['race'];
+const ROLE_CMDS = ['role'];
 
 export const handleAutocomplete = (interaction: AutocompleteInteraction) => {
   if (BADGE_CREATION_CMDS.includes(interaction.commandName)) {
@@ -30,6 +33,9 @@ export const handleAutocomplete = (interaction: AutocompleteInteraction) => {
   }
   if (BADGE_MEMBER_CMDS.includes(interaction.commandName)) {
     badgeAutocomplete(interaction);
+  }
+  if (CHEESE_CMDS.includes(interaction.commandName)) {
+    cheeseAutocomplete(interaction);
   }
   if (SEASON_START.includes(interaction.commandName)) {
     seasonInactiveAutocomplete(interaction);

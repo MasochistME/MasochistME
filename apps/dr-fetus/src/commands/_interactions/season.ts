@@ -1,12 +1,12 @@
 import {
   AutocompleteInteraction,
   ApplicationCommandOptionChoiceData,
-} from "discord.js";
+} from 'discord.js';
 
 import {
   getSeasonInactiveChoices,
   getSeasonActiveChoices,
-} from "commands/_utils/season";
+} from 'commands/_utils/season';
 
 /**
  * Handles autocompletion for searching an inactive season
@@ -22,7 +22,7 @@ export const seasonInactiveAutocomplete = async (
 
   const focused = interaction.options.getFocused(true);
 
-  if (focused.name === "season")
+  if (focused.name === 'season')
     choices = getSeasonInactiveChoices(focused.value);
 
   await interaction.respond(choices);
@@ -42,7 +42,7 @@ export const seasonActiveAutocomplete = async (
 
   const focused = interaction.options.getFocused(true);
 
-  if (focused.name === "season")
+  if (focused.name === 'season')
     choices = getSeasonActiveChoices(focused.value);
 
   await interaction.respond(choices);

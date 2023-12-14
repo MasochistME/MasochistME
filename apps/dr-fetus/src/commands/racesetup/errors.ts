@@ -1,4 +1,4 @@
-import { DiscordInteraction, getErrorEmbed } from "arcybot";
+import { DiscordInteraction, getErrorEmbed } from 'arcybot';
 
 /**
  * Handles error caused by race ending before it starts.
@@ -8,8 +8,8 @@ import { DiscordInteraction, getErrorEmbed } from "arcybot";
 export const errorEndsBeforeStart = (interaction: DiscordInteraction) => {
   interaction.reply(
     getErrorEmbed(
-      "Error",
-      "A race can _not_ have a later start date than end date, you moron.",
+      'Error',
+      'A race can _not_ have a later start date than end date, you moron.',
     ),
   );
   return;
@@ -23,8 +23,8 @@ export const errorEndsBeforeStart = (interaction: DiscordInteraction) => {
 export const errorRaceInThePast = (interaction: DiscordInteraction) => {
   interaction.reply(
     getErrorEmbed(
-      "Error",
-      "Ever heard about time continuity? A race can _not_ take place in the past, silly.",
+      'Error',
+      'Ever heard about time continuity? A race can _not_ take place in the past, silly.',
     ),
   );
   return;
@@ -44,10 +44,10 @@ export const errorNegativeTimers = (
 ) => {
   interaction.reply(
     getErrorEmbed(
-      "Wrong time provided",
+      'Wrong time provided',
       `There is something very wrong with the timers you provided.\n
       **Download grace period** - \`\`${downloadGrace}s\`\`\n**Upload grace period** - \`\`${uploadGrace}s\`\`
-      ${playLimit ? `**Play time limit** - ${playLimit}m` : ""}\n
+      ${playLimit ? `**Play time limit** - ${playLimit}m` : ''}\n
       At least one of those looks _seriously wrong_.`,
     ),
   );
@@ -66,7 +66,7 @@ export const errorWrongDownloadLink = (
 ) => {
   interaction.reply(
     getErrorEmbed(
-      "Wrong download link",
+      'Wrong download link',
       `${link} → Does _this_ look like a link to you?`,
     ),
   );

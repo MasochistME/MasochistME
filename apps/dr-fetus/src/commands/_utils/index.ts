@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionChoiceData } from "discord.js";
+import { ApplicationCommandOptionChoiceData } from 'discord.js';
 
 /**
  * Filter the choice list based on the user provided autocomplete value.

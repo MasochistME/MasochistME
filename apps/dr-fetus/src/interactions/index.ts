@@ -1,3 +1,3 @@
-export { handleAutocomplete } from "./autocomplete";
-export { handleButtons } from "./buttons";
-export { handleModals } from "./modals";
+export { handleAutocomplete } from './autocomplete';
+export { handleButtons } from './buttons';
+export { handleModals } from './modals';

@@ -1,10 +1,10 @@
-import { CommandObject } from "arcybot";
-import { Badge, Race, Season, Tier } from "@masochistme/sdk/dist/v1/types";
+import { CommandObject } from 'arcybot';
+import { Badge, Race, Season, Tier } from '@masochistme/sdk/dist/v1/types';
 
-import { getCommandsFromAPI, getAllOptionsFromAPI } from "api";
-import { sdk } from "fetus";
+import { getCommandsFromAPI, getAllOptionsFromAPI } from 'api';
+import { sdk } from 'fetus';
 
-import { CacheMember, CacheGame, CacheOption } from "./types";
+import { CacheMember, CacheGame, CacheOption } from './types';
 
 type CacheConfig = {
   botDb?: string;
@@ -25,8 +25,8 @@ export class Cache {
   public commandList: CommandObject[] = [];
 
   constructor(config: CacheConfig) {
-    this.botDb = config.botDb ?? "";
-    this.masochistDb = config.masochistDb ?? "";
+    this.botDb = config.botDb ?? '';
+    this.masochistDb = config.masochistDb ?? '';
   }
 
   private async updateFetus() {

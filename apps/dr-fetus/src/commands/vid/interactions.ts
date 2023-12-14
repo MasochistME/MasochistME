@@ -1,14 +1,14 @@
-import { getErrorEmbed } from "arcybot";
+import { getErrorEmbed } from 'arcybot';
 import {
   ButtonInteraction,
   AutocompleteInteraction,
   ApplicationCommandOptionChoiceData,
-} from "discord.js";
+} from 'discord.js';
 
-import { isMod } from "utils";
-import { getGameChoices } from "commands/_utils/choices";
-import { sdk } from "fetus";
-import { FEATURE_VIDEO } from "consts";
+import { isMod } from 'utils';
+import { getGameChoices } from 'commands/_utils/choices';
+import { sdk } from 'fetus';
+import { FEATURE_VIDEO } from 'consts';
 
 /**
  * Handles autocompletion for attaching a game to the posted video.
@@ -22,7 +22,7 @@ export const vidGameAutocomplete = async (
 
   let choices: ApplicationCommandOptionChoiceData[] = [];
   const focused = interaction.options.getFocused(true);
-  if (focused.name === "game") choices = getGameChoices(focused.value);
+  if (focused.name === 'game') choices = getGameChoices(focused.value);
 
   await interaction.respond(choices);
 };
@@ -47,12 +47,12 @@ export const featureVideo = async (
     return;
   }
 
-  const featuredId = interaction.customId.replace(`${FEATURE_VIDEO}_`, "");
+  const featuredId = interaction.customId.replace(`${FEATURE_VIDEO}_`, '');
   if (featuredId === interaction.customId) {
     // There is no ID attached to the button, cannot feature video
     interaction.reply(
       getErrorEmbed(
-        "Could not feature this video",
+        'Could not feature this video',
         "Could not find a relevant entity in the data base. This won't work without reposting the video again.",
         true,
       ),
@@ -68,8 +68,8 @@ export const featureVideo = async (
   if (!featuredData.acknowledged) {
     interaction.reply(
       getErrorEmbed(
-        "Error",
-        "Could not create a featured post out of this video. Please try again later.",
+        'Error',
+        'Could not create a featured post out of this video. Please try again later.',
         true,
       ),
     );

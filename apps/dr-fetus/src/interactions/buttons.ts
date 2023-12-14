@@ -1,4 +1,4 @@
-import { ButtonInteraction } from "discord.js";
+import { ButtonInteraction } from 'discord.js';
 
 import {
   REGISTRATION_REVIEW,
@@ -6,8 +6,8 @@ import {
   FEATURE_VIDEO,
   RACE_DISQUALIFICATION,
   RaceButton,
-} from "consts";
-import { registrationReview } from "commands/register/interactions";
+} from 'consts';
+import { registrationReview } from 'commands/register/interactions';
 import {
   racesetupConfirm,
   racesetupJoin,
@@ -17,8 +17,8 @@ import {
   raceGiveUp,
   raceDisqualify,
   raceSendStartFormToParticipantMod,
-} from "commands/racesetup/interactions";
-import { featureVideo } from "commands/vid/interactions";
+} from 'commands/racesetup/interactions';
+import { featureVideo } from 'commands/vid/interactions';
 
 export const handleButtons = (interaction: ButtonInteraction) => {
   if (interaction.customId.includes(FEATURE_VIDEO)) {

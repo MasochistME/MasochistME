@@ -1,2 +1,2 @@
-export * from "./api";
-export * from "./memes";
+export * from './api';
+export * from './memes';

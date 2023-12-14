@@ -1,8 +1,8 @@
-import { getSuccessEmbed, DiscordInteraction } from "arcybot";
+import { getSuccessEmbed, DiscordInteraction } from 'arcybot';
 
-import { createError, ErrorAction } from "utils";
-import { sdk } from "fetus";
-import { Options } from "./builder";
+import { createError, ErrorAction } from 'utils';
+import { sdk } from 'fetus';
+import { Options } from './builder';
 
 /**
  * Ends an active season, if such exists.
@@ -25,18 +25,18 @@ export const seasonend = async (
         `Race with the ID **${seasonId.toUpperCase()}** does not exist.`,
       );
     if (specifiedSeason?.endDate)
-      throw new Error("You cannot finish a season which is already finished.");
+      throw new Error('You cannot finish a season which is already finished.');
 
     const response = await sdk.endSeasonById({ seasonId });
 
     if (!response.acknowledged)
       throw new Error(
-        "Could not finish an active season, please try again later.",
+        'Could not finish an active season, please try again later.',
       );
 
     interaction.editReply(
       getSuccessEmbed(
-        "Success",
+        'Success',
         `You officially finished season **${specifiedSeason.name.toUpperCase()}**!`,
       ),
     );

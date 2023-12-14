@@ -1,7 +1,7 @@
-import { DiscordInteraction } from "arcybot";
-import { ButtonInteraction, GuildMemberRoleManager, Role } from "discord.js";
+import { DiscordInteraction } from 'arcybot';
+import { ButtonInteraction, GuildMemberRoleManager, Role } from 'discord.js';
 
-import { getOption } from "utils";
+import { getOption } from 'utils';
 
 /**
  * Checks if the passed string is a link (starts with http).
@@ -9,7 +9,7 @@ import { getOption } from "utils";
  * @return boolean
  */
 export const isLink = (supposedLink: string): boolean =>
-  supposedLink.startsWith("http");
+  supposedLink.startsWith('http');
 
 /**
  * Checks if the user interacting with command interface has the Mod role.
@@ -17,7 +17,7 @@ export const isLink = (supposedLink: string): boolean =>
  * @return boolean
  */
 export const isMod = (interaction: DiscordInteraction | ButtonInteraction) => {
-  const modRole = getOption("modRole");
+  const modRole = getOption('modRole');
   if (modRole && interaction.inGuild()) {
     const isMod = (
       interaction?.member.roles as GuildMemberRoleManager
@@ -33,7 +33,7 @@ export const isMod = (interaction: DiscordInteraction | ButtonInteraction) => {
  * @return string
  */
 export const cenzor = (text: string) => {
-  return Array(text.length).fill("█").join("");
+  return Array(text.length).fill('█').join('');
 };
 
 /**
@@ -45,7 +45,7 @@ export const cenzor = (text: string) => {
 export const shortenString = (strFull: string, maxLength: number) => {
   const str =
     strFull.length >= maxLength
-      ? strFull.substring(0, maxLength - 4) + "..."
+      ? strFull.substring(0, maxLength - 4) + '...'
       : strFull;
   return str;
 };

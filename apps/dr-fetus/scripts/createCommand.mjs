@@ -1,8 +1,8 @@
-import fs from "fs";
-import readline from "readline";
+import fs from 'fs';
+import readline from 'readline';
 
-import chalk from "chalk";
-import Confirm from "prompt-confirm";
+import chalk from 'chalk';
+import Confirm from 'prompt-confirm';
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -12,8 +12,8 @@ const rl = readline.createInterface({
 const init = () => {
   console.clear();
 
-  const question = `${chalk.blue("What is the keyword of your command?")}
-${chalk.white.bold("Name: ")}`;
+  const question = `${chalk.blue('What is the keyword of your command?')}
+${chalk.white.bold('Name: ')}`;
 
   rl.question(question, keyword => {
     const prompt = new Confirm(
@@ -42,7 +42,7 @@ const createCommand = name => {
   if (fs.existsSync(destination)) {
     log.WARN(
       `${chalk.red(
-        "⚠️  Error: ",
+        '⚠️  Error: ',
       )} A component with the name "${command}" already exists.`,
     );
     process.exit(1);
@@ -51,13 +51,13 @@ const createCommand = name => {
   fs.mkdirSync(destination);
   log.INFO(`✓ Created command folder: "${chalk.white.bold(destination)}"`);
 
-  ["logic.ts", "builder.ts", "interactions.ts"].forEach(path => {
+  ['logic.ts', 'builder.ts', 'interactions.ts'].forEach(path => {
     replaceTemplateWithCmdKeyword(source, destination, path, path, command);
     console.log(`✓ Generated ${path} file...`);
   });
 
   fs.appendFileSync(
-    "./src/commands/builders.ts",
+    './src/commands/builders.ts',
     `\r\n
     // TODO Don't forget to edit this!
     //
@@ -65,17 +65,17 @@ const createCommand = name => {
     // export const customCommands = [${command}Builder];`,
   );
   fs.appendFileSync(
-    "./src/commands/logic.ts",
+    './src/commands/logic.ts',
     `\r\n
     // TODO Don't forget to edit this!
     //
     // import { ${command} } from "./${command}/logic";
     // export const commandsFunctions: CommandFn[] = [${command}];`,
   );
-  log.INFO("✓ Exported logic and builder files...");
+  log.INFO('✓ Exported logic and builder files...');
 
   fs.appendFileSync(
-    "./src/interactions/autocomplete.ts",
+    './src/interactions/autocomplete.ts',
     `\r\n
     // TODO Don't forget to edit this!
     // 
@@ -90,11 +90,11 @@ const createCommand = name => {
     //};
     `,
   );
-  log.INFO("✓ Created a sample interaction module...");
+  log.INFO('✓ Created a sample interaction module...');
 
   log.INFO(
-    `${chalk.blue("Command")} ${chalk.green.bold(name)} ${chalk.blue(
-      "created!",
+    `${chalk.blue('Command')} ${chalk.green.bold(name)} ${chalk.blue(
+      'created!',
     )}`,
   );
 };
@@ -114,7 +114,7 @@ const log = {
 
 const errorCb = (dir, err) => {
   if (err) {
-    log.WARN(`⚠️ ${chalk.red("\n\nError: ")} ${err}`);
+    log.WARN(`⚠️ ${chalk.red('\n\nError: ')} ${err}`);
     log.INFO(`⚠️ Undoing changes...`);
 
     fs.rmdirSync(dir, { recursive: true });
@@ -130,7 +130,7 @@ const replaceTemplateWithCmdKeyword = (
   cmdKeyword,
 ) => {
   try {
-    const file = fs.readFileSync(`${sourcePath}/${sourceFileName}`, "utf8");
+    const file = fs.readFileSync(`${sourcePath}/${sourceFileName}`, 'utf8');
     const updatedFile = file.replace(/template/g, cmdKeyword);
     fs.writeFileSync(`${destinationPath}/${destinationFileName}`, updatedFile);
   } catch (error) {
