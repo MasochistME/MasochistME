@@ -38,20 +38,21 @@ export const cheeseBuilder = new SlashCommandBuilder()
     const subcommandWithCommonOptions = getCommonOptions(subcommand)
       .setName(OptionCheeseType.GIVE)
       .setDescription('Give an anti-cheese badge to a member.')
+      .addNumberOption(option =>
+        option
+          .setName(Options.POINTS)
+          .setDescription(
+            'Amount of points (will be changed to always negative)',
+          )
+          .setRequired(true),
+      )
       .addStringOption(option =>
         option
           .setName(Options.REASON)
           .setDescription(
             'Reason why this member deserves a filthy cheater shame badge',
           )
-          .setRequired(true)
           .setAutocomplete(true),
-      )
-      .addNumberOption(option =>
-        option
-          .setName(Options.POINTS)
-          .setDescription('Amount of negative points')
-          .setRequired(true),
       );
     return subcommandWithCommonOptions;
   })

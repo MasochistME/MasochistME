@@ -49,6 +49,18 @@ export const getMemberNameById = (id?: string | null): string => {
   return member?.name ?? UNKNOWN_NAME;
 };
 
+export const getMemberDiscordBySteamId = (steamId: string): string | null => {
+  if (!steamId) return null;
+  const member = cache.members.find(m => m.id === steamId);
+  return member?.discordId ?? null;
+};
+
+export const getMemberSteamByDiscordId = (discordId: string): string | null => {
+  if (!discordId) return null;
+  const member = cache.members.find(m => m.discordId === discordId);
+  return (member?.id as string) ?? null;
+};
+
 export const getIsUserRegistered = async (discordId: string) => {
   try {
     const member = await sdk.getMemberById({ discordId });

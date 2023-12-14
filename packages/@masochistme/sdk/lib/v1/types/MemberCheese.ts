@@ -23,7 +23,7 @@ export type MemberCheese = WithId<{
    */
   isModAssigned: boolean;
   /**
-   * Selectable reason for self-assigning a cheese badge.
+   * Selectable reason for self-assigning a cheese badge. Will be empty string if none provided.
    */
   reason: string;
   /**

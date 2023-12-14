@@ -19,17 +19,19 @@ export const giveCheeseToMemberById = async (
     const collectionMemberCheese =
       db.collection<Omit<MemberCheese, '_id'>>('memberCheese');
     const { memberId } = req.params;
+    const { gameId, ...rest } = req.body;
 
     const memberCheeseBadge: Omit<MemberCheese, '_id'> = {
-      ...req.body,
+      ...rest,
       memberId,
+      gameId,
       unlocked: new Date(),
     };
 
-    console.log(memberCheeseBadge);
-
-    const responseCheeseGrant = await collectionMemberCheese.insertOne(
-      memberCheeseBadge,
+    const responseCheeseGrant = await collectionMemberCheese.updateOne(
+      { memberId, gameId },
+      { $set: memberCheeseBadge },
+      { upsert: true },
     );
 
     if (!responseCheeseGrant.acknowledged) {
