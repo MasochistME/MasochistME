@@ -11,14 +11,17 @@ import {
   getMembersList,
   getMemberById,
   updateMemberById,
+  getMemberAchievementList,
   getMemberAwardList,
   getMemberBadgeList,
+  getMemberCheeseList,
   getMemberGameList,
-  getMemberAchievementList,
-  giveBadgeToMemberById,
   giveAwardToMemberById,
-  revokeBadgeFromMemberById,
+  giveBadgeToMemberById,
+  giveCheeseToMemberById,
   revokeAwardFromMemberById,
+  revokeBadgeFromMemberById,
+  revokeCheeseFromMemberById,
 } from 'v1/api/members';
 import {
   getBadgesList,
@@ -172,6 +175,22 @@ export class SDK {
   >(
     args: Head<T>,
   ) => revokeBadgeFromMemberById(args, this.BASE_URL);
+
+  /*********************************
+   *         MEMBER CHEESE         *
+   *********************************/
+
+  public getMemberCheeseList = <T extends typeof getMemberCheeseList>(
+    args: Head<T>,
+  ) => getMemberCheeseList(args, this.BASE_URL);
+  public giveCheeseToMemberById = <T extends typeof giveCheeseToMemberById>(
+    args: Head<T>,
+  ) => giveCheeseToMemberById(args, this.BASE_URL);
+  public revokeCheeseFromMemberById = <
+    T extends typeof revokeCheeseFromMemberById,
+  >(
+    args: Head<T>,
+  ) => revokeCheeseFromMemberById(args, this.BASE_URL);
 
   /**************************
    *         AWARDS         *

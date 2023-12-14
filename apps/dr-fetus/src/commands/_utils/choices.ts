@@ -1,7 +1,8 @@
-import { cache } from "fetus";
-import { getFilteredChoices } from "commands/_utils";
-import { shortenString } from "utils";
-import { Console } from "console";
+import { cache } from 'fetus';
+import { getFilteredChoices } from 'commands/_utils';
+import { shortenString } from 'utils';
+import { Console } from 'console';
+import { CacheOption } from 'cache';
 
 /**
  * Filter the badge choice list based on the user provided autocomplete value.
@@ -11,7 +12,7 @@ import { Console } from "console";
 export const getBadgeChoices = (focused: string) => {
   const choices = cache.badges.map(badge => {
     const game = cache.games.find(g => g.id === badge.gameId);
-    const nameFull = `${(game?.name ?? "UNKNOWN GAME").toUpperCase()} - ${
+    const nameFull = `${(game?.name ?? 'UNKNOWN GAME').toUpperCase()} - ${
       badge.name
     } (${badge.description})`;
     const name = shortenString(nameFull, 100);
@@ -71,6 +72,24 @@ export const getRaceChoices = (focused: string) => {
       value: String(race._id),
     };
   });
+
+  return getFilteredChoices(choices, focused);
+};
+
+/**
+ * Filter the list of reasons for getting a cheese badge based on the user provided autocomplete value.
+ * @param focused string - user provided autocomplete value
+ * @return ApplicationCommandOptionChoiceData[]
+ */
+export const getCheeseReasonChoices = (focused: string) => {
+  const cheeseReasons = (cache.options.find(
+    ({ option }) => option === 'cheese_reasons',
+  ) ?? []) as CacheOption & { value: string[] };
+
+  const choices = cheeseReasons.value.map((reason: string) => ({
+    name: reason,
+    value: reason,
+  }));
 
   return getFilteredChoices(choices, focused);
 };

@@ -26,7 +26,7 @@ import { MemberCheese, ResponseError } from 'v1/types';
  * @param params.memberId - ID of member which is supposed to get an award.
  */
 export const giveCheeseToMemberById = async (
-  params: { memberId: string; gameId: number; points: number; reason: string },
+  params: Omit<MemberCheese, '_id' | 'unlocked'>,
   /** @ignore */
   BASE_URL: string,
 ): Promise<InsertOneResult<MemberCheese>> => {

@@ -12,7 +12,7 @@ import { ResponseError } from 'v1/types';
  * ## Usage
  *
  * ```ts
- * const gameId: string = "65300";
+ * const gameId: number = 65300;
  * const memberId: string = "2938274356793";
  *
  * const {
@@ -25,7 +25,7 @@ import { ResponseError } from 'v1/types';
  * @param params.memberId - ID of member which is supposed to have cheese revoked.
  */
 export const revokeCheeseFromMemberById = async (
-  params: { memberId: string; gameId: string },
+  params: { memberId: string; gameId: number },
   /** @ignore */
   BASE_URL: string,
 ): Promise<DeleteResult> => {

@@ -26,6 +26,8 @@ export const giveCheeseToMemberById = async (
       unlocked: new Date(),
     };
 
+    console.log(memberCheeseBadge);
+
     const responseCheeseGrant = await collectionMemberCheese.insertOne(
       memberCheeseBadge,
     );
