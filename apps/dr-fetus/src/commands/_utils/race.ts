@@ -5,23 +5,25 @@ import {
   RaceScoreBased,
   RaceTimeBased,
   RaceType,
-} from "@masochistme/sdk/dist/v1/types";
-import { getErrorEmbed, getInfoEmbed, log } from "arcybot";
-import dayjs from "dayjs";
+} from '@masochistme/sdk/dist/v1/types';
+import { SCORE_RACE_WARNINGS } from '@masochistme/sdk/dist/v1';
 
-import { RACE_TIMEOUT, RACE_RESULTS_TIMEOUT, Room } from "consts";
+import { getErrorEmbed, getInfoEmbed, log } from 'arcybot';
+import dayjs from 'dayjs';
+
+import { RACE_TIMEOUT, RACE_RESULTS_TIMEOUT, Room } from 'consts';
 import {
   getChannelByKey,
   getDateFromDelay,
   getDMChannel,
   getModChannel,
   getTimestampFromDate,
-} from "utils";
-import { bot, sdk } from "fetus";
+} from 'utils';
+import { bot, sdk } from 'fetus';
 
-import { RaceData } from "commands/racesetup/logic";
-import { raceReadyToGo } from "commands/racesetup/interactions/playerActions";
-import { raceFinalize } from "commands/racesetup/interactions/raceFinalize";
+import { RaceData } from 'commands/racesetup/logic';
+import { raceReadyToGo } from 'commands/racesetup/interactions/playerActions';
+import { raceFinalize } from 'commands/racesetup/interactions/raceFinalize';
 
 /**
  * Executes every minute to check if any race needs to be started or finished.
@@ -38,8 +40,8 @@ export const handleRaceTimer = async () => {
     log.WARN(err);
     getModChannel(true)?.send(
       getErrorEmbed(
-        "ERROR - RACE TIMER",
-        "There was something wrong trying to check the race status.",
+        'ERROR - RACE TIMER',
+        'There was something wrong trying to check the race status.',
       ),
     );
   } finally {
@@ -60,7 +62,7 @@ const handleRaceStart = async (race: Race) => {
     dayjs(startDate).diff(new Date()) <= 0 &&
     dayjs(endDate).diff(new Date()) > 0;
   if (!raceShouldStart) return;
-  log.INFO("Detected a race to begin...");
+  log.INFO('Detected a race to begin...');
   const response = await sdk.updateRaceById({
     raceId,
     race: { isActive: true },
@@ -68,7 +70,7 @@ const handleRaceStart = async (race: Race) => {
   if (!response.acknowledged) {
     getModChannel(true)?.send(
       getErrorEmbed(
-        "ERROR - RACE STARTING...",
+        'ERROR - RACE STARTING...',
         `Race **${name.toUpperCase()}** should start right now, but something fucked up and it could not start.`,
       ),
     );
@@ -84,13 +86,18 @@ const handleRaceStart = async (race: Race) => {
 const handleRaceFinish = async (race: Race) => {
   const { startDate, endDate, isActive, isDone, _id } = race;
   const raceId = String(_id);
+  // Race enters end period when start date and end date passed.
   const raceEnded =
     dayjs(startDate).diff(new Date()) <= 0 &&
     dayjs(endDate).diff(new Date()) <= 0;
-  const raceEndPeriodEnded =
-    -1 * dayjs(endDate).diff(new Date()) >= RACE_RESULTS_TIMEOUT;
-
-  const raceShouldEnterEndPeriod = raceEnded && isActive && !isDone;
+  // This is time of race grace period ending.
+  const endDateWithGrace = dayjs(endDate).add(RACE_RESULTS_TIMEOUT, 'ms');
+  // This checks if grace period ended.
+  const raceEndPeriodEnded = dayjs(endDateWithGrace).diff(Date.now()) <= 0;
+  // This checks if race should end grace period
+  const raceShouldEnterEndPeriod =
+    raceEnded && isActive && !isDone && !raceEndPeriodEnded;
+  // This check if race should end definitely
   const raceShouldEnd = raceEnded && !isActive && !isDone && raceEndPeriodEnded;
 
   if (raceShouldEnterEndPeriod) {
@@ -98,14 +105,16 @@ const handleRaceFinish = async (race: Race) => {
       `Race ends - entering the ${RACE_RESULTS_TIMEOUT}ms long grace period...`,
     );
     try {
+      const msTillEnd = ((Date.now() + RACE_RESULTS_TIMEOUT) / 1000).toFixed(0);
+      const timeTillEnd = `<t:${msTillEnd}:R>`;
       getChannelByKey(Room.RACE_CURRENT)?.send(
         getInfoEmbed(
-          "RACE FINISHING SOON",
-          `You cannot join the race anymore, but if you are in the middle of your run, you still have ${RACE_RESULTS_TIMEOUT}ms to finish. After that time the race is closed and the results will get posted.`,
+          'RACE FINISHING SOON',
+          `You cannot join the race anymore, but if you are in the middle of your run, you still have grace period to finish. The grace period ends ${timeTillEnd}. After that time the race is closed and the results will get posted.`,
         ),
       );
     } catch (e) {
-      log.WARN("Sending the warning about race ending failed!");
+      log.WARN('Sending the warning about race ending failed!');
       console.log(e);
     }
     const response = await sdk.updateRaceById({
@@ -115,7 +124,7 @@ const handleRaceFinish = async (race: Race) => {
     if (!response.acknowledged) {
       getModChannel(true)?.send(
         getErrorEmbed(
-          "ERROR - RACE FINISHING...",
+          'ERROR - RACE FINISHING...',
           `Race **${race?.name}** should finish right now, but something fucked up and it could not finish.`,
         ),
       );
@@ -137,11 +146,15 @@ const handleScoreRace = async (race: RaceScoreBased) => {
   })) as RacePlayerScore[];
   await handleScoreRaceWarn(
     race,
-    raceParticipants.filter(p => p.startDate && !p.endDate && !p.isWarned),
+    raceParticipants.filter(
+      p => p.startDate && !p.endDate && p.warningsLeft > 0,
+    ),
   );
   await handleScoreRaceDNF(
     race,
-    raceParticipants.filter(p => p.startDate && !p.endDate && p.isWarned),
+    raceParticipants.filter(
+      p => p.startDate && !p.endDate && p.warningsLeft === 0,
+    ),
   );
 };
 
@@ -162,15 +175,34 @@ const handleScoreRaceWarn = async (
       const participantPlayTime =
         getTimestampFromDate(new Date()) -
         getTimestampFromDate(participant.startDate);
-      const shouldPlayerBeWarned =
+
+      // First player warning, happening at the time set up by race owner
+      const isPlayerFirstWarning =
+        participant.warningsLeft === SCORE_RACE_WARNINGS &&
         playLimit * 1000 - participantPlayTime <= warningPeriod * 1000;
+      // Second player warning, always occuring a minute before the end of the run
+      const isPlayerLastWarning =
+        participant.warningsLeft === 1 &&
+        playLimit * 1000 - participantPlayTime <= 1000;
+
+      // Get the time until the end of the race to display for the player
+      const warningGraceTime =
+        (isPlayerFirstWarning ? warningPeriod : 1) * 1000;
+
+      // Player should be warned two times, this checks if it's any of those times
+      const shouldPlayerBeWarned = isPlayerFirstWarning || isPlayerLastWarning;
+
       if (shouldPlayerBeWarned) {
+        const msTillEnd = ((Date.now() + warningGraceTime) / 1000).toFixed(0);
+        const timeTillEnd = `<t:${msTillEnd}:R>`;
         await getDMChannel(participant.discordId)?.send(
           getInfoEmbed(
-            "Your race attempt ends soon",
-            `You have ${
-              warningPeriod / 60
-            } minutes left before the end of your run.
+            isPlayerLastWarning
+              ? 'ONE MINUTE LEFT UNTIL THE END OF RACE!'
+              : 'Your race attempt ends soon',
+            `Your run ends ${
+              isPlayerLastWarning ? 'exactly in ONE MINUTE' : timeTillEnd
+            }.
               \n**You need to physically click the END button before the race timer runs out.** If you forget to do this, you'll get DNF.
               \n[DEBUG] Timestamp: \`\`${getTimestampFromDate(new Date())}\`\``,
           ),
@@ -178,8 +210,8 @@ const handleScoreRaceWarn = async (
         const { acknowledged } = await sdk.updateRaceByParticipantId({
           raceId,
           memberId: participant.discordId,
-          update: { isWarned: true } as Partial<
-            Omit<RacePlayerScore, "_id" | "type">
+          update: { warningsLeft: participant.warningsLeft - 1 } as Partial<
+            Omit<RacePlayerScore, '_id' | 'type'>
           >,
         });
         if (!acknowledged)
@@ -188,7 +220,7 @@ const handleScoreRaceWarn = async (
     });
   } catch (err: any) {
     getModChannel(true)?.send(
-      getErrorEmbed("ERROR - WARNING PARTICIPANT...", err),
+      getErrorEmbed('ERROR - WARNING PARTICIPANT...', err),
     );
   }
 };
@@ -203,7 +235,7 @@ const handleScoreRaceDNF = async (
   raceParticipants: RacePlayerScore[],
 ) => {
   try {
-    const { playLimit, _id } = race;
+    const { playLimit, warningPeriod, _id } = race;
     const raceId = String(_id);
     const botId = bot.botClient.user?.id;
 
@@ -211,11 +243,12 @@ const handleScoreRaceDNF = async (
       const participantPlayTime =
         getTimestampFromDate(new Date()) -
         getTimestampFromDate(participant.startDate);
-      const shouldPlayerBeDisqualified = participantPlayTime > playLimit * 1000;
+      const shouldPlayerBeDisqualified =
+        participantPlayTime >= (playLimit + warningPeriod) * 1000;
       if (shouldPlayerBeDisqualified) {
         await getDMChannel(participant.discordId)?.send(
           getErrorEmbed(
-            "Your timer ran out",
+            'Your timer ran out',
             `The time of your run has ended and you didn't physically click the END button, therefore you got disqualified.
               \n[DEBUG] Timestamp: \`\`${getTimestampFromDate(new Date())}\`\``,
           ),
@@ -224,8 +257,8 @@ const handleScoreRaceDNF = async (
           dnf: true,
           disqualified: true,
           disqualifiedBy: botId,
-          disqualificationReason: "Timer run out",
-        } as Partial<Omit<RacePlayerScore, "_id" | "type">>;
+          disqualificationReason: 'Timer run out',
+        } as Partial<Omit<RacePlayerScore, '_id' | 'type'>>;
         const { acknowledged } = await sdk.updateRaceByParticipantId({
           raceId,
           memberId: participant.discordId,
@@ -248,7 +281,7 @@ const handleScoreRaceDNF = async (
     });
   } catch (err: any) {
     getModChannel(true)?.send(
-      getErrorEmbed("ERROR - WARNING PARTICIPANT...", err),
+      getErrorEmbed('ERROR - WARNING PARTICIPANT...', err),
     );
   }
 };
@@ -257,7 +290,7 @@ const handleScoreRaceDNF = async (
  * Draft race - after it's set up by moderator but before it's confirmed
  */
 export const draftRace: {
-  race: Omit<Race, "_id" | "isActive" | "isDone"> | null;
+  race: Omit<Race, '_id' | 'isActive' | 'isDone'> | null;
 } = {
   race: null,
 };
@@ -267,7 +300,7 @@ export const draftRace: {
  * @param race Omit<Race, "_id">
  */
 export const setDraftRace = (
-  race?: Omit<Race, "_id" | "isActive" | "isDone">,
+  race?: Omit<Race, '_id' | 'isActive' | 'isDone'>,
 ) => {
   if (race) draftRace.race = race;
   else draftRace.race = null;
@@ -279,7 +312,7 @@ export const setDraftRace = (
  */
 export const getDraftRace = (): Omit<
   Race,
-  "_id" | "isActive" | "isDone"
+  '_id' | 'isActive' | 'isDone'
 > | null => {
   return draftRace.race;
 };
@@ -334,8 +367,8 @@ export const getParticipantRaceTime = (
  * @returns medal lol
  */
 export const getMedal = (place: number) => {
-  if (place === 0) return "🥇";
-  if (place >= 1 && place < 3) return "🥈";
-  if (place >= 3 && place < 6) return "🥉";
-  return "";
+  if (place === 0) return '🥇';
+  if (place >= 1 && place < 3) return '🥈';
+  if (place >= 3 && place < 6) return '🥉';
+  return '';
 };

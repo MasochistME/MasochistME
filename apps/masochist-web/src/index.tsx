@@ -12,8 +12,6 @@ import { AppContextProvider } from 'context';
 
 import { App } from './App';
 
-import './index.css';
-
 // import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 dayjs.extend(customParseFormat);

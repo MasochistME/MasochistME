@@ -89,7 +89,7 @@ ProgressBar.Percentage = styled.div<{ colorTokens: ColorTokens }>`
   line-height: var(--size-11);
   font-size: var(--font-size-11);
   font-family: var(--font-raleway);
-  font-weight: bold;
+  font-weight: 600;
   letter-spacing: var(--size-1);
   color: ${({ colorTokens }) => colorTokens['core-primary-text']};
   border-radius: var(--border-radius-8);

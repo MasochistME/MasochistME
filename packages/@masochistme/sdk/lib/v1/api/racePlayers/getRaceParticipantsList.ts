@@ -1,11 +1,11 @@
 import axios, { AxiosResponse } from 'axios';
 
 import {
-	RacePlayer,
-	Sort,
-	ResponseError,
-	RacePlayerScore,
-	RacePlayerTime,
+  RacePlayer,
+  Sort,
+  ResponseError,
+  RacePlayerScore,
+  RacePlayerTime,
 } from 'v1/types';
 
 /**
@@ -38,38 +38,38 @@ import {
  * @param params.limit - How many race participants will get returned.
  */
 export const getRaceParticipantsList = async (
-	params: RaceParticipantsListParams,
-	/** @ignore */
-	BASE_URL: string,
+  params: RaceParticipantsListParams,
+  /** @ignore */
+  BASE_URL: string,
 ): Promise<RacePlayer[]> => {
-	const { raceId, filter, sort, limit } = params;
-	const url = `${BASE_URL}/races/race/${raceId}/participants/list`;
+  const { raceId, filter, sort, limit } = params;
+  const url = `${BASE_URL}/races/race/${raceId}/participants/list`;
 
-	const racePlayerResponse = await axios.post<
-		RacePlayer[] | ResponseError,
-		AxiosResponse<RacePlayer[] | ResponseError>
-	>(url, { filter, sort, limit }, { validateStatus: () => true });
+  const racePlayerResponse = await axios.post<
+    RacePlayer[] | ResponseError,
+    AxiosResponse<RacePlayer[] | ResponseError>
+  >(url, { filter, sort, limit }, { validateStatus: () => true });
 
-	const { status, data } = racePlayerResponse;
+  const { status, data } = racePlayerResponse;
 
-	if (status !== 200) throw new Error((data as ResponseError).error);
-	return data as RacePlayer[];
+  if (status !== 200) throw new Error((data as ResponseError).error);
+  return data as RacePlayer[];
 };
 
 export type RaceParticipantsListParams = {
-	raceId: string;
-	filter?:
-		| Partial<Pick<RacePlayerTime, 'dnf' | 'disqualified' | 'disqualifiedBy'>>
-		| Partial<
-				Pick<
-					RacePlayerScore,
-					'dnf' | 'disqualified' | 'disqualifiedBy' | 'isWarned'
-				>
-		  >;
-	sort?: {
-		[key in keyof Partial<
-			Pick<RacePlayerScore, 'startDate' | 'endDate' | 'score'>
-		>]: Sort;
-	};
-	limit?: number;
+  raceId: string;
+  filter?:
+    | Partial<Pick<RacePlayerTime, 'dnf' | 'disqualified' | 'disqualifiedBy'>>
+    | Partial<
+        Pick<
+          RacePlayerScore,
+          'dnf' | 'disqualified' | 'disqualifiedBy' | 'warningsLeft'
+        >
+      >;
+  sort?: {
+    [key in keyof Partial<
+      Pick<RacePlayerScore, 'startDate' | 'endDate' | 'score'>
+    >]: Sort;
+  };
+  limit?: number;
 };

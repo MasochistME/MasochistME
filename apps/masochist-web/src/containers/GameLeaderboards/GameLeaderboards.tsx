@@ -162,7 +162,7 @@ const StyledGameLeaderboardsMemberUsername = styled.div<{
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-weight: bold;
+  font-weight: 600;
   font-size: ${({ isCompact }) =>
     isCompact ? 'var(--font-size-14)' : 'var(--font-size-16)'};
   @media (max-width: ${media.smallTablets}) {

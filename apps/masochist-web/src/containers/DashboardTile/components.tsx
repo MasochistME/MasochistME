@@ -39,7 +39,7 @@ LogCompact.Link = (props: Props) => {
 
 const StyledLogLink = styled.span<{ colorTokens: ColorTokens }>`
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 600;
   &:hover {
     color: ${({ colorTokens }) => colorTokens['semantic-color--link-hover']};
   }

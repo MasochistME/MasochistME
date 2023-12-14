@@ -14,6 +14,7 @@ type Props = {
   toggled?: boolean;
   tooltip?: React.ReactNode;
   size?: Size;
+  styledIcon?: boolean;
   variant?: Variant;
   className?: string;
   onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
@@ -24,6 +25,7 @@ export const Button = (props: Props) => {
     label,
     icon,
     iconPlacement = 'left',
+    styledIcon = false,
     disabled = false,
     toggled = false,
     tooltip,
@@ -37,7 +39,7 @@ export const Button = (props: Props) => {
   return (
     <Tooltip content={tooltip}>
       <StyledButton
-        iconOnly={!label}
+        iconOnly={!label && !styledIcon}
         size={size}
         disabled={disabled}
         toggled={toggled}
@@ -96,7 +98,7 @@ const StyledButton = styled.button.attrs((props: Props) => {
     return 'var(--font-size-16)';
   }};
   font-family: var(--font-raleway);
-  font-weight: 600;
+  font-weight: 500;
   background-color: ${({ iconOnly, variant, colorTokens }) => {
     if (iconOnly) return 'transparent';
     if (variant === Variant.DEFAULT)

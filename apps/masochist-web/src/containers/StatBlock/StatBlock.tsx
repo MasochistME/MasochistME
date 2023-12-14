@@ -82,7 +82,6 @@ const StyledStatBlock = styled(Flex)<{
 const StyledStatBlockLabel = styled.span`
   line-height: var(--size-24);
   font-size: var(--font-size-24);
-  font-weight: bold;
   white-space: nowrap;
   @media (max-width: ${media.tablets}) {
     font-size: var(--font-size-20);
@@ -92,7 +91,6 @@ const StyledStatBlockLabel = styled.span`
 const StyledStatBlockSublabel = styled.span<{ tierColor: string }>`
   line-height: var(--size-14);
   font-size: var(--font-size-14);
-  font-weight: bold;
   color: ${({ tierColor }) => tierColor}bb;
   white-space: nowrap;
   @media (max-width: ${media.smallNetbooks}) {
@@ -101,7 +99,7 @@ const StyledStatBlockSublabel = styled.span<{ tierColor: string }>`
 `;
 
 StatBlock.Title = styled(Flex)`
-  font-weight: bold;
+  font-weight: 600;
 `;
 
 StatBlock.Subtitle = styled(Flex)`

@@ -138,7 +138,7 @@ PodiumItem.Username = styled(Link)<{
 
 PodiumItem.Score = styled.span<{ colorTokens: ColorTokens }>`
   font-size: var(--font-size-16);
-  font-weight: bold;
+  font-weight: 600;
   font-family: var(--font-dosis);
   border-radius: var(--border-radius-32);
 `;

@@ -4,32 +4,32 @@ import {
   ButtonStyle,
   APIEmbed,
   APIEmbedField,
-} from "discord.js";
-import { DiscordInteraction, getInfoEmbed } from "arcybot";
+} from 'discord.js';
+import { DiscordInteraction, getInfoEmbed } from 'arcybot';
 import {
   Race,
   RaceScoreBased,
   RaceTimeBased,
   RaceType,
-} from "@masochistme/sdk/dist/v1/types";
-import dayjs from "dayjs";
+} from '@masochistme/sdk/dist/v1/types';
+import dayjs from 'dayjs';
 
-import { cache, sdk } from "fetus";
-import { RACE_CONFIRMATION } from "consts";
-import { isLink, getDiscordTimestamp, createError, ErrorAction } from "utils";
-import { getRace, setDraftRace } from "commands/_utils/race";
+import { cache, sdk } from 'fetus';
+import { RACE_CONFIRMATION } from 'consts';
+import { isLink, getDiscordTimestamp, createError, ErrorAction } from 'utils';
+import { getRace, setDraftRace } from 'commands/_utils/race';
 
-import { OptionRaceType, Options } from "./builder";
+import { OptionRaceType, Options } from './builder';
 import {
   errorEndsBeforeStart,
   errorRaceInThePast,
   errorNegativeTimers,
   errorWrongDownloadLink,
-} from "./errors";
+} from './errors';
 
 export type RaceData<T> = Omit<
   T,
-  "startDate" | "endDate" | "isActive" | "isDone" | "_id"
+  'startDate' | 'endDate' | 'isActive' | 'isDone' | '_id'
 > & {
   startsIn: number;
   endsAfter: number;
@@ -52,8 +52,8 @@ export const racesetup = async (
   );
 
   // Handle all the common errors between time and score based races
-  if (icon && !icon.contentType?.includes("image/")) {
-    throw "This type of file is not supported as a race icon. You need to upload an image.";
+  if (icon && !icon.contentType?.includes('image/')) {
+    throw 'This type of file is not supported as a race icon. You need to upload an image.';
   }
   if (startsIn + endsAfter <= 0) {
     return errorEndsBeforeStart(interaction);
@@ -72,7 +72,7 @@ export const racesetup = async (
     return racesetupTimeBased(interaction);
   if (raceType === OptionRaceType.SCORE_BASED)
     return racesetupScoreBased(interaction);
-  throw "Selected race type is not supported, please try again.";
+  throw 'Selected race type is not supported, please try again.';
 };
 
 /**
@@ -122,7 +122,7 @@ const racesetupTimeBased = async (
     setDraftRace(race);
     interaction.reply(
       getInfoEmbed(
-        "Race draft saved!",
+        'Race draft saved!',
         "I've sent you a confirmation message, check your DMs.",
       ),
     );
@@ -191,7 +191,7 @@ const racesetupScoreBased = async (
     setDraftRace(race);
     interaction.reply(
       getInfoEmbed(
-        "Race draft saved!",
+        'Race draft saved!',
         "I've sent you a confirmation message, check your DMs.",
       ),
     );
@@ -212,11 +212,11 @@ const racesetupScoreBased = async (
 const getRaceConfirmationButtons = () => {
   const buttonConfirm = new ButtonBuilder()
     .setCustomId(`${RACE_CONFIRMATION}_CONFIRM`)
-    .setLabel("Confirm")
+    .setLabel('Confirm')
     .setStyle(ButtonStyle.Success);
   const buttonReject = new ButtonBuilder()
     .setCustomId(`${RACE_CONFIRMATION}_REJECT`)
-    .setLabel("Reject")
+    .setLabel('Reject')
     .setStyle(ButtonStyle.Danger);
   const buttonBar = new ActionRowBuilder<ButtonBuilder>().addComponents(
     buttonConfirm,
@@ -232,68 +232,68 @@ const getRaceConfirmationButtons = () => {
  * @return APIEmbed
  */
 const getRaceConfirmationEmbed = async (
-  race: Omit<Race, "_id" | "isActive" | "isDone">,
+  race: Omit<Race, '_id' | 'isActive' | 'isDone'>,
 ) => {
   const season = race.season
     ? await sdk.getSeasonById({ seasonId: race.season })
     : null;
-  const seasonName = season?.name ?? "None";
+  const seasonName = season?.name ?? 'None';
 
   const fields: APIEmbedField[] = [
     {
-      name: "Name",
+      name: 'Name',
       value: race.name,
       inline: true,
     },
-    { name: "Race type", value: race.type, inline: true },
+    { name: 'Race type', value: race.type, inline: true },
     {
-      name: "Instructions",
+      name: 'Instructions',
       value: race.instructions,
     },
     {
-      name: "Objectives",
+      name: 'Objectives',
       value: race.objectives,
     },
     {
-      name: "Start time",
+      name: 'Start time',
       value: getDiscordTimestamp(race.startDate),
       inline: true,
     },
     {
-      name: "Finish time",
+      name: 'Finish time',
       value: getDiscordTimestamp(race.endDate),
       inline: true,
     },
     {
-      name: "Download link",
+      name: 'Download link',
       value: race.downloadLink,
     },
     {
-      name: "Download grace period",
+      name: 'Download grace period',
       value: `${race.downloadGrace} s`,
       inline: true,
     },
     {
-      name: "Screenshot upload grace period",
+      name: 'Screenshot upload grace period',
       value: `${race.uploadGrace} s`,
       inline: true,
     },
     ...(race.type === RaceType.SCORE_BASED
       ? [
           {
-            name: "Play time limit",
+            name: 'Play time limit',
             value: `${(race as RaceScoreBased).playLimit / 60} minutes`,
             inline: true,
           },
         ]
       : []),
     {
-      name: "Season",
+      name: 'Season',
       value: seasonName,
       inline: true,
     },
     {
-      name: "Owner",
+      name: 'Owner',
       value: `<@${race.owner}>`,
       inline: true,
     },
@@ -303,7 +303,7 @@ const getRaceConfirmationEmbed = async (
             name: "Owner's time",
             value: dayjs
               .duration(((race as RaceTimeBased)?.ownerTime ?? 0) * 1000)
-              .format("H:mm:ss.SSS"),
+              .format('H:mm:ss.SSS'),
             inline: true,
           },
         ]

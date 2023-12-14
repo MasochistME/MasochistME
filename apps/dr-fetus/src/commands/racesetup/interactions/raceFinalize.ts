@@ -1,11 +1,11 @@
-import { RacePlayer } from "@masochistme/sdk/dist/v1/types";
-import { getErrorEmbed, log } from "arcybot";
-import { Room } from "consts";
-import { APIEmbed } from "discord.js";
+import { RacePlayer } from '@masochistme/sdk/dist/v1/types';
+import { getErrorEmbed, log } from 'arcybot';
+import { Room } from 'consts';
+import { APIEmbed } from 'discord.js';
 
-import { sdk } from "fetus";
-import { getChannelByKey, getModChannel } from "utils";
-import { getMedal } from "commands/_utils/race";
+import { sdk } from 'fetus';
+import { getChannelByKey, getModChannel } from 'utils';
+import { getMedal } from 'commands/_utils/race';
 
 /**
  * Aggregates and sends the results after race finish.
@@ -14,7 +14,7 @@ import { getMedal } from "commands/_utils/race";
  */
 export const raceFinalize = async (raceId: string): Promise<void> => {
   try {
-    log.INFO("Detected a race to end...");
+    log.INFO('Detected a race to end...');
 
     const participantsOld = await sdk.getRaceParticipantsList({
       raceId,
@@ -35,12 +35,12 @@ export const raceFinalize = async (raceId: string): Promise<void> => {
     const leaderboards = (race.leaderboards ?? [])
       .slice(0, 10)
       .map((leader: RacePlayer, index: number) => {
-        const isLeader = leader.discordId === race.owner ? "(owner)" : "";
+        const isLeader = leader.discordId === race.owner ? '(owner)' : '';
         return `\`\`#${index + 1}\`\`. \`\`${leader.score}\`\` - <@${
           leader.discordId
         }> ${getMedal(index)} ${isLeader}`;
       })
-      .join("\n");
+      .join('\n');
 
     const raceLeaderboardsEmbed: APIEmbed = {
       title: `🏁 ${race.name.toUpperCase()}`,
@@ -48,14 +48,14 @@ export const raceFinalize = async (raceId: string): Promise<void> => {
       fields: [
         {
           name: `Leaderboards`,
-          value: leaderboards?.length ? leaderboards : "—",
+          value: leaderboards?.length ? leaderboards : '—',
         },
         {
           name: `Link to the game`,
           value: race.downloadLink,
         },
         {
-          name: "Statistics",
+          name: 'Statistics',
           value: `- **${participated}** members signed in\n- **${finished}** members finished (**${finishedPercentage}%** completion ratio)\n- **${disqualified}** members were disqualified (**${disqualifiedPercentage}%** disqualification ratio)\n\nTo see participants above 10th place use \`\`/race\`\` command.`,
         },
       ],
@@ -69,7 +69,7 @@ export const raceFinalize = async (raceId: string): Promise<void> => {
     if (!response.acknowledged) {
       getModChannel(true)?.send(
         getErrorEmbed(
-          "ERROR - RACE FINALIZING...",
+          'ERROR - RACE FINALIZING...',
           `Race **${race?.name}** should ultimately finalize right now, but something fucked up and it could not.`,
         ),
       );

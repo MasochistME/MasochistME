@@ -1,10 +1,11 @@
-import { DiscordInteraction, getInfoEmbed } from "arcybot";
-import { APIEmbed, APIEmbedField } from "discord.js";
-import { RaceWithParticipants } from "@masochistme/sdk/dist/v1/types";
+import { DiscordInteraction, getInfoEmbed } from 'arcybot';
+import { APIEmbed, APIEmbedField } from 'discord.js';
+import { RaceWithParticipants } from '@masochistme/sdk/dist/v1/types';
 
-import { sdk } from "fetus";
-import { splitArrayToChunks, createError, ErrorAction } from "utils";
-import { getMedal } from "commands/_utils/race";
+import { sdk } from 'fetus';
+import { splitArrayToChunks, createError, ErrorAction } from 'utils';
+import { getMedal } from 'commands/_utils/race';
+import { isRaceFinished } from 'commands/racesetup/interactions/playerActions/__common';
 
 /**
  * Displays info about an ongoing or soon starting race, if it exists.
@@ -14,14 +15,13 @@ import { getMedal } from "commands/_utils/race";
 export const race = async (interaction: DiscordInteraction): Promise<void> => {
   await interaction.deferReply();
 
-  const raceId = interaction.options.getString("race", true);
-  if (!raceId) throw "The selected race apparently does not exist.";
+  const raceId = interaction.options.getString('race', true);
+  if (!raceId) throw 'The selected race apparently does not exist.';
 
   try {
     const race = await sdk.getRaceById({ raceId });
-    const isFinished = !race.isActive && race.isDone;
 
-    if (isFinished) getFinishedRaceEmbed(interaction, race);
+    if (isRaceFinished(race)) getFinishedRaceEmbed(interaction, race);
     else getActiveRaceEmbed(interaction, race);
   } catch (err: any) {
     createError(interaction, err, ErrorAction.EDIT);
@@ -39,7 +39,7 @@ const getActiveRaceEmbed = (
 ) => {
   const raceParticipants = (race.participants ?? [])
     .map(participant => `● <@${participant.discordId}>`)
-    .join("\n ");
+    .join('\n ');
   interaction.editReply(
     getInfoEmbed(
       `${race.name}\n→ ${
@@ -60,15 +60,15 @@ const getFinishedRaceEmbed = (
   race: RaceWithParticipants,
 ) => {
   const raceParticipants = (race.leaderboards ?? []).map((leader, index) => {
-    const isLeader = leader.discordId === race.owner ? "(owner)" : "";
+    const isLeader = leader.discordId === race.owner ? '(owner)' : '';
     return `\`\`#${leader.place ?? index + 1}\`\` - \`\`${
       leader.score
     }\`\` - <@${leader.discordId}> ${getMedal(index)} ${isLeader}`;
   });
   const raceParticipantsChunks = splitArrayToChunks(raceParticipants, 5);
   const fields: APIEmbedField[] = raceParticipantsChunks.map(chunk => ({
-    name: "---",
-    value: chunk.join("\n"),
+    name: '---',
+    value: chunk.join('\n'),
     inline: false,
   }));
   const embed: APIEmbed = {

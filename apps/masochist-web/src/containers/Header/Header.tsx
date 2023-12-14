@@ -37,7 +37,7 @@ const StyledHeader = styled(Flex)<{ colorTokens: ColorTokens }>`
 `;
 
 const StyledHeaderTitle = styled.h1`
-  font-weight: 600;
+  /* font-weight: 600; */
   font-size: var(--font-size-16);
   letter-spacing: var(--size-4);
   margin: 0 var(--size-10);

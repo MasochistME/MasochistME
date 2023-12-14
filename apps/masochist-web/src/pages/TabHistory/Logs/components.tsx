@@ -47,7 +47,7 @@ const Link = (props: Props) => {
 };
 
 const StyledHistoryLogLink = styled.span<{ colorTokens: ColorTokens }>`
-  font-weight: bold;
+  font-weight: 600;
   cursor: pointer;
   &:hover {
     color: ${({ colorTokens }) => colorTokens['common-color--white']};

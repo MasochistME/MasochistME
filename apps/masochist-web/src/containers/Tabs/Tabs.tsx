@@ -26,7 +26,7 @@ export const Tab = (props: StyledTabProps) => {
 
 const StyledMUITab = styled(MUITab)<{ colortokens: ColorTokens }>`
   text-transform: uppercase;
-  font-weight: bold;
+  font-weight: 600;
   font-family: var(--font-dosis);
   font-size: var(--font-size-18);
   color: ${({ colortokens }) => colortokens['core-secondary-text']};

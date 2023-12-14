@@ -118,7 +118,9 @@ const StyledSeasonTitle = styled.h2<{ colorTokens: ColorTokens }>`
   align-items: center;
   font-size: var(--font-size-20);
   text-align: left;
+  min-width: 200px;
   gap: var(--size-16);
+  justify-content: space-between;
   padding: var(--size-6) var(--size-12);
   border-radius: var(--border-radius-64);
   background-color: ${({ colorTokens }) =>
