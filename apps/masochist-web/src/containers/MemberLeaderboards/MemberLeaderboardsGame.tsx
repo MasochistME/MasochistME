@@ -1,7 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
-import { Game, MemberGame, Tier } from '@masochistme/sdk/dist/v1/types';
+import {
+  Game,
+  MemberCheese,
+  MemberGame,
+  Tier,
+} from '@masochistme/sdk/dist/v1/types';
 
 import { useTiers, useCuratedGames } from 'sdk';
 import { media, useTheme, ColorTokens } from 'styles';

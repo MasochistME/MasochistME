@@ -2,6 +2,7 @@ import { Award, Badge } from '@masochistme/sdk/dist/v1/types';
 
 export const curatorURL = 'https://store.steampowered.com/curator/41289936';
 export const NO_IMG = 'https://cdn.masochist.me/files/no_game_img.png';
+export const CHEESE_IMG = 'https://cdn.masochist.me/icons/cheese.png';
 
 export const getGameThumbnail = (gameId?: number) => {
   if (gameId)

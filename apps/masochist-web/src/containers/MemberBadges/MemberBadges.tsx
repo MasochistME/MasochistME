@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { useMemberBadges, useBadges } from 'sdk';
-import { BadgeThumbnail } from 'containers';
+import { useMemberBadges, useBadges, useMemberCheese } from 'sdk';
+import { BadgeThumbnail, CheeseThumbnail } from 'containers';
 import { Flex, QueryBoundary, Spinner } from 'components';
 import { Size } from 'components';
 
@@ -25,25 +25,41 @@ const MemberBadgesBoundary = (props: Required<Props>) => {
   const { size, memberId, gameId } = props;
 
   const { memberBadgesData } = useMemberBadges(memberId);
+  const { memberCheeseData } = useMemberCheese(memberId);
   const { badgesData } = useBadges();
 
   const mappedBadges = badgesData
     .filter(badge => badge.gameId === gameId)
     .map(badge => {
-      const memberHasBadge = !!memberBadgesData.find(
+      const isBadgeUnlocked = !!memberBadgesData.find(
         b => b.badgeId === String(badge._id),
       );
       const isBadgeNegative = badge.points < 0;
-      if (isBadgeNegative && !memberHasBadge) return null;
+      if (isBadgeNegative && !isBadgeUnlocked) return null;
       return (
         <BadgeThumbnail
           size={size}
           badge={badge}
-          isDisabled={!memberHasBadge}
+          isDisabled={!isBadgeUnlocked}
           key={`badge-tile-${badge._id}`}
         />
       );
     });
 
-  return <Flex gap={4}>{mappedBadges}</Flex>;
+  const mappedCheese = memberCheeseData
+    .filter(cheese => cheese.gameId === gameId)
+    .map(cheese => (
+      <CheeseThumbnail
+        size={size}
+        cheese={cheese}
+        key={`badge-tile-${cheese._id}`}
+      />
+    ));
+
+  return (
+    <Flex gap={4}>
+      {mappedBadges}
+      {mappedCheese}
+    </Flex>
+  );
 };

@@ -32,6 +32,7 @@ export const MemberLeaderboards = (props: Props): JSX.Element => {
 
 const MemberLeaderboardsBoundary = (props: Props) => {
   const filteredGames = useFilteredGames(props);
+
   return (
     <>
       {filteredGames.map(memberGame => (

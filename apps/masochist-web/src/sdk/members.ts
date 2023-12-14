@@ -128,6 +128,26 @@ export const useMemberBadges = (steamId: string) => {
 /**
  *
  */
+export const useMemberCheese = (steamId: string) => {
+  const { sdk } = useAppContext();
+
+  const {
+    data: memberCheeseData = [],
+    isLoading,
+    isFetched,
+    isError,
+  } = useQuery(
+    ['masochist', 'member', steamId, 'cheese'],
+    () => sdk.getMemberCheeseList({ steamId }),
+    { enabled: !!steamId },
+  );
+
+  return { memberCheeseData, isLoading, isFetched, isError };
+};
+
+/**
+ *
+ */
 export const useMemberAwards = (steamId: string) => {
   const { sdk } = useAppContext();
 
