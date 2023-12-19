@@ -3,6 +3,8 @@
   "version": "4.0.0",
   "description": "MasochistME API",
   "main": "dist/api.js",
+  "author": "Arcyvilk",
+  "license": "ISC",
   "scripts": {
     "build:dev": "env ENV=dev PORT=3081 CORS=http://localhost:3000 DELAY=3000 BIG_DELAY=43200000 tsc && tsc-alias",
     "build:staging": "env ENV=dev PORT=3081 CORS=https://dev.masochist.me DELAY=3000 BIG_DELAY=43200000 tsc && tsc-alias",
@@ -19,8 +21,9 @@
     "lint:fix": "eslint . --ext .ts --fix --quiet",
     "test": "echo TODO"
   },
-  "author": "Arcyvilk",
-  "license": "ISC",
+  "eslintConfig": {
+    "extends": ["mme"]
+  },
   "dependencies": {
     "@masochistme/sdk": "*",
     "body-parser": "^1.19.0",

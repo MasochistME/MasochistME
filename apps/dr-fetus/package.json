@@ -17,6 +17,9 @@
     "lint": "eslint . --ext .ts --fix",
     "test": "echo TODO"
   },
+  "eslintConfig": {
+    "extends": ["mme"]
+  },
   "main": "dist/fetus.js",
   "homepage": "https://github.com/PointOnePercent/DrFetus#readme",
   "repository": {

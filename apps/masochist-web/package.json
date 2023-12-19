@@ -59,6 +59,9 @@
     "@types/styled-components": "^5.1.7",
     "react-app-rewired": "^2.2.1"
   },
+  "eslintConfig": {
+    "extends": ["mme"]
+  },
   "browserslist": [
     ">0.2%",
     "not dead",
