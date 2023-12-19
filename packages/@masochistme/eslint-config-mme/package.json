@@ -1,15 +1,17 @@
 {
-  "name": "eslint-config-mme",
+  "name": "@masochistme/eslint-config-mme",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
+    "typescript": "*"
+  },
+  "peerDependencies": {
     "@typescript-eslint/eslint-plugin": "^6.15.0",
     "@typescript-eslint/parser": "^6.15.0",
     "eslint": "^8.0.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.0.1",
-    "prettier": "^3.1.1",
-    "typescript": "*"
+    "prettier": "^3.1.1"
   }
 }
