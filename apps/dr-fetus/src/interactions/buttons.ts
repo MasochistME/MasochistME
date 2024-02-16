@@ -1,4 +1,4 @@
-import { ButtonInteraction } from "discord.js";
+import { ButtonInteraction } from 'discord.js';
 
 import {
   REGISTRATION_REVIEW,
@@ -6,8 +6,8 @@ import {
   FEATURE_VIDEO,
   RACE_DISQUALIFICATION,
   RaceButton,
-} from "consts";
-import { registrationReview } from "commands/register/interactions";
+} from 'consts';
+import { registrationReview } from 'commands/register/interactions';
 import {
   racesetupConfirm,
   racesetupJoin,
@@ -17,8 +17,12 @@ import {
   raceGiveUp,
   raceDisqualify,
   raceSendStartFormToParticipantMod,
-} from "commands/racesetup/interactions";
-import { featureVideo } from "commands/vid/interactions";
+} from 'commands/racesetup/interactions';
+import { featureVideo } from 'commands/vid/interactions';
+import {
+  raceRateDifficulty,
+  raceRateFun,
+} from 'commands/racesetup/interactions/playerActions/raceRate';
 
 export const handleButtons = (interaction: ButtonInteraction) => {
   if (interaction.customId.includes(FEATURE_VIDEO)) {
@@ -50,5 +54,13 @@ export const handleButtons = (interaction: ButtonInteraction) => {
   }
   if (interaction.customId.includes(RACE_DISQUALIFICATION)) {
     raceDisqualify(interaction);
+  }
+
+  // Race ratings
+  if (interaction.customId.includes(RaceButton.RACE_RATING_FUN)) {
+    raceRateFun(interaction);
+  }
+  if (interaction.customId.includes(RaceButton.RACE_RATING_DIFFICULTY)) {
+    raceRateDifficulty(interaction);
   }
 };

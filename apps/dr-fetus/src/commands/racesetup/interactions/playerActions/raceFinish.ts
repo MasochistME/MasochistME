@@ -13,6 +13,7 @@ import {
 } from './infoRaceParticipant';
 
 import { getRaceStartEmbed, getRaceStartButtons } from './__common';
+import { raceRate } from './raceRate';
 
 /**
  * Response to race participant clicking the FINISH button.
@@ -167,7 +168,9 @@ const raceUploadProof = async (
       );
 
     raceShowPlayerFinishResultMods(raceId, memberId);
-    raceShowPlayerFinishResultSelf(channel, raceId, memberId);
+    await raceShowPlayerFinishResultSelf(channel, raceId, memberId);
+
+    raceRate(interaction, raceId);
   } catch (err: any) {
     createError(interaction, err, ErrorAction.SEND);
   }
