@@ -1,3 +1,4 @@
+import { Race } from '@masochistme/sdk/dist/v1/types';
 import {
   ActionRowBuilder,
   APIEmbed,
@@ -5,11 +6,13 @@ import {
   ButtonInteraction,
   ButtonStyle,
 } from 'discord.js';
+import { sdk } from 'fetus';
 
 import { RaceButton } from 'consts';
-import { createError, ErrorAction, tierEmojis } from 'utils';
-import { sdk } from 'fetus';
-import { Race } from '@masochistme/sdk/dist/v1/types';
+import { createError, ErrorAction, difficultyEmojis, funEmojis } from 'utils';
+
+const STEPS_FUN = 3;
+const STEPS_DIFFICULTY = 3;
 
 // TODO get this from database, otherwise it will be hardcoded for all users
 let race_fun = 0;
@@ -26,23 +29,26 @@ export const raceRate = async (
   try {
     const race = await sdk.getRaceById({ raceId });
     const buttonsFun = new ActionRowBuilder<ButtonBuilder>().addComponents(
-      ...new Array(5).fill(null).map((_, i) => {
-        const raceFun = i + 1;
+      ...new Array(STEPS_FUN).fill(null).map((_, i) => {
+        const raceFun = STEPS_FUN - i; // show thumbsup first
+        const funEmoji =
+          funEmojis.find(game => game.rating === raceFun)?.emoji ??
+          funEmojis[0].emoji;
         const id = `${RaceButton.RACE_RATING_FUN}-score_${raceFun}-raceid_${raceId}-memberid_${memberId}`;
         return new ButtonBuilder()
           .setCustomId(id)
-          .setLabel(new Array(raceFun).fill('⭐').join(''))
-          .setStyle(ButtonStyle.Secondary);
+          .setStyle(ButtonStyle.Secondary)
+          .setEmoji(funEmoji);
       }),
     );
 
     const buttonsDifficulty =
       new ActionRowBuilder<ButtonBuilder>().addComponents(
-        ...new Array(5).fill(null).map((_, i) => {
+        ...new Array(STEPS_DIFFICULTY).fill(null).map((_, i) => {
           const raceDifficulty = i + 1;
           const difficultyEmoji =
-            tierEmojis.find(tier => tier.tier === raceDifficulty)?.emoji ??
-            tierEmojis[0].emoji;
+            difficultyEmojis.find(game => game.difficulty === raceDifficulty)
+              ?.emoji ?? difficultyEmojis[0].emoji;
           const id = `${RaceButton.RACE_RATING_DIFFICULTY}-score_${raceDifficulty}-raceid_${raceId}-memberid_${memberId}`;
           return new ButtonBuilder()
             .setCustomId(id)
@@ -129,9 +135,11 @@ export const raceRateDifficulty = async (
 };
 
 const raceRatingEmbed = (race: Race) => {
-  const emojiFun = new Array(race_fun).fill('⭐').join('') ?? '-';
+  const emojiFun =
+    funEmojis.find(game => game.rating === race_fun)?.emojiId ?? '-';
   const emojiDifficulty =
-    tierEmojis.find(tier => tier.tier === race_difficulty)?.emojiId ?? '-';
+    difficultyEmojis.find(game => game.difficulty === race_difficulty)
+      ?.emojiId ?? '-';
 
   const embed: APIEmbed = {
     title: `Rate race: ${race.name}`,
