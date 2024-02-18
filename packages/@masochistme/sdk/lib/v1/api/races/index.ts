@@ -8,3 +8,4 @@ export { updateRaceById } from './updateRaceById';
 export { getRaceById } from './getRaceById';
 export { getRaceList, RaceListParams } from './getRaceList';
 export { getActiveRace } from './getActiveRace';
+export { updateRaceRatingById } from './updateRaceRatingById'

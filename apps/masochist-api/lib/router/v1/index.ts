@@ -172,6 +172,7 @@ import {
   deleteRaceById,
   getRaceList,
   getActiveRace,
+  updateRaceRatingById
 } from './race';
 
 routerV1.post('/races', apiV1Auth, createRace);
@@ -180,6 +181,7 @@ routerV1.put('/races/race/:raceId', apiV1Auth, updateRaceById);
 routerV1.delete('/races/race/:raceId', apiV1Auth, deleteRaceById);
 routerV1.post('/races/list', getRaceList);
 routerV1.get('/races/active', getActiveRace);
+routerV1.post('/races/race/:raceId/rate', updateRaceRatingById)
 
 /*********************************
  *       RACE PARTICIPANTS       *
