@@ -21,6 +21,7 @@ export * from './PatreonTier';
 export * from './Patron';
 export * from './Race';
 export * from './RacePlayer';
+export * from './RaceRating';
 export * from './Season';
 export * from './Tier';
 export * from './Update';

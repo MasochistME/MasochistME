@@ -42,6 +42,7 @@ import {
   getRaceById,
   getRaceList,
   getActiveRace,
+  updateRaceRatingById
 } from 'v1/api/races';
 import {
   getRaceParticipantById,
@@ -228,6 +229,8 @@ export class SDK {
   public getRaceById = <T extends typeof getRaceById>(args: Head<T>) =>
     getRaceById(args, this.BASE_URL);
   public getActiveRace = () => getActiveRace(this.BASE_URL);
+  public updateRaceRatingById = <T extends typeof updateRaceRatingById>(args: Head<T>) =>
+  updateRaceRatingById(args, this.BASE_URL);
 
   /*********************************
    *       RACE PARTICIPANTS       *
