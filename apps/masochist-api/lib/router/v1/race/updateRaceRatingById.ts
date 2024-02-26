@@ -11,20 +11,27 @@ export const updateRaceRatingById = async (
   try {
     const { db } = mongoInstance.getDb();
     const collection = db.collection<RaceRating>('raceRatings');
-    const raceRating = req.body; 
+    const raceRating = req.body as RaceRating; 
 
-    const {discordId, raceId} = raceRating;
+    const { discordId, raceId, rating, difficulty } = raceRating;
+
+    const oldRating = await collection.findOne({ discordId, raceId })
+    const newRating = {
+      ...oldRating,
+      rating: rating ?? oldRating?.rating ?? null,
+      difficulty: difficulty ?? oldRating?.difficulty ?? null,
+    }
 
     const response = await collection.updateOne(
       { discordId, raceId },
-      { $set: raceRating },
-      { upsert:true }
+      { $set: newRating },
+      { upsert: true }
     );
 
     if (!response.acknowledged) {
       res.status(400).send({ error: 'Could not update the race rating.' });
     } else {
-      res.status(200).send(response);
+      res.status(200).send(newRating);
     }
   } catch (err: any) {
     log.WARN(err);
