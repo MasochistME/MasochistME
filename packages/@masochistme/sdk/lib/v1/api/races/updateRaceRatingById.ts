@@ -36,18 +36,18 @@ export const updateRaceRatingById = async (
 	params: { raceId: string; raceRating: Partial<Omit<RaceRating, '_id'>> },
 	/** @ignore */
 	BASE_URL: string,
-): Promise<UpdateResult> => {
+): Promise<RaceRating> => {
 	const { raceId, raceRating } = params;
 	const url = `${BASE_URL}/races/race/${raceId}/rate`;
 
 	const response = await axios.put<
-		UpdateResult | ResponseError,
-		AxiosResponse<UpdateResult | ResponseError>,
+		RaceRating | ResponseError,
+		AxiosResponse<RaceRating | ResponseError>,
 		Partial<Omit<RaceRating, '_id'>>
 	>(url, raceRating, { validateStatus: () => true });
 
 	const { status, data } = response;
 
 	if (status !== 200) throw new Error((data as ResponseError).error);
-	return data as UpdateResult;
+	return data as RaceRating;
 };

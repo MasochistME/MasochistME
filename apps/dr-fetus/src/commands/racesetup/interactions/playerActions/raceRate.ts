@@ -1,4 +1,4 @@
-import { Race } from '@masochistme/sdk/dist/v1/types';
+import { Race, RaceRating } from '@masochistme/sdk/dist/v1/types';
 import {
   ActionRowBuilder,
   APIEmbed,
@@ -13,10 +13,6 @@ import { createError, ErrorAction, difficultyEmojis, funEmojis } from 'utils';
 
 const STEPS_FUN = 3;
 const STEPS_DIFFICULTY = 3;
-
-// TODO get this from database, otherwise it will be hardcoded for all users
-let race_fun = 0;
-let race_difficulty = 0;
 
 export const raceRate = async (
   interaction: ButtonInteraction,
@@ -58,7 +54,7 @@ export const raceRate = async (
       );
 
     channel.send({
-      embeds: [raceRatingEmbed(race)],
+      embeds: [raceRatingEmbed(race, { rating: null, difficulty: null })],
       components: [buttonsFun, buttonsDifficulty],
     });
   } catch (err: any) {
@@ -81,19 +77,24 @@ export const raceRateFun = async (
 
     const buttonId = interaction.customId.toLowerCase();
 
-    const rating = buttonId.match(ratingRegex)?.[0] ?? null;
+    const userRating = buttonId.match(ratingRegex)?.[0] ?? null;
     const raceId = buttonId.match(raceIdRegex)?.[0] ?? null;
     const memberId = buttonId.match(memberIdRegex)?.[0] ?? null;
 
-    if (!raceId || !memberId || !rating)
+    if (!raceId || !memberId || !userRating)
       throw 'Something went wrong. Just try again, it should work this time.';
 
-    const race = await sdk.getRaceById({ raceId });
+    const raceRating = {
+      discordId: interaction.user.id,
+      raceId,
+      rating: Number(userRating)
+    }
 
-    race_fun = Number(rating);
+    const race = await sdk.getRaceById({ raceId });    
+    const { difficulty, rating } = await sdk.updateRaceRatingById({ raceId, raceRating })
 
     interaction.update({
-      embeds: [raceRatingEmbed(race)],
+      embeds: [raceRatingEmbed(race, { difficulty, rating })],
     });
   } catch (err: any) {
     createError(interaction, err, ErrorAction.REPLY);
@@ -117,28 +118,35 @@ export const raceRateDifficulty = async (
 
     const raceId = buttonId.match(raceIdRegex)?.[0] ?? null;
     const memberId = buttonId.match(memberIdRegex)?.[0] ?? null;
-    const rating = buttonId.match(ratingRegex)?.[0] ?? null;
+    const userRating = buttonId.match(ratingRegex)?.[0] ?? null;
 
-    if (!raceId || !memberId || !rating)
+    if (!raceId || !memberId || !userRating)
       throw 'Something went wrong. Just try again, it should work this time.';
 
-    const race = await sdk.getRaceById({ raceId });
+    const raceRating = {
+      discordId: interaction.user.id,
+      raceId,
+      difficulty: Number(userRating)
+    }
 
-    race_difficulty = Number(rating);
+    const race = await sdk.getRaceById({ raceId });
+    const { difficulty, rating } = await sdk.updateRaceRatingById({ raceId, raceRating })
 
     interaction.update({
-      embeds: [raceRatingEmbed(race)],
+      embeds: [raceRatingEmbed(race, { difficulty, rating })],
     });
   } catch (err: any) {
     createError(interaction, err, ErrorAction.REPLY);
   }
 };
 
-const raceRatingEmbed = (race: Race) => {
+const raceRatingEmbed = (race: Race, responseRating: Pick<RaceRating, 'rating'|'difficulty'>) => {
+  const { difficulty, rating } = responseRating
+
   const emojiFun =
-    funEmojis.find(game => game.rating === race_fun)?.emojiId ?? '-';
+    funEmojis.find(game => game.rating === rating)?.emojiId ?? '-';
   const emojiDifficulty =
-    difficultyEmojis.find(game => game.difficulty === race_difficulty)
+    difficultyEmojis.find(game => game.difficulty === difficulty)
       ?.emojiId ?? '-';
 
   const embed: APIEmbed = {

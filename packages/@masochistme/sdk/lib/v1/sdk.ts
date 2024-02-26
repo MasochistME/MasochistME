@@ -233,7 +233,7 @@ export class SDK {
   updateRaceRatingById(args, this.BASE_URL);
 
   /*********************************
-   *       RACE PARTICIPANTS       *
+   *       RACE PARTICIPANTS       * 
    *********************************/
 
   public getRaceParticipantById = <T extends typeof getRaceParticipantById>(
