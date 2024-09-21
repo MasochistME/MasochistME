@@ -109,7 +109,7 @@ const JoinInfo = (props: InfoProps) => {
       content={
         <StyledInfo>
           <div>
-            To join, you need
+            To join, you need{' '}
             <span style={{ fontWeight: 600 }}>at least 20 points</span> worth of
             games curated on MasochistME. The list of endorsed games is
             available under the GAMES tab. A single game cannot give you more
