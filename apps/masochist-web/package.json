@@ -17,16 +17,16 @@
     "maso:dev": "env HOST=0.0.0.0 PORT=3000 REACT_APP_API=http://localhost:3081 react-app-rewired start",
     "maso:start": "react-app-rewired start",
     "maso:build": "react-app-rewired build",
-    "build:prod": "env PORT=8000 REACT_APP_API=https://api.masochist.me --max_old_space_size=4096 react-app-rewired build",
-    "build:dev": "env PORT=8081 REACT_APP_API=http://localhost:3081 --max_old_space_size=4096 react-app-rewired build",
-    "build:staging": "env PORT=8081 REACT_APP_API=https://api-dev.masochist.me --max_old_space_size=4096 react-app-rewired build",
+    "build:prod": "env PORT=8000 REACT_APP_API=https://api.masochist.me --max_old_space_size=8192 react-app-rewired build",
+    "build:dev": "env PORT=8081 REACT_APP_API=http://localhost:3081 --max_old_space_size=8192 react-app-rewired build",
+    "build:staging": "env PORT=8081 REACT_APP_API=https://api-dev.masochist.me --max_old_space_size=8192 react-app-rewired build",
     "lint": "eslint src --ext .ts,.tsx",
     "test": "echo TODO"
   },
   "dependencies": {
     "@masochistme/sdk": "*",
-    "@mui/material": "^5.10.10",
-    "@mui/styled-engine-sc": "^5.10.6",
+    "@mui/material": "^5.15.13",
+    "@mui/styled-engine-sc": "^6.0.0-alpha.17",
     "@sgratzl/chartjs-chart-boxplot": "^4.1.2",
     "@tanstack/react-location": "^3.7.4",
     "@tanstack/react-query": "4.0.9",
@@ -57,10 +57,13 @@
     "@types/react-dom": "^18.0.10",
     "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.7",
+    "eslint-config-mme": "*",
     "react-app-rewired": "^2.2.1"
   },
   "eslintConfig": {
-    "extends": ["mme"]
+    "extends": [
+      "mme"
+    ]
   },
   "browserslist": [
     ">0.2%",
