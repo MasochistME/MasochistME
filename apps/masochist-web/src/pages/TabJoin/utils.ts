@@ -5,7 +5,7 @@ export const validateSteamUrl = (steamUrl?: string) => {
     /^https:\/\/steamcommunity\.com\/profiles\/[0-9]*[\/]?$/i,
   );
   const steamUrlWithNameValidator = new RegExp(
-    /^https:\/\/steamcommunity\.com\/id\/[a-zA-Z0-9_]*[\/]?$/i,
+    /^https:\/\/steamcommunity\.com\/id\/[a-zA-Z0-9-_]*[\/]?$/i,
   );
   const hasError =
     !steamUrl ||
