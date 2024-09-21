@@ -1,6 +1,6 @@
 import TablePaginationUnstyled, {
-  tablePaginationUnstyledClasses as classes,
-} from '@mui/base/TablePaginationUnstyled';
+  tablePaginationClasses as classes,
+} from '@mui/material/TablePagination';
 import styled from 'styled-components';
 
 import { useTheme, ColorTokens } from 'styles';
