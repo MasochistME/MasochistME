@@ -49,6 +49,7 @@ const BadgesTileViewBoundary = () => {
       });
       const tierIcon = (tiersData.find(tier => tier.id === game.gameTier)
         ?.icon ?? 'QuestionCircle') as IconType;
+      const hasGamePage = Boolean(game.gameId);
 
       return (
         <Section
@@ -59,7 +60,11 @@ const BadgesTileViewBoundary = () => {
           title={
             <StyledBadgeTitle>
               <Icon icon={tierIcon} />
-              <Link to={`/game/${game.gameId}`}>{game.gameTitle}</Link>
+              {hasGamePage ? (
+                <Link to={`/game/${game.gameId}`}>{game.gameTitle}</Link>
+              ) : (
+                game.gameTitle
+              )}
             </StyledBadgeTitle>
           }
           content={
