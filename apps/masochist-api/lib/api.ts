@@ -1,27 +1,24 @@
+require('./instrument.js');
+
+import * as Sentry from '@sentry/node';
 import * as dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
 
 import { MongoInstance } from 'helpers/db';
 import { log } from 'helpers/log';
+import { initializeDayJS } from 'initialize/initializeDayJS';
 
 // import { routerLegacy } from 'router/legacy';
 import { routerV1 } from 'router/v1';
 import { updateCurator } from 'router/v1/update';
 
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
-import duration from 'dayjs/plugin/duration';
-
-dayjs.extend(duration);
-dayjs.extend(relativeTime);
-dayjs.extend(utc);
-dayjs.extend(timezone);
+initializeDayJS();
 
 dotenv.config();
 const app = express();
+
+Sentry.setupExpressErrorHandler(app);
 
 app.use(express.json({ limit: '5mb' }));
 app.use(express.urlencoded({ limit: '5mb', extended: false }));
@@ -42,6 +39,11 @@ app.use((req: any, res: any, next) => {
 
 // app.use('/api', routerLegacy);
 app.use('/api/v1', routerV1);
+
+// Intentional error to debug Sentry
+app.get('/debug-sentry', function mainHandler(req, res) {
+  throw new Error('My first Sentry error!');
+});
 
 app.listen(process.env.PORT, async () => {
   log.INFO(`Server listening at port ${process.env.PORT}!`);
