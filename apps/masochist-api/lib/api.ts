@@ -41,7 +41,7 @@ app.use((req: any, res: any, next) => {
 app.use('/api/v1', routerV1);
 
 // Intentional error to debug Sentry
-app.get('/debug-sentry', function mainHandler(req, res) {
+app.get('/debug-sentry', function mainHandler(_req, _res) {
   throw new Error('My first Sentry error!');
 });
 
