@@ -12,18 +12,15 @@ export const updateCurator = async (
     const authorizationHeader = req?.headers?.authorization;
     const forceUpdate = req?.headers?.forceupdate;
     const canForceUpdate =
-      forceUpdate &&
-      authorizationHeader &&
+      Boolean(forceUpdate) &&
+      Boolean(authorizationHeader) &&
       hash('sha256', authorizationHeader) ===
         process.env.HASH_TEMP_ACCESS_TOKEN_V1;
-    if (canForceUpdate) {
-      updateCuratorLogic(true, res);
-    } else {
-      updateCuratorLogic(false, res);
-    }
+
+    updateCuratorLogic(canForceUpdate, res);
   } catch (err: unknown) {
     log.INFO(`--> [UPDATE] curator update [ERROR]`);
-    log.ERROR(err.message ?? err);
+    log.ERROR(err);
     if (res) res?.sendStatus(500);
   }
 };

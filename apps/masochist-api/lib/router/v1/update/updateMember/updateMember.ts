@@ -345,7 +345,7 @@ export const updateMember = async (
     log.INFO(`--> [UPDATE] user ${memberId} [END]`);
   } catch (err: unknown) {
     log.INFO(`--> [UPDATE] user ${memberId} [ERROR]`);
-    log.ERROR(err.message ?? err);
+    log.ERROR(err);
     /**
      * Remove user from update queue.
      */
@@ -590,7 +590,7 @@ export const getMemberSteamAchievements = async (
          * Axios request fails when the game has no achievements.
          * Here we ignore that error and procees.
          */
-        log.ERROR(err.message ?? err);
+        log.ERROR(err);
         if (memberGames[gameIndex + 1]) {
           setTimeout(
             () => getRecurrentAchievementData(gameIndex + 1),

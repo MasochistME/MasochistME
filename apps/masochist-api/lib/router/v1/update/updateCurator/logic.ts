@@ -450,7 +450,7 @@ export const updateCuratorLogic = async (
     statusCurator.updateStatus = UpdateStatus.ERROR;
     statusCurator.isUpdating = false;
     log.INFO(`--> [UPDATE] main update [ERROR]`);
-    log.ERROR(err.message ?? err);
+    log.ERROR(err);
     log.INFO(`--> [UPDATE] main update [END]`);
   }
 };
@@ -556,7 +556,6 @@ const getCuratorGameDetails = async (
     price: details?.price_overview?.initial ?? 0,
     currency: details?.price_overview?.currency ?? 'USD',
     sale: details?.price_overview?.discount_percent ?? 0,
-    // @ts-ignore
     tier: getGameTier(game.description, tiers),
     isCurated: true,
     isProtected: false,

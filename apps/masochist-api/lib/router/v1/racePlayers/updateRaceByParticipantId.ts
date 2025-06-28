@@ -59,6 +59,6 @@ export const updateRaceByParticipantId = async (
     }
   } catch (err: unknown) {
     log.ERROR(err);
-    res.status(500).send({ error: err.message ?? 'Internal server error' });
+    res.status(500).send({ error: err ?? 'Internal server error' });
   }
 };
