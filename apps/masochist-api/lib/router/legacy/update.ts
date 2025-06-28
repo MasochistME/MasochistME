@@ -34,7 +34,7 @@ export const getStatus = async (_req?: any, res?: any): Promise<void> => {
   try {
     lastUpdated = await getDataFromDB('update', { id: 'lastUpdated' });
   } catch (err: unknown) {
-    log.ERROR(err.message);
+    log.ERROR(err);
     res.status(500).send(err);
     return;
   }
@@ -71,7 +71,7 @@ export const initiateMainUpdate = async (
     }
   } catch (err: unknown) {
     log.WARN('--> [UPDATE] main update [ERR]');
-    log.ERROR(err.message);
+    log.ERROR(err);
     if (res) {
       res.status(500).send(err);
     }
@@ -86,7 +86,7 @@ export const initiateMainUpdate = async (
     members = await getCuratorMembers();
   } catch (err: unknown) {
     log.WARN('--> [UPDATE] main update [ERR]');
-    log.ERROR(err.message);
+    log.ERROR(err);
     return;
   }
   try {
@@ -94,7 +94,7 @@ export const initiateMainUpdate = async (
     await updateCuratorGames();
   } catch (err: unknown) {
     log.WARN('--> [UPDATE] main update [ERR]');
-    log.ERROR(err.message);
+    log.ERROR(err);
     return;
   }
 
@@ -157,7 +157,7 @@ export const initiateMainUpdate = async (
         members[index].avatar = user.avatarfull;
       } catch (err: unknown) {
         log.WARN(`--> [UPDATE] member ${members[index].id} [ERROR]`);
-        log.ERROR(err.message);
+        log.ERROR(err);
       }
       const eventDetails: TMemberJoinedEvent = {
         date: Date.now(),
