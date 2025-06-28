@@ -55,7 +55,7 @@ export const raceReveal = async (
         getRaceStartButtons(raceId, false, race.isActive, false, false),
       ],
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
     createError(interaction, err, ErrorAction.REPLY);
   }
 };

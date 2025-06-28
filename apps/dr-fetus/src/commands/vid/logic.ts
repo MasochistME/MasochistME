@@ -101,7 +101,7 @@ export const vid = async (interaction: DiscordInteraction): Promise<void> => {
     interaction.reply(
       getSuccessEmbed("Video sent!", interactionReplyContent, true),
     );
-  } catch (err: any) {
+  } catch (err: unknown) {
     createError(interaction, err, ErrorAction.REPLY);
   }
 };

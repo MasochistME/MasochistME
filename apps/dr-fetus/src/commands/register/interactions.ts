@@ -1,7 +1,7 @@
 import { getErrorEmbed } from 'arcybot';
 import { ButtonInteraction, APIEmbed } from 'discord.js';
 
-import { isMod } from 'utils';
+import { isMod, log } from 'utils';
 import { REGISTRATION_REVIEW } from 'consts';
 import { sdk } from 'fetus';
 
@@ -68,16 +68,15 @@ export const registrationReview = async (
         embeds: [{ ...embed, title: '✅ User application - APPROVED' }],
         components: [],
       });
-    } catch (err: any) {
+    } catch (err: unknown) {
       interaction.update({
         ...getErrorEmbed(
           'Error',
-          err?.message ??
-            err ??
-            'Incorrect token. Please contact Arcyvilk because something is fucked up.',
+          'Incorrect token. Please contact Arcyvilk because something is fucked up.',
         ),
         components: [],
       });
+      log.ERROR(err);
     }
   }
   if (interaction.customId === `${REGISTRATION_REVIEW}_REJECT`) {

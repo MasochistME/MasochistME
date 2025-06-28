@@ -50,7 +50,7 @@ export const raceGiveUp = async (
     await interaction.showModal(modal);
 
     raceRate(interaction, raceId);
-  } catch (err: any) {
+  } catch (err: unknown) {
     createError(interaction, err, ErrorAction.REPLY);
   }
 };
@@ -103,7 +103,7 @@ export const raceGiveUpModal = async (interaction: ModalSubmitInteraction) => {
         \n**Race:** ${raceName}\n**Reason:** _${giveupReason}_\n**Date:** ${new Date().toLocaleString()}`,
       ),
     );
-  } catch (err) {
+  } catch (err: unknown) {
     createError(interaction, err, ErrorAction.SEND);
   }
 };

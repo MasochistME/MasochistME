@@ -33,7 +33,7 @@ export const update = async (
         "✅ Updating cache...\n✅ Updating command list...\n\nUpdate successfully completed!",
       ),
     );
-  } catch (err: any) {
+  } catch (err: unknown) {
     createError(interaction, err, ErrorAction.EDIT);
   }
 };

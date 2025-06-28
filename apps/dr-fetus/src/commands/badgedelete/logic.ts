@@ -26,7 +26,7 @@ export const badgedelete = async (
         ).toUpperCase()}** permanently deleted.\nEvery member which had this badge also had it removed.`,
       ),
     );
-  } catch (err: any) {
+  } catch (err: unknown) {
     createError(interaction, err, ErrorAction.EDIT);
   }
 };

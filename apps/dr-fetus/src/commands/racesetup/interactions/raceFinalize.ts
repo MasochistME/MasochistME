@@ -1,10 +1,10 @@
 import { RacePlayer } from '@masochistme/sdk/dist/v1/types';
-import { getErrorEmbed, log } from 'arcybot';
+import { getErrorEmbed } from 'arcybot';
 import { Room } from 'consts';
 import { APIEmbed } from 'discord.js';
 
 import { sdk } from 'fetus';
-import { getChannelByKey, getModChannel } from 'utils';
+import { getChannelByKey, getModChannel, log } from 'utils';
 import { getMedal } from 'commands/_utils/race';
 
 /**
@@ -74,8 +74,8 @@ export const raceFinalize = async (raceId: string): Promise<void> => {
         ),
       );
     }
-  } catch (err: any) {
-    log.WARN(err);
+  } catch (err: unknown) {
+    log.ERROR(err);
     getModChannel(true)?.send(
       getErrorEmbed(
         `ERROR - RACE FINISHING...`,

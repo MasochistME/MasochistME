@@ -33,7 +33,7 @@ export const setdescription = async (
         `Now everyone will be able to see that <@${interaction.user.id}> describes themselves as:\n\n***"${description}"***\n\n`,
       ),
     );
-  } catch (err: any) {
+  } catch (err: unknown) {
     createError(interaction, err, ErrorAction.EDIT);
   }
 };

@@ -68,7 +68,7 @@ export const seasoncreate = async (
       ],
     };
     interaction.editReply({ embeds: [embed] });
-  } catch (err: any) {
+  } catch (err: unknown) {
     createError(interaction, err, ErrorAction.EDIT);
   }
 };

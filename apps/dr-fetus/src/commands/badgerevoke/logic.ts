@@ -38,7 +38,7 @@ export const badgerevoke = async (
         ).toUpperCase()}**!`,
       ),
     );
-  } catch (err: any) {
+  } catch (err: unknown) {
     createError(interaction, err, ErrorAction.REPLY);
   }
 };

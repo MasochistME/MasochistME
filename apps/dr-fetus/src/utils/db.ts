@@ -22,7 +22,7 @@ export class Database {
         throw new Error(`Database: SYMBOL or URL missing.`);
       const client = new MongoClient(db.url);
       this.dbs[db.symbol] = client.db(db.symbol);
-    } catch (err) {
+    } catch (err: unknown) {
       log.WARN(`Error while connecting to database: ${err}`);
     }
   };

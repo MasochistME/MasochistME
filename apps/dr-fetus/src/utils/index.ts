@@ -5,6 +5,7 @@ export * from './error';
 export * from './events';
 export * from './getDate';
 export * from './helpers';
+export * from './log';
 export * from './raceRatingEmojis';
 export * from './rng';
 export * from './saveImage';

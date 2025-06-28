@@ -44,7 +44,7 @@ export const memedelete = async (
         `In case it was by mistake, the deleted meme was:\n\n${memeToDelete.meme}`,
       ),
     );
-  } catch (err: any) {
+  } catch (err: unknown) {
     createError(interaction, err, ErrorAction.REPLY);
   }
 };

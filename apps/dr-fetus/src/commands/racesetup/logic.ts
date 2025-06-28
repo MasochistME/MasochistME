@@ -130,7 +130,7 @@ const racesetupTimeBased = async (
       embeds: [await getRaceConfirmationEmbed(race)],
       components: [getRaceConfirmationButtons()],
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.log(err);
     createError(interaction, err, ErrorAction.SEND);
   }
@@ -199,7 +199,7 @@ const racesetupScoreBased = async (
       embeds: [await getRaceConfirmationEmbed(race)],
       components: [getRaceConfirmationButtons()],
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.log(err);
     createError(interaction, err, ErrorAction.SEND);
   }

@@ -1,9 +1,11 @@
+import './instrument';
+
 import * as dotenv from 'dotenv';
-import { Arcybot, log } from 'arcybot';
+import { Arcybot } from 'arcybot';
 import { GatewayIntentBits, Partials } from 'discord.js';
 import { SDK } from '@masochistme/sdk/dist/v1/sdk';
 
-import { getOption, Database } from 'utils';
+import { getOption, log, Database } from 'utils';
 import { Cache } from 'cache';
 import { handleRaceTimer } from 'commands/_utils/race';
 
@@ -74,12 +76,10 @@ const init = async () => {
       if (interaction.isModalSubmit()) handleModals(interaction);
     })
     .on('error', async error => {
-      log.DEBUG('Discord bot error detected');
-      console.log(error);
+      log.ERROR(error);
     })
     .on('warn', async (message: string) => {
-      log.DEBUG('Discord bot warning detected');
-      console.log(message);
+      log.DEBUG(message);
     });
   // .on("debug", console.log);
 };

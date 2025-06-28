@@ -40,7 +40,7 @@ export const seasonend = async (
         `You officially finished season **${specifiedSeason.name.toUpperCase()}**!`,
       ),
     );
-  } catch (err: any) {
+  } catch (err: unknown) {
     createError(interaction, err, ErrorAction.EDIT);
   }
 };

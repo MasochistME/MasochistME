@@ -38,7 +38,7 @@ export const seasonstart = async (
         `You officially started season **${specifiedSeason.name.toUpperCase()}**!`,
       ),
     );
-  } catch (err: any) {
+  } catch (err: unknown) {
     createError(interaction, err, ErrorAction.EDIT);
   }
 };
