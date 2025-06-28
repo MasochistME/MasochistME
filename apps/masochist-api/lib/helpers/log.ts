@@ -11,17 +11,17 @@ export const log = {
   DEBUG: (content: string): void => {
     console.trace(`${new Date().toLocaleString()} - [DEBUG] - ${content}`);
   },
-  ERROR: (
-    error: unknown,
-    args?: { userId?: string; userName?: string },
-  ): void => {
+  ERROR: (error: unknown, args?: Record<string, string>): void => {
     console.error(`${new Date().toLocaleString()} - [ERROR]`);
     console.error(error);
 
-    if (args?.userId || args?.userName) {
-      Sentry.setUser({ id: args.userId, username: args.userName });
+    const context: Record<string, any> = {};
+
+    for (const key in args) {
+      context[key] = args[key];
     }
 
+    Sentry.setContext('context', context);
     Sentry.captureException(error);
   },
 };
