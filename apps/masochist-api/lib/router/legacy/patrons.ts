@@ -153,7 +153,7 @@ export const updatePatron = async (req: any, res: any) => {
     userSummary = await axios.get(urlSummary);
   } catch (err: unknown) {
     log.WARN(urlSummary);
-    log.ERROR(err.message);
+    log.ERROR(err);
     return;
   }
 

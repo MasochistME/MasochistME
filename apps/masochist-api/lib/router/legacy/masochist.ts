@@ -44,7 +44,7 @@ export const connectUserWithDiscord = async (
       },
     );
   } catch (err: unknown) {
-    log.ERROR(err.message);
+    log.ERROR(err);
     res.status(500).send(err);
   }
 };
@@ -90,7 +90,7 @@ export const updateUserFields = async (
       },
     );
   } catch (err: unknown) {
-    log.ERROR(err.message);
+    log.ERROR(err);
     res.status(500).send(err);
   }
 };

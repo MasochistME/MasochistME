@@ -280,7 +280,7 @@ export const updateCuratorGames = (_req?: any, res?: any): Promise<void> =>
       } catch (err: unknown) {
         log.INFO(`- saving game ${gameId} failed`);
         log.INFO(`-- ${urlGamesDetails}`);
-        log.ERROR(err.message);
+        log.ERROR(err);
         if (games[index + 1]) {
           setTimeout(
             () => getGameDetails(index + 1),

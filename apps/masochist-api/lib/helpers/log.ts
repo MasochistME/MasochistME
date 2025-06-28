@@ -1,4 +1,4 @@
-import { captureException } from '@sentry/node';
+import * as Sentry from '@sentry/node';
 
 /* eslint-disable no-console */
 export const log = {
@@ -11,9 +11,17 @@ export const log = {
   DEBUG: (content: string): void => {
     console.trace(`${new Date().toLocaleString()} - [DEBUG] - ${content}`);
   },
-  ERROR: (error: unknown): void => {
+  ERROR: (
+    error: unknown,
+    args?: { userId?: string; userName?: string },
+  ): void => {
     console.error(`${new Date().toLocaleString()} - [ERROR]`);
     console.error(error);
-    captureException(error);
+
+    if (args?.userId || args?.userName) {
+      Sentry.setUser({ id: args.userId, username: args.userName });
+    }
+
+    Sentry.captureException(error);
   },
 };

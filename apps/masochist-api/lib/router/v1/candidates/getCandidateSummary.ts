@@ -207,7 +207,7 @@ export const getCandidateSummary = async (
       queue => queue !== userId,
     );
     res.status(200).send(candidateData);
-  } catch (err: unknown) {
+  } catch (err: any) {
     log.ERROR(err);
     updateQueue.CANDIDATE_QUEUE = updateQueue.CANDIDATE_QUEUE.filter(
       queue => queue !== userId,
