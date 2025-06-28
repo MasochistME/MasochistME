@@ -578,8 +578,10 @@ const getGameAchievements = (gamePrev, gameNew) => {
   const gameHasBuggedAchievements =
     Boolean(gamePrev?.achievementsTotal) === true &&
     Boolean(gameNew.achievementsTotal) === false;
+
   const achievementsTotal = gameHasBuggedAchievements
-    ? gamePrev?.achievementsTotal
+    ? gamePrev.achievementsTotal
     : gameNew.achievementsTotal;
+
   return achievementsTotal;
 };
