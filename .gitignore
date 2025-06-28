@@ -42,6 +42,7 @@ config.dev.json
 config.prod.json
 config.staging.json
 
+.sentryclirc
 
 # turbo
 .turbo
