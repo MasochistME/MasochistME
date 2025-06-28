@@ -9,7 +9,7 @@ export enum AvailableLocales {
 
 let l: Locale;
 
-export const initLocale = (locale?: AvailableLocales) => {
+export const initializeLocale = (locale?: AvailableLocales) => {
   if (!l) l = new Locale(locale);
 };
 

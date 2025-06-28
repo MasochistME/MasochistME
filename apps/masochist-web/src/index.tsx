@@ -1,23 +1,21 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
-import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
-import relativeTime from 'dayjs/plugin/relativeTime';
 
 import { useTheme } from 'styles';
 import GlobalStyle from 'styles/globalStyles';
-import { initLocale } from 'i18n';
+import { initializeLocale } from 'i18n';
+import { initializeSentry } from 'initialize/initializeSentry';
+import { initializeDayJS } from 'initialize/initializeDayJS';
 import { AppContextProvider } from 'context';
 
 import { App } from './App';
 
 // import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-dayjs.extend(customParseFormat);
-dayjs.extend(relativeTime);
-
-initLocale();
+initializeSentry();
+initializeDayJS();
+initializeLocale();
 
 const queryClient = new QueryClient({
   defaultOptions: {
