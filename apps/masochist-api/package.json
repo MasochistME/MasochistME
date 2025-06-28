@@ -22,10 +22,13 @@
     "test": "echo TODO"
   },
   "eslintConfig": {
-    "extends": ["mme"]
+    "extends": [
+      "mme"
+    ]
   },
   "dependencies": {
     "@masochistme/sdk": "*",
+    "@sentry/node": "^9.33.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
