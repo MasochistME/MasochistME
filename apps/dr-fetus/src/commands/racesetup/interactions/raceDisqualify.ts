@@ -53,7 +53,7 @@ export const raceDisqualify = async (
     modal.addComponents(actionRow);
 
     await interaction.showModal(modal);
-  } catch (err) {
+  } catch (err: unknown) {
     createError(interaction, err, ErrorAction.SEND);
   }
 };
@@ -136,7 +136,7 @@ export const raceDisqualifyModal = async (
       embeds: [editedEmbed],
       components: [],
     });
-  } catch (err) {
+  } catch (err: unknown) {
     createError(interaction, err, ErrorAction.SEND);
   }
 };

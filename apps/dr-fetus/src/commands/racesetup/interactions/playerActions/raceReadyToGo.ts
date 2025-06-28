@@ -4,20 +4,20 @@ import {
   ButtonBuilder,
   ButtonInteraction,
   ButtonStyle,
-} from "discord.js";
-import { getErrorEmbed, getInfoEmbed, getSuccessEmbed, log } from "arcybot";
+} from 'discord.js';
+import { getErrorEmbed, getInfoEmbed, getSuccessEmbed } from 'arcybot';
 
-import { bot, sdk } from "fetus";
-import { getModChannel } from "utils";
-import { RaceButton } from "consts";
-import { getDMChannel, createError, ErrorAction } from "utils";
+import { bot, sdk } from 'fetus';
+import { getModChannel, log } from 'utils';
+import { RaceButton } from 'consts';
+import { getDMChannel, createError, ErrorAction } from 'utils';
 
 import {
   fieldsBeforeReveal,
   getRaceStartEmbed,
   getRaceStartButtons,
-} from "./__common";
-import { Race } from "@masochistme/sdk/dist/v1/types";
+} from './__common';
+import { Race } from '@masochistme/sdk/dist/v1/types';
 
 /**
  * Message sent to race participant on DM when the race begins.
@@ -31,7 +31,7 @@ export const raceReadyToGo = async (raceId: string): Promise<void> => {
     const participantsDiscordIds = participants.map(
       participant => participant.discordId,
     );
-    log.INFO("Preparing to inform race participants about race starting...");
+    log.INFO('Preparing to inform race participants about race starting...');
     getModChannel(true)?.send(
       getInfoEmbed(
         `${race.name.toUpperCase()} - RACE STARTED`,
@@ -42,15 +42,12 @@ export const raceReadyToGo = async (raceId: string): Promise<void> => {
     participantsDiscordIds.forEach((memberId: string) => {
       raceSendStartFormToParticipant(String(race._id), memberId);
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
     getModChannel(true)?.send(
-      getErrorEmbed(
-        `ERROR - RACE STARTING...`,
-        err?.error ?? err?.message ?? err ?? "Something went wrong.",
-      ),
+      getErrorEmbed(`ERROR - RACE STARTING...`, 'Something went wrong.'),
     );
     // createError(interaction, err, ErrorAction.REPLY);
-    log.WARN(err);
+    log.ERROR(err);
   }
 };
 
@@ -62,11 +59,11 @@ export const raceSendStartFormToParticipantSelf = async (
 ): Promise<void> => {
   if (!interaction.isButton()) return;
   const memberId = interaction.user.id;
-  const raceId = interaction.customId.replace(`${RaceButton.RACE_JOIN}-`, "");
+  const raceId = interaction.customId.replace(`${RaceButton.RACE_JOIN}-`, '');
 
   try {
     raceSendStartFormToParticipant(raceId, memberId);
-  } catch (err: any) {
+  } catch (err: unknown) {
     createError(interaction, err, ErrorAction.REPLY);
   }
 };
@@ -85,20 +82,20 @@ export const raceSendStartFormToParticipantMod = async (
   const memberId = buttonId.match(memberIdRegex)?.[0] ?? null;
 
   if (!raceId || !memberId)
-    throw "Something went wrong. Just try again, it should work this time.";
+    throw 'Something went wrong. Just try again, it should work this time.';
 
   try {
     raceSendStartFormToParticipant(raceId, memberId);
     interaction.update({
       embeds: [
         {
-          title: "❌ Attempt to reach member",
+          title: '❌ Attempt to reach member',
           description: `<@${interaction.user.id}> attempted to reach <@${memberId}>...`,
         },
       ],
       components: [],
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
     createError(interaction, err, ErrorAction.REPLY);
   }
 };
@@ -128,7 +125,8 @@ const raceSendStartFormToParticipant = async (
     .then(() => {
       raceParticipantsInformedSuccess(race, memberId);
     })
-    .catch(() => {
+    .catch((err: unknown) => {
+      log.ERROR(err);
       raceParticipantsInformedError(race, memberId);
     });
 };
@@ -161,11 +159,11 @@ const raceParticipantsInformedError = (race: Race, memberId: string) => {
     title: `❌ ${race.name.toUpperCase()} - PARTICIPANT NOT INFORMED`,
     fields: [
       {
-        name: "---",
+        name: '---',
         value: `Participant <@${memberId}> could not get informed about race starting.`,
       },
       {
-        name: "How to fix it?",
+        name: 'How to fix it?',
         value: `Check https://www.notion.so/Races-6fe4971a56194039b85807adf2077262#9edac186e61a4be38bac0e4a046ba39bv - we have a list of possible reasons and fixes there.`,
       },
     ],
@@ -184,7 +182,7 @@ const getResendRaceStartFormButton = (raceId: string, memberId: string) => {
     .setCustomId(
       `${RaceButton.RACE_RESEND_JOIN_FORM}-raceid_${raceId}-memberid_${memberId}`,
     )
-    .setLabel("Resend race DM to this player")
+    .setLabel('Resend race DM to this player')
     .setStyle(ButtonStyle.Primary);
   const buttonBar = new ActionRowBuilder<ButtonBuilder>().addComponents(
     buttonResend,

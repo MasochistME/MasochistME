@@ -82,7 +82,7 @@ export const raceStart = async (
         getRaceStartButtons(raceId, false, false, !race.isDone, !race.isDone),
       ],
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
     createError(interaction, err, ErrorAction.REPLY);
   }
 };

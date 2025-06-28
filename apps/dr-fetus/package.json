@@ -18,7 +18,9 @@
     "test": "echo TODO"
   },
   "eslintConfig": {
-    "extends": ["mme"]
+    "extends": [
+      "mme"
+    ]
   },
   "main": "dist/fetus.js",
   "homepage": "https://github.com/PointOnePercent/DrFetus#readme",
@@ -37,6 +39,7 @@
   ],
   "dependencies": {
     "@masochistme/sdk": "*",
+    "@sentry/node": "^9.33.0",
     "arcybot": "^1.4.8",
     "discord.js": "^14.8.0"
   },

@@ -23,7 +23,7 @@ export const race = async (interaction: DiscordInteraction): Promise<void> => {
 
     if (isRaceFinished(race)) getFinishedRaceEmbed(interaction, race);
     else getActiveRaceEmbed(interaction, race);
-  } catch (err: any) {
+  } catch (err: unknown) {
     createError(interaction, err, ErrorAction.EDIT);
   }
 };

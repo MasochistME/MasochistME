@@ -16,7 +16,7 @@ export const memeadd = async (
     if (!meme) throw new Error("You did not provide a meme.");
     await addMemeToAPI(meme);
     interaction.reply(getSuccessEmbed("Meme added!", meme));
-  } catch (err: any) {
+  } catch (err: unknown) {
     createError(interaction, err, ErrorAction.REPLY);
   }
 };

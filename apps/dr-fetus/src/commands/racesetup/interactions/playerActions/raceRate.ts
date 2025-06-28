@@ -57,7 +57,7 @@ export const raceRate = async (
       embeds: [raceRatingEmbed(race, { rating: null, difficulty: null })],
       components: [buttonsFun, buttonsDifficulty],
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
     createError(interaction, err, ErrorAction.SEND);
   }
 };
@@ -96,7 +96,7 @@ export const raceRateFun = async (
     interaction.update({
       embeds: [raceRatingEmbed(race, { difficulty, rating })],
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
     createError(interaction, err, ErrorAction.REPLY);
   }
 };
@@ -130,12 +130,12 @@ export const raceRateDifficulty = async (
     }
 
     const race = await sdk.getRaceById({ raceId });
-    const { difficulty, rating } = await sdk.updateRaceRatingById({ raceId, raceRating })
+    const { difficulty = null, rating = null } = await sdk.updateRaceRatingById({ raceId, raceRating })
 
     interaction.update({
       embeds: [raceRatingEmbed(race, { difficulty, rating })],
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
     createError(interaction, err, ErrorAction.REPLY);
   }
 };

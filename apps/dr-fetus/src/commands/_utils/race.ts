@@ -8,7 +8,7 @@ import {
 } from '@masochistme/sdk/dist/v1/types';
 import { SCORE_RACE_WARNINGS } from '@masochistme/sdk/dist/v1';
 
-import { getErrorEmbed, getInfoEmbed, log } from 'arcybot';
+import { getErrorEmbed, getInfoEmbed } from 'arcybot';
 import dayjs from 'dayjs';
 
 import { RACE_TIMEOUT, RACE_RESULTS_TIMEOUT, Room } from 'consts';
@@ -18,6 +18,7 @@ import {
   getDMChannel,
   getModChannel,
   getTimestampFromDate,
+  log,
 } from 'utils';
 import { bot, sdk } from 'fetus';
 
@@ -36,8 +37,8 @@ export const handleRaceTimer = async () => {
       await handleRaceFinish(race);
       if (race.type === RaceType.SCORE_BASED) await handleScoreRace(race);
     });
-  } catch (err: any) {
-    log.WARN(err);
+  } catch (err: unknown) {
+    log.ERROR(err);
     getModChannel(true)?.send(
       getErrorEmbed(
         'ERROR - RACE TIMER',
@@ -113,9 +114,9 @@ const handleRaceFinish = async (race: Race) => {
           `You cannot join the race anymore, but if you are in the middle of your run, you still have grace period to finish. The grace period ends ${timeTillEnd}. After that time the race is closed and the results will get posted.`,
         ),
       );
-    } catch (e) {
+    } catch (err: unknown) {
       log.WARN('Sending the warning about race ending failed!');
-      console.log(e);
+      log.ERROR(err);
     }
     const response = await sdk.updateRaceById({
       raceId,
@@ -222,6 +223,7 @@ const handleScoreRaceWarn = async (
     getModChannel(true)?.send(
       getErrorEmbed('ERROR - WARNING PARTICIPANT...', err),
     );
+    log.ERROR(err);
   }
 };
 
@@ -283,6 +285,7 @@ const handleScoreRaceDNF = async (
     getModChannel(true)?.send(
       getErrorEmbed('ERROR - WARNING PARTICIPANT...', err),
     );
+    log.ERROR(err);
   }
 };
 

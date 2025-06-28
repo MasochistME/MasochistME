@@ -25,7 +25,7 @@ export const racesetupJoin = async (
     await sdk.getMemberById({
       discordId: interaction.user.id,
     });
-  } catch (err) {
+  } catch (err: unknown) {
     interaction.reply(
       getErrorEmbed(
         'You need to register to be able to join a race',

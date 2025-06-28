@@ -83,7 +83,7 @@ export const raceFinish = async (
       .then(() => {
         raceUploadProof(interaction, race);
       });
-  } catch (err: any) {
+  } catch (err: unknown) {
     createError(interaction, err, ErrorAction.REPLY);
   }
 };
@@ -171,7 +171,7 @@ const raceUploadProof = async (
     await raceShowPlayerFinishResultSelf(channel, raceId, memberId);
 
     raceRate(interaction, raceId);
-  } catch (err: any) {
+  } catch (err: unknown) {
     createError(interaction, err, ErrorAction.SEND);
   }
 };

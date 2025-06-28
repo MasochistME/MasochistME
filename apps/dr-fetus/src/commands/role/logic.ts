@@ -31,7 +31,7 @@ const roleAssign = async (interaction: DiscordInteraction): Promise<void> => {
     interaction.editReply(
       getSuccessEmbed("Success", `You now have **${role.name}** role!`),
     );
-  } catch (err: any) {
+  } catch (err: unknown) {
     createError(interaction, err, ErrorAction.EDIT);
   }
 };
@@ -56,7 +56,7 @@ const roleRemove = async (interaction: DiscordInteraction): Promise<void> => {
         `You don't have role **${role.name}** anymore!`,
       ),
     );
-  } catch (err: any) {
+  } catch (err: unknown) {
     createError(interaction, err, ErrorAction.EDIT);
   }
 };
