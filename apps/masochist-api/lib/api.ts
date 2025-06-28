@@ -27,6 +27,7 @@ app.use(
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     origin: process.env.CORS ?? 'http://localhost:3000',
+    allowedHeaders: 'sentry-trace, baggage',
   }),
 );
 app.set('trust proxy', 1);
