@@ -214,7 +214,7 @@ export const getCandidateSummary = async (
     );
     res
       .status(err.status ?? 500)
-      .send({ error: err.message ?? 'Internal server error' });
+      .send({ error: err ?? 'Internal server error' });
   }
 };
 

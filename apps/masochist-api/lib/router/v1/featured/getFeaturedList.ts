@@ -43,6 +43,6 @@ export const getFeaturedList = async (
     res.status(200).send(featured);
   } catch (err: unknown) {
     log.ERROR(err);
-    res.status(500).send({ error: err.message ?? 'Internal server error' });
+    res.status(500).send({ error: err ?? 'Internal server error' });
   }
 };
