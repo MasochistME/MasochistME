@@ -15,8 +15,8 @@ export const useLocalStorage = <T extends Record<string, any>>(
       const item = window.localStorage.getItem(key);
 
       return item ? JSON.parse(item) : initialValue;
-    } catch (error: any) {
-      log.WARN(error);
+    } catch (error: unknown) {
+      log.ERROR(error);
       return initialValue;
     }
   });
@@ -29,8 +29,8 @@ export const useLocalStorage = <T extends Record<string, any>>(
         if (typeof window !== 'undefined') {
           window.localStorage.setItem(key, JSON.stringify(value));
         }
-      } catch (error: any) {
-        log.WARN(error);
+      } catch (error: unknown) {
+        log.ERROR(error);
       }
     },
     [key, initialValue],
