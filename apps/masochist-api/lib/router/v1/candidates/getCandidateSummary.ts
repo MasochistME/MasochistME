@@ -98,7 +98,7 @@ export const getCandidateSummary = async (
           steamids: userId,
         },
       });
-    } catch (err) {
+    } catch (err: unknown) {
       throw new Error('Requested Steam user does not exist.');
     }
     const { personaname, avatarhash }: MemberSteam =
@@ -207,8 +207,8 @@ export const getCandidateSummary = async (
       queue => queue !== userId,
     );
     res.status(200).send(candidateData);
-  } catch (err: any) {
-    log.WARN(err);
+  } catch (err: unknown) {
+    log.ERROR(err);
     updateQueue.CANDIDATE_QUEUE = updateQueue.CANDIDATE_QUEUE.filter(
       queue => queue !== userId,
     );

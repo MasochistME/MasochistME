@@ -21,7 +21,7 @@ export const getUsers = async (_req: Request, res: Response): Promise<void> => {
         };
       });
     res.status(200).send(filteredUsers);
-  } catch (err) {
+  } catch (err: unknown) {
     res.status(500).send(err);
   }
 };
@@ -51,8 +51,8 @@ export const getUserDetails = async (
       lastUnlocked: game.lastUnlocked,
     }));
     res.status(200).send({ id, badges, games: fixedGames });
-  } catch (err: any) {
-    log.WARN(err.message);
+  } catch (err: unknown) {
+    log.ERROR(err.message);
     res.status(500).send(err);
   }
 };
@@ -73,10 +73,10 @@ export const updateUser = async (req: any, res: any) => {
   try {
     log.INFO(`--> [UPDATE] user ${id} [START]`);
     userData = await axios.get(userUrl);
-  } catch (err: any) {
+  } catch (err: unknown) {
     res.status(500).send(err);
     log.WARN(`--> [UPDATE] user ${id} [ERROR]`);
-    log.WARN(err.message);
+    log.ERROR(err.message);
     return;
   }
   if (!userData?.data?.response?.players) {
@@ -136,7 +136,7 @@ export const updateUser = async (req: any, res: any) => {
     err => {
       if (err) {
         log.WARN(`--> [UPDATE] user ${id} [ERROR]`);
-        log.WARN(err.message);
+        log.ERROR(err.message);
       } else {
         const index = cache.updating.findIndex(user => user.user === id);
         const newCache = cache.updating.splice(index, 1);
@@ -169,7 +169,7 @@ const getUserGames = async (
   games = games.substring(0, games.indexOf('];') + 1).trim();
   try {
     games = JSON.parse(games);
-  } catch (err) {
+  } catch (err: unknown) {
     if (userGamesFallback.data.response.games) {
       log.INFO('--> [UPDATE] game list [FALLBACK]');
       games = userGamesFallback.data.response.games;
@@ -205,8 +205,8 @@ const getUserGames = async (
       userToUpdate,
     );
     return withAchievements;
-  } catch (err: any) {
-    log.WARN(err.message);
+  } catch (err: unknown) {
+    log.ERROR(err.message);
     return [];
   }
 };
@@ -284,13 +284,13 @@ const getUserAchievements = (userID: number, games: any, userToUpdate: any) =>
               db.collection('events').insertOne(eventDetails);
             }
           }
-        } catch (err: any) {
+        } catch (err: unknown) {
           log.WARN(
             `--> [${index + 1}/${
               Object.keys(games).length
             }] game ${gameID} (user ${userID}) - [ERROR] - ${url}`,
           );
-          log.WARN(err.message);
+          log.ERROR(err.message);
           if (games[index + 1]) {
             setTimeout(
               () => getAchievementsDetails(index + 1),
@@ -325,7 +325,7 @@ const getUserRanking = (curatedGames: any, userGames: any) =>
     let rating;
     try {
       rating = await getDataFromDB('points');
-    } catch (err) {
+    } catch (err: unknown) {
       resolve(ranking);
     }
     //@ts-ignore

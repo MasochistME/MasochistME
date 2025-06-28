@@ -88,7 +88,7 @@ export const getRanking = async (
       ['desc'],
     );
     res.status(200).send(orderedUsers);
-  } catch (err) {
+  } catch (err: unknown) {
     res.status(500).send(err);
   }
 };
@@ -134,7 +134,7 @@ export const getUserRanking = async (
     };
 
     res.status(200).send(filteredUser);
-  } catch (err) {
+  } catch (err: unknown) {
     res.status(500).send(err);
   }
 };
@@ -244,7 +244,7 @@ export const getGameLeaderboards = async (
       badges: filteredBadges,
       players: usersWithTrophies,
     });
-  } catch (err) {
+  } catch (err: unknown) {
     res.sendStatus(500);
   }
 };
@@ -287,7 +287,7 @@ export const getTierDetails = async (
 ): Promise<void> => {
   try {
     console.log('test');
-  } catch (err) {
+  } catch (err: unknown) {
     res.sendStatus(500);
   }
 };

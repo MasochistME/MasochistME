@@ -23,7 +23,7 @@ export const updateStatus = (db: any, percent: number) => {
     { upsert: true },
     (err: any) => {
       if (err) {
-        log.WARN(err.message);
+        log.ERROR(err.message);
       }
     },
   );
@@ -33,8 +33,8 @@ export const getStatus = async (_req?: any, res?: any): Promise<void> => {
   let lastUpdated;
   try {
     lastUpdated = await getDataFromDB('update', { id: 'lastUpdated' });
-  } catch (err: any) {
-    log.WARN(err.message);
+  } catch (err: unknown) {
+    log.ERROR(err.message);
     res.status(500).send(err);
     return;
   }
@@ -69,9 +69,9 @@ export const initiateMainUpdate = async (
         return;
       }
     }
-  } catch (err: any) {
+  } catch (err: unknown) {
     log.WARN('--> [UPDATE] main update [ERR]');
-    log.WARN(err.message);
+    log.ERROR(err.message);
     if (res) {
       res.status(500).send(err);
     }
@@ -84,17 +84,17 @@ export const initiateMainUpdate = async (
   try {
     updateStatus(db, 0);
     members = await getCuratorMembers();
-  } catch (err: any) {
+  } catch (err: unknown) {
     log.WARN('--> [UPDATE] main update [ERR]');
-    log.WARN(err.message);
+    log.ERROR(err.message);
     return;
   }
   try {
     updateStatus(db, 20);
     await updateCuratorGames();
-  } catch (err: any) {
+  } catch (err: unknown) {
     log.WARN('--> [UPDATE] main update [ERR]');
-    log.WARN(err.message);
+    log.ERROR(err.message);
     return;
   }
 
@@ -117,13 +117,13 @@ export const initiateMainUpdate = async (
         { $set: { member: false } },
         err => {
           if (err) {
-            log.WARN(err.message);
+            log.ERROR(err.message);
           }
         },
       );
       db.collection('events').insertOne(eventDetails, err => {
         if (err) {
-          log.WARN(err.message);
+          log.ERROR(err.message);
         }
       });
     }
@@ -155,9 +155,9 @@ export const initiateMainUpdate = async (
         const user = userData.data.response.players[0];
         members[index].name = user.personaname;
         members[index].avatar = user.avatarfull;
-      } catch (err: any) {
+      } catch (err: unknown) {
         log.WARN(`--> [UPDATE] member ${members[index].id} [ERROR]`);
-        log.WARN(err.message);
+        log.ERROR(err.message);
       }
       const eventDetails: TMemberJoinedEvent = {
         date: Date.now(),
@@ -166,12 +166,12 @@ export const initiateMainUpdate = async (
       };
       db.collection('events').insertOne(eventDetails, err => {
         if (err) {
-          log.WARN(err.message);
+          log.ERROR(err.message);
         }
       });
       db.collection('users').insertOne(members[index], err => {
         if (err) {
-          log.WARN(err.message);
+          log.ERROR(err.message);
         }
       });
 

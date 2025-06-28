@@ -21,9 +21,9 @@ export const updateCurator = async (
     } else {
       updateCuratorLogic(false, res);
     }
-  } catch (err: any) {
+  } catch (err: unknown) {
     log.INFO(`--> [UPDATE] curator update [ERROR]`);
-    log.WARN(err.message ?? err);
+    log.ERROR(err.message ?? err);
     if (res) res?.sendStatus(500);
   }
 };

@@ -116,7 +116,7 @@ export const getCuratorGames = async (
         });
       res.status(200).send(filteredGames);
     }
-  } catch (err) {
+  } catch (err: unknown) {
     if (res) {
       res.status(500).send(err);
     }
@@ -131,7 +131,7 @@ export const getCuratedGamesFromTier = async (req: any, res: any) => {
   try {
     const games = await getDataFromDB('games', { rating: req.params.tier });
     res.status(200).send(games);
-  } catch (err) {
+  } catch (err: unknown) {
     res.status(500).send(err);
   }
 };
@@ -236,7 +236,7 @@ export const updateCuratorGames = (_req?: any, res?: any): Promise<void> =>
           { upsert: true },
           err => {
             if (err) {
-              log.WARN(err.message);
+              log.ERROR(err.message);
             } else {
               log.INFO(
                 `--> [UPDATE] games - game ${
@@ -248,7 +248,7 @@ export const updateCuratorGames = (_req?: any, res?: any): Promise<void> =>
         );
         db.collection('events').insertOne(eventDetails, err => {
           if (err) {
-            log.WARN(err.message);
+            log.ERROR(err.message);
           } else {
             log.INFO(
               `--> [UPDATE] events - game ${decuratedGame.id} decurated`,
@@ -277,10 +277,10 @@ export const updateCuratorGames = (_req?: any, res?: any): Promise<void> =>
       try {
         // eslint-disable-next-line prefer-const
         game = await axios.get(urlGamesDetails);
-      } catch (err: any) {
+      } catch (err: unknown) {
         log.INFO(`- saving game ${gameId} failed`);
         log.INFO(`-- ${urlGamesDetails}`);
-        log.WARN(err.message);
+        log.ERROR(err.message);
         if (games[index + 1]) {
           setTimeout(
             () => getGameDetails(index + 1),
@@ -334,7 +334,7 @@ export const updateCuratorGames = (_req?: any, res?: any): Promise<void> =>
         };
         db.collection('events').insertOne(eventDetails, err => {
           if (err) {
-            log.WARN(err.message);
+            log.ERROR(err.message);
           }
         });
       }
@@ -348,7 +348,7 @@ export const updateCuratorGames = (_req?: any, res?: any): Promise<void> =>
         };
         db.collection('events').insertOne(eventDetails, err => {
           if (err) {
-            log.WARN(err.message);
+            log.ERROR(err.message);
           }
         });
         log.INFO(`--> [UPDATE] events - game ${gameId} curated`);
@@ -365,7 +365,7 @@ export const updateCuratorGames = (_req?: any, res?: any): Promise<void> =>
             log.INFO(
               `- saving game ${gameId} (${gameDetails?.title?.toUpperCase()}) failed`,
             );
-            log.WARN(err.message);
+            log.ERROR(err.message);
           } else {
             // @ts-ignore:next-line
             log.INFO(
@@ -444,6 +444,6 @@ export const getCuratorMembers = (_req?: any, res?: any): Promise<void> =>
           res.status(500).send(err);
         }
         log.WARN('--> [UPDATE] curator members list [ERROR]');
-        log.WARN(err.message);
+        log.ERROR(err.message);
       });
   });

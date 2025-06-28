@@ -42,8 +42,8 @@ export const getAwardById = async (
       awardChildren.push(award);
     });
     res.status(200).send({ ...award, children: awardChildren });
-  } catch (err: any) {
-    log.WARN(err);
+  } catch (err: unknown) {
+    log.ERROR(err);
     res.status(500).send({ error: err.message ?? 'Internal server error' });
   }
 };

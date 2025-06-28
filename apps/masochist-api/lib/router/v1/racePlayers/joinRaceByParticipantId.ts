@@ -19,7 +19,7 @@ export const joinRaceByParticipantId = async (
 
     try {
       new ObjectId(raceId);
-    } catch (err) {
+    } catch (err: unknown) {
       res
         .status(400)
         .send({ error: 'The race ID your provided is incorrect.' });
@@ -67,8 +67,8 @@ export const joinRaceByParticipantId = async (
     } else {
       res.status(201).send(response);
     }
-  } catch (err: any) {
-    log.WARN(err);
+  } catch (err: unknown) {
+    log.ERROR(err);
     res.status(500).send({ error: err.message ?? 'Internal server error' });
   }
 };
