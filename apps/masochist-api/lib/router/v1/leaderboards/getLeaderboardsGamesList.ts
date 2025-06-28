@@ -143,8 +143,8 @@ export const getLeaderboardsGamesList = async (
     const fixedGameLeaderboards = gameLeaderboards.slice(0, limit);
 
     res.status(200).send(fixedGameLeaderboards);
-  } catch (err: any) {
-    log.WARN(err);
+  } catch (err: unknown) {
+    log.ERROR(err);
     res.status(500).send({ error: err.message ?? 'Internal server error' });
   }
 };

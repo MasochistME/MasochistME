@@ -442,7 +442,7 @@ export const updateCuratorLogic = async (
     statusCurator.updateStatus = UpdateStatus.IDLE;
     statusCurator.isUpdating = false;
     log.INFO(`--> [UPDATE] main update [END]`);
-  } catch (err: any) {
+  } catch (err: unknown) {
     /**
      * Set the update status to error.
      */
@@ -450,7 +450,7 @@ export const updateCuratorLogic = async (
     statusCurator.updateStatus = UpdateStatus.ERROR;
     statusCurator.isUpdating = false;
     log.INFO(`--> [UPDATE] main update [ERROR]`);
-    log.WARN(err.message ?? err);
+    log.ERROR(err.message ?? err);
     log.INFO(`--> [UPDATE] main update [END]`);
   }
 };

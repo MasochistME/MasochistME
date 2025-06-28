@@ -49,8 +49,8 @@ export const giveAwardToMemberById = async (
     } else {
       res.status(201).send(responseAwardGrant);
     }
-  } catch (err: any) {
-    log.WARN(err);
+  } catch (err: unknown) {
+    log.ERROR(err);
     res.status(500).send({ error: err.message ?? 'Internal server error' });
   }
 };

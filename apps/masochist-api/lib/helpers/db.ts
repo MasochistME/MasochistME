@@ -17,8 +17,8 @@ export class MongoInstance {
       this.db = this.client.db(
         process.env.ENV === 'dev' ? 'masochist-dev' : 'masochist',
       );
-    } catch (error: any) {
-      log.WARN(error);
+    } catch (error: unknown) {
+      log.ERROR(error);
       throw error;
     }
   }
@@ -42,8 +42,8 @@ export const connectToDb = async (): Promise<{
       client,
       db: client.db(process.env.ENV === 'dev' ? 'masochist-dev' : 'masochist'),
     };
-  } catch (error: any) {
-    log.WARN(error);
+  } catch (error: unknown) {
+    log.ERROR(error);
     throw error;
   }
 };

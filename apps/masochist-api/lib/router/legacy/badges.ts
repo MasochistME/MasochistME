@@ -15,7 +15,7 @@ export const getAllBadges = async (_req: any, res: any) => {
 
   data.find({}).toArray((err, badges) => {
     if (err) {
-      log.WARN(err.message);
+      log.ERROR(err.message);
       res.status(500).send(err);
     } else {
       const orderedBadges = orderBy(
@@ -43,7 +43,7 @@ export const getBadge = async (req: any, res: any) => {
 
   data.findOne({ _id: new ObjectId(req.params.id) }, (err, badge) => {
     if (err) {
-      log.WARN(err.message);
+      log.ERROR(err.message);
       res.status(500).send(err);
     } else if (!badge) {
       res.sendStatus(404);
@@ -68,7 +68,7 @@ export const addBadge = async (req: any, res: any) => {
 
   data.insertOne(req.body, (err, badge) => {
     if (err) {
-      log.WARN(err.message);
+      log.ERROR(err.message);
       res.status(500).send(err);
     } else if (!badge) {
       res.sendStatus(404);
@@ -82,7 +82,7 @@ export const addBadge = async (req: any, res: any) => {
       };
       db.collection('events').insertOne(eventDetails, err => {
         if (err) {
-          log.WARN(err.message);
+          log.ERROR(err.message);
         }
       });
       res.status(201).send(badge);
@@ -110,7 +110,7 @@ export const updateBadge = async (req: any, res: any) => {
     { upsert: true },
     (err, badge) => {
       if (err) {
-        log.WARN(err.message);
+        log.ERROR(err.message);
         res.status(500).send(err);
       } else if (!badge) {
         res.sendStatus(404);
@@ -132,7 +132,7 @@ export const deleteBadge = async (req: any, res: any) => {
 
   data.deleteOne({ _id: new ObjectId(req.params.id) }, (err, badge) => {
     if (err) {
-      log.WARN(err.message);
+      log.ERROR(err.message);
       res.status(500).send(err);
     } else if (!badge) {
       res.sendStatus(404);
@@ -163,7 +163,7 @@ export const giveBadge = async (req: any, res: any) => {
     badge = await getDataFromDB('badges', {
       _id: new ObjectId(req.params.badgeid),
     });
-  } catch (err) {
+  } catch (err: unknown) {
     res.status(500).send(err);
     return;
   }
@@ -197,7 +197,7 @@ export const giveBadge = async (req: any, res: any) => {
         log.WARN(
           `--> [ADD] badge ${req.params.badgeid} => user ${req.params.steamid} [ERROR]`,
         );
-        log.WARN(err.message);
+        log.ERROR(err.message);
       } else {
         log.INFO(
           `--> [ADD] badge ${req.params.badgeid} => user ${req.params.steamid} [DONE]`,
@@ -210,7 +210,7 @@ export const giveBadge = async (req: any, res: any) => {
         };
         db.collection('events').insertOne(eventDetails, err => {
           if (err) {
-            log.WARN(err.message);
+            log.ERROR(err.message);
           } else {
             log.INFO(
               `--> [ADD] event - badge ${req.params.badgeid} => user ${req.params.steamid} [DONE]`,
@@ -236,7 +236,7 @@ export const takeBadge = async (req: any, res: any): Promise<void> => {
 
   try {
     user = await getDataFromDB('users', { id: req.params.steamid });
-  } catch (err) {
+  } catch (err: unknown) {
     res.status(500).send(err);
     return;
   }
@@ -268,7 +268,7 @@ export const takeBadge = async (req: any, res: any): Promise<void> => {
         log.WARN(
           `--> [DELETE] badge ${req.params.badgeid} => user ${req.params.steamid} [ERROR]`,
         );
-        log.WARN(err.message);
+        log.ERROR(err.message);
       } else {
         log.INFO(
           `--> [DELETE] badge ${req.params.badgeid} => user ${req.params.steamid} [DONE]`,

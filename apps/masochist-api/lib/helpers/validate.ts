@@ -11,11 +11,9 @@ export const apiLegacyAuth = (req: any, res: any, next: any) => {
     hash('sha256', authorizationHeader) !==
       process.env.HASH_TEMP_ACCESS_TOKEN_LEGACY
   ) {
-    log.CRITICAL(
-      'An unauthorized attempt to access protected legacy endpoint!',
+    log.ERROR(
+      `An unauthorized attempt to access protected legacy endpoint! Endpoint: ${url} Fake token: ${fakeToken}`,
     );
-    log.CRITICAL(`-- Endpoint: ${url}`);
-    log.CRITICAL(`-- Fake token: ${fakeToken}`);
     return res.sendStatus(401);
   }
 
@@ -32,9 +30,9 @@ export const apiV1Auth = (req: any, res: any, next: any) => {
     hash('sha256', authorizationHeader) !==
       process.env.HASH_TEMP_ACCESS_TOKEN_V1
   ) {
-    log.CRITICAL('An unauthorized attempt to access protected V1 endpoint!');
-    log.CRITICAL(`-- Endpoint: ${url}`);
-    log.CRITICAL(`-- Fake token: ${fakeToken}`);
+    log.ERROR(
+      `An unauthorized attempt to access protected V1 endpoint! Endpoint: ${url} Fake token: ${fakeToken}`,
+    );
     return res.sendStatus(401);
   }
 

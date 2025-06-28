@@ -31,8 +31,8 @@ export const getPatronsList = async (
     });
 
     res.status(200).send(patrons);
-  } catch (err: any) {
-    log.WARN(err);
+  } catch (err: unknown) {
+    log.ERROR(err);
     res.status(500).send({ error: err.message ?? 'Internal server error' });
   }
 };

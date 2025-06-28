@@ -14,14 +14,14 @@ export const getAllPatrons = async (_req: any, res: any) => {
     .find({})
     .toArray((err, tiers) => {
       if (err) {
-        log.WARN(err.message);
+        log.ERROR(err.message);
         res.status(500).send(err);
       } else {
         db.collection<Patron>('patrons')
           .find({})
           .toArray((err, patrons) => {
             if (err) {
-              log.WARN(err.message);
+              log.ERROR(err.message);
               res.status(500).send(err);
             } else {
               (tiers ?? [])
@@ -61,7 +61,7 @@ export const getPatronsByTier = async (req: any, res: any) => {
     .find({ tier: req.params.tier })
     .toArray((err, tier) => {
       if (err) {
-        log.WARN(err.message);
+        log.ERROR(err.message);
         res.status(500).send(err);
       } else if (!tier) {
         res.sendStatus(404);
@@ -82,7 +82,7 @@ export const getPatron = async (req: any, res: any) => {
     { steamid: req.params.steamid },
     (err, tier) => {
       if (err) {
-        log.WARN(err.message);
+        log.ERROR(err.message);
         res.status(500).send(err);
       } else if (!tier) {
         res.sendStatus(404);
@@ -126,7 +126,7 @@ export const addPatron = async (req: any, res: any) => {
 
   db.collection('patrons').insertOne(patron, err => {
     if (err) {
-      log.WARN(err.message);
+      log.ERROR(err.message);
       res.status(500).send(err);
     } else {
       log.INFO(
@@ -151,9 +151,9 @@ export const updatePatron = async (req: any, res: any) => {
   try {
     // eslint-disable-next-line prefer-const
     userSummary = await axios.get(urlSummary);
-  } catch (err: any) {
+  } catch (err: unknown) {
     log.WARN(urlSummary);
-    log.WARN(err.message);
+    log.ERROR(err.message);
     return;
   }
 
@@ -174,7 +174,7 @@ export const updatePatron = async (req: any, res: any) => {
     { $set: patron },
     err => {
       if (err) {
-        log.WARN(err.message);
+        log.ERROR(err.message);
         res.status(500).send(err);
       } else {
         log.INFO(
@@ -199,7 +199,7 @@ export const deletePatron = async (req: any, res: any) => {
     { steamid: req.params.steamid },
     (err, patron) => {
       if (err) {
-        log.WARN(err.message);
+        log.ERROR(err.message);
         res.status(500).send(err);
       } else if (!patron) {
         res.sendStatus(404);
