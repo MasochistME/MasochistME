@@ -590,7 +590,7 @@ export const getMemberSteamAchievements = async (
          * Axios request fails when the game has no achievements.
          * Here we ignore that error and procees.
          */
-        // log.ERROR(err);
+
         if (memberGames[gameIndex + 1]) {
           setTimeout(
             () => getRecurrentAchievementData(gameIndex + 1),
