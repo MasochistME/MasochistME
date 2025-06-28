@@ -20,7 +20,7 @@ Sentry.init({
 // All spans (unless those discarded by sampling) will have profiling data attached to them.
 Sentry.startSpan(
   {
-    name: 'Sentry Span',
+    name: 'API Span',
   },
   () => {
     // The code executed here will be profiled
