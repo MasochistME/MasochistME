@@ -9,7 +9,6 @@ import { getHumanReadableDate } from 'utils';
 import { SingleSeasonRanking } from './SingleSeasonRanking';
 import { SingleSeasonRaces } from './SingleSeasonRaces';
 import { ColorTokens, useTheme } from 'styles';
-import { useMixpanel } from 'hooks';
 import { t } from 'i18n';
 
 enum TabsSeasonDetails {
@@ -24,7 +23,6 @@ type SingleSeasonProps = {
 
 export const SingleSeason = (props: SingleSeasonProps) => {
   const { season, races } = props;
-  const { track } = useMixpanel();
   const { colorTokens } = useTheme();
   const [activeTab, setActiveTab] = useState<TabsSeasonDetails>(
     TabsSeasonDetails.RANKING,
@@ -45,7 +43,6 @@ export const SingleSeason = (props: SingleSeasonProps) => {
     newTab: TabsSeasonDetails,
   ) => {
     setActiveTab(newTab);
-    track('races.tab.change', { tab: newTab });
   };
 
   // TODO This shows error fallback component for a split second

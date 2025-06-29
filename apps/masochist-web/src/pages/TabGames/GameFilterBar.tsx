@@ -15,13 +15,7 @@ import {
   Slider,
   Spinner,
 } from 'components';
-import {
-  useActiveTab,
-  GameView,
-  useLoadTiers,
-  useDebounce,
-  useMixpanel,
-} from 'hooks';
+import { useActiveTab, GameView, useLoadTiers, useDebounce } from 'hooks';
 import { TabDict } from 'configuration/tabs';
 import { useTiers } from 'sdk';
 import { t } from 'i18n';
@@ -34,7 +28,6 @@ type Props = {
 };
 export const GameFilterBar = (props: Props): JSX.Element => {
   useActiveTab(TabDict.GAMES);
-  const { track } = useMixpanel();
 
   const { gameListView, toggleGameView } = props;
   const { queryGame, setQueryGame, visiblePrices, setVisiblePrices } =
@@ -42,13 +35,7 @@ export const GameFilterBar = (props: Props): JSX.Element => {
   const [prices, setPrices] = useState<number[]>(DEFAULT_PRICES);
   const [showSlider, setShowSlider] = useState<boolean>(false);
 
-  const trackPriceChange = () => {
-    track('games.price.change', {
-      min: visiblePrices[0],
-      max: visiblePrices[1],
-    });
-  };
-  useDebounce(prices, visiblePrices, setVisiblePrices, 500, trackPriceChange);
+  useDebounce(prices, visiblePrices, setVisiblePrices, 500);
 
   const gameViewButtonIcon = useMemo(() => {
     if (gameListView === GameView.TILE) return 'Table';

@@ -15,7 +15,6 @@ import {
   Tooltip,
 } from 'components';
 import { WinnerLink } from 'containers';
-import { useMixpanel } from 'hooks';
 import { useCuratorMembers, useSeasonLeaderboards } from 'sdk';
 import { ModalParticipant } from './ModalParticipant';
 import { LocaleKey, t } from 'i18n';
@@ -53,7 +52,6 @@ export const SingleSeasonRanking = (props: Props) => {
 };
 
 const RankingBoundary = ({ seasonId }: Props) => {
-  const { track } = useMixpanel();
   const { data = [] } = useSeasonLeaderboards({ seasonId });
   const participants = useSeasonParticipants(data);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -64,9 +62,6 @@ const RankingBoundary = ({ seasonId }: Props) => {
     if (participant) {
       setIsModalOpen(!isModalOpen);
       setSelectedParticipant(participant);
-      track('race.participant.click', {
-        participant: participant.member?.name ?? participant.discordId,
-      });
     }
   };
 

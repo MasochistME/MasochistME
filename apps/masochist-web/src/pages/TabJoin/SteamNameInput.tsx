@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 import { Button, Input, Size } from 'components';
 import { useTheme, ColorTokens, media } from 'styles';
-import { useMixpanel } from 'hooks';
 
 import { validateSteamUrl } from './utils';
 
@@ -14,7 +13,6 @@ type Props = {
 export const SteamNameInput = (props: Props) => {
   const { setSteamUrl } = props;
   const { colorTokens } = useTheme();
-  const { track } = useMixpanel();
 
   const [searchParams] = useSearchParams();
   const route = searchParams.get('url');
@@ -25,7 +23,6 @@ export const SteamNameInput = (props: Props) => {
   const onGo = () => {
     setSteamUrl(inputUrl);
     if (route) setInputUrl(decodeURIComponent(route));
-    track('scout', { url: inputUrl });
   };
 
   useEffect(() => {

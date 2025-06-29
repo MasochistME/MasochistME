@@ -1,14 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import { PatreonTier, PatronTier } from '@masochistme/sdk/dist/v1/types';
-import { usePatreonTiers, useMemberLeaderboards, useMemberById } from 'sdk';
+import { usePatreonTiers, useMemberLeaderboards } from 'sdk';
 import { ErrorFallback, Flex, Loader, QueryBoundary } from 'components';
 import { useTheme, ColorTokens } from 'styles';
 
 import { MemberProfileHeader } from './MemberProfileHeader';
 import { MemberProfileStats } from './MemberProfileStats';
-import { useMixpanel } from 'hooks';
 
 type Props = { id: string };
 export const MemberProfileTop = ({ id }: Props) => (
@@ -18,16 +17,10 @@ export const MemberProfileTop = ({ id }: Props) => (
 );
 
 const MemberProfileTopBoundary = ({ id }: Props) => {
-  const { track } = useMixpanel();
   const { colorTokens } = useTheme();
 
-  const { memberData: member } = useMemberById(id);
   const { leaderData } = useMemberLeaderboards(id);
   const { patreonTiersData } = usePatreonTiers();
-
-  useEffect(() => {
-    if (member?.name) track('tab.profile.visit', { name: member.name, id });
-  }, [member]);
 
   const patron = (patreonTiersData.find(
     patreonTier => patreonTier.id === leaderData?.patreonTier,

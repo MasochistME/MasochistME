@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { Game, Badge } from '@masochistme/sdk/dist/v1/types';
@@ -12,7 +11,7 @@ import {
   Loader,
 } from 'components';
 import { SubPage, Section, SectionProps, BadgeTile } from 'containers';
-import { useActiveTab, useMixpanel } from 'hooks';
+import { useActiveTab } from 'hooks';
 import { TabDict } from 'configuration/tabs';
 
 import { GameProfileHeader } from './GameProfileHeader';
@@ -22,7 +21,7 @@ import { TabGameTabsBoundary } from './GameProfileTabs';
 export const TabGame = (): JSX.Element => {
   // ID param will always be defined because this tab is used ONLY for the /game/:id route.
   const { id } = useParams<{ id: string }>() as { id: string };
-  useActiveTab(TabDict.GAME, true);
+  useActiveTab(TabDict.GAME);
 
   return (
     <SubPage>
@@ -40,15 +39,10 @@ export const TabGame = (): JSX.Element => {
 };
 
 const TabGameBoundary = ({ id }: { id: string }) => {
-  const { track } = useMixpanel();
   const { gamesData } = useCuratedGames();
 
   const gameId = Number(id);
   const game = gamesData.find((g: Game) => g.id === gameId);
-
-  useEffect(() => {
-    if (game?.title) track('tab.game.visit', { name: game.title, id });
-  }, [game]);
 
   if (!game)
     return <Warning description={`Game with id ${id} does not exist.`} />;

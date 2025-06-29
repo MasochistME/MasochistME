@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { media } from 'styles';
 import { Flex, Button } from 'components';
 import { Size } from 'components';
-import { useMixpanel } from 'hooks';
 import { curatorURL } from 'utils';
 import { Variant } from 'components/Button/types';
 import { useNavigate } from 'react-router';
@@ -17,23 +16,18 @@ type Props = {
 
 export const ButtonsSocialMedia = (props: Props): JSX.Element => {
   const { size = Size.BIG, withJoinButton = false } = props;
-  const { track } = useMixpanel();
   const navigate = useNavigate();
 
   const onButtonCuratorClick = () => {
-    track(`button.curator.click`);
     window.open(curatorURL, '_blank');
   };
   const onButtonPatreonClick = () => {
-    track(`button.patreon.click`);
     window.open('https://www.patreon.com/pointonepercent', '_blank');
   };
   const onButtonDiscordClick = () => {
-    track(`button.discord.click`);
     window.open('https://discord.gg/NjAeT53kVb', '_blank');
   };
   const onJoinUsClick = () => {
-    track(`button.joinus.click`);
     navigate('/join');
   };
 

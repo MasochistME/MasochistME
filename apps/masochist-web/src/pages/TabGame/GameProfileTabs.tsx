@@ -2,7 +2,7 @@ import { SyntheticEvent } from 'react';
 import styled from 'styled-components';
 
 import { Tabs, Tab, TabPanel } from 'containers';
-import { useContextualRouting, useMixpanel } from 'hooks';
+import { useContextualRouting } from 'hooks';
 
 import { GameProfileLeaderboards } from './GameProfileLeaderboards';
 import { GameProfileFeatured } from './GameProfileFeatured';
@@ -16,8 +16,6 @@ enum TabRoutes {
 }
 
 export const TabGameTabsBoundary = ({ gameId }: { gameId: number }) => {
-  const { track } = useMixpanel();
-
   const { navigateToRoute, route: tab } = useContextualRouting<TabRoutes>({
     key: 'tab',
     value: TabRoutes.LEADERBOARDS,
@@ -25,7 +23,6 @@ export const TabGameTabsBoundary = ({ gameId }: { gameId: number }) => {
 
   const handleChangeTab = (_e: SyntheticEvent, newTab: TabRoutes) => {
     navigateToRoute({ tab: newTab });
-    track('page.game.tab', { tab: newTab });
   };
 
   return (

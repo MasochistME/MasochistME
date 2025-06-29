@@ -14,7 +14,6 @@ import { ModalRace, WinnerLink } from 'containers';
 import styled from 'styled-components';
 import { getRaceTypeIcon } from 'utils/getIcon';
 import { media } from 'styles';
-import { useMixpanel } from 'hooks';
 
 type Props = {
   races: Race[];
@@ -34,13 +33,11 @@ export const SingleSeasonRaces = (props: Props): JSX.Element => {
   const { races } = props;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRaceId, setSelectedRaceId] = useState<string | null>(null);
-  const { track } = useMixpanel();
 
   const onRaceClick = (raceId: string) => {
     if (raceId) {
       setIsModalOpen(!isModalOpen);
       setSelectedRaceId(raceId);
-      track('race.click', { raceId });
     }
   };
 

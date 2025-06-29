@@ -4,7 +4,7 @@ import { orderBy } from 'lodash';
 import { PatreonTier } from '@masochistme/sdk/dist/v1/types';
 
 import { usePatreonTiers } from 'sdk';
-import { useActiveTab, useMixpanel } from 'hooks';
+import { useActiveTab } from 'hooks';
 import { TabDict } from 'configuration/tabs';
 import { ErrorFallback, Flex, Loader, QueryBoundary } from 'components';
 import { Section, SectionProps, SubPage } from 'containers';
@@ -44,12 +44,8 @@ const PatronsList = () => {
 };
 
 const Info = (props: Partial<SectionProps>): JSX.Element => {
-  const { trackLink } = useMixpanel();
   const idLinkPatreon = 'link--patreon';
   const idLinkKofi = 'link--kofi';
-
-  trackLink(`#${idLinkPatreon}`, 'link.patreon.click');
-  trackLink(`#${idLinkKofi}`, 'link.kofi.click');
 
   return (
     <Section

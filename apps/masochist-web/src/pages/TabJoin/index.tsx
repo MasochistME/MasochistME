@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 
 import styled from 'styled-components';
 
-import { useActiveTab, useMixpanel } from 'hooks';
+import { useActiveTab } from 'hooks';
 import { TabDict } from 'configuration/tabs';
 import { Button, Flex } from 'components';
 import { Variant } from 'components/Button/types';
@@ -49,18 +49,14 @@ export const TabJoin = () => {
 type InfoProps = Partial<SectionProps>;
 const CommunityInfo = () => {
   const navigate = useNavigate();
-  const { track } = useMixpanel();
 
   const onButtonDiscordClick = () => {
-    track(`button.discord.click`);
     window.open('https://discord.gg/NjAeT53kVb', '_blank');
   };
   const onButtonCuratorClick = () => {
-    track(`button.discord.click`);
     window.open(curatorURL, '_blank');
   };
   const onButtonSupportClick = () => {
-    track(`button.support.click`);
     navigate('/support');
   };
 
