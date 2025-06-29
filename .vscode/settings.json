@@ -11,7 +11,6 @@
     "javascript",
     "typescript"
   ],
-  "editor.tabSize": 2,
   "files.eol": "\n",
   "[json]": {
     "editor.suggest.insertMode": "replace",
