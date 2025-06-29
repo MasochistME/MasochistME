@@ -1,3 +1,5 @@
+import './instrument';
+
 import { SDK } from '@masochistme/sdk/dist/v1/sdk';
 import { Arcybot } from 'arcybot';
 import { Cache } from 'cache';

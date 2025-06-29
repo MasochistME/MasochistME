@@ -1,79 +1,79 @@
 import axios from 'axios';
 import {
-    createAward,
-    deleteAwardById,
-    getAwardById,
-    getAwardsList,
-    updateAwardById,
+  createAward,
+  deleteAwardById,
+  getAwardById,
+  getAwardsList,
+  updateAwardById,
 } from 'v1/api/awards';
 import {
-    createBadge,
-    deleteBadgeById,
-    getBadgeById,
-    getBadgesList,
-    updateBadgeById,
+  createBadge,
+  deleteBadgeById,
+  getBadgeById,
+  getBadgesList,
+  updateBadgeById,
 } from 'v1/api/badges';
 import { getCandidateSummary } from 'v1/api/candidates';
 import {
-    getBadgesByGameIdList,
-    getGameCompletionList,
-    getGamesList,
+  getBadgesByGameIdList,
+  getGameCompletionList,
+  getGamesList,
 } from 'v1/api/games';
 import { createLog, getLogList } from 'v1/api/logs';
 import {
-    getMemberAchievementList,
-    getMemberAwardList,
-    getMemberBadgeList,
-    getMemberById,
-    getMemberGameList,
-    getMembersList,
-    giveAwardToMemberById,
-    giveBadgeToMemberById,
-    revokeAwardFromMemberById,
-    revokeBadgeFromMemberById,
-    updateMemberById,
+  getMemberAchievementList,
+  getMemberAwardList,
+  getMemberBadgeList,
+  getMemberById,
+  getMemberGameList,
+  getMembersList,
+  giveAwardToMemberById,
+  giveBadgeToMemberById,
+  revokeAwardFromMemberById,
+  revokeBadgeFromMemberById,
+  updateMemberById,
 } from 'v1/api/members';
 import {
-    getRaceParticipantById,
-    getRaceParticipantsList,
-    joinRaceByParticipantId,
-    updateRaceByParticipantId,
+  getRaceParticipantById,
+  getRaceParticipantsList,
+  joinRaceByParticipantId,
+  updateRaceByParticipantId,
 } from 'v1/api/racePlayers';
 import {
-    createRace,
-    deleteRaceById,
-    getActiveRace,
-    getRaceById,
-    getRaceList,
-    updateRaceById,
-    updateRaceRatingById
+  createRace,
+  deleteRaceById,
+  getActiveRace,
+  getRaceById,
+  getRaceList,
+  updateRaceById,
+  updateRaceRatingById,
 } from 'v1/api/races';
 import {
-    createSeason,
-    endSeasonById,
-    getSeasonById,
-    getSeasonLeaderboardsById,
-    getSeasonsList,
-    startSeasonById,
-    updateSeasonById,
+  createSeason,
+  endSeasonById,
+  getSeasonById,
+  getSeasonLeaderboardsById,
+  getSeasonsList,
+  startSeasonById,
+  updateSeasonById,
 } from 'v1/api/seasons';
 import { getTiersList } from 'v1/api/tiers';
 import {
-    createFeatured,
-    deleteFeaturedById,
-    getFeaturedList,
-    updateFeaturedById,
+  createFeatured,
+  deleteFeaturedById,
+  getFeaturedList,
+  updateFeaturedById,
 } from './api/featured';
 import {
-    getLeaderboardsGamesList,
-    getLeaderboardsMembersList,
-    getMemberLeaderboardsPositionById,
+  getLeaderboardsGamesList,
+  getLeaderboardsMembersList,
+  getMemberLeaderboardsPositionById,
 } from './api/leaderboards';
 import {
-    createPatron,
-    getPatreonTierList,
-    getPatronsList,
-    updatePatronById,
+  createPatron,
+  getPatreonTierList,
+  getPatronsList,
+  updatePatronById,
 } from './api/patrons';
 import { getUpdateStatus, updateMember } from './api/update';
 
@@ -85,7 +85,7 @@ export type Config = {
 export type Head<T> = T extends (
   first: infer FirstArgument,
   ...args: any[] | never
-) => any
+) => unknown
   ? FirstArgument
   : never;
 
@@ -228,11 +228,12 @@ export class SDK {
   public getRaceById = <T extends typeof getRaceById>(args: Head<T>) =>
     getRaceById(args, this.BASE_URL);
   public getActiveRace = () => getActiveRace(this.BASE_URL);
-  public updateRaceRatingById = <T extends typeof updateRaceRatingById>(args: Head<T>) =>
-  updateRaceRatingById(args, this.BASE_URL);
+  public updateRaceRatingById = <T extends typeof updateRaceRatingById>(
+    args: Head<T>,
+  ) => updateRaceRatingById(args, this.BASE_URL);
 
   /*********************************
-   *       RACE PARTICIPANTS       * 
+   *       RACE PARTICIPANTS       *
    *********************************/
 
   public getRaceParticipantById = <T extends typeof getRaceParticipantById>(

@@ -2,18 +2,18 @@ import { Race } from '@masochistme/sdk/dist/v1/types';
 import { getErrorEmbed, getInfoEmbed, getSuccessEmbed } from 'arcybot';
 import { RaceButton } from 'consts';
 import {
-    ActionRowBuilder,
-    APIEmbed,
-    ButtonBuilder,
-    ButtonInteraction,
-    ButtonStyle,
+  ActionRowBuilder,
+  APIEmbed,
+  ButtonBuilder,
+  ButtonInteraction,
+  ButtonStyle,
 } from 'discord.js';
 import { bot, sdk } from 'fetus';
 import { createError, ErrorAction, getModChannel, log } from 'utils';
 import {
-    fieldsBeforeReveal,
-    getRaceStartButtons,
-    getRaceStartEmbed,
+  fieldsBeforeReveal,
+  getRaceStartButtons,
+  getRaceStartEmbed,
 } from './__common';
 
 /**

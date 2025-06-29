@@ -2,7 +2,6 @@
  * @module Races
  */
 
-
 /**
  * This is a type of a single object representing a single race rating
  * from a specific Discord user
@@ -11,11 +10,11 @@ export interface RaceRating {
   /**
    * Discord ID of the race player
    */
-	discordId: string;
+  discordId: string;
   /**
    * ID of the rated race
    */
-  raceId:string;
+  raceId: string;
   /**
    * Fun rating of the race game
    */
@@ -23,5 +22,5 @@ export interface RaceRating {
   /**
    * Difficulty rating of the race game
    */
-  difficulty: number | null
+  difficulty: number | null;
 }
