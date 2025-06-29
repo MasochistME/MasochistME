@@ -24,14 +24,20 @@ const queryClient = new QueryClient({
 });
 
 export const App = () => {
-  const { assetTokens, colorTokens } = useTheme();
   return (
     <AppContextProvider>
-      <QueryClientProvider client={queryClient}>
-        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
-        <GlobalStyle assetTokens={assetTokens} colorTokens={colorTokens} />
-        <App />
-      </QueryClientProvider>
+      <Providers />
     </AppContextProvider>
+  );
+};
+
+const Providers = () => {
+  const { assetTokens, colorTokens } = useTheme();
+  return (
+    <QueryClientProvider client={queryClient}>
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+      <GlobalStyle assetTokens={assetTokens} colorTokens={colorTokens} />
+      <App />
+    </QueryClientProvider>
   );
 };
