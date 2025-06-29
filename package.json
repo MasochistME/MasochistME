@@ -22,7 +22,7 @@
     "packages/@masochistme/*"
   ],
   "dependencies": {
-    "axios": "1.1.2",
+    "axios": "1.8.2",
     "dayjs": "^1.11.7",
     "dotenv": "^16.0.3",
     "lodash": "^4.17.13",
