@@ -6,8 +6,7 @@ export const routerV1 = express.Router();
 /***************************
  *         UPDATE         *
  ***************************/
-
-import { updateMember, getUpdateCuratorStatus, updateCurator } from './update';
+import { getUpdateCuratorStatus, updateCurator, updateMember } from './update';
 
 routerV1.get('/update', getUpdateCuratorStatus);
 routerV1.put('/update', updateCurator);
@@ -16,7 +15,6 @@ routerV1.put('/members/member/:memberId/update', updateMember);
 /******************************
  *         CANDIDATES         *
  ******************************/
-
 import { getCandidateSummary } from './candidates';
 
 // TODO hide this behind CAPTCHA
@@ -25,19 +23,18 @@ routerV1.post('/candidate/scout', getCandidateSummary);
 /***************************
  *         MEMBERS         *
  ***************************/
-
 import {
-  getMembersList,
-  getMemberById,
-  updateMemberById,
-  getMemberGameList,
   getMemberAchievementList,
-  getMemberBadgeList,
-  giveBadgeToMemberById,
-  revokeBadgeFromMemberById,
   getMemberAwardList,
+  getMemberBadgeList,
+  getMemberById,
+  getMemberGameList,
+  getMembersList,
   giveAwardToMemberById,
+  giveBadgeToMemberById,
   revokeAwardFromMemberById,
+  revokeBadgeFromMemberById,
+  updateMemberById,
 } from './members';
 
 routerV1.post('/members/list', getMembersList);
@@ -80,10 +77,9 @@ routerV1.delete(
 /********************************
  *         LEADERBOARDS         *
  ********************************/
-
 import {
-  getLeaderboardsMembersList,
   getLeaderboardsGamesList,
+  getLeaderboardsMembersList,
   getMemberLeaderboardsPositionById,
 } from './leaderboards';
 
@@ -97,11 +93,10 @@ routerV1.get(
 /*************************
  *         GAMES         *
  *************************/
-
 import {
-  getGamesList,
   getBadgesByGameIdList,
   getGameCompletionList,
+  getGamesList,
 } from './games';
 
 routerV1.post('/games/list', getGamesList);
@@ -111,13 +106,12 @@ routerV1.post('/games/completion/list', getGameCompletionList);
 /**************************
  *         BADGES         *
  **************************/
-
 import {
-  getBadgesList,
   createBadge,
-  getBadgeById,
-  updateBadgeById,
   deleteBadgeById,
+  getBadgeById,
+  getBadgesList,
+  updateBadgeById,
 } from './badges';
 
 routerV1.post('/badges/list', getBadgesList);
@@ -129,13 +123,12 @@ routerV1.delete('/badges/badge/:badgeId', apiV1Auth, deleteBadgeById);
 /**************************
  *         AWARDS         *
  **************************/
-
 import {
-  getAwardsList,
   createAward,
-  getAwardById,
-  updateAwardById,
   deleteAwardById,
+  getAwardById,
+  getAwardsList,
+  updateAwardById,
 } from './awards';
 
 routerV1.post('/awards/list', getAwardsList);
@@ -147,8 +140,7 @@ routerV1.delete('/awards/award/:awardId', apiV1Auth, deleteAwardById);
 /*************************
  *         LOGS         *
  *************************/
-
-import { getLogList, createLog } from './logs';
+import { createLog, getLogList } from './logs';
 
 routerV1.post('/logs/list', getLogList);
 routerV1.post('/logs', apiV1Auth, createLog);
@@ -156,7 +148,6 @@ routerV1.post('/logs', apiV1Auth, createLog);
 /*************************
  *         TIERS         *
  *************************/
-
 import { getTiersList } from './tiers';
 
 routerV1.post('/tiers/list', getTiersList);
@@ -164,14 +155,13 @@ routerV1.post('/tiers/list', getTiersList);
 /*************************
  *         RACES         *
  *************************/
-
 import {
   createRace,
-  getRaceById,
-  updateRaceById,
   deleteRaceById,
-  getRaceList,
   getActiveRace,
+  getRaceById,
+  getRaceList,
+  updateRaceById,
   updateRaceRatingById,
 } from './race';
 
@@ -186,12 +176,11 @@ routerV1.put('/races/race/:raceId/rate', updateRaceRatingById); // TODO add auth
 /*********************************
  *       RACE PARTICIPANTS       *
  *********************************/
-
 import {
   getRaceParticipantById,
+  getRaceParticipantsList,
   joinRaceByParticipantId,
   updateRaceByParticipantId,
-  getRaceParticipantsList,
 } from './racePlayers';
 
 routerV1.get(
@@ -213,13 +202,12 @@ routerV1.post('/races/race/:raceId/participants/list', getRaceParticipantsList);
 /***************************
  *         SEASONS         *
  ***************************/
-
 import {
   createSeason,
-  updateSeasonById,
-  getSeasonsList,
   getSeasonById,
   getSeasonLeaderboardsById,
+  getSeasonsList,
+  updateSeasonById,
 } from './seasons';
 
 routerV1.post('/seasons', apiV1Auth, createSeason);
@@ -234,12 +222,11 @@ routerV1.post('/seasons/list', getSeasonsList);
 /****************************
  *         FEATURED         *
  ****************************/
-
 import {
   createFeatured,
+  deleteFeaturedById,
   getFeaturedList,
   updateFeaturedById,
-  deleteFeaturedById,
 } from './featured';
 
 routerV1.post('/featured', apiV1Auth, createFeatured);
@@ -250,11 +237,10 @@ routerV1.delete('/featured/:featuredId', apiV1Auth, deleteFeaturedById);
 /****************************
  *         PATRONS         *
  ****************************/
-
 import {
   createPatron,
-  getPatronsList,
   getPatreonTierList,
+  getPatronsList,
   updatePatronById,
 } from './patrons';
 

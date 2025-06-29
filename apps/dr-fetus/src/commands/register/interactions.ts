@@ -1,9 +1,8 @@
 import { getErrorEmbed } from 'arcybot';
-import { ButtonInteraction, APIEmbed } from 'discord.js';
-
-import { isMod, log } from 'utils';
 import { REGISTRATION_REVIEW } from 'consts';
+import { APIEmbed, ButtonInteraction } from 'discord.js';
 import { sdk } from 'fetus';
+import { isMod, log } from 'utils';
 
 /**
  * Handles autocompletion for the create badge command

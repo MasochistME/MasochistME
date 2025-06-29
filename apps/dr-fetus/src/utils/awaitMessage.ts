@@ -1,5 +1,5 @@
 import { DiscordInteraction } from 'arcybot';
-import { Message, ButtonInteraction, MessageCollector } from 'discord.js';
+import { ButtonInteraction, Message, MessageCollector } from 'discord.js';
 
 export const awaitMessage = async <
   T extends DiscordInteraction | ButtonInteraction,

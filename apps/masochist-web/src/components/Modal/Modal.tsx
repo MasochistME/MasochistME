@@ -1,8 +1,7 @@
-import React from 'react';
 import { Box, Modal as MuiModal } from '@mui/material';
+import React from 'react';
 import styled from 'styled-components';
-
-import { useTheme, ColorTokens } from 'styles';
+import { ColorTokens, useTheme } from 'styles';
 
 type Props = {
   children: React.ReactNode;

@@ -1,5 +1,5 @@
-import { IconType } from 'components';
 import { Race, RaceType, Tier } from '@masochistme/sdk/dist/v1/types';
+import { IconType } from 'components';
 
 export const getTierIcon = (
   scoreID: string | number,

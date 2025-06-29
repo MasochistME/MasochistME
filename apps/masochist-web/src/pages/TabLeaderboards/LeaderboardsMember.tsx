@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
 import Collapse from '@mui/material/Collapse';
-import styled from 'styled-components';
-
-import { media } from 'styles';
 import { Flex } from 'components';
 import { MemberLeaderboards } from 'containers';
+import { useState } from 'react';
+import styled from 'styled-components';
+import { media } from 'styles';
 import { TimePeriod } from 'utils/getTimePeriod';
-
 import { LeaderboardsMemberSummary } from './LeaderboardsMemberSummary';
 
 type Props = {

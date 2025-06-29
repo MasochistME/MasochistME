@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-
-import { media, useTheme, ColorTokens } from 'styles';
+import { ColorTokens, media, useTheme } from 'styles';
 
 type Props = {
   percentage: number;

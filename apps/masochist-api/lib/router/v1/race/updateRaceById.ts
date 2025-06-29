@@ -1,9 +1,8 @@
-import { ObjectId } from 'mongodb';
-import { Request, Response } from 'express';
 import { Race } from '@masochistme/sdk/dist/v1/types';
-
-import { log } from 'helpers/log';
 import { mongoInstance } from 'api';
+import { Request, Response } from 'express';
+import { log } from 'helpers/log';
+import { ObjectId } from 'mongodb';
 
 export const updateRaceById = async (
   req: Request<any, Partial<Omit<Race, '_id'>>>,

@@ -1,8 +1,7 @@
-import { Request, Response } from 'express';
 import { PatreonTier } from '@masochistme/sdk/dist/v1/types';
-
-import { log } from 'helpers/log';
 import { mongoInstance } from 'api';
+import { Request, Response } from 'express';
+import { log } from 'helpers/log';
 
 /**
  * Returns a list of patreon tiers.

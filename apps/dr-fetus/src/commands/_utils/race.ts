@@ -1,3 +1,4 @@
+import { SCORE_RACE_WARNINGS } from '@masochistme/sdk/dist/v1';
 import {
   Race,
   RacePlayer,
@@ -6,12 +7,13 @@ import {
   RaceTimeBased,
   RaceType,
 } from '@masochistme/sdk/dist/v1/types';
-import { SCORE_RACE_WARNINGS } from '@masochistme/sdk/dist/v1';
-
 import { getErrorEmbed, getInfoEmbed } from 'arcybot';
+import { raceReadyToGo } from 'commands/racesetup/interactions/playerActions';
+import { raceFinalize } from 'commands/racesetup/interactions/raceFinalize';
+import { RaceData } from 'commands/racesetup/logic';
+import { RACE_RESULTS_TIMEOUT, RACE_TIMEOUT, Room } from 'consts';
 import dayjs from 'dayjs';
-
-import { RACE_TIMEOUT, RACE_RESULTS_TIMEOUT, Room } from 'consts';
+import { bot, sdk } from 'fetus';
 import {
   getChannelByKey,
   getDateFromDelay,
@@ -20,11 +22,6 @@ import {
   getTimestampFromDate,
   log,
 } from 'utils';
-import { bot, sdk } from 'fetus';
-
-import { RaceData } from 'commands/racesetup/logic';
-import { raceReadyToGo } from 'commands/racesetup/interactions/playerActions';
-import { raceFinalize } from 'commands/racesetup/interactions/raceFinalize';
 
 /**
  * Executes every minute to check if any race needs to be started or finished.

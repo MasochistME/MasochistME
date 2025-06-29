@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
+import { getDataFromDB } from 'helpers/db';
 import { orderBy } from 'lodash';
 import { ObjectId } from 'mongodb';
-import { getDataFromDB } from 'helpers/db';
-import { TUser, TPoints } from './types/ranking';
 import { TBadge } from './types/badges';
+import { TPoints, TUser } from './types/ranking';
 
 /**
  * Returns basic info about ranking.

@@ -1,19 +1,18 @@
 import {
-  BoxPlotController,
-  BoxAndWiskers,
+    BoxAndWiskers,
+    BoxPlotController,
 } from '@sgratzl/chartjs-chart-boxplot';
 import {
-  Chart as ChartJS,
-  registerables,
-  CategoryScale,
-  LinearScale,
-  BarElement,
+    BarElement,
+    CategoryScale,
+    Chart as ChartJS,
+    LinearScale,
+    registerables,
 } from 'chart.js';
-import { Chart } from 'react-chartjs-2';
-
-import { useGameCompletions } from 'sdk';
-import { Section } from 'containers';
 import { ErrorFallback, Flex, Loader, QueryBoundary } from 'components';
+import { Section } from 'containers';
+import { Chart } from 'react-chartjs-2';
+import { useGameCompletions } from 'sdk';
 import { useTheme } from 'styles';
 
 ChartJS.register(

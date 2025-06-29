@@ -17,9 +17,8 @@
     "api:prod:test:danger": "env ENV=prod PORT=3081 CORS=http://localhost:3000 DELAY=3000 BIG_DELAY=43200000 nodemon --exec npx tsx lib/api.ts",
     "start": "env NODE_OPTIONS='--experimental-specifier-resolution=node' node dist/api.js",
     "clean": "rm -rf node_modules && rm -rf dist",
-    "lint": "eslint . --ext .ts",
-    "lint:fix": "eslint . --ext .ts --fix --quiet",
-    "test": "echo TODO"
+    "lint": "eslint",
+    "lint:fix": "eslint --fix"
   },
   "eslintConfig": {
     "extends": [

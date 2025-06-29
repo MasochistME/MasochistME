@@ -1,8 +1,6 @@
-import React from 'react';
-import { useNavigate } from 'react-router';
-import styled from 'styled-components';
 import {
   Badge,
+  Game,
   Log,
   LogAchievementNumberChange,
   LogBadgeCreate,
@@ -15,27 +13,27 @@ import {
   LogMemberJoin,
   LogMemberLeave,
   LogType,
-  Game,
   Member,
 } from '@masochistme/sdk/dist/v1/types';
-
-import { useBadges, useLogs, useTiers, useAllMembers, useAllGames } from 'sdk';
-import { media } from 'styles';
-import { getTierIcon } from 'utils';
-import { LogDictionary } from 'configuration';
-import { Section, SectionProps } from 'containers';
 import {
+  ErrorFallback,
   Flex,
   Icon,
   IconType,
-  Skeleton,
-  Size,
   QueryBoundary,
-  ErrorFallback,
+  Size,
+  Skeleton,
 } from 'components';
-
-import { LogCompact } from './components';
+import { LogDictionary } from 'configuration';
+import { Section, SectionProps } from 'containers';
 import { t } from 'i18n';
+import React from 'react';
+import { useNavigate } from 'react-router';
+import { useAllGames, useAllMembers, useBadges, useLogs, useTiers } from 'sdk';
+import styled from 'styled-components';
+import { media } from 'styles';
+import { getTierIcon } from 'utils';
+import { LogCompact } from './components';
 
 const NUMBER_OF_LOGS = 15;
 

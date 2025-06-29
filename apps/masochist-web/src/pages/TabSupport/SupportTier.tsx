@@ -1,12 +1,9 @@
-import React from 'react';
-import { useNavigate } from 'react-router';
-import styled from 'styled-components';
 import { Member, PatreonTier } from '@masochistme/sdk/dist/v1/types';
-
-import { useMembers, usePatrons } from 'sdk';
-import { Flex, Icon, IconType, Spinner } from 'components';
+import { Flex, Icon, IconType, Size, Spinner } from 'components';
 import { MemberAvatar, Section } from 'containers';
-import { Size } from 'components';
+import { useNavigate } from 'react-router';
+import { useMembers, usePatrons } from 'sdk';
+import styled from 'styled-components';
 
 type Props = {
   patreonTier: PatreonTier;

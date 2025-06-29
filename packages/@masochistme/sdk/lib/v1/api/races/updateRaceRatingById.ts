@@ -1,6 +1,4 @@
 import axios, { AxiosResponse } from 'axios';
-import { UpdateResult } from 'mongodb';
-
 import { RaceRating, ResponseError } from 'v1/types';
 
 /**
@@ -33,21 +31,21 @@ import { RaceRating, ResponseError } from 'v1/types';
  * @param params.raceRating - Fields to update in the chosen race.
  */
 export const updateRaceRatingById = async (
-	params: { raceId: string; raceRating: Partial<Omit<RaceRating, '_id'>> },
-	/** @ignore */
-	BASE_URL: string,
+  params: { raceId: string; raceRating: Partial<Omit<RaceRating, '_id'>> },
+  /** @ignore */
+  BASE_URL: string,
 ): Promise<RaceRating> => {
-	const { raceId, raceRating } = params;
-	const url = `${BASE_URL}/races/race/${raceId}/rate`;
+  const { raceId, raceRating } = params;
+  const url = `${BASE_URL}/races/race/${raceId}/rate`;
 
-	const response = await axios.put<
-		RaceRating | ResponseError,
-		AxiosResponse<RaceRating | ResponseError>,
-		Partial<Omit<RaceRating, '_id'>>
-	>(url, raceRating, { validateStatus: () => true });
+  const response = await axios.put<
+    RaceRating | ResponseError,
+    AxiosResponse<RaceRating | ResponseError>,
+    Partial<Omit<RaceRating, '_id'>>
+  >(url, raceRating, { validateStatus: () => true });
 
-	const { status, data } = response;
+  const { status, data } = response;
 
-	if (status !== 200) throw new Error((data as ResponseError).error);
-	return data as RaceRating;
+  if (status !== 200) throw new Error((data as ResponseError).error);
+  return data as RaceRating;
 };

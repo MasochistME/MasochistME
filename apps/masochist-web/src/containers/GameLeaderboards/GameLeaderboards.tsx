@@ -1,21 +1,19 @@
-import React from 'react';
-import { useNavigate } from 'react-router';
-import styled from 'styled-components';
 import { Member, MemberGame } from '@masochistme/sdk/dist/v1/types';
-
-import { useGameCompletion, GameCompletion } from 'hooks';
 import {
   DateBlock,
   ErrorFallback,
   Flex,
   ProgressBar,
   QueryBoundary,
+  Size,
   Skeleton,
 } from 'components';
-import { MemberBadges, MemberAvatar } from 'containers';
-import { ColorTokens, useTheme, media } from 'styles';
-import { Size } from 'components';
+import { MemberAvatar, MemberBadges } from 'containers';
 import { useAppContext } from 'context';
+import { GameCompletion, useGameCompletion } from 'hooks';
+import { useNavigate } from 'react-router';
+import styled from 'styled-components';
+import { ColorTokens, media, useTheme } from 'styles';
 
 type Completion = Omit<MemberGame, '_id' | 'memberId' | 'playtime'> & {
   member: Member;

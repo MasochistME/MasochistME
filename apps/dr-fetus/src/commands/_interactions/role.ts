@@ -1,12 +1,11 @@
+import { getFilteredChoices } from 'commands/_utils';
+import { Options } from 'commands/role/builder';
+import { RoleOption } from 'consts';
 import {
-  AutocompleteInteraction,
   ApplicationCommandOptionChoiceData,
-} from "discord.js";
-
-import { getFilteredChoices } from "commands/_utils";
-import { Options } from "commands/role/builder";
-import { getOption } from "utils";
-import { RoleOption } from "consts";
+  AutocompleteInteraction,
+} from 'discord.js';
+import { getOption } from 'utils';
 
 /**
  * Handles autocompletion for the "role" command.

@@ -1,12 +1,10 @@
-import { Request, Response } from 'express';
 import axios from 'axios';
-
-import { log } from 'helpers/log';
-import { connectToDb, getDataFromDB, findOption } from 'helpers/db';
+import { Request, Response } from 'express';
 import { sanitizeString } from 'helpers';
-
-import { TGameEvent, TTierChangeEvent } from './types/events';
+import { connectToDb, findOption, getDataFromDB } from 'helpers/db';
+import { log } from 'helpers/log';
 import { findGame } from './ranking';
+import { TGameEvent, TTierChangeEvent } from './types/events';
 import { updateStatus } from './update';
 
 type TRating = {

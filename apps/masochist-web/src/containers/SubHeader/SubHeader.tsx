@@ -1,12 +1,11 @@
-import React, { useMemo } from 'react';
-import styled from 'styled-components';
-
-import { t } from 'i18n';
-import { media, useTheme, ColorTokens } from 'styles';
-import { Tab, tabs } from 'configuration/tabs';
-import { useAppContext } from 'context';
 import { Flex, Icon, Size } from 'components';
+import { Tab, tabs } from 'configuration/tabs';
 import { UpdateStatus } from 'containers';
+import { useAppContext } from 'context';
+import { t } from 'i18n';
+import { useMemo } from 'react';
+import styled from 'styled-components';
+import { ColorTokens, media, useTheme } from 'styles';
 
 export const SubHeader = (): JSX.Element => {
   const { activeTab } = useAppContext();

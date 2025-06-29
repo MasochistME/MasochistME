@@ -1,10 +1,9 @@
-import React from 'react';
-import styled from 'styled-components';
-
-import { useCuratedGames } from 'sdk';
-import { Flex, Tooltip } from 'components';
 import { Badge, Game } from '@masochistme/sdk/dist/v1/types';
+import { Flex, Tooltip } from 'components';
 import { t } from 'i18n';
+import React from 'react';
+import { useCuratedGames } from 'sdk';
+import styled from 'styled-components';
 
 type Props = {
   badge?: Badge;

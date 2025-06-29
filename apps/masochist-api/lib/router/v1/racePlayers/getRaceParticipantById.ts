@@ -1,8 +1,7 @@
-import { Request, Response } from 'express';
 import { RacePlayer } from '@masochistme/sdk/dist/v1/types';
-
-import { log } from 'helpers/log';
 import { mongoInstance } from 'api';
+import { Request, Response } from 'express';
+import { log } from 'helpers/log';
 
 /**
  * Returns a race participant (if it exists).

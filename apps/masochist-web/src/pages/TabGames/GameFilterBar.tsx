@@ -1,9 +1,4 @@
-import React, { useMemo, useState } from 'react';
-import styled from 'styled-components';
 import { Tier } from '@masochistme/sdk/dist/v1/types';
-
-import { media } from 'styles';
-import { useAppContext } from 'context';
 import {
   Button,
   Checkbox,
@@ -15,16 +10,14 @@ import {
   Slider,
   Spinner,
 } from 'components';
-import {
-  useActiveTab,
-  GameView,
-  useLoadTiers,
-  useDebounce,
-  useMixpanel,
-} from 'hooks';
 import { TabDict } from 'configuration/tabs';
-import { useTiers } from 'sdk';
+import { useAppContext } from 'context';
+import { GameView, useActiveTab, useDebounce, useLoadTiers } from 'hooks';
 import { t } from 'i18n';
+import { useMemo, useState } from 'react';
+import { useTiers } from 'sdk';
+import styled from 'styled-components';
+import { media } from 'styles';
 
 const DEFAULT_PRICES = [0, 1000];
 
@@ -34,7 +27,6 @@ type Props = {
 };
 export const GameFilterBar = (props: Props): JSX.Element => {
   useActiveTab(TabDict.GAMES);
-  const { track } = useMixpanel();
 
   const { gameListView, toggleGameView } = props;
   const { queryGame, setQueryGame, visiblePrices, setVisiblePrices } =
@@ -42,13 +34,7 @@ export const GameFilterBar = (props: Props): JSX.Element => {
   const [prices, setPrices] = useState<number[]>(DEFAULT_PRICES);
   const [showSlider, setShowSlider] = useState<boolean>(false);
 
-  const trackPriceChange = () => {
-    track('games.price.change', {
-      min: visiblePrices[0],
-      max: visiblePrices[1],
-    });
-  };
-  useDebounce(prices, visiblePrices, setVisiblePrices, 500, trackPriceChange);
+  useDebounce(prices, visiblePrices, setVisiblePrices, 500);
 
   const gameViewButtonIcon = useMemo(() => {
     if (gameListView === GameView.TILE) return 'Table';

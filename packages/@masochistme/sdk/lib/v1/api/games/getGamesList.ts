@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-
-import { Game, Sort, ResponseError } from 'v1/types';
+import { Game, ResponseError, Sort } from 'v1/types';
 
 /**
  * Returns a list of all games.

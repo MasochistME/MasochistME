@@ -1,13 +1,11 @@
-import { ButtonInteraction } from 'discord.js';
-import { getErrorEmbed } from 'arcybot';
 import { Race } from '@masochistme/sdk/dist/v1/types';
-
-import { sdk } from 'fetus';
-import { ImgType, saveImage, log } from 'utils';
-import { RACE_CONFIRMATION } from 'consts';
-
-import { sendRaceJoinForm } from './racesetupJoin';
+import { getErrorEmbed } from 'arcybot';
 import { getDraftRace, setDraftRace } from 'commands/_utils/race';
+import { RACE_CONFIRMATION } from 'consts';
+import { ButtonInteraction } from 'discord.js';
+import { sdk } from 'fetus';
+import { ImgType, log, saveImage } from 'utils';
+import { sendRaceJoinForm } from './racesetupJoin';
 
 export const draftRaceData: { race?: Race } = {};
 

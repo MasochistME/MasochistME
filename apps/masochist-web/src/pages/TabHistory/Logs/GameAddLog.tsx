@@ -1,12 +1,8 @@
-import React from 'react';
-import { useNavigate } from 'react-router';
-import { Game, Tier, LogGameAdd } from '@masochistme/sdk/dist/v1/types';
-
-import { useAllGames, useTiers } from 'sdk';
+import { Game, LogGameAdd, Tier } from '@masochistme/sdk/dist/v1/types';
+import { Icon, IconType, Size } from 'components';
 import { GameThumbnail } from 'containers';
-import { Icon, IconType } from 'components';
-import { Size } from 'components';
-
+import { useNavigate } from 'react-router';
+import { useAllGames, useTiers } from 'sdk';
 import { HistoryLog } from '.';
 
 type Props = {

@@ -1,11 +1,9 @@
-import React from 'react';
-import styled from 'styled-components';
-
-import { useUpdateStatus } from 'sdk';
 import { Flex, ProgressBar, QueryBoundary } from 'components';
 import { HideOn } from 'containers';
-import { ColorTokens, useTheme } from 'styles';
 import { t } from 'i18n';
+import { useUpdateStatus } from 'sdk';
+import styled from 'styled-components';
+import { ColorTokens, useTheme } from 'styles';
 
 export const UpdateStatus = (): JSX.Element => {
   const { colorTokens } = useTheme();

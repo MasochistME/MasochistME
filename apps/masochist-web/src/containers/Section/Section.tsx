@@ -1,8 +1,7 @@
-import styled from 'styled-components';
-import { useNavigate } from 'react-router';
-
-import { media, useTheme, ColorTokens } from 'styles';
 import { Button } from 'components';
+import { useNavigate } from 'react-router';
+import styled from 'styled-components';
+import { ColorTokens, media, useTheme } from 'styles';
 
 export type SectionProps = {
   isMobileOnly?: boolean;

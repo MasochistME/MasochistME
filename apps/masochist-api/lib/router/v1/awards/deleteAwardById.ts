@@ -1,9 +1,8 @@
-import { ObjectId } from 'mongodb';
-import { Request, Response } from 'express';
 import { Award, MemberAward } from '@masochistme/sdk/dist/v1/types';
-
-import { log } from 'helpers/log';
 import { mongoInstance } from 'api';
+import { Request, Response } from 'express';
+import { log } from 'helpers/log';
+import { ObjectId } from 'mongodb';
 
 /**
  * Deletes an award with a given award ID, and removes it from all members that have it.

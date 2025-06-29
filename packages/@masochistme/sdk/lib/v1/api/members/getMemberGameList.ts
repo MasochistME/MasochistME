@@ -1,11 +1,10 @@
 import axios, { AxiosResponse } from 'axios';
-
 import {
-	Game,
-	MemberGame,
-	MemberIdEither,
-	Sort,
-	ResponseError,
+    Game,
+    MemberGame,
+    MemberIdEither,
+    ResponseError,
+    Sort,
 } from 'v1/types';
 
 /**

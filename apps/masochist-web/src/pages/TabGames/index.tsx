@@ -1,12 +1,4 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
 import { Tier } from '@masochistme/sdk/dist/v1/types';
-
-import { TabDict } from 'configuration/tabs';
-import { useActiveTab, GameView, useToggleView } from 'hooks';
-import { useTiers } from 'sdk';
-import { Section, SectionProps, SubPage } from 'containers';
 import {
   ErrorFallback,
   Flex,
@@ -16,9 +8,14 @@ import {
   QueryBoundary,
   Size,
 } from 'components';
-
-import { GameTableView } from './GameTableView';
+import { TabDict } from 'configuration/tabs';
+import { Section, SectionProps, SubPage } from 'containers';
+import { GameView, useActiveTab, useToggleView } from 'hooks';
+import { Link } from 'react-router-dom';
+import { useTiers } from 'sdk';
+import styled from 'styled-components';
 import { GameFilterBar } from './GameFilterBar';
+import { GameTableView } from './GameTableView';
 import { GameTileView } from './GameTileView';
 
 export const TabGames = () => {

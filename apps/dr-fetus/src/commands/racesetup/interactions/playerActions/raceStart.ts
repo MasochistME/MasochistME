@@ -1,16 +1,14 @@
-import { ButtonInteraction } from 'discord.js';
-
-import { sdk } from 'fetus';
-import { RaceButton } from 'consts';
-import {
-  getUTCDate,
-  getTimestampFromDate,
-  createError,
-  ErrorAction,
-} from 'utils';
-
-import { getRaceStartEmbed, getRaceStartButtons } from './__common';
 import { RaceType } from '@masochistme/sdk/dist/v1/types';
+import { RaceButton } from 'consts';
+import { ButtonInteraction } from 'discord.js';
+import { sdk } from 'fetus';
+import {
+    createError,
+    ErrorAction,
+    getTimestampFromDate,
+    getUTCDate,
+} from 'utils';
+import { getRaceStartButtons, getRaceStartEmbed } from './__common';
 
 /**
  * Response to race participant clicking the START button.

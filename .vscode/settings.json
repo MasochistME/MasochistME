@@ -2,15 +2,15 @@
   "javascript.updateImportsOnFileMove.enabled": "always",
   "javascript.preferences.importModuleSpecifier": "non-relative",
   "typescript.preferences.importModuleSpecifier": "non-relative",
-  "editor.formatOnSave": false,
+  "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
+    "source.fixAll.eslint": "always",
+    "source.organizeImports": "always"
   },
   "eslint.validate": [
     "javascript",
     "typescript"
   ],
-  "editor.tabSize": 2,
   "files.eol": "\n",
   "[json]": {
     "editor.suggest.insertMode": "replace",

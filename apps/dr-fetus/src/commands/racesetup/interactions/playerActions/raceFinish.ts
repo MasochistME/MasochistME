@@ -1,18 +1,16 @@
-import { ButtonInteraction, Message } from 'discord.js';
-import dayjs from 'dayjs';
-import { getInfoEmbed } from 'arcybot';
 import { Race, RaceType } from '@masochistme/sdk/dist/v1/types';
-
-import { sdk } from 'fetus';
+import { getInfoEmbed } from 'arcybot';
 import { RACE_RESULTS_TIMEOUT, RaceButton } from 'consts';
+import dayjs from 'dayjs';
+import { ButtonInteraction, Message } from 'discord.js';
+import { sdk } from 'fetus';
+import { awaitMessage, createError, ErrorAction, getUTCDate } from 'utils';
 import { ImgType, saveImage } from 'utils/saveImage';
-import { awaitMessage, getUTCDate, createError, ErrorAction } from 'utils';
+import { getRaceStartButtons, getRaceStartEmbed } from './__common';
 import {
   raceShowPlayerFinishResultMods,
   raceShowPlayerFinishResultSelf,
 } from './infoRaceParticipant';
-
-import { getRaceStartEmbed, getRaceStartButtons } from './__common';
 import { raceRate } from './raceRate';
 
 /**

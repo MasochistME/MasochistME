@@ -1,14 +1,12 @@
+import { Flex } from 'components';
+import { TabDict } from 'configuration/tabs';
+import { SubPage, Tab, TabPanel, Tabs } from 'containers';
+import { useActiveTab, useContextualRouting } from 'hooks';
+import { t } from 'i18n';
 import React from 'react';
 import styled from 'styled-components';
-
-import { useActiveTab, useContextualRouting, useMixpanel } from 'hooks';
-import { TabDict } from 'configuration/tabs';
-import { Flex } from 'components';
-import { SubPage, Tabs, Tab, TabPanel } from 'containers';
-
-import { RacesPage } from './Races';
 import { OtherEventsPage } from './OtherEvents';
-import { t } from 'i18n';
+import { RacesPage } from './Races';
 
 enum EventTabs {
   RACES = 'races',
@@ -17,7 +15,6 @@ enum EventTabs {
 
 export const TabEvents = (): JSX.Element => {
   useActiveTab(TabDict.EVENTS);
-  const { track } = useMixpanel();
   const { navigateToRoute, route: event } = useContextualRouting<EventTabs>({
     key: 'event',
     value: EventTabs.RACES,
@@ -25,7 +22,6 @@ export const TabEvents = (): JSX.Element => {
 
   const handleChangeTab = (_e: React.SyntheticEvent, newTab: EventTabs) => {
     navigateToRoute({ event: newTab });
-    track('events.tab.change', { tab: newTab });
   };
 
   return (

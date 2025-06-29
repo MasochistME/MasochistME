@@ -1,11 +1,10 @@
+import { Game } from '@masochistme/sdk/dist/v1/types';
+import { Button, Flex, Icon } from 'components';
+import { t } from 'i18n';
 import React from 'react';
 import { useNavigate } from 'react-router';
-import styled from 'styled-components';
-
 import { useCuratedGames } from 'sdk';
-import { Flex, Icon, Button } from 'components';
-import { Game } from '@masochistme/sdk/dist/v1/types';
-import { t } from 'i18n';
+import styled from 'styled-components';
 
 type Props = {
   gameId: number;

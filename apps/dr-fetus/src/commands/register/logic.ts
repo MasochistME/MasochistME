@@ -1,12 +1,11 @@
-import {
-  ActionRowBuilder,
-  APIEmbed,
-  ButtonBuilder,
-  ButtonStyle,
-} from 'discord.js';
-import { DiscordInteraction, getSuccessEmbed, getErrorEmbed } from 'arcybot';
-
+import { DiscordInteraction, getErrorEmbed, getSuccessEmbed } from 'arcybot';
 import { REGISTRATION_REVIEW, Room } from 'consts';
+import {
+    ActionRowBuilder,
+    APIEmbed,
+    ButtonBuilder,
+    ButtonStyle,
+} from 'discord.js';
 import { getChannelById, getMemberNameById, getOption } from 'utils';
 
 /**

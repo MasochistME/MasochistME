@@ -1,7 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { InsertOneResult } from 'mongodb';
-
-import { Season, ResponseError } from 'v1/types';
+import { ResponseError, Season } from 'v1/types';
 
 /**
  * Creates a new inactive season.

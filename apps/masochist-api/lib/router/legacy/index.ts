@@ -6,48 +6,47 @@ export const routerLegacy = express.Router();
 // -----------------------------------------------------------------
 // ------------------------------- NEW -----------------------------
 // -----------------------------------------------------------------
-
-import { initiateMainUpdate, getStatus } from './update';
-import { getUsers, getUserDetails, updateUser } from './users';
+import {
+    addBadge,
+    deleteBadge,
+    getAllBadges,
+    getBadge,
+    giveBadge,
+    takeBadge,
+    updateBadge,
+} from './badges';
+import { getBlog } from './blog';
+import {
+    getCuratedGamesFromTier,
+    getCuratorGames,
+    getCuratorMembers,
+    updateCuratorGames,
+} from './curator';
+import { getEvents } from './events';
 import { connectUserWithDiscord, updateUserFields } from './masochist';
 import {
-  getAllBadges,
-  addBadge,
-  getBadge,
-  updateBadge,
-  deleteBadge,
-  giveBadge,
-  takeBadge,
-} from './badges';
-import {
-  getAllPatrons,
-  getPatronsByTier,
-  getPatron,
-  addPatron,
-  updatePatron,
-  deletePatron,
+    addPatron,
+    deletePatron,
+    getAllPatrons,
+    getPatron,
+    getPatronsByTier,
+    updatePatron,
 } from './patrons';
 import {
-  getRanking,
-  getUserRanking,
-  getGameLeaderboards,
-  getTierDetails,
+    getGameLeaderboards,
+    getRanking,
+    getTierDetails,
+    getUserRanking,
 } from './ranking';
 import {
-  getCuratorGames,
-  getCuratedGamesFromTier,
-  updateCuratorGames,
-  getCuratorMembers,
-} from './curator';
-import { getBlog } from './blog';
-import { getEvents } from './events';
-import {
-  getSteamID,
-  getRating,
-  getAllSettings,
-  getSetting,
-  getTabs,
+    getAllSettings,
+    getRating,
+    getSetting,
+    getSteamID,
+    getTabs,
 } from './special';
+import { getStatus, initiateMainUpdate } from './update';
+import { getUserDetails, getUsers, updateUser } from './users';
 
 routerLegacy.get('/special/vanityid/:vanityid', apiLegacyAuth, getSteamID);
 routerLegacy.get('/rating', apiLegacyAuth, getRating);

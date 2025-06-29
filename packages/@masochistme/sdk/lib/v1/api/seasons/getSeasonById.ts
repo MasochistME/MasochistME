@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-
-import { Season, ResponseError } from 'v1/types';
+import { ResponseError, Season } from 'v1/types';
 
 /**
  * Gets an active season by the given ID (if it exists).

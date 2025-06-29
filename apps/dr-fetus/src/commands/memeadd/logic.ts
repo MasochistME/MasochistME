@@ -1,6 +1,5 @@
-import { DiscordInteraction, getSuccessEmbed } from "arcybot";
-
 import { addMemeToAPI } from "api";
+import { DiscordInteraction, getSuccessEmbed } from "arcybot";
 import { createError, ErrorAction } from "utils";
 
 /**

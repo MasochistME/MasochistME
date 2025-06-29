@@ -1,7 +1,6 @@
+import dayjs from 'dayjs';
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
-import dayjs from 'dayjs';
-
 import { media } from 'styles';
 import { getHumanReadableDate } from 'utils';
 import { Flex } from '../Flex';

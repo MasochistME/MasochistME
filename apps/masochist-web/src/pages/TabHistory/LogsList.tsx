@@ -1,5 +1,3 @@
-import React from 'react';
-import styled from 'styled-components';
 import {
   Log,
   LogAchievementNumberChange,
@@ -14,19 +12,17 @@ import {
   LogMemberLeave,
   LogType,
 } from '@masochistme/sdk/dist/v1/types';
-
-import { useAppContext } from 'context';
-import { useLogs } from 'sdk';
 import {
   DateBlock,
+  ErrorFallback,
   Flex,
   QueryBoundary,
-  ErrorFallback,
   Skeleton,
 } from 'components';
-
+import { useLogs } from 'sdk';
+import styled from 'styled-components';
+import { ColorTokens, useTheme } from 'styles';
 import { HistoryLog } from './Logs';
-import { useTheme, ColorTokens } from 'styles';
 
 const NUMBER_OF_LOGS = 50;
 

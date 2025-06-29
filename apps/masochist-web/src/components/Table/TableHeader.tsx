@@ -2,7 +2,6 @@ import Box from '@mui/material/Box';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
 import styled from 'styled-components';
-
 import { ColorTokens, useTheme } from 'styles';
 import { Order, TableHeaderCell } from './types';
 

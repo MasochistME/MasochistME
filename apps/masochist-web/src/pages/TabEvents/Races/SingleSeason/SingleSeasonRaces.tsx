@@ -1,6 +1,4 @@
-import { useEffect, useState } from 'react';
 import { Race, RaceWithSummary } from '@masochistme/sdk/dist/v1/types';
-
 import {
   DateBlock,
   Flex,
@@ -11,10 +9,10 @@ import {
   TableColumn,
 } from 'components';
 import { ModalRace, WinnerLink } from 'containers';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { getRaceTypeIcon } from 'utils/getIcon';
 import { media } from 'styles';
-import { useMixpanel } from 'hooks';
+import { getRaceTypeIcon } from 'utils/getIcon';
 
 type Props = {
   races: Race[];
@@ -34,13 +32,11 @@ export const SingleSeasonRaces = (props: Props): JSX.Element => {
   const { races } = props;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRaceId, setSelectedRaceId] = useState<string | null>(null);
-  const { track } = useMixpanel();
 
   const onRaceClick = (raceId: string) => {
     if (raceId) {
       setIsModalOpen(!isModalOpen);
       setSelectedRaceId(raceId);
-      track('race.click', { raceId });
     }
   };
 

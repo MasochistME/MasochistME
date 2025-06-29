@@ -1,6 +1,5 @@
-import React from 'react';
-
 import { Size } from 'components';
+import React from 'react';
 
 export type CommonProps = {
   size?: Size;

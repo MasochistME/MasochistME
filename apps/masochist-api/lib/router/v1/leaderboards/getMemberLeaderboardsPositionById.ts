@@ -1,19 +1,18 @@
-import { Request, Response } from 'express';
-import { ObjectId } from 'mongodb';
 import {
-  Game,
-  Badge,
-  MemberBadge,
-  MemberGame,
-  Patron,
-  Leaderboards,
-  Tier,
-  TierId,
-  LeaderboardsCategoryGame,
+    Badge,
+    Game,
+    Leaderboards,
+    LeaderboardsCategoryGame,
+    MemberBadge,
+    MemberGame,
+    Patron,
+    Tier,
+    TierId,
 } from '@masochistme/sdk/dist/v1/types';
-
-import { log } from 'helpers/log';
 import { mongoInstance } from 'api';
+import { Request, Response } from 'express';
+import { log } from 'helpers/log';
+import { ObjectId } from 'mongodb';
 
 /**
  * Returns information about member's position in MasochistME leaderboards.

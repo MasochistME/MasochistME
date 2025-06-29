@@ -1,26 +1,23 @@
-import React from 'react';
 import { Game, TierId } from '@masochistme/sdk/dist/v1/types';
-
-import { useCuratedGames, useLeaderboardsGames, useTiers } from 'sdk';
-import { useAppContext } from 'context';
 import {
+  ErrorFallback,
   Flex,
   Icon,
+  QueryBoundary,
   Size,
   Table,
   TableColumn,
-  QueryBoundary,
-  ErrorFallback,
 } from 'components';
-
+import { useAppContext } from 'context';
+import { useCuratedGames, useLeaderboardsGames, useTiers } from 'sdk';
 import {
   Cell,
-  getGameTotalPoints,
-  getGameCompletions,
-  getGameBadges,
-  getGameOwners,
   getGameAvgPlaytime,
+  getGameBadges,
+  getGameCompletions,
   getGameLatestCompletion,
+  getGameOwners,
+  getGameTotalPoints,
 } from './columns';
 
 enum Columns {

@@ -1,5 +1,5 @@
-import { LocaleKey } from 'i18n';
 import { IconType } from 'components';
+import { LocaleKey } from 'i18n';
 
 export enum TabDict {
   HOME = 'home',

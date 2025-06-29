@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getDataFromDB, findOption, Options } from 'helpers/db';
+import { findOption, getDataFromDB, Options } from 'helpers/db';
 
 /**
  * Get user's steam ID.

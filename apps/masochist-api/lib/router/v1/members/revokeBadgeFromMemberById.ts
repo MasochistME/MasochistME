@@ -1,8 +1,7 @@
-import { Request, Response } from 'express';
-import { MemberBadge, Log } from '@masochistme/sdk/dist/v1/types';
-
-import { log } from 'helpers/log';
+import { Log, MemberBadge } from '@masochistme/sdk/dist/v1/types';
 import { mongoInstance } from 'api';
+import { Request, Response } from 'express';
+import { log } from 'helpers/log';
 
 /**
  * Removes a badge with given badge ID from member with given member ID.

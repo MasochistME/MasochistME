@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-
-import { Member, Sort, ResponseError } from 'v1/types';
+import { Member, ResponseError, Sort } from 'v1/types';
 
 /**
  * Returns a list of all members.

@@ -1,12 +1,11 @@
+import { Skeleton } from 'components';
 import { useState } from 'react';
 import styled from 'styled-components';
-
-import { Skeleton } from 'components';
-import { Order, TableColumn, TableRow } from './types';
-import { TableHeader } from './TableHeader';
 import { TableBody } from './TableBody';
 import { TableCell } from './TableCell';
+import { TableHeader } from './TableHeader';
 import { TablePagination } from './TablePagination';
+import { Order, TableColumn, TableRow } from './types';
 
 type Props<T> = {
   columns: TableColumn<T>[];

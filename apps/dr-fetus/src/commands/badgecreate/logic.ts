@@ -1,9 +1,8 @@
-import { DiscordInteraction } from "arcybot";
-
-import { sdk } from "fetus";
-import { Badge } from "@masochistme/sdk/dist/v1/types";
-import { createError, ErrorAction } from "utils";
-import { ImgType, saveImage } from "utils/saveImage";
+import { Badge } from '@masochistme/sdk/dist/v1/types';
+import { DiscordInteraction } from 'arcybot';
+import { sdk } from 'fetus';
+import { createError, ErrorAction } from 'utils';
+import { ImgType, saveImage } from 'utils/saveImage';
 
 /**
  * Creates a new badge.
@@ -15,19 +14,19 @@ export const badgecreate = async (
 ): Promise<void> => {
   await interaction.deferReply();
 
-  const gameId = interaction.options.getString("game", true);
-  const name = interaction.options.getString("name", true);
-  const thumbnail = interaction.options.getAttachment("image", true)?.proxyURL;
+  const gameId = interaction.options.getString('game', true);
+  const name = interaction.options.getString('name', true);
+  const thumbnail = interaction.options.getAttachment('image', true)?.proxyURL;
   const isSteamGame = !isNaN(parseInt(gameId));
 
   try {
     // First we save a badge with just the Discord's attachment image.
-    const badge: Omit<Badge, "_id"> = {
+    const badge: Omit<Badge, '_id'> = {
       name,
       gameId: isSteamGame ? Number(gameId) : null,
-      requirements: interaction.options.getString("requirements", true),
-      points: interaction.options.getNumber("points", true),
-      description: interaction.options.getString("description", true),
+      requirements: interaction.options.getString('requirements', true),
+      points: interaction.options.getNumber('points', true),
+      description: interaction.options.getString('description', true),
       title: isSteamGame ? null : gameId,
       img: thumbnail,
       isEnabled: true,
@@ -37,7 +36,7 @@ export const badgecreate = async (
 
     const { acknowledged, insertedId } = await sdk.createBadge({ badge });
     if (!acknowledged)
-      throw new Error("Could not create a badge, please try again later.");
+      throw new Error('Could not create a badge, please try again later.');
     // Then we update the badge image with the one stored on server.
     const badgeId = String(insertedId);
     const fixedImage = await saveImage(
@@ -53,14 +52,14 @@ export const badgecreate = async (
       throw "Could not save badge's image to server, please try again.";
 
     const disabledFields = [
-      "game",
-      "img",
-      "enabled",
-      "legacy",
-      "isNonSteamGame",
+      'game',
+      'img',
+      'enabled',
+      'legacy',
+      'isNonSteamGame',
     ];
     const embed = {
-      title: "🥇 Badge created!",
+      title: '🥇 Badge created!',
       thumbnail: { url: fixedImage },
       fields: [
         ...Object.entries(badge)
@@ -71,7 +70,7 @@ export const badgecreate = async (
             inline: true,
           })),
         {
-          name: "---",
+          name: '---',
           value: `You have added a new badge! Its ID is ${insertedId}.`,
         },
       ],

@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-
-import { Featured, Sort, ResponseError } from 'v1/types';
+import { Featured, ResponseError, Sort } from 'v1/types';
 
 /**
  * Returns a list of all featured objects.

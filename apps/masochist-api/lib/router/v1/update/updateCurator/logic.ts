@@ -1,13 +1,11 @@
+import { Game, Member, Tier } from '@masochistme/sdk/dist/v1/types';
+import { mongoInstance } from 'api';
 import axios from 'axios';
 import { Response } from 'express';
-import { Member, Game, Tier } from '@masochistme/sdk/dist/v1/types';
-
-import { log } from 'helpers/log';
 import { splitArrayToChunks } from 'helpers';
-
-import { SteamGameDetailsData, MemberSteam } from '../types';
+import { log } from 'helpers/log';
 import { statusCurator, UpdateStatus } from '.';
-import { mongoInstance } from 'api';
+import { MemberSteam, SteamGameDetailsData } from '../types';
 import * as eventLog from './logs';
 
 type Update = { lastUpdate: Date; id: 'status' };

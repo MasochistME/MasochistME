@@ -1,7 +1,6 @@
 /**
  * @module Races
  */
-
 import { WithId } from 'mongodb';
 import { RaceType } from 'v1/types/Race';
 

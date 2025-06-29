@@ -1,11 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
 import { LogType } from '@masochistme/sdk/dist/v1/types';
-
-import { SingleLog, LogDictionary } from 'configuration';
-import { media } from 'styles';
 import { FilterBar, Flex } from 'components';
-
+import { LogDictionary, SingleLog } from 'configuration';
+import styled from 'styled-components';
+import { media } from 'styles';
 import { LogsFilterCheckbox } from './LogsFilterCheckbox';
 
 type Props = {

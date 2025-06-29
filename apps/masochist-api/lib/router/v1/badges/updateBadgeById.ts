@@ -1,9 +1,8 @@
-import { ObjectId } from 'mongodb';
-import { Request, Response } from 'express';
 import { Badge } from '@masochistme/sdk/dist/v1/types';
-
-import { log } from 'helpers/log';
 import { mongoInstance } from 'api';
+import { Request, Response } from 'express';
+import { log } from 'helpers/log';
+import { ObjectId } from 'mongodb';
 
 /**
  * Updates a badge with given badge ID. All of the updatable fields are optional.

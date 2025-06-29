@@ -1,12 +1,10 @@
-import React from 'react';
-import { useNavigate } from 'react-router';
-import styled from 'styled-components';
 import { Game, MemberGame, Tier } from '@masochistme/sdk/dist/v1/types';
-
-import { useTiers, useCuratedGames } from 'sdk';
-import { media, useTheme, ColorTokens } from 'styles';
-import { Flex, Icon, IconType, DateBlock, ProgressBar, Size } from 'components';
-import { MemberBadges, GameThumbnail } from 'containers';
+import { DateBlock, Flex, Icon, IconType, ProgressBar, Size } from 'components';
+import { GameThumbnail, MemberBadges } from 'containers';
+import { useNavigate } from 'react-router';
+import { useCuratedGames, useTiers } from 'sdk';
+import styled from 'styled-components';
+import { ColorTokens, media, useTheme } from 'styles';
 
 type Props = {
   steamId: string;

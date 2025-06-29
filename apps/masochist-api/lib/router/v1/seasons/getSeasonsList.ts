@@ -1,10 +1,9 @@
-import { Request, Response } from 'express';
-import { Season } from '@masochistme/sdk/dist/v1/types';
 import { SeasonsListParams } from '@masochistme/sdk/dist/v1/api/seasons';
-
-import { log } from 'helpers/log';
+import { Season } from '@masochistme/sdk/dist/v1/types';
 import { mongoInstance } from 'api';
+import { Request, Response } from 'express';
 import { sortCollection } from 'helpers/db';
+import { log } from 'helpers/log';
 
 /**
  * Returns a list of all seasons.

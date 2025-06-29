@@ -1,7 +1,3 @@
-import React from 'react';
-import styled from 'styled-components';
-
-import { useMemberById } from 'sdk';
 import {
   ErrorFallback,
   Flex,
@@ -9,12 +5,14 @@ import {
   QueryBoundary,
   Warning,
 } from 'components';
-import { Tabs, Tab, TabPanel } from 'containers';
-import { useContextualRouting, useMixpanel } from 'hooks';
-
+import { Tab, TabPanel, Tabs } from 'containers';
+import { useContextualRouting } from 'hooks';
+import React from 'react';
+import { useMemberById } from 'sdk';
+import styled from 'styled-components';
 import { MemberProfileBadges } from './MemberProfileBadges';
-import { MemberProfileGraphs } from './MemberProfileGraphs';
 import { MemberProfileGames } from './MemberProfileGames';
+import { MemberProfileGraphs } from './MemberProfileGraphs';
 // import { MemberProfileAwards } from './MemberProfileAwards';
 
 enum TabRoutes {
@@ -33,7 +31,6 @@ export const MemberProfileTabs = ({ id }: Props) => (
 );
 
 const MemberProfileTabsBoundary = ({ id }: Props) => {
-  const { track } = useMixpanel();
   const { navigateToRoute, route: tab } = useContextualRouting<TabRoutes>({
     key: 'tab',
     value: TabRoutes.GAMES,
@@ -45,7 +42,6 @@ const MemberProfileTabsBoundary = ({ id }: Props) => {
 
   const handleChangeTab = (_e: React.SyntheticEvent, newTab: TabRoutes) => {
     navigateToRoute({ tab: newTab });
-    track('page.user.tab', { tab: newTab });
   };
 
   if (isUserPrivate)

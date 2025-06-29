@@ -1,8 +1,7 @@
 import { DiscordInteraction } from 'arcybot';
-
-import { bot, cache, sdk } from 'fetus';
 import { Room, UNKNOWN_NAME } from 'consts';
 import { ButtonInteraction, DMChannel } from 'discord.js';
+import { bot, cache, sdk } from 'fetus';
 
 export const getOption = <T>(key: string): T =>
   cache.options.find(option => option.option === key)?.value;

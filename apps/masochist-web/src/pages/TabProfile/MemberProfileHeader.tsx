@@ -1,13 +1,10 @@
-import React, { useMemo } from 'react';
-import styled from 'styled-components';
 import { PatreonTier } from '@masochistme/sdk/dist/v1/types';
-
-import { useMemberById, useMemberLeaderboards } from 'sdk';
-import { QueryBoundary, Size } from 'components';
-import { media } from 'styles';
-import { Flex, Icon, IconType, Tooltip } from 'components';
+import { Flex, Icon, IconType, QueryBoundary, Size, Tooltip } from 'components';
 import { MemberAvatar } from 'containers';
-
+import { useMemo } from 'react';
+import { useMemberById, useMemberLeaderboards } from 'sdk';
+import styled from 'styled-components';
+import { media } from 'styles';
 import { MemberProfileUpdate } from './MemberProfileUpdate';
 
 type Props = {

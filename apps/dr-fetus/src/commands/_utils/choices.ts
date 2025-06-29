@@ -1,7 +1,6 @@
-import { cache } from "fetus";
-import { getFilteredChoices } from "commands/_utils";
-import { shortenString } from "utils";
-import { Console } from "console";
+import { getFilteredChoices } from 'commands/_utils';
+import { cache } from 'fetus';
+import { shortenString } from 'utils';
 
 /**
  * Filter the badge choice list based on the user provided autocomplete value.
@@ -11,7 +10,7 @@ import { Console } from "console";
 export const getBadgeChoices = (focused: string) => {
   const choices = cache.badges.map(badge => {
     const game = cache.games.find(g => g.id === badge.gameId);
-    const nameFull = `${(game?.name ?? "UNKNOWN GAME").toUpperCase()} - ${
+    const nameFull = `${(game?.name ?? 'UNKNOWN GAME').toUpperCase()} - ${
       badge.name
     } (${badge.description})`;
     const name = shortenString(nameFull, 100);

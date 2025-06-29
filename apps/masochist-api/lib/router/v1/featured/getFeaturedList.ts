@@ -1,10 +1,9 @@
-import { Request, Response } from 'express';
-import { Featured } from '@masochistme/sdk/dist/v1/types';
 import { FeaturedListParams } from '@masochistme/sdk/dist/v1/api/featured';
-
-import { log } from 'helpers/log';
-import { sortCollection } from 'helpers/db';
+import { Featured } from '@masochistme/sdk/dist/v1/types';
 import { mongoInstance } from 'api';
+import { Request, Response } from 'express';
+import { sortCollection } from 'helpers/db';
+import { log } from 'helpers/log';
 
 /**
  * Returns a list of all featured objects stored in the database.

@@ -1,12 +1,10 @@
-import React, { useMemo, useState } from 'react';
-import styled from 'styled-components';
 import { FeaturedType } from '@masochistme/sdk/dist/v1/types';
-
-import { useFeaturedFiltered, useMembers } from 'sdk';
 import { ErrorFallback, Loader, Pagination, QueryBoundary } from 'components';
 import { Section, SectionProps } from 'containers';
-
 import { FeaturedNews, FeaturedVideo } from 'containers/Featured';
+import { useMemo, useState } from 'react';
+import { useFeaturedFiltered, useMembers } from 'sdk';
+import styled from 'styled-components';
 
 type Props = Partial<SectionProps> & {
   memberId: string;

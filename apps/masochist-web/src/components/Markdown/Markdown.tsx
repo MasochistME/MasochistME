@@ -1,7 +1,6 @@
+import { Flex } from 'components';
 import ReactMarkdown from 'react-markdown';
 import styled from 'styled-components';
-
-import { Flex } from 'components';
 
 type Props = {
   children: string;

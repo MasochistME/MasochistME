@@ -1,11 +1,10 @@
+import { Game } from '@masochistme/sdk/dist/v1/types';
+import { Size, Skeleton, Tooltip } from 'components';
+import { CommonProps, GameTooltip } from 'containers';
 import React from 'react';
 import styled from 'styled-components';
-import { Game } from '@masochistme/sdk/dist/v1/types';
-
+import { ColorTokens, useTheme } from 'styles';
 import { getGameThumbnail } from 'utils';
-import { Size, Skeleton, Tooltip } from 'components';
-import { GameTooltip, CommonProps } from 'containers';
-import { useTheme, ColorTokens } from 'styles';
 
 type Props = CommonProps & {
   game?: Game;

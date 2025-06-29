@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
-
-import { log } from 'helpers/log';
 import { connectToDb, getDataFromDB } from 'helpers/db';
+import { log } from 'helpers/log';
 import { Member } from 'router/legacy/types/user';
 
 /**

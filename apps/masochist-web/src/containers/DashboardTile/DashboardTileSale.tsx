@@ -1,12 +1,10 @@
-import React from 'react';
-import styled from 'styled-components';
-
-import { useTheme, ColorTokens } from 'styles';
-import { useGames } from 'sdk';
-import { getGameThumbnail } from 'utils';
+import { Flex, Loader, QueryBoundary, Spinner } from 'components';
 import { Section, SectionProps } from 'containers';
-import { Flex, Loader, Spinner, QueryBoundary } from 'components';
 import { t } from 'i18n';
+import { useGames } from 'sdk';
+import styled from 'styled-components';
+import { ColorTokens, useTheme } from 'styles';
+import { getGameThumbnail } from 'utils';
 
 type Props = Omit<SectionProps, 'content' | 'title'>;
 export const DashboardTileSale = (props: Props) => {

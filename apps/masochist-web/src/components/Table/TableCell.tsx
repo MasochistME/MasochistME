@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import { Flex } from 'components';
+import styled from 'styled-components';
 
 type Props = {
   isCentered?: boolean;

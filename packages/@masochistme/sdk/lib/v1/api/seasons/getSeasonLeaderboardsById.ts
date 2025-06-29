@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-
-import { SeasonLeaderboardEntry, ResponseError } from 'v1/types';
+import { ResponseError, SeasonLeaderboardEntry } from 'v1/types';
 
 /**
  * Gets leaderboards for a season by the given ID (if it exists).

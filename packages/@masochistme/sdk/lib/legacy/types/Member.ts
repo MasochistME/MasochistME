@@ -5,6 +5,6 @@ import { WithId } from 'mongodb';
  * A single object describes a single Masochist.ME member.
  */
 export type Member = WithId<{
-	id: string; // Steam ID of a member.
-	groups: string[]; // List of group names that this member should have.
+  id: string; // Steam ID of a member.
+  groups: string[]; // List of group names that this member should have.
 }>;

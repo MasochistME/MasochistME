@@ -1,11 +1,9 @@
-import React from 'react';
-import styled from 'styled-components';
 import { Badge } from '@masochistme/sdk/dist/v1/types';
-
-import { useGameBadges } from 'sdk';
 import { Flex } from 'components';
-import { BadgeTile, BadgeThumbnail, Section } from 'containers';
+import { BadgeThumbnail, BadgeTile, Section } from 'containers';
 import { t } from 'i18n';
+import { useGameBadges } from 'sdk';
+import styled from 'styled-components';
 
 type Props = {
   gameId: number;

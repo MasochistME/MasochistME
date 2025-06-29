@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-
-import { MemberGame, Sort, ResponseError } from 'v1/types';
+import { MemberGame, ResponseError, Sort } from 'v1/types';
 
 /**
  * Returns data about the completion of Curator games by MasochistME members.

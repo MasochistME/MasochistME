@@ -1,6 +1,6 @@
 import {
-  GamesListParams,
   GameCompletionListParams,
+  GamesListParams,
 } from '@masochistme/sdk/dist/v1/api/games';
 import { Sort } from '@masochistme/sdk/dist/v1/types';
 import { useQuery } from '@tanstack/react-query';

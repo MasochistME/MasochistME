@@ -1,5 +1,4 @@
 import { DiscordInteraction, getAwaitEmbed, getSuccessEmbed } from "arcybot";
-
 import { bot, cache } from "fetus";
 import { createError, ErrorAction } from "utils";
 

@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-
-import { Log, Sort, ResponseError } from 'v1/types';
+import { Log, ResponseError, Sort } from 'v1/types';
 
 /**
  * Returns a list of all logs.

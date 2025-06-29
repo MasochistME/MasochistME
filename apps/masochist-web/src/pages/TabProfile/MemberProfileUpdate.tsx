@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import dayjs from 'dayjs';
-
 import { Member, PatronTier } from '@masochistme/sdk/dist/v1/types';
-
-import { useUpdateMemberMutation, useMemberLeaderboards } from 'sdk';
+import { Alert, Button, Flex, Tooltip } from 'components';
+import { Variant } from 'components/Button/types';
+import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
+import { useMemberLeaderboards, useUpdateMemberMutation } from 'sdk';
+import styled from 'styled-components';
 import { media } from 'styles';
 import { getHumanReadableDate } from 'utils';
-import { Alert, Flex, Tooltip, Button } from 'components';
-import { Variant } from 'components/Button/types';
 
 type Props = {
   member?: Member;

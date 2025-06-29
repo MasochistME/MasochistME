@@ -1,14 +1,13 @@
-import { DiscordInteraction } from "arcybot";
-
+import { Badge } from '@masochistme/sdk/dist/v1/types';
+import { DiscordInteraction } from 'arcybot';
+import { sdk } from 'fetus';
 import {
   createError,
   ErrorAction,
   getBadgeNameById,
   ImgType,
   saveImage,
-} from "utils";
-import { sdk } from "fetus";
-import { Badge } from "@masochistme/sdk/dist/v1/types";
+} from 'utils';
 
 /**
  * Edits an existing badge.
@@ -20,17 +19,17 @@ export const badgeedit = async (
 ): Promise<void> => {
   await interaction.deferReply();
 
-  const badgeId = interaction.options.getString("badge", true);
-  const name = interaction.options.getString("name", false);
-  const description = interaction.options.getString("description", false);
-  const points = interaction.options.getNumber("points", false);
-  const requirements = interaction.options.getString("requirements", false);
-  const image = interaction.options.getAttachment("image", false);
+  const badgeId = interaction.options.getString('badge', true);
+  const name = interaction.options.getString('name', false);
+  const description = interaction.options.getString('description', false);
+  const points = interaction.options.getNumber('points', false);
+  const requirements = interaction.options.getString('requirements', false);
+  const image = interaction.options.getAttachment('image', false);
 
   try {
     const existingBadge = await sdk.getBadgeById({ badgeId });
     if (!existingBadge)
-      throw new Error("Cannot edit a badge which does not exist.");
+      throw new Error('Cannot edit a badge which does not exist.');
 
     const fixedImage = image
       ? await saveImage(
@@ -51,17 +50,17 @@ export const badgeedit = async (
     const response = await sdk.updateBadgeById({ badgeId, badge: newBadge });
 
     if (!response.acknowledged)
-      throw new Error("Could not update the badge, please try again later.");
+      throw new Error('Could not update the badge, please try again later.');
 
     const disabledFields = [
-      "game",
-      "img",
-      "enabled",
-      "legacy",
-      "isNonSteamGame",
+      'game',
+      'img',
+      'enabled',
+      'legacy',
+      'isNonSteamGame',
     ];
     const embed = {
-      title: "🥇 Badge updated!",
+      title: '🥇 Badge updated!',
       ...(newBadge.img && { thumbnail: { url: newBadge.img } }),
       fields: [
         ...Object.entries(newBadge)
@@ -72,7 +71,7 @@ export const badgeedit = async (
             inline: true,
           })),
         {
-          name: "---",
+          name: '---',
           value: `You have updated a **${getBadgeNameById(
             badgeId,
           ).toUpperCase()}** badge!`,

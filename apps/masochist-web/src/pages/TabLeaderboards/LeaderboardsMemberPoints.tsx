@@ -1,11 +1,9 @@
-import React, { useMemo } from 'react';
-import styled from 'styled-components';
-
+import { Flex, Icon, IconType, Size, Spinner, Tooltip } from 'components';
 import { useMemberLeaderboardsPoints } from 'hooks';
+import { useMemo } from 'react';
+import styled from 'styled-components';
 import { media } from 'styles';
-import { Size } from 'components';
 import { TimePeriod } from 'utils/getTimePeriod';
-import { Flex, Icon, IconType, Spinner, Tooltip } from 'components';
 
 type Props = {
   steamId: string;

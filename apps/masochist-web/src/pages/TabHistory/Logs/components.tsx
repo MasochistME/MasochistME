@@ -1,8 +1,6 @@
+import { Flex, Icon as MMEIcon, Size } from 'components';
 import styled from 'styled-components';
-
-import { Flex, Icon as MMEIcon } from 'components';
-import { Size } from 'components';
-import { media, ColorTokens, useTheme } from 'styles';
+import { ColorTokens, media, useTheme } from 'styles';
 
 const Description = styled.div`
   display: inline-block;
@@ -76,4 +74,5 @@ const Summary = styled(Flex)`
   }
 `;
 
-export { Description, Icons, Image, Link, Icon, Logo, Summary };
+export { Description, Icon, Icons, Image, Link, Logo, Summary };
+

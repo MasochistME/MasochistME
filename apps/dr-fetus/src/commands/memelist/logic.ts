@@ -1,7 +1,6 @@
-import { DiscordInteraction } from "arcybot";
-
-import { DISCORD_MAX_MSG_LENGTH } from "consts";
-import { getMemesFromAPI } from "api";
+import { getMemesFromAPI } from 'api';
+import { DiscordInteraction } from 'arcybot';
+import { DISCORD_MAX_MSG_LENGTH } from 'consts';
 
 /**
  * Shows a full list of all the memes.
@@ -22,6 +21,6 @@ export const memelist = async (
       }
       memes.push(acc);
       return curr;
-    }, "");
+    }, '');
   memes.forEach(chunk => channel?.send({ content: chunk }));
 };

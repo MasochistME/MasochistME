@@ -1,10 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
-
-import { useTheme, ColorTokens } from 'styles';
 import { Flex, Loader, Modal, QueryBoundary } from 'components';
 import { GameLeaderboards } from 'containers';
-
+import styled from 'styled-components';
+import { ColorTokens, useTheme } from 'styles';
 import { ModalLeaderboardsBadges } from './ModalLeaderboardsBadges';
 import { ModalLeaderboardsHeader } from './ModalLeaderboardsHeader';
 

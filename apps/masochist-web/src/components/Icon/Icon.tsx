@@ -1,9 +1,8 @@
+import icons, { IconType as AssetIconType } from 'assets/icons';
+import { Size, Tooltip } from 'components';
 import React from 'react';
 import styled from 'styled-components';
-
-import icons, { IconType as AssetIconType } from 'assets/icons';
 import { ColorTokens } from 'styles';
-import { Size, Tooltip } from 'components';
 
 type Props = {
   className?: string;

@@ -1,13 +1,10 @@
-import React from 'react';
-import { useNavigate } from 'react-router';
-import styled from 'styled-components';
-
-import { useLeaderboardsMembers, useCuratorMembers } from 'sdk';
-import { Section, SectionProps } from 'containers';
 import { Flex, Skeleton } from 'components';
-
-import { LogCompact } from './components';
+import { Section, SectionProps } from 'containers';
 import { t } from 'i18n';
+import { useNavigate } from 'react-router';
+import { useCuratorMembers, useLeaderboardsMembers } from 'sdk';
+import styled from 'styled-components';
+import { LogCompact } from './components';
 
 const NUMBER_OF_LEADERS = 10;
 

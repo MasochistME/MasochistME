@@ -1,11 +1,10 @@
-import { CommandObject } from "arcybot";
-
-import { CacheOption } from "cache";
-import { mongo, cache } from "fetus";
+import { CommandObject } from 'arcybot';
+import { CacheOption } from 'cache';
+import { cache, mongo } from 'fetus';
 
 export const getCommandsFromAPI = async () => {
   const cursor = mongo.dbs[cache.botDb]
-    .collection<CommandObject>("commands")
+    .collection<CommandObject>('commands')
     .find();
   const commands: CommandObject[] = [];
   await cursor.forEach(el => {
@@ -16,7 +15,7 @@ export const getCommandsFromAPI = async () => {
 
 export const getAllOptionsFromAPI = async () => {
   const cursor = mongo.dbs[cache.botDb]
-    .collection<CacheOption>("options")
+    .collection<CacheOption>('options')
     .find();
   const options: CacheOption[] = [];
   await cursor.forEach(el => {

@@ -1,7 +1,6 @@
 /**
  * @module Seasons
  */
-
 import { WithId } from 'mongodb';
 
 /**

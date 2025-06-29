@@ -15,10 +15,10 @@
   "scripts": {
     "build": "tsc && tsc-alias -p tsconfig.json",
     "build:sdk": "tsc && tsc-alias -p tsconfig.json",
-    "lint": "eslint . --ext .ts",
-    "test": "echo TODO",
-    "semantic-release": "semantic-release",
-    "docs": "typedoc"
+    "docs": "typedoc",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "semantic-release": "semantic-release"
   },
   "dependencies": {
     "discord.js": "^14.8.0"

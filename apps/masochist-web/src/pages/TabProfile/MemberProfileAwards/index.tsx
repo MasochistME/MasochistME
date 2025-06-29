@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router';
-import styled from 'styled-components';
 import { Award } from '@masochistme/sdk/dist/v1/types';
-
 import { Button, Flex } from 'components';
 import { AwardThumbnail, ModalAward } from 'containers';
 import { useAwardCategoriesForMember } from 'hooks';
+import { useState } from 'react';
+import { useNavigate } from 'react-router';
+import styled from 'styled-components';
 
 type Props = { memberId: string };
 

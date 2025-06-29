@@ -1,10 +1,9 @@
+import { Icon, Menu, QueryBoundary, Size, Warning } from 'components';
+import { useRacesFromSeason } from 'hooks';
+import { t } from 'i18n';
 import { useEffect } from 'react';
 import styled from 'styled-components';
-
-import { t } from 'i18n';
-import { useRacesFromSeason } from 'hooks';
 import { ColorTokens, media, useTheme } from 'styles';
-import { Icon, Menu, QueryBoundary, Size, Warning } from 'components';
 
 type Props = {
   selectedSeasonId: string | null;

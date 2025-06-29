@@ -1,6 +1,4 @@
-import React from 'react';
 import styled from 'styled-components';
-
 import { Flex } from '../Flex';
 
 type Props = { description: string };

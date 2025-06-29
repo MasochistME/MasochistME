@@ -1,12 +1,10 @@
-import React, { useContext, useState } from 'react';
 import { SDK } from '@masochistme/sdk/dist/v1/sdk';
 import { TierId } from '@masochistme/sdk/dist/v1/types';
-
 import { TabDict } from 'configuration/tabs';
-
-import { Theme } from 'styles';
-import { GameView, BadgeView } from 'hooks';
 import { env } from 'env';
+import { BadgeView, GameView } from 'hooks';
+import React, { useContext, useState } from 'react';
+import { Theme } from 'styles';
 
 type ContextType = {
   // DEV

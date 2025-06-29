@@ -1,5 +1,4 @@
 import { AvailableLocales, LocaleKey } from 'i18n';
-
 import enUS from './en-US.json';
 import teST from './te-ST'; // This is a testing locale
 

@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
 import { InsertOneResult } from 'mongodb';
-
 import { Log, ResponseError } from 'v1/types';
 
 /**

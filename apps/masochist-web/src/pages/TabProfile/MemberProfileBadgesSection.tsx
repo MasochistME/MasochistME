@@ -1,12 +1,9 @@
-import React from 'react';
-import { useNavigate } from 'react-router';
-import styled from 'styled-components';
-
-import { Flex, Loader, QueryBoundary, ErrorFallback } from 'components';
+import { ErrorFallback, Flex, Loader, QueryBoundary, Size } from 'components';
+import { TabDict } from 'configuration/tabs';
 import { BadgeThumbnail, Section } from 'containers';
 import { useActiveTab, useMemberBadgesFilter } from 'hooks';
-import { TabDict } from 'configuration/tabs';
-import { Size } from 'components';
+import { useNavigate } from 'react-router';
+import styled from 'styled-components';
 
 type Props = {
   memberId: string;

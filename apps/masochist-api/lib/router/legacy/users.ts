@@ -1,7 +1,6 @@
-import { Request, Response } from 'express';
 import axios from 'axios';
-
 import cache from 'cache';
+import { Request, Response } from 'express';
 import { connectToDb, getDataFromDB } from 'helpers/db';
 import { log } from 'helpers/log';
 

@@ -1,13 +1,11 @@
-import { ButtonInteraction } from 'discord.js';
-
-import { sdk } from 'fetus';
 import { RaceButton } from 'consts';
+import { ButtonInteraction } from 'discord.js';
+import { sdk } from 'fetus';
 import { createError, ErrorAction } from 'utils';
-
 import {
-  fieldsAfterReveal,
-  getRaceStartEmbed,
-  getRaceStartButtons,
+    fieldsAfterReveal,
+    getRaceStartButtons,
+    getRaceStartEmbed,
 } from './__common';
 
 /**

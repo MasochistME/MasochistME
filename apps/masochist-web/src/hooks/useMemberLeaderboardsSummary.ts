@@ -1,6 +1,5 @@
-import { useMemo } from 'react';
 import { PatronTier } from '@masochistme/sdk/dist/v1/types';
-
+import { useMemo } from 'react';
 import { useCuratorMembers, useLeaderboardsMembers } from 'sdk';
 import { TimePeriod } from 'utils/getTimePeriod';
 

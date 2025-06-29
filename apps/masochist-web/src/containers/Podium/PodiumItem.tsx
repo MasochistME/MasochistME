@@ -1,11 +1,9 @@
 import { RacePlayer } from '@masochistme/sdk/dist/v1/types';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-
-import { useMembers } from 'sdk';
 import { Icon, Size, Skeleton } from 'components';
+import { Link } from 'react-router-dom';
+import { useMembers } from 'sdk';
+import styled from 'styled-components';
 import { ColorTokens, useTheme } from 'styles';
-
 import { PodiumAvatar } from './PodiumAvatar';
 import { usePodiumColor } from './hooks';
 

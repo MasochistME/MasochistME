@@ -1,16 +1,14 @@
 import { Badge } from '@masochistme/sdk/dist/v1/types';
-
 import {
-  Flex,
-  Table,
-  TableColumn,
-  TableCell,
-  QueryBoundary,
   ErrorFallback,
+  Flex,
+  QueryBoundary,
+  Table,
+  TableCell,
+  TableColumn,
 } from 'components';
 import { BadgeThumbnail } from 'containers';
 import { useBadges } from 'sdk';
-
 import { CellGame } from './columns';
 
 enum Columns {

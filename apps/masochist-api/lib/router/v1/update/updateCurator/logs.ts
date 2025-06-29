@@ -1,12 +1,12 @@
 import {
-  Game,
-  LogAchievementNumberChange,
-  LogGameAdd,
-  LogGameRemove,
-  LogGameTierChange,
-  LogMemberJoin,
-  LogMemberLeave,
-  LogType,
+    Game,
+    LogAchievementNumberChange,
+    LogGameAdd,
+    LogGameRemove,
+    LogGameTierChange,
+    LogMemberJoin,
+    LogMemberLeave,
+    LogType,
 } from '@masochistme/sdk/dist/v1/types';
 import { mongoInstance } from 'api';
 import { log } from 'helpers/log';

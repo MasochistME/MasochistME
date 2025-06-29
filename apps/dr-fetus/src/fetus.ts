@@ -1,16 +1,15 @@
 import './instrument';
 
-import * as dotenv from 'dotenv';
-import { Arcybot } from 'arcybot';
-import { GatewayIntentBits, Partials } from 'discord.js';
 import { SDK } from '@masochistme/sdk/dist/v1/sdk';
-
-import { getOption, log, Database } from 'utils';
+import { Arcybot } from 'arcybot';
 import { Cache } from 'cache';
-import { handleRaceTimer } from 'commands/_utils/race';
-
 import { commandsFunctions, customCommands } from 'commands';
-import { handleModals, handleAutocomplete, handleButtons } from 'interactions';
+import { handleRaceTimer } from 'commands/_utils/race';
+import { GatewayIntentBits, Partials } from 'discord.js';
+import * as dotenv from 'dotenv';
+import { handleAutocomplete, handleButtons, handleModals } from 'interactions';
+import { Database, getOption, log } from 'utils';
+import './instrument';
 
 dotenv.config();
 

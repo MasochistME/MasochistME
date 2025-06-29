@@ -1,10 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
-
-import { media, useTheme, ColorTokens } from 'styles';
 import { Flex } from 'components';
 import { ButtonsSocialMedia, Logo } from 'containers';
 import { t } from 'i18n';
+import styled from 'styled-components';
+import { ColorTokens, media, useTheme } from 'styles';
 
 export const Header = (): JSX.Element => {
   const { colorTokens } = useTheme();

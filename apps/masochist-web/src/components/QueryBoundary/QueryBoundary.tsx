@@ -1,15 +1,14 @@
-import React, { Suspense, useState } from 'react';
-import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
-import { QueryErrorResetBoundary } from '@tanstack/react-query';
-import styled from 'styled-components';
 import Collapse from '@mui/material/Collapse';
-
-import { Button } from 'components/Button';
-import { Modal } from 'components/Modal';
+import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { Size } from 'components/__utils';
-import { useLocation } from 'react-router';
+import { Button } from 'components/Button';
+import { Modal } from 'components/Modal';
 import { t } from 'i18n';
+import React, { Suspense, useState } from 'react';
+import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
+import { useLocation } from 'react-router';
+import styled from 'styled-components';
 
 type Props = {
   fallback?: React.ReactNode;

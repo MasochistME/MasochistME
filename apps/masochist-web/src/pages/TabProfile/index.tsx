@@ -1,21 +1,18 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import styled from 'styled-components';
-
 import { Flex, Loader, QueryBoundary, Warning } from 'components';
+import { TabDict } from 'configuration/tabs';
 import { SubPage } from 'containers';
 import { useActiveTab } from 'hooks';
-import { TabDict } from 'configuration/tabs';
-
-import { MemberProfileFeaturedSection } from './MemberProfileFeaturedSection';
+import { useParams } from 'react-router-dom';
+import styled from 'styled-components';
 import { MemberProfileBadgesSection } from './MemberProfileBadgesSection';
-import { MemberProfileTop } from './MemberProfileTop';
+import { MemberProfileFeaturedSection } from './MemberProfileFeaturedSection';
 import { MemberProfileTabs } from './MemberProfileTabs';
+import { MemberProfileTop } from './MemberProfileTop';
 
 export const TabProfile = (): JSX.Element => {
   // ID param will always be defined because this tab is used ONLY for the /profile/:id route.
   const { id } = useParams<{ id: string }>() as { id: string };
-  useActiveTab(TabDict.PROFILE, true);
+  useActiveTab(TabDict.PROFILE);
 
   return (
     <SubPage>

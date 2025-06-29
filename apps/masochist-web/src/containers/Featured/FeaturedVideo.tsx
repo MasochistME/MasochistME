@@ -1,12 +1,10 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import dayjs from 'dayjs';
 import { FeaturedVideo as TFeaturedVideo } from '@masochistme/sdk/dist/v1/types';
-
 import { Flex } from 'components';
-import { getYTVideoID } from 'utils';
+import dayjs from 'dayjs';
+import { Link } from 'react-router-dom';
 import { useGames, useMembers } from 'sdk';
+import styled from 'styled-components';
+import { getYTVideoID } from 'utils';
 
 type Props = {
   featured: TFeaturedVideo;

@@ -1,5 +1,5 @@
+import { BarChart, Section } from 'containers';
 import { useGameCompletions } from 'sdk';
-import { Section, BarChart } from 'containers';
 
 type Props = {
   gameId: number;

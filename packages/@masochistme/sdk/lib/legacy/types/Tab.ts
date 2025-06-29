@@ -5,9 +5,9 @@ import { WithId } from 'mongodb';
  * A single object describes a single tab.
  */
 export type Tab = WithId<{
-	text: string; // Label of the tab.
-	icon: string; // A FontAwesome icon classname (for example `fas fa-star`).
-	link: string; // An internal route to which the tab redirects upon clicking.
-	visible: boolean; // If false, the tab will be hidden from view.
-	external: boolean; // Indicates if the tab redirects to an external website.
+  text: string; // Label of the tab.
+  icon: string; // A FontAwesome icon classname (for example `fas fa-star`).
+  link: string; // An internal route to which the tab redirects upon clicking.
+  visible: boolean; // If false, the tab will be hidden from view.
+  external: boolean; // Indicates if the tab redirects to an external website.
 }>;

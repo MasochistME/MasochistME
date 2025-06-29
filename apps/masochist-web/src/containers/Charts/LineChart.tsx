@@ -79,15 +79,14 @@
 // 		/>
 // 	);
 // };
-
-import { Chart } from 'react-chartjs-2';
 import {
-  Chart as ChartJS,
   ChartData,
+  Chart as ChartJS,
   ChartOptions,
   registerables,
   ScaleOptionsByType,
 } from 'chart.js';
+import { Chart } from 'react-chartjs-2';
 import { useTheme } from 'styles';
 
 ChartJS.register(...registerables);

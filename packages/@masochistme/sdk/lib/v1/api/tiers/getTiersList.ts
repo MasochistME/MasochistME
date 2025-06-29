@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-
-import { Tier, ResponseError } from 'v1/types';
+import { ResponseError, Tier } from 'v1/types';
 
 /**
  * Returns a list of all game tiers.

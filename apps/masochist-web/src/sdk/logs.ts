@@ -1,7 +1,6 @@
+import { LogListParams } from '@masochistme/sdk/dist/v1/api/logs';
 import { useQuery } from '@tanstack/react-query';
 import { useAppContext } from 'context';
-
-import { LogListParams } from '@masochistme/sdk/dist/v1/api/logs';
 
 /**
  *

@@ -1,10 +1,9 @@
-import { Request, Response } from 'express';
-import { Log } from '@masochistme/sdk/dist/v1/types';
 import { LogListParams } from '@masochistme/sdk/dist/v1/api/logs';
-
-import { log } from 'helpers/log';
-import { sortCollection } from 'helpers/db';
+import { Log } from '@masochistme/sdk/dist/v1/types';
 import { mongoInstance } from 'api';
+import { Request, Response } from 'express';
+import { sortCollection } from 'helpers/db';
+import { log } from 'helpers/log';
 
 /**
  * Returns a list of all logs.

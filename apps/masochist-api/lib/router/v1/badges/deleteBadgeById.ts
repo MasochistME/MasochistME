@@ -1,9 +1,8 @@
-import { ObjectId } from 'mongodb';
-import { Request, Response } from 'express';
 import { Badge, MemberBadge } from '@masochistme/sdk/dist/v1/types';
-
-import { log } from 'helpers/log';
 import { mongoInstance } from 'api';
+import { Request, Response } from 'express';
+import { log } from 'helpers/log';
+import { ObjectId } from 'mongodb';
 
 /**
  * Deletes a badge with a given badge ID, and removes it from all members that have it.

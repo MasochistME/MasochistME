@@ -1,8 +1,7 @@
-import { Request, Response } from 'express';
 import { MemberAward } from '@masochistme/sdk/dist/v1/types';
-
-import { log } from 'helpers/log';
 import { mongoInstance } from 'api';
+import { Request, Response } from 'express';
+import { log } from 'helpers/log';
 
 /**
  * Gives an award with given award ID to member with given member ID.

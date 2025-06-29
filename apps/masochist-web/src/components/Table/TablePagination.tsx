@@ -2,8 +2,7 @@ import TablePaginationUnstyled, {
   tablePaginationClasses as classes,
 } from '@mui/material/TablePagination';
 import styled from 'styled-components';
-
-import { useTheme, ColorTokens } from 'styles';
+import { ColorTokens, useTheme } from 'styles';
 import { TableRow } from './types';
 
 type Props = {

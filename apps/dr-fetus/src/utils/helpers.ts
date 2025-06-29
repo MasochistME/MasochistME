@@ -1,6 +1,5 @@
 import { DiscordInteraction } from "arcybot";
 import { ButtonInteraction, GuildMemberRoleManager, Role } from "discord.js";
-
 import { getOption } from "utils";
 
 /**

@@ -1,8 +1,6 @@
-import React from 'react';
 import { LogType } from '@masochistme/sdk/dist/v1/types';
-
-import { SingleLog } from 'configuration';
 import { Checkbox } from 'components';
+import { SingleLog } from 'configuration';
 import { t } from 'i18n';
 
 type Props = {

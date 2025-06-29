@@ -1,11 +1,10 @@
 import { RacePlayer } from '@masochistme/sdk/dist/v1/types';
 import { getErrorEmbed } from 'arcybot';
+import { getMedal } from 'commands/_utils/race';
 import { Room } from 'consts';
 import { APIEmbed } from 'discord.js';
-
 import { sdk } from 'fetus';
 import { getChannelByKey, getModChannel, log } from 'utils';
-import { getMedal } from 'commands/_utils/race';
 
 /**
  * Aggregates and sends the results after race finish.

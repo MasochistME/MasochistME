@@ -1,12 +1,10 @@
-import React from 'react';
-import { useNavigate } from 'react-router';
 import { Game, GameLeaderboards, Tier } from '@masochistme/sdk/dist/v1/types';
-
-import { useTiers, useLeaderboardsGames } from 'sdk';
+import { Flex, Icon, Size, Skeleton, TableLink } from 'components';
+import { GameThumbnail } from 'containers';
+import { useNavigate } from 'react-router';
+import { useLeaderboardsGames, useTiers } from 'sdk';
 import { useTheme } from 'styles';
 import { getTierIcon } from 'utils';
-import { Flex, Icon, Skeleton, Size, TableLink } from 'components';
-import { GameThumbnail } from 'containers';
 
 type Props = { game: Game };
 

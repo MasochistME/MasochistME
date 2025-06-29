@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
 import { Game } from '@masochistme/sdk/dist/v1/types';
-
-import { useTiers, useCuratedGames } from 'sdk';
-import { getTierIcon, getGameThumbnail } from 'utils';
-import { Flex, Icon, Skeleton, Tooltip, Size, QueryBoundary } from 'components';
+import { Flex, Icon, QueryBoundary, Size, Skeleton, Tooltip } from 'components';
 import { ModalLeaderboards } from 'containers';
-import { useTheme, ColorTokens } from 'styles';
+import React, { useState } from 'react';
+import { useCuratedGames, useTiers } from 'sdk';
+import styled from 'styled-components';
+import { ColorTokens, useTheme } from 'styles';
+import { getGameThumbnail, getTierIcon } from 'utils';
 
 type Props = {
   gameId?: number;

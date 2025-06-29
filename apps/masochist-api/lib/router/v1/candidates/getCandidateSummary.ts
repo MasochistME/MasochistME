@@ -1,16 +1,15 @@
-import { Request, Response } from 'express';
-import axios, { AxiosError } from 'axios';
 import { Game, MemberGame, Tier } from '@masochistme/sdk/dist/v1/types';
-
 import { mongoInstance } from 'api';
+import axios from 'axios';
+import { Request, Response } from 'express';
 import { log } from 'helpers/log';
-import { updateQueue } from 'router/v1/update/updateQueue';
-import {
-  getMemberSteamAchievements,
-  getMemberSteamGames,
-} from 'router/v1/update/updateMember/updateMember';
 import { validateSteamUrl } from 'helpers/validate';
 import { MemberSteam } from 'router/v1/update/types';
+import {
+    getMemberSteamAchievements,
+    getMemberSteamGames,
+} from 'router/v1/update/updateMember/updateMember';
+import { updateQueue } from 'router/v1/update/updateQueue';
 
 /**
  * Returns a small summary of any requested Steam member.

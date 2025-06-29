@@ -1,18 +1,17 @@
-import { DiscordInteraction, getErrorEmbed, getSuccessEmbed } from "arcybot";
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
-import { ObjectId } from "mongodb";
 import { FeaturedType } from "@masochistme/sdk/dist/v1/types";
-
-import {
-  createError,
-  ErrorAction,
-  getChannelById,
-  getOption,
-  isLink,
-  getIsUserRegistered,
-} from "utils";
+import { DiscordInteraction, getErrorEmbed, getSuccessEmbed } from "arcybot";
 import { FEATURE_VIDEO, Room } from "consts";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
 import { sdk } from "fetus";
+import { ObjectId } from "mongodb";
+import {
+    createError,
+    ErrorAction,
+    getChannelById,
+    getIsUserRegistered,
+    getOption,
+    isLink,
+} from "utils";
 import { Options } from "./builder";
 
 /**

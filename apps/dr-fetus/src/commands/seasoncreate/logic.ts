@@ -1,9 +1,7 @@
-import { DiscordInteraction } from 'arcybot';
 import { Season } from '@masochistme/sdk/dist/v1/types';
-
-import { createError, ErrorAction, ImgType, saveImage } from 'utils';
+import { DiscordInteraction } from 'arcybot';
 import { sdk } from 'fetus';
-
+import { createError, ErrorAction, ImgType, saveImage } from 'utils';
 import { Options } from './builder';
 
 /**

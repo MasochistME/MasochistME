@@ -1,10 +1,9 @@
 import { Game } from '@masochistme/sdk/dist/v1/types';
-import styled from 'styled-components';
-
 import { Flex, QueryBoundary, Skeleton } from 'components';
 import { StatBlock } from 'containers';
 import { useGameCompletion } from 'hooks';
 import { useCuratorMembers, useLeaderboardsGames } from 'sdk';
+import styled from 'styled-components';
 import { ColorTokens, media, useTheme } from 'styles';
 import { getPercentage } from 'utils';
 

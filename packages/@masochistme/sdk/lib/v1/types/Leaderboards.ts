@@ -1,7 +1,6 @@
 /**
  * @module Leaderboards
  */
-
 import { PatronTier } from 'v1/types/PatreonTier';
 import { TierId } from './Tier';
 

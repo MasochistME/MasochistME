@@ -1,16 +1,15 @@
-import styled from 'styled-components';
 import {
   MemberGame,
   PatreonTier,
   PatronTier,
 } from '@masochistme/sdk/dist/v1/types';
-
-import { useLeaderboardsMembers, useMemberGames, useTiers } from 'sdk';
-import { useMemberBadgesFilter } from 'hooks';
-import { media } from 'styles';
-import { getPercentage, ColorMap } from 'utils';
-import { Flex, Icon, IconType, Skeleton, QueryBoundary } from 'components';
+import { Flex, Icon, IconType, QueryBoundary, Skeleton } from 'components';
 import { StatBlock } from 'containers';
+import { useMemberBadgesFilter } from 'hooks';
+import { useLeaderboardsMembers, useMemberGames, useTiers } from 'sdk';
+import styled from 'styled-components';
+import { media } from 'styles';
+import { ColorMap, getPercentage } from 'utils';
 
 type Props = {
   memberId: string;

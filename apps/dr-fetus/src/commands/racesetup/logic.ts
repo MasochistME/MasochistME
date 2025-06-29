@@ -1,29 +1,27 @@
 import {
-  ButtonBuilder,
-  ActionRowBuilder,
-  ButtonStyle,
-  APIEmbed,
-  APIEmbedField,
-} from 'discord.js';
-import { DiscordInteraction, getInfoEmbed } from 'arcybot';
-import {
   Race,
   RaceScoreBased,
   RaceTimeBased,
   RaceType,
 } from '@masochistme/sdk/dist/v1/types';
-import dayjs from 'dayjs';
-
-import { cache, sdk } from 'fetus';
-import { RACE_CONFIRMATION } from 'consts';
-import { isLink, getDiscordTimestamp, createError, ErrorAction } from 'utils';
+import { DiscordInteraction, getInfoEmbed } from 'arcybot';
 import { getRace, setDraftRace } from 'commands/_utils/race';
-
+import { RACE_CONFIRMATION } from 'consts';
+import dayjs from 'dayjs';
+import {
+  ActionRowBuilder,
+  APIEmbed,
+  APIEmbedField,
+  ButtonBuilder,
+  ButtonStyle,
+} from 'discord.js';
+import { cache, sdk } from 'fetus';
+import { createError, ErrorAction, getDiscordTimestamp, isLink } from 'utils';
 import { OptionRaceType, Options } from './builder';
 import {
   errorEndsBeforeStart,
-  errorRaceInThePast,
   errorNegativeTimers,
+  errorRaceInThePast,
   errorWrongDownloadLink,
 } from './errors';
 

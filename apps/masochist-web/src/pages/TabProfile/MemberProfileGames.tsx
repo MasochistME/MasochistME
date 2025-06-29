@@ -1,9 +1,4 @@
-import { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { Tier, TierId } from '@masochistme/sdk/dist/v1/types';
-
-import { useTiers } from 'sdk';
-import { MemberLeaderboards } from 'containers';
 import {
   Checkbox,
   ErrorFallback,
@@ -13,8 +8,11 @@ import {
   Skeleton,
   Switch,
 } from 'components';
-import { media, useTheme, ColorTokens } from 'styles';
-import { useMixpanel } from 'hooks';
+import { MemberLeaderboards } from 'containers';
+import { useEffect, useState } from 'react';
+import { useTiers } from 'sdk';
+import styled from 'styled-components';
+import { ColorTokens, media, useTheme } from 'styles';
 
 type Props = { memberId: string };
 
@@ -29,7 +27,6 @@ export const MemberProfileGames = (props: Props) => (
 const MemberProfileGamesBoundary = (props: Props) => {
   const { memberId } = props;
   const { colorTokens } = useTheme();
-  const { track } = useMixpanel();
   const [visibleTiers, setVisibleTiers] = useState<TierId[]>([]);
   const [isHideCompleted, setIsHideCompleted] = useState<boolean>(false);
   const [isHideUnfinished, setIsHideUnfinished] = useState<boolean>(false);
@@ -43,11 +40,9 @@ const MemberProfileGamesBoundary = (props: Props) => {
 
   const handleHideCompleted = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsHideCompleted(event.target.checked);
-    track('page.user.games.filter', { hideCompleted: event.target.checked });
   };
   const handleHideUnfinished = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsHideUnfinished(event.target.checked);
-    track('page.user.games.filter', { hideUnfinished: event.target.checked });
   };
 
   return (

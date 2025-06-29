@@ -1,4 +1,5 @@
 import { Race, RaceRating } from '@masochistme/sdk/dist/v1/types';
+import { RaceButton } from 'consts';
 import {
   ActionRowBuilder,
   APIEmbed,
@@ -7,9 +8,7 @@ import {
   ButtonStyle,
 } from 'discord.js';
 import { sdk } from 'fetus';
-
-import { RaceButton } from 'consts';
-import { createError, ErrorAction, difficultyEmojis, funEmojis } from 'utils';
+import { createError, difficultyEmojis, ErrorAction, funEmojis } from 'utils';
 
 const STEPS_FUN = 3;
 const STEPS_DIFFICULTY = 3;
@@ -87,11 +86,14 @@ export const raceRateFun = async (
     const raceRating = {
       discordId: interaction.user.id,
       raceId,
-      rating: Number(userRating)
-    }
+      rating: Number(userRating),
+    };
 
-    const race = await sdk.getRaceById({ raceId });    
-    const { difficulty, rating } = await sdk.updateRaceRatingById({ raceId, raceRating })
+    const race = await sdk.getRaceById({ raceId });
+    const { difficulty, rating } = await sdk.updateRaceRatingById({
+      raceId,
+      raceRating,
+    });
 
     interaction.update({
       embeds: [raceRatingEmbed(race, { difficulty, rating })],
@@ -126,11 +128,13 @@ export const raceRateDifficulty = async (
     const raceRating = {
       discordId: interaction.user.id,
       raceId,
-      difficulty: Number(userRating)
-    }
+      difficulty: Number(userRating),
+    };
 
     const race = await sdk.getRaceById({ raceId });
-    const { difficulty = null, rating = null } = await sdk.updateRaceRatingById({ raceId, raceRating })
+    const { difficulty = null, rating = null } = await sdk.updateRaceRatingById(
+      { raceId, raceRating },
+    );
 
     interaction.update({
       embeds: [raceRatingEmbed(race, { difficulty, rating })],
@@ -140,14 +144,17 @@ export const raceRateDifficulty = async (
   }
 };
 
-const raceRatingEmbed = (race: Race, responseRating: Pick<RaceRating, 'rating'|'difficulty'>) => {
-  const { difficulty, rating } = responseRating
+const raceRatingEmbed = (
+  race: Race,
+  responseRating: Pick<RaceRating, 'rating' | 'difficulty'>,
+) => {
+  const { difficulty, rating } = responseRating;
 
   const emojiFun =
     funEmojis.find(game => game.rating === rating)?.emojiId ?? '-';
   const emojiDifficulty =
-    difficultyEmojis.find(game => game.difficulty === difficulty)
-      ?.emojiId ?? '-';
+    difficultyEmojis.find(game => game.difficulty === difficulty)?.emojiId ??
+    '-';
 
   const embed: APIEmbed = {
     title: `Rate race: ${race.name}`,

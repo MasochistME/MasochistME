@@ -1,12 +1,8 @@
-import React from 'react';
-import { useNavigate } from 'react-router';
-import { LogBadgeGet, Badge, Member } from '@masochistme/sdk/dist/v1/types';
-
-import { Icon } from 'components';
+import { Badge, LogBadgeGet, Member } from '@masochistme/sdk/dist/v1/types';
+import { Icon, Size } from 'components';
 import { BadgeThumbnail, MemberAvatar } from 'containers';
-import { useBadges, useAllMembers } from 'sdk';
-import { Size } from 'components';
-
+import { useNavigate } from 'react-router';
+import { useAllMembers, useBadges } from 'sdk';
 import { HistoryLog } from '.';
 
 export const BadgeGrantLog = ({ log }: { log: LogBadgeGet }) => {

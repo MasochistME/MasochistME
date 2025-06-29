@@ -1,10 +1,8 @@
-import React from 'react';
 import { Game, Tier } from '@masochistme/sdk/dist/v1/types';
-
-import { useTiers, useCuratorMembers, useCuratedGames } from 'sdk';
-import { Spinner, Icon, IconType } from 'components';
+import { Icon, IconType, Spinner } from 'components';
 import { Section, SectionProps } from 'containers';
 import { t } from 'i18n';
+import { useCuratedGames, useCuratorMembers, useTiers } from 'sdk';
 
 export const DashboardTileTrivia = (
   props: Omit<SectionProps, 'content' | 'title'>,

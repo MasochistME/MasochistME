@@ -1,3 +1,6 @@
+import { Race } from '@masochistme/sdk/dist/v1/types';
+import { getErrorEmbed, getInfoEmbed, getSuccessEmbed } from 'arcybot';
+import { RaceButton } from 'consts';
 import {
   ActionRowBuilder,
   APIEmbed,
@@ -5,19 +8,13 @@ import {
   ButtonInteraction,
   ButtonStyle,
 } from 'discord.js';
-import { getErrorEmbed, getInfoEmbed, getSuccessEmbed } from 'arcybot';
-
 import { bot, sdk } from 'fetus';
-import { getModChannel, log } from 'utils';
-import { RaceButton } from 'consts';
-import { getDMChannel, createError, ErrorAction } from 'utils';
-
+import { createError, ErrorAction, getModChannel, log } from 'utils';
 import {
   fieldsBeforeReveal,
-  getRaceStartEmbed,
   getRaceStartButtons,
+  getRaceStartEmbed,
 } from './__common';
-import { Race } from '@masochistme/sdk/dist/v1/types';
 
 /**
  * Message sent to race participant on DM when the race begins.

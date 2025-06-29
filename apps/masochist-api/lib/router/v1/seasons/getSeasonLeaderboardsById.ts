@@ -1,12 +1,11 @@
-import { ObjectId, WithId } from 'mongodb';
-import { Request, Response } from 'express';
 import { Race, RacePlayer, Season } from '@masochistme/sdk/dist/v1/types';
-
-import { log } from 'helpers/log';
 import { mongoInstance } from 'api';
+import { Request, Response } from 'express';
+import { log } from 'helpers/log';
+import { ObjectId, WithId } from 'mongodb';
 import {
-  getParticipantRaceScore,
-  getPlayersPointsPerRace,
+    getParticipantRaceScore,
+    getPlayersPointsPerRace,
 } from 'router/v1/race/__utils';
 
 export const getSeasonLeaderboardsById = async (

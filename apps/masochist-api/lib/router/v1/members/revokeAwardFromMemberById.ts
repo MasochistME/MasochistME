@@ -1,8 +1,7 @@
-import { Request, Response } from 'express';
-import { MemberAward, Log } from '@masochistme/sdk/dist/v1/types';
-
-import { log } from 'helpers/log';
+import { MemberAward } from '@masochistme/sdk/dist/v1/types';
 import { mongoInstance } from 'api';
+import { Request, Response } from 'express';
+import { log } from 'helpers/log';
 
 /**
  * Removes an award with given award ID from member with given member ID.

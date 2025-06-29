@@ -1,7 +1,6 @@
-import React from 'react';
 
-import { useCuratedGames, useMemberGames } from 'sdk';
 import { DoughnutChart } from 'containers';
+import { useCuratedGames, useMemberGames } from 'sdk';
 
 type Props = {
   memberId: string;

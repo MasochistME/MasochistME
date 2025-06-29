@@ -1,7 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { UpdateResult } from 'mongodb';
-
-import { Season, ResponseError } from 'v1/types';
+import { ResponseError, Season } from 'v1/types';
 
 /**
  * Ends an active season by the given ID (if it exists).
