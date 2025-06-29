@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-
-import { Leaderboards, Sort, ResponseError } from 'v1/types';
+import { Leaderboards, ResponseError, Sort } from 'v1/types';
 
 /**
  * Returns MasochistME leaderboards.

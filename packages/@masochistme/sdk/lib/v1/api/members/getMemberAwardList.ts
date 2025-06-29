@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from 'axios';
-
 import { Award, MemberAward, MemberIdEither, ResponseError } from 'v1/types';
 
 /**

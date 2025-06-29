@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
 import { InsertOneResult } from 'mongodb';
-
 import { MemberBadge, ResponseError } from 'v1/types';
 
 /**

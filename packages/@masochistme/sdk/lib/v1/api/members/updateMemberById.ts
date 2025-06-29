@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
 import { UpdateResult } from 'mongodb';
-
 import { Member, ResponseError } from 'v1/types';
 
 type MemberUpdate = Partial<Pick<Member, 'description' | 'discordId'>>;

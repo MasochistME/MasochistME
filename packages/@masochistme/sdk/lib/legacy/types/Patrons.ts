@@ -1,5 +1,4 @@
 import { WithId } from 'mongodb';
-
 import { PatreonTier } from './PatreonTier';
 
 /**

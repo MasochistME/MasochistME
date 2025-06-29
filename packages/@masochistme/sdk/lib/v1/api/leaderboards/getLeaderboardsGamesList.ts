@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-
-import { GameLeaderboards, Sort, ResponseError } from 'v1/types';
+import { GameLeaderboards, ResponseError, Sort } from 'v1/types';
 
 /**
  * Returns MasochistME games leaderboards.

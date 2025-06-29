@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-
-import { Badge, Sort, ResponseError } from 'v1/types';
+import { Badge, ResponseError, Sort } from 'v1/types';
 
 /**
  * Returns a list of all badges.

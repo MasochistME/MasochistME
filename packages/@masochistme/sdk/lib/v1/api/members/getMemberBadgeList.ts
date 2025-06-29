@@ -1,11 +1,10 @@
 import axios, { AxiosResponse } from 'axios';
-
 import {
-	Badge,
-	MemberBadge,
-	MemberIdEither,
-	Sort,
-	ResponseError,
+    Badge,
+    MemberBadge,
+    MemberIdEither,
+    ResponseError,
+    Sort,
 } from 'v1/types';
 
 /**
