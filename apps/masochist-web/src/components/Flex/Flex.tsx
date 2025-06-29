@@ -1,38 +1,46 @@
 import { Size } from 'components';
+import React from 'react';
 import styled from 'styled-components';
 
-type PropsIgnore = {
-  children?: React.ReactNode;
-  theme?: any;
-};
-type Props = {
+type FlexStyleProps = {
   row?: boolean;
   column?: boolean;
   justify?: boolean;
   align?: boolean;
   width?: string | Size;
   height?: string | Size;
-} & PropsIgnore &
-  Omit<React.CSSProperties, 'width' | 'height'>;
+  // Any other CSS style that can be added as a prop as opposed to via { style }
+  [key: string]: unknown;
+};
 
-export const Flex = styled.div.attrs((props: Props) => {
+type NativeDivProps = Omit<React.HTMLAttributes<HTMLDivElement>, 'style'>;
+type Props = FlexStyleProps & NativeDivProps;
+
+export const Flex = styled.div.attrs<Props>(props => {
   const {
     row,
     column,
     justify,
     align,
-    children: _c, // ignore
-    theme: _t, // ignore
-    ...style
+    children: _c,
+    theme: _t,
+    style = {},
+    ...rest
   } = props;
-  const newStyle: React.CSSProperties = {};
-  if (row) newStyle.flexDirection = 'row';
-  if (column) newStyle.flexDirection = 'column';
-  if (justify) newStyle.justifyContent = 'center';
-  if (align) newStyle.alignItems = 'center';
-  return {
-    style: { ...newStyle, ...style },
+
+  const flexStyle: React.CSSProperties = {
+    display: 'flex',
+    ...(row ? { flexDirection: 'row' } : {}),
+    ...(column ? { flexDirection: 'column' } : {}),
+    ...(justify ? { justifyContent: 'center' } : {}),
+    ...(align ? { alignItems: 'center' } : {}),
   };
-})<Props>`
-  display: flex;
-`;
+
+  return {
+    ...rest,
+    style: {
+      ...flexStyle,
+      ...style,
+    },
+  };
+})<Props>``;
