@@ -15,7 +15,7 @@ import { MemberProfileTabs } from './MemberProfileTabs';
 export const TabProfile = (): JSX.Element => {
   // ID param will always be defined because this tab is used ONLY for the /profile/:id route.
   const { id } = useParams<{ id: string }>() as { id: string };
-  useActiveTab(TabDict.PROFILE, true);
+  useActiveTab(TabDict.PROFILE);
 
   return (
     <SubPage>
