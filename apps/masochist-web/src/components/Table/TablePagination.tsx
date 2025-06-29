@@ -81,6 +81,10 @@ const StyledTablePagination = styled(TablePaginationUnstyled)<{
 
   & .${classes.selectLabel} {
     margin: 0;
+    color: ${({ colorTokens }) => colorTokens['core-primary-text']};
+    font-family: var(--font-raleway);
+    font-size: var(--font-size-12);
+
     @media (max-width: 768px) {
       display: none;
     }
@@ -110,6 +114,9 @@ const StyledTablePagination = styled(TablePaginationUnstyled)<{
 
   & .${classes.displayedRows} {
     margin-left: auto;
+    color: ${({ colorTokens }) => colorTokens['core-primary-text']};
+    font-family: var(--font-raleway);
+    font-size: var(--font-size-12);
   }
 
   & .${classes.actions} {

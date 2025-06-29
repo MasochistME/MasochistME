@@ -22,14 +22,12 @@ export const Flex = styled.div.attrs<Props>(props => {
     column,
     justify,
     align,
-    children: _c,
-    theme: _t,
-    style = {},
-    ...rest
+    children: _c, // ignore this
+    theme: _t, // ignore this
+    ...style
   } = props;
 
   const flexStyle: React.CSSProperties = {
-    display: 'flex',
     ...(row ? { flexDirection: 'row' } : {}),
     ...(column ? { flexDirection: 'column' } : {}),
     ...(justify ? { justifyContent: 'center' } : {}),
@@ -37,10 +35,11 @@ export const Flex = styled.div.attrs<Props>(props => {
   };
 
   return {
-    ...rest,
     style: {
       ...flexStyle,
       ...style,
     },
   };
-})<Props>``;
+})<Props>`
+  display: flex;
+`;
