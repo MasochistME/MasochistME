@@ -5,5 +5,5 @@ import { WithId } from 'mongodb';
  * A single object describes a single permission.
  */
 export type Permission = WithId<{
-	// TODO Define a Permission type
+  // TODO Define a Permission type
 }>;

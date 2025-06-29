@@ -5,6 +5,6 @@ import { WithId } from 'mongodb';
  * A single object describes a single setting.
  */
 export type Setting<T> = WithId<{
-	option: string; // Key by which the setting can be found.
-	value: T; // The setting itself.
+  option: string; // Key by which the setting can be found.
+  value: T; // The setting itself.
 }>;
