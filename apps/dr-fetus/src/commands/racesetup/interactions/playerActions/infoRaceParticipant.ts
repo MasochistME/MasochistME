@@ -1,3 +1,7 @@
+import { RaceType } from '@masochistme/sdk/dist/v1/types';
+import { getParticipantRaceTime } from 'commands/_utils/race';
+import { RACE_DISQUALIFICATION } from 'consts';
+import dayjs from 'dayjs';
 import {
   ActionRowBuilder,
   APIEmbed,
@@ -5,14 +9,9 @@ import {
   ButtonBuilder,
   ButtonStyle,
   TextBasedChannel,
-} from "discord.js";
-import dayjs from "dayjs";
-
-import { sdk } from "fetus";
-import { getMemberNameById, getModChannel } from "utils";
-import { getParticipantRaceTime } from "commands/_utils/race";
-import { RACE_DISQUALIFICATION } from "consts";
-import { RaceType } from "@masochistme/sdk/dist/v1/types";
+} from 'discord.js';
+import { sdk } from 'fetus';
+import { getMemberNameById, getModChannel } from 'utils';
 
 export const raceShowPlayerFinishResultSelf = async (
   channel: TextBasedChannel,
@@ -31,7 +30,7 @@ export const raceShowPlayerFinishResultMods = async (
   const modChannel = getModChannel(true);
   if (!modChannel) {
     throw new Error(
-      "Could not inform mods about you finishing a race. Tough luck QQ",
+      'Could not inform mods about you finishing a race. Tough luck QQ',
     );
   }
 
@@ -58,57 +57,57 @@ const getParticipantStatsRaceFinish = async (
     raceParticipant,
     race,
   );
-  const totalTime = dayjs.duration(fullTime).format("H:mm:ss.SSS");
-  const download = `${downloadTime > downloadGrace * 1000 ? "⚠️ " : ""}${dayjs
+  const totalTime = dayjs.duration(fullTime).format('H:mm:ss.SSS');
+  const download = `${downloadTime > downloadGrace * 1000 ? '⚠️ ' : ''}${dayjs
     .duration(downloadTime)
-    .format("H:mm:ss.SSS")}`;
-  const upload = `${uploadTime > uploadGrace * 1000 ? "⚠️ " : ""}${dayjs
+    .format('H:mm:ss.SSS')}`;
+  const upload = `${uploadTime > uploadGrace * 1000 ? '⚠️ ' : ''}${dayjs
     .duration(uploadTime)
-    .format("H:mm:ss.SSS")}`;
+    .format('H:mm:ss.SSS')}`;
 
   const fields: APIEmbedField[] = [
-    { name: "FINAL TIME", value: totalTime, inline: false },
+    { name: 'FINAL TIME', value: totalTime, inline: false },
     ...(showMore
       ? [
           {
-            name: "Time spent downloading game",
+            name: 'Time spent downloading game',
             value: download,
             inline: true,
           },
           {
-            name: "Time spent uploading proof",
+            name: 'Time spent uploading proof',
             value: upload,
             inline: true,
           },
         ]
       : []),
-    { name: "PROOF", value: raceParticipant.proof ?? "—", inline: false },
+    { name: 'PROOF', value: raceParticipant.proof ?? '—', inline: false },
     ...(race.type === RaceType.SCORE_BASED
       ? [
           {
-            name: "SCORE",
-            value: String(raceParticipant.score) ?? "—",
+            name: 'SCORE',
+            value: String(raceParticipant.score) ?? '—',
             inline: false,
           },
         ]
       : []),
     {
-      name: "Start time",
-      value: startDate ? dayjs(startDate).format("DD.MM.YYYY, HH:mm:ss") : "—",
+      name: 'Start time',
+      value: startDate ? dayjs(startDate).format('DD.MM.YYYY, HH:mm:ss') : '—',
       inline: true,
     },
     {
-      name: "Finish time",
-      value: endDate ? dayjs(endDate).format("DD.MM.YYYY, HH:mm:ss") : "—",
+      name: 'Finish time',
+      value: endDate ? dayjs(endDate).format('DD.MM.YYYY, HH:mm:ss') : '—',
       inline: true,
     },
   ];
 
   const embed: APIEmbed = {
-    title: `🏁 ${race.name ?? "UNKNOWN RACE"} - FINISH - ${
+    title: `🏁 ${race.name ?? 'UNKNOWN RACE'} - FINISH - ${
       getMemberNameById(memberId) ?? memberId
     }`,
-    thumbnail: { url: raceParticipant.proof ?? "http://http.cat/404" },
+    thumbnail: { url: raceParticipant.proof ?? 'http://http.cat/404' },
     fields,
   };
   return embed;
@@ -120,7 +119,7 @@ const getParticipantRaceFinishActions = (raceId: string, memberId: string) => {
       .setCustomId(
         `${RACE_DISQUALIFICATION}-raceid_${raceId}-memberid_${memberId}`,
       )
-      .setLabel("Disqualify")
+      .setLabel('Disqualify')
       .setStyle(ButtonStyle.Danger),
   );
   return buttonBar;

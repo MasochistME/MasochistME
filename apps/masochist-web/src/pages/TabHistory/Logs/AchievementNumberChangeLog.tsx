@@ -1,17 +1,13 @@
-import React from 'react';
-import { useNavigate } from 'react-router';
 import {
-  LogAchievementNumberChange,
-  Tier,
-  Game,
+    Game,
+    LogAchievementNumberChange,
+    Tier,
 } from '@masochistme/sdk/dist/v1/types';
-
-import { useTiers, useAllGames } from 'sdk';
+import { Icon, IconType, Size } from 'components';
 import { GameThumbnail } from 'containers';
-import { Icon, IconType } from 'components';
-
+import { useNavigate } from 'react-router';
+import { useAllGames, useTiers } from 'sdk';
 import { HistoryLog } from '.';
-import { Size } from 'components';
 
 type Props = {
   log: LogAchievementNumberChange;

@@ -1,20 +1,18 @@
-import React from 'react';
-import styled from 'styled-components';
-
-import { useMemberById } from 'sdk';
 import {
-  ErrorFallback,
-  Flex,
-  Loader,
-  QueryBoundary,
-  Warning,
+    ErrorFallback,
+    Flex,
+    Loader,
+    QueryBoundary,
+    Warning,
 } from 'components';
-import { Tabs, Tab, TabPanel } from 'containers';
+import { Tab, TabPanel, Tabs } from 'containers';
 import { useContextualRouting } from 'hooks';
-
+import React from 'react';
+import { useMemberById } from 'sdk';
+import styled from 'styled-components';
 import { MemberProfileBadges } from './MemberProfileBadges';
-import { MemberProfileGraphs } from './MemberProfileGraphs';
 import { MemberProfileGames } from './MemberProfileGames';
+import { MemberProfileGraphs } from './MemberProfileGraphs';
 // import { MemberProfileAwards } from './MemberProfileAwards';
 
 enum TabRoutes {

@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-
-import { Season, Sort, ResponseError } from 'v1/types';
+import { ResponseError, Season, Sort } from 'v1/types';
 
 /**
  * Returns a list of all seasons.

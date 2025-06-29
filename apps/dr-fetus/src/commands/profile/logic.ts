@@ -1,11 +1,9 @@
-import { APIEmbed } from 'discord.js';
-import { DiscordInteraction } from 'arcybot';
 import { Leaderboards, Member } from '@masochistme/sdk/dist/v1/types';
-
+import { DiscordInteraction } from 'arcybot';
+import { UNKNOWN, USER_NO_DESCRIPTION } from 'consts';
+import { APIEmbed } from 'discord.js';
 import { cache, sdk } from 'fetus';
 import { createError, ErrorAction } from 'utils';
-
-import { UNKNOWN, USER_NO_DESCRIPTION } from 'consts';
 
 type PartialMember = Pick<
   Member,

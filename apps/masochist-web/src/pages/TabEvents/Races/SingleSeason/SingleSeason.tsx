@@ -1,15 +1,13 @@
+import { RaceWithSummary, Season } from '@masochistme/sdk/dist/v1/types';
+import { ErrorFallback, Flex } from 'components';
+import { StatBlock, Tab, TabPanel, Tabs } from 'containers';
+import { t } from 'i18n';
 import { useState } from 'react';
 import styled from 'styled-components';
-import { RaceWithSummary, Season } from '@masochistme/sdk/dist/v1/types';
-
-import { ErrorFallback, Flex } from 'components';
-import { StatBlock, Tabs, Tab, TabPanel } from 'containers';
-import { getHumanReadableDate } from 'utils';
-
-import { SingleSeasonRanking } from './SingleSeasonRanking';
-import { SingleSeasonRaces } from './SingleSeasonRaces';
 import { ColorTokens, useTheme } from 'styles';
-import { t } from 'i18n';
+import { getHumanReadableDate } from 'utils';
+import { SingleSeasonRaces } from './SingleSeasonRaces';
+import { SingleSeasonRanking } from './SingleSeasonRanking';
 
 enum TabsSeasonDetails {
   RANKING = 'ranking',

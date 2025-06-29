@@ -1,20 +1,18 @@
-import styled from 'styled-components';
-
 import {
-  ErrorFallback,
-  Flex,
-  QueryBoundary,
-  Loader,
-  Icon,
-  Warning,
+    ErrorFallback,
+    Flex,
+    Icon,
+    Loader,
+    QueryBoundary,
+    Warning,
 } from 'components';
 import { Section, SectionProps } from 'containers';
-
-import { SingleSeason } from './SingleSeason';
 import { useRacesFromSeason } from 'hooks';
-import { SeasonSelect } from './SeasonSelect';
-import { useState } from 'react';
 import { t } from 'i18n';
+import { useState } from 'react';
+import styled from 'styled-components';
+import { SeasonSelect } from './SeasonSelect';
+import { SingleSeason } from './SingleSeason';
 
 export const RacesPage = (): JSX.Element => {
   const [selectedSeasonId, setSelectedSeasonId] = useState<string | null>(null);

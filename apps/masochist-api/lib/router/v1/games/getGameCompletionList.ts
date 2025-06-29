@@ -1,10 +1,9 @@
-import e, { Request, Response } from 'express';
-import { Member, MemberGame, Game } from '@masochistme/sdk/dist/v1/types';
 import { GameCompletionListParams } from '@masochistme/sdk/dist/v1/api/games';
-
-import { log } from 'helpers/log';
-import { sortCollection } from 'helpers/db';
+import { Game, Member, MemberGame } from '@masochistme/sdk/dist/v1/types';
 import { mongoInstance } from 'api';
+import { Request, Response } from 'express';
+import { sortCollection } from 'helpers/db';
+import { log } from 'helpers/log';
 
 /**
  * Returns a list of game completions from MasochistME members.

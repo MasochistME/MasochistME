@@ -1,13 +1,11 @@
-import React from 'react';
-import styled from 'styled-components';
-
-import { useTheme, ColorTokens } from 'styles';
-
 import { Size } from 'components/__utils';
-import { Icon, IconType } from 'components/Icon';
 import { Flex } from 'components/Flex';
+import { Icon, IconType } from 'components/Icon';
 import { Tooltip } from 'components/Tooltip';
 import { t } from 'i18n';
+import React from 'react';
+import styled from 'styled-components';
+import { ColorTokens, useTheme } from 'styles';
 
 type Props<T extends string> = {
   icon: IconType;

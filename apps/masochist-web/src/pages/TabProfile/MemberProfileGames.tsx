@@ -1,19 +1,18 @@
-import { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { Tier, TierId } from '@masochistme/sdk/dist/v1/types';
-
-import { useTiers } from 'sdk';
-import { MemberLeaderboards } from 'containers';
 import {
-  Checkbox,
-  ErrorFallback,
-  Flex,
-  IconType,
-  QueryBoundary,
-  Skeleton,
-  Switch,
+    Checkbox,
+    ErrorFallback,
+    Flex,
+    IconType,
+    QueryBoundary,
+    Skeleton,
+    Switch,
 } from 'components';
-import { media, useTheme, ColorTokens } from 'styles';
+import { MemberLeaderboards } from 'containers';
+import { useEffect, useState } from 'react';
+import { useTiers } from 'sdk';
+import styled from 'styled-components';
+import { ColorTokens, media, useTheme } from 'styles';
 
 type Props = { memberId: string };
 

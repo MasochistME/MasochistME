@@ -1,14 +1,13 @@
-import { WithId } from 'mongodb';
-import { Request, Response } from 'express';
-import { Race, RacePlayer } from '@masochistme/sdk/dist/v1/types';
 import { RaceListParams } from '@masochistme/sdk/dist/v1/api/races';
-
-import { log } from 'helpers/log';
-import { sortCollection } from 'helpers/db';
+import { Race, RacePlayer } from '@masochistme/sdk/dist/v1/types';
 import { mongoInstance } from 'api';
+import { Request, Response } from 'express';
+import { sortCollection } from 'helpers/db';
+import { log } from 'helpers/log';
+import { WithId } from 'mongodb';
 import {
-  getParticipantRaceScore,
-  sortPlayersByResult,
+    getParticipantRaceScore,
+    sortPlayersByResult,
 } from 'router/v1/race/__utils';
 
 /**

@@ -1,12 +1,11 @@
-import React from 'react';
-import styled from 'styled-components';
-import dayjs from 'dayjs';
 import { LogGameAdd, LogType } from '@masochistme/sdk/dist/v1/types';
-
-import { useCuratedGames, useLogs } from 'sdk';
-import { Section, SectionProps, GameTile } from 'containers';
-import { Flex, ErrorFallback, QueryBoundary } from 'components';
+import { ErrorFallback, Flex, QueryBoundary } from 'components';
+import { GameTile, Section, SectionProps } from 'containers';
+import dayjs from 'dayjs';
 import { t } from 'i18n';
+import React from 'react';
+import { useCuratedGames, useLogs } from 'sdk';
+import styled from 'styled-components';
 
 const NUMBER_OF_GAMES = 3;
 

@@ -1,19 +1,17 @@
+import { Race, RaceScoreBased, RaceType } from '@masochistme/sdk/dist/v1/types';
+import { getErrorEmbed, getInfoEmbed } from 'arcybot';
+import { RaceButton, RoleOption, Room } from 'consts';
+import dayjs from 'dayjs';
 import {
-  ButtonInteraction,
-  ButtonBuilder,
-  ButtonStyle,
   ActionRowBuilder,
   APIEmbed,
   APIEmbedField,
+  ButtonBuilder,
+  ButtonInteraction,
+  ButtonStyle,
 } from 'discord.js';
-import { getErrorEmbed, getInfoEmbed } from 'arcybot';
-import { Race, RaceType, RaceScoreBased } from '@masochistme/sdk/dist/v1/types';
-import dayjs from 'dayjs';
-
 import { sdk } from 'fetus';
-import { RaceButton, RoleOption, Room } from 'consts';
-import { getChannelByKey, getDiscordTimestamp, cenzor, getOption } from 'utils';
-
+import { cenzor, getChannelByKey, getDiscordTimestamp, getOption } from 'utils';
 import { raceSendStartFormToParticipantSelf } from './playerActions';
 
 export const racesetupJoin = async (

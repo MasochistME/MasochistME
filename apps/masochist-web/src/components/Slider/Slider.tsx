@@ -1,7 +1,6 @@
 import MuiSlider from '@mui/material/Slider';
-import styled from 'styled-components';
-
 import { Flex, Icon, IconType, Size } from 'components';
+import styled from 'styled-components';
 import { ColorTokens, useTheme } from 'styles';
 import { SliderExpand } from './SliderExpand';
 

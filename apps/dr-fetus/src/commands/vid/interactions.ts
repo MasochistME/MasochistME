@@ -1,14 +1,13 @@
 import { getErrorEmbed } from "arcybot";
-import {
-  ButtonInteraction,
-  AutocompleteInteraction,
-  ApplicationCommandOptionChoiceData,
-} from "discord.js";
-
-import { isMod } from "utils";
 import { getGameChoices } from "commands/_utils/choices";
-import { sdk } from "fetus";
 import { FEATURE_VIDEO } from "consts";
+import {
+    ApplicationCommandOptionChoiceData,
+    AutocompleteInteraction,
+    ButtonInteraction,
+} from "discord.js";
+import { sdk } from "fetus";
+import { isMod } from "utils";
 
 /**
  * Handles autocompletion for attaching a game to the posted video.

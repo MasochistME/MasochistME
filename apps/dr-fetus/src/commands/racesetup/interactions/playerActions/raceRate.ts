@@ -1,15 +1,14 @@
 import { Race, RaceRating } from '@masochistme/sdk/dist/v1/types';
+import { RaceButton } from 'consts';
 import {
-  ActionRowBuilder,
-  APIEmbed,
-  ButtonBuilder,
-  ButtonInteraction,
-  ButtonStyle,
+    ActionRowBuilder,
+    APIEmbed,
+    ButtonBuilder,
+    ButtonInteraction,
+    ButtonStyle,
 } from 'discord.js';
 import { sdk } from 'fetus';
-
-import { RaceButton } from 'consts';
-import { createError, ErrorAction, difficultyEmojis, funEmojis } from 'utils';
+import { createError, difficultyEmojis, ErrorAction, funEmojis } from 'utils';
 
 const STEPS_FUN = 3;
 const STEPS_DIFFICULTY = 3;

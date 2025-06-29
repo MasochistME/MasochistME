@@ -1,11 +1,9 @@
+import { Tab, TabPanel, Tabs } from 'containers';
+import { useContextualRouting } from 'hooks';
 import { SyntheticEvent } from 'react';
 import styled from 'styled-components';
-
-import { Tabs, Tab, TabPanel } from 'containers';
-import { useContextualRouting } from 'hooks';
-
-import { GameProfileLeaderboards } from './GameProfileLeaderboards';
 import { GameProfileFeatured } from './GameProfileFeatured';
+import { GameProfileLeaderboards } from './GameProfileLeaderboards';
 // import { GameProfileGraphs } from './Graphs';
 
 enum TabRoutes {

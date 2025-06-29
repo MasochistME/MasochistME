@@ -1,15 +1,23 @@
 import { Flex } from 'components';
-
+import { AchievementNumberChangeLog } from './AchievementNumberChangeLog';
+import { BadgeCreateLog } from './BadgeCreateLog';
+import { BadgeGrantLog } from './BadgeGrantLog';
+import { CustomLog } from './CustomLog';
 import { GameAddLog } from './GameAddLog';
+import { GameCompleteLog } from './GameCompleteLog';
 import { GameRemoveLog } from './GameRemoveLog';
 import { MemberJoinLog } from './MemberJoinLog';
 import { MemberLeaveLog } from './MemberLeaveLog';
-import { GameCompleteLog } from './GameCompleteLog';
-import { BadgeCreateLog } from './BadgeCreateLog';
-import { BadgeGrantLog } from './BadgeGrantLog';
-import { AchievementNumberChangeLog } from './AchievementNumberChangeLog';
 import { TierChangeLog } from './TierChangeLog';
-import { CustomLog } from './CustomLog';
+import {
+    Description,
+    Icon,
+    Icons,
+    Image,
+    Link,
+    Logo,
+    Summary,
+} from './components';
 
 type Props = {
   children: React.ReactNode;
@@ -37,16 +45,6 @@ HistoryLog.BadgeGrant = BadgeGrantLog;
 HistoryLog.AchievementNumberChange = AchievementNumberChangeLog;
 HistoryLog.TierChange = TierChangeLog;
 HistoryLog.Custom = CustomLog;
-
-import {
-  Description,
-  Icons,
-  Image,
-  Link,
-  Icon,
-  Logo,
-  Summary,
-} from './components';
 
 /**
  * Log sub-components

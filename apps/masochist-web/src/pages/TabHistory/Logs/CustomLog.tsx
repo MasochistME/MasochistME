@@ -1,13 +1,9 @@
-import React from 'react';
-import ReactMarkdown from 'react-markdown';
 import { LogCustom, Member } from '@masochistme/sdk/dist/v1/types';
-
+import { Icon, IconType, Size } from 'components';
+import { MemberAvatar } from 'containers';
+import ReactMarkdown from 'react-markdown';
 import { useAllMembers } from 'sdk';
 import { useTheme } from 'styles';
-import { Icon, IconType } from 'components';
-import { MemberAvatar } from 'containers';
-import { Size } from 'components';
-
 import { HistoryLog } from '.';
 
 type Props = {

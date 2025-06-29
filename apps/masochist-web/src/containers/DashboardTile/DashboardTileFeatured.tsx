@@ -1,12 +1,10 @@
-import { useMemo } from 'react';
-import styled from 'styled-components';
 import { Featured, FeaturedType } from '@masochistme/sdk/dist/v1/types';
-
-import { Section, SectionProps } from 'containers';
 import { ErrorFallback, Flex, Loader, Pagination, Skeleton } from 'components';
-
+import { Section, SectionProps } from 'containers';
 import { FeaturedNews, FeaturedVideo } from 'containers/Featured';
 import { t } from 'i18n';
+import { useMemo } from 'react';
+import styled from 'styled-components';
 
 type Props = Omit<SectionProps, 'content' | 'title'> & {
   featuredData: Featured[];

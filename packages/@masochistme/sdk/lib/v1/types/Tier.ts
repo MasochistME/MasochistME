@@ -1,7 +1,6 @@
 /**
  * @module Tiers
  */
-
 import { WithId } from 'mongodb';
 
 /**

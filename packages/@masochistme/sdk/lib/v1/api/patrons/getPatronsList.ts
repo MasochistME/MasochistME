@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-
-import { Patron, Sort, ResponseError } from 'v1/types';
+import { Patron, ResponseError, Sort } from 'v1/types';
 
 /**
  * Returns a list of all patrons.

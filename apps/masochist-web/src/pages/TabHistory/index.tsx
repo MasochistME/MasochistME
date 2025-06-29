@@ -1,14 +1,12 @@
-import styled from 'styled-components';
 import { LogType } from '@masochistme/sdk/dist/v1/types';
-
-import { t } from 'i18n';
-import { SubPage, Section, SectionProps } from 'containers';
-import { Flex, Icon, Loader, QueryBoundary, ErrorFallback } from 'components';
+import { ErrorFallback, Flex, Icon, Loader, QueryBoundary } from 'components';
+import { LogDictionary, TabDict } from 'configuration';
+import { Section, SectionProps, SubPage } from 'containers';
 import { useActiveTab, useContextualRouting } from 'hooks';
-import { TabDict, LogDictionary } from 'configuration';
-
-import { LogsList } from './LogsList';
+import { t } from 'i18n';
+import styled from 'styled-components';
 import { LogsFilterBar } from './LogsFilterBar';
+import { LogsList } from './LogsList';
 
 export const TabHistory = (): JSX.Element => {
   useActiveTab(TabDict.HISTORY);

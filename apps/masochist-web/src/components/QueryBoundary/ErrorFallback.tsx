@@ -1,8 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
-
 import { Flex, Size } from 'components';
 import { t } from 'i18n';
+import styled from 'styled-components';
 
 type Props = {
   width?: string;

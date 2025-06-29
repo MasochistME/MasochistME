@@ -1,10 +1,9 @@
-import { useMemo } from 'react';
-import dayjs from 'dayjs';
 import { PatronTier } from '@masochistme/sdk/dist/v1/types';
-
-import { usePatreonTiers } from 'sdk';
 import { Icon, Size } from 'components';
-import { useTheme, ColorTokens } from 'styles';
+import dayjs from 'dayjs';
+import { useMemo } from 'react';
+import { usePatreonTiers } from 'sdk';
+import { ColorTokens, useTheme } from 'styles';
 
 type Props = {
   patronTier?: PatronTier | null;

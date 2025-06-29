@@ -1,19 +1,17 @@
-import { useParams } from 'react-router-dom';
-import styled from 'styled-components';
-import { Game, Badge } from '@masochistme/sdk/dist/v1/types';
-
-import { useCuratedGames, useGameBadges } from 'sdk';
+import { Badge, Game } from '@masochistme/sdk/dist/v1/types';
 import {
-  Flex,
-  Warning,
-  QueryBoundary,
-  ErrorFallback,
-  Loader,
+    ErrorFallback,
+    Flex,
+    Loader,
+    QueryBoundary,
+    Warning,
 } from 'components';
-import { SubPage, Section, SectionProps, BadgeTile } from 'containers';
-import { useActiveTab } from 'hooks';
 import { TabDict } from 'configuration/tabs';
-
+import { BadgeTile, Section, SectionProps, SubPage } from 'containers';
+import { useActiveTab } from 'hooks';
+import { useParams } from 'react-router-dom';
+import { useCuratedGames, useGameBadges } from 'sdk';
+import styled from 'styled-components';
 import { GameProfileHeader } from './GameProfileHeader';
 import { GameProfileStats } from './GameProfileStats';
 import { TabGameTabsBoundary } from './GameProfileTabs';

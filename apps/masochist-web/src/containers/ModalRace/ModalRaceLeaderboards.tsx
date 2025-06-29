@@ -1,21 +1,20 @@
 import { RacePlayer, RaceType } from '@masochistme/sdk/dist/v1/types';
-import styled from 'styled-components';
-
-import { useRaceById } from 'sdk';
 import {
-  ErrorFallback,
-  Flex,
-  Icon,
-  QueryBoundary,
-  Table,
-  TableCell,
-  TableColumn,
+    ErrorFallback,
+    Flex,
+    Icon,
+    QueryBoundary,
+    Table,
+    TableCell,
+    TableColumn,
 } from 'components';
 import { Podium, WinnerLink } from 'containers';
-import { media } from 'styles';
 import dayjs from 'dayjs';
-import { getMedal } from 'utils/getMedal';
 import { LocaleKey, t } from 'i18n';
+import { useRaceById } from 'sdk';
+import styled from 'styled-components';
+import { media } from 'styles';
+import { getMedal } from 'utils/getMedal';
 
 type Props = {
   raceId?: string | null;

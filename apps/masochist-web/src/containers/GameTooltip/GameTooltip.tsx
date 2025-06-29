@@ -1,8 +1,7 @@
+import { Game } from '@masochistme/sdk/dist/v1/types';
+import { Flex, Tooltip } from 'components';
 import React from 'react';
 import styled from 'styled-components';
-
-import { Flex, Tooltip } from 'components';
-import { Game } from '@masochistme/sdk/dist/v1/types';
 
 type Props = {
   game?: Game;

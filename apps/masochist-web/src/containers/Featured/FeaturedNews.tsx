@@ -1,6 +1,4 @@
-import React from 'react';
 import { FeaturedNews as TFeaturedNews } from '@masochistme/sdk/dist/v1/types';
-
 import { Markdown } from 'components';
 
 type Props = {

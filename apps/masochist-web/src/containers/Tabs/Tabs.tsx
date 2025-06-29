@@ -1,7 +1,6 @@
-import { Link } from 'react-router-dom';
 import { Tab as MUITab, Tabs as MUITabs } from '@mui/material';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-
 import { ColorTokens, useTheme } from 'styles';
 
 /**

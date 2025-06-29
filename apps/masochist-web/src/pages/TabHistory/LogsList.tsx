@@ -1,32 +1,28 @@
-import React from 'react';
-import styled from 'styled-components';
 import {
-  Log,
-  LogAchievementNumberChange,
-  LogBadgeCreate,
-  LogBadgeGet,
-  LogComplete,
-  LogCustom,
-  LogGameAdd,
-  LogGameRemove,
-  LogGameTierChange,
-  LogMemberJoin,
-  LogMemberLeave,
-  LogType,
+    Log,
+    LogAchievementNumberChange,
+    LogBadgeCreate,
+    LogBadgeGet,
+    LogComplete,
+    LogCustom,
+    LogGameAdd,
+    LogGameRemove,
+    LogGameTierChange,
+    LogMemberJoin,
+    LogMemberLeave,
+    LogType,
 } from '@masochistme/sdk/dist/v1/types';
-
-import { useAppContext } from 'context';
-import { useLogs } from 'sdk';
 import {
-  DateBlock,
-  Flex,
-  QueryBoundary,
-  ErrorFallback,
-  Skeleton,
+    DateBlock,
+    ErrorFallback,
+    Flex,
+    QueryBoundary,
+    Skeleton,
 } from 'components';
-
+import { useLogs } from 'sdk';
+import styled from 'styled-components';
+import { ColorTokens, useTheme } from 'styles';
 import { HistoryLog } from './Logs';
-import { useTheme, ColorTokens } from 'styles';
 
 const NUMBER_OF_LOGS = 50;
 

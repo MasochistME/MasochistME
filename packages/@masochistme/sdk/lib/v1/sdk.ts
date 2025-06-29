@@ -1,82 +1,81 @@
 import axios from 'axios';
-
 import {
-  getGamesList,
-  getBadgesByGameIdList,
-  getGameCompletionList,
-} from 'v1/api/games';
-import { getTiersList } from 'v1/api/tiers';
+    createAward,
+    deleteAwardById,
+    getAwardById,
+    getAwardsList,
+    updateAwardById,
+} from 'v1/api/awards';
+import {
+    createBadge,
+    deleteBadgeById,
+    getBadgeById,
+    getBadgesList,
+    updateBadgeById,
+} from 'v1/api/badges';
 import { getCandidateSummary } from 'v1/api/candidates';
 import {
-  getMembersList,
-  getMemberById,
-  updateMemberById,
-  getMemberAwardList,
-  getMemberBadgeList,
-  getMemberGameList,
-  getMemberAchievementList,
-  giveBadgeToMemberById,
-  giveAwardToMemberById,
-  revokeBadgeFromMemberById,
-  revokeAwardFromMemberById,
-} from 'v1/api/members';
-import {
-  getBadgesList,
-  createBadge,
-  getBadgeById,
-  updateBadgeById,
-  deleteBadgeById,
-} from 'v1/api/badges';
-import {
-  getAwardsList,
-  createAward,
-  getAwardById,
-  updateAwardById,
-  deleteAwardById,
-} from 'v1/api/awards';
+    getBadgesByGameIdList,
+    getGameCompletionList,
+    getGamesList,
+} from 'v1/api/games';
 import { createLog, getLogList } from 'v1/api/logs';
 import {
-  createRace,
-  deleteRaceById,
-  updateRaceById,
-  getRaceById,
-  getRaceList,
-  getActiveRace,
-  updateRaceRatingById
-} from 'v1/api/races';
+    getMemberAchievementList,
+    getMemberAwardList,
+    getMemberBadgeList,
+    getMemberById,
+    getMemberGameList,
+    getMembersList,
+    giveAwardToMemberById,
+    giveBadgeToMemberById,
+    revokeAwardFromMemberById,
+    revokeBadgeFromMemberById,
+    updateMemberById,
+} from 'v1/api/members';
 import {
-  getRaceParticipantById,
-  getRaceParticipantsList,
-  joinRaceByParticipantId,
-  updateRaceByParticipantId,
+    getRaceParticipantById,
+    getRaceParticipantsList,
+    joinRaceByParticipantId,
+    updateRaceByParticipantId,
 } from 'v1/api/racePlayers';
 import {
-  createSeason,
-  updateSeasonById,
-  startSeasonById,
-  endSeasonById,
-  getSeasonsList,
-  getSeasonById,
-  getSeasonLeaderboardsById,
+    createRace,
+    deleteRaceById,
+    getActiveRace,
+    getRaceById,
+    getRaceList,
+    updateRaceById,
+    updateRaceRatingById
+} from 'v1/api/races';
+import {
+    createSeason,
+    endSeasonById,
+    getSeasonById,
+    getSeasonLeaderboardsById,
+    getSeasonsList,
+    startSeasonById,
+    updateSeasonById,
 } from 'v1/api/seasons';
+import { getTiersList } from 'v1/api/tiers';
 import {
-  getLeaderboardsMembersList,
-  getLeaderboardsGamesList,
-  getMemberLeaderboardsPositionById,
-} from './api/leaderboards';
-import {
-  createFeatured,
-  getFeaturedList,
-  updateFeaturedById,
-  deleteFeaturedById,
+    createFeatured,
+    deleteFeaturedById,
+    getFeaturedList,
+    updateFeaturedById,
 } from './api/featured';
 import {
-  createPatron,
-  getPatronsList,
-  updatePatronById,
-  getPatreonTierList,
+    getLeaderboardsGamesList,
+    getLeaderboardsMembersList,
+    getMemberLeaderboardsPositionById,
+} from './api/leaderboards';
+import {
+    createPatron,
+    getPatreonTierList,
+    getPatronsList,
+    updatePatronById,
 } from './api/patrons';
-import { updateMember, getUpdateStatus } from './api/update';
+import { getUpdateStatus, updateMember } from './api/update';
 
 export type Config = {
   host: string; // for example localhost:3000

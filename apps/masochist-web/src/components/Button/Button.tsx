@@ -1,10 +1,8 @@
-import styled from 'styled-components';
-
-import { useTheme, ColorTokens } from 'styles';
-import { Icon, IconType, Tooltip } from 'components';
-import { Size } from 'components';
-import { Variant } from './types';
+import { Icon, IconType, Size, Tooltip } from 'components';
 import React from 'react';
+import styled from 'styled-components';
+import { ColorTokens, useTheme } from 'styles';
+import { Variant } from './types';
 
 type Props = {
   label?: string;

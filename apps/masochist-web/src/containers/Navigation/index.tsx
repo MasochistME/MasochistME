@@ -1,12 +1,11 @@
+import { Icon } from 'components';
+import { Tab, tabs } from 'configuration/tabs';
+import { useAppContext } from 'context';
+import { t } from 'i18n';
 import React from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
-
-import { Icon } from 'components';
-import { useAppContext } from 'context';
-import { media, useTheme, ColorTokens } from 'styles';
-import { tabs, Tab } from 'configuration/tabs';
-import { t } from 'i18n';
+import { ColorTokens, media, useTheme } from 'styles';
 
 export const Navigation = (): JSX.Element => {
   const { colorTokens } = useTheme();

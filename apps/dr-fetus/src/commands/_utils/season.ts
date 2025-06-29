@@ -1,7 +1,7 @@
-import { cache } from "fetus";
-import { getFilteredChoices } from "commands/_utils";
+import { getFilteredChoices } from 'commands/_utils';
+import { cache } from 'fetus';
 
-const NO_SEASON = { name: "None", value: "None" };
+const NO_SEASON = { name: 'None', value: 'None' };
 /**
  * Filter the list of inactive seasons based on the user provided autocomplete value.
  * @param focused string - user provided autocomplete value

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { orderBy } from 'lodash';
 import { getDataFromDB } from 'helpers/db';
+import { orderBy } from 'lodash';
 import { Blog } from './types/blog';
 
 /**

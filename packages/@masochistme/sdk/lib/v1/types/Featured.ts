@@ -1,7 +1,6 @@
 /**
  * @module Featured
  */
-
 import { WithId } from 'mongodb';
 
 /**

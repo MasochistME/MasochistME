@@ -1,24 +1,21 @@
-import { Request, Response } from 'express';
-import axios from 'axios';
 import {
-  Game,
-  Member,
-  MemberAchievement,
-  MemberGame,
-  LogType,
-  LogComplete,
+    Game,
+    LogComplete,
+    LogType,
+    Member,
+    MemberAchievement,
+    MemberGame,
 } from '@masochistme/sdk/dist/v1/types';
-
-import { log } from 'helpers/log';
 import { mongoInstance } from 'api';
-
+import axios from 'axios';
+import { Request, Response } from 'express';
+import { log } from 'helpers/log';
 import {
-  MemberSteam,
-  MemberSteamGame,
-  MemberSteamGameFallback,
-  MemberSteamPlayerStats,
+    MemberSteam,
+    MemberSteamGame,
+    MemberSteamGameFallback,
+    MemberSteamPlayerStats,
 } from '../types';
-
 import { updateQueue } from '../updateQueue';
 
 /**

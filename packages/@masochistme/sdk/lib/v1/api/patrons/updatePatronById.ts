@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
 import { UpdateResult } from 'mongodb';
-
 import { Patron, ResponseError } from 'v1/types';
 
 /**

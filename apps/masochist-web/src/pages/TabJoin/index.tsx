@@ -1,18 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
-
-import styled from 'styled-components';
-
-import { useActiveTab } from 'hooks';
-import { TabDict } from 'configuration/tabs';
 import { Button, Flex } from 'components';
 import { Variant } from 'components/Button/types';
-import { SubPage, Section, SectionProps } from 'containers';
-
+import { TabDict } from 'configuration/tabs';
+import { Section, SectionProps, SubPage } from 'containers';
+import { useActiveTab } from 'hooks';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
+import { useSearchParams } from 'react-router-dom';
+import styled from 'styled-components';
+import { curatorURL } from 'utils';
 import { CandidateSummary } from './CandidateSummary';
 import { SteamNameInput } from './SteamNameInput';
-import { useSearchParams } from 'react-router-dom';
-import { curatorURL } from 'utils';
 
 export const TabJoin = () => {
   useActiveTab(TabDict.JOIN);

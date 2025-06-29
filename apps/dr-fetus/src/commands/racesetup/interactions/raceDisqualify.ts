@@ -1,4 +1,5 @@
-import { getErrorEmbed } from "arcybot";
+import { getErrorEmbed } from 'arcybot';
+import { DISQUALIFY_PARTICIPANT } from 'consts';
 import {
   ActionRowBuilder,
   ButtonInteraction,
@@ -6,22 +7,20 @@ import {
   ModalSubmitInteraction,
   TextInputBuilder,
   TextInputStyle,
-} from "discord.js";
-
-import { sdk } from "fetus";
-import { DISQUALIFY_PARTICIPANT } from "consts";
+} from 'discord.js';
+import { sdk } from 'fetus';
 import {
   createError,
   ErrorAction,
-  getModChannel,
-  getMemberNameById,
   getDMChannel,
-} from "utils";
+  getMemberNameById,
+  getModChannel,
+} from 'utils';
 
 const raceIdRegex = new RegExp(/(?<=raceid_)(.*)(?=-)/gim);
 const memberIdRegex = new RegExp(/(?<=memberid_)(.*)/gim);
 
-const DISQUALIFICATION_REASON = "DISQUALIFICATION_REASON";
+const DISQUALIFICATION_REASON = 'DISQUALIFICATION_REASON';
 
 export const raceDisqualify = async (
   interaction: ButtonInteraction,
@@ -35,17 +34,17 @@ export const raceDisqualify = async (
     const memberId = buttonId.match(memberIdRegex)?.[0] ?? null;
 
     if (!raceId || !memberId)
-      throw "Something went wrong. Just try again, it should work this time.";
+      throw 'Something went wrong. Just try again, it should work this time.';
 
     const modal = new ModalBuilder()
-      .setTitle("Are you sure you want to do that?")
+      .setTitle('Are you sure you want to do that?')
       .setCustomId(
         `${DISQUALIFY_PARTICIPANT}-raceid_${raceId}-memberid_${memberId}`,
       );
     const textInput = new TextInputBuilder()
       .setMinLength(1)
       .setCustomId(DISQUALIFICATION_REASON)
-      .setLabel("Reason of disqualification")
+      .setLabel('Reason of disqualification')
       .setStyle(TextInputStyle.Short);
     const actionRow = [new ActionRowBuilder().addComponents(textInput)];
 
@@ -66,17 +65,17 @@ export const raceDisqualifyModal = async (
   try {
     const modalId = interaction.customId.toLowerCase();
     const disqualificationReason =
-      interaction.fields.getTextInputValue(DISQUALIFICATION_REASON) ?? "—";
+      interaction.fields.getTextInputValue(DISQUALIFICATION_REASON) ?? '—';
     const raceExec = modalId.match(raceIdRegex);
     const memberExec = modalId.match(memberIdRegex);
     const raceId = raceExec?.[0] ?? null;
     const memberId = memberExec?.[0] ?? null;
 
     if (!raceId || !memberId)
-      throw "Something went wrong. Just try again, it should work this time.";
+      throw 'Something went wrong. Just try again, it should work this time.';
 
     const race = await sdk.getRaceById({ raceId });
-    const raceName = race?.name ?? "UNKNOWN RACE";
+    const raceName = race?.name ?? 'UNKNOWN RACE';
     const memberName = getMemberNameById(memberId) ?? memberId;
 
     const { acknowledged } = await sdk.updateRaceByParticipantId({
@@ -88,7 +87,7 @@ export const raceDisqualifyModal = async (
         disqualifiedBy: interaction.user.id,
       },
     });
-    if (!acknowledged) throw "Could not disqualify this user.";
+    if (!acknowledged) throw 'Could not disqualify this user.';
 
     getModChannel(true)?.send(
       getErrorEmbed(
@@ -115,17 +114,17 @@ export const raceDisqualifyModal = async (
       fields: [
         ...(originalEmbed?.fields ?? []),
         {
-          name: "⛔ Disqualification reason",
+          name: '⛔ Disqualification reason',
           value: `_${disqualificationReason}_`,
           inline: false,
         },
         {
-          name: "⛔ Disqualified by",
+          name: '⛔ Disqualified by',
           value: `<@${interaction.user.id}>`,
           inline: true,
         },
         {
-          name: "⛔ Disqualification date",
+          name: '⛔ Disqualification date',
           value: new Date().toLocaleString(),
           inline: true,
         },

@@ -1,12 +1,8 @@
-import React from 'react';
-import { useNavigate } from 'react-router';
 import { LogMemberJoin, Member } from '@masochistme/sdk/dist/v1/types';
-
-import { useAllMembers } from 'sdk';
+import { Icon, Size } from 'components';
 import { MemberAvatar } from 'containers';
-import { Icon } from 'components';
-import { Size } from 'components';
-
+import { useNavigate } from 'react-router';
+import { useAllMembers } from 'sdk';
 import { HistoryLog } from '.';
 
 type Props = {

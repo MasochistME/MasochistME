@@ -1,5 +1,5 @@
-import React from 'react';
 import { Flex, Spinner } from 'components';
+import React from 'react';
 
 type Props = { title?: React.ReactNode };
 export const Loader = ({ title }: Props) => {

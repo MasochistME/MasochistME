@@ -1,10 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
-import { MemberBadge, Game } from '@masochistme/sdk/dist/v1/types';
-
-import { useAllGames, useBadges, useMemberBadges } from 'sdk';
-import { BadgeTile } from 'containers';
+import { Game, MemberBadge } from '@masochistme/sdk/dist/v1/types';
 import { Flex, Warning } from 'components';
+import { BadgeTile } from 'containers';
+import { useAllGames, useBadges, useMemberBadges } from 'sdk';
+import styled from 'styled-components';
 
 type Props = { memberId: string };
 

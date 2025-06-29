@@ -1,11 +1,9 @@
+import { Badge } from '@masochistme/sdk/dist/v1/types';
+import { QueryBoundary, Size, Skeleton, Tooltip } from 'components';
+import { BadgeTooltip, CommonProps } from 'containers';
 import React from 'react';
 import styled from 'styled-components';
-import { Badge } from '@masochistme/sdk/dist/v1/types';
-
-import { BadgeTooltip, CommonProps } from 'containers';
-import { QueryBoundary, Size, Skeleton } from 'components';
 import { ColorTokens, useTheme } from 'styles';
-import { Tooltip } from 'components';
 import { getBadgeThumbnail } from 'utils';
 
 type Props = CommonProps & {

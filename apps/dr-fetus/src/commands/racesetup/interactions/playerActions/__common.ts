@@ -1,14 +1,13 @@
+import { Race, RaceScoreBased, RaceType } from '@masochistme/sdk/dist/v1/types';
+import { RaceButton } from 'consts';
 import {
-  ButtonBuilder,
-  ButtonStyle,
   ActionRowBuilder,
   APIEmbed,
   APIEmbedField,
+  ButtonBuilder,
+  ButtonStyle,
 } from 'discord.js';
-import { Race, RaceType, RaceScoreBased } from '@masochistme/sdk/dist/v1/types';
-
-import { RaceButton } from 'consts';
-import { getDiscordTimestamp, cenzor } from 'utils';
+import { cenzor, getDiscordTimestamp } from 'utils';
 
 export const isRaceInGracePeriod = (race: Race) =>
   !race.isDone && !race.isActive;

@@ -1,14 +1,12 @@
+import { Button, FilterBar, Flex } from 'components';
+import { TabDict } from 'configuration/tabs';
+import { Section, SectionProps, SubPage } from 'containers';
+import { BadgeView, useActiveTab, useToggleView } from 'hooks';
+import { t } from 'i18n';
 import { useMemo } from 'react';
 import styled from 'styled-components';
-
-import { useActiveTab, BadgeView, useToggleView } from 'hooks';
-import { TabDict } from 'configuration/tabs';
-import { Button, FilterBar, Flex } from 'components';
-import { SubPage, Section, SectionProps } from 'containers';
-
 import { BadgesTableView } from './BadgesTableView';
 import { BadgesTileView } from './BadgesTileView';
-import { t } from 'i18n';
 
 export const TabBadges = (): JSX.Element => {
   useActiveTab(TabDict.BADGES);

@@ -1,9 +1,8 @@
-import { ObjectId } from 'mongodb';
-import { Request, Response } from 'express';
 import { Featured } from '@masochistme/sdk/dist/v1/types';
-
-import { log } from 'helpers/log';
 import { mongoInstance } from 'api';
+import { Request, Response } from 'express';
+import { log } from 'helpers/log';
+import { ObjectId } from 'mongodb';
 
 /**
  * Deletes a featured object with a given featured object ID.

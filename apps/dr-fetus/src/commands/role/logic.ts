@@ -1,4 +1,4 @@
-import { getSuccessEmbed, DiscordInteraction } from "arcybot";
+import { DiscordInteraction, getSuccessEmbed } from "arcybot";
 import { createError, ErrorAction } from "utils";
 import { Options } from "./builder";
 

@@ -1,12 +1,9 @@
-import React from 'react';
-import { orderBy } from 'lodash';
-import styled from 'styled-components';
 import { MemberGame, TierId } from '@masochistme/sdk/dist/v1/types';
-
+import { ErrorFallback, Flex, QueryBoundary, Skeleton } from 'components';
+import { orderBy } from 'lodash';
 import { useCuratedGames, useMemberGames } from 'sdk';
-import { media, useTheme, ColorTokens } from 'styles';
-import { Flex, Skeleton, QueryBoundary, ErrorFallback } from 'components';
-
+import styled from 'styled-components';
+import { ColorTokens, media, useTheme } from 'styles';
 import { MemberLeaderboardsGame } from './MemberLeaderboardsGame';
 
 type Props = {

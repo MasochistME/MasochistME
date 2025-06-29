@@ -1,11 +1,10 @@
 import axios, { AxiosResponse } from 'axios';
-
 import {
-  RacePlayer,
-  Sort,
-  ResponseError,
-  RacePlayerScore,
-  RacePlayerTime,
+    RacePlayer,
+    RacePlayerScore,
+    RacePlayerTime,
+    ResponseError,
+    Sort,
 } from 'v1/types';
 
 /**

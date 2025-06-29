@@ -1,7 +1,6 @@
 /**
  * @module Games
  */
-
 import { WithId } from 'mongodb';
 import { TierId } from 'v1/types/Tier';
 

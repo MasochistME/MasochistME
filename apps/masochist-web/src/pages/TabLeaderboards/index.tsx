@@ -1,25 +1,22 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
 import { Leaderboards } from '@masochistme/sdk/dist/v1/types';
-
-import { useAppContext } from 'context';
-import { useMembers, useLeaderboardsMembers } from 'sdk';
-import { useActiveTab, useContextualRouting } from 'hooks';
-import { TabDict } from 'configuration/tabs';
-import { SubPage, Section, SectionProps } from 'containers';
 import {
-  Flex,
-  QueryBoundary,
-  Loader,
-  Skeleton,
-  ErrorFallback,
+    ErrorFallback,
+    Flex,
+    Loader,
+    QueryBoundary,
+    Skeleton,
 } from 'components';
-
-import { LeaderboardsFilterBar } from './LeaderboardsFilterBar';
-import { LeaderboardsMember } from './LeaderboardsMember';
+import { TabDict } from 'configuration/tabs';
+import { Section, SectionProps, SubPage } from 'containers';
+import { useAppContext } from 'context';
+import { useActiveTab, useContextualRouting } from 'hooks';
+import { Link } from 'react-router-dom';
+import { useLeaderboardsMembers, useMembers } from 'sdk';
+import styled from 'styled-components';
 import { curatorURL } from 'utils';
 import { TimePeriod } from 'utils/getTimePeriod';
+import { LeaderboardsFilterBar } from './LeaderboardsFilterBar';
+import { LeaderboardsMember } from './LeaderboardsMember';
 
 export const TabLeaderboards = (): JSX.Element => {
   useActiveTab(TabDict.LEADERBOARDS);

@@ -1,12 +1,10 @@
-import React from 'react';
-import styled from 'styled-components';
-
-import { useTheme, ColorTokens } from 'styles';
-import { ErrorFallback, Flex, Loader, Modal, QueryBoundary } from 'components';
 import { Award } from '@masochistme/sdk/dist/v1/types';
-import { ModalAwardHeader } from './ModalAwardHeader';
-import { ModalAwardChild } from './ModalAwardChild';
+import { ErrorFallback, Flex, Loader, Modal, QueryBoundary } from 'components';
 import { useAward } from 'sdk';
+import styled from 'styled-components';
+import { ColorTokens, useTheme } from 'styles';
+import { ModalAwardChild } from './ModalAwardChild';
+import { ModalAwardHeader } from './ModalAwardHeader';
 
 type Props = {
   awardId: string;

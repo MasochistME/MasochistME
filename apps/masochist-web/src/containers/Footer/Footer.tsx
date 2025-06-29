@@ -1,13 +1,10 @@
-import React from 'react';
-import styled from 'styled-components';
-
-import { Flex } from 'components';
-import { media, useTheme, ColorTokens } from 'styles';
+import { Flex, Size } from 'components';
 import { ButtonsSocialMedia } from 'containers';
-import { Size } from 'components';
-import { Link } from 'react-router-dom';
 import { useAppContext } from 'context';
 import { t } from 'i18n';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { ColorTokens, media, useTheme } from 'styles';
 
 export const Footer = () => {
   const { colorTokens } = useTheme();

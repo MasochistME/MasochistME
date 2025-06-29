@@ -1,21 +1,19 @@
-import React, { useState, useMemo } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import styled from 'styled-components';
-
-import { useMemberLeaderboardsSummary } from 'hooks';
-import { media, useTheme, ColorTokens } from 'styles';
-import { TimePeriod } from 'utils/getTimePeriod';
-import { MemberAvatar } from 'containers';
-import { Flex, Button, Size } from 'components';
-
-import { LeaderboardsMemberPoints } from './LeaderboardsMemberPoints';
-import {
-  LeaderboardsMemberIconPatron,
-  LeaderboardsMemberIconPrivate,
-  LeaderboardsMemberIconOutdated,
-  LeaderboardsMemberIconDummy,
-} from './LeaderboardsMemberIcons';
+import { Button, Flex, Size } from 'components';
 import { Variant } from 'components/Button/types';
+import { MemberAvatar } from 'containers';
+import { useMemberLeaderboardsSummary } from 'hooks';
+import React, { useMemo, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import { ColorTokens, media, useTheme } from 'styles';
+import { TimePeriod } from 'utils/getTimePeriod';
+import {
+    LeaderboardsMemberIconDummy,
+    LeaderboardsMemberIconOutdated,
+    LeaderboardsMemberIconPatron,
+    LeaderboardsMemberIconPrivate,
+} from './LeaderboardsMemberIcons';
+import { LeaderboardsMemberPoints } from './LeaderboardsMemberPoints';
 
 type Props = {
   steamId: string;

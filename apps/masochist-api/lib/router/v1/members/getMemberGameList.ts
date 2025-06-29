@@ -1,10 +1,9 @@
-import { Request, Response } from 'express';
-import { MemberGame, Game } from '@masochistme/sdk/dist/v1/types';
 import { MemberGameListParams } from '@masochistme/sdk/dist/v1/api/members';
-
-import { log } from 'helpers/log';
+import { Game, MemberGame } from '@masochistme/sdk/dist/v1/types';
 import { mongoInstance } from 'api';
+import { Request, Response } from 'express';
 import { sortCollection } from 'helpers/db';
+import { log } from 'helpers/log';
 
 /**
  * Returns a list of all games owned by a single member.

@@ -1,19 +1,17 @@
-import React from 'react';
-import styled from 'styled-components';
 import { RaceType } from '@masochistme/sdk/dist/v1/types';
-
-import { useRaceById } from 'sdk';
 import {
-  ErrorFallback,
-  Flex,
-  Icon,
-  QueryBoundary,
-  Size,
-  Skeleton,
-  Spinner,
+    ErrorFallback,
+    Flex,
+    Icon,
+    QueryBoundary,
+    Size,
+    Skeleton,
+    Spinner,
 } from 'components';
-import { getRaceTypeIcon } from 'utils';
 import { t } from 'i18n';
+import { useRaceById } from 'sdk';
+import styled from 'styled-components';
+import { getRaceTypeIcon } from 'utils';
 
 type Props = {
   raceId?: string | null;

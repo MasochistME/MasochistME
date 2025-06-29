@@ -1,23 +1,22 @@
-import { useState } from 'react';
 import { Member, SeasonLeaderboardEntry } from '@masochistme/sdk/dist/v1/types';
-import styled from 'styled-components';
-
 import {
-  Button,
-  ErrorFallback,
-  Flex,
-  Icon,
-  QueryBoundary,
-  Size,
-  Table,
-  TableCell,
-  TableColumn,
-  Tooltip,
+    Button,
+    ErrorFallback,
+    Flex,
+    Icon,
+    QueryBoundary,
+    Size,
+    Table,
+    TableCell,
+    TableColumn,
+    Tooltip,
 } from 'components';
 import { WinnerLink } from 'containers';
-import { useCuratorMembers, useSeasonLeaderboards } from 'sdk';
-import { ModalParticipant } from './ModalParticipant';
 import { LocaleKey, t } from 'i18n';
+import { useState } from 'react';
+import { useCuratorMembers, useSeasonLeaderboards } from 'sdk';
+import styled from 'styled-components';
+import { ModalParticipant } from './ModalParticipant';
 
 const Columns: Record<string, LocaleKey> = {
   PLACE: 'season.ranking.column.place',

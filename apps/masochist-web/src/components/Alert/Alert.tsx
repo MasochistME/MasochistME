@@ -1,6 +1,6 @@
-import React from 'react';
 import { Snackbar } from '@mui/material';
-import MuiAlert, { AlertProps, AlertColor } from '@mui/material/Alert';
+import MuiAlert, { AlertColor, AlertProps } from '@mui/material/Alert';
+import React from 'react';
 
 type Props = {
   message: string;

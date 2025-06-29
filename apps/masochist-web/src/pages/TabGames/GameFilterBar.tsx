@@ -1,24 +1,23 @@
-import React, { useMemo, useState } from 'react';
-import styled from 'styled-components';
 import { Tier } from '@masochistme/sdk/dist/v1/types';
-
-import { media } from 'styles';
-import { useAppContext } from 'context';
 import {
-  Button,
-  Checkbox,
-  FilterBar,
-  Flex,
-  IconType,
-  Input,
-  QueryBoundary,
-  Slider,
-  Spinner,
+    Button,
+    Checkbox,
+    FilterBar,
+    Flex,
+    IconType,
+    Input,
+    QueryBoundary,
+    Slider,
+    Spinner,
 } from 'components';
-import { useActiveTab, GameView, useLoadTiers, useDebounce } from 'hooks';
 import { TabDict } from 'configuration/tabs';
-import { useTiers } from 'sdk';
+import { useAppContext } from 'context';
+import { GameView, useActiveTab, useDebounce, useLoadTiers } from 'hooks';
 import { t } from 'i18n';
+import { useMemo, useState } from 'react';
+import { useTiers } from 'sdk';
+import styled from 'styled-components';
+import { media } from 'styles';
 
 const DEFAULT_PRICES = [0, 1000];
 

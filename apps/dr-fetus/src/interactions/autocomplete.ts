@@ -1,16 +1,14 @@
-import { AutocompleteInteraction } from "discord.js";
-
-import { badgeCreateAutocomplete } from "commands/badgecreate/interactions";
-import { badgeEditAutocomplete } from "commands/badgeedit/interactions";
-import { vidGameAutocomplete } from "commands/vid/interactions";
-
 import { badgeAutocomplete } from "commands/_interactions/badge";
 import { roleAutocomplete } from "commands/_interactions/role";
-import { raceAutocomplete } from "commands/race/interactions";
 import {
-  seasonInactiveAutocomplete,
-  seasonActiveAutocomplete,
+    seasonActiveAutocomplete,
+    seasonInactiveAutocomplete,
 } from "commands/_interactions/season";
+import { badgeCreateAutocomplete } from "commands/badgecreate/interactions";
+import { badgeEditAutocomplete } from "commands/badgeedit/interactions";
+import { raceAutocomplete } from "commands/race/interactions";
+import { vidGameAutocomplete } from "commands/vid/interactions";
+import { AutocompleteInteraction } from "discord.js";
 
 const BADGE_MEMBER_CMDS = ["badgegive", "badgerevoke"];
 const BADGE_EDIT_CMDS = ["badgedelete", "badgeedit"];

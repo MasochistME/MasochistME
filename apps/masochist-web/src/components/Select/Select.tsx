@@ -1,13 +1,13 @@
-import React from 'react';
 import {
-  Select as MuiSelect,
-  SelectChangeEvent,
-  MenuItem,
-  ListSubheader,
+    ListSubheader,
+    MenuItem,
+    Select as MuiSelect,
+    SelectChangeEvent,
 } from '@mui/material';
+import { t } from 'i18n';
+import React from 'react';
 import styled from 'styled-components';
 import { ColorTokens, useTheme } from 'styles';
-import { t } from 'i18n';
 
 type Option = {
   value: string;

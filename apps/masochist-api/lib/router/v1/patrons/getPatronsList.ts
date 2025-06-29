@@ -1,10 +1,9 @@
-import { Request, Response } from 'express';
-import { Patron } from '@masochistme/sdk/dist/v1/types';
 import { PatronListParams } from '@masochistme/sdk/dist/v1/api/patrons';
-
-import { log } from 'helpers/log';
-import { sortCollection } from 'helpers/db';
+import { Patron } from '@masochistme/sdk/dist/v1/types';
 import { mongoInstance } from 'api';
+import { Request, Response } from 'express';
+import { sortCollection } from 'helpers/db';
+import { log } from 'helpers/log';
 
 /**
  * Returns a list of all patrons stored in the database.

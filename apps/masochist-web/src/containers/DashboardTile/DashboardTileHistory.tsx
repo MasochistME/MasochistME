@@ -1,41 +1,39 @@
-import React from 'react';
-import { useNavigate } from 'react-router';
-import styled from 'styled-components';
 import {
-  Badge,
-  Log,
-  LogAchievementNumberChange,
-  LogBadgeCreate,
-  LogBadgeGet,
-  LogComplete,
-  LogCustom,
-  LogGameAdd,
-  LogGameRemove,
-  LogGameTierChange,
-  LogMemberJoin,
-  LogMemberLeave,
-  LogType,
-  Game,
-  Member,
+    Badge,
+    Game,
+    Log,
+    LogAchievementNumberChange,
+    LogBadgeCreate,
+    LogBadgeGet,
+    LogComplete,
+    LogCustom,
+    LogGameAdd,
+    LogGameRemove,
+    LogGameTierChange,
+    LogMemberJoin,
+    LogMemberLeave,
+    LogType,
+    Member,
 } from '@masochistme/sdk/dist/v1/types';
-
-import { useBadges, useLogs, useTiers, useAllMembers, useAllGames } from 'sdk';
-import { media } from 'styles';
-import { getTierIcon } from 'utils';
+import {
+    ErrorFallback,
+    Flex,
+    Icon,
+    IconType,
+    QueryBoundary,
+    Size,
+    Skeleton,
+} from 'components';
 import { LogDictionary } from 'configuration';
 import { Section, SectionProps } from 'containers';
-import {
-  Flex,
-  Icon,
-  IconType,
-  Skeleton,
-  Size,
-  QueryBoundary,
-  ErrorFallback,
-} from 'components';
-
-import { LogCompact } from './components';
 import { t } from 'i18n';
+import React from 'react';
+import { useNavigate } from 'react-router';
+import { useAllGames, useAllMembers, useBadges, useLogs, useTiers } from 'sdk';
+import styled from 'styled-components';
+import { media } from 'styles';
+import { getTierIcon } from 'utils';
+import { LogCompact } from './components';
 
 const NUMBER_OF_LOGS = 15;
 

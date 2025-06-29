@@ -1,17 +1,16 @@
-import { Request, Response } from 'express';
-import {
-  GameLeaderboards,
-  Badge,
-  Game,
-  Member,
-  MemberBadge,
-  MemberGame,
-  Tier,
-} from '@masochistme/sdk/dist/v1/types';
 import { LeaderboardsGamesListParams } from '@masochistme/sdk/dist/v1/api/leaderboards';
-
-import { log } from 'helpers/log';
+import {
+    Badge,
+    Game,
+    GameLeaderboards,
+    Member,
+    MemberBadge,
+    MemberGame,
+    Tier,
+} from '@masochistme/sdk/dist/v1/types';
 import { mongoInstance } from 'api';
+import { Request, Response } from 'express';
+import { log } from 'helpers/log';
 
 /**
  * Returns MasochistME leaderboards.

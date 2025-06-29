@@ -1,9 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
 import { Award } from '@masochistme/sdk/dist/v1/types';
-
 import { Flex, Size, Tooltip } from 'components';
 import { AwardThumbnail } from 'containers/AwardThumbnail/AwardThumbnail';
+import React from 'react';
+import styled from 'styled-components';
 
 type Props = {
   award: Award;

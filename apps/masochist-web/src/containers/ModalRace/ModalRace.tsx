@@ -1,9 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
-
-import { useTheme, ColorTokens } from 'styles';
 import { Flex, Modal } from 'components';
-
+import styled from 'styled-components';
+import { ColorTokens, useTheme } from 'styles';
 import { ModalRaceHeader } from './ModalRaceHeader';
 import { ModalRaceLeaderboards } from './ModalRaceLeaderboards';
 

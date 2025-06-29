@@ -1,8 +1,6 @@
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 import styled from 'styled-components';
-
-import { ColorTokens } from 'styles';
-import { useTheme } from 'styles';
+import { ColorTokens, useTheme } from 'styles';
 
 type Option = {
   label: string;

@@ -1,20 +1,19 @@
-import { useMemo } from 'react';
-import styled from 'styled-components';
-
-import { useCandidateSummary, useTiers } from 'sdk';
-import { StatBlock } from 'containers';
 import {
-  ErrorFallback,
-  Flex,
-  IconType,
-  Loader,
-  QueryBoundary,
+    ErrorFallback,
+    Flex,
+    IconType,
+    Loader,
+    QueryBoundary,
 } from 'components';
-import { ColorMap } from 'utils';
+import { StatBlock } from 'containers';
+import { CandidateTable } from 'pages/TabJoin/CandidateTable';
+import { useMemo } from 'react';
+import { useCandidateSummary, useTiers } from 'sdk';
+import styled from 'styled-components';
 import { ColorTokens, useTheme } from 'styles';
+import { ColorMap } from 'utils';
 import { CandidateHeader } from './CandidateHeader';
 import { CandidateVerdict } from './CandidateVerdict';
-import { CandidateTable } from 'pages/TabJoin/CandidateTable';
 
 type Props = {
   steamUrl: string;

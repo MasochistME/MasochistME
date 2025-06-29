@@ -1,12 +1,11 @@
+import { Member, PatronTier } from '@masochistme/sdk/dist/v1/types';
+import { BrokenImage, Flex, Size, Skeleton, Tooltip } from 'components';
+import { CommonProps } from 'containers';
+import { t } from 'i18n';
 import { useMemo } from 'react';
 import styled from 'styled-components';
-import { Member, PatronTier } from '@masochistme/sdk/dist/v1/types';
-
-import { t } from 'i18n';
+import { ColorTokens, useTheme } from 'styles';
 import { getAvatarFromHash } from 'utils';
-import { useTheme, ColorTokens } from 'styles';
-import { CommonProps } from 'containers';
-import { BrokenImage, Flex, Skeleton, Size, Tooltip } from 'components';
 
 type Props = CommonProps & {
   member?: Partial<Member>;

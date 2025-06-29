@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-
-import { TimePeriod, getTimePeriod } from 'utils/getTimePeriod';
 import { useAppContext } from 'context';
+import { TimePeriod, getTimePeriod } from 'utils/getTimePeriod';
 
 /**
  *

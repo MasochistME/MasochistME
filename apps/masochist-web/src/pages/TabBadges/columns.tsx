@@ -1,7 +1,6 @@
 import { Badge } from '@masochistme/sdk/dist/v1/types';
-import { useNavigate } from 'react-router';
-
 import { TableCell, TableLink } from 'components';
+import { useNavigate } from 'react-router';
 import { useCuratedGames } from 'sdk';
 import { useTheme } from 'styles';
 

@@ -1,11 +1,10 @@
-import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
-
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { AppContextProvider } from 'context';
+import { initializeLocale } from 'i18n';
+import { initializeDayJS } from 'initialize/initializeDayJS';
+import { initializeSentry } from 'initialize/initializeSentry';
 import { useTheme } from 'styles';
 import GlobalStyle from 'styles/globalStyles';
-import { initializeLocale } from 'i18n';
-import { initializeSentry } from 'initialize/initializeSentry';
-import { initializeDayJS } from 'initialize/initializeDayJS';
-import { AppContextProvider } from 'context';
 import { AppRoutes } from './AppRoutes';
 
 // import { ReactQueryDevtools } from '@tanstack/react-query-devtools';

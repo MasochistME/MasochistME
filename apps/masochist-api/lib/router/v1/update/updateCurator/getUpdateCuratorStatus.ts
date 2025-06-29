@@ -1,6 +1,5 @@
-import { Request, Response } from 'express';
-
 import { mongoInstance } from 'api';
+import { Request, Response } from 'express';
 import { statusCurator } from '.';
 
 export const getUpdateCuratorStatus = async (

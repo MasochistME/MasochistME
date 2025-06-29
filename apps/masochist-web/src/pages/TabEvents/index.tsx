@@ -1,14 +1,12 @@
+import { Flex } from 'components';
+import { TabDict } from 'configuration/tabs';
+import { SubPage, Tab, TabPanel, Tabs } from 'containers';
+import { useActiveTab, useContextualRouting } from 'hooks';
+import { t } from 'i18n';
 import React from 'react';
 import styled from 'styled-components';
-
-import { useActiveTab, useContextualRouting } from 'hooks';
-import { TabDict } from 'configuration/tabs';
-import { Flex } from 'components';
-import { SubPage, Tabs, Tab, TabPanel } from 'containers';
-
-import { RacesPage } from './Races';
 import { OtherEventsPage } from './OtherEvents';
-import { t } from 'i18n';
+import { RacesPage } from './Races';
 
 enum EventTabs {
   RACES = 'races',

@@ -1,18 +1,16 @@
-import React, { ReactNode } from 'react';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from 'react-router-dom';
-import styled from 'styled-components';
-
-import { media, useTheme, ColorTokens } from 'styles';
 import { ErrorFallback, Flex, Loader, QueryBoundary } from 'components';
 import { Footer, Header, Navigation, SubHeader } from 'containers';
-
 import { NotFound } from 'pages';
-
+import { TabEvents } from 'pages/TabEvents';
+import React, { ReactNode } from 'react';
+import {
+    Navigate,
+    Route,
+    BrowserRouter as Router,
+    Routes,
+} from 'react-router-dom';
+import styled from 'styled-components';
+import { ColorTokens, media, useTheme } from 'styles';
 import { TabBadges } from './pages/TabBadges';
 import { TabChangelog } from './pages/TabChangelog';
 import { TabGame } from './pages/TabGame';
@@ -23,7 +21,6 @@ import { TabJoin } from './pages/TabJoin';
 import { TabLeaderboards } from './pages/TabLeaderboards';
 import { TabProfile } from './pages/TabProfile';
 import { TabSupport } from './pages/TabSupport';
-import { TabEvents } from 'pages/TabEvents';
 
 export const AppRoutes = (): JSX.Element => {
   return (

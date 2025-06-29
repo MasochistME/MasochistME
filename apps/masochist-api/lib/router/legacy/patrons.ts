@@ -1,8 +1,7 @@
+import { PatreonTier, Patron } from '@masochistme/sdk/dist/legacy/types';
 import axios from 'axios';
-import { Patron, PatreonTier } from '@masochistme/sdk/dist/legacy/types';
-
-import { log } from 'helpers/log';
 import { connectToDb } from 'helpers/db';
+import { log } from 'helpers/log';
 
 /**
  * Returns all patrons no matter the tier.

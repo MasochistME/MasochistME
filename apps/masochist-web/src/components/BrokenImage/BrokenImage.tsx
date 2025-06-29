@@ -1,10 +1,8 @@
-import styled from 'styled-components';
-
 import { Size } from 'components';
 import { t } from 'i18n';
-
-import { Icon } from '../Icon';
+import styled from 'styled-components';
 import { Flex } from '../Flex';
+import { Icon } from '../Icon';
 import { Tooltip } from '../Tooltip';
 
 type Props = {

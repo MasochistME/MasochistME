@@ -1,7 +1,6 @@
+import { Button, IconType, Size, Slider } from 'components';
 import React from 'react';
 import styled from 'styled-components';
-
-import { Button, IconType, Size, Slider } from 'components';
 import { ColorTokens, useTheme } from 'styles';
 
 type Props = {

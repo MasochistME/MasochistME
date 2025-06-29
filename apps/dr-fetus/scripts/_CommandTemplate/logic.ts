@@ -1,8 +1,7 @@
-import { getSuccessEmbed, DiscordInteraction } from "arcybot";
+import { DiscordInteraction, getSuccessEmbed } from 'arcybot';
 // @ts-ignore:next-line
-import { createError, ErrorAction } from "utils";
-
-import { Options } from "./builder";
+import { createError, ErrorAction } from 'utils';
+import { Options } from './builder';
 
 /**
  * Describe your "template" command here.
@@ -26,7 +25,7 @@ export const template = async (
   try {
     interaction.editReply(
       getSuccessEmbed(
-        "Success",
+        'Success',
         `Your command worked! ${stringoption} + ${numberoption}`,
       ),
     );

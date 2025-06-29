@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
 import { Featured } from '@masochistme/sdk/dist/v1/types';
-import styled from 'styled-components';
-
-import { media } from 'styles';
-import { useFeatured } from 'sdk';
-import { chooseRandomIndex } from 'utils';
-import { useActiveTab } from 'hooks';
-import { TabDict } from 'configuration/tabs';
 import { Flex, QueryBoundary } from 'components';
-import { SubPage, DashboardTile } from 'containers';
+import { TabDict } from 'configuration/tabs';
+import { DashboardTile, SubPage } from 'containers';
+import { useActiveTab } from 'hooks';
+import { useEffect, useState } from 'react';
+import { useFeatured } from 'sdk';
+import styled from 'styled-components';
+import { media } from 'styles';
+import { chooseRandomIndex } from 'utils';
 
 export enum SectionMap {
   WELCOME = 'welcome',

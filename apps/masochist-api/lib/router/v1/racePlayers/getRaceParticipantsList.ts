@@ -1,10 +1,9 @@
-import { Request, Response } from 'express';
-import { RacePlayer } from '@masochistme/sdk/dist/v1/types';
 import { RaceParticipantsListParams } from '@masochistme/sdk/dist/v1/api/racePlayers';
-
-import { log } from 'helpers/log';
+import { RacePlayer } from '@masochistme/sdk/dist/v1/types';
 import { mongoInstance } from 'api';
+import { Request, Response } from 'express';
 import { sortCollection } from 'helpers/db';
+import { log } from 'helpers/log';
 
 /**
  * Returns a list of all participants of a race.

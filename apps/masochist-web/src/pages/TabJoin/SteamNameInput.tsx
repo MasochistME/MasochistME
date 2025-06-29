@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { Button, Input, Size } from 'components';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
-
-import { Button, Input, Size } from 'components';
-import { useTheme, ColorTokens, media } from 'styles';
-
+import { ColorTokens, media, useTheme } from 'styles';
 import { validateSteamUrl } from './utils';
 
 type Props = {

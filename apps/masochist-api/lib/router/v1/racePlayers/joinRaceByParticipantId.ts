@@ -1,10 +1,9 @@
-import { ObjectId } from 'mongodb';
-import { Request, Response } from 'express';
-import { Race, RacePlayer, RaceType } from '@masochistme/sdk/dist/v1/types';
 import { SCORE_RACE_WARNINGS } from '@masochistme/sdk/dist/v1';
-
-import { log } from 'helpers/log';
+import { Race, RacePlayer, RaceType } from '@masochistme/sdk/dist/v1/types';
 import { mongoInstance } from 'api';
+import { Request, Response } from 'express';
+import { log } from 'helpers/log';
+import { ObjectId } from 'mongodb';
 
 export const joinRaceByParticipantId = async (
   req: Request,

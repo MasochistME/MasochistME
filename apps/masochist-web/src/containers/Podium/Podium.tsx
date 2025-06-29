@@ -1,7 +1,6 @@
 import { RacePlayer } from '@masochistme/sdk/dist/v1/types';
 import styled from 'styled-components';
 import { media } from 'styles';
-
 import { PodiumItem } from './PodiumItem';
 
 type Props = {

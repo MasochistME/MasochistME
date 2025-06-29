@@ -1,7 +1,6 @@
 import Tippy from '@tippyjs/react/headless';
 import styled from 'styled-components';
-
-import { media, useTheme, ColorTokens } from 'styles';
+import { ColorTokens, media, useTheme } from 'styles';
 import { Flex } from '../Flex';
 
 type Props = {

@@ -1,17 +1,16 @@
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-
-import { dedupArray, stringCompare } from 'utils';
-import { useBadges, useCuratedGames, useTiers } from 'sdk';
 import {
-  ErrorFallback,
-  Flex,
-  Icon,
-  IconType,
-  QueryBoundary,
-  Skeleton,
+    ErrorFallback,
+    Flex,
+    Icon,
+    IconType,
+    QueryBoundary,
+    Skeleton,
 } from 'components';
 import { BadgeTile, Section } from 'containers';
+import { Link } from 'react-router-dom';
+import { useBadges, useCuratedGames, useTiers } from 'sdk';
+import styled from 'styled-components';
+import { dedupArray, stringCompare } from 'utils';
 
 export const BadgesTileView = () => (
   <QueryBoundary

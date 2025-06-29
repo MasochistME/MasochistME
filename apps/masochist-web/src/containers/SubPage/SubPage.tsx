@@ -1,8 +1,7 @@
-import styled from 'styled-components';
-
-import { useScrollToLocation } from 'hooks';
-import { media } from 'styles';
 import { Flex } from 'components';
+import { useScrollToLocation } from 'hooks';
+import styled from 'styled-components';
+import { media } from 'styles';
 
 type Props = {
   children: React.ReactNode;

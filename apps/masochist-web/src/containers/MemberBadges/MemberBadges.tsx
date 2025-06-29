@@ -1,9 +1,7 @@
-import React from 'react';
 
-import { useMemberBadges, useBadges } from 'sdk';
+import { Flex, QueryBoundary, Size, Spinner } from 'components';
 import { BadgeThumbnail } from 'containers';
-import { Flex, QueryBoundary, Spinner } from 'components';
-import { Size } from 'components';
+import { useBadges, useMemberBadges } from 'sdk';
 
 type Props = {
   size?: Size;

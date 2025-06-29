@@ -1,11 +1,10 @@
 import axios, { AxiosResponse } from 'axios';
 import { UpdateResult } from 'mongodb';
-
 import {
-	RacePlayer,
-	RacePlayerScore,
-	RacePlayerTime,
-	ResponseError,
+    RacePlayer,
+    RacePlayerScore,
+    RacePlayerTime,
+    ResponseError,
 } from 'v1/types';
 
 /**

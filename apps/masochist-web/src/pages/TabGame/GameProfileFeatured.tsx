@@ -1,11 +1,9 @@
-import React, { useMemo } from 'react';
-import styled from 'styled-components';
 import { FeaturedType } from '@masochistme/sdk/dist/v1/types';
-
-import { useFeaturedFiltered } from 'sdk';
 import { Flex, QueryBoundary, Spinner } from 'components';
-
 import { FeaturedNews, FeaturedVideo } from 'containers/Featured';
+import { useMemo } from 'react';
+import { useFeaturedFiltered } from 'sdk';
+import styled from 'styled-components';
 import { ColorTokens, useTheme } from 'styles';
 
 type Props = { gameId: number };

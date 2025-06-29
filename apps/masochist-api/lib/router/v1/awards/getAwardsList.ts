@@ -1,9 +1,8 @@
-import { Request, Response } from 'express';
-import { Award, AwardCategory } from '@masochistme/sdk/dist/v1/types';
 import { AwardsListParams } from '@masochistme/sdk/dist/v1/api/awards';
-
-import { log } from 'helpers/log';
+import { Award, AwardCategory } from '@masochistme/sdk/dist/v1/types';
 import { mongoInstance } from 'api';
+import { Request, Response } from 'express';
+import { log } from 'helpers/log';
 
 type AwardWithChildren = Omit<Award, 'children'> & {
   children: (Award | null)[];

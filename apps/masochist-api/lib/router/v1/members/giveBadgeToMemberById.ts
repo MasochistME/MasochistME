@@ -1,13 +1,12 @@
-import { Request, Response } from 'express';
 import {
-  Log,
-  LogBadgeGet,
-  LogType,
-  MemberBadge,
+    Log,
+    LogBadgeGet,
+    LogType,
+    MemberBadge,
 } from '@masochistme/sdk/dist/v1/types';
-
-import { log } from 'helpers/log';
 import { mongoInstance } from 'api';
+import { Request, Response } from 'express';
+import { log } from 'helpers/log';
 
 /**
  * Gives a badge with given badge ID to member with given member ID.

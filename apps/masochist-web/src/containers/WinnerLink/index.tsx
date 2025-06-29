@@ -1,11 +1,10 @@
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-
-import { useRaceById } from 'sdk';
-import { useMemberData } from 'hooks';
 import { Icon } from 'components';
 import { MemberAvatar } from 'containers/MemberAvatar';
+import { useMemberData } from 'hooks';
 import { t } from 'i18n';
+import { Link } from 'react-router-dom';
+import { useRaceById } from 'sdk';
+import styled from 'styled-components';
 
 type Props = {
   discordId?: string | null;

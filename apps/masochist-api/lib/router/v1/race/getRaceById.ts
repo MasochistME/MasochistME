@@ -1,12 +1,11 @@
-import { ObjectId, WithId } from 'mongodb';
-import { Request, Response } from 'express';
 import { Race, RacePlayer } from '@masochistme/sdk/dist/v1/types';
-
-import { log } from 'helpers/log';
 import { mongoInstance } from 'api';
+import { Request, Response } from 'express';
+import { log } from 'helpers/log';
+import { ObjectId, WithId } from 'mongodb';
 import {
-  getParticipantRaceScore,
-  sortPlayersByResult,
+    getParticipantRaceScore,
+    sortPlayersByResult,
 } from 'router/v1/race/__utils';
 
 export const getRaceById = async (

@@ -1,17 +1,15 @@
-import React from 'react';
-import styled from 'styled-components';
-import dayjs from 'dayjs';
-
-import { useFeaturedFiltered, useAllMembers } from 'sdk';
-import { useActiveTab } from 'hooks';
-import { TabDict } from 'configuration/tabs';
-import { Flex, Loader, QueryBoundary, ErrorFallback } from 'components';
-import { FeaturedNews, Section, SectionProps, SubPage } from 'containers';
 import {
-  FeaturedNews as TFeaturedNews,
-  FeaturedType,
-  Member,
+    FeaturedType,
+    Member,
+    FeaturedNews as TFeaturedNews,
 } from '@masochistme/sdk/dist/v1/types';
+import { ErrorFallback, Flex, Loader, QueryBoundary } from 'components';
+import { TabDict } from 'configuration/tabs';
+import { FeaturedNews, Section, SectionProps, SubPage } from 'containers';
+import dayjs from 'dayjs';
+import { useActiveTab } from 'hooks';
+import { useAllMembers, useFeaturedFiltered } from 'sdk';
+import styled from 'styled-components';
 
 type Post = {
   data: TFeaturedNews;

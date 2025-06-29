@@ -1,13 +1,11 @@
-import './instrument';
-
 import * as Sentry from '@sentry/node';
+import cors from 'cors';
 import * as dotenv from 'dotenv';
 import express from 'express';
-import cors from 'cors';
-
 import { MongoInstance } from 'helpers/db';
 import { log } from 'helpers/log';
 import { initializeDayJS } from 'initialize/initializeDayJS';
+import './instrument';
 
 // import { routerLegacy } from 'router/legacy';
 import { routerV1 } from 'router/v1';

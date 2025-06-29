@@ -1,5 +1,4 @@
 import * as dotenv from 'dotenv';
-
 import { SDK } from 'v1/sdk';
 import { RaceType } from 'v1/types';
 

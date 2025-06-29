@@ -1,22 +1,19 @@
-import React from 'react';
+import { Race } from '@masochistme/sdk/dist/v1/types';
+import {
+    Flex,
+    Icon,
+    Modal,
+    Size,
+    Table,
+    TableCell,
+    TableColumn,
+} from 'components';
+import { MemberAvatar } from 'containers';
+import { useRacesFromSeason } from 'hooks';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Race } from '@masochistme/sdk/dist/v1/types';
-
-import { useTheme, ColorTokens } from 'styles';
-import {
-  Flex,
-  Icon,
-  Modal,
-  Size,
-  Table,
-  TableCell,
-  TableColumn,
-} from 'components';
-import { useRacesFromSeason } from 'hooks';
-import { MemberAvatar } from 'containers';
+import { ColorTokens, useTheme } from 'styles';
 import { getRaceTypeIcon } from 'utils';
-
 import { SeasonSummary } from './SingleSeasonRanking';
 
 type Props = {

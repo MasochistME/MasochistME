@@ -1,7 +1,6 @@
-import { useMemo } from 'react';
 import { Tier } from '@masochistme/sdk/dist/v1/types';
-
-import { useTiers, useLeaderboardsMembers } from 'sdk';
+import { useMemo } from 'react';
+import { useLeaderboardsMembers, useTiers } from 'sdk';
 import { TimePeriod } from 'utils/getTimePeriod';
 
 export const useMemberLeaderboardsPoints = (

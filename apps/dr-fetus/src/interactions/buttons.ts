@@ -1,28 +1,27 @@
-import { ButtonInteraction } from 'discord.js';
-
 import {
-  REGISTRATION_REVIEW,
-  RACE_CONFIRMATION,
-  FEATURE_VIDEO,
-  RACE_DISQUALIFICATION,
-  RaceButton,
-} from 'consts';
-import { registrationReview } from 'commands/register/interactions';
-import {
-  racesetupConfirm,
-  racesetupJoin,
-  raceReveal,
-  raceStart,
-  raceFinish,
-  raceGiveUp,
-  raceDisqualify,
-  raceSendStartFormToParticipantMod,
+    raceDisqualify,
+    raceFinish,
+    raceGiveUp,
+    raceReveal,
+    raceSendStartFormToParticipantMod,
+    racesetupConfirm,
+    racesetupJoin,
+    raceStart,
 } from 'commands/racesetup/interactions';
+import {
+    raceRateDifficulty,
+    raceRateFun,
+} from 'commands/racesetup/interactions/playerActions/raceRate';
+import { registrationReview } from 'commands/register/interactions';
 import { featureVideo } from 'commands/vid/interactions';
 import {
-  raceRateDifficulty,
-  raceRateFun,
-} from 'commands/racesetup/interactions/playerActions/raceRate';
+    FEATURE_VIDEO,
+    RACE_CONFIRMATION,
+    RACE_DISQUALIFICATION,
+    RaceButton,
+    REGISTRATION_REVIEW,
+} from 'consts';
+import { ButtonInteraction } from 'discord.js';
 
 export const handleButtons = (interaction: ButtonInteraction) => {
   if (interaction.customId.includes(FEATURE_VIDEO)) {

@@ -1,12 +1,9 @@
-import React from 'react';
-import styled from 'styled-components';
-
-import { Section } from 'containers';
 import { Flex, Icon, Size } from 'components';
-
-import { GraphHoursPlayedTotal } from './GraphHoursPlayedTotal';
-import { GraphHoursPlayedCompleted } from './GraphHoursPlayedCompleted';
+import { Section } from 'containers';
+import styled from 'styled-components';
 import { GraphGamesCompleted } from './GraphGamesCompleted';
+import { GraphHoursPlayedCompleted } from './GraphHoursPlayedCompleted';
+import { GraphHoursPlayedTotal } from './GraphHoursPlayedTotal';
 // import { GraphCompletionTimeline } from './GraphCompletionTimeline';
 
 type Props = {

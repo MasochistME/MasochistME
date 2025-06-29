@@ -2,7 +2,6 @@
  * @module Races
  */
 
-import { TierId } from './Tier';
 
 /**
  * This is a type of a single object representing a single race rating

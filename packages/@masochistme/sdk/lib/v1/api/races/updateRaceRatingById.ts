@@ -1,6 +1,4 @@
 import axios, { AxiosResponse } from 'axios';
-import { UpdateResult } from 'mongodb';
-
 import { RaceRating, ResponseError } from 'v1/types';
 
 /**

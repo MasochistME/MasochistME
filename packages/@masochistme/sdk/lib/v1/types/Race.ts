@@ -1,7 +1,6 @@
 /**
  * @module Races
  */
-
 import { WithId } from 'mongodb';
 import { RacePlayer } from './RacePlayer';
 

@@ -1,9 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
-
 import { IconType } from 'assets/icons';
 import { Icon } from 'components/Icon';
-import { media, useTheme, ColorTokens } from 'styles';
+import React from 'react';
+import styled from 'styled-components';
+import { ColorTokens, media, useTheme } from 'styles';
 
 type Props<T extends string> = {
   query: T;

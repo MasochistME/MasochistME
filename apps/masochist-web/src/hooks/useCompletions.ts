@@ -1,6 +1,5 @@
+import { Game, Member, MemberGame } from '@masochistme/sdk/dist/v1/types';
 import { useMemo } from 'react';
-import { Member, MemberGame, Game } from '@masochistme/sdk/dist/v1/types';
-
 import { useCuratedGames, useCuratorMembers, useGameCompletions } from 'sdk';
 
 export type GameCompletion = Omit<

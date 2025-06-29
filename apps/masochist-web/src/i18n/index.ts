@@ -1,5 +1,5 @@
-import { Locale } from './locale';
 import enUS from './en-US.json';
+import { Locale } from './locale';
 
 export type LocaleKey = keyof typeof enUS;
 export enum AvailableLocales {

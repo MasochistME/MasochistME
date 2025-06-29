@@ -1,8 +1,7 @@
 import _orderBy from 'lodash/orderBy';
 import styled from 'styled-components';
 import { ColorTokens, useTheme } from 'styles';
-
-import { TableRow, Order } from './types';
+import { Order, TableRow } from './types';
 
 type Props<T extends string> = {
   rows: TableRow[][];

@@ -1,15 +1,13 @@
+import { LogMemberJoin, LogType } from '@masochistme/sdk/dist/v1/types';
+import { ErrorFallback, Flex, QueryBoundary, Size } from 'components';
+import { MemberAvatar, Section, SectionProps } from 'containers';
+import dayjs from 'dayjs';
+import { t } from 'i18n';
 import React from 'react';
 import { useNavigate } from 'react-router';
-import styled from 'styled-components';
-import dayjs from 'dayjs';
-import { LogMemberJoin, LogType } from '@masochistme/sdk/dist/v1/types';
-
-import { media } from 'styles';
 import { useCuratorMembers, useLogs } from 'sdk';
-import { MemberAvatar, Section, SectionProps } from 'containers';
-import { Flex, ErrorFallback, QueryBoundary } from 'components';
-import { Size } from 'components';
-import { t } from 'i18n';
+import styled from 'styled-components';
+import { media } from 'styles';
 
 const NUMBER_OF_MEMBERS = 10;
 

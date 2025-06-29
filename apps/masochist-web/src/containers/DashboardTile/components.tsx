@@ -1,8 +1,7 @@
+import { Flex, Icon, Size } from 'components';
 import React from 'react';
 import styled from 'styled-components';
-
-import { Flex, Icon, Size } from 'components';
-import { useTheme, ColorTokens } from 'styles';
+import { ColorTokens, useTheme } from 'styles';
 
 type Props = {
   children: React.ReactNode;

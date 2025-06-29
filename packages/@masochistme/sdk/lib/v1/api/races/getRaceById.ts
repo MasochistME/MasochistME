@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from 'axios';
-
 import { RaceWithParticipants, ResponseError } from 'v1/types';
 
 /**

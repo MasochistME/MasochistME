@@ -1,14 +1,11 @@
-import React from 'react';
-import styled from 'styled-components';
-import { orderBy } from 'lodash';
 import { PatreonTier } from '@masochistme/sdk/dist/v1/types';
-
-import { usePatreonTiers } from 'sdk';
-import { useActiveTab } from 'hooks';
-import { TabDict } from 'configuration/tabs';
 import { ErrorFallback, Flex, Loader, QueryBoundary } from 'components';
+import { TabDict } from 'configuration/tabs';
 import { Section, SectionProps, SubPage } from 'containers';
-
+import { useActiveTab } from 'hooks';
+import { orderBy } from 'lodash';
+import { usePatreonTiers } from 'sdk';
+import styled from 'styled-components';
 import { SupportTier } from './SupportTier';
 
 export const TabSupport = (): JSX.Element => {

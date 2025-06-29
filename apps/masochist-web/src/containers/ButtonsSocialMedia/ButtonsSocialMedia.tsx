@@ -1,13 +1,10 @@
-import React from 'react';
-import styled from 'styled-components';
-
-import { media } from 'styles';
-import { Flex, Button } from 'components';
-import { Size } from 'components';
-import { curatorURL } from 'utils';
+import { Button, Flex, Size } from 'components';
 import { Variant } from 'components/Button/types';
-import { useNavigate } from 'react-router';
 import { t } from 'i18n';
+import { useNavigate } from 'react-router';
+import styled from 'styled-components';
+import { media } from 'styles';
+import { curatorURL } from 'utils';
 
 type Props = {
   size?: Size;

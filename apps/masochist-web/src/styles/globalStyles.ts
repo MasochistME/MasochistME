@@ -1,7 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
-import { ColorTokens, AssetTokens } from './theme';
-
-import { fonts, sizes, border } from './vars/main';
+import { AssetTokens, ColorTokens } from './theme';
+import { border, fonts, sizes } from './vars/main';
 
 const GlobalStyle = createGlobalStyle<{
   colorTokens: ColorTokens;

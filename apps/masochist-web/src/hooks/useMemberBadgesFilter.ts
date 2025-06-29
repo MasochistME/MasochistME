@@ -1,5 +1,4 @@
-import { MemberBadge, Game } from '@masochistme/sdk/dist/v1/types';
-
+import { Game, MemberBadge } from '@masochistme/sdk/dist/v1/types';
 import { useAllGames, useBadges, useMemberBadges } from 'sdk';
 
 export const useMemberBadgesFilter = (memberId: string) => {

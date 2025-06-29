@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-
-import { Update, ResponseError } from 'v1/types';
+import { ResponseError, Update } from 'v1/types';
 
 /**
  * Get a curator update status.

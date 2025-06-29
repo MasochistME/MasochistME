@@ -1,6 +1,5 @@
 import { Switch as MUISwitch, SwitchProps } from '@mui/material';
 import styled from 'styled-components';
-
 import { ColorTokens, useTheme } from 'styles';
 
 type Props = SwitchProps & { colortokens: ColorTokens };

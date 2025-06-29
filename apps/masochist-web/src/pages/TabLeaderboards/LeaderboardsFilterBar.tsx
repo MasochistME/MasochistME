@@ -1,9 +1,8 @@
-import React from 'react';
 
-import { useAppContext } from 'context';
 import { FilterBar, Input, ToggleButtons } from 'components';
-import { TimePeriod } from 'utils/getTimePeriod';
+import { useAppContext } from 'context';
 import { t } from 'i18n';
+import { TimePeriod } from 'utils/getTimePeriod';
 
 type Props = {
   filter: TimePeriod;

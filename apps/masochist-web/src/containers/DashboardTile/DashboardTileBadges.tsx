@@ -1,13 +1,11 @@
-import React from 'react';
-import styled from 'styled-components';
 import { LogBadgeCreate, LogType } from '@masochistme/sdk/dist/v1/types';
-
-import { media } from 'styles';
-import { useBadges, useLogs } from 'sdk';
+import { ErrorFallback, Flex, QueryBoundary, Size } from 'components';
 import { BadgeThumbnail, Section, SectionProps } from 'containers';
-import { Flex, ErrorFallback, QueryBoundary } from 'components';
-import { Size } from 'components';
 import { t } from 'i18n';
+import React from 'react';
+import { useBadges, useLogs } from 'sdk';
+import styled from 'styled-components';
+import { media } from 'styles';
 
 const NUMBER_OF_BADGES = 5;
 

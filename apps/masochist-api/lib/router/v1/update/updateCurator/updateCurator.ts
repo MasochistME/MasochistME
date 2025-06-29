@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
-import { log } from 'helpers/log';
 import { hash } from 'helpers/hash';
-
+import { log } from 'helpers/log';
 import { updateCuratorLogic } from './logic';
 
 export const updateCurator = async (

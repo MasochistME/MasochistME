@@ -1,18 +1,16 @@
-import {
-  ButtonInteraction,
-  ModalSubmitInteraction,
-  ModalBuilder,
-  ActionRowBuilder,
-  TextInputBuilder,
-  TextInputStyle,
-} from 'discord.js';
 import { getInfoEmbed } from 'arcybot';
-
+import { RACE_GIVE_UP, RaceButton } from 'consts';
+import {
+    ActionRowBuilder,
+    ButtonInteraction,
+    ModalBuilder,
+    ModalSubmitInteraction,
+    TextInputBuilder,
+    TextInputStyle,
+} from 'discord.js';
 import { sdk } from 'fetus';
-import { RaceButton, RACE_GIVE_UP } from 'consts';
 import { createError, ErrorAction, getModChannel } from 'utils';
-
-import { getRaceStartEmbed, getRaceStartButtons } from './__common';
+import { getRaceStartButtons, getRaceStartEmbed } from './__common';
 import { raceRate } from './raceRate';
 
 const raceIdRegex = new RegExp(/(?<=raceid_)(.*)/gim);

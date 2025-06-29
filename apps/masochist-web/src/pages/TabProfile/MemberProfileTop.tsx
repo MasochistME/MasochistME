@@ -1,11 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
-
 import { PatreonTier, PatronTier } from '@masochistme/sdk/dist/v1/types';
-import { usePatreonTiers, useMemberLeaderboards } from 'sdk';
 import { ErrorFallback, Flex, Loader, QueryBoundary } from 'components';
-import { useTheme, ColorTokens } from 'styles';
-
+import { useMemberLeaderboards, usePatreonTiers } from 'sdk';
+import styled from 'styled-components';
+import { ColorTokens, useTheme } from 'styles';
 import { MemberProfileHeader } from './MemberProfileHeader';
 import { MemberProfileStats } from './MemberProfileStats';
 

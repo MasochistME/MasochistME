@@ -1,7 +1,6 @@
-import { useEffect } from 'react';
-
 import { useAppContext } from 'context';
 import { useLocalStorage } from 'hooks/useLocalStorage';
+import { useEffect } from 'react';
 
 export enum GameView {
   TILE = 'tiles',

@@ -1,12 +1,11 @@
-import styled from 'styled-components';
 import { Candidate } from '@masochistme/sdk/dist/v1/types';
-
 import { Flex, Icon, Size } from 'components';
+import styled from 'styled-components';
 import { ColorTokens, media, useTheme } from 'styles';
 import {
-  getAvatarFromHash,
-  getUserSteamUrl,
-  getHumanReadableDate,
+    getAvatarFromHash,
+    getHumanReadableDate,
+    getUserSteamUrl,
 } from 'utils';
 
 type Props = { candidate: Candidate };

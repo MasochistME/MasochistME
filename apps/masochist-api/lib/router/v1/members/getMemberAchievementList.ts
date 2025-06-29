@@ -1,10 +1,9 @@
-import { Request, Response } from 'express';
-import { MemberAchievement } from '@masochistme/sdk/dist/v1/types';
 import { MemberAchievementListParams } from '@masochistme/sdk/dist/v1/api/members';
-
-import { log } from 'helpers/log';
-import { sortCollection } from 'helpers/db';
+import { MemberAchievement } from '@masochistme/sdk/dist/v1/types';
 import { mongoInstance } from 'api';
+import { Request, Response } from 'express';
+import { sortCollection } from 'helpers/db';
+import { log } from 'helpers/log';
 
 /**
  * Returns a list of all achievements unlocked by a single member.

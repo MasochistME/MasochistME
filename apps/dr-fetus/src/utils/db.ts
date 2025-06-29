@@ -1,5 +1,5 @@
-import { MongoClient, Db } from "mongodb";
 import { log } from "arcybot";
+import { Db, MongoClient } from "mongodb";
 
 type DB = {
   symbol?: string;

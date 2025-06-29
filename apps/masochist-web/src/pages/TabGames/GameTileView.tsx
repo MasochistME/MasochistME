@@ -1,11 +1,9 @@
-import React from 'react';
-import styled from 'styled-components';
 import { Game, TierId } from '@masochistme/sdk/dist/v1/types';
-
-import { useCuratedGames } from 'sdk';
-import { useAppContext } from 'context';
-import { QueryBoundary, ErrorFallback } from 'components';
+import { ErrorFallback, QueryBoundary } from 'components';
 import { GameTile } from 'containers';
+import { useAppContext } from 'context';
+import { useCuratedGames } from 'sdk';
+import styled from 'styled-components';
 
 export const GameTileView = () => (
   <QueryBoundary

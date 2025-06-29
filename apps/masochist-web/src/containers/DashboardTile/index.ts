@@ -1,6 +1,6 @@
-import { DashboardTileFeatured } from './DashboardTileFeatured';
 import { DashboardTileBadges } from './DashboardTileBadges';
 import { DashboardTileDiscord } from './DashboardTileDiscord';
+import { DashboardTileFeatured } from './DashboardTileFeatured';
 import { DashboardTileGames } from './DashboardTileGames';
 import { DashboardTileHistory } from './DashboardTileHistory';
 import { DashboardTileMembers } from './DashboardTileMembers';

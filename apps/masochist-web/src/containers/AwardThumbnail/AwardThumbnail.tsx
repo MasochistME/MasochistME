@@ -1,5 +1,4 @@
 import { Award } from '@masochistme/sdk/dist/v1/types';
-
 import { QueryBoundary, Size, Skeleton } from 'components';
 import { AwardTooltip } from 'containers/AwardTooltip';
 import { CommonProps } from 'containers/CommonProps';

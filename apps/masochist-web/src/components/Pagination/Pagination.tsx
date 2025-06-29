@@ -1,7 +1,6 @@
 import { Flex } from 'components/Flex';
 import styled from 'styled-components';
-
-import { useTheme, ColorTokens } from 'styles';
+import { ColorTokens, useTheme } from 'styles';
 
 type Props = {
   isCompact?: boolean;

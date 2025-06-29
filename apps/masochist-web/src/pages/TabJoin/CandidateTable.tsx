@@ -1,12 +1,11 @@
 import { Candidate, CandidateGame } from '@masochistme/sdk/dist/v1/types';
-import styled from 'styled-components';
-
 import { Icon, Size, Table, TableCell, TableColumn } from 'components';
 import { GameThumbnail } from 'containers';
+import { useNavigate } from 'react-router';
 import { useTiers } from 'sdk';
+import styled from 'styled-components';
 import { useTheme } from 'styles';
 import { getTierIcon } from 'utils';
-import { useNavigate } from 'react-router';
 
 enum Columns {
   TIER = '',

@@ -1,7 +1,6 @@
 /**
  * @module Candidates
  */
-
 import { TierId } from './Tier';
 
 /**

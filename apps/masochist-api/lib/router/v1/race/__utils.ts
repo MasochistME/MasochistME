@@ -1,6 +1,5 @@
-import dayjs from 'dayjs';
 import { Race, RacePlayer, RaceType } from '@masochistme/sdk/dist/v1/types';
-
+import dayjs from 'dayjs';
 import { getTimestampFromDate } from 'helpers';
 
 /**

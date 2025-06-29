@@ -1,9 +1,9 @@
-import styled from 'styled-components';
 import { Award } from '@masochistme/sdk/dist/v1/types';
-import { ColorTokens, useTheme } from 'styles';
-import { Button, ErrorFallback, Flex, Icon, Size } from 'components';
+import { Button, ErrorFallback, Flex, Size } from 'components';
 import { AwardThumbnail } from 'containers/AwardThumbnail';
 import { useMemberAward } from 'hooks';
+import styled from 'styled-components';
+import { ColorTokens, useTheme } from 'styles';
 
 type Props = {
   award: Award;
