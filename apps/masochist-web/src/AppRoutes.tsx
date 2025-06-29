@@ -25,7 +25,7 @@ import { TabProfile } from './pages/TabProfile';
 import { TabSupport } from './pages/TabSupport';
 import { TabEvents } from 'pages/TabEvents';
 
-export const Routing = (): JSX.Element => {
+export const AppRoutes = (): JSX.Element => {
   return (
     <Router>
       <Layout>

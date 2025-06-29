@@ -6,6 +6,7 @@ import { initializeLocale } from 'i18n';
 import { initializeSentry } from 'initialize/initializeSentry';
 import { initializeDayJS } from 'initialize/initializeDayJS';
 import { AppContextProvider } from 'context';
+import { AppRoutes } from './AppRoutes';
 
 // import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
@@ -37,7 +38,7 @@ const Providers = () => {
     <QueryClientProvider client={queryClient}>
       {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       <GlobalStyle assetTokens={assetTokens} colorTokens={colorTokens} />
-      <App />
+      <AppRoutes />
     </QueryClientProvider>
   );
 };
