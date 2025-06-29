@@ -13,9 +13,9 @@
     "fetus:prod": "env ENV=prod npx tsx src/fetus.ts",
     "fetus:prod:watch": "env ENV=prod nodemon --exec npx tsx src/fetus.ts",
     "fetus": "node dist/fetus.js",
-    "start": "env ENV=prod node dist/fetus.js",
     "lint": "eslint --fix",
-    "test": "echo TODO"
+    "start": "env ENV=prod node dist/fetus.js"
+    
   },
   "eslintConfig": {
     "extends": [
