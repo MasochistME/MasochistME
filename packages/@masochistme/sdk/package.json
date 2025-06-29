@@ -16,7 +16,8 @@
     "build": "tsc && tsc-alias -p tsconfig.json",
     "build:sdk": "tsc && tsc-alias -p tsconfig.json",
     "docs": "typedoc",
-    "lint": "eslint --fix",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
     "semantic-release": "semantic-release"
   },
   "dependencies": {
