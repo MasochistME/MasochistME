@@ -1,12 +1,12 @@
 import { Race } from '@masochistme/sdk/dist/v1/types';
 import {
-    Flex,
-    Icon,
-    Modal,
-    Size,
-    Table,
-    TableCell,
-    TableColumn,
+  Flex,
+  Icon,
+  Modal,
+  Size,
+  Table,
+  TableCell,
+  TableColumn,
 } from 'components';
 import { MemberAvatar } from 'containers';
 import { useRacesFromSeason } from 'hooks';

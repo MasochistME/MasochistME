@@ -1,15 +1,15 @@
 import { Member, SeasonLeaderboardEntry } from '@masochistme/sdk/dist/v1/types';
 import {
-    Button,
-    ErrorFallback,
-    Flex,
-    Icon,
-    QueryBoundary,
-    Size,
-    Table,
-    TableCell,
-    TableColumn,
-    Tooltip,
+  Button,
+  ErrorFallback,
+  Flex,
+  Icon,
+  QueryBoundary,
+  Size,
+  Table,
+  TableCell,
+  TableColumn,
+  Tooltip,
 } from 'components';
 import { WinnerLink } from 'containers';
 import { LocaleKey, t } from 'i18n';

@@ -3,9 +3,9 @@ import { Flex, Icon, Size } from 'components';
 import styled from 'styled-components';
 import { ColorTokens, media, useTheme } from 'styles';
 import {
-    getAvatarFromHash,
-    getHumanReadableDate,
-    getUserSteamUrl,
+  getAvatarFromHash,
+  getHumanReadableDate,
+  getUserSteamUrl,
 } from 'utils';
 
 type Props = { candidate: Candidate };

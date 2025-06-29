@@ -1,7 +1,7 @@
 import {
-    FeaturedType,
-    Member,
-    FeaturedNews as TFeaturedNews,
+  FeaturedType,
+  Member,
+  FeaturedNews as TFeaturedNews,
 } from '@masochistme/sdk/dist/v1/types';
 import { ErrorFallback, Flex, Loader, QueryBoundary } from 'components';
 import { TabDict } from 'configuration/tabs';

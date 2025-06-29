@@ -1,9 +1,9 @@
 import {
-    ErrorFallback,
-    Flex,
-    IconType,
-    Loader,
-    QueryBoundary,
+  ErrorFallback,
+  Flex,
+  IconType,
+  Loader,
+  QueryBoundary,
 } from 'components';
 import { StatBlock } from 'containers';
 import { CandidateTable } from 'pages/TabJoin/CandidateTable';

@@ -1,14 +1,14 @@
 import { Tier } from '@masochistme/sdk/dist/v1/types';
 import {
-    Button,
-    Checkbox,
-    FilterBar,
-    Flex,
-    IconType,
-    Input,
-    QueryBoundary,
-    Slider,
-    Spinner,
+  Button,
+  Checkbox,
+  FilterBar,
+  Flex,
+  IconType,
+  Input,
+  QueryBoundary,
+  Slider,
+  Spinner,
 } from 'components';
 import { TabDict } from 'configuration/tabs';
 import { useAppContext } from 'context';

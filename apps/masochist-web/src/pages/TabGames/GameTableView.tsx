@@ -1,23 +1,23 @@
 import { Game, TierId } from '@masochistme/sdk/dist/v1/types';
 import {
-    ErrorFallback,
-    Flex,
-    Icon,
-    QueryBoundary,
-    Size,
-    Table,
-    TableColumn,
+  ErrorFallback,
+  Flex,
+  Icon,
+  QueryBoundary,
+  Size,
+  Table,
+  TableColumn,
 } from 'components';
 import { useAppContext } from 'context';
 import { useCuratedGames, useLeaderboardsGames, useTiers } from 'sdk';
 import {
-    Cell,
-    getGameAvgPlaytime,
-    getGameBadges,
-    getGameCompletions,
-    getGameLatestCompletion,
-    getGameOwners,
-    getGameTotalPoints,
+  Cell,
+  getGameAvgPlaytime,
+  getGameBadges,
+  getGameCompletions,
+  getGameLatestCompletion,
+  getGameOwners,
+  getGameTotalPoints,
 } from './columns';
 
 enum Columns {

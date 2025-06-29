@@ -1,10 +1,10 @@
 import { Badge, Game } from '@masochistme/sdk/dist/v1/types';
 import {
-    ErrorFallback,
-    Flex,
-    Loader,
-    QueryBoundary,
-    Warning,
+  ErrorFallback,
+  Flex,
+  Loader,
+  QueryBoundary,
+  Warning,
 } from 'components';
 import { TabDict } from 'configuration/tabs';
 import { BadgeTile, Section, SectionProps, SubPage } from 'containers';

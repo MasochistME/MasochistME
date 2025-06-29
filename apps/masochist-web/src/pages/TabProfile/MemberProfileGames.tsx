@@ -1,12 +1,12 @@
 import { Tier, TierId } from '@masochistme/sdk/dist/v1/types';
 import {
-    Checkbox,
-    ErrorFallback,
-    Flex,
-    IconType,
-    QueryBoundary,
-    Skeleton,
-    Switch,
+  Checkbox,
+  ErrorFallback,
+  Flex,
+  IconType,
+  QueryBoundary,
+  Skeleton,
+  Switch,
 } from 'components';
 import { MemberLeaderboards } from 'containers';
 import { useEffect, useState } from 'react';

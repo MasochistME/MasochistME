@@ -1,9 +1,9 @@
 import {
-    ErrorFallback,
-    Flex,
-    Loader,
-    QueryBoundary,
-    Warning,
+  ErrorFallback,
+  Flex,
+  Loader,
+  QueryBoundary,
+  Warning,
 } from 'components';
 import { Tab, TabPanel, Tabs } from 'containers';
 import { useContextualRouting } from 'hooks';

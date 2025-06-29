@@ -1,12 +1,12 @@
 import { Tier } from '@masochistme/sdk/dist/v1/types';
 import {
-    ErrorFallback,
-    Flex,
-    Icon,
-    IconType,
-    Loader,
-    QueryBoundary,
-    Size,
+  ErrorFallback,
+  Flex,
+  Icon,
+  IconType,
+  Loader,
+  QueryBoundary,
+  Size,
 } from 'components';
 import { TabDict } from 'configuration/tabs';
 import { Section, SectionProps, SubPage } from 'containers';

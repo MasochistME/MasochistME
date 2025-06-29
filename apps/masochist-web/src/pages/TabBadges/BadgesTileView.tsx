@@ -1,10 +1,10 @@
 import {
-    ErrorFallback,
-    Flex,
-    Icon,
-    IconType,
-    QueryBoundary,
-    Skeleton,
+  ErrorFallback,
+  Flex,
+  Icon,
+  IconType,
+  QueryBoundary,
+  Skeleton,
 } from 'components';
 import { BadgeTile, Section } from 'containers';
 import { Link } from 'react-router-dom';

@@ -1,7 +1,7 @@
 import {
-    MemberGame,
-    PatreonTier,
-    PatronTier,
+  MemberGame,
+  PatreonTier,
+  PatronTier,
 } from '@masochistme/sdk/dist/v1/types';
 import { Flex, Icon, IconType, QueryBoundary, Skeleton } from 'components';
 import { StatBlock } from 'containers';

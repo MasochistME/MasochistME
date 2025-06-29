@@ -1,7 +1,7 @@
 import {
-    Game,
-    LogAchievementNumberChange,
-    Tier,
+  Game,
+  LogAchievementNumberChange,
+  Tier,
 } from '@masochistme/sdk/dist/v1/types';
 import { Icon, IconType, Size } from 'components';
 import { GameThumbnail } from 'containers';

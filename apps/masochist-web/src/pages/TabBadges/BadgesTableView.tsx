@@ -1,11 +1,11 @@
 import { Badge } from '@masochistme/sdk/dist/v1/types';
 import {
-    ErrorFallback,
-    Flex,
-    QueryBoundary,
-    Table,
-    TableCell,
-    TableColumn,
+  ErrorFallback,
+  Flex,
+  QueryBoundary,
+  Table,
+  TableCell,
+  TableColumn,
 } from 'components';
 import { BadgeThumbnail } from 'containers';
 import { useBadges } from 'sdk';

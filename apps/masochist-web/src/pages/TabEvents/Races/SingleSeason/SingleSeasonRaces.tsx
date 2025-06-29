@@ -1,12 +1,12 @@
 import { Race, RaceWithSummary } from '@masochistme/sdk/dist/v1/types';
 import {
-    DateBlock,
-    Flex,
-    Icon,
-    Size,
-    Table,
-    TableCell,
-    TableColumn,
+  DateBlock,
+  Flex,
+  Icon,
+  Size,
+  Table,
+  TableCell,
+  TableColumn,
 } from 'components';
 import { ModalRace, WinnerLink } from 'containers';
 import { useEffect, useState } from 'react';

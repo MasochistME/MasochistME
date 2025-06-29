@@ -1,10 +1,10 @@
 import { Leaderboards } from '@masochistme/sdk/dist/v1/types';
 import {
-    ErrorFallback,
-    Flex,
-    Loader,
-    QueryBoundary,
-    Skeleton,
+  ErrorFallback,
+  Flex,
+  Loader,
+  QueryBoundary,
+  Skeleton,
 } from 'components';
 import { TabDict } from 'configuration/tabs';
 import { Section, SectionProps, SubPage } from 'containers';

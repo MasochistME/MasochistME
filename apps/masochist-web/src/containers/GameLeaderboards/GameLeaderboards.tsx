@@ -1,12 +1,12 @@
 import { Member, MemberGame } from '@masochistme/sdk/dist/v1/types';
 import {
-    DateBlock,
-    ErrorFallback,
-    Flex,
-    ProgressBar,
-    QueryBoundary,
-    Size,
-    Skeleton,
+  DateBlock,
+  ErrorFallback,
+  Flex,
+  ProgressBar,
+  QueryBoundary,
+  Size,
+  Skeleton,
 } from 'components';
 import { MemberAvatar, MemberBadges } from 'containers';
 import { useAppContext } from 'context';

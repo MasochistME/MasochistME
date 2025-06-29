@@ -1,10 +1,10 @@
 import {
-    ErrorFallback,
-    Flex,
-    Icon,
-    Loader,
-    QueryBoundary,
-    Warning,
+  ErrorFallback,
+  Flex,
+  Icon,
+  Loader,
+  QueryBoundary,
+  Warning,
 } from 'components';
 import { Section, SectionProps } from 'containers';
 import { useRacesFromSeason } from 'hooks';

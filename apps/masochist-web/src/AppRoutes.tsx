@@ -4,10 +4,10 @@ import { NotFound } from 'pages';
 import { TabEvents } from 'pages/TabEvents';
 import React, { ReactNode } from 'react';
 import {
-    Navigate,
-    Route,
-    BrowserRouter as Router,
-    Routes,
+  Navigate,
+  Route,
+  BrowserRouter as Router,
+  Routes,
 } from 'react-router-dom';
 import styled from 'styled-components';
 import { ColorTokens, media, useTheme } from 'styles';

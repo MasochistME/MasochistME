@@ -1,12 +1,12 @@
 import { RacePlayer, RaceType } from '@masochistme/sdk/dist/v1/types';
 import {
-    ErrorFallback,
-    Flex,
-    Icon,
-    QueryBoundary,
-    Table,
-    TableCell,
-    TableColumn,
+  ErrorFallback,
+  Flex,
+  Icon,
+  QueryBoundary,
+  Table,
+  TableCell,
+  TableColumn,
 } from 'components';
 import { Podium, WinnerLink } from 'containers';
 import dayjs from 'dayjs';

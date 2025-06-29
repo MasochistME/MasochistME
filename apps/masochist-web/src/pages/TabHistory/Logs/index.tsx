@@ -10,13 +10,13 @@ import { MemberJoinLog } from './MemberJoinLog';
 import { MemberLeaveLog } from './MemberLeaveLog';
 import { TierChangeLog } from './TierChangeLog';
 import {
-    Description,
-    Icon,
-    Icons,
-    Image,
-    Link,
-    Logo,
-    Summary,
+  Description,
+  Icon,
+  Icons,
+  Image,
+  Link,
+  Logo,
+  Summary,
 } from './components';
 
 type Props = {

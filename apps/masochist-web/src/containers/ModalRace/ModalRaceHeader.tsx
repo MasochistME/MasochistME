@@ -1,12 +1,12 @@
 import { RaceType } from '@masochistme/sdk/dist/v1/types';
 import {
-    ErrorFallback,
-    Flex,
-    Icon,
-    QueryBoundary,
-    Size,
-    Skeleton,
-    Spinner,
+  ErrorFallback,
+  Flex,
+  Icon,
+  QueryBoundary,
+  Size,
+  Skeleton,
+  Spinner,
 } from 'components';
 import { t } from 'i18n';
 import { useRaceById } from 'sdk';

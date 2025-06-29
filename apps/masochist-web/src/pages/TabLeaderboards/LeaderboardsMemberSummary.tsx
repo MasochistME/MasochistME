@@ -8,10 +8,10 @@ import styled from 'styled-components';
 import { ColorTokens, media, useTheme } from 'styles';
 import { TimePeriod } from 'utils/getTimePeriod';
 import {
-    LeaderboardsMemberIconDummy,
-    LeaderboardsMemberIconOutdated,
-    LeaderboardsMemberIconPatron,
-    LeaderboardsMemberIconPrivate,
+  LeaderboardsMemberIconDummy,
+  LeaderboardsMemberIconOutdated,
+  LeaderboardsMemberIconPatron,
+  LeaderboardsMemberIconPrivate,
 } from './LeaderboardsMemberIcons';
 import { LeaderboardsMemberPoints } from './LeaderboardsMemberPoints';
 

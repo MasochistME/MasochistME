@@ -1,8 +1,8 @@
 import {
-    ListSubheader,
-    MenuItem,
-    Select as MuiSelect,
-    SelectChangeEvent,
+  ListSubheader,
+  MenuItem,
+  Select as MuiSelect,
+  SelectChangeEvent,
 } from '@mui/material';
 import { t } from 'i18n';
 import React from 'react';

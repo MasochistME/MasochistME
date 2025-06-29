@@ -1,8 +1,8 @@
 import {
-    Game,
-    LogComplete,
-    Member,
-    Tier,
+  Game,
+  LogComplete,
+  Member,
+  Tier,
 } from '@masochistme/sdk/dist/v1/types';
 import { Icon, IconType, Size } from 'components';
 import { GameThumbnail, MemberAvatar } from 'containers';
