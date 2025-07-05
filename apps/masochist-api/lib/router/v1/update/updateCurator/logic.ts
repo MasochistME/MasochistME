@@ -511,7 +511,11 @@ const getCuratorGamesDetailsRecurrent = (
         curatorGames[gameIndex],
         tiers,
       );
-      curatorGameDetails.push(details);
+
+      if (details) {
+        curatorGameDetails.push(details);
+      }
+
       if (curatorGames[gameIndex + 1]) {
         setTimeout(
           () => getDetailedCuratorGamesData(gameIndex + 1),
@@ -535,30 +539,36 @@ const getCuratorGameDetails = async (
     description: string;
   },
   tiers: Tier[],
-): Promise<Omit<Game, '_id'>> => {
-  const gameId = Number(game.id);
-  const curatorGameDetailsUrl = `http://store.steampowered.com/api/appdetails`;
-  const curatorGameDetailsData = await axios.get(curatorGameDetailsUrl, {
-    params: {
-      appids: gameId,
-      filters: 'price_overview,basic,achievements',
-    },
-  });
-  const details: SteamGameDetailsData =
-    curatorGameDetailsData.data?.[gameId]?.data;
-  const finalGame: Omit<Game, '_id'> = {
-    id: Number(gameId),
-    title: details?.name ?? null,
-    description: game.description ?? null,
-    achievementsTotal: details?.achievements?.total ?? 0,
-    price: details?.price_overview?.initial ?? 0,
-    currency: details?.price_overview?.currency ?? 'USD',
-    sale: details?.price_overview?.discount_percent ?? 0,
-    tier: getGameTier(game.description, tiers),
-    isCurated: true,
-    isProtected: false,
-  };
-  return finalGame;
+): Promise<Omit<Game, '_id'> | null> => {
+  try {
+    const gameId = Number(game.id);
+    const curatorGameDetailsUrl = `http://store.steampowered.com/api/appdetails`;
+    // The endpoint below can fail and this will brick entire update
+    const curatorGameDetailsData = await axios.get(curatorGameDetailsUrl, {
+      params: {
+        appids: gameId,
+        filters: 'price_overview,basic,achievements',
+      },
+    });
+    const details: SteamGameDetailsData =
+      curatorGameDetailsData.data?.[gameId]?.data;
+    const finalGame: Omit<Game, '_id'> = {
+      id: Number(gameId),
+      title: details?.name ?? null,
+      description: game.description ?? null,
+      achievementsTotal: details?.achievements?.total ?? 0,
+      price: details?.price_overview?.initial ?? 0,
+      currency: details?.price_overview?.currency ?? 'USD',
+      sale: details?.price_overview?.discount_percent ?? 0,
+      tier: getGameTier(game.description, tiers),
+      isCurated: true,
+      isProtected: false,
+    };
+    return finalGame;
+  } catch (err: unknown) {
+    log.ERROR(err, { context: `--> [UPDATE] game details ${game.id} [ERROR]` });
+    return null;
+  }
 };
 
 const getGameTier = (description: string, tiers: Tier[]) => {
