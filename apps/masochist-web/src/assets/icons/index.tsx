@@ -31,6 +31,7 @@ import { ReactComponent as Hashtag } from './Hashtag.svg';
 import { ReactComponent as Heart } from './Heart.svg';
 import { ReactComponent as History } from './History.svg';
 import { ReactComponent as Home } from './Home.svg';
+import { ReactComponent as Hornet } from './Hornet.svg';
 import { ReactComponent as HourglassHalf } from './HourglassHalf.svg';
 import { ReactComponent as IDCard } from './IDCard.svg';
 import { ReactComponent as Link } from './Link.svg';
@@ -98,6 +99,7 @@ const icons = {
   Heart,
   History,
   Home,
+  Hornet,
   HourglassHalf,
   Link,
   IDCard,
