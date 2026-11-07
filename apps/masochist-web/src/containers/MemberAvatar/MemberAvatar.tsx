@@ -1,4 +1,5 @@
 import { Member, PatronTier } from '@masochistme/sdk/dist/v1/types';
+import { Link } from 'react-router-dom';
 import { BrokenImage, Flex, Size, Skeleton, Tooltip } from 'components';
 import { CommonProps } from 'containers';
 import { t } from 'i18n';
@@ -15,13 +16,12 @@ type Props = CommonProps & {
 export const MemberAvatar = (props: Props) => {
   const { colorTokens, LOGO_URL_STATIC } = useTheme();
   const {
-    member = { name: t('loading') },
+    member = { name: t('loading'), steamId: 'NO_ID' },
     patronTier,
     size = Size.MEDIUM,
     title,
     isLoading,
     isError,
-    onClick,
   } = props;
 
   const avatarSize = useMemo(() => {
@@ -35,26 +35,30 @@ export const MemberAvatar = (props: Props) => {
       return getAvatarFromHash(member.avatarHash, avatarSize);
   }, [member]);
 
+  const to = `/profile/${member.steamId}`;
+
   if (isLoading) return <Skeleton size={size} />;
   return (
     <Tooltip content={title ?? <Flex column>{member.name}</Flex>}>
-      <StyledMemberAvatar
-        onClick={onClick}
-        size={size}
-        patronTier={patronTier}
-        isEmpty={!avatarUrl}
-        colorTokens={colorTokens}>
-        {(isError || !avatarUrl) && (
-          <BrokenImage size={size} title={t('error.could_not_load_avatar')} />
-        )}
-        {!isError && avatarUrl && (
-          <img
-            src={avatarUrl ?? LOGO_URL_STATIC}
-            alt="Member avatar"
-            loading="lazy"
-          />
-        )}
-      </StyledMemberAvatar>
+      <Link to={to}>
+        <StyledMemberAvatar
+          size={size}
+          patronTier={patronTier}
+          isEmpty={!avatarUrl}
+          colorTokens={colorTokens}
+        >
+          {(isError || !avatarUrl) && (
+            <BrokenImage size={size} title={t('error.could_not_load_avatar')} />
+          )}
+          {!isError && avatarUrl && (
+            <img
+              src={avatarUrl ?? LOGO_URL_STATIC}
+              alt="Member avatar"
+              loading="lazy"
+            />
+          )}
+        </StyledMemberAvatar>
+      </Link>
     </Tooltip>
   );
 };
@@ -72,7 +76,7 @@ const StyledMemberAvatar = styled.div.attrs(
       minHeight: `${size}rem`,
       maxWidth: `${size}rem`,
       maxHeight: `${size}rem`,
-      cursor: onClick ? 'pointer' : 'help',
+      cursor: 'pointer',
     };
     if (patronTier === PatronTier.TIER1) {
       style.border = `var(--size-5) solid ${colorTokens['semantic-color--tier-1']}`;

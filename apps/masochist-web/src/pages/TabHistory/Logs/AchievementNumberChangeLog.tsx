@@ -5,7 +5,6 @@ import {
 } from '@masochistme/sdk/dist/v1/types';
 import { Icon, IconType, Size } from 'components';
 import { GameThumbnail } from 'containers';
-import { useNavigate } from 'react-router';
 import { useAllGames, useTiers } from 'sdk';
 import { HistoryLog } from '.';
 
@@ -17,7 +16,6 @@ export const AchievementNumberChangeLog = (
   props: Props,
 ): JSX.Element | null => {
   const { log } = props;
-  const navigate = useNavigate();
 
   const { tiersData } = useTiers();
   const { gamesData: games } = useAllGames();
@@ -28,9 +26,7 @@ export const AchievementNumberChangeLog = (
   const iconTier = tier?.icon ?? 'QuestionCircle'; // TODO this wont be compatible
   const iconAchievementChange = game ? 'Checklist' : 'WarningTriangle'; // TODO this won't be compatible
 
-  const onGameClick = () => {
-    if (game?.id) navigate(`/game/${game.id}`);
-  };
+  const to = `/game/${game?.id ?? 'NO_ID'}`;
 
   if (!game || !tier) return null;
 
@@ -38,7 +34,7 @@ export const AchievementNumberChangeLog = (
     <HistoryLog>
       <HistoryLog.Logo />
       <HistoryLog.Description>
-        <HistoryLog.Link onClick={onGameClick}>
+        <HistoryLog.Link to={to}>
           {game.title ?? `Game ${game.id}`}
         </HistoryLog.Link>
         {log.oldNumber < log.newNumber
@@ -50,7 +46,7 @@ export const AchievementNumberChangeLog = (
           <Icon icon={iconAchievementChange as IconType} />
           <Icon icon={iconTier as IconType} />
         </HistoryLog.Icons>
-        <GameThumbnail game={game} size={Size.SMALL} onClick={onGameClick} />
+        <GameThumbnail game={game} size={Size.SMALL} />
       </HistoryLog.Summary>
     </HistoryLog>
   );

@@ -6,7 +6,6 @@ import {
 } from '@masochistme/sdk/dist/v1/types';
 import { Icon, IconType, Size } from 'components';
 import { GameThumbnail, MemberAvatar } from 'containers';
-import { useNavigate } from 'react-router';
 import { useAllGames, useAllMembers, useTiers } from 'sdk';
 import { HistoryLog } from '.';
 
@@ -16,7 +15,6 @@ type Props = {
 
 export const GameCompleteLog = (props: Props): JSX.Element | null => {
   const { log } = props;
-  const navigate = useNavigate();
 
   const { membersData } = useAllMembers();
   const { tiersData } = useTiers();
@@ -29,22 +27,15 @@ export const GameCompleteLog = (props: Props): JSX.Element | null => {
   const iconMemberComplete = member ? 'SquareCheck' : 'WarningTriangle';
   const iconGameRating = (gameRating?.icon ?? 'QuestionCircle') as IconType;
 
-  const onMemberClick = () => {
-    if (member?.steamId) navigate(`/profile/${member.steamId}`);
-  };
-  const onGameClick = () => {
-    if (game?.id) navigate(`/game/${game.id}`);
-  };
-
   return (
     <HistoryLog>
-      <MemberAvatar member={member} size={Size.SMALL} onClick={onMemberClick} />
+      <MemberAvatar member={member} size={Size.SMALL} />
       <HistoryLog.Description>
-        <HistoryLog.Link onClick={onMemberClick}>
+        <HistoryLog.Link to={`/profile/${member?.steamId ?? 'NO_ID'}`}>
           {member?.name ?? `User ${log.memberId}`}
         </HistoryLog.Link>
         <span>completed</span>
-        <HistoryLog.Link onClick={onGameClick}>
+        <HistoryLog.Link to={`/game/${game?.id ?? 'NO_ID'}`}>
           {game?.title ?? `game ${log.gameId}`}!
         </HistoryLog.Link>
       </HistoryLog.Description>
@@ -53,7 +44,7 @@ export const GameCompleteLog = (props: Props): JSX.Element | null => {
           <Icon icon={iconMemberComplete} />
           <Icon icon={iconGameRating} />
         </HistoryLog.Icons>
-        <GameThumbnail game={game} size={Size.SMALL} onClick={onGameClick} />
+        <GameThumbnail game={game} size={Size.SMALL} />
       </HistoryLog.Summary>
     </HistoryLog>
   );
