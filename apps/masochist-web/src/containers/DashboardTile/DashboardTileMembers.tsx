@@ -24,24 +24,20 @@ export const DashboardTileMembers = (props: Props) => {
       fallback={<Content content={members} />}
       errorFallback={
         <Content content={<ErrorFallback width="45rem" maxWidth="100%" />} />
-      }>
+      }
+    >
       <DashboardTileMembersBoundary {...props} />
     </QueryBoundary>
   );
 };
 
 const DashboardTileMembersBoundary = (props: Props) => {
-  const navigate = useNavigate();
   const { membersData } = useCuratorMembers();
   const { data: logs = [] } = useLogs({
     limit: NUMBER_OF_MEMBERS,
     sort: { date: 'desc' },
     filter: { type: LogType.MEMBER_JOIN },
   });
-
-  const onMemberClick = (memberId?: string) => {
-    if (memberId) navigate(`/profile/${memberId}`);
-  };
 
   const memberLogs = logs.filter(
     log => log.type === LogType.MEMBER_JOIN,
@@ -55,7 +51,6 @@ const DashboardTileMembersBoundary = (props: Props) => {
           key={`new-member-${member.steamId}`}
           member={member}
           size={Size.BIG}
-          onClick={() => onMemberClick(member.steamId)}
           title={
             <Flex column>
               <span style={{ fontWeight: 'bold' }}>{member.name}</span>

@@ -1,12 +1,13 @@
 import { Flex, Icon, Size } from 'components';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { ColorTokens, useTheme } from 'styles';
 
 type Props = {
   children: React.ReactNode;
-  onClick?: () => void;
   style?: React.CSSProperties;
+  to: string;
 };
 
 export const LogCompact = (props: Pick<Props, 'children'>) => {
@@ -24,14 +25,11 @@ const StyledLogCompact = styled.div`
 `;
 
 LogCompact.Link = (props: Props) => {
-  const { children, style = {}, onClick } = props;
+  const { children, style = {}, to } = props;
   const { colorTokens } = useTheme();
   return (
-    <StyledLogLink
-      colorTokens={colorTokens}
-      style={style}
-      {...(onClick && { onClick })}>
-      {children}
+    <StyledLogLink colorTokens={colorTokens} style={style}>
+      <Link to={to}>{children}</Link>
     </StyledLogLink>
   );
 };

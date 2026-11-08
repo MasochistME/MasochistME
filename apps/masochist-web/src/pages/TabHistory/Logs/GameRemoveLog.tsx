@@ -1,7 +1,6 @@
 import { Game, LogGameRemove, Tier } from '@masochistme/sdk/dist/v1/types';
 import { Icon, IconType, Size } from 'components';
 import { GameThumbnail } from 'containers';
-import { useNavigate } from 'react-router';
 import { useAllGames, useTiers } from 'sdk';
 import { HistoryLog } from '.';
 
@@ -11,7 +10,6 @@ type Props = {
 
 export const GameRemoveLog = (props: Props): JSX.Element | null => {
   const { log } = props;
-  const navigate = useNavigate();
 
   const { tiersData } = useTiers();
   const { gamesData: games } = useAllGames();
@@ -24,15 +22,13 @@ export const GameRemoveLog = (props: Props): JSX.Element | null => {
     gameRating ? gameRating.icon : 'QuestionCircle'
   ) as IconType;
 
-  const onGameClick = () => {
-    navigate(`/game/${log.gameId}`);
-  };
+  const to = `/game/${log.gameId}`;
 
   return (
     <HistoryLog>
       <HistoryLog.Logo />
       <HistoryLog.Description>
-        <HistoryLog.Link onClick={onGameClick}>
+        <HistoryLog.Link to={to}>
           {game ? game.title : `Game ${log.gameId}`}
         </HistoryLog.Link>
         <span>has been removed from curator!</span>
@@ -42,7 +38,7 @@ export const GameRemoveLog = (props: Props): JSX.Element | null => {
           <Icon icon={iconGameRemove} />
           <Icon icon={iconGameRating} />
         </HistoryLog.Icons>
-        <GameThumbnail game={game} size={Size.SMALL} onClick={onGameClick} />
+        <GameThumbnail game={game} size={Size.SMALL} />
       </HistoryLog.Summary>
     </HistoryLog>
   );

@@ -1,7 +1,7 @@
 import { Candidate, CandidateGame } from '@masochistme/sdk/dist/v1/types';
 import { Icon, Size, Table, TableCell, TableColumn } from 'components';
 import { GameThumbnail } from 'containers';
-import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 import { useTiers } from 'sdk';
 import styled from 'styled-components';
 import { useTheme } from 'styles';
@@ -16,13 +16,8 @@ enum Columns {
 type Props = { candidate: Candidate };
 
 export const CandidateTable = ({ candidate }: Props) => {
-  const navigate = useNavigate();
   const { colorTokens } = useTheme();
   const { tiersData } = useTiers();
-
-  const onGameClick = (gameId: number) => {
-    navigate(`/game/${gameId}`);
-  };
 
   const columns: TableColumn<CandidateGame>[] = [
     {
@@ -42,12 +37,8 @@ export const CandidateTable = ({ candidate }: Props) => {
         <TableCell
           content={
             <StyledCandidateGameTitle>
-              <GameThumbnail
-                gameId={game.id}
-                size={Size.SMALL}
-                onClick={() => onGameClick(game.id)}
-              />
-              {game.title}
+              <GameThumbnail gameId={game.id} size={Size.SMALL} />
+              <Link to={`/game/${game.id}`}>{game.title}</Link>
             </StyledCandidateGameTitle>
           }
           isCentered={false}

@@ -1,7 +1,6 @@
 import { LogMemberLeave, Member } from '@masochistme/sdk/dist/v1/types';
 import { Icon, Size } from 'components';
 import { MemberAvatar } from 'containers';
-import { useNavigate } from 'react-router';
 import { useAllMembers } from 'sdk';
 import { HistoryLog } from '.';
 
@@ -11,20 +10,17 @@ type Props = {
 
 export const MemberLeaveLog = (props: Props): JSX.Element | null => {
   const { log } = props;
-  const navigate = useNavigate();
 
   const { membersData } = useAllMembers();
   const member = membersData.find((m: Member) => m.steamId === log.memberId);
 
-  const onMemberClick = () => {
-    if (member?.steamId) navigate(`/profile/${member.steamId}`);
-  };
+  const to = `/profile/${member?.steamId ?? 'NO_ID'}`;
 
   return (
     <HistoryLog>
       <MemberAvatar member={member} size={Size.SMALL} />
       <HistoryLog.Description>
-        <HistoryLog.Link onClick={onMemberClick}>
+        <HistoryLog.Link to={to}>
           {member?.name ?? `User ${log.memberId}`}
         </HistoryLog.Link>
         has left the group!

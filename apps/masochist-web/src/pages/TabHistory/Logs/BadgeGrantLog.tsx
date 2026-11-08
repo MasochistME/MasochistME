@@ -1,22 +1,17 @@
 import { Badge, LogBadgeGet, Member } from '@masochistme/sdk/dist/v1/types';
 import { Icon, Size } from 'components';
 import { BadgeThumbnail, MemberAvatar } from 'containers';
-import { useNavigate } from 'react-router';
 import { useAllMembers, useBadges } from 'sdk';
 import { HistoryLog } from '.';
 
 export const BadgeGrantLog = ({ log }: { log: LogBadgeGet }) => {
-  const navigate = useNavigate();
-
   const { membersData } = useAllMembers();
   const { badgesData } = useBadges();
 
   const badge = badgesData.find((b: Badge) => String(b._id) === log.badgeId);
   const member = membersData.find((m: Member) => m.steamId === log.memberId);
 
-  const onMemberClick = () => {
-    if (member?.steamId) navigate(`/profile/${member.steamId}`);
-  };
+  const to = `/profile/${member?.steamId ?? 'NO_ID'}`;
 
   if (!badge || !member) return null;
 
@@ -24,7 +19,7 @@ export const BadgeGrantLog = ({ log }: { log: LogBadgeGet }) => {
     <HistoryLog>
       <MemberAvatar member={member} size={Size.SMALL} />
       <HistoryLog.Description>
-        <HistoryLog.Link onClick={onMemberClick}>
+        <HistoryLog.Link to={to}>
           {member?.name ?? `User ${log.memberId}`}
         </HistoryLog.Link>
         has earned a new badge -

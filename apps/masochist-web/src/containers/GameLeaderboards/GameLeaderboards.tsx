@@ -12,6 +12,7 @@ import { MemberAvatar, MemberBadges } from 'containers';
 import { useAppContext } from 'context';
 import { GameCompletion, useGameCompletion } from 'hooks';
 import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { ColorTokens, media, useTheme } from 'styles';
 
@@ -28,7 +29,8 @@ type Props = {
 export const GameLeaderboards = (props: Props) => (
   <QueryBoundary
     fallback={<GameLeaderboardsSkeleton />}
-    errorFallback={<ErrorFallback />}>
+    errorFallback={<ErrorFallback />}
+  >
     <GameLeaderboardsBoundary {...props} />
   </QueryBoundary>
 );
@@ -47,8 +49,6 @@ const GameLeaderboardsBoundary = (props: Props) => {
     else return <DateBlock date={undefined} />;
   };
 
-  const onMemberClick = (id?: string) => id && navigate(`/profile/${id}`);
-
   const leaderboardsList = gameCompletions.map(
     (memberCompletion: GameCompletion) => {
       if (!memberCompletion) return null;
@@ -56,7 +56,8 @@ const GameLeaderboardsBoundary = (props: Props) => {
         <StyledGameLeaderboardsMember
           isCompact={isCompact}
           colorTokens={colorTokens}
-          key={`leaderboards-member-${memberCompletion.member.steamId}`}>
+          key={`leaderboards-member-${memberCompletion.member.steamId}`}
+        >
           {!isCompact && (
             <StyledGameLeaderboardsMemberTime colorTokens={colorTokens}>
               {assignDateIfFinished(memberCompletion)}
@@ -65,16 +66,15 @@ const GameLeaderboardsBoundary = (props: Props) => {
           <MemberAvatar
             member={memberCompletion.member}
             size={isCompact ? Size.SMALL : Size.MEDIUM}
-            onClick={() => onMemberClick(memberCompletion.member.steamId)}
           />
           <StyledGameLeaderboardsMemberInfo align>
             <StyledGameLeaderboardsMemberUsername isCompact={isCompact}>
               {memberCompletion.trophy}
-              <Link
-                colorTokens={colorTokens}
-                onClick={() => onMemberClick(memberCompletion.member.steamId)}>
-                {memberCompletion.member.name}
-              </Link>
+              <StyledLink colorTokens={colorTokens}>
+                <Link to={`/profile/${memberCompletion.member.steamId}`}>
+                  {memberCompletion.member.name}
+                </Link>
+              </StyledLink>
             </StyledGameLeaderboardsMemberUsername>
             {!isCompact && (
               <Flex>
@@ -114,7 +114,8 @@ const GameLeaderboardsSkeleton = () => {
         <StyledGameLeaderboardsMember
           isCompact
           colorTokens={colorTokens}
-          key={i}>
+          key={i}
+        >
           <Skeleton width="100%" height="4.8rem" />
         </StyledGameLeaderboardsMember>
       ))}
@@ -181,7 +182,7 @@ const StyledGameLeaderboardsMemberTime = styled.div<{
   }
 `;
 
-const Link = styled.span<{ colorTokens: ColorTokens }>`
+const StyledLink = styled.span<{ colorTokens: ColorTokens }>`
   cursor: pointer;
   &:hover {
     color: ${({ colorTokens }) => colorTokens['semantic-color--link-hover']};

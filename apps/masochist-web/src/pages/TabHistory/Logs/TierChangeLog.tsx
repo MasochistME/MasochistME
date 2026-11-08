@@ -1,16 +1,15 @@
 import { Game, LogGameTierChange, Tier } from '@masochistme/sdk/dist/v1/types';
-import { Icon, IconType, Size } from 'components';
 import { GameThumbnail } from 'containers';
-import { useNavigate } from 'react-router';
 import { useAllGames, useTiers } from 'sdk';
 import { getTierIcon } from 'utils';
 import { HistoryLog } from '.';
+import { IconType, Size } from '../../../components';
+import { Icon } from './components';
 
 type Props = { log: LogGameTierChange };
 
 export const TierChangeLog = (props: Props): JSX.Element | null => {
   const { log } = props;
-  const navigate = useNavigate();
 
   const { tiersData } = useTiers();
   const { gamesData } = useAllGames();
@@ -19,7 +18,7 @@ export const TierChangeLog = (props: Props): JSX.Element | null => {
   const gameRating = tiersData.find((tier: Tier) => tier.id === game?.tier);
   const isDemoted = Number(log.oldTier) > Number(log.newTier);
 
-  const onGameClick = () => game?.id && navigate(`/game/${game.id}`);
+  const to = `/game/${game?.id ?? 'NO_ID'}`;
 
   if (!game) return null;
 
@@ -27,7 +26,7 @@ export const TierChangeLog = (props: Props): JSX.Element | null => {
     <HistoryLog>
       <HistoryLog.Logo />
       <HistoryLog.Description>
-        <HistoryLog.Link onClick={onGameClick}>
+        <HistoryLog.Link to={to}>
           {game?.title ?? `Game ${log.gameId}`}
         </HistoryLog.Link>
         <span>
@@ -47,7 +46,7 @@ export const TierChangeLog = (props: Props): JSX.Element | null => {
             icon={gameRating ? (gameRating.icon as IconType) : 'QuestionCircle'}
           />
         </HistoryLog.Icons>
-        <GameThumbnail game={game} size={Size.SMALL} onClick={onGameClick} />
+        <GameThumbnail game={game} size={Size.SMALL} />
       </HistoryLog.Summary>
     </HistoryLog>
   );

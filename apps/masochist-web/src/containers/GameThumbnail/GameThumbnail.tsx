@@ -2,6 +2,7 @@ import { Game } from '@masochistme/sdk/dist/v1/types';
 import { Size, Skeleton, Tooltip } from 'components';
 import { CommonProps, GameTooltip } from 'containers';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { ColorTokens, useTheme } from 'styles';
 import { getGameThumbnail } from 'utils';
@@ -13,31 +14,27 @@ type Props = CommonProps & {
 
 export const GameThumbnail = (props: Props) => {
   const { colorTokens } = useTheme();
-  const { game, gameId, size = Size.MEDIUM, title, isLoading, onClick } = props;
-  const gameSrc = getGameThumbnail(gameId ?? game?.id);
+  const { game, gameId, size = Size.MEDIUM, title, isLoading } = props;
+  const gameThumbnailSrc = getGameThumbnail(gameId ?? game?.id);
 
   const gameThumbnail = isLoading ? (
     <Skeleton size={size} />
   ) : (
-    <img src={gameSrc} alt="Game" loading="lazy" />
+    <img src={gameThumbnailSrc} alt="Game" loading="lazy" />
   );
+
+  const to = `/game/${gameId ?? game?.id ?? 'NO_ID'}`;
 
   return title ? (
     <Tooltip content={title}>
-      <StyledGameThumbnail
-        onClick={onClick}
-        size={size}
-        colorTokens={colorTokens}>
-        {gameThumbnail}
+      <StyledGameThumbnail size={size} colorTokens={colorTokens}>
+        <Link to={to}>{gameThumbnail}</Link>
       </StyledGameThumbnail>
     </Tooltip>
   ) : (
     <GameTooltip game={game}>
-      <StyledGameThumbnail
-        onClick={onClick}
-        size={size}
-        colorTokens={colorTokens}>
-        {gameThumbnail}
+      <StyledGameThumbnail size={size} colorTokens={colorTokens}>
+        <Link to={to}>{gameThumbnail}</Link>
       </StyledGameThumbnail>
     </GameTooltip>
   );

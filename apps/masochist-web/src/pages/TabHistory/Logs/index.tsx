@@ -21,6 +21,7 @@ import {
 
 type Props = {
   children: React.ReactNode;
+  to?: string;
   onClick?: () => void;
 };
 export const HistoryLog = (props: Pick<Props, 'children'>) => {

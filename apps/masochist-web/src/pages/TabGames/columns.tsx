@@ -1,7 +1,7 @@
 import { Game, GameLeaderboards, Tier } from '@masochistme/sdk/dist/v1/types';
 import { Flex, Icon, Size, Skeleton, TableLink } from 'components';
 import { GameThumbnail } from 'containers';
-import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 import { useLeaderboardsGames, useTiers } from 'sdk';
 import { useTheme } from 'styles';
 import { getTierIcon } from 'utils';
@@ -30,17 +30,15 @@ Cell.Tier = (props: Props) => {
 Cell.Title = (props: Props) => {
   const { game } = props;
   const { colorTokens } = useTheme();
-  const navigate = useNavigate();
 
-  const onGameClick = (game: Game) => {
-    if (game?.id) navigate(`/game/${game.id}`);
-  };
+  const to = `/game/${game?.id ?? 'NO_ID'}`;
+
   return (
     <Flex align textAlign="left" gap={4}>
       <GameThumbnail game={game} size={Size.MEDIUM} />
-      <TableLink colorTokens={colorTokens} onClick={() => onGameClick(game)}>
-        {game.title}
-      </TableLink>
+      <Link to={to}>
+        <TableLink colorTokens={colorTokens}>{game.title}</TableLink>
+      </Link>
     </Flex>
   );
 };

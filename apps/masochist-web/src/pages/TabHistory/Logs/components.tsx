@@ -32,14 +32,15 @@ const Image = styled.img`
 
 type Props = {
   children: React.ReactNode;
+  to?: string;
   onClick?: () => void;
 };
 const Link = (props: Props) => {
-  const { children, onClick } = props;
+  const { children, to } = props;
   const { colorTokens } = useTheme();
   return (
-    <StyledHistoryLogLink colorTokens={colorTokens} onClick={onClick}>
-      {children}
+    <StyledHistoryLogLink colorTokens={colorTokens}>
+      <Link to={to}>{children}</Link>
     </StyledHistoryLogLink>
   );
 };
@@ -75,4 +76,3 @@ const Summary = styled(Flex)`
 `;
 
 export { Description, Icon, Icons, Image, Link, Logo, Summary };
-

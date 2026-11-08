@@ -24,15 +24,13 @@ export const GameAddLog = (props: Props): JSX.Element | null => {
     gameRating ? gameRating.icon : 'QuestionCircle'
   ) as IconType;
 
-  const onGameClick = () => {
-    navigate(`/game/${log.gameId}`);
-  };
+  const to = `/game/${log.gameId ?? 'NO_ID'}`;
 
   return (
     <HistoryLog>
       <HistoryLog.Logo />
       <HistoryLog.Description>
-        <HistoryLog.Link onClick={onGameClick}>
+        <HistoryLog.Link to={to}>
           {game ? game.title : `Game ${log.gameId}`}
         </HistoryLog.Link>
         <span>has been curated!</span>
@@ -42,7 +40,7 @@ export const GameAddLog = (props: Props): JSX.Element | null => {
           <Icon icon={iconGameAdd} />
           <Icon icon={iconGameRating} />
         </HistoryLog.Icons>
-        <GameThumbnail game={game} size={Size.SMALL} onClick={onGameClick} />
+        <GameThumbnail game={game} size={Size.SMALL} />
       </HistoryLog.Summary>
     </HistoryLog>
   );
