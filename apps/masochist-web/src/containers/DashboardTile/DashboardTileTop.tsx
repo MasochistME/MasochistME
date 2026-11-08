@@ -42,17 +42,19 @@ export const DashboardTileTop = (
     memberId: string;
     position: number;
   }) => {
-    const onUserClick = () => navigate(`/profile/${leader.memberId}`);
+    const to = `/profile/${leader.memberId}`;
+
     return (
       <StyledSectionTopMember row align key={`leaderboards-${leader.memberId}`}>
         <div>{leader.position}.</div>
         <LogCompact.Link
-          onClick={onUserClick}
+          to={to}
           style={{
             overflow: 'hidden',
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
-          }}>
+          }}
+        >
           <span>{leader.name}</span>
         </LogCompact.Link>
         <div style={{ whiteSpace: 'nowrap' }}>

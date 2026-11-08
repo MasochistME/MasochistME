@@ -28,7 +28,6 @@ import { LogDictionary } from 'configuration';
 import { Section, SectionProps } from 'containers';
 import { t } from 'i18n';
 import React from 'react';
-import { useNavigate } from 'react-router';
 import { useAllGames, useAllMembers, useBadges, useLogs, useTiers } from 'sdk';
 import styled from 'styled-components';
 import { media } from 'styles';
@@ -48,7 +47,8 @@ export const DashboardTileHistory = (props: Props) => {
   return (
     <QueryBoundary
       fallback={<Content content={logs} />}
-      errorFallback={<Content content={<ErrorFallback />} />}>
+      errorFallback={<Content content={<ErrorFallback />} />}
+    >
       <DashboardTileHistoryBoundary {...props} />
     </QueryBoundary>
   );
@@ -138,8 +138,6 @@ const StyledSectionHistory = styled(Flex)`
 `;
 
 const useLogComponents = () => {
-  const navigate = useNavigate();
-
   const { gamesData: games } = useAllGames();
   const { membersData: members } = useAllMembers();
   const { badgesData: badges } = useBadges();
@@ -150,17 +148,14 @@ const useLogComponents = () => {
       LogDictionary.find(e => e.type === LogType.MEMBER_JOIN)?.icon ??
       'QuestionCircle';
     const member = members.find((m: Member) => m.steamId === log.memberId);
-    const onUserClick = () =>
-      member?.steamId && navigate(`/profile/${member.steamId}`);
+    const to = `/profile/${member?.steamId ?? 'NO_ID'}`;
 
     if (member)
       return (
         <LogCompact key={`sidebar-log-${log._id}`}>
           <LogCompact.Icon icon={icon} />
           <LogCompact.Block>
-            <LogCompact.Link onClick={onUserClick}>
-              {member.name}
-            </LogCompact.Link>
+            <LogCompact.Link to={to}>{member.name}</LogCompact.Link>
             <span>{t('dashboard.history.has_joined')}</span>
           </LogCompact.Block>
         </LogCompact>
@@ -172,17 +167,14 @@ const useLogComponents = () => {
       LogDictionary.find(e => e.type === LogType.MEMBER_LEAVE)?.icon ??
       'QuestionCircle';
     const member = members.find((m: Member) => m.steamId === log.memberId);
-    const onUserClick = () =>
-      member?.steamId && navigate(`/profile/${member.steamId}`);
+    const to = `/profile/${member?.steamId ?? 'NO_ID'}`;
 
     if (member)
       return (
         <LogCompact key={`sidebar-log-${log._id}`}>
           <LogCompact.Icon icon={icon} />
           <LogCompact.Block>
-            <LogCompact.Link onClick={onUserClick}>
-              {member.name}
-            </LogCompact.Link>
+            <LogCompact.Link to={to}>{member.name}</LogCompact.Link>
             <span>{t('dashboard.history.has_left')}</span>
           </LogCompact.Block>
         </LogCompact>
@@ -194,16 +186,14 @@ const useLogComponents = () => {
       LogDictionary.find(e => e.type === LogType.GAME_ADD)?.icon ??
       'QuestionCircle';
     const game = games.find((g: Game) => g.id === log.gameId);
-    const onGameClick = () => game?.id && navigate(`/game/${game.id}`);
+    const to = `/game/${game?.id ?? 'NO_ID'}`;
 
     if (game)
       return (
         <LogCompact key={`sidebar-log-${log._id}`}>
           <LogCompact.Icon icon={icon} />
           <LogCompact.Block>
-            <LogCompact.Link onClick={onGameClick}>
-              {game.title}
-            </LogCompact.Link>
+            <LogCompact.Link to={to}>{game.title}</LogCompact.Link>
             <span>{t('dashboard.history.has_been_curated')}</span>
           </LogCompact.Block>
         </LogCompact>
@@ -221,7 +211,7 @@ const useLogComponents = () => {
         <LogCompact key={`sidebar-log-${log._id}`}>
           <LogCompact.Icon icon={icon} />
           <LogCompact.Block>
-            <LogCompact.Link> {game.title}</LogCompact.Link>
+            <LogCompact.Link to={''}> {game.title}</LogCompact.Link>
             <span>{t('dashboard.history.has_been_removed')}</span>
           </LogCompact.Block>
         </LogCompact>
@@ -235,22 +225,17 @@ const useLogComponents = () => {
     const member = members.find((m: Member) => m.steamId === log.memberId);
     const game = games.find((g: Game) => g.id === log.gameId);
 
-    const onUserClick = () =>
-      member?.steamId && navigate(`/profile/${member.steamId}`);
-    const onGameClick = () => game?.id && navigate(`/game/${game.id}`);
+    const toMember = `/profile/${member?.steamId ?? 'NO_ID'}`;
+    const toGame = `/game/${game?.id ?? 'NO_ID'}`;
 
     if (member && game)
       return (
         <LogCompact key={`sidebar-log-${log._id}`}>
           <LogCompact.Icon icon={icon} />
           <LogCompact.Block>
-            <LogCompact.Link onClick={onUserClick}>
-              {member.name}
-            </LogCompact.Link>
+            <LogCompact.Link to={toMember}>{member.name}</LogCompact.Link>
             <span>{t('dashboard.history.completed')}</span>
-            <LogCompact.Link onClick={onGameClick}>
-              {game.title}!
-            </LogCompact.Link>
+            <LogCompact.Link to={toGame}>{game.title}!</LogCompact.Link>
           </LogCompact.Block>
         </LogCompact>
       );
@@ -262,16 +247,14 @@ const useLogComponents = () => {
       'QuestionCircle';
     const game = games.find((g: Game) => g.id === log.gameId);
 
-    const onGameClick = () => game?.id && navigate(`/game/${game.id}`);
+    const to = `/game/${game?.id ?? 'NO_ID'}`;
 
     if (game)
       return (
         <LogCompact key={`sidebar-log-${log._id}`}>
           <LogCompact.Icon icon={icon} />
           <LogCompact.Block>
-            <LogCompact.Link onClick={onGameClick}>
-              {game.title}
-            </LogCompact.Link>
+            <LogCompact.Link to={to}>{game.title}</LogCompact.Link>
             <span>{t('dashboard.history.changed_tier')}</span>
           </LogCompact.Block>
           <Icon size={Size.MICRO} icon={getTierIcon(game.tier, tiersData)} />!
@@ -286,16 +269,14 @@ const useLogComponents = () => {
     const game = games.find((g: Game) => g.id === Number(log.gameId));
     const badge = badges.find((b: Badge) => String(b._id) === log.badgeId);
 
-    const onGameClick = () => game?.id && navigate(`/game/${game.id}`);
+    const to = `/game/${game?.id ?? 'NO_ID'}`;
 
     if (game && badge)
       return (
         <LogCompact key={`sidebar-log-${log._id}`}>
           <LogCompact.Icon icon={icon} />
           <LogCompact.Block>
-            <LogCompact.Link onClick={onGameClick}>
-              {game.title}
-            </LogCompact.Link>
+            <LogCompact.Link to={to}>{game.title}</LogCompact.Link>
             <span>{t('dashboard.history.got_badge')}!</span>
           </LogCompact.Block>
         </LogCompact>
@@ -309,17 +290,14 @@ const useLogComponents = () => {
     const badge = badges.find((b: Badge) => String(b._id) === log.badgeId);
     const member = members.find((m: Member) => m.steamId === log.memberId);
 
-    const onUserClick = () =>
-      member?.steamId && navigate(`/profile/${member.steamId}`);
+    const to = `/profile/${member?.steamId ?? 'NO_ID'}`;
 
     if (member && badge)
       return (
         <LogCompact key={`sidebar-log-${log._id}`}>
           <LogCompact.Icon icon={icon} />
           <LogCompact.Block>
-            <LogCompact.Link onClick={onUserClick}>
-              {member.name}
-            </LogCompact.Link>
+            <LogCompact.Link to={to}>{member.name}</LogCompact.Link>
             <span>
               {t('dashboard.history.got_badge')} - {badge.name}!
             </span>
@@ -335,16 +313,14 @@ const useLogComponents = () => {
       LogDictionary.find(e => e.type === LogType.ACHIEVEMENTS_CHANGE)?.icon ??
       'QuestionCircle';
     const game = games.find((g: Game) => g.id === log.gameId);
-    const onGameClick = () => game?.id && navigate(`/game/${game.id}`);
+    const to = `game/${game?.id ?? 'NO_ID'}`;
 
     if (game)
       return (
         <LogCompact key={`sidebar-log-${log._id}`}>
           <LogCompact.Icon icon={icon} />
           <LogCompact.Block>
-            <LogCompact.Link onClick={onGameClick}>
-              {game.title}
-            </LogCompact.Link>
+            <LogCompact.Link to={to}>{game.title}</LogCompact.Link>
             <span>
               {/* TODO Localize this */}
               {log.oldNumber < log.newNumber

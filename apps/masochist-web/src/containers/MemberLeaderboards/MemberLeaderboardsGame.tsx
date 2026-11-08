@@ -1,4 +1,5 @@
 import { Game, MemberGame, Tier } from '@masochistme/sdk/dist/v1/types';
+import { Link } from 'react-router-dom';
 import { DateBlock, Flex, Icon, IconType, ProgressBar, Size } from 'components';
 import { GameThumbnail, MemberBadges } from 'containers';
 import { useNavigate } from 'react-router';
@@ -27,9 +28,7 @@ export const MemberLeaderboardsGame = (props: Props): JSX.Element => {
     (tier: Tier) => tier.id === gameData?.tier,
   )?.icon ?? 'Spin') as IconType;
 
-  const onGameClick = () => {
-    navigate(`/game/${memberGame.gameId}`);
-  };
+  const to = `/game/${memberGame.gameId}`;
 
   return (
     <StyledMemberGame align colorTokens={colorTokens}>
@@ -41,14 +40,10 @@ export const MemberLeaderboardsGame = (props: Props): JSX.Element => {
         }
       />
       <StyledGameInfo align gap={8}>
-        <GameThumbnail
-          game={gameData}
-          size={Size.SMALL}
-          onClick={onGameClick}
-        />
+        <GameThumbnail game={gameData} size={Size.SMALL} />
         <Icon icon={gameTierIcon} size={Size.MICRO} />
-        <StyledGameTitle onClick={onGameClick} colorTokens={colorTokens}>
-          {gameTitle}
+        <StyledGameTitle colorTokens={colorTokens}>
+          <Link to={to}>{gameTitle}</Link>
         </StyledGameTitle>
       </StyledGameInfo>
       <MemberBadges
