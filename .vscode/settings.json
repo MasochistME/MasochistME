@@ -2,15 +2,13 @@
   "javascript.updateImportsOnFileMove.enabled": "always",
   "javascript.preferences.importModuleSpecifier": "non-relative",
   "typescript.preferences.importModuleSpecifier": "non-relative",
-  "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": {
+  "javascript.editor.formatOnSave": false,
+  "typescript.editor.formatOnSave": true,
+  "typescript.editor.codeActionsOnSave": {
     "source.fixAll.eslint": "always",
     "source.organizeImports": "always"
   },
-  "eslint.validate": [
-    "javascript",
-    "typescript"
-  ],
+  "eslint.validate": ["typescript"],
   "files.eol": "\n",
   "[json]": {
     "editor.suggest.insertMode": "replace",
@@ -19,4 +17,4 @@
     }
   },
   "typescript.tsdk": "node_modules\\typescript\\lib"
-} 
+}
