@@ -21,13 +21,6 @@
     "packages/*",
     "packages/@masochistme/*"
   ],
-  "dependencies": {
-    "axios": "1.1.2",
-    "dayjs": "^1.11.7",
-    "dotenv": "^16.0.3",
-    "lodash": "^4.17.13",
-    "mongodb": "^4.10.0"
-  },
   "devDependencies": {
     "@types/node": "18.8.0",
     "@typescript-eslint/eslint-plugin": "5.40.0",
@@ -36,7 +29,11 @@
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-prettier": "4.2.1",
     "prettier": "2.7.1",
+<<<<<<< HEAD
     "turbo": "1.9.3",
+=======
+    "turbo": "2.11.13",
+>>>>>>> 7360e684 (chore: clean up root package.json)
     "typescript": "4.8.4"
   },
   "packageManager": "yarn@1.22.19"
