@@ -32,5 +32,11 @@
     "turbo": "1.9.3",
     "typescript": "4.9.5"
   },
+  "resolutions": {
+    "@mui/private-theming": "6.1.1",
+    "@mui/styled-engine": "6.1.1",
+    "@mui/system": "6.1.1",
+    "@mui/utils": "6.1.1"
+  },
   "packageManager": "yarn@1.22.19"
 }
