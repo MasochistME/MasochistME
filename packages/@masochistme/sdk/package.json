@@ -12,6 +12,8 @@
   "files": [
     "dist/**/*"
   ],
+  "main": "dist/v1/sdk.js",
+  "types": "dist/v1/sdk.d.ts",
   "scripts": {
     "build": "tsc && tsc-alias -p tsconfig.json",
     "build:sdk": "tsc && tsc-alias -p tsconfig.json",
@@ -21,23 +23,24 @@
     "semantic-release": "semantic-release"
   },
   "dependencies": {
-    "discord.js": "^14.8.0"
+    "axios": "1.1.2",
+    "mongodb": "4.10.0"
   },
   "devDependencies": {
-    "@semantic-release/commit-analyzer": "^9.0.2",
-    "@semantic-release/github": "^8.0.6",
-    "@semantic-release/npm": "^9.0.1",
-    "@semantic-release/release-notes-generator": "^10.0.3",
-    "better-docs": "^2.7.2",
-    "conventional-changelog-conventionalcommits": "^5.0.0",
-    "jsdoc": "^3.6.11",
-    "nodemon": "^2.0.19",
-    "semantic-release": "^19.0.5",
-    "tsc-alias": "^1.8.5",
-    "typedoc": "^0.23.16",
-    "typedoc-plugin-merge-modules": "^4.0.1"
+    "@semantic-release/commit-analyzer": "9.0.2",
+    "@semantic-release/github": "8.0.6",
+    "@semantic-release/npm": "9.0.1",
+    "@semantic-release/release-notes-generator": "10.0.3",
+    "conventional-changelog-conventionalcommits": "5.0.0",
+    "dotenv": "16.0.3",
+    "semantic-release": "19.0.5",
+    "tsc-alias": "1.8.5",
+    "typedoc": "0.23.16",
+    "typedoc-plugin-merge-modules": "4.0.1"
   },
   "eslintConfig": {
-    "extends": ["mme"]
+    "extends": [
+      "mme"
+    ]
   }
 }
