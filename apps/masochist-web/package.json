@@ -46,8 +46,7 @@
     "react-markdown": "8.0.7",
     "react-router": "6.10.0",
     "react-router-dom": "6.10.0",
-    "styled-components": "5.3.10",
-    "theme": "*"
+    "styled-components": "5.3.10"
   },
   "devDependencies": {
     "@masochistme/eslint-config-mme": "*",

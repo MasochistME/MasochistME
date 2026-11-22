@@ -36,7 +36,8 @@
     "@mui/private-theming": "6.1.1",
     "@mui/styled-engine": "6.1.1",
     "@mui/system": "6.1.1",
-    "@mui/utils": "6.1.1"
+    "@mui/utils": "6.1.1",
+    "@types/react": "18.0.38"
   },
   "packageManager": "yarn@1.22.19"
 }
