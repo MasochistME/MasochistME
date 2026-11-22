@@ -27,6 +27,7 @@
     "mongodb": "4.10.0"
   },
   "devDependencies": {
+    "@masochistme/eslint-config-mme": "*",
     "@semantic-release/commit-analyzer": "9.0.2",
     "@semantic-release/github": "8.0.6",
     "@semantic-release/npm": "9.0.1",
@@ -40,7 +41,7 @@
   },
   "eslintConfig": {
     "extends": [
-      "mme"
+      "@masochistme/mme"
     ]
   }
 }

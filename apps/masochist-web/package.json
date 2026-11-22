@@ -50,19 +50,19 @@
     "theme": "*"
   },
   "devDependencies": {
+    "@masochistme/eslint-config-mme": "*",
     "@sentry/cli": "2.46.0",
     "@types/crypto-js": "4.0.1",
     "@types/lodash": "4.14.186",
     "@types/react": "18.0.27",
     "@types/react-dom": "18.0.10",
     "@types/styled-components": "5.1.7",
-    "eslint-config-mme": "*",
     "react-app-rewired": "2.2.1",
     "react-scripts": "5.0.1"
   },
   "eslintConfig": {
     "extends": [
-      "mme"
+      "@masochistme/mme"
     ]
   },
   "browserslist": [

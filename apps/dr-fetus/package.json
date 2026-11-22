@@ -19,7 +19,7 @@
   },
   "eslintConfig": {
     "extends": [
-      "mme"
+      "@masochistme/mme"
     ]
   },
   "main": "dist/fetus.js",
@@ -50,6 +50,7 @@
     "discord.js": "14.8.0"
   },
   "devDependencies": {
+    "@masochistme/eslint-config-mme": "*",
     "chalk": "5.1.0",
     "nodemon": "2.0.20",
     "prompt-confirm": "2.0.4"
