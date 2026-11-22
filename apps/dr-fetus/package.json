@@ -45,14 +45,13 @@
     "axios": "1.1.2",
     "dayjs": "1.11.7",
     "dotenv": "16.0.3",
-    "lodash": "4.17.13",
-    "mongodb": "4.10.0",
-    "discord.js": "14.8.0"
+    "mongodb": "4.16.0",
+    "discord.js": "14.9.0"
   },
   "devDependencies": {
     "@masochistme/eslint-config-mme": "*",
-    "chalk": "5.1.0",
-    "nodemon": "2.0.20",
+    "chalk": "5.2.0",
+    "nodemon": "2.0.22",
     "prompt-confirm": "2.0.4"
   }
 }

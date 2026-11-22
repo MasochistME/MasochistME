@@ -24,20 +24,20 @@
   },
   "dependencies": {
     "axios": "1.1.2",
-    "mongodb": "4.10.0"
+    "mongodb": "4.16.0"
   },
   "devDependencies": {
     "@masochistme/eslint-config-mme": "*",
     "@semantic-release/commit-analyzer": "9.0.2",
-    "@semantic-release/github": "8.0.6",
-    "@semantic-release/npm": "9.0.1",
+    "@semantic-release/github": "8.0.7",
+    "@semantic-release/npm": "9.0.2",
     "@semantic-release/release-notes-generator": "10.0.3",
     "conventional-changelog-conventionalcommits": "5.0.0",
     "dotenv": "16.0.3",
     "semantic-release": "19.0.5",
     "tsc-alias": "1.8.5",
-    "typedoc": "0.23.16",
-    "typedoc-plugin-merge-modules": "4.0.1"
+    "typedoc": "0.23.28",
+    "typedoc-plugin-merge-modules": "4.1.0"
   },
   "eslintConfig": {
     "extends": [

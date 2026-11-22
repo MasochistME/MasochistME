@@ -33,16 +33,16 @@
     "cors": "2.8.5",
     "dayjs": "1.11.7",
     "dotenv": "16.0.3",
-    "express": "4.17.1",
-    "lodash": "4.17.13",
-    "mongodb": "4.10.0"
+    "express": "4.18.2",
+    "lodash": "4.17.21",
+    "mongodb": "4.16.0"
   },
   "devDependencies": {
     "@masochistme/eslint-config-mme": "*",
-    "@types/cors": "2.8.12",
-    "@types/express": "4.17.14",
-    "@types/lodash": "4.14.186",
-    "nodemon": "2.0.20"
+    "@types/cors": "2.8.13",
+    "@types/express": "4.17.17",
+    "@types/lodash": "4.14.194",
+    "nodemon": "2.0.22"
   },
   "repository": {
     "type": "git",
