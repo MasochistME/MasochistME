@@ -23,7 +23,7 @@ module.exports = {
     'no-useless-escape': 'off',
     'no-unused-vars': 'off',
     'sort-imports': [
-      'error',
+      'warn',
       {
         ignoreCase: false,
         ignoreDeclarationSort: false,
