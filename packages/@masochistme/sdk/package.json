@@ -7,7 +7,7 @@
   "license": "MIT",
   "sideEffects": false,
   "engines": {
-    "node": ">=22"
+    "node": ">=22.24.4"
   },
   "files": [
     "dist/**/*"
