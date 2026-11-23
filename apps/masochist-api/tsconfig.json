@@ -5,8 +5,15 @@
     "rootDir": "./lib",
     "outDir": "./dist",
     "declaration": true,
-    "declarationDir": "dist"
+    "declarationDir": "dist",
+    "module": "ESNext"
   },
-  "include": ["lib/**/*"],
-  "exclude": ["node_modules", "dist", "__migrate"],
+  "include": [
+    "lib/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "__migrate"
+  ]
 }
