@@ -1,7 +1,10 @@
 import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import { getFileExtension } from './data';
+
+const moduleDir = path.dirname(fileURLToPath(import.meta.url));
 
 export enum ImgType {
   BADGE = 'badges',
@@ -20,11 +23,11 @@ export const saveImage = async (
     const localFilePath =
       process.env.ENV === 'prod'
         ? path.resolve(
-            __dirname,
+            moduleDir,
             `../../../../../__CDN/${type}`,
             `${name}.${extension}`,
           )
-        : path.resolve(__dirname, `${name}.${extension}`);
+        : path.resolve(moduleDir, `${name}.${extension}`);
 
     const newPath = `https://cdn.masochist.me/${type}/${name}.${extension}`;
     const response = await axios({

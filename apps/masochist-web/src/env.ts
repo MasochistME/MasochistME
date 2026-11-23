@@ -1,4 +1,4 @@
-const API = process.env.REACT_APP_API;
+const API = import.meta.env.REACT_APP_API;
 
 export const env = {
   API,

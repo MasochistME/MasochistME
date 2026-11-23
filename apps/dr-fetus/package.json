@@ -6,8 +6,8 @@
   "license": "MIT",
   "scripts": {
     "create-command": "node ./scripts/createCommand.mjs && yarn lint --fix",
-    "build:dev": "env ENV=dev tsc",
-    "build:prod": "env ENV=prod tsc",
+    "build:dev": "env ENV=dev tsc && tsc-alias -p tsconfig.json --resolve-full-paths",
+    "build:prod": "env ENV=prod tsc && tsc-alias -p tsconfig.json --resolve-full-paths",
     "fetus:dev": "env ENV=dev npx tsx src/fetus.ts",
     "fetus:dev:watch": "env ENV=dev nodemon --exec npx tsx src/fetus.ts",
     "fetus:prod": "env ENV=prod npx tsx src/fetus.ts",
@@ -15,6 +15,7 @@
     "fetus": "node dist/fetus.js",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
+    "typecheck": "tsc --noEmit",
     "start": "env ENV=prod node dist/fetus.js"
   },
   "eslintConfig": {
@@ -54,6 +55,8 @@
     "eslint": "8.39.0",
     "nodemon": "2.0.22",
     "prompt-confirm": "2.0.4",
+    "tsc-alias": "1.8.5",
     "typescript": "4.9.5"
-  }
+  },
+  "type": "module"
 }

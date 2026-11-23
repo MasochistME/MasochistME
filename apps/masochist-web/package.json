@@ -2,8 +2,8 @@
   "name": "@masochistme/web",
   "version": "4.0.0",
   "private": true,
+  "type": "module",
   "description": "MasochistME - games that masochists love.",
-  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MasochistME/MasochistME.git"
@@ -14,14 +14,16 @@
     "url": "https://github.com/MasochistME/MasochistME/issues"
   },
   "scripts": {
-    "maso:dev": "env HOST=0.0.0.0 PORT=3000 REACT_APP_API=http://localhost:3081 react-app-rewired start",
-    "maso:start": "react-app-rewired start",
-    "maso:build": "react-app-rewired build",
-    "build:prod": "env PORT=8000 REACT_APP_API=https://api.masochist.me --max_old_space_size=8192 react-app-rewired build && yarn sentry:sourcemaps",
-    "build:dev": "env PORT=8081 REACT_APP_API=http://localhost:3081 --max_old_space_size=8192 react-app-rewired build",
-    "build:staging": "env PORT=8081 REACT_APP_API=https://api-dev.masochist.me --max_old_space_size=8192 react-app-rewired build",
-    "lint": "eslint",
-    "lint:fix": "eslint --fix",
+    "maso:dev": "env HOST=0.0.0.0 PORT=3000 REACT_APP_API=http://localhost:3081 vite",
+    "maso:start": "vite",
+    "maso:build": "vite build",
+    "build:prod": "env REACT_APP_API=https://api.masochist.me tsc --noEmit && vite build && yarn sentry:sourcemaps",
+    "build:dev": "env REACT_APP_API=http://localhost:3081 tsc --noEmit && vite build",
+    "build:staging": "env REACT_APP_API=https://api-dev.masochist.me tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
     "sentry:sourcemaps": "sentry-cli sourcemaps inject --org masochistme --project masochist-web ./build && sentry-cli sourcemaps upload --org masochistme --project masochist-web ./build"
   },
   "dependencies": {
@@ -38,7 +40,6 @@
     "crypto-js": "4.1.1",
     "dayjs": "1.11.7",
     "lodash": "4.17.21",
-    "moment": "2.29.4",
     "react": "18.2.0",
     "react-chartjs-2": "4.3.1",
     "react-dom": "18.2.0",
@@ -56,19 +57,16 @@
     "@types/react": "18.0.38",
     "@types/react-dom": "18.0.11",
     "@types/styled-components": "5.1.26",
+    "@vitejs/plugin-react": "6.3.0",
     "eslint": "8.39.0",
-    "react-app-rewired": "2.2.1",
-    "react-scripts": "5.0.1"
+    "typescript": "4.9.5",
+    "vite": "8.3.8",
+    "vite-plugin-svgr": "5.2.0",
+    "vite-tsconfig-paths": "6.1.1"
   },
   "eslintConfig": {
     "extends": [
       "@masochistme/mme"
     ]
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  }
 }

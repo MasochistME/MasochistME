@@ -1,19 +1,65 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": ["**/.env.*local"],
+  "globalDependencies": [
+    "**/.env.*local"
+  ],
   "pipeline": {
     "tsc": {
-      "dependsOn": ["^tsc"],
+      "dependsOn": [
+        "^tsc"
+      ],
       "outputs": []
     },
-    "build:sdk": { "outputs": ["dist/**"] },
-    "build:prod": { "dependsOn": ["^build:sdk"], "outputs": ["dist/**", "build/**"] },
-    "build:dev": { "dependsOn": ["^build:sdk"], "outputs": ["dist/**", "build/**"] },
-    "build:staging": { "dependsOn": ["^build:sdk"], "outputs": ["dist/**", "build/**"] },
-    "maso:build": { "dependsOn": ["^build:sdk"], "outputs": ["dist/**", "build/**"] },
-    "maso:start": { "outputs": [] },
-    "docs": { "outputs": [] },
-    "lint": { "outputs": [] },
+    "build:sdk": {
+      "outputs": [
+        "dist/**"
+      ]
+    },
+    "build:prod": {
+      "dependsOn": [
+        "^build:sdk"
+      ],
+      "outputs": [
+        "dist/**",
+        "build/**"
+      ]
+    },
+    "build:dev": {
+      "dependsOn": [
+        "^build:sdk"
+      ],
+      "outputs": [
+        "dist/**",
+        "build/**"
+      ]
+    },
+    "build:staging": {
+      "dependsOn": [
+        "^build:sdk"
+      ],
+      "outputs": [
+        "dist/**",
+        "build/**"
+      ]
+    },
+    "maso:build": {
+      "dependsOn": [
+        "^build:sdk"
+      ],
+      "outputs": [
+        "dist/**",
+        "build/**"
+      ]
+    },
+    "maso:start": {
+      "outputs": []
+    },
+    "docs": {
+      "outputs": []
+    },
+    "lint": {
+      "outputs": []
+    },
     "api:dev:watch": {
       "outputs": [],
       "cache": false,

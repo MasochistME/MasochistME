@@ -49,3 +49,11 @@ config.staging.json
 
 # vercel
 .vercel
+
+# yarn berry
+.yarn/install-state.gz
+.yarn/unplugged/
+.yarn/build-state.yml
+.yarn/cache/
+.yarn/sdks/
+.pnp.*

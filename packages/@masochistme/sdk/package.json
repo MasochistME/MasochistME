@@ -2,6 +2,36 @@
   "name": "@masochistme/sdk",
   "version": "3.2.8",
   "description": "Masochist.ME SDK",
+  "type": "module",
+  "main": "./dist/v1/sdk.js",
+  "types": "./dist/v1/sdk.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/v1/sdk.d.ts",
+      "default": "./dist/v1/sdk.js"
+    },
+    "./dist/v1": {
+      "types": "./dist/v1/index.d.ts",
+      "default": "./dist/v1/index.js"
+    },
+    "./dist/v1/sdk": {
+      "types": "./dist/v1/sdk.d.ts",
+      "default": "./dist/v1/sdk.js"
+    },
+    "./dist/v1/types": {
+      "types": "./dist/v1/types/index.d.ts",
+      "default": "./dist/v1/types/index.js"
+    },
+    "./dist/v1/api/*": {
+      "types": "./dist/v1/api/*/index.d.ts",
+      "default": "./dist/v1/api/*/index.js"
+    },
+    "./dist/legacy/types": {
+      "types": "./dist/legacy/types/index.d.ts",
+      "default": "./dist/legacy/types/index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "repository": "https://github.com/MasochistME/masochist-sdk.git",
   "author": "Arcyvilk <arcyvilk@gmail.com>",
   "license": "MIT",
@@ -12,14 +42,13 @@
   "files": [
     "dist/**/*"
   ],
-  "main": "dist/v1/sdk.js",
-  "types": "dist/v1/sdk.d.ts",
   "scripts": {
-    "build": "tsc && tsc-alias -p tsconfig.json",
-    "build:sdk": "tsc && tsc-alias -p tsconfig.json",
+    "build": "tsc -p tsconfig.json && tsc-alias -p tsconfig.json --resolve-full-paths",
+    "build:sdk": "tsc -p tsconfig.json && tsc-alias -p tsconfig.json --resolve-full-paths",
     "docs": "typedoc",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
+    "typecheck": "tsc --noEmit",
     "semantic-release": "semantic-release"
   },
   "dependencies": {
