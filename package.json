@@ -16,7 +16,7 @@
     "api:staging": "turbo run api:staging",
     "api:prod": "turbo run api:prod",
     "lint": "turbo run lint",
-    "tsc": "turbo run tsc",
+    "typecheck": "turbo run typecheck",
     "docs": "turbo run docs",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },

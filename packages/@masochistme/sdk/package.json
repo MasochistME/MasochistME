@@ -20,6 +20,7 @@
     "docs": "typedoc",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
+    "typecheck": "tsc --noEmit",
     "semantic-release": "semantic-release"
   },
   "dependencies": {

@@ -15,6 +15,7 @@
     "fetus": "node dist/fetus.js",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
+    "typecheck": "tsc --noEmit",
     "start": "env ENV=prod node dist/fetus.js"
   },
   "eslintConfig": {
