@@ -32,7 +32,7 @@
     "url": "https://github.com/PointOnePercent/DrFetus/issues"
   },
   "engines": {
-    "node": ">=22.24.4"
+    "node": ">=22.23.5"
   },
   "files": [
     "dist/**/*"
