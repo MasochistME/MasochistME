@@ -4,7 +4,6 @@
   "private": true,
   "type": "module",
   "description": "MasochistME - games that masochists love.",
-  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MasochistME/MasochistME.git"
@@ -41,7 +40,6 @@
     "crypto-js": "4.1.1",
     "dayjs": "1.11.7",
     "lodash": "4.17.21",
-    "moment": "2.29.4",
     "react": "18.2.0",
     "react-chartjs-2": "4.3.1",
     "react-dom": "18.2.0",
@@ -70,11 +68,5 @@
     "extends": [
       "@masochistme/mme"
     ]
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  }
 }

@@ -1,6 +1,6 @@
 import React from 'react';
+import dayjs from 'dayjs';
 import { orderBy } from 'lodash';
-import moment from 'moment';
 import { Tier, Game, Member } from '@masochistme/sdk/dist/v1/types';
 
 import { useCuratedGames, useTiers, useMemberById, useMemberGames } from 'sdk';
@@ -64,9 +64,9 @@ const getTimelines = (
 	timelines = orderBy(timelines, ['lastUnlocked'], ['asc']);
 
 	// @ts-ignore
-	startDate = moment(new Date(timelines[0]?.lastUnlocked * 1000));
+	startDate = dayjs(new Date(timelines[0]?.lastUnlocked * 1000));
 	// @ts-ignore
-	endDate = moment(
+	endDate = dayjs(
 		new Date(timelines[timelines.length - 1]?.lastUnlocked * 1000),
 	);
 
@@ -75,12 +75,12 @@ const getTimelines = (
 			// @ts-ignore
 		data.push({
 			// @ts-ignore
-			label: startDate.format('yyyy-MM'),
+			label: startDate.format('YYYY-MM'),
 			games: 0,
 			points: 0,
 		});
 		// @ts-ignore: any
-		startDate.add(1, 'month');
+		startDate = startDate.add(1, 'month');
 	}
 	// @ts-ignore
 	data = data.map((date: any) => {
