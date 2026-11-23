@@ -39,14 +39,14 @@
   ],
   "dependencies": {
     "@masochistme/sdk": "*",
-    "@sentry/profiling-node": "9.33.0",
     "@sentry/node": "9.33.0",
+    "@sentry/profiling-node": "9.33.0",
     "arcybot": "1.4.8",
     "axios": "1.1.2",
     "dayjs": "1.11.7",
+    "discord.js": "14.9.0",
     "dotenv": "16.0.3",
-    "mongodb": "4.16.0",
-    "discord.js": "14.9.0"
+    "mongodb": "4.16.0"
   },
   "devDependencies": {
     "@masochistme/eslint-config-mme": "*",
