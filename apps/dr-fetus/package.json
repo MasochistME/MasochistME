@@ -32,7 +32,7 @@
     "url": "https://github.com/PointOnePercent/DrFetus/issues"
   },
   "engines": {
-    "node": ">=22"
+    "node": ">=22.23.5"
   },
   "files": [
     "dist/**/*"
@@ -51,7 +51,9 @@
   "devDependencies": {
     "@masochistme/eslint-config-mme": "*",
     "chalk": "5.2.0",
+    "eslint": "8.39.0",
     "nodemon": "2.0.22",
-    "prompt-confirm": "2.0.4"
+    "prompt-confirm": "2.0.4",
+    "typescript": "4.9.5"
   }
 }
